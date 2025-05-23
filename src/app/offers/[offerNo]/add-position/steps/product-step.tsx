@@ -6,10 +6,10 @@ import { type Product } from "@/documents/products";
 
 interface ProductStepProps {
   products: Product[];
-  selectedProduct: string | null;
+  selectedProduct: Product | null;
   selectedType: string | null;
   selectedOption: string | null;
-  onProductSelect: (productId: string) => void;
+  onProductSelect: (product: Product) => void;
   onTypeSelect: (typeId: string) => void;
   onOptionSelect: (optionId: string) => void;
 }
@@ -35,9 +35,13 @@ export function ProductStep({
                 ? "hover:border-blue-500"
                 : "opacity-50 cursor-not-allowed"
             }
-            ${selectedProduct === product.id ? "border-2 border-blue-500" : ""}
+            ${
+              selectedProduct?.id === product.id
+                ? "border-2 border-blue-500"
+                : ""
+            }
           `}
-          onClick={() => product.isActive && onProductSelect(product.id)}
+          onClick={() => product.isActive && onProductSelect(product)}
         >
           <div className="aspect-video relative mb-4 rounded-lg overflow-hidden bg-gray-100">
             <Image
@@ -48,6 +52,7 @@ export function ProductStep({
               priority
             />
           </div>
+
           <div className="space-y-3">
             <h3 className="text-lg font-semibold">{product.name}</h3>
             {product.id === "panjur" && product.options && (
@@ -85,7 +90,7 @@ export function ProductStep({
       ))}
 
       {/* Panjur Tipleri */}
-      {selectedProduct === "panjur" && (
+      {selectedProduct?.id === "panjur" && (
         <div className="lg:col-span-4 border-t pt-8 mt-8">
           <h3 className="text-lg font-semibold mb-4">Panjur Tipleri</h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-6">

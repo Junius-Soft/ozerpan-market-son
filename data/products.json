@@ -8,6 +8,16 @@
       "name": "Panjur",
       "isActive": true,
       "image": "/images/products/panjur.png",
+      "dimensions": {
+        "width": {
+          "min": 250,
+          "max": 5500
+        },
+        "height": {
+          "min": 250,
+          "max": 4000
+        }
+      },
       "options": [
         {
           "id": "distan",

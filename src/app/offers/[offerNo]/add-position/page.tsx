@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ArrowLeft } from "lucide-react";
 import { type Product, getProducts } from "@/documents/products";
 import { type Position } from "@/documents/offers";
@@ -22,7 +22,7 @@ export default function AddPositionPage() {
   const [currentStep, setCurrentStep] = useState("product");
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [positionDetails, setPositionDetails] = useState<Omit<
@@ -37,7 +37,8 @@ export default function AddPositionPage() {
         const { products, defaultProduct, defaultType, defaultOption } =
           await getProducts();
         setProducts(products);
-        setSelectedProduct(defaultProduct);
+        const defaultProductObj = products.find((p) => p.id === defaultProduct);
+        setSelectedProduct(defaultProductObj || null);
         setSelectedType(defaultType);
         setSelectedOption(defaultOption);
       } finally {
@@ -47,9 +48,9 @@ export default function AddPositionPage() {
     loadProducts();
   }, []);
 
-  const handleProductSelect = (productId: string) => {
-    setSelectedProduct(productId);
-    if (productId !== "panjur") {
+  const handleProductSelect = (product: Product) => {
+    setSelectedProduct(product);
+    if (product.id !== "panjur") {
       setSelectedType(null);
     }
   };
@@ -70,10 +71,49 @@ export default function AddPositionPage() {
     }
   };
 
-  const handlePositionDetailsChange = (
-    details: Omit<Position, "id" | "total">
-  ) => {
-    setPositionDetails(details);
+  const handlePositionDetailsChange = useCallback(
+    (details: Omit<Position, "id" | "total">) => {
+      setPositionDetails((prev) => {
+        // Only update if the details have actually changed
+        if (
+          JSON.stringify(prev) !== JSON.stringify(details) &&
+          details.quantity > 0 // Ensure we have valid details
+        ) {
+          return details;
+        }
+        return prev;
+      });
+    },
+    []
+  );
+
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case "product":
+        return (
+          <ProductStep
+            products={products}
+            selectedProduct={selectedProduct}
+            selectedType={selectedType}
+            selectedOption={selectedOption}
+            onProductSelect={handleProductSelect}
+            onTypeSelect={setSelectedType}
+            onOptionSelect={setSelectedOption}
+          />
+        );
+      case "details":
+        return (
+          <DetailsStep
+            products={products}
+            selectedProduct={selectedProduct}
+            onPositionDetailsChange={handlePositionDetailsChange}
+          />
+        );
+      case "preview":
+        return <PreviewStep positionDetails={positionDetails} />;
+      default:
+        return null;
+    }
   };
 
   if (isLoading) {
@@ -105,37 +145,6 @@ export default function AddPositionPage() {
       </div>
     );
   }
-
-  const renderStepContent = () => {
-    switch (currentStep) {
-      case "product":
-        return (
-          <ProductStep
-            products={products}
-            selectedProduct={selectedProduct}
-            selectedType={selectedType}
-            selectedOption={selectedOption}
-            onProductSelect={handleProductSelect}
-            onTypeSelect={setSelectedType}
-            onOptionSelect={setSelectedOption}
-          />
-        );
-      case "details":
-        return (
-          <DetailsStep
-            products={products}
-            selectedProduct={selectedProduct}
-            selectedType={selectedType}
-            positionDetails={positionDetails}
-            onPositionDetailsChange={handlePositionDetailsChange}
-          />
-        );
-      case "preview":
-        return <PreviewStep positionDetails={positionDetails} />;
-      default:
-        return null;
-    }
-  };
 
   return (
     <div className="py-8">

@@ -16,11 +16,22 @@ export interface ProductsResponse {
   products: Product[];
 }
 
+export interface ProductDimension {
+  min: number;
+  max: number;
+}
+
+export interface ProductDimensions {
+  width: ProductDimension;
+  height: ProductDimension;
+}
+
 export interface Product {
   id: string;
   name: string;
   isActive: boolean;
   image: string;
+  dimensions?: ProductDimensions;
   options?: ProductOption[];
   types?: ProductType[];
 }

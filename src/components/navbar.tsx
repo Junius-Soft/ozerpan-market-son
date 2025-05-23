@@ -20,12 +20,18 @@ export function Navbar() {
               </Link>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              {/* <Link
+              <Link
                 href="/"
                 className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900"
               >
                 Ana Sayfa
-              </Link> */}
+              </Link>
+              <Link
+                href="/"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900"
+              >
+                Ürünler
+              </Link>
             </div>
           </div>
           <div className="flex items-center">

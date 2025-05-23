@@ -1,0 +1,72 @@
+{
+  "defaultProduct": "panjur",
+  "defaultType": "1",
+  "defaultOption": "monoblok",
+  "products": [
+    {
+      "id": "panjur",
+      "name": "Panjur",
+      "isActive": true,
+      "image": "/images/products/panjur.png",
+      "options": [
+        {
+          "id": "distan",
+          "name": "Dıştan Takmalı Panjur"
+        },
+        {
+          "id": "monoblok",
+          "name": "Monoblok Panjur"
+        },
+        {
+          "id": "yalitimli",
+          "name": "Yalıtımlı Panjur"
+        }
+      ],
+      "types": [
+        {
+          "id": "1",
+          "name": "1'li Panjur",
+          "image": "/images/products/subProducts/panjur-1.png"
+        },
+        {
+          "id": "2",
+          "name": "2'li Panjur",
+          "image": "/images/products/subProducts/panjur-1.png"
+        },
+        {
+          "id": "3",
+          "name": "3'lü Panjur",
+          "image": "/images/products/subProducts/panjur-1.png"
+        },
+        {
+          "id": "4",
+          "name": "4'lü Panjur",
+          "image": "/images/products/subProducts/panjur-1.png"
+        },
+        {
+          "id": "5",
+          "name": "5'li Panjur",
+          "image": "/images/products/subProducts/panjur-1.png"
+        }
+      ]
+    },
+    {
+      "id": "pencere",
+      "name": "Pencere",
+      "isActive": false,
+      "image": "/images/products/pencere.png"
+    },
+    {
+      "id": "sineklik",
+      "name": "Sineklik",
+      "isActive": false,
+      "image": "/images/products/sineklik.png"
+    },
+    {
+      "id": "kapi",
+      "name": "Kapı",
+      "isActive": false,
+      "image": "/images/products/kapi.png"
+    }
+  ]
+}

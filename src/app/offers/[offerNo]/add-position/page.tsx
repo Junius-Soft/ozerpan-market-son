@@ -104,7 +104,6 @@ export default function AddPositionPage() {
       case "details":
         return (
           <DetailsStep
-            products={products}
             selectedProduct={selectedProduct}
             onPositionDetailsChange={handlePositionDetailsChange}
           />

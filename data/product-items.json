@@ -8,7 +8,9 @@
       "unit": "Metre",
       "unit_price": 1.03,
       "currency": "EUR",
+      "tickness": 39,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
     },
@@ -20,7 +22,10 @@
       "unit": "Metre",
       "unit_price": 1.04,
       "currency": "EUR",
+      "tickness": 39,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
+
       "supplier": "ozdil",
       "description": ""
     },
@@ -32,7 +37,10 @@
       "unit": "Metre",
       "unit_price": 1.04,
       "currency": "EUR",
+      "tickness": 39,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
+
       "supplier": "ozdil",
       "description": ""
     },
@@ -44,7 +52,10 @@
       "unit": "Metre",
       "unit_price": 1.04,
       "currency": "EUR",
+      "tickness": 39,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
+
       "supplier": "ozdil",
       "description": ""
     },
@@ -56,7 +67,10 @@
       "unit": "Metre",
       "unit_price": 1.06,
       "currency": "EUR",
+      "tickness": 39,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
+
       "supplier": "ozdil",
       "description": ""
     },
@@ -68,7 +82,10 @@
       "unit": "Metre",
       "unit_price": 1.08,
       "currency": "EUR",
+      "tickness": 39,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
+
       "supplier": "ozdil",
       "description": ""
     },
@@ -80,7 +97,10 @@
       "unit": "Metre",
       "unit_price": 1.06,
       "currency": "EUR",
+      "tickness": 39,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
+
       "supplier": "ozdil",
       "description": ""
     },
@@ -92,7 +112,10 @@
       "unit": "Metre",
       "unit_price": 1.08,
       "currency": "EUR",
+      "tickness": 39,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
+
       "supplier": "ozdil",
       "description": ""
     },
@@ -104,6 +127,7 @@
       "unit": "Metre",
       "unit_price": 1.04,
       "currency": "EUR",
+      "tickness": 39,
       "product_group": "panjur_lamel_profile",
       "supplier": "ozdil",
       "description": ""
@@ -116,6 +140,7 @@
       "unit": "Metre",
       "unit_price": 1.04,
       "currency": "EUR",
+      "tickness": 39,
       "product_group": "panjur_lamel_profile",
       "supplier": "ozdil",
       "description": ""
@@ -128,7 +153,9 @@
       "unit": "Metre",
       "unit_price": 1.53,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
     },
@@ -140,7 +167,9 @@
       "unit": "Metre",
       "unit_price": 1.56,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
     },
@@ -152,7 +181,9 @@
       "unit": "Metre",
       "unit_price": 1.58,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
     },
@@ -164,7 +195,9 @@
       "unit": "Metre",
       "unit_price": 1.58,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
     },
@@ -176,7 +209,9 @@
       "unit": "Metre",
       "unit_price": 1.61,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
     },
@@ -188,7 +223,9 @@
       "unit": "Metre",
       "unit_price": 1.58,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
     },
@@ -201,6 +238,7 @@
       "unit_price": 1.61,
       "currency": "EUR",
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
     },
@@ -212,7 +250,9 @@
       "unit": "Metre",
       "unit_price": 1.64,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
     },
@@ -224,7 +264,9 @@
       "unit": "Metre",
       "unit_price": 1.61,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
     },
@@ -236,7 +278,9 @@
       "unit": "Metre",
       "unit_price": 1.64,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
     },
@@ -248,7 +292,9 @@
       "unit": "Metre",
       "unit_price": 1.61,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
     },
@@ -260,7 +306,9 @@
       "unit": "Metre",
       "unit_price": 1.58,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
     },
@@ -272,7 +320,9 @@
       "unit": "Metre",
       "unit_price": 2.65,
       "currency": "EUR",
+      "tickness": 45,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
     },
@@ -284,7 +334,9 @@
       "unit": "Metre",
       "unit_price": 2.71,
       "currency": "EUR",
+      "tickness": 45,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
     },
@@ -296,7 +348,9 @@
       "unit": "Metre",
       "unit_price": 2.71,
       "currency": "EUR",
+      "tickness": 45,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
     },
@@ -308,7 +362,9 @@
       "unit": "Metre",
       "unit_price": 2.71,
       "currency": "EUR",
+      "tickness": 45,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
     },
@@ -320,7 +376,9 @@
       "unit": "Metre",
       "unit_price": 3.21,
       "currency": "EUR",
+      "tickness": 45,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
     },
@@ -332,19 +390,24 @@
       "unit": "Metre",
       "unit_price": 3.55,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
     },
     {
       "manufacturer_code": "SE.058.04.EXT",
+      "product_type": "aliminyum_ekstruzyon",
       "product_id": "panjur",
       "stock_code": "352113401010",
       "material_name": "55 mm Alüminyum Ekstrüzyon Lamel Metalik Gri",
       "unit": "Metre",
       "unit_price": 3.69,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
     },
@@ -356,7 +419,9 @@
       "unit": "Metre",
       "unit_price": 3.69,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
     },
@@ -368,7 +433,9 @@
       "unit": "Metre",
       "unit_price": 3.69,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
     },
@@ -380,7 +447,9 @@
       "unit": "Metre",
       "unit_price": 4.3,
       "currency": "EUR",
+      "tickness": 55,
       "product_group": "panjur_lamel_profile",
+      "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
     },

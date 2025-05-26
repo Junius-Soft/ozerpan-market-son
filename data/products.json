@@ -92,14 +92,42 @@
           "content": {
             "fields": [
               {
-                "id": "movement",
+                "id": "movementType",
                 "name": "Hareket Tipi",
-                "type": "radio",
+                "type": "select",
                 "options": [
                   { "id": "manuel", "name": "Manuel" },
                   { "id": "motorlu", "name": "Motorlu" }
                 ],
                 "default": "manuel"
+              },
+              {
+                "id": "manuelSekli",
+                "name": "Manuel Şekli",
+                "type": "select",
+                "options": [
+                  { "id": "makarali", "name": "Makaralı" },
+                  { "id": "reduktorlu", "name": "Redüktörlü" }
+                ],
+                "default": "makarali",
+                "dependsOn": {
+                  "field": "movementType",
+                  "value": "manuel"
+                }
+              },
+              {
+                "id": "makaraliTip",
+                "name": "Makara Tipi",
+                "type": "select",
+                "options": [
+                  { "id": "makassiz", "name": "Makassız" },
+                  { "id": "makasli", "name": "Makaslı" }
+                ],
+                "default": "makassiz",
+                "dependsOn": {
+                  "field": "manuelSekli",
+                  "value": "makarali"
+                }
               }
             ]
           }

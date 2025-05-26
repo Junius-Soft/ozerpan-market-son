@@ -6,27 +6,11 @@ import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { type Position } from "@/documents/offers";
 import { type Product } from "@/documents/products";
 import { getProductPreview } from "@/lib/product-preview";
-
+import { ProductPreview } from "./components/product-preview";
 import { DynamicForm } from "./components/dynamic-form";
-
-interface ProductDetails {
-  dimensions: {
-    width: number;
-    height: number;
-  };
-  divisions: {
-    kutuOlcuAlmaSekli: string;
-    dikmeOlcuAlmaSekli: string;
-    hareketBaglanti: string;
-  };
-  movement: "manuel" | "motorlu";
-  lamelType: "35mm" | "50mm";
-  frameType: "siva-alti" | "siva-ustu";
-  color: string;
-}
+import { type ProductDetails } from "./types";
 
 interface DetailsStepProps {
-  products: Product[];
   selectedProduct: Product | null;
   onPositionDetailsChange: (details: Omit<Position, "id" | "total">) => void;
 }
@@ -35,19 +19,70 @@ export function DetailsStep({
   selectedProduct,
   onPositionDetailsChange,
 }: DetailsStepProps) {
-  // Default to first tab if available, otherwise empty string
-  const [currentTab, setCurrentTab] = useState("");
-  const [productDetails, setProductDetails] = useState<ProductDetails>({
-    dimensions: { width: 250, height: 250 },
-    divisions: {
-      kutuOlcuAlmaSekli: "kutu-dahil",
-      dikmeOlcuAlmaSekli: "dikme-dahil",
-      hareketBaglanti: "sol",
-    },
-    movement: "manuel",
-    lamelType: "35mm",
-    frameType: "siva-alti",
-    color: "beyaz",
+  // Default to first tab if available
+  const [currentTab, setCurrentTab] = useState<string>(
+    selectedProduct?.tabs?.[0].id ?? ""
+  );
+  const [productDetails, setProductDetails] = useState<ProductDetails>(() => {
+    if (!selectedProduct?.tabs) return {} as ProductDetails;
+
+    // Initialize state from product configuration
+    return selectedProduct.tabs.reduce((details, tab) => {
+      // Create tab entry if it doesn't exist
+      if (!details[tab.id]) {
+        details[tab.id] = {};
+      }
+
+      // Process fields for this tab
+      if (tab.content?.fields) {
+        const allFields = tab.content.fields;
+
+        // First pass: set all non-dependent fields with default values
+        allFields.forEach((field) => {
+          if (!field.dependsOn && field.default !== undefined) {
+            const defaultValue =
+              typeof field.default === "boolean"
+                ? field.default
+                  ? "1"
+                  : "0"
+                : field.default.toString();
+
+            // Always set default value for non-dependent fields during initialization
+            details[tab.id][field.id] = defaultValue;
+          }
+        });
+
+        // Second pass: handle dependent fields and their defaults
+        allFields.forEach((field) => {
+          if (field.dependsOn) {
+            const parentField = field.dependsOn.field;
+            const requiredValue = field.dependsOn.value;
+            const parentValue = details[tab.id][parentField];
+
+            // If parent field matches the required value, set the default
+            if (parentValue === requiredValue && field.default !== undefined) {
+              const defaultValue =
+                typeof field.default === "boolean"
+                  ? field.default
+                    ? "1"
+                    : "0"
+                  : field.default.toString();
+
+              details[tab.id][field.id] = defaultValue;
+            }
+          }
+        });
+
+        // Third pass: ensure all remaining fields have at least an empty value
+        allFields.forEach((field) => {
+          if (details[tab.id][field.id] === undefined) {
+            details[tab.id][field.id] = "";
+          }
+        });
+      }
+
+      return details;
+    }, {} as ProductDetails);
   });
 
   const isInitialMount = useRef(true);
@@ -56,73 +91,139 @@ export function DetailsStep({
     [selectedProduct]
   );
 
-  // Set initial tab when product is selected
-  useEffect(() => {
-    if (availableTabs.length > 0) {
-      setCurrentTab(availableTabs[0].id);
-    } else {
-      // Default to "dimensions" if no tabs are defined
-      setCurrentTab("dimensions");
-    }
-  }, [selectedProduct, availableTabs]);
-
   // Memoize the update function to avoid unnecessary recalculations
   const updatePositionDetails = useCallback(
     (details: ProductDetails) => {
-      const area =
-        (details.dimensions.width * details.dimensions.height) / 10000;
-      if (area > 0) {
-        // Only update if we have valid dimensions
+      // Tab değerlerini ve fieldları bul
+      const findTabAndField = (fieldName: string) => {
+        const tab = availableTabs.find((tab) =>
+          tab.content?.fields?.some((field) => field.id === fieldName)
+        );
+        return tab ? details[tab.id] || {} : {};
+      };
+
+      // Gerekli değerleri dinamik olarak al
+      const width = parseFloat(
+        Object.values(details).reduce(
+          (val, tabValues) => tabValues.width?.toString() || val,
+          "0"
+        )
+      );
+      const height = parseFloat(
+        Object.values(details).reduce(
+          (val, tabValues) => tabValues.height?.toString() || val,
+          "0"
+        )
+      );
+      const area = (width * height) / 10000;
+
+      if (!isNaN(area) && area > 0) {
+        // Tab değerlerini dinamik olarak bul
+        const movementValues = findTabAndField("movementType");
+        const lamelValues = findTabAndField("lamelType");
+        const colorValues = findTabAndField("color");
+        const divisionsValues = findTabAndField("kutuOlcuAlmaSekli");
+
+        const movementText =
+          movementValues.movementType === "motorlu" ? "Motorlu" : "Manuel";
+        const lamelText = lamelValues.lamelType || "";
+        const colorText = colorValues.color || "";
+        const kutuText =
+          divisionsValues.kutuOlcuAlmaSekli === "kutu-dahil"
+            ? "Kutu Dahil"
+            : "Kutu Hariç";
+        const dikmeText =
+          divisionsValues.dikmeOlcuAlmaSekli === "dikme-dahil"
+            ? "Dikme Dahil"
+            : divisionsValues.dikmeOlcuAlmaSekli === "dikme-haric"
+            ? "Dikme Hariç"
+            : "Tek Dikme";
+
         onPositionDetailsChange({
           pozNo: "PNJ-001",
-          description: `${
-            details.movement === "motorlu" ? "Motorlu" : "Manuel"
-          } ${details.lamelType} Panjur - ${details.color} (${
-            details.dimensions.width
-          }x${details.dimensions.height}mm) - ${
-            details.divisions.kutuOlcuAlmaSekli === "kutu-dahil"
-              ? "Kutu Dahil"
-              : "Kutu Hariç"
-          }, ${
-            details.divisions.dikmeOlcuAlmaSekli === "dikme-dahil"
-              ? "Dikme Dahil"
-              : details.divisions.dikmeOlcuAlmaSekli === "dikme-haric"
-              ? "Dikme Hariç"
-              : "Tek Dikme"
-          }`,
+          description: `${movementText} ${lamelText} Panjur - ${colorText} (${width}x${height}mm) - ${kutuText}, ${dikmeText}`,
           unit: "m²",
           quantity: area,
           unitPrice: 1000,
         });
       }
     },
-    [onPositionDetailsChange]
+    [onPositionDetailsChange, availableTabs]
   );
 
-  // Update position details when productDetails changes, but skip the first render
+  // Update useEffect to use the same dynamic field finding logic
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
-    } else if (
-      productDetails.dimensions.width > 0 &&
-      productDetails.dimensions.height > 0
-    ) {
-      updatePositionDetails(productDetails);
+    } else {
+      const width = parseFloat(
+        Object.values(productDetails).reduce(
+          (val, tabValues) => tabValues.width?.toString() || val,
+          "0"
+        )
+      );
+      const height = parseFloat(
+        Object.values(productDetails).reduce(
+          (val, tabValues) => tabValues.height?.toString() || val,
+          "0"
+        )
+      );
+      if (!isNaN(width) && !isNaN(height) && width > 0 && height > 0) {
+        updatePositionDetails(productDetails);
+      }
     }
   }, [productDetails, updatePositionDetails]);
 
   const handleProductDetailsChange = (
-    category: keyof ProductDetails,
+    tabId: string,
     field: string,
-    value: string | number
+    value: string | number | boolean
   ) => {
-    setProductDetails((prev) => ({
-      ...prev,
-      [category]:
-        typeof prev[category] === "object"
-          ? { ...prev[category], [field]: value }
-          : value,
-    }));
+    const processedValue =
+      typeof value === "boolean" ? (value ? "1" : "0") : value.toString();
+
+    setProductDetails((prev) => {
+      const currentTab = availableTabs.find((tab) => tab.id === tabId);
+      if (!currentTab) return prev;
+
+      // Build the new state starting with all previous values
+      const newState = { ...prev };
+
+      // Create or update the tab if it doesn't exist
+      if (!newState[tabId]) {
+        newState[tabId] = {};
+      }
+
+      // Update the field value while preserving other fields in the tab
+      newState[tabId] = {
+        ...newState[tabId],
+        [field]: processedValue,
+      };
+
+      // Handle dependent fields
+      currentTab.content?.fields?.forEach((tabField) => {
+        if (
+          tabField.dependsOn?.field === field &&
+          tabField.dependsOn?.value === processedValue &&
+          tabField.default !== undefined
+        ) {
+          const defaultValue =
+            typeof tabField.default === "boolean"
+              ? tabField.default
+                ? "1"
+                : "0"
+              : tabField.default.toString();
+
+          // Update dependent field while preserving other values
+          newState[tabId] = {
+            ...newState[tabId],
+            [tabField.id]: defaultValue,
+          };
+        }
+      });
+
+      return newState;
+    });
   };
 
   const renderTabContent = () => {
@@ -131,85 +232,41 @@ export function DetailsStep({
 
     // If the tab has content with fields defined, use dynamic form
     if (activeTab?.content?.fields && activeTab.content.fields.length > 0) {
-      // Get values for the fields from productDetails based on tab id
+      // Get values for the fields from productDetails based on tab category
       const getValuesForTab = (): Record<string, string | number | boolean> => {
-        switch (activeTab.id) {
-          case "dimensions":
-            return {
-              width: productDetails.dimensions.width,
-              height: productDetails.dimensions.height,
-            };
-          case "divisions":
-            return {
-              kutuOlcuAlmaSekli: productDetails.divisions.kutuOlcuAlmaSekli,
-              dikmeOlcuAlmaSekli: productDetails.divisions.dikmeOlcuAlmaSekli,
-              hareketBaglanti: productDetails.divisions.hareketBaglanti,
-            };
-          case "movement":
-            return { movement: productDetails.movement };
-          case "lamel":
-            return { lamelType: productDetails.lamelType };
-          case "frame":
-            return { frameType: productDetails.frameType };
-          case "color":
-            return { color: productDetails.color };
-          default:
-            return {};
-        }
+        if (!activeTab?.content?.fields) return {};
+
+        const tabValues = productDetails[activeTab.id] || {};
+        return activeTab.content.fields.reduce((acc, field) => {
+          if (!field) return acc;
+
+          const value = tabValues[field.id];
+
+          // Convert string values to appropriate types based on field type
+          switch (field.type) {
+            case "number":
+              acc[field.id] =
+                value !== undefined ? parseFloat(value.toString()) : 0;
+              break;
+            case "checkbox":
+              acc[field.id] = value === "1";
+              break;
+            default:
+              acc[field.id] = value || "";
+          }
+          return acc;
+        }, {} as Record<string, string | number | boolean>);
       };
 
       const handleDynamicFormChange = (
         fieldId: string,
         value: string | number | boolean
       ) => {
-        // Convert boolean to string if needed
-        const processedValue =
-          typeof value === "boolean" ? (value ? "1" : "0") : value;
-
-        switch (activeTab.id) {
-          case "dimensions":
-            handleProductDetailsChange(
-              "dimensions",
-              fieldId,
-              processedValue as string | number
-            );
-            break;
-          case "divisions":
-            handleProductDetailsChange(
-              "divisions",
-              fieldId,
-              processedValue as string | number
-            );
-            break;
-          case "movement":
-            handleProductDetailsChange(
-              "movement",
-              "",
-              processedValue as string
-            );
-            break;
-          case "lamel":
-            handleProductDetailsChange(
-              "lamelType",
-              "",
-              processedValue as string
-            );
-            break;
-          case "frame":
-            handleProductDetailsChange(
-              "frameType",
-              "",
-              processedValue as string
-            );
-            break;
-          case "color":
-            handleProductDetailsChange("color", "", processedValue as string);
-            break;
-        }
+        handleProductDetailsChange(activeTab.id, fieldId, value);
       };
 
       // Render form with preview if it's the dimensions tab
-      if (activeTab.id === "dimensions" && selectedProduct) {
+      if (activeTab.content.preview) {
         return (
           <>
             <DynamicForm
@@ -222,15 +279,13 @@ export function DetailsStep({
               <div className="aspect-square w-full max-w-xl mx-auto border rounded-lg overflow-hidden shadow-sm">
                 {getProductPreview({
                   product: selectedProduct,
-                  width: productDetails.dimensions.width,
-                  height: productDetails.dimensions.height,
+                  width: parseFloat(productDetails.dimensions.width.toString()),
+                  height: parseFloat(
+                    productDetails.dimensions.height.toString()
+                  ),
                   className: "p-4",
-                  tabId: "dimensions",
+                  tabId: activeTab.id,
                 })}
-              </div>
-              <div className="mt-2 text-center text-sm text-gray-500">
-                Genişlik: {productDetails.dimensions.width}mm × Yükseklik:{" "}
-                {productDetails.dimensions.height}mm
               </div>
             </div>
           </>
@@ -243,6 +298,39 @@ export function DetailsStep({
           fields={activeTab.content.fields}
           values={getValuesForTab()}
           onChange={handleDynamicFormChange}
+          onFormikChange={(formik) => {
+            // Değişen alan ve değeri al
+            const changedValues = Object.entries(formik.values);
+
+            // Önce normal değişiklikleri uygula
+            changedValues.forEach(([key, value]) => {
+              handleDynamicFormChange(key, value);
+            });
+
+            // Bağımlı alanları kontrol et
+            activeTab.content?.fields?.forEach((field) => {
+              if (field.dependsOn) {
+                const mainField = changedValues.find(
+                  ([key]) => key === field.dependsOn?.field
+                );
+                if (
+                  mainField &&
+                  mainField[1].toString() === field.dependsOn.value
+                ) {
+                  // Bağımlı alan için varsayılan değeri ayarla
+                  const defaultValue =
+                    field.default !== undefined
+                      ? typeof field.default === "boolean"
+                        ? field.default
+                          ? "1"
+                          : "0"
+                        : field.default.toString()
+                      : "";
+                  handleDynamicFormChange(field.id, defaultValue);
+                }
+              }
+            });
+          }}
         />
       );
     }
@@ -273,83 +361,11 @@ export function DetailsStep({
       </div>
 
       {/* Right Side - Preview */}
-      <Card className="p-6">
-        <h3 className="text-lg font-semibold">Ürün Ön İzleme</h3>
-
-        {/* Product Image */}
-        <div className="aspect-video relative bg-gray-100 rounded-lg">
-          {selectedProduct &&
-            getProductPreview({
-              product: selectedProduct,
-              width: productDetails.dimensions.width,
-              height: productDetails.dimensions.height,
-              className: "w-full h-full",
-              tabId: currentTab,
-            })}
-        </div>
-
-        {/* Selected Options Summary */}
-        <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-            <div className="text-sm text-gray-500">Ölçüler:</div>
-            <div className="text-sm">
-              {productDetails.dimensions.width} x{" "}
-              {productDetails.dimensions.height} cm
-            </div>
-
-            <div className="text-sm text-gray-500">Kutu Ölçü Alma:</div>
-            <div className="text-sm capitalize">
-              {productDetails.divisions.kutuOlcuAlmaSekli === "kutu-dahil"
-                ? "Kutu Dahil"
-                : "Kutu Hariç"}
-            </div>
-
-            <div className="text-sm text-gray-500">Dikme Ölçü Alma:</div>
-            <div className="text-sm capitalize">
-              {productDetails.divisions.dikmeOlcuAlmaSekli === "dikme-dahil"
-                ? "Dikme Dahil"
-                : productDetails.divisions.dikmeOlcuAlmaSekli === "dikme-haric"
-                ? "Dikme Hariç"
-                : "Tek Dikme"}
-            </div>
-
-            <div className="text-sm text-gray-500">Bağlantı Noktası:</div>
-            <div className="text-sm capitalize">
-              {productDetails.divisions.hareketBaglanti}
-            </div>
-
-            <div className="text-sm text-gray-500">Hareket:</div>
-            <div className="text-sm capitalize">{productDetails.movement}</div>
-
-            <div className="text-sm text-gray-500">Lamel:</div>
-            <div className="text-sm">{productDetails.lamelType}</div>
-
-            <div className="text-sm text-gray-500">Çerçeve:</div>
-            <div className="text-sm capitalize">
-              {productDetails.frameType === "siva-alti"
-                ? "Sıva Altı"
-                : "Sıva Üstü"}
-            </div>
-
-            <div className="text-sm text-gray-500">Renk:</div>
-            <div className="text-sm capitalize">{productDetails.color}</div>
-          </div>
-
-          <div className="pt-4 border-t">
-            <div className="flex justify-between">
-              <div className="text-sm text-gray-500">Toplam Alan:</div>
-              <div className="text-sm font-medium">
-                {(
-                  (productDetails.dimensions.width *
-                    productDetails.dimensions.height) /
-                  10000
-                ).toFixed(2)}{" "}
-                m²
-              </div>
-            </div>
-          </div>
-        </div>
-      </Card>
+      <ProductPreview
+        selectedProduct={selectedProduct}
+        productDetails={productDetails}
+        currentTab={currentTab}
+      />
     </div>
   );
 }

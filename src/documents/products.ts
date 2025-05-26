@@ -17,6 +17,10 @@ export interface ProductTabField {
   min?: number;
   max?: number;
   default?: string | number | boolean;
+  dependsOn?: {
+    field: string;
+    value: string;
+  };
 }
 
 export interface ProductPreview {

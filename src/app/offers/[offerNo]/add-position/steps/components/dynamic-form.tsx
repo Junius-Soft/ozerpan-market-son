@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Formik, Form, Field, useFormikContext, FormikProps } from "formik";
 import * as Yup from "yup";
 import { Label } from "@/components/ui/label";
@@ -26,7 +26,6 @@ interface DynamicFormProps {
 
 type FormValues = Record<string, string | number | boolean>;
 
-// Common props for field components
 interface FormikInputProps {
   field: {
     name: string;
@@ -38,7 +37,6 @@ interface FormikInputProps {
   fieldDef: ProductTabField;
 }
 
-// AutoSave component
 function AutoSave({
   onChange,
 }: {
@@ -48,7 +46,6 @@ function AutoSave({
   const previousValuesRef = useRef<FormValues>({});
 
   useEffect(() => {
-    // Only update if values have actually changed
     if (JSON.stringify(previousValuesRef.current) !== JSON.stringify(values)) {
       previousValuesRef.current = values;
       Object.entries(values).forEach(([key, value]) => {
@@ -60,7 +57,6 @@ function AutoSave({
   return null;
 }
 
-// Text input component
 const TextInput: React.FC<FormikInputProps> = ({ field, fieldDef }) => (
   <Input
     id={fieldDef.id}
@@ -71,7 +67,6 @@ const TextInput: React.FC<FormikInputProps> = ({ field, fieldDef }) => (
   />
 );
 
-// Number input component
 const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => (
   <Input
     id={fieldDef.id}
@@ -100,33 +95,40 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => (
   />
 );
 
-// Select component
 const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
-  const mounted = useRef(false);
-  const defaultValue = fieldDef.default?.toString() ?? "";
+  const isInitializedRef = useRef(false);
+  const deferredUpdateRef = useRef<NodeJS.Timeout | null>(null);
 
-  // İlk mount'ta ve sadece bir kez çalışacak effect
   useEffect(() => {
-    if (!mounted.current && !field.value && defaultValue) {
-      form.setFieldValue(field.name, defaultValue, false);
+    const hasDefault = fieldDef.default !== undefined;
+    if (!isInitializedRef.current && hasDefault && !field.value) {
+      isInitializedRef.current = true;
+      Promise.resolve().then(() => {
+        form.setFieldValue(field.name, String(fieldDef.default), false);
+      });
     }
-    mounted.current = true;
-  }, [defaultValue, field.name, field.value, form]);
+
+    return () => {
+      if (deferredUpdateRef.current) {
+        clearTimeout(deferredUpdateRef.current);
+      }
+    };
+  }, [field.name, field.value, fieldDef.default, form]);
 
   if (!fieldDef.options) return null;
 
-  // Field'ın mevcut değerini kullan, yoksa varsayılan değeri kullan
-  const value = field.value?.toString() || defaultValue;
+  const handleChange = (newValue: string) => {
+    if (deferredUpdateRef.current) {
+      clearTimeout(deferredUpdateRef.current);
+    }
+
+    form.setFieldValue(field.name, newValue, false);
+  };
+
+  const currentValue = field.value?.toString() ?? "";
 
   return (
-    <Select
-      value={value}
-      onValueChange={(newValue) => {
-        form.setFieldValue(field.name, newValue);
-        form.setFieldTouched(field.name, true, false);
-      }}
-      name={field.name}
-    >
+    <Select value={currentValue} onValueChange={handleChange} name={field.name}>
       <SelectTrigger className="w-full">
         <SelectValue placeholder={fieldDef.name} />
       </SelectTrigger>
@@ -141,19 +143,17 @@ const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
   );
 };
 
-// Radio component
 const RadioInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
-  const isFirstMount = useRef(true);
+  const isFirstMountRef = useRef(true);
 
   useEffect(() => {
     if (
-      isFirstMount.current &&
+      isFirstMountRef.current &&
       fieldDef.default !== undefined &&
       !field.value
     ) {
-      const defaultValue = fieldDef.default.toString();
-      form.setFieldValue(field.name, defaultValue, false);
-      isFirstMount.current = false;
+      isFirstMountRef.current = false;
+      form.setFieldValue(field.name, String(fieldDef.default), false);
     }
   }, [field.value, field.name, fieldDef.default, form]);
 
@@ -167,7 +167,6 @@ const RadioInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
       onValueChange={(value) => {
         form.setFieldValue(field.name, value);
         form.setFieldTouched(field.name, true, false);
-        form.submitForm();
       }}
       className="flex flex-col space-y-2"
       name={field.name}
@@ -185,7 +184,6 @@ const RadioInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
   );
 };
 
-// Checkbox component
 const CheckboxInput: React.FC<FormikInputProps> = ({
   field,
   form,
@@ -202,45 +200,6 @@ const CheckboxInput: React.FC<FormikInputProps> = ({
   </div>
 );
 
-// Color component
-const ColorInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
-  if (!fieldDef.options) return null;
-
-  const getColorCode = (optionId: string): string => {
-    const colorMap: Record<string, string> = {
-      beyaz: "#ffffff",
-      siyah: "#000000",
-      gri: "#888888",
-      kahve: "#5D4037",
-      krem: "#FFF8DC",
-      wenge: "#4E342E",
-      meşe: "#D7CCC8",
-      antrasit: "#37474F",
-    };
-    return colorMap[optionId] || optionId;
-  };
-
-  return (
-    <div className="flex flex-wrap gap-2">
-      {fieldDef.options?.map((option: { id: string; name: string }) => (
-        <button
-          key={option.id}
-          type="button"
-          className={`w-8 h-8 rounded-full border-2 ${
-            field.value === option.id ? "border-blue-600" : "border-gray-300"
-          }`}
-          style={{
-            backgroundColor: getColorCode(option.id),
-          }}
-          onClick={() => form.setFieldValue(field.name, option.id)}
-          title={option.name}
-        />
-      ))}
-    </div>
-  );
-};
-
-// Check all dependencies in the chain
 const checkDependencyChain = (
   currentField: ProductTabField,
   values: FormValues,
@@ -248,28 +207,23 @@ const checkDependencyChain = (
   visited = new Set<string>()
 ): boolean => {
   if (!currentField.dependsOn) return true;
-  if (visited.has(currentField.id)) return true; // Break circular dependencies
+  if (visited.has(currentField.id)) return true;
 
   visited.add(currentField.id);
   const { field: parentField, value: requiredValue } = currentField.dependsOn;
   const currentValue = values[parentField]?.toString();
   const expectedValue = requiredValue?.toString();
 
-  // If immediate dependency is not met
   if (currentValue !== expectedValue) {
     return false;
   }
 
-  // Find parent field definition and check its dependencies
   const parentFieldDef = fields.find((f) => f.id === parentField);
-  if (parentFieldDef) {
-    return checkDependencyChain(parentFieldDef, values, fields, visited);
-  }
-
-  return true;
+  return parentFieldDef
+    ? checkDependencyChain(parentFieldDef, values, fields, visited)
+    : true;
 };
 
-// Main FormikInputs component
 const FormikInputs = (props: FormikInputProps) => {
   switch (props.fieldDef.type) {
     case "text":
@@ -282,8 +236,6 @@ const FormikInputs = (props: FormikInputProps) => {
       return <RadioInput {...props} />;
     case "checkbox":
       return <CheckboxInput {...props} />;
-    case "color":
-      return <ColorInput {...props} />;
     default:
       return null;
   }
@@ -291,30 +243,31 @@ const FormikInputs = (props: FormikInputProps) => {
 
 export function DynamicForm({ fields, values, onChange }: DynamicFormProps) {
   const formRef = useRef<FormikProps<FormValues>>(null);
+  const stateRef = useRef({
+    previousValues: values,
+    updateQueue: [] as Array<() => void>,
+    processing: false,
+  });
 
-  // Prepare initial values and validation schema
   const [initialValues, validationSchema] = useMemo(() => {
-    const initValues: FormValues = { ...values }; // Mevcut değerleri doğrudan kopyala
+    const initValues: FormValues = { ...values };
     const schema: Record<
       string,
       Yup.StringSchema | Yup.NumberSchema | Yup.BooleanSchema | Yup.MixedSchema
     > = {};
 
     fields.forEach((field) => {
-      // Eğer değer zaten varsa, onu koru
-      if (!(field.id in initValues)) {
-        if (field.default !== undefined) {
-          initValues[field.id] =
-            typeof field.default === "boolean"
+      if (!(field.id in initValues) || initValues[field.id] === undefined) {
+        initValues[field.id] =
+          field.default !== undefined
+            ? typeof field.default === "boolean"
               ? field.default
-              : field.default.toString();
-        } else {
-          // Değer yoksa alan tipine göre varsayılan değer ata
-          initValues[field.id] = field.type === "number" ? 0 : "";
-        }
+              : field.default.toString()
+            : field.type === "number"
+            ? 0
+            : "";
       }
 
-      // Validation schema oluştur
       switch (field.type) {
         case "number": {
           let validation = Yup.number().typeError("Sayısal bir değer giriniz");
@@ -351,21 +304,57 @@ export function DynamicForm({ fields, values, onChange }: DynamicFormProps) {
     return [initValues, schema];
   }, [fields, values]);
 
-  // Force form values to update when values prop changes
   useEffect(() => {
-    if (formRef.current) {
-      Object.entries(values).forEach(([key, value]) => {
-        if (formRef.current?.values[key] !== value) {
-          formRef.current?.setFieldValue(key, value);
-        }
-      });
+    const state = stateRef.current;
+    if (
+      formRef.current &&
+      JSON.stringify(state.previousValues) !== JSON.stringify(values)
+    ) {
+      const formik = formRef.current;
+      const updatedFields = Object.entries(values).filter(
+        ([key, value]) => value !== undefined && formik.values[key] !== value
+      );
+
+      if (updatedFields.length > 0) {
+        updatedFields.forEach(([key, value]) => {
+          formik.setFieldValue(key, value, false);
+        });
+        state.previousValues = values;
+      }
     }
   }, [values]);
 
-  // Determine if fields should be displayed in a grid
-  const shouldUseGrid =
-    fields.length >= 2 &&
-    fields.every((field) => ["number", "text", "select"].includes(field.type));
+  const processQueue = useCallback(() => {
+    const state = stateRef.current;
+    if (!state.processing && state.updateQueue.length > 0) {
+      state.processing = true;
+      const updates = state.updateQueue;
+      state.updateQueue = [];
+
+      updates.forEach((update) => update());
+      state.processing = false;
+
+      if (state.updateQueue.length > 0) {
+        setTimeout(processQueue, 0);
+      }
+    }
+  }, []);
+
+  const handleFormChange = useCallback(
+    (name: string, value: string | number | boolean) => {
+      if (!formRef.current) return;
+
+      const state = stateRef.current;
+      state.updateQueue.push(() => {
+        onChange(name, value);
+      });
+
+      if (!state.processing) {
+        processQueue();
+      }
+    },
+    [onChange, processQueue]
+  );
 
   return (
     <Formik
@@ -379,14 +368,8 @@ export function DynamicForm({ fields, values, onChange }: DynamicFormProps) {
     >
       {(formikProps) => (
         <Form className="space-y-6">
-          <AutoSave onChange={onChange} />
-          <div
-            className={
-              shouldUseGrid ? "grid grid-cols-2 gap-x-4 gap-y-6" : "space-y-6"
-            }
-          >
+          <div className="space-y-6">
             {fields.map((field) => {
-              // Check dependencies before rendering anything
               if (!checkDependencyChain(field, formikProps.values, fields)) {
                 return null;
               }
@@ -411,6 +394,7 @@ export function DynamicForm({ fields, values, onChange }: DynamicFormProps) {
               );
             })}
           </div>
+          <AutoSave onChange={handleFormChange} />
         </Form>
       )}
     </Formik>

@@ -12,7 +12,7 @@ export interface ProductOption {
 export interface ProductTabField {
   id: string;
   name: string;
-  type: "text" | "number" | "select" | "radio" | "checkbox" | "color";
+  type: "text" | "number" | "select" | "radio" | "checkbox";
   options?: { id: string; name: string }[];
   min?: number;
   max?: number;

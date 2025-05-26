@@ -128,6 +128,104 @@
                   "field": "manuelSekli",
                   "value": "makarali"
                 }
+              },
+              {
+                "id": "motorSekli",
+                "name": "Motor Şekli",
+                "type": "select",
+                "options": [
+                  { "id": "duz-motorlu", "name": "Düz Motorlu (Butonlu)" },
+                  {
+                    "id": "alicili-motorlu",
+                    "name": "Alıcılı Motorlu (Kumandalı)"
+                  },
+                  {
+                    "id": "alicili-motorlu-reduktorlu",
+                    "name": "Alıcılı Motorlu (Redüktörlü)"
+                  },
+                  {
+                    "id": "alicili-geri-bildirimli",
+                    "name": "Alıcılı Geri Bildirimli Motor"
+                  },
+                  {
+                    "id": "alicili-geri-bildirimli-engel",
+                    "name": "Alıcılı Geri Bildirimli Engel Tanımalı Motor"
+                  },
+                  {
+                    "id": "solar-panelli",
+                    "name": "Solar Panelli Alıcılı Motor"
+                  }
+                ],
+                "default": "duz-motorlu",
+                "dependsOn": {
+                  "field": "movementType",
+                  "value": "motorlu"
+                }
+              },
+              {
+                "id": "motorMarka",
+                "name": "Motor Markası",
+                "type": "select",
+                "options": [
+                  { "id": "somfy", "name": "Somfy" },
+                  { "id": "mosel", "name": "Mosel" }
+                ],
+                "default": "mosel",
+                "dependsOn": {
+                  "field": "movementType",
+                  "value": "motorlu"
+                }
+              },
+              {
+                "id": "motorModel",
+                "name": "Motor Modeli",
+                "type": "select",
+                "options": [
+                  { "id": "mosel-60-10", "name": "Mosel 60-10" },
+                  { "id": "mosel-60-20", "name": "Model 60-20" },
+                  { "id": "mosel-60-30", "name": "Mosel 60-30" },
+                  { "id": "mosel-60-50", "name": "Mosel 60-50" },
+                  { "id": "boost-15", "name": "Boost 15" },
+                  { "id": "boost-35", "name": "Boost 35" },
+                  { "id": "boost-55", "name": "Boost 55" }
+                ],
+                "default": "mosel-60-10",
+                "dependsOn": {
+                  "field": "movementType",
+                  "value": "motorlu"
+                }
+              },
+              {
+                "id": "buton",
+                "name": "Buton",
+                "type": "select",
+                "options": [
+                  { "id": "yok", "name": "Yok" },
+                  { "id": "alicili-buton", "name": "Alıcılı Buton" }
+                ],
+                "default": "yok",
+                "dependsOn": {
+                  "field": "movementType",
+                  "value": "motorlu"
+                }
+              },
+              {
+                "id": "akilliEv",
+                "name": "Akıllı Ev Sistemleri",
+                "type": "select",
+                "options": [
+                  { "id": "yok", "name": "Yok" },
+                  { "id": "mosel-dd-7002-b", "name": "Mosel DD 7002 B" },
+                  {
+                    "id": "somfy-tahoma-switch-pro",
+                    "name": "Somfy TAHOMA SWITCH Pro"
+                  }
+                ],
+                "default": "yok",
+                "dependsOn": {
+                  "field": "movementType",
+                  "value": "motorlu"
+                }
               }
             ]
           }

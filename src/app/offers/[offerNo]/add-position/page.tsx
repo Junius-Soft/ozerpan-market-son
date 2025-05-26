@@ -9,12 +9,9 @@ import { type Product, getProducts } from "@/documents/products";
 import { type Position } from "@/documents/offers";
 import { ProductStep } from "./steps/product-step";
 import { DetailsStep } from "./steps/details-step";
-import { PreviewStep } from "./steps/preview-step";
-
 const steps = [
   { id: "product", title: "Ürün Seçimi" },
   { id: "details", title: "Poz Detayları" },
-  { id: "preview", title: "Önizleme" },
 ];
 
 export default function AddPositionPage() {
@@ -25,11 +22,6 @@ export default function AddPositionPage() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [positionDetails, setPositionDetails] = useState<Omit<
-    Position,
-    "id" | "total"
-  > | null>(null);
-
   useEffect(() => {
     const loadProducts = async () => {
       setIsLoading(true);
@@ -59,30 +51,24 @@ export default function AddPositionPage() {
     if (currentStep === "product" && selectedProduct) {
       setCurrentStep("details");
     } else if (currentStep === "details") {
-      setCurrentStep("preview");
+      router.back(); // Go back to the offer page when done
     }
   };
 
   const handlePreviousStep = () => {
     if (currentStep === "details") {
       setCurrentStep("product");
-    } else if (currentStep === "preview") {
-      setCurrentStep("details");
     }
   };
 
   const handlePositionDetailsChange = useCallback(
     (details: Omit<Position, "id" | "total">) => {
-      setPositionDetails((prev) => {
-        // Only update if the details have actually changed
-        if (
-          JSON.stringify(prev) !== JSON.stringify(details) &&
-          details.quantity > 0 // Ensure we have valid details
-        ) {
-          return details;
-        }
-        return prev;
-      });
+      // Here you can handle the position details update directly,
+      // for example, saving to a parent state or making an API call
+      if (details.quantity > 0) {
+        // Handle the valid position details
+        console.log("Position details updated:", details);
+      }
     },
     []
   );
@@ -108,8 +94,6 @@ export default function AddPositionPage() {
             onPositionDetailsChange={handlePositionDetailsChange}
           />
         );
-      case "preview":
-        return <PreviewStep positionDetails={positionDetails} />;
       default:
         return null;
     }
@@ -223,7 +207,7 @@ export default function AddPositionPage() {
               onClick={handleNextStep}
               disabled={currentStep === "product" && !selectedProduct}
             >
-              {currentStep === "preview" ? "Tamamla" : "Devam Et"}
+              {currentStep === "details" ? "Tamamla" : "Devam Et"}
             </Button>
           </div>
         </div>

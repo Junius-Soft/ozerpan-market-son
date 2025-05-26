@@ -9,6 +9,30 @@ export interface ProductOption {
   name: string;
 }
 
+export interface ProductTabField {
+  id: string;
+  name: string;
+  type: "text" | "number" | "select" | "radio" | "checkbox" | "color";
+  options?: { id: string; name: string }[];
+  min?: number;
+  max?: number;
+  default?: string | number | boolean;
+}
+
+export interface ProductPreview {
+  type: string;
+  component: string;
+}
+
+export interface ProductTab {
+  id: string;
+  name: string;
+  content?: {
+    fields: ProductTabField[];
+    preview?: ProductPreview;
+  };
+}
+
 export interface ProductsResponse {
   defaultProduct: string;
   defaultType: string;
@@ -34,6 +58,7 @@ export interface Product {
   dimensions?: ProductDimensions;
   options?: ProductOption[];
   types?: ProductType[];
+  tabs?: ProductTab[];
 }
 
 // Function to get products from JSON file

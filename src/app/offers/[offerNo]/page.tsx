@@ -19,12 +19,22 @@ import {
   type Offer,
   type Position,
 } from "@/documents/offers";
-import { ArrowLeft, AlertTriangle, Plus } from "lucide-react";
+import { ArrowLeft, AlertTriangle, Plus, Edit2 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 
 export default function OfferDetailPage() {
   const params = useParams();
   const router = useRouter();
   const [offer, setOffer] = useState<Offer | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [offerName, setOfferName] = useState("");
 
   useEffect(() => {
     const loadOffer = async () => {
@@ -32,6 +42,7 @@ export default function OfferDetailPage() {
       const currentOffer = offers.find((o) => o.id === params.offerNo);
       if (currentOffer) {
         setOffer(currentOffer);
+        setOfferName(currentOffer.name);
       }
     };
     loadOffer();
@@ -44,6 +55,25 @@ export default function OfferDetailPage() {
       discount: 0,
       total: subtotal,
     };
+  };
+
+  const handleSaveOfferName = async () => {
+    try {
+      const updatedOffer = {
+        ...offer!,
+        name: offerName,
+        isDirty: true,
+      };
+      const offers = await getOffers();
+      const updatedOffers = offers.map((o) =>
+        o.id === offer?.id ? updatedOffer : o
+      );
+      await saveOffers(updatedOffers);
+      setOffer(updatedOffer);
+      setIsEditDialogOpen(false);
+    } catch (error) {
+      console.error("Failed to save offer name:", error);
+    }
   };
 
   if (!offer) {
@@ -118,7 +148,17 @@ export default function OfferDetailPage() {
     <div className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Teklif Detayı</h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-2xl font-bold">Teklif Detayı</h1>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsEditDialogOpen(true)}
+              className="hover:bg-gray-100"
+            >
+              <Edit2 className="h-4 w-4" />
+            </Button>
+          </div>
           <Button
             variant="outline"
             className="gap-2 border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-gray-700"
@@ -128,6 +168,37 @@ export default function OfferDetailPage() {
             Tekliflere Dön
           </Button>
         </div>
+
+        {/* Edit Dialog */}
+        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Teklif Adını Düzenle</DialogTitle>
+            </DialogHeader>
+            <div className="py-4">
+              <Input
+                value={offerName}
+                onChange={(e) => setOfferName(e.target.value)}
+                placeholder="Teklif adı"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleSaveOfferName();
+                  }
+                }}
+              />
+            </div>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => setIsEditDialogOpen(false)}
+              >
+                İptal
+              </Button>
+              <Button onClick={handleSaveOfferName}>Kaydet</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
         <div className="flex gap-6">
           {/* Sol Taraf - Poz Tablosu */}
           <div className="flex-1">

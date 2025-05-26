@@ -61,14 +61,8 @@ export function PreviewStep({ positionDetails }: PreviewStepProps) {
       </Card>
 
       {/* Product Preview Card */}
-      <Card className="p-6">
-        <h3 className="text-sm font-medium text-gray-500 mb-4">
-          Ürün Önizleme
-        </h3>
-        <div className="border rounded-lg p-4 bg-white">
-          <ShutterPreview width={width} height={height} className="w-full" />
-        </div>
-      </Card>
+
+      <ShutterPreview width={width} height={height} className="w-full" />
     </div>
   );
 }

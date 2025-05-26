@@ -1,0 +1,63 @@
+"use client";
+
+import { ShutterPreview } from "./shutter-preview";
+import { WindowPreview } from "./window-preview";
+import { DoorPreview } from "./door-preview";
+import { InsectScreenPreview } from "./insect-screen-preview";
+import { ProductPreview } from "@/documents/products";
+
+interface DynamicPreviewProps {
+  preview: ProductPreview;
+  width: number;
+  height: number;
+  className?: string;
+}
+
+export function DynamicPreview({
+  preview,
+  width,
+  height,
+  className = "",
+}: DynamicPreviewProps) {
+  // Select the appropriate preview component based on the component name
+  const renderPreview = () => {
+    switch (preview.component) {
+      case "ShutterPreview":
+        return (
+          <ShutterPreview width={width} height={height} className={className} />
+        );
+      case "WindowPreview":
+        return (
+          <WindowPreview width={width} height={height} className={className} />
+        );
+      case "DoorPreview":
+        return (
+          <DoorPreview width={width} height={height} className={className} />
+        );
+      case "InsectScreenPreview":
+        return (
+          <InsectScreenPreview
+            width={width}
+            height={height}
+            className={className}
+          />
+        );
+      default:
+        return (
+          <div
+            className={`flex items-center justify-center bg-gray-100 rounded-md ${className}`}
+          >
+            <span className="text-gray-500 text-sm">Preview not available</span>
+          </div>
+        );
+    }
+  };
+
+  // If this is used directly in a container, return just the preview component
+  if (className.includes("w-full") || className.includes("h-full")) {
+    return renderPreview();
+  }
+
+  // Otherwise wrap it in a container with styling
+  return <div className="aspect-video relative">{renderPreview()}</div>;
+}

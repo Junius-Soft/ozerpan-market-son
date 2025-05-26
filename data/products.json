@@ -18,6 +18,149 @@
           "max": 4000
         }
       },
+      "tabs": [
+        {
+          "id": "dimensions",
+          "name": "Ürün Ölçüleri",
+          "content": {
+            "fields": [
+              {
+                "id": "width",
+                "name": "Genişlik (mm)",
+                "type": "number",
+                "min": 250,
+                "max": 5500,
+                "default": 250
+              },
+              {
+                "id": "height",
+                "name": "Yükseklik (mm)",
+                "type": "number",
+                "min": 250,
+                "max": 4000,
+                "default": 250
+              }
+            ],
+            "preview": {
+              "type": "shutter",
+              "component": "ShutterPreview"
+            }
+          }
+        },
+        {
+          "id": "divisions",
+          "name": "Bölme Ayarları",
+          "content": {
+            "fields": [
+              {
+                "id": "kutuOlcuAlmaSekli",
+                "name": "Kutu Ölçü Alma Şekli",
+                "type": "select",
+                "options": [
+                  { "id": "kutu-dahil", "name": "Kutu Dahil" },
+                  { "id": "kutu-haric", "name": "Kutu Hariç" }
+                ],
+                "default": "kutu-dahil"
+              },
+              {
+                "id": "dikmeOlcuAlmaSekli",
+                "name": "Dikme Ölçü Alma Şekli",
+                "type": "select",
+                "options": [
+                  { "id": "dikme-dahil", "name": "Dikme Dahil" },
+                  { "id": "dikme-haric", "name": "Dikme Hariç" },
+                  { "id": "tek-dikme", "name": "Tek Dikme" }
+                ],
+                "default": "dikme-dahil"
+              },
+              {
+                "id": "hareketBaglanti",
+                "name": "Hareket Bağlantı Noktası",
+                "type": "select",
+                "options": [
+                  { "id": "sol", "name": "Sol" },
+                  { "id": "sag", "name": "Sağ" }
+                ],
+                "default": "sol"
+              }
+            ]
+          }
+        },
+        {
+          "id": "movement",
+          "name": "Hareket Şekli",
+          "content": {
+            "fields": [
+              {
+                "id": "movement",
+                "name": "Hareket Tipi",
+                "type": "radio",
+                "options": [
+                  { "id": "manuel", "name": "Manuel" },
+                  { "id": "motorlu", "name": "Motorlu" }
+                ],
+                "default": "manuel"
+              }
+            ]
+          }
+        },
+        {
+          "id": "lamel",
+          "name": "Lamel Seçimi",
+          "content": {
+            "fields": [
+              {
+                "id": "lamelType",
+                "name": "Lamel Tipi",
+                "type": "radio",
+                "options": [
+                  { "id": "35mm", "name": "35mm Lamel" },
+                  { "id": "50mm", "name": "50mm Lamel" }
+                ],
+                "default": "35mm"
+              }
+            ]
+          }
+        },
+        {
+          "id": "frame",
+          "name": "Çerçeve Seçimi",
+          "content": {
+            "fields": [
+              {
+                "id": "frameType",
+                "name": "Çerçeve Tipi",
+                "type": "radio",
+                "options": [
+                  { "id": "siva-alti", "name": "Sıva Altı" },
+                  { "id": "siva-ustu", "name": "Sıva Üstü" }
+                ],
+                "default": "siva-alti"
+              }
+            ]
+          }
+        },
+        {
+          "id": "color",
+          "name": "Renk Seçimi",
+          "content": {
+            "fields": [
+              {
+                "id": "color",
+                "name": "Renk",
+                "type": "select",
+                "options": [
+                  { "id": "beyaz", "name": "Beyaz" },
+                  { "id": "gri", "name": "Gri" },
+                  { "id": "krem", "name": "Krem" },
+                  { "id": "kahve", "name": "Kahve" }
+                ],
+                "default": "beyaz"
+              }
+            ]
+          }
+        }
+      ],
       "options": [
         {
           "id": "distan",
@@ -64,19 +207,313 @@
       "id": "pencere",
       "name": "Pencere",
       "isActive": false,
-      "image": "/images/products/pencere.png"
+      "image": "/images/products/pencere.png",
+      "tabs": [
+        {
+          "id": "dimensions",
+          "name": "Pencere Ölçüleri",
+          "content": {
+            "fields": [
+              {
+                "id": "width",
+                "name": "Genişlik (cm)",
+                "type": "number",
+                "min": 300,
+                "max": 3000,
+                "default": 500
+              },
+              {
+                "id": "height",
+                "name": "Yükseklik (cm)",
+                "type": "number",
+                "min": 300,
+                "max": 2500,
+                "default": 500
+              }
+            ],
+            "preview": {
+              "type": "window",
+              "component": "WindowPreview"
+            }
+          }
+        },
+        {
+          "id": "frame",
+          "name": "Çerçeve Seçimi",
+          "content": {
+            "fields": [
+              {
+                "id": "frameType",
+                "name": "Çerçeve Tipi",
+                "type": "radio",
+                "options": [
+                  { "id": "ahsap", "name": "Ahşap" },
+                  { "id": "pvc", "name": "PVC" },
+                  { "id": "aluminyum", "name": "Alüminyum" }
+                ],
+                "default": "pvc"
+              }
+            ]
+          }
+        },
+        {
+          "id": "glass",
+          "name": "Cam Seçimi",
+          "content": {
+            "fields": [
+              {
+                "id": "glassType",
+                "name": "Cam Tipi",
+                "type": "select",
+                "options": [
+                  { "id": "tekli", "name": "Tek Cam" },
+                  { "id": "ciftli", "name": "Çift Cam" },
+                  { "id": "uclu", "name": "Üçlü Cam" }
+                ],
+                "default": "ciftli"
+              }
+            ]
+          }
+        },
+        {
+          "id": "color",
+          "name": "Renk Seçimi",
+          "content": {
+            "fields": [
+              {
+                "id": "color",
+                "name": "Renk",
+                "type": "select",
+                "options": [
+                  { "id": "beyaz", "name": "Beyaz" },
+                  { "id": "kahve", "name": "Kahve" },
+                  { "id": "antrasit", "name": "Antrasit" }
+                ],
+                "default": "beyaz"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "sineklik",
       "name": "Sineklik",
       "isActive": false,
-      "image": "/images/products/sineklik.png"
+      "image": "/images/products/sineklik.png",
+      "tabs": [
+        {
+          "id": "dimensions",
+          "name": "Sineklik Ölçüleri",
+          "content": {
+            "fields": [
+              {
+                "id": "width",
+                "name": "Genişlik (cm)",
+                "type": "number",
+                "min": 200,
+                "max": 2500,
+                "default": 400
+              },
+              {
+                "id": "height",
+                "name": "Yükseklik (cm)",
+                "type": "number",
+                "min": 200,
+                "max": 2000,
+                "default": 400
+              }
+            ],
+            "preview": {
+              "type": "insectScreen",
+              "component": "InsectScreenPreview"
+            }
+          }
+        },
+        {
+          "id": "type",
+          "name": "Sineklik Tipi",
+          "content": {
+            "fields": [
+              {
+                "id": "sineklikType",
+                "name": "Sineklik Tipi",
+                "type": "radio",
+                "options": [
+                  { "id": "sabit", "name": "Sabit" },
+                  { "id": "surgu", "name": "Sürgü" },
+                  { "id": "plise", "name": "Plise" },
+                  { "id": "menteşe", "name": "Menteşe" }
+                ],
+                "default": "sabit"
+              }
+            ]
+          }
+        },
+        {
+          "id": "mesh",
+          "name": "File Seçimi",
+          "content": {
+            "fields": [
+              {
+                "id": "meshType",
+                "name": "File Tipi",
+                "type": "select",
+                "options": [
+                  { "id": "standart", "name": "Standart File" },
+                  { "id": "fiber", "name": "Fiber File" },
+                  { "id": "pet", "name": "Pet Dostu File" }
+                ],
+                "default": "standart"
+              }
+            ]
+          }
+        },
+        {
+          "id": "color",
+          "name": "Renk Seçimi",
+          "content": {
+            "fields": [
+              {
+                "id": "color",
+                "name": "Renk",
+                "type": "select",
+                "options": [
+                  { "id": "beyaz", "name": "Beyaz" },
+                  { "id": "kahve", "name": "Kahve" },
+                  { "id": "siyah", "name": "Siyah" }
+                ],
+                "default": "beyaz"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "kapi",
       "name": "Kapı",
       "isActive": false,
-      "image": "/images/products/kapi.png"
+      "image": "/images/products/kapi.png",
+      "tabs": [
+        {
+          "id": "dimensions",
+          "name": "Kapı Ölçüleri",
+          "content": {
+            "fields": [
+              {
+                "id": "width",
+                "name": "Genişlik (cm)",
+                "type": "number",
+                "min": 600,
+                "max": 1200,
+                "default": 800
+              },
+              {
+                "id": "height",
+                "name": "Yükseklik (cm)",
+                "type": "number",
+                "min": 1900,
+                "max": 2500,
+                "default": 2100
+              }
+            ],
+            "preview": {
+              "type": "door",
+              "component": "DoorPreview"
+            }
+          }
+        },
+        {
+          "id": "type",
+          "name": "Kapı Tipi",
+          "content": {
+            "fields": [
+              {
+                "id": "doorType",
+                "name": "Kapı Tipi",
+                "type": "radio",
+                "options": [
+                  { "id": "ic", "name": "İç Kapı" },
+                  { "id": "dis", "name": "Dış Kapı" },
+                  { "id": "celik", "name": "Çelik Kapı" }
+                ],
+                "default": "ic"
+              }
+            ]
+          }
+        },
+        {
+          "id": "panel",
+          "name": "Panel Seçimi",
+          "content": {
+            "fields": [
+              {
+                "id": "panelType",
+                "name": "Panel Tipi",
+                "type": "select",
+                "options": [
+                  { "id": "duz", "name": "Düz Panel" },
+                  { "id": "cizgili", "name": "Çizgili Panel" },
+                  { "id": "desenli", "name": "Desenli Panel" }
+                ],
+                "default": "duz"
+              }
+            ]
+          }
+        },
+        {
+          "id": "hardware",
+          "name": "Donanım Seçimi",
+          "content": {
+            "fields": [
+              {
+                "id": "handleType",
+                "name": "Kapı Kolu",
+                "type": "select",
+                "options": [
+                  { "id": "standart", "name": "Standart Kol" },
+                  { "id": "lux", "name": "Lüks Kol" },
+                  { "id": "modern", "name": "Modern Kol" }
+                ],
+                "default": "standart"
+              },
+              {
+                "id": "lockType",
+                "name": "Kilit Sistemi",
+                "type": "select",
+                "options": [
+                  { "id": "normal", "name": "Normal Kilit" },
+                  { "id": "silindir", "name": "Silindir Kilit" },
+                  { "id": "elektronik", "name": "Elektronik Kilit" }
+                ],
+                "default": "normal"
+              }
+            ]
+          }
+        },
+        {
+          "id": "color",
+          "name": "Renk Seçimi",
+          "content": {
+            "fields": [
+              {
+                "id": "color",
+                "name": "Renk",
+                "type": "select",
+                "options": [
+                  { "id": "beyaz", "name": "Beyaz" },
+                  { "id": "kahve", "name": "Kahve" },
+                  { "id": "siyah", "name": "Siyah" },
+                  { "id": "wenge", "name": "Wenge" },
+                  { "id": "meşe", "name": "Meşe" }
+                ],
+                "default": "beyaz"
+              }
+            ]
+          }
+        }
+      ]
     }
   ]
 }

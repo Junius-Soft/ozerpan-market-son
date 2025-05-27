@@ -46,6 +46,20 @@ export interface ProductsResponse {
   products: Product[];
 }
 
+export interface ProductTabsResponse {
+  tabs: ProductTab[];
+}
+
+export const getProductTabs = async (
+  productId: string
+): Promise<ProductTabsResponse> => {
+  const response = await fetch(`/api/products/tabs?productId=${productId}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch product tabs");
+  }
+  return response.json();
+};
+
 export interface ProductDimension {
   min: number;
   max: number;

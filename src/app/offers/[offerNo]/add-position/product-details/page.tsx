@@ -4,7 +4,11 @@ import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ArrowLeft } from "lucide-react";
-import { type Product, getProducts } from "@/documents/products";
+import {
+  type Product,
+  getProducts,
+  getProductTabs,
+} from "@/documents/products";
 import { type Position } from "@/documents/offers";
 import { DetailsStep } from "../steps/details-step";
 
@@ -16,7 +20,7 @@ export default function ProductDetailsPage() {
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
-    const loadProduct = async () => {
+    const loadProductAndTabs = async () => {
       setIsLoading(true);
       try {
         const productId = searchParams.get("productId");
@@ -25,20 +29,28 @@ export default function ProductDetailsPage() {
           return;
         }
 
-        const { products } = await getProducts();
-        const selectedProduct = products.find((p) => p.id === productId);
+        // Fetch both product and tabs in parallel
+        const [productsResponse, tabsResponse] = await Promise.all([
+          getProducts(),
+          getProductTabs(productId),
+        ]);
 
+        const selectedProduct = productsResponse.products.find(
+          (p) => p.id === productId
+        );
         if (!selectedProduct) {
           router.replace("select-product");
           return;
         }
 
+        // Add tabs from the API to the product
+        selectedProduct.tabs = tabsResponse.tabs;
         setProduct(selectedProduct);
       } finally {
         setIsLoading(false);
       }
     };
-    loadProduct();
+    loadProductAndTabs();
   }, [router, searchParams]);
 
   const handlePositionDetailsChange = useCallback(

@@ -1782,6 +1782,7 @@
       "unit_price": 31.53,
       "currency": "EUR",
       "product_group": "panjur_motors",
+      "brand": "MOSEL",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1794,6 +1795,7 @@
       "unit_price": 41.3,
       "currency": "EUR",
       "product_group": "panjur_motors",
+      "brand": "MOSEL",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1806,6 +1808,7 @@
       "unit_price": 48.86,
       "currency": "EUR",
       "product_group": "panjur_motors",
+      "brand": "MOSEL",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1818,6 +1821,7 @@
       "unit_price": 44.62,
       "currency": "EUR",
       "product_group": "panjur_motors",
+      "brand": "MOSEL",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1830,6 +1834,7 @@
       "unit_price": 64.02,
       "currency": "EUR",
       "product_group": "panjur_motors",
+      "brand": "MOSEL",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1842,6 +1847,7 @@
       "unit_price": 64.66,
       "currency": "EUR",
       "product_group": "panjur_motors",
+      "brand": "MOSEL",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1854,6 +1860,7 @@
       "unit_price": 75.36,
       "currency": "EUR",
       "product_group": "panjur_motors",
+      "brand": "MOSEL",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1867,6 +1874,7 @@
       "currency": "EUR",
       "product_group": "panjur_motors",
       "supplier": "somfy",
+      "brand": "SOMFY",
       "description": ""
     },
     {
@@ -1878,6 +1886,7 @@
       "unit_price": 110.01,
       "currency": "EUR",
       "product_group": "panjur_motors",
+      "brand": "SOMFY",
       "supplier": "somfy",
       "description": ""
     },
@@ -1890,6 +1899,7 @@
       "unit_price": 159.86,
       "currency": "EUR",
       "product_group": "panjur_motors",
+      "brand": "SOMFY",
       "supplier": "somfy",
       "description": ""
     },
@@ -1902,6 +1912,7 @@
       "unit_price": 132.17,
       "currency": "EUR",
       "product_group": "panjur_motors",
+      "brand": "SOMFY",
       "supplier": "somfy",
       "description": ""
     },
@@ -1914,6 +1925,7 @@
       "unit_price": 159.86,
       "currency": "EUR",
       "product_group": "panjur_motors",
+      "brand": "SOMFY",
       "supplier": "somfy",
       "description": ""
     },
@@ -1926,6 +1938,7 @@
       "unit_price": 206.43,
       "currency": "EUR",
       "product_group": "panjur_motors",
+      "brand": "SOMFY",
       "supplier": "somfy",
       "description": ""
     },

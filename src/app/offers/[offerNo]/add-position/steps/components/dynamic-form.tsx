@@ -22,6 +22,7 @@ interface DynamicFormProps {
   values: Record<string, string | number | boolean>;
   onChange: (fieldId: string, value: string | number | boolean) => void;
   onFormikChange?: (formik: FormikProps<FormValues>) => void;
+  formRef?: React.MutableRefObject<HTMLFormElement | null>;
 }
 
 type FormValues = Record<string, string | number | boolean>;
@@ -241,8 +242,13 @@ const FormikInputs = (props: FormikInputProps) => {
   }
 };
 
-export function DynamicForm({ fields, values, onChange }: DynamicFormProps) {
-  const formRef = useRef<FormikProps<FormValues>>(null);
+export function DynamicForm({
+  fields,
+  values,
+  onChange,
+  formRef,
+}: DynamicFormProps) {
+  const formikRef = useRef<FormikProps<FormValues>>(null);
   const stateRef = useRef({
     previousValues: values,
     updateQueue: [] as Array<() => void>,
@@ -307,10 +313,10 @@ export function DynamicForm({ fields, values, onChange }: DynamicFormProps) {
   useEffect(() => {
     const state = stateRef.current;
     if (
-      formRef.current &&
+      formikRef.current &&
       JSON.stringify(state.previousValues) !== JSON.stringify(values)
     ) {
-      const formik = formRef.current;
+      const formik = formikRef.current;
       const updatedFields = Object.entries(values).filter(
         ([key, value]) => value !== undefined && formik.values[key] !== value
       );
@@ -342,7 +348,7 @@ export function DynamicForm({ fields, values, onChange }: DynamicFormProps) {
 
   const handleFormChange = useCallback(
     (name: string, value: string | number | boolean) => {
-      if (!formRef.current) return;
+      if (!formikRef.current) return;
 
       const state = stateRef.current;
       state.updateQueue.push(() => {
@@ -358,16 +364,22 @@ export function DynamicForm({ fields, values, onChange }: DynamicFormProps) {
 
   return (
     <Formik
-      innerRef={formRef}
+      innerRef={formikRef}
       initialValues={initialValues}
       validationSchema={Yup.object().shape(validationSchema)}
-      onSubmit={() => {}}
+      onSubmit={(values) => {
+        console.log({ values });
+        // Form is valid, we can process the submission
+        Object.entries(values).forEach(([key, value]) => {
+          onChange(key, value);
+        });
+      }}
       validateOnMount={false}
       validateOnChange={true}
       enableReinitialize={false}
     >
       {(formikProps) => (
-        <Form className="space-y-6">
+        <Form ref={formRef} className="space-y-6">
           <div className="space-y-6">
             {fields.map((field) => {
               if (!checkDependencyChain(field, formikProps.values, fields)) {

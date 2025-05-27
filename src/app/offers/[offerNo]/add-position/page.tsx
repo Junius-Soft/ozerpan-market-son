@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { ArrowLeft } from "lucide-react";
 import { type Product, getProducts } from "@/documents/products";
 import { type Position } from "@/documents/offers";
@@ -17,6 +17,7 @@ const steps = [
 export default function AddPositionPage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState("product");
+  const formRef = useRef<HTMLFormElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -92,6 +93,7 @@ export default function AddPositionPage() {
           <DetailsStep
             selectedProduct={selectedProduct}
             onPositionDetailsChange={handlePositionDetailsChange}
+            formRef={formRef}
           />
         );
       default:
@@ -204,7 +206,14 @@ export default function AddPositionPage() {
               Geri
             </Button>
             <Button
-              onClick={handleNextStep}
+              onClick={() => {
+                if (currentStep === "details") {
+                  // Go back after changes are saved
+                  router.back();
+                } else {
+                  handleNextStep();
+                }
+              }}
               disabled={currentStep === "product" && !selectedProduct}
             >
               {currentStep === "details" ? "Tamamla" : "Devam Et"}

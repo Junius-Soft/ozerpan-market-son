@@ -13,11 +13,13 @@ import { type ProductDetails } from "./types";
 interface DetailsStepProps {
   selectedProduct: Product | null;
   onPositionDetailsChange: (details: Omit<Position, "id" | "total">) => void;
+  formRef?: React.MutableRefObject<HTMLFormElement | null>;
 }
 
 export function DetailsStep({
   selectedProduct,
   onPositionDetailsChange,
+  formRef,
 }: DetailsStepProps) {
   // Default to first tab if available
   const [currentTab, setCurrentTab] = useState<string>(
@@ -273,6 +275,7 @@ export function DetailsStep({
               fields={activeTab.content.fields}
               values={getValuesForTab()}
               onChange={handleDynamicFormChange}
+              formRef={formRef}
             />
             <div className="mt-6">
               <h4 className="text-md font-medium mb-3">Ürün Önizleme</h4>
@@ -357,6 +360,7 @@ export function DetailsStep({
         {/* Tab Content */}
         <Card className="p-6">
           <div className="space-y-6">{renderTabContent()}</div>
+          <input type="submit" hidden />
         </Card>
       </div>
 

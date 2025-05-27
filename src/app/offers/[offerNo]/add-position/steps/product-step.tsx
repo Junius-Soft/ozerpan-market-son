@@ -64,6 +64,7 @@ export function ProductStep({
                       e.stopPropagation();
                       onOptionSelect(option.id);
                     }}
+                    disabled={option.disabled}
                     className={`
                       px-3 py-1 rounded-full text-sm font-medium transition-colors 
                       ${

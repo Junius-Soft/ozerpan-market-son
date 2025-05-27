@@ -1,7 +1,7 @@
 {
   "defaultProduct": "panjur",
   "defaultType": "1",
-  "defaultOption": "monoblok",
+  "defaultOption": "distan",
   "products": [
     {
       "id": "panjur",
@@ -78,10 +78,10 @@
                 "name": "Hareket Bağlantı Noktası",
                 "type": "select",
                 "options": [
-                  { "id": "sol", "name": "Sol" },
-                  { "id": "sag", "name": "Sağ" }
+                  { "id": "left", "name": "Sol" },
+                  { "id": "righr", "name": "Sağ" }
                 ],
-                "default": "sol"
+                "default": "left"
               }
             ]
           }
@@ -145,11 +145,13 @@
                   },
                   {
                     "id": "alicili-geri-bildirimli",
-                    "name": "Alıcılı Geri Bildirimli Motor"
+                    "name": "Alıcılı Geri Bildirimli Motor",
+                    "product_group_selector": "SOMFY"
                   },
                   {
                     "id": "alicili-geri-bildirimli-engel",
-                    "name": "Alıcılı Geri Bildirimli Engel Tanımalı Motor"
+                    "name": "Alıcılı Geri Bildirimli Engel Tanımalı Motor",
+                    "product_group_selector": "SOMFY"
                   },
                   {
                     "id": "solar-panelli",
@@ -167,10 +169,19 @@
                 "name": "Motor Markası",
                 "type": "select",
                 "options": [
-                  { "id": "somfy", "name": "Somfy" },
-                  { "id": "mosel", "name": "Mosel" }
+                  {
+                    "id": "somfy",
+                    "name": "Somfy",
+                    "product_group": "SOMFY"
+                  },
+                  {
+                    "id": "mosel",
+                    "name": "Mosel",
+                    "product_group": "MOSEL"
+                  }
                 ],
                 "default": "mosel",
+                "product_group_dependent": true,
                 "dependsOn": {
                   "field": "movementType",
                   "value": "motorlu"
@@ -180,16 +191,8 @@
                 "id": "motorModel",
                 "name": "Motor Modeli",
                 "type": "select",
-                "options": [
-                  { "id": "mosel-60-10", "name": "Mosel 60-10" },
-                  { "id": "mosel-60-20", "name": "Model 60-20" },
-                  { "id": "mosel-60-30", "name": "Mosel 60-30" },
-                  { "id": "mosel-60-50", "name": "Mosel 60-50" },
-                  { "id": "boost-15", "name": "Boost 15" },
-                  { "id": "boost-35", "name": "Boost 35" },
-                  { "id": "boost-55", "name": "Boost 55" }
-                ],
-                "default": "mosel-60-10",
+                "options": [],
+                "filterBy": "motorMarka",
                 "dependsOn": {
                   "field": "movementType",
                   "value": "motorlu"
@@ -210,7 +213,29 @@
                 }
               },
               {
-                "id": "akilliEv",
+                "id": "receiver",
+                "name": "Alıcı",
+                "type": "select",
+                "options": [{ "id": "yok", "name": "Yok" }],
+                "default": "yok",
+                "dependsOn": {
+                  "field": "movementType",
+                  "value": "motorlu"
+                }
+              },
+              {
+                "id": "remote",
+                "name": "Kumanda",
+                "type": "select",
+                "options": [{ "id": "yok", "name": "Yok" }],
+                "default": "yok",
+                "dependsOn": {
+                  "field": "movementType",
+                  "value": "motorlu"
+                }
+              },
+              {
+                "id": "smarthome",
                 "name": "Akıllı Ev Sistemleri",
                 "type": "select",
                 "options": [
@@ -290,15 +315,18 @@
       "options": [
         {
           "id": "distan",
-          "name": "Dıştan Takmalı Panjur"
+          "name": "Dıştan Takmalı Panjur",
+          "disabled": false
         },
         {
           "id": "monoblok",
-          "name": "Monoblok Panjur"
+          "name": "Monoblok Panjur",
+          "disabled": true
         },
         {
           "id": "yalitimli",
-          "name": "Yalıtımlı Panjur"
+          "name": "Yalıtımlı Panjur",
+          "disabled": true
         }
       ],
       "types": [

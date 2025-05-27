@@ -9,7 +9,7 @@
       "unit_price": 1.03,
       "currency": "EUR",
       "tickness": 39,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
@@ -23,7 +23,7 @@
       "unit_price": 1.04,
       "currency": "EUR",
       "tickness": 39,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
 
       "supplier": "ozdil",
@@ -38,7 +38,7 @@
       "unit_price": 1.04,
       "currency": "EUR",
       "tickness": 39,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
 
       "supplier": "ozdil",
@@ -53,7 +53,7 @@
       "unit_price": 1.04,
       "currency": "EUR",
       "tickness": 39,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
 
       "supplier": "ozdil",
@@ -68,7 +68,7 @@
       "unit_price": 1.06,
       "currency": "EUR",
       "tickness": 39,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
 
       "supplier": "ozdil",
@@ -83,7 +83,7 @@
       "unit_price": 1.08,
       "currency": "EUR",
       "tickness": 39,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
 
       "supplier": "ozdil",
@@ -98,7 +98,7 @@
       "unit_price": 1.06,
       "currency": "EUR",
       "tickness": 39,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
 
       "supplier": "ozdil",
@@ -113,7 +113,7 @@
       "unit_price": 1.08,
       "currency": "EUR",
       "tickness": 39,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
 
       "supplier": "ozdil",
@@ -128,7 +128,7 @@
       "unit_price": 1.04,
       "currency": "EUR",
       "tickness": 39,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -141,7 +141,7 @@
       "unit_price": 1.04,
       "currency": "EUR",
       "tickness": 39,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -154,7 +154,7 @@
       "unit_price": 1.53,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
@@ -168,7 +168,7 @@
       "unit_price": 1.56,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
@@ -182,7 +182,7 @@
       "unit_price": 1.58,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
@@ -196,7 +196,7 @@
       "unit_price": 1.58,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
@@ -210,7 +210,7 @@
       "unit_price": 1.61,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
@@ -224,7 +224,7 @@
       "unit_price": 1.58,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
@@ -237,7 +237,7 @@
       "unit": "Metre",
       "unit_price": 1.61,
       "currency": "EUR",
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
@@ -251,7 +251,7 @@
       "unit_price": 1.64,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
@@ -265,7 +265,7 @@
       "unit_price": 1.61,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
@@ -279,7 +279,7 @@
       "unit_price": 1.64,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
@@ -293,7 +293,7 @@
       "unit_price": 1.61,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
@@ -307,7 +307,7 @@
       "unit_price": 1.58,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_poliuretan",
       "supplier": "ozdil",
       "description": ""
@@ -321,7 +321,7 @@
       "unit_price": 2.65,
       "currency": "EUR",
       "tickness": 45,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
@@ -335,7 +335,7 @@
       "unit_price": 2.71,
       "currency": "EUR",
       "tickness": 45,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
@@ -349,7 +349,7 @@
       "unit_price": 2.71,
       "currency": "EUR",
       "tickness": 45,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
@@ -363,7 +363,7 @@
       "unit_price": 2.71,
       "currency": "EUR",
       "tickness": 45,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
@@ -377,7 +377,7 @@
       "unit_price": 3.21,
       "currency": "EUR",
       "tickness": 45,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
@@ -391,7 +391,7 @@
       "unit_price": 3.55,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
@@ -406,7 +406,7 @@
       "unit_price": 3.69,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
@@ -420,7 +420,7 @@
       "unit_price": 3.69,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
@@ -434,7 +434,7 @@
       "unit_price": 3.69,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
@@ -448,7 +448,7 @@
       "unit_price": 4.3,
       "currency": "EUR",
       "tickness": 55,
-      "product_group": "panjur_lamel_profile",
+      "product_type": "panjur_lamel_profile",
       "product_type": "aliminyum_ekstruzyon",
       "supplier": "ozdil",
       "description": ""
@@ -461,7 +461,7 @@
       "unit": "Metre",
       "unit_price": 1.24,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_profiles",
+      "product_type": "panjur_drum_pipe_profiles",
       "supplier": "ozdil",
       "description": ""
     },
@@ -473,7 +473,7 @@
       "unit": "Metre",
       "unit_price": 2.35,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_profiles",
+      "product_type": "panjur_drum_pipe_profiles",
       "supplier": "ozdil",
       "description": ""
     },
@@ -485,7 +485,7 @@
       "unit": "Metre",
       "unit_price": 4.56,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -497,7 +497,7 @@
       "unit": "Metre",
       "unit_price": 6.94,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -509,7 +509,7 @@
       "unit": "Metre",
       "unit_price": 4.78,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -521,7 +521,7 @@
       "unit": "Metre",
       "unit_price": 7.29,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -533,7 +533,7 @@
       "unit": "Metre",
       "unit_price": 4.78,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -545,7 +545,7 @@
       "unit": "Metre",
       "unit_price": 7.29,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -557,7 +557,7 @@
       "unit": "Metre",
       "unit_price": 4.78,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -569,7 +569,7 @@
       "unit": "Metre",
       "unit_price": 7.29,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -581,7 +581,7 @@
       "unit": "Metre",
       "unit_price": 4.78,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -593,7 +593,7 @@
       "unit": "Metre",
       "unit_price": 7.29,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -605,7 +605,7 @@
       "unit": "Metre",
       "unit_price": 5.58,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -617,7 +617,7 @@
       "unit": "Metre",
       "unit_price": 8.16,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -629,7 +629,7 @@
       "unit": "Metre",
       "unit_price": 5.86,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -641,7 +641,7 @@
       "unit": "Metre",
       "unit_price": 8.56,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -653,7 +653,7 @@
       "unit": "Metre",
       "unit_price": 5.86,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -665,7 +665,7 @@
       "unit": "Metre",
       "unit_price": 8.56,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -677,7 +677,7 @@
       "unit": "Metre",
       "unit_price": 5.86,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -689,7 +689,7 @@
       "unit": "Metre",
       "unit_price": 8.56,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -701,7 +701,7 @@
       "unit": "Metre",
       "unit_price": 5.97,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -713,7 +713,7 @@
       "unit": "Metre",
       "unit_price": 8.73,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -725,7 +725,7 @@
       "unit": "Metre",
       "unit_price": 5.86,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -737,7 +737,7 @@
       "unit": "Metre",
       "unit_price": 8.56,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -749,7 +749,7 @@
       "unit": "Metre",
       "unit_price": 5.97,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -761,7 +761,7 @@
       "unit": "Metre",
       "unit_price": 8.73,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -773,7 +773,7 @@
       "unit": "Metre",
       "unit_price": 7.35,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -785,7 +785,7 @@
       "unit": "Metre",
       "unit_price": 9.94,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -797,7 +797,7 @@
       "unit": "Metre",
       "unit_price": 7.72,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -809,7 +809,7 @@
       "unit": "Metre",
       "unit_price": 10.44,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -821,7 +821,7 @@
       "unit": "Metre",
       "unit_price": 7.72,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -833,7 +833,7 @@
       "unit": "Metre",
       "unit_price": 10.44,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -845,7 +845,7 @@
       "unit": "Metre",
       "unit_price": 7.72,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -857,7 +857,7 @@
       "unit": "Metre",
       "unit_price": 10.44,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -869,7 +869,7 @@
       "unit": "Metre",
       "unit_price": 7.86,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -881,7 +881,7 @@
       "unit": "Metre",
       "unit_price": 10.63,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -893,7 +893,7 @@
       "unit": "Metre",
       "unit_price": 7.72,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -905,7 +905,7 @@
       "unit": "Metre",
       "unit_price": 10.44,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -917,7 +917,7 @@
       "unit": "Metre",
       "unit_price": 7.86,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -929,7 +929,7 @@
       "unit": "Metre",
       "unit_price": 10.63,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -941,7 +941,7 @@
       "unit": "Metre",
       "unit_price": 11.55,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -953,7 +953,7 @@
       "unit": "Metre",
       "unit_price": 15.7,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -965,7 +965,7 @@
       "unit": "Metre",
       "unit_price": 12.12,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -977,7 +977,7 @@
       "unit": "Metre",
       "unit_price": 16.49,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -989,7 +989,7 @@
       "unit": "Metre",
       "unit_price": 12.12,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1001,7 +1001,7 @@
       "unit": "Metre",
       "unit_price": 16.49,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1013,7 +1013,7 @@
       "unit": "Metre",
       "unit_price": 12.12,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1025,7 +1025,7 @@
       "unit": "Metre",
       "unit_price": 16.49,
       "currency": "EUR",
-      "product_group": "panjur_box_profile",
+      "product_type": "panjur_box_profile",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1037,7 +1037,7 @@
       "unit": "Takım",
       "unit_price": 6.15,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1049,7 +1049,7 @@
       "unit": "Takım",
       "unit_price": 6.15,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1061,7 +1061,7 @@
       "unit": "Takım",
       "unit_price": 6.15,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1073,7 +1073,7 @@
       "unit": "Takım",
       "unit_price": 6.15,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1085,7 +1085,7 @@
       "unit": "Takım",
       "unit_price": 6.15,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1097,7 +1097,7 @@
       "unit": "Takım",
       "unit_price": 6.15,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1109,7 +1109,7 @@
       "unit": "Takım",
       "unit_price": 6.95,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1121,7 +1121,7 @@
       "unit": "Takım",
       "unit_price": 5.76,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1133,7 +1133,7 @@
       "unit": "Takım",
       "unit_price": 7.21,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1145,7 +1145,7 @@
       "unit": "Takım",
       "unit_price": 7.21,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1157,7 +1157,7 @@
       "unit": "Takım",
       "unit_price": 7.21,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1169,7 +1169,7 @@
       "unit": "Takım",
       "unit_price": 7.21,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1181,7 +1181,7 @@
       "unit": "Takım",
       "unit_price": 7.21,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1193,7 +1193,7 @@
       "unit": "Takım",
       "unit_price": 7.21,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1205,7 +1205,7 @@
       "unit": "Takım",
       "unit_price": 7.21,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1217,7 +1217,7 @@
       "unit": "Takım",
       "unit_price": 8.16,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1229,7 +1229,7 @@
       "unit": "Takım",
       "unit_price": 7.97,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1241,7 +1241,7 @@
       "unit": "Takım",
       "unit_price": 10.19,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1253,7 +1253,7 @@
       "unit": "Takım",
       "unit_price": 10.19,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1265,7 +1265,7 @@
       "unit": "Takım",
       "unit_price": 10.19,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1277,7 +1277,7 @@
       "unit": "Takım",
       "unit_price": 10.19,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1289,7 +1289,7 @@
       "unit": "Takım",
       "unit_price": 10.19,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1301,7 +1301,7 @@
       "unit": "Takım",
       "unit_price": 10.19,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1313,7 +1313,7 @@
       "unit": "Takım",
       "unit_price": 11.52,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1325,7 +1325,7 @@
       "unit": "Takım",
       "unit_price": 21.12,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1337,7 +1337,7 @@
       "unit": "Takım",
       "unit_price": 23.12,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1349,7 +1349,7 @@
       "unit": "Takım",
       "unit_price": 23.12,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1361,7 +1361,7 @@
       "unit": "Takım",
       "unit_price": 23.12,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1373,7 +1373,7 @@
       "unit": "Takım",
       "unit_price": 23.12,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1385,7 +1385,7 @@
       "unit": "Takım",
       "unit_price": 23.12,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1397,7 +1397,7 @@
       "unit": "Takım",
       "unit_price": 23.12,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1409,7 +1409,7 @@
       "unit": "Takım",
       "unit_price": 26.12,
       "currency": "EUR",
-      "product_group": "panjur_box_accessories",
+      "product_type": "panjur_box_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1421,7 +1421,7 @@
       "unit": "Adet",
       "unit_price": 0.83,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1433,7 +1433,7 @@
       "unit": "Adet",
       "unit_price": 0.3,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1445,7 +1445,7 @@
       "unit": "Adet",
       "unit_price": 0.55,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1457,7 +1457,7 @@
       "unit": "Metre",
       "unit_price": 0.09,
       "currency": "EUR",
-      "product_group": "Ortak Fitiller",
+      "product_type": "Ortak Fitiller",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1469,7 +1469,7 @@
       "unit": "Metre",
       "unit_price": 0.18,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_accessories",
+      "product_type": "panjur_lower_part_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1481,7 +1481,7 @@
       "unit": "Metre",
       "unit_price": 0.29,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_accessories",
+      "product_type": "panjur_lower_part_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1493,7 +1493,7 @@
       "unit": "Adet",
       "unit_price": 3.43,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1505,7 +1505,7 @@
       "unit": "Adet",
       "unit_price": 3.67,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1517,7 +1517,7 @@
       "unit": "Adet",
       "unit_price": 3.67,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1529,7 +1529,7 @@
       "unit": "Adet",
       "unit_price": 3.67,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1541,7 +1541,7 @@
       "unit": "Adet",
       "unit_price": 0.36,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1553,7 +1553,7 @@
       "unit": "Adet",
       "unit_price": 0.35,
       "currency": "EUR",
-      "product_group": "panjur_lamel_accessories",
+      "product_type": "panjur_lamel_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1565,7 +1565,7 @@
       "unit": "Adet",
       "unit_price": 0.5,
       "currency": "EUR",
-      "product_group": "panjur_lamel_accessories",
+      "product_type": "panjur_lamel_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1577,7 +1577,7 @@
       "unit": "Adet",
       "unit_price": 19.35,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1589,7 +1589,7 @@
       "unit": "Adet",
       "unit_price": 1.68,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1601,7 +1601,7 @@
       "unit": "Adet",
       "unit_price": 23.01,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1613,7 +1613,7 @@
       "unit": "Adet",
       "unit_price": 17.74,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1625,7 +1625,7 @@
       "unit": "Takım",
       "unit_price": 9.92,
       "currency": "EUR",
-      "product_group": "panjur_dikme_accessories",
+      "product_type": "panjur_dikme_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1637,7 +1637,7 @@
       "unit": "Takım",
       "unit_price": 10.47,
       "currency": "EUR",
-      "product_group": "panjur_dikme_accessories",
+      "product_type": "panjur_dikme_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1649,7 +1649,7 @@
       "unit": "Takım",
       "unit_price": 0.99,
       "currency": "EUR",
-      "product_group": "panjur_dikme_accessories",
+      "product_type": "panjur_dikme_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1661,7 +1661,7 @@
       "unit": "Takım",
       "unit_price": 1.05,
       "currency": "EUR",
-      "product_group": "panjur_dikme_accessories",
+      "product_type": "panjur_dikme_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1673,7 +1673,7 @@
       "unit": "Adet",
       "unit_price": 0.67,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1685,7 +1685,7 @@
       "unit": "Adet",
       "unit_price": 0.74,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1697,7 +1697,7 @@
       "unit": "Adet",
       "unit_price": 0.15,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_accessories",
+      "product_type": "panjur_lower_part_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1709,7 +1709,7 @@
       "unit": "Adet",
       "unit_price": 0.15,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_accessories",
+      "product_type": "panjur_lower_part_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1721,7 +1721,7 @@
       "unit": "Adet",
       "unit_price": 0.15,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_accessories",
+      "product_type": "panjur_lower_part_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1733,7 +1733,7 @@
       "unit": "Adet",
       "unit_price": 0.15,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_accessories",
+      "product_type": "panjur_lower_part_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1745,7 +1745,7 @@
       "unit": "Adet",
       "unit_price": 0.01,
       "currency": "EUR",
-      "product_group": "panjur_lamel_accessories",
+      "product_type": "panjur_lamel_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1757,7 +1757,7 @@
       "unit": "Adet",
       "unit_price": 0.02,
       "currency": "EUR",
-      "product_group": "panjur_lamel_accessories",
+      "product_type": "panjur_lamel_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1769,7 +1769,7 @@
       "unit": "Takım",
       "unit_price": 2.55,
       "currency": "EUR",
-      "product_group": "panjur_dikme_accessories",
+      "product_type": "panjur_dikme_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1781,8 +1781,8 @@
       "unit": "Adet",
       "unit_price": 31.53,
       "currency": "EUR",
-      "product_group": "panjur_motors",
-      "brand": "MOSEL",
+      "product_type": "panjur_motors",
+      "product_group": "MOSEL",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1794,8 +1794,8 @@
       "unit": "Adet",
       "unit_price": 41.3,
       "currency": "EUR",
-      "product_group": "panjur_motors",
-      "brand": "MOSEL",
+      "product_type": "panjur_motors",
+      "product_group": "MOSEL",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1807,8 +1807,8 @@
       "unit": "Adet",
       "unit_price": 48.86,
       "currency": "EUR",
-      "product_group": "panjur_motors",
-      "brand": "MOSEL",
+      "product_type": "panjur_motors",
+      "product_group": "MOSEL",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1820,8 +1820,8 @@
       "unit": "Adet",
       "unit_price": 44.62,
       "currency": "EUR",
-      "product_group": "panjur_motors",
-      "brand": "MOSEL",
+      "product_type": "panjur_motors",
+      "product_group": "MOSEL",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1833,8 +1833,8 @@
       "unit": "Adet",
       "unit_price": 64.02,
       "currency": "EUR",
-      "product_group": "panjur_motors",
-      "brand": "MOSEL",
+      "product_type": "panjur_motors",
+      "product_group": "MOSEL",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1846,8 +1846,8 @@
       "unit": "Adet",
       "unit_price": 64.66,
       "currency": "EUR",
-      "product_group": "panjur_motors",
-      "brand": "MOSEL",
+      "product_type": "panjur_motors",
+      "product_group": "MOSEL",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1859,8 +1859,8 @@
       "unit": "Adet",
       "unit_price": 75.36,
       "currency": "EUR",
-      "product_group": "panjur_motors",
-      "brand": "MOSEL",
+      "product_type": "panjur_motors",
+      "product_group": "MOSEL",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1872,9 +1872,9 @@
       "unit": "Adet",
       "unit_price": 75.02,
       "currency": "EUR",
-      "product_group": "panjur_motors",
+      "product_type": "panjur_motors",
       "supplier": "somfy",
-      "brand": "SOMFY",
+      "product_group": "SOMFY",
       "description": ""
     },
     {
@@ -1885,8 +1885,8 @@
       "unit": "Adet",
       "unit_price": 110.01,
       "currency": "EUR",
-      "product_group": "panjur_motors",
-      "brand": "SOMFY",
+      "product_type": "panjur_motors",
+      "product_group": "SOMFY",
       "supplier": "somfy",
       "description": ""
     },
@@ -1898,8 +1898,8 @@
       "unit": "Adet",
       "unit_price": 159.86,
       "currency": "EUR",
-      "product_group": "panjur_motors",
-      "brand": "SOMFY",
+      "product_type": "panjur_motors",
+      "product_group": "SOMFY",
       "supplier": "somfy",
       "description": ""
     },
@@ -1911,8 +1911,8 @@
       "unit": "Adet",
       "unit_price": 132.17,
       "currency": "EUR",
-      "product_group": "panjur_motors",
-      "brand": "SOMFY",
+      "product_type": "panjur_motors",
+      "product_group": "SOMFY",
       "supplier": "somfy",
       "description": ""
     },
@@ -1924,8 +1924,8 @@
       "unit": "Adet",
       "unit_price": 159.86,
       "currency": "EUR",
-      "product_group": "panjur_motors",
-      "brand": "SOMFY",
+      "product_type": "panjur_motors",
+      "product_group": "SOMFY",
       "supplier": "somfy",
       "description": ""
     },
@@ -1937,8 +1937,8 @@
       "unit": "Adet",
       "unit_price": 206.43,
       "currency": "EUR",
-      "product_group": "panjur_motors",
-      "brand": "SOMFY",
+      "product_type": "panjur_motors",
+      "product_group": "SOMFY",
       "supplier": "somfy",
       "description": ""
     },
@@ -1950,7 +1950,7 @@
       "unit": "Adet",
       "unit_price": 25.18,
       "currency": "EUR",
-      "product_group": "reciever",
+      "product_type": "receiver",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1962,7 +1962,7 @@
       "unit": "Adet",
       "unit_price": 58.2,
       "currency": "EUR",
-      "product_group": "reciever",
+      "product_type": "receiver",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1974,7 +1974,7 @@
       "unit": "Adet",
       "unit_price": 49.45,
       "currency": "EUR",
-      "product_group": "reciever",
+      "product_type": "receiver",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1986,7 +1986,7 @@
       "unit": "Adet",
       "unit_price": 19.59,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "ozdil",
       "description": ""
     },
@@ -1998,7 +1998,7 @@
       "unit": "Adet",
       "unit_price": 21.19,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "ozdil",
       "description": ""
     },
@@ -2010,7 +2010,7 @@
       "unit": "Adet",
       "unit_price": 32.08,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "ozdil",
       "description": ""
     },
@@ -2022,7 +2022,7 @@
       "unit": "Adet",
       "unit_price": 30.73,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "ozdil",
       "description": ""
     },
@@ -2034,7 +2034,7 @@
       "unit": "Adet",
       "unit_price": 32.79,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "ozdil",
       "description": ""
     },
@@ -2046,7 +2046,7 @@
       "unit": "Adet",
       "unit_price": 12.44,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "ozdil",
       "description": ""
     },
@@ -2058,7 +2058,7 @@
       "unit": "Adet",
       "unit_price": 19.59,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "ozdil",
       "description": ""
     },
@@ -2070,7 +2070,7 @@
       "unit": "Adet",
       "unit_price": 20.4,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "ozdil",
       "description": ""
     },
@@ -2082,7 +2082,7 @@
       "unit": "Adet",
       "unit_price": 23.17,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "ozdil",
       "description": ""
     },
@@ -2094,7 +2094,7 @@
       "unit": "Adet",
       "unit_price": 165,
       "currency": "EUR",
-      "product_group": "reciever",
+      "product_type": "receiver",
       "supplier": "somfy",
       "description": ""
     },
@@ -2106,7 +2106,7 @@
       "unit": "Adet",
       "unit_price": 188,
       "currency": "EUR",
-      "product_group": "reciever",
+      "product_type": "receiver",
       "supplier": "somfy",
       "description": ""
     },
@@ -2118,7 +2118,7 @@
       "unit": "Adet",
       "unit_price": 18.24,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "ozdil",
       "description": ""
     },
@@ -2130,7 +2130,7 @@
       "unit": "Adet",
       "unit_price": 22.91,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "ozdil",
       "description": ""
     },
@@ -2142,7 +2142,7 @@
       "unit": "Adet",
       "unit_price": 25.34,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "ozdil",
       "description": ""
     },
@@ -2154,7 +2154,7 @@
       "unit": "Adet",
       "unit_price": 62.19,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "somfy",
       "description": ""
     },
@@ -2166,7 +2166,7 @@
       "unit": "Adet",
       "unit_price": 105.61,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "somfy",
       "description": ""
     },
@@ -2178,7 +2178,7 @@
       "unit": "Adet",
       "unit_price": 62.19,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "somfy",
       "description": ""
     },
@@ -2190,7 +2190,7 @@
       "unit": "Adet",
       "unit_price": 105.61,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "somfy",
       "description": ""
     },
@@ -2202,19 +2202,19 @@
       "unit": "Adet",
       "unit_price": 292.03,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "somfy",
       "description": ""
     },
     {
-      "manufacturer_code": "352532211100",
+      "manufacturer_code": "352532211101",
       "product_id": "panjur",
       "stock_code": "352532211100",
       "material_name": "Smoove Origin RTS Buton Kumanda",
       "unit": "Adet",
       "unit_price": 54.48,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "somfy",
       "description": ""
     },
@@ -2226,7 +2226,7 @@
       "unit": "Adet",
       "unit_price": 54.48,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "somfy",
       "description": ""
     },
@@ -2238,7 +2238,7 @@
       "unit": "Adet",
       "unit_price": 323.5,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "somfy",
       "description": ""
     },
@@ -2250,7 +2250,7 @@
       "unit": "Adet",
       "unit_price": 2.56,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "Sinüs",
       "description": ""
     },
@@ -2262,7 +2262,7 @@
       "unit": "Adet",
       "unit_price": 0.93,
       "currency": "EUR",
-      "product_group": "remote",
+      "product_type": "remote",
       "supplier": "Sinüs",
       "description": ""
     },
@@ -2274,7 +2274,7 @@
       "unit": "Adet",
       "unit_price": 258,
       "currency": "EUR",
-      "product_group": "smarthome",
+      "product_type": "smarthome",
       "supplier": "ozdil",
       "description": ""
     },
@@ -2286,7 +2286,7 @@
       "unit": "Adet",
       "unit_price": 287,
       "currency": "EUR",
-      "product_group": "smarthome",
+      "product_type": "smarthome",
       "supplier": "somfy",
       "description": ""
     },
@@ -2298,7 +2298,7 @@
       "unit": "Adet",
       "unit_price": 0.13,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "Winsa",
       "description": ""
     },
@@ -2310,7 +2310,7 @@
       "unit": "Adet",
       "unit_price": 0.14,
       "currency": "EUR",
-      "product_group": "panjur_drum_pipe_accessories",
+      "product_type": "panjur_drum_pipe_accessories",
       "supplier": "Winsa",
       "description": ""
     },
@@ -2322,7 +2322,7 @@
       "unit": "Adet",
       "unit_price": 0,
       "currency": "EUR",
-      "product_group": "panjur_lamel_accessories",
+      "product_type": "panjur_lamel_accessories",
       "supplier": "Alenda",
       "description": ""
     },
@@ -2334,7 +2334,7 @@
       "unit": "Adet",
       "unit_price": 3.12,
       "currency": "EUR",
-      "product_group": "panjur_lamel_accessories",
+      "product_type": "panjur_lamel_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -2346,7 +2346,7 @@
       "unit": "Adet",
       "unit_price": 0.58,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_accessories",
+      "product_type": "panjur_lower_part_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -2358,7 +2358,7 @@
       "unit": "Adet",
       "unit_price": 0.55,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_accessories",
+      "product_type": "panjur_lower_part_accessories",
       "supplier": "ozdil",
       "description": ""
     },
@@ -2370,7 +2370,7 @@
       "unit": "Metre",
       "unit_price": 2.21,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2382,7 +2382,7 @@
       "unit": "Metre",
       "unit_price": 2.62,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2394,7 +2394,7 @@
       "unit": "Metre",
       "unit_price": 2.71,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2406,7 +2406,7 @@
       "unit": "Metre",
       "unit_price": 2.71,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2418,7 +2418,7 @@
       "unit": "Metre",
       "unit_price": 2.71,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2430,7 +2430,7 @@
       "unit": "Metre",
       "unit_price": 2.71,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2442,7 +2442,7 @@
       "unit": "Metre",
       "unit_price": 2.71,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2454,7 +2454,7 @@
       "unit": "Metre",
       "unit_price": 3.25,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2466,7 +2466,7 @@
       "unit": "Metre",
       "unit_price": 2.83,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2478,7 +2478,7 @@
       "unit": "Metre",
       "unit_price": 3.1,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2490,7 +2490,7 @@
       "unit": "Metre",
       "unit_price": 3.25,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2502,7 +2502,7 @@
       "unit": "Metre",
       "unit_price": 3.37,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2514,7 +2514,7 @@
       "unit": "Metre",
       "unit_price": 3.37,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2526,7 +2526,7 @@
       "unit": "Metre",
       "unit_price": 3.37,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2538,7 +2538,7 @@
       "unit": "Metre",
       "unit_price": 3.37,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2550,7 +2550,7 @@
       "unit": "Metre",
       "unit_price": 3.37,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2562,7 +2562,7 @@
       "unit": "Metre",
       "unit_price": 3.52,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2574,7 +2574,7 @@
       "unit": "Metre",
       "unit_price": 3.45,
       "currency": "EUR",
-      "product_group": "panjur_lower_part_profiles",
+      "product_type": "panjur_lower_part_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2586,7 +2586,7 @@
       "unit": "Metre",
       "unit_price": 3.1,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2598,7 +2598,7 @@
       "unit": "Metre",
       "unit_price": 3.21,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2610,7 +2610,7 @@
       "unit": "Metre",
       "unit_price": 3.32,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2622,7 +2622,7 @@
       "unit": "Metre",
       "unit_price": 3.32,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2634,7 +2634,7 @@
       "unit": "Metre",
       "unit_price": 3.32,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2646,7 +2646,7 @@
       "unit": "Metre",
       "unit_price": 3.32,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2658,7 +2658,7 @@
       "unit": "Metre",
       "unit_price": 3.32,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2670,7 +2670,7 @@
       "unit": "Metre",
       "unit_price": 4.05,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "39 luk ve 45 lik Lamel için"
     },
@@ -2682,7 +2682,7 @@
       "unit": "Metre",
       "unit_price": 3.49,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2694,7 +2694,7 @@
       "unit": "Metre",
       "unit_price": 3.94,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2706,7 +2706,7 @@
       "unit": "Metre",
       "unit_price": 4.08,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2718,7 +2718,7 @@
       "unit": "Metre",
       "unit_price": 4.08,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2730,7 +2730,7 @@
       "unit": "Metre",
       "unit_price": 4.08,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2742,7 +2742,7 @@
       "unit": "Metre",
       "unit_price": 4.08,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2754,7 +2754,7 @@
       "unit": "Metre",
       "unit_price": 4.08,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2766,7 +2766,7 @@
       "unit": "Metre",
       "unit_price": 4.35,
       "currency": "EUR",
-      "product_group": "panjur_dikme_profiles",
+      "product_type": "panjur_dikme_profiles",
       "supplier": "ozdil",
       "description": "55 lik Lamller İçin"
     },
@@ -2778,7 +2778,7 @@
       "unit": "Metre",
       "unit_price": 2.92,
       "currency": "EUR",
-      "product_group": "fly_profiles",
+      "product_type": "fly_profiles",
       "supplier": "ELC",
       "description": "Sineklik Yükseltme Profili"
     },
@@ -2790,7 +2790,7 @@
       "unit": "Metre",
       "unit_price": 3.19,
       "currency": "EUR",
-      "product_group": "fly_profiles",
+      "product_type": "fly_profiles",
       "supplier": "ELC",
       "description": "Sineklik Yükseltme Profili"
     },
@@ -2802,7 +2802,7 @@
       "unit": "Metre",
       "unit_price": 3.21,
       "currency": "EUR",
-      "product_group": "fly_profiles",
+      "product_type": "fly_profiles",
       "supplier": "ELC",
       "description": "Sineklik Yükseltme Profili"
     },
@@ -2814,7 +2814,7 @@
       "unit": "Metre",
       "unit_price": 3.21,
       "currency": "EUR",
-      "product_group": "fly_profiles",
+      "product_type": "fly_profiles",
       "supplier": "ELC",
       "description": "Sineklik Yükseltme Profili"
     },
@@ -2826,7 +2826,7 @@
       "unit": "Metre",
       "unit_price": 3.21,
       "currency": "EUR",
-      "product_group": "fly_profiles",
+      "product_type": "fly_profiles",
       "supplier": "ELC",
       "description": "Sineklik Yükseltme Profili"
     },
@@ -2838,7 +2838,7 @@
       "unit": "Metre",
       "unit_price": 3.21,
       "currency": "EUR",
-      "product_group": "fly_profiles",
+      "product_type": "fly_profiles",
       "supplier": "ELC",
       "description": "Sineklik Yükseltme Profili"
     },
@@ -2850,7 +2850,7 @@
       "unit": "Metre",
       "unit_price": 4.03,
       "currency": "EUR",
-      "product_group": "fly_profiles",
+      "product_type": "fly_profiles",
       "supplier": "ELC",
       "description": "Sineklik Yükseltme Profili"
     }

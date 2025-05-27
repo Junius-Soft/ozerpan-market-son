@@ -7,16 +7,24 @@ export interface ProductType {
 export interface ProductOption {
   id: string;
   name: string;
+  disabled?: boolean;
+}
+
+export interface OptionWithBrand {
+  id: string;
+  name: string;
+  brand?: string;
 }
 
 export interface ProductTabField {
   id: string;
   name: string;
   type: "text" | "number" | "select" | "radio" | "checkbox";
-  options?: { id: string; name: string }[];
+  options?: OptionWithBrand[];
   min?: number;
   max?: number;
   default?: string | number | boolean;
+  filterBy?: string;
   dependsOn?: {
     field: string;
     value: string;

@@ -128,13 +128,35 @@ const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
 
   const currentValue = field.value?.toString() ?? "";
 
+  // Filter options based on parent field if filterBy is present
+  let filteredOptions = fieldDef.options;
+  if (fieldDef.filterBy) {
+    const parentValue = form.values[fieldDef.filterBy]?.toString();
+    if (parentValue) {
+      filteredOptions = fieldDef.options.filter((option) =>
+        option.name.toLowerCase().includes(parentValue.toLowerCase())
+      );
+
+      // If there are filtered options and the current value is not in the filtered options,
+      // automatically select the first option
+      if (
+        filteredOptions.length > 0 &&
+        !filteredOptions.some((opt) => opt.id === currentValue)
+      ) {
+        Promise.resolve().then(() => {
+          form.setFieldValue(field.name, filteredOptions[0].id, false);
+        });
+      }
+    }
+  }
+
   return (
     <Select value={currentValue} onValueChange={handleChange} name={field.name}>
       <SelectTrigger className="w-full">
         <SelectValue placeholder={fieldDef.name} />
       </SelectTrigger>
       <SelectContent>
-        {fieldDef.options?.map((option: { id: string; name: string }) => (
+        {filteredOptions.map((option: { id: string; name: string }) => (
           <SelectItem key={option.id} value={option.id}>
             {option.name}
           </SelectItem>

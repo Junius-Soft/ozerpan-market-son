@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Formik, Form, Field, useFormikContext, FormikProps } from "formik";
 import * as Yup from "yup";
 import { Label } from "@/components/ui/label";
@@ -36,6 +36,7 @@ interface FormikInputProps {
   };
   form: FormikProps<FormValues>;
   fieldDef: ProductTabField;
+  productGroupSelector?: string | null;
 }
 
 function AutoSave({
@@ -96,7 +97,12 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => (
   />
 );
 
-const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
+const SelectInput: React.FC<FormikInputProps> = ({
+  field,
+  form,
+  fieldDef,
+  productGroupSelector,
+}) => {
   const isInitializedRef = useRef(false);
   const deferredUpdateRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -109,9 +115,10 @@ const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
       });
     }
 
+    const currentTimeout = deferredUpdateRef.current;
     return () => {
-      if (deferredUpdateRef.current) {
-        clearTimeout(deferredUpdateRef.current);
+      if (currentTimeout) {
+        clearTimeout(currentTimeout);
       }
     };
   }, [field.name, field.value, fieldDef.default, form]);
@@ -122,7 +129,6 @@ const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
     if (deferredUpdateRef.current) {
       clearTimeout(deferredUpdateRef.current);
     }
-
     form.setFieldValue(field.name, newValue, false);
   };
 
@@ -130,24 +136,37 @@ const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
 
   // Filter options based on parent field if filterBy is present
   let filteredOptions = fieldDef.options;
-  if (fieldDef.filterBy) {
-    const parentValue = form.values[fieldDef.filterBy]?.toString();
-    if (parentValue) {
-      filteredOptions = fieldDef.options.filter((option) =>
-        option.name.toLowerCase().includes(parentValue.toLowerCase())
-      );
 
-      // If there are filtered options and the current value is not in the filtered options,
-      // automatically select the first option
-      if (
-        filteredOptions.length > 0 &&
-        !filteredOptions.some((opt) => opt.id === currentValue)
-      ) {
-        Promise.resolve().then(() => {
-          form.setFieldValue(field.name, filteredOptions[0].id, false);
-        });
-      }
-    }
+  // if (fieldDef.filterBy) {
+  //   const parentValue = form.values[fieldDef.filterBy]?.toString();
+  //   if (parentValue) {
+  //     filteredOptions = fieldDef.options.filter((option) =>
+  //       option.name.toLowerCase().includes(parentValue.toLowerCase())
+  //     );
+  //   }
+  // }
+
+  // Filter options based on product group selector if the field is product_group_dependent
+  if (
+    fieldDef.product_group_dependent &&
+    productGroupSelector &&
+    filteredOptions
+  ) {
+    filteredOptions = filteredOptions.filter(
+      (option) => option.product_group === productGroupSelector
+    );
+  }
+
+  // If there are no options after filtering and we have a current value,
+  // or if the current value is not in the filtered options, select a default
+  if (
+    filteredOptions.length > 0 &&
+    currentValue &&
+    !filteredOptions.some((opt) => opt.id === currentValue)
+  ) {
+    Promise.resolve().then(() => {
+      form.setFieldValue(field.name, filteredOptions[0].id, false);
+    });
   }
 
   return (
@@ -270,6 +289,9 @@ export function DynamicForm({
   onChange,
   formRef,
 }: DynamicFormProps) {
+  const [productGroupSelector, setProductGroupSelector] = useState<
+    string | null
+  >(null);
   const formikRef = useRef<FormikProps<FormValues>>(null);
   const stateRef = useRef({
     previousValues: values,
@@ -377,11 +399,30 @@ export function DynamicForm({
         onChange(name, value);
       });
 
+      // Check if the changed field has a product_group_selector
+      const changedField = fields.find((field) => field.id === name);
+
+      if (
+        changedField?.type === "select" &&
+        changedField.product_group_selector
+      ) {
+        const selectedOption = changedField.options?.find(
+          (opt) => opt.id === String(value)
+        );
+
+        if (selectedOption?.selected_product_group) {
+          setProductGroupSelector(selectedOption.selected_product_group);
+        } else {
+          // If the selected option doesn't have a selected_product_group, clear the filter
+          setProductGroupSelector(null);
+        }
+      }
+
       if (!state.processing) {
         processQueue();
       }
     },
-    [onChange, processQueue]
+    [onChange, processQueue, fields]
   );
 
   return (
@@ -417,6 +458,7 @@ export function DynamicForm({
                     name={field.id}
                     component={FormikInputs}
                     fieldDef={field}
+                    productGroupSelector={productGroupSelector}
                   />
                   {formikProps.errors[field.id] &&
                     formikProps.touched[field.id] && (

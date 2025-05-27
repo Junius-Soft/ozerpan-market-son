@@ -14,6 +14,9 @@ export interface OptionWithBrand {
   id: string;
   name: string;
   brand?: string;
+  product_group?: string;
+  selected_product_group?: string;
+  product_group_selector?: boolean;
 }
 
 export interface ProductTabField {
@@ -25,6 +28,8 @@ export interface ProductTabField {
   max?: number;
   default?: string | number | boolean;
   filterBy?: string;
+  product_group_dependent?: boolean;
+  product_group_selector?: boolean;
   dependsOn?: {
     field: string;
     value: string;

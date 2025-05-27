@@ -130,69 +130,111 @@
                 }
               },
               {
+                "id": "motorMarka",
+                "name": "Motor Markası",
+                "type": "select",
+                "options": [
+                  {
+                    "id": "mosel",
+                    "name": "Mosel",
+                    "selected_product_group": "MOSEL"
+                  },
+                  {
+                    "id": "somfy",
+                    "name": "Somfy",
+                    "selected_product_group": "SOMFY"
+                  }
+                ],
+                "default": "mosel",
+                "product_group_selector": true,
+                "dependsOn": {
+                  "field": "movementType",
+                  "value": "motorlu"
+                }
+              },
+              {
                 "id": "motorSekli",
                 "name": "Motor Şekli",
                 "type": "select",
                 "options": [
-                  { "id": "duz-motorlu", "name": "Düz Motorlu (Butonlu)" },
+                  {
+                    "id": "duz-motorlu",
+                    "name": "Düz Motorlu (Butonlu)",
+                    "product_group": "MOSEL"
+                  },
                   {
                     "id": "alicili-motorlu",
-                    "name": "Alıcılı Motorlu (Kumandalı)"
+                    "name": "Alıcılı Motorlu (Kumandalı)",
+                    "product_group": "MOSEL"
                   },
                   {
                     "id": "alicili-motorlu-reduktorlu",
-                    "name": "Alıcılı Motorlu (Redüktörlü)"
+                    "name": "Alıcılı Motorlu (Redüktörlü)",
+                    "product_group": "MOSEL"
                   },
                   {
                     "id": "alicili-geri-bildirimli",
                     "name": "Alıcılı Geri Bildirimli Motor",
-                    "product_group_selector": "SOMFY"
+                    "product_group": "SOMFY"
                   },
                   {
                     "id": "alicili-geri-bildirimli-engel",
                     "name": "Alıcılı Geri Bildirimli Engel Tanımalı Motor",
-                    "product_group_selector": "SOMFY"
+                    "product_group": "SOMFY"
                   },
                   {
                     "id": "solar-panelli",
-                    "name": "Solar Panelli Alıcılı Motor"
+                    "name": "Solar Panelli Alıcılı Motor",
+                    "product_group": "MOSEL"
                   }
                 ],
+                "product_group_dependent": true,
                 "default": "duz-motorlu",
                 "dependsOn": {
                   "field": "movementType",
                   "value": "motorlu"
                 }
               },
-              {
-                "id": "motorMarka",
-                "name": "Motor Markası",
-                "type": "select",
-                "options": [
-                  {
-                    "id": "somfy",
-                    "name": "Somfy",
-                    "product_group": "SOMFY"
-                  },
-                  {
-                    "id": "mosel",
-                    "name": "Mosel",
-                    "product_group": "MOSEL"
-                  }
-                ],
-                "default": "mosel",
-                "product_group_dependent": true,
-                "dependsOn": {
-                  "field": "movementType",
-                  "value": "motorlu"
-                }
-              },
+
               {
                 "id": "motorModel",
                 "name": "Motor Modeli",
                 "type": "select",
-                "options": [],
+                "options": [
+                  {
+                    "id": "mosel-60-20",
+                    "name": "Mosel 60-20",
+                    "product_group": "MOSEL"
+                  },
+                  {
+                    "id": "mosel-60-30",
+                    "name": "Mosel 60-30",
+                    "product_group": "MOSEL"
+                  },
+                  {
+                    "id": "mosel-d60-50",
+                    "name": "Mosel 60-60",
+                    "product_group": "MOSEL"
+                  },
+                  {
+                    "id": "somfy-boost-15",
+                    "name": "Boost 15",
+                    "product_group": "SOMFY"
+                  },
+                  {
+                    "id": "somfy-boost-35",
+                    "name": "Boost 35",
+                    "product_group": "SOMFY"
+                  },
+                  {
+                    "id": "somfy-boost-55",
+                    "name": "Boost 55",
+                    "product_group": "SOMFY"
+                  }
+                ],
+                "product_group_dependent": true,
                 "filterBy": "motorMarka",
+                "default": "mosel-60-20",
                 "dependsOn": {
                   "field": "movementType",
                   "value": "motorlu"
@@ -216,11 +258,44 @@
                 "id": "receiver",
                 "name": "Alıcı",
                 "type": "select",
-                "options": [{ "id": "yok", "name": "Yok" }],
+                "options": [
+                  { "id": "yok", "name": "Yok" },
+                  {
+                    "id": "1",
+                    "name": "MOSEL VERA DC 318 (Tek Kanallı)",
+                    "product_group": "MOSEL"
+                  },
+                  {
+                    "id": "2",
+                    "name": "MOSEL VERA DC 319 (İki Kanallı)",
+                    "product_group": "MOSEL"
+                  },
+                  {
+                    "id": "3",
+                    "name": "Mosel DC-73A Kutu İçi Panjur Alıcısı",
+                    "product_group": "MOSEL"
+                  },
+                  {
+                    "id": "4",
+                    "name": "PF RECEIVER RTS Panjur Alıcısı",
+                    "product_group": "SOMFY"
+                  },
+                  {
+                    "id": "5",
+                    "name": "Centralis Uno RTS Buton Alıcı",
+                    "product_group": "SOMFY"
+                  },
+                  {
+                    "id": "6",
+                    "name": "Mosel Oval Power II Alıcı + 2 -4 Kanallı Verici",
+                    "product_group": "MOSEL"
+                  }
+                ],
                 "default": "yok",
+                "product_group_dependent": true,
                 "dependsOn": {
-                  "field": "movementType",
-                  "value": "motorlu"
+                  "field": "motorSekli",
+                  "value": "duz-motorlu"
                 }
               },
               {

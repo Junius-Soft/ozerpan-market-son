@@ -1,22 +1,13 @@
-export interface ProductType {
-  id: string;
-  name: string;
-  image: string;
-}
-
-export interface ProductOption {
-  id: string;
-  name: string;
-  disabled?: boolean;
+export interface FilterItem {
+  field: string;
+  valueMap: {
+    [key: string]: string[];
+  };
 }
 
 export interface OptionWithBrand {
-  id: string;
+  id?: string;
   name: string;
-  brand?: string;
-  product_group?: string;
-  selected_product_group?: string;
-  product_group_selector?: boolean;
 }
 
 export interface ProductTabField {
@@ -27,12 +18,10 @@ export interface ProductTabField {
   min?: number;
   max?: number;
   default?: string | number | boolean;
-  filterBy?: string;
-  product_group_dependent?: boolean;
-  product_group_selector?: boolean;
+  filterBy?: FilterItem | FilterItem[];
   dependsOn?: {
     field: string;
-    value: string;
+    value: string | string[]; // Allow either a single string or an array of strings
   };
 }
 
@@ -76,6 +65,18 @@ export interface Product {
   options?: ProductOption[];
   types?: ProductType[];
   tabs?: ProductTab[];
+}
+
+export interface ProductOption {
+  id: string;
+  name: string;
+  disabled?: boolean;
+}
+
+export interface ProductType {
+  id: string;
+  name: string;
+  image: string;
 }
 
 // Function to get products from JSON file

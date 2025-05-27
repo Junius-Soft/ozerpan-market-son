@@ -206,21 +206,27 @@ export function DetailsStep({
       currentTab.content?.fields?.forEach((tabField) => {
         if (
           tabField.dependsOn?.field === field &&
-          tabField.dependsOn?.value === processedValue &&
           tabField.default !== undefined
         ) {
-          const defaultValue =
-            typeof tabField.default === "boolean"
-              ? tabField.default
-                ? "1"
-                : "0"
-              : tabField.default.toString();
+          const requiredValue = tabField.dependsOn.value;
+          const shouldSetDefault = Array.isArray(requiredValue)
+            ? requiredValue.includes(processedValue)
+            : requiredValue === processedValue;
 
-          // Update dependent field while preserving other values
-          newState[tabId] = {
-            ...newState[tabId],
-            [tabField.id]: defaultValue,
-          };
+          if (shouldSetDefault) {
+            const defaultValue =
+              typeof tabField.default === "boolean"
+                ? tabField.default
+                  ? "1"
+                  : "0"
+                : tabField.default.toString();
+
+            // Update dependent field while preserving other values
+            newState[tabId] = {
+              ...newState[tabId],
+              [tabField.id]: defaultValue,
+            };
+          }
         }
       });
 

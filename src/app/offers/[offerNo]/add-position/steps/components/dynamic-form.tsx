@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Formik, Form, Field, useFormikContext, FormikProps } from "formik";
 import * as Yup from "yup";
 import { Label } from "@/components/ui/label";
@@ -36,7 +36,6 @@ interface FormikInputProps {
   };
   form: FormikProps<FormValues>;
   fieldDef: ProductTabField;
-  productGroupSelector?: string | null;
 }
 
 function AutoSave({
@@ -97,77 +96,69 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => (
   />
 );
 
-const SelectInput: React.FC<FormikInputProps> = ({
-  field,
-  form,
-  fieldDef,
-  productGroupSelector,
-}) => {
+const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
   const isInitializedRef = useRef(false);
-  const deferredUpdateRef = useRef<NodeJS.Timeout | null>(null);
+  const { values } = form;
 
-  useEffect(() => {
-    const hasDefault = fieldDef.default !== undefined;
-    if (!isInitializedRef.current && hasDefault && !field.value) {
-      isInitializedRef.current = true;
-      Promise.resolve().then(() => {
-        form.setFieldValue(field.name, String(fieldDef.default), false);
+  // Filtreleme mantığını useMemo ile optimize edelim
+  const filteredOptions = useMemo(() => {
+    if (!fieldDef.options) return [];
+
+    let options = [...fieldDef.options];
+
+    if (fieldDef.filterBy) {
+      const filters = Array.isArray(fieldDef.filterBy)
+        ? fieldDef.filterBy
+        : [fieldDef.filterBy];
+
+      // Her bir filtre için options'ı filtrele
+      filters.forEach((filter) => {
+        const filterValue = values[filter.field]?.toString();
+        if (filterValue && filter.valueMap && filter.valueMap[filterValue]) {
+          options = options.filter((option) => {
+            const optionId = option.id || option.name;
+            return filter.valueMap[filterValue].includes(optionId);
+          });
+        }
       });
     }
 
-    const currentTimeout = deferredUpdateRef.current;
-    return () => {
-      if (currentTimeout) {
-        clearTimeout(currentTimeout);
-      }
-    };
-  }, [field.name, field.value, fieldDef.default, form]);
+    return options;
+  }, [fieldDef.options, fieldDef.filterBy, values]);
 
-  if (!fieldDef.options) return null;
+  // Handle default value and first option selection after filtering
+  useEffect(() => {
+    if (filteredOptions.length > 0) {
+      const firstOption = filteredOptions[0];
+      const firstOptionValue = firstOption.id || firstOption.name;
+      const currentValue = field.value?.toString();
+
+      // Auto-select first option in these cases:
+      // 1. No current value
+      // 2. Current value is not in filtered options
+      // 3. Initial mount
+      const isCurrentValueInOptions = filteredOptions.some(
+        (opt) => (opt.id || opt.name) === currentValue
+      );
+
+      if (
+        !currentValue ||
+        !isCurrentValueInOptions ||
+        !isInitializedRef.current
+      ) {
+        isInitializedRef.current = true;
+        Promise.resolve().then(() => {
+          form.setFieldValue(field.name, firstOptionValue, false);
+        });
+      }
+    }
+  }, [filteredOptions, field.name, field.value, form]);
 
   const handleChange = (newValue: string) => {
-    if (deferredUpdateRef.current) {
-      clearTimeout(deferredUpdateRef.current);
-    }
     form.setFieldValue(field.name, newValue, false);
   };
 
   const currentValue = field.value?.toString() ?? "";
-
-  // Filter options based on parent field if filterBy is present
-  let filteredOptions = fieldDef.options;
-
-  // if (fieldDef.filterBy) {
-  //   const parentValue = form.values[fieldDef.filterBy]?.toString();
-  //   if (parentValue) {
-  //     filteredOptions = fieldDef.options.filter((option) =>
-  //       option.name.toLowerCase().includes(parentValue.toLowerCase())
-  //     );
-  //   }
-  // }
-
-  // Filter options based on product group selector if the field is product_group_dependent
-  if (
-    fieldDef.product_group_dependent &&
-    productGroupSelector &&
-    filteredOptions
-  ) {
-    filteredOptions = filteredOptions.filter(
-      (option) => option.product_group === productGroupSelector
-    );
-  }
-
-  // If there are no options after filtering and we have a current value,
-  // or if the current value is not in the filtered options, select a default
-  if (
-    filteredOptions.length > 0 &&
-    currentValue &&
-    !filteredOptions.some((opt) => opt.id === currentValue)
-  ) {
-    Promise.resolve().then(() => {
-      form.setFieldValue(field.name, filteredOptions[0].id, false);
-    });
-  }
 
   return (
     <Select value={currentValue} onValueChange={handleChange} name={field.name}>
@@ -175,8 +166,11 @@ const SelectInput: React.FC<FormikInputProps> = ({
         <SelectValue placeholder={fieldDef.name} />
       </SelectTrigger>
       <SelectContent>
-        {filteredOptions.map((option: { id: string; name: string }) => (
-          <SelectItem key={option.id} value={option.id}>
+        {filteredOptions.map((option) => (
+          <SelectItem
+            key={option.id || option.name}
+            value={option.id || option.name}
+          >
             {option.name}
           </SelectItem>
         ))}
@@ -213,13 +207,18 @@ const RadioInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
       className="flex flex-col space-y-2"
       name={field.name}
     >
-      {fieldDef.options?.map((option: { id: string; name: string }) => (
-        <div key={option.id} className="flex items-center space-x-2">
+      {fieldDef.options.map((option) => (
+        <div
+          key={option.id || option.name}
+          className="flex items-center space-x-2"
+        >
           <RadioGroupItem
-            value={option.id}
-            id={`${fieldDef.id}-${option.id}`}
+            value={option.id || option.name}
+            id={`${fieldDef.id}-${option.id || option.name}`}
           />
-          <Label htmlFor={`${fieldDef.id}-${option.id}`}>{option.name}</Label>
+          <Label htmlFor={`${fieldDef.id}-${option.id || option.name}`}>
+            {option.name}
+          </Label>
         </div>
       ))}
     </RadioGroup>
@@ -254,12 +253,24 @@ const checkDependencyChain = (
   visited.add(currentField.id);
   const { field: parentField, value: requiredValue } = currentField.dependsOn;
   const currentValue = values[parentField]?.toString();
-  const expectedValue = requiredValue?.toString();
 
-  if (currentValue !== expectedValue) {
-    return false;
+  // Check if no current value
+  if (!currentValue) return false;
+
+  // Check if requiredValue is an array (multiple values in OR condition)
+  if (Array.isArray(requiredValue)) {
+    // Return true if currentValue matches any of the required values
+    if (!requiredValue.map(String).includes(currentValue)) {
+      return false;
+    }
+  } else {
+    // Single value check
+    if (currentValue !== requiredValue?.toString()) {
+      return false;
+    }
   }
 
+  // Continue checking parent dependencies
   const parentFieldDef = fields.find((f) => f.id === parentField);
   return parentFieldDef
     ? checkDependencyChain(parentFieldDef, values, fields, visited)
@@ -289,9 +300,6 @@ export function DynamicForm({
   onChange,
   formRef,
 }: DynamicFormProps) {
-  const [productGroupSelector, setProductGroupSelector] = useState<
-    string | null
-  >(null);
   const formikRef = useRef<FormikProps<FormValues>>(null);
   const stateRef = useRef({
     previousValues: values,
@@ -400,29 +408,11 @@ export function DynamicForm({
       });
 
       // Check if the changed field has a product_group_selector
-      const changedField = fields.find((field) => field.id === name);
-
-      if (
-        changedField?.type === "select" &&
-        changedField.product_group_selector
-      ) {
-        const selectedOption = changedField.options?.find(
-          (opt) => opt.id === String(value)
-        );
-
-        if (selectedOption?.selected_product_group) {
-          setProductGroupSelector(selectedOption.selected_product_group);
-        } else {
-          // If the selected option doesn't have a selected_product_group, clear the filter
-          setProductGroupSelector(null);
-        }
-      }
-
       if (!state.processing) {
         processQueue();
       }
     },
-    [onChange, processQueue, fields]
+    [onChange, processQueue]
   );
 
   return (
@@ -458,7 +448,6 @@ export function DynamicForm({
                     name={field.id}
                     component={FormikInputs}
                     fieldDef={field}
-                    productGroupSelector={productGroupSelector}
                   />
                   {formikProps.errors[field.id] &&
                     formikProps.touched[field.id] && (

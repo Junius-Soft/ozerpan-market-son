@@ -18,6 +18,9 @@ export default function ProductDetailsPage() {
   const productId = searchParams.get("productId");
   const productName = searchParams.get("productName") || productId;
 
+  const typeId = searchParams.get("typeId");
+  const optionId = searchParams.get("optionId");
+
   useEffect(() => {
     const loadProductAndTabs = async () => {
       setIsLoading(true);
@@ -26,9 +29,6 @@ export default function ProductDetailsPage() {
           router.replace("select-product");
           return;
         }
-
-        const typeId = searchParams.get("typeId");
-        const optionId = searchParams.get("optionId");
 
         // Get the product tabs with type and option filters
         const tabsResponse = await getProductTabs(productId, typeId, optionId);
@@ -89,7 +89,9 @@ export default function ProductDetailsPage() {
           {/* Title and Buttons */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <h1 className="text-2xl font-bold">{product?.name} Detaylarıı</h1>
+              <h1 className="text-2xl font-bold">
+                {product?.name} Detayları ({typeId})
+              </h1>
               <Button
                 variant="outline"
                 onClick={() => router.back()}

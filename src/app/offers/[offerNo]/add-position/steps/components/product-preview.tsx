@@ -1,6 +1,8 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { getProductPreview } from "@/lib/product-preview";
 import { type Product } from "@/documents/products";
 import { ProductDetails } from "../types";
@@ -9,16 +11,56 @@ interface ProductPreviewProps {
   selectedProduct: Product | null;
   productDetails: ProductDetails;
   currentTab: string;
+  quantity?: number;
+  onQuantityChange?: (value: number) => void;
 }
 
 export function ProductPreview({
   selectedProduct,
   productDetails,
   currentTab,
+  quantity = 1,
+  onQuantityChange,
 }: ProductPreviewProps) {
+  const [inputValue, setInputValue] = useState<string>(quantity.toString());
+
+  // quantity prop'u değiştiğinde input değerini güncelle
+  useEffect(() => {
+    setInputValue(quantity.toString());
+  }, [quantity]);
+
   return (
     <Card className="p-6">
-      <h3 className="text-lg font-semibold">Ürün Ön İzleme</h3>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-lg font-semibold">Ürün Ön İzleme</h3>
+        <div className="flex items-center gap-2">
+          <Input
+            id="quantity"
+            type="number"
+            min={1}
+            step={1}
+            value={inputValue}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+              const numValue = parseInt(e.target.value);
+              if (!isNaN(numValue) && numValue >= 1) {
+                onQuantityChange?.(numValue);
+              }
+            }}
+            onBlur={(e) => {
+              const numValue = parseInt(e.target.value);
+              if (isNaN(numValue) || numValue < 1) {
+                setInputValue("1");
+                onQuantityChange?.(1);
+              }
+            }}
+            className="w-16 h-8 text-sm text-right pr-2"
+          />
+          <label htmlFor="quantity" className="text-sm text-gray-500">
+            adet
+          </label>
+        </div>
+      </div>
 
       {/* Product Image */}
       <div className="aspect-video relative bg-gray-100 rounded-lg">

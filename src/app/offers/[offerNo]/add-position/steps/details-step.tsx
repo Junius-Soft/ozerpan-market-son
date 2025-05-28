@@ -25,6 +25,7 @@ export function DetailsStep({
   const [currentTab, setCurrentTab] = useState<string>(
     selectedProduct?.tabs?.[0].id ?? ""
   );
+  const [quantity, setQuantity] = useState<number>(1);
   const [productDetails, setProductDetails] = useState<ProductDetails>(() => {
     if (!selectedProduct?.tabs) return {} as ProductDetails;
 
@@ -93,6 +94,11 @@ export function DetailsStep({
     [selectedProduct]
   );
 
+  // Add quantity change handler
+  const handleQuantityChange = useCallback((newQuantity: number) => {
+    setQuantity(newQuantity);
+  }, []);
+
   // Memoize the update function to avoid unnecessary recalculations
   const updatePositionDetails = useCallback(
     (details: ProductDetails) => {
@@ -145,12 +151,12 @@ export function DetailsStep({
           pozNo: "PNJ-001",
           description: `${movementText} ${lamelText} Panjur - ${colorText} (${width}x${height}mm) - ${kutuText}, ${dikmeText}`,
           unit: "m²",
-          quantity: area,
+          quantity: quantity * area, // Multiply area by quantity
           unitPrice: 1000,
         });
       }
     },
-    [onPositionDetailsChange, availableTabs]
+    [onPositionDetailsChange, availableTabs, quantity] // Add quantity to dependencies
   );
 
   // Update useEffect to use the same dynamic field finding logic
@@ -375,6 +381,8 @@ export function DetailsStep({
         selectedProduct={selectedProduct}
         productDetails={productDetails}
         currentTab={currentTab}
+        quantity={quantity}
+        onQuantityChange={handleQuantityChange}
       />
     </div>
   );

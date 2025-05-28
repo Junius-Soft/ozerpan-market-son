@@ -97,7 +97,6 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => (
 );
 
 const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
-  const isInitializedRef = useRef(false);
   const { values } = form;
 
   // Filtreleme mantığını useMemo ile optimize edelim
@@ -129,24 +128,17 @@ const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
   // Handle default value and first option selection after filtering
   useEffect(() => {
     if (filteredOptions.length > 0) {
-      const firstOption = filteredOptions[0];
-      const firstOptionValue = firstOption.id || firstOption.name;
       const currentValue = field.value?.toString();
-
-      // Auto-select first option in these cases:
-      // 1. No current value
-      // 2. Current value is not in filtered options
-      // 3. Initial mount
       const isCurrentValueInOptions = filteredOptions.some(
         (opt) => (opt.id || opt.name) === currentValue
       );
 
-      if (
-        !currentValue ||
-        !isCurrentValueInOptions ||
-        !isInitializedRef.current
-      ) {
-        isInitializedRef.current = true;
+      // Select first option if:
+      // 1. There's no current value, or
+      // 2. Current value is not in filtered options
+      if (!currentValue || !isCurrentValueInOptions) {
+        const firstOption = filteredOptions[0];
+        const firstOptionValue = firstOption.id || firstOption.name;
         Promise.resolve().then(() => {
           form.setFieldValue(field.name, firstOptionValue, false);
         });

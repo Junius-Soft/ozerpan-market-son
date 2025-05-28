@@ -497,18 +497,18 @@
             "name": "Lamel Kalınlığı",
             "type": "select",
             "options": [
-              { "id": "1", "name": "SL 39 MM" },
-              { "id": "2", "name": "SL 55 MM" },
-              { "id": "3", "name": "SE 45 MM" },
-              { "id": "4", "name": "SE 55 MM" }
+              { "id": "sl39", "name": "SL 39 MM" },
+              { "id": "sl55", "name": "SL 55 MM" },
+              { "id": "se45", "name": "SE 45 MM" },
+              { "id": "se55", "name": "SE 55 MM" }
             ],
             "default": "1",
             "filterBy": [
               {
                 "field": "lamelType",
                 "valueMap": {
-                  "aliminyum_poliuretan": ["1", "2"],
-                  "aliminyum_ekstrüzyon": ["3", "4"]
+                  "aliminyum_poliuretan": ["sl39", "sl55"],
+                  "aliminyum_ekstrüzyon": ["se45", "se55"]
                 }
               }
             ]
@@ -557,7 +557,33 @@
               { "id": "midi_pvc", "name": "Midi PVC Dikme" },
               { "id": "midi_pvc_middle", "name": "Midi PVC Orta Dikme" }
             ],
-            "default": "mini"
+            "default": "mini",
+            "filterBy": [
+              {
+                "field": "lamelTickness",
+                "valueMap": {
+                  "sl39": [
+                    "mini",
+                    "mini_middle",
+                    "mini_pvc",
+                    "mini_pvc_middle"
+                  ],
+                  "sl55": [
+                    "midi",
+                    "midi_middle",
+                    "midi_pvc",
+                    "midi_pvc_middle"
+                  ],
+                  "se45": [
+                    "mini",
+                    "mini_middle",
+                    "mini_pvc",
+                    "mini_pvc_middle"
+                  ],
+                  "se55": ["midi", "midi_middle", "midi_pvc", "midi_pvc_middle"]
+                }
+              }
+            ]
           },
           {
             "id": "dikmeAdapter",

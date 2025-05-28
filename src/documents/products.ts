@@ -51,9 +51,16 @@ export interface ProductTabsResponse {
 }
 
 export const getProductTabs = async (
-  productId: string
+  productId: string,
+  typeId?: string | null,
+  optionId?: string | null
 ): Promise<ProductTabsResponse> => {
-  const response = await fetch(`/api/products/tabs?productId=${productId}`);
+  const params = new URLSearchParams();
+  params.set("productId", productId);
+  if (typeId) params.set("typeId", typeId);
+  if (optionId) params.set("optionId", optionId);
+
+  const response = await fetch(`/api/products/tabs?${params.toString()}`);
   if (!response.ok) {
     throw new Error("Failed to fetch product tabs");
   }

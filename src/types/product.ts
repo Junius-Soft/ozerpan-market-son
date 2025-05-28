@@ -1,8 +1,13 @@
+export interface Option {
+  id: string;
+  name: string;
+}
+
 export interface Field {
   id: string;
   label: string;
   type: "text" | "number" | "select" | "checkbox";
-  options?: string[];
+  options?: Option[];
   defaultValue?: string | number;
   required?: boolean;
 }
@@ -15,6 +20,8 @@ export interface Tab {
   id: string;
   label: string;
   content?: TabContent;
+  typeId?: string;
+  optionId?: string;
 }
 
 export interface Product {

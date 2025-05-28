@@ -27,8 +27,11 @@ export default function ProductDetailsPage() {
           return;
         }
 
-        // Get the product tabs
-        const tabsResponse = await getProductTabs(productId);
+        const typeId = searchParams.get("typeId");
+        const optionId = searchParams.get("optionId");
+
+        // Get the product tabs with type and option filters
+        const tabsResponse = await getProductTabs(productId, typeId, optionId);
 
         // Create a simple product object with the necessary info
         const product = {

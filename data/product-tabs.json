@@ -38,31 +38,31 @@
             "name": "Kutu Ölçü Alma Şekli",
             "type": "select",
             "options": [
-              { "id": "kutu-dahil", "name": "Kutu Dahil" },
-              { "id": "kutu-haric", "name": "Kutu Hariç" }
+              { "id": "kutu_dahil", "name": "Kutu Dahil" },
+              { "id": "kutu_haric", "name": "Kutu Hariç" }
             ],
-            "default": "kutu-dahil"
+            "default": "kutu_dahil"
           },
           {
             "id": "dikmeOlcuAlmaSekli",
             "name": "Dikme Ölçü Alma Şekli",
             "type": "select",
             "options": [
-              { "id": "dikme-dahil", "name": "Dikme Dahil" },
-              { "id": "dikme-haric", "name": "Dikme Hariç" },
-              { "id": "tek-dikme", "name": "Tek Dikme" }
+              { "id": "dikme_dahil", "name": "Dikme Dahil" },
+              { "id": "dikme_haric", "name": "Dikme Hariç" },
+              { "id": "tek_dikme", "name": "Tek Dikme" }
             ],
-            "default": "dikme-dahil"
+            "default": "dikme_dahil"
           },
           {
             "id": "hareketBaglanti",
             "name": "Hareket Bağlantı Noktası",
             "type": "select",
             "options": [
-              { "id": "left", "name": "Sol" },
-              { "id": "righr", "name": "Sağ" }
+              { "id": "sol", "name": "Sol" },
+              { "id": "sag", "name": "Sağ" }
             ],
-            "default": "left"
+            "default": "sol"
           }
         ]
       }
@@ -246,27 +246,27 @@
             "options": [
               { "id": "yok", "name": "Yok" },
               {
-                "id": "1",
+                "id": "mosel_vera_dc_318",
                 "name": "MOSEL VERA DC 318 (Tek Kanallı)"
               },
               {
-                "id": "2",
+                "id": "mosel_vera__dc_319",
                 "name": "MOSEL VERA DC 319 (İki Kanallı)"
               },
               {
-                "id": "3",
+                "id": "mosel_dc-73a_kutu_ici_panjur_alicisi",
                 "name": "Mosel DC-73A Kutu İçi Panjur Alıcısı"
               },
               {
-                "id": "4",
+                "id": "pf_receiver_rts_panjur_alicisi",
                 "name": "PF RECEIVER RTS Panjur Alıcısı"
               },
               {
-                "id": "5",
+                "id": "centralis_uno_rts_buton_alici",
                 "name": "Centralis Uno RTS Buton Alıcı"
               },
               {
-                "id": "6",
+                "id": "mosel_oval_power_ii_alici",
                 "name": "Mosel Oval Power II Alıcı + 2 -4 Kanallı Verici"
               }
             ],
@@ -275,15 +275,30 @@
               {
                 "field": "motorMarka",
                 "valueMap": {
-                  "mosel": ["1", "2", "3", "6"],
-                  "somfy": ["4", "5"]
+                  "mosel": [
+                    "mosel_vera_dc_318",
+                    "mosel_vera__dc_319",
+                    "mosel_dc-73a_kutu_ici_panjur_alicisi",
+                    "mosel_oval_power_ii_alici"
+                  ],
+                  "somfy": [
+                    "pf_receiver_rts_panjur_alicisi",
+                    "centralis_uno_rts_buton_alici"
+                  ]
                 }
               },
               {
                 "field": "motorSekli",
                 "valueMap": {
-                  "duz-motorlu": ["1", "2", "3", "4", "5", "6"],
-                  "alicili-motorlu-reduktorlu": ["6"]
+                  "duz-motorlu": [
+                    "mosel_vera_dc_318",
+                    "mosel_vera__dc_319",
+                    "mosel_dc-73a_kutu_ici_panjur_alicisi",
+                    "pf_receiver_rts_panjur_alicisi",
+                    "centralis_uno_rts_buton_alici",
+                    "mosel_oval_power_ii_alici"
+                  ],
+                  "alicili-motorlu-reduktorlu": ["mosel_oval_power_ii_alici"]
                 }
               }
             ],
@@ -442,9 +457,9 @@
             "type": "select",
             "options": [
               { "id": "yok", "name": "Yok" },
-              { "id": "1", "name": "Mosel DD 7002 B" },
+              { "id": "mosel_dd_7002_b", "name": "Mosel DD 7002 B" },
               {
-                "id": "2",
+                "id": "somfy_tahoma_switch_pro",
                 "name": "Somfy TAHOMA SWITCH Pro"
               }
             ],
@@ -462,8 +477,8 @@
               {
                 "field": "motorMarka",
                 "valueMap": {
-                  "mosel": ["yok", "1"],
-                  "somfy": ["yok", "2"]
+                  "mosel": ["yok", "mosel_dd_7002_b"],
+                  "somfy": ["yok", "somfy_tahoma_switch_pro"]
                 }
               }
             ]
@@ -482,44 +497,44 @@
             "type": "select",
             "options": [
               {
-                "id": "aliminyum_poliuretan",
-                "name": "Aliminyum Poliüretan Dolgulu"
+                "id": "alüminyum_poliuretanli",
+                "name": "Alüminyum Poliüretanlı"
               },
               {
-                "id": "aliminyum_ekstrüzyon",
+                "id": "alüminyum_ekstrüzyon",
                 "name": "Alüminyum Ekstrüzyon"
               }
             ],
-            "default": "1"
+            "default": "alüminyum_poliuretanli"
           },
           {
             "id": "lamelTickness",
             "name": "Lamel Kalınlığı",
             "type": "select",
             "options": [
-              { "id": "sl39", "name": "SL 39 MM" },
-              { "id": "sl55", "name": "SL 55 MM" },
-              { "id": "se45", "name": "SE 45 MM" },
-              { "id": "se55", "name": "SE 55 MM" }
+              { "id": "39_sl", "name": "SL 39 MM" },
+              { "id": "55_sl", "name": "SL 55 MM" },
+              { "id": "45_se", "name": "SE 45 MM" },
+              { "id": "55_se", "name": "SE 55 MM" }
             ],
-            "default": "1",
+            "default": "39_sl",
             "filterBy": [
               {
                 "field": "lamelType",
                 "valueMap": {
-                  "aliminyum_poliuretan": ["sl39", "sl55"],
-                  "aliminyum_ekstrüzyon": ["se45", "se55"]
+                  "alüminyum_poliuretanli": ["39_sl", "55_sl"],
+                  "alüminyum_ekstrüzyon": ["45_se", "55_se"]
                 }
               }
             ]
           },
           {
-            "id": "aski_kilit",
+            "id": "aski_kilit_secimi",
             "name": "Askı Kilit Seçimi",
             "type": "select",
             "options": [
               { "id": "yok", "name": "Yok" },
-              { "id": "1", "name": "Askı Kilit" }
+              { "id": "aski_kilit", "name": "Askı Kilit" }
             ],
             "default": "yok"
           }
@@ -548,39 +563,44 @@
             "name": "Dikme Seçimi",
             "type": "select",
             "options": [
-              { "id": "mini", "name": "Mini Dikme" },
-              { "id": "mini_middle", "name": "Mini Orta Dikme" },
-              { "id": "midi", "name": "Midi Dikme" },
-              { "id": "midi_middle", "name": "Midi Orta Dikme" },
-              { "id": "mini_pvc", "name": "Mini PVC Dikme" },
-              { "id": "mini_pvc_middle", "name": "Mini PVC Orta Dikme" },
-              { "id": "midi_pvc", "name": "Midi PVC Dikme" },
-              { "id": "midi_pvc_middle", "name": "Midi PVC Orta Dikme" }
+              { "id": "mini_dikme", "name": "Mini Dikme" },
+              { "id": "mini_orta_dikme", "name": "Mini Orta Dikme" },
+              { "id": "midi_dikme", "name": "Midi Dikme" },
+              { "id": "midi_orta_dikme", "name": "Midi Orta Dikme" },
+              { "id": "mini_pvc_dikme", "name": "Mini PVC Dikme" },
+              { "id": "mini_pvc_orta_dikme", "name": "Mini PVC Orta Dikme" },
+              { "id": "midi_pvc_dikme", "name": "Midi PVC Dikme" },
+              { "id": "midi_pvc_orta_dikme", "name": "Midi PVC Orta Dikme" }
             ],
-            "default": "mini",
+            "default": "mini_dikme",
             "filterBy": [
               {
                 "field": "lamelTickness",
                 "valueMap": {
-                  "sl39": [
-                    "mini",
-                    "mini_middle",
-                    "mini_pvc",
-                    "mini_pvc_middle"
+                  "39_sl": [
+                    "mini_dikme",
+                    "mini_orta_dikme",
+                    "mini_pvc_dikme",
+                    "mini_pvc_orta_dikme"
                   ],
-                  "sl55": [
-                    "midi",
-                    "midi_middle",
-                    "midi_pvc",
-                    "midi_pvc_middle"
+                  "55_sl": [
+                    "midi_dikme",
+                    "midi_orta_dikme",
+                    "midi_pvc_dikme",
+                    "midi_pvc_orta_dikme"
                   ],
-                  "se45": [
-                    "mini",
-                    "mini_middle",
-                    "mini_pvc",
-                    "mini_pvc_middle"
+                  "45_se": [
+                    "mini_dikme",
+                    "mini_orta_dikme",
+                    "mini_pvc_dikme",
+                    "mini_pvc_orta_dikme"
                   ],
-                  "se55": ["midi", "midi_middle", "midi_pvc", "midi_pvc_middle"]
+                  "55_se": [
+                    "midi_dikme",
+                    "midi_orta_dikme",
+                    "midi_pvc_dikme",
+                    "midi_pvc_orta_dikme"
+                  ]
                 }
               }
             ]
@@ -591,7 +611,7 @@
             "type": "select",
             "options": [
               { "id": "yok", "name": "Yok" },
-              { "id": "mini_dikme_adapter", "name": "Mini Dikme Adaptörü" },
+              { "id": "mini_dikme_adaptor", "name": "Mini Dikme Adaptörü" },
               {
                 "id": "fullset_dikme_adapter",
                 "name": "Fulset Dikme Adaptörü"
@@ -604,10 +624,10 @@
             "name": "Alt Parça Seçimi",
             "type": "select",
             "options": [
-              { "id": "mini_subPart", "name": "Mini Alt Parça" },
-              { "id": "locaked_subPart", "name": "Kilitli Alt Parça" }
+              { "id": "mini_alt_parca", "name": "Mini Alt Parça" },
+              { "id": "kilitli_alt_parca", "name": "Kilitli Alt Parça" }
             ],
-            "default": "mini_subPart"
+            "default": "mini_alt_parca"
           }
         ]
       }
@@ -622,67 +642,67 @@
             "name": "Lamel Rengi ",
             "type": "select",
             "options": [
-              { "id": "antrasit_gray", "name": "Antrasit Gri" },
+              { "id": "antrasit_gri", "name": "Antrasit Gri" },
               { "id": "metalic_gray", "name": "Metalik Gri" },
               { "id": "beyaz", "name": "Beyaz" },
               { "id": "kahve", "name": "Kahve" },
               { "id": "krem", "name": "Krem" },
               { "id": "vizon", "name": "Vizon" },
-              { "id": "gold_mese", "name": "Altın Meşe" },
-              { "id": "nut", "name": "Fındık" },
-              { "id": "light_bej", "name": "Açık Bej" },
-              { "id": "dark_bej", "name": "Koyu Bej" },
-              { "id": "light_bronz", "name": "Açık Bronz" },
-              { "id": "dust_black", "name": "Kül Siyahı" }
+              { "id": "altin_mese", "name": "Altın Meşe" },
+              { "id": "findik", "name": "Fındık" },
+              { "id": "acik_bej", "name": "Açık Bej" },
+              { "id": "koyu_bej", "name": "Koyu Bej" },
+              { "id": "acik_bronz", "name": "Açık Bronz" },
+              { "id": "kul_siyahi", "name": "Kül Siyahı" }
             ],
-            "default": "antrasit_gray"
+            "default": "antrasit_gri"
           },
           {
             "id": "box_color",
             "name": "Kutu Rengi ",
             "type": "select",
             "options": [
-              { "id": "antrasit_gray", "name": "Antrasit Gri" },
+              { "id": "antrasit_gri", "name": "Antrasit Gri" },
               { "id": "metalic_gray", "name": "Metalik Gri" },
               { "id": "beyaz", "name": "Beyaz" },
               { "id": "kahve", "name": "Kahve" },
               { "id": "krem", "name": "Krem" },
-              { "id": "gold_mese", "name": "Altın Meşe" },
-              { "id": "ral_color", "name": "Ral Boyalı" }
+              { "id": "altin_mese", "name": "Altın Meşe" },
+              { "id": "ral_boyali", "name": "Ral Boyalı" }
             ],
-            "default": "antrasit_gray"
+            "default": "antrasit_gri"
           },
           {
             "id": "subPart_color",
             "name": "Alt Parça Rengi ",
             "type": "select",
             "options": [
-              { "id": "antrasit_gray", "name": "Antrasit Gri" },
+              { "id": "antrasit_gri", "name": "Antrasit Gri" },
               { "id": "metalic_gray", "name": "Metalik Gri" },
               { "id": "beyaz", "name": "Beyaz" },
               { "id": "kahve", "name": "Kahve" },
               { "id": "krem", "name": "Krem" },
-              { "id": "gold_mese", "name": "Altın Meşe" },
-              { "id": "nut", "name": "Fındık" },
-              { "id": "ral_color", "name": "Ral Boyalı" }
+              { "id": "altin_mese", "name": "Altın Meşe" },
+              { "id": "findik", "name": "Fındık" },
+              { "id": "ral_boyali", "name": "Ral Boyalı" }
             ],
-            "default": "antrasit_gray"
+            "default": "antrasit_gri"
           },
           {
             "id": "dikme_color",
             "name": "Dikme Rengi ",
             "type": "select",
             "options": [
-              { "id": "antrasit_gray", "name": "Antrasit Gri" },
+              { "id": "antrasit_gri", "name": "Antrasit Gri" },
               { "id": "metalic_gray", "name": "Metalik Gri" },
               { "id": "beyaz", "name": "Beyaz" },
               { "id": "kahve", "name": "Kahve" },
               { "id": "krem", "name": "Krem" },
-              { "id": "gold_mese", "name": "Altın Meşe" },
-              { "id": "nut", "name": "Fındık" },
-              { "id": "ral_color", "name": "Ral Boyalı" }
+              { "id": "altin_mese", "name": "Altın Meşe" },
+              { "id": "findik", "name": "Fındık" },
+              { "id": "ral_boyali", "name": "Ral Boyalı" }
             ],
-            "default": "antrasit_gray"
+            "default": "antrasit_gri"
           }
         ]
       }

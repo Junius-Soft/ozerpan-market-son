@@ -27,10 +27,8 @@ export async function GET(request: NextRequest) {
     if (!tabs) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
-    console.log("xxx");
     // Apply product-specific filters
     tabs = applyProductFilters(productId, tabs, optionId, typeId);
-    console.log({ tabs });
     return NextResponse.json({ tabs });
   } catch (error) {
     console.error("Error reading products:", error);

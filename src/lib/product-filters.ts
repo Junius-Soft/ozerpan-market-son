@@ -27,12 +27,15 @@ const shutterFilters = {
             options: field.options?.filter((opt) => {
               if (typeId <= 1) {
                 // Only basic types for typeId <= 1
-                return ["mini", "midi"].includes(opt.id);
+                return ["mini_dikme", "midi_dikme"].includes(opt.id);
               } else {
                 // Include middle types for typeId > 1
-                return ["mini", "mini_middle", "midi", "midi_middle"].includes(
-                  opt.id
-                );
+                return [
+                  "mini_dikme",
+                  "mini_orta_dikme",
+                  "midi_dikme",
+                  "midi_orta_dikme",
+                ].includes(opt.id);
               }
             }),
           };
@@ -55,14 +58,14 @@ const shutterFilters = {
             options: field.options?.filter((opt) => {
               if (typeId <= 1) {
                 // Only basic PVC types for typeId <= 1
-                return ["mini_pvc", "midi_pvc"].includes(opt.id);
+                return ["mini_pvc_dikme", "midi_pvc_dikme"].includes(opt.id);
               } else {
                 // Include middle PVC types for typeId > 1
                 return [
-                  "mini_pvc",
-                  "mini_pvc_middle",
-                  "midi_pvc",
-                  "midi_pvc_middle",
+                  "mini_pvc_dikme",
+                  "mini_pvc_orta_dikme",
+                  "midi_pvc_dikme",
+                  "midi_pvc_orta_dikme",
                 ].includes(opt.id);
               }
             }),

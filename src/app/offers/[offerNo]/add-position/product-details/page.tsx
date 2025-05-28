@@ -86,7 +86,7 @@ export default function ProductDetailsPage() {
           {/* Title and Buttons */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <h1 className="text-2xl font-bold">{product?.name} Detayları</h1>
+              <h1 className="text-2xl font-bold">{product?.name} Detaylarıı</h1>
               <Button
                 variant="outline"
                 onClick={() => router.back()}

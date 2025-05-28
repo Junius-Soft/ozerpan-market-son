@@ -1,0 +1,25 @@
+export interface Field {
+  id: string;
+  label: string;
+  type: "text" | "number" | "select" | "checkbox";
+  options?: string[];
+  defaultValue?: string | number;
+  required?: boolean;
+}
+
+export interface TabContent {
+  fields?: Field[];
+}
+
+export interface Tab {
+  id: string;
+  label: string;
+  content?: TabContent;
+}
+
+export interface Product {
+  id: string;
+  name: string;
+  description?: string;
+  tabs: Tab[];
+}

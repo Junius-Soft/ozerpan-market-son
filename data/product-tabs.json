@@ -115,8 +115,14 @@
             "name": "Motor Markası",
             "type": "select",
             "options": [
-              { "id": "mosel", "name": "Mosel" },
-              { "id": "somfy", "name": "Somfy" }
+              {
+                "id": "mosel",
+                "name": "Mosel"
+              },
+              {
+                "id": "somfy",
+                "name": "Somfy"
+              }
             ],
             "default": "mosel",
             "dependsOn": {
@@ -129,7 +135,10 @@
             "name": "Motor Şekli",
             "type": "select",
             "options": [
-              { "id": "duz-motorlu", "name": "Düz Motorlu (Butonlu)" },
+              {
+                "id": "duz-motorlu",
+                "name": "Düz Motorlu (Butonlu)"
+              },
               {
                 "id": "alicili-motorlu",
                 "name": "Alıcılı Motorlu (Kumandalı)"
@@ -146,7 +155,10 @@
                 "id": "alicili-geri-bildirimli-engel",
                 "name": "Alıcılı Geri Bildirimli Engel Tanımalı Motor"
               },
-              { "id": "solar-panelli", "name": "Solar Panelli Alıcılı Motor" }
+              {
+                "id": "solar-panelli",
+                "name": "Solar Panelli Alıcılı Motor"
+              }
             ],
             "filterBy": {
               "field": "motorMarka",
@@ -169,17 +181,36 @@
               "value": "motorlu"
             }
           },
+
           {
             "id": "motorModel",
             "name": "Motor Modeli",
             "type": "select",
             "options": [
-              { "id": "mosel-60-20", "name": "Mosel 60-20" },
-              { "id": "mosel-60-30", "name": "Mosel 60-30" },
-              { "id": "mosel-d60-50", "name": "Mosel 60-60" },
-              { "id": "somfy-boost-15", "name": "Boost 15" },
-              { "id": "somfy-boost-35", "name": "Boost 35" },
-              { "id": "somfy-boost-55", "name": "Boost 55" }
+              {
+                "id": "mosel-60-20",
+                "name": "Mosel 60-20"
+              },
+              {
+                "id": "mosel-60-30",
+                "name": "Mosel 60-30"
+              },
+              {
+                "id": "mosel-d60-50",
+                "name": "Mosel 60-60"
+              },
+              {
+                "id": "somfy-boost-15",
+                "name": "Boost 15"
+              },
+              {
+                "id": "somfy-boost-35",
+                "name": "Boost 35"
+              },
+              {
+                "id": "somfy-boost-55",
+                "name": "Boost 55"
+              }
             ],
             "filterBy": {
               "field": "motorMarka",
@@ -193,6 +224,249 @@
               "field": "movementType",
               "value": "motorlu"
             }
+          },
+          {
+            "id": "buton",
+            "name": "Buton",
+            "type": "select",
+            "options": [
+              { "id": "yok", "name": "Yok" },
+              { "id": "alicili-buton", "name": "Alıcılı Buton" }
+            ],
+            "default": "yok",
+            "dependsOn": {
+              "field": "movementType",
+              "value": "motorlu"
+            }
+          },
+          {
+            "id": "receiver",
+            "name": "Alıcı",
+            "type": "select",
+            "options": [
+              { "id": "yok", "name": "Yok" },
+              {
+                "id": "1",
+                "name": "MOSEL VERA DC 318 (Tek Kanallı)"
+              },
+              {
+                "id": "2",
+                "name": "MOSEL VERA DC 319 (İki Kanallı)"
+              },
+              {
+                "id": "3",
+                "name": "Mosel DC-73A Kutu İçi Panjur Alıcısı"
+              },
+              {
+                "id": "4",
+                "name": "PF RECEIVER RTS Panjur Alıcısı"
+              },
+              {
+                "id": "5",
+                "name": "Centralis Uno RTS Buton Alıcı"
+              },
+              {
+                "id": "6",
+                "name": "Mosel Oval Power II Alıcı + 2 -4 Kanallı Verici"
+              }
+            ],
+            "default": "yok",
+            "filterBy": [
+              {
+                "field": "motorMarka",
+                "valueMap": {
+                  "mosel": ["1", "2", "3", "6"],
+                  "somfy": ["4", "5"]
+                }
+              },
+              {
+                "field": "motorSekli",
+                "valueMap": {
+                  "duz-motorlu": ["1", "2", "3", "4", "5", "6"],
+                  "alicili-motorlu-reduktorlu": ["6"]
+                }
+              }
+            ],
+            "dependsOn": {
+              "field": "motorSekli",
+              "value": ["duz-motorlu", "alicili-motorlu-reduktorlu"]
+            }
+          },
+          {
+            "id": "remote",
+            "name": "Kumanda",
+            "type": "select",
+            "options": [
+              { "id": "yok", "name": "Yok" },
+              { "id": "1", "name": "DC 104 Tek Kanallı" },
+              { "id": "2", "name": "DC 105 4+1 Kanallı" },
+              { "id": "3", "name": "DC 106 10 Kanallı Verici" },
+              { "id": "4", "name": "DC 107 16 Kanallı Verici" },
+              { "id": "5", "name": "DC 315 1 Kanallı Buton Tipi Verici" },
+              { "id": "6", "name": "DC 316 2 Kanallı Buton Tipi Verici" },
+              { "id": "7", "name": "DC 317 16 Kanallı Buton Tipi Verici" },
+              { "id": "8", "name": "DC 168 1 Kanallı Zaman Ayarlı Verici" },
+              {
+                "id": "9",
+                "name": "DC 169 16 Kanallı Zaman Ayarlı Verici"
+              },
+              {
+                "id": "10",
+                "name": "DD 3000H Bi-Direction Elektronik Tekli Verici"
+              },
+              {
+                "id": "11",
+                "name": "DD 3001H Bi-Direction Elektronik 5+1 Verici"
+              },
+              {
+                "id": "12",
+                "name": "DD 3002H Bi-Direction Elektronik 15+1 Verici"
+              },
+              { "id": "13", "name": "Situo 1 IO Pure II SEA MEA" },
+              { "id": "14", "name": "Situo 1 RTS Pure II" },
+              { "id": "15", "name": "Situo 5 IO Pure II SEA MEA" },
+              { "id": "16", "name": "Situo 5 RTS Pure II" },
+              { "id": "17", "name": "Telis 16 RTS Pure" },
+              { "id": "18", "name": "Smoove Origin RTS Buton Kumanda" },
+              { "id": "19", "name": "Smoove Origin IO Buton Kumanda" },
+              {
+                "id": "20",
+                "name": "Telis 6 Chronis RTS Zaman Ayarlı Kumanda"
+              },
+              { "id": "21", "name": "DC 115 A 1 Kanallı Verici" },
+              { "id": "22", "name": "DC 115 B 4 Kanallı Verici" },
+              { "id": "23", "name": "Sıva Altı Kalıcı Buton" },
+              { "id": "24", "name": "Sıva Üstü Buton Kasası" }
+            ],
+            "default": "yok",
+            "dependsOn": {
+              "field": "motorSekli",
+              "value": [
+                "duz-motorlu",
+                "alicili-motorlu",
+                "alicili-motorlu-reduktorlu",
+                "solar-panelli",
+                "alicili-geri-bildirimli",
+                "alicili-geri-bildirimli-engel"
+              ]
+            },
+            "filterBy": [
+              {
+                "field": "motorMarka",
+                "valueMap": {
+                  "mosel": [
+                    "yok",
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "10",
+                    "11",
+                    "12",
+                    "21",
+                    "22",
+                    "23"
+                  ],
+                  "somfy": [
+                    "yok",
+                    "13",
+                    "14",
+                    "15",
+                    "16",
+                    "17",
+                    "18",
+                    "19",
+                    "20",
+                    "24"
+                  ]
+                }
+              },
+              {
+                "field": "motorSekli",
+                "valueMap": {
+                  "alicili-motorlu": [
+                    "yok",
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "14",
+                    "16",
+                    "17",
+                    "18",
+                    "20",
+                    "21",
+                    "22"
+                  ],
+                  "alicili-motorlu-reduktorlu": [
+                    "yok",
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "14",
+                    "16",
+                    "17",
+                    "18",
+                    "20",
+                    "21",
+                    "22"
+                  ],
+                  "solar-panelli": ["yok", "10", "11", "12"],
+                  "alicili-geri-bildirimli": ["yok", "13", "15", "19"],
+                  "alicili-geri-bildirimli-engel": ["yok", "13", "15", "19"],
+                  "duz-motorlu": ["yok", "23", "24"]
+                }
+              }
+            ]
+          },
+
+          {
+            "id": "smarthome",
+            "name": "Akıllı Ev Sistemleri",
+            "type": "select",
+            "options": [
+              { "id": "yok", "name": "Yok" },
+              { "id": "1", "name": "Mosel DD 7002 B" },
+              {
+                "id": "2",
+                "name": "Somfy TAHOMA SWITCH Pro"
+              }
+            ],
+            "default": "yok",
+            "dependsOn": {
+              "field": "motorSekli",
+              "value": [
+                "alicili-motorlu",
+                "alicili-motorlu-reduktorlu",
+                "alicili-geri-bildirimli",
+                "alicili-geri-bildirimli-engel"
+              ]
+            },
+            "filterBy": [
+              {
+                "field": "motorMarka",
+                "valueMap": {
+                  "mosel": ["yok", "1"],
+                  "somfy": ["yok", "2"]
+                }
+              }
+            ]
           }
         ]
       }
@@ -216,7 +490,7 @@
                 "name": "Alüminyum Ekstrüzyon"
               }
             ],
-            "default": "aliminyum_poliuretan"
+            "default": "1"
           },
           {
             "id": "lamelTickness",
@@ -238,6 +512,16 @@
                 }
               }
             ]
+          },
+          {
+            "id": "aski_kilit",
+            "name": "Askı Kilit Seçimi",
+            "type": "select",
+            "options": [
+              { "id": "yok", "name": "Yok" },
+              { "id": "1", "name": "Askı Kilit" }
+            ],
+            "default": "yok"
           }
         ]
       }
@@ -274,6 +558,30 @@
               { "id": "midi_pvc_middle", "name": "Midi PVC Orta Dikme" }
             ],
             "default": "mini"
+          },
+          {
+            "id": "dikmeAdapter",
+            "name": "Dikme Adaptörü",
+            "type": "select",
+            "options": [
+              { "id": "yok", "name": "Yok" },
+              { "id": "mini_dikme_adapter", "name": "Mini Dikme Adaptörü" },
+              {
+                "id": "fullset_dikme_adapter",
+                "name": "Fulset Dikme Adaptörü"
+              }
+            ],
+            "default": "yok"
+          },
+          {
+            "id": "subPart",
+            "name": "Alt Parça Seçimi",
+            "type": "select",
+            "options": [
+              { "id": "mini_subPart", "name": "Mini Alt Parça" },
+              { "id": "locaked_subPart", "name": "Kilitli Alt Parça" }
+            ],
+            "default": "mini_subPart"
           }
         ]
       }

@@ -80,6 +80,7 @@ export default function SelectProductPage() {
                 if (selectedProduct) {
                   const params = new URLSearchParams();
                   params.set("productId", selectedProduct.id);
+                  params.set("productName", selectedProduct.name);
                   if (selectedType) params.set("typeId", selectedType);
                   if (selectedOption) params.set("optionId", selectedOption);
 

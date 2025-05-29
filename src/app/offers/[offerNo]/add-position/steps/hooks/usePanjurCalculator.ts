@@ -154,7 +154,7 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
       const postHeight = systemHeight - boxHeight + kertmePayi;
 
       // Lamel sayısı hesaplama
-      const lamelWidth = parseInt(selections.lamelTickness.split("_")[0]);
+      const lamelWidth = parseInt(selections.lamelTickness?.split("_")[0]);
       const lamelHeight = (systemHeight - boxHeight) / lamelWidth;
       const lamelCount = Math.ceil(lamelHeight) + 1;
 

@@ -23,32 +23,15 @@ export default function ProductDetailsPage() {
   const typeId = searchParams.get("typeId");
   const optionId = searchParams.get("optionId");
 
-  // Initialize selections from URL parameters
+  // Initialize selections with URL parameters and required fields
   const [selections, setSelections] = useState<PanjurSelections>({
     productId: productId || "panjur",
-    panjurType: (optionId as "distan" | "monoblok" | "yalitimli") || "distan",
+    panjurType: (optionId as PanjurSelections["panjurType"]) || "distan",
     sectionCount: typeId ? parseInt(typeId) : 1,
     width: 0,
     height: 0,
     quantity: 1,
-    kutuOlcuAlmaSekli: "kutu_dahil",
-    dikmeOlcuAlmaSekli: "dikme_dahil",
-    hareketBaglanti: "sag",
-    movementType: "manuel",
-    manuelSekli: "makarali",
-    makaraliTip: "makassiz",
-    lamelType: "aluminyum_poliuretanli",
-    lamelTickness: "39_sl",
-    aski_kilit_secimi: "yok",
-    boxType: "137mm",
-    dikmeType: "mini_dikme",
-    dikmeAdapter: "yok",
-    subPart: "mini_alt_parca",
-    lamel_color: "antrasit_gri",
-    box_color: "antrasit_gri",
-    subPart_color: "antrasit_gri",
-    dikme_color: "antrasit_gri",
-  });
+  } as PanjurSelections);
 
   useEffect(() => {
     const loadProductAndTabs = async () => {
@@ -70,6 +53,48 @@ export default function ProductDetailsPage() {
         } as Product;
 
         setProduct(product);
+
+        // Initialize values object with URL parameters and defaults
+        const values: Record<string, string | number> = {
+          productId: productId || "panjur",
+          panjurType: (optionId as PanjurSelections["panjurType"]) || "distan",
+          sectionCount: typeId ? parseInt(typeId) : 1,
+          quantity: 1,
+          width: 0,
+          height: 0,
+        };
+
+        // Add default values from API response
+        for (const tab of tabsResponse.tabs) {
+          if (tab.content?.fields) {
+            for (const field of tab.content.fields) {
+              // Skip if a value is already set
+              if (field.id in values) continue;
+
+              // For fields with options
+              if (Array.isArray(field.options) && field.options.length > 0) {
+                // Find the option marked as default, or use the first one
+                const defaultOption = field.default
+                  ? field.options.find((opt) => opt.id === field.default)
+                  : field.options[0];
+
+                if (defaultOption?.id) {
+                  values[field.id] = defaultOption.id;
+                }
+              }
+              // For numeric fields
+              else if (
+                field.type === "number" &&
+                typeof field.default === "number"
+              ) {
+                values[field.id] = field.default;
+              }
+            }
+          }
+        }
+
+        // Set the selections with the complete values
+        setSelections(values as unknown as PanjurSelections);
       } finally {
         setIsLoading(false);
       }

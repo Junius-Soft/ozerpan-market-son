@@ -1,0 +1,609 @@
+{
+  "accessories": {
+    "panjur": [
+      {
+        "description": "137 Yan Kapak 45 Pimli Pres",
+        "stock_code": "352441111000",
+        "uretici_kodu": "SF.137.00.045",
+        "type": "kutu",
+        "color": "pres",
+        "unit": "Takım",
+        "price": "6,15"
+      },
+      {
+        "description": "137 Yan Kapak 45 Pimli Beyaz",
+        "stock_code": "352441111100",
+        "uretici_kodu": "SF.137.01.045",
+        "type": "kutu",
+        "color": "beyaz",
+        "unit": "Takım",
+        "price": "6,15"
+      },
+      {
+        "description": "137 Yan Kapak 45 Pimli Kahverengi",
+        "stock_code": "352441112000",
+        "uretici_kodu": "SF.137.03.045",
+        "type": "kutu",
+        "color": "kahverengi",
+        "unit": "Takım",
+        "price": "6,15"
+      },
+      {
+        "description": "137 Yan Kapak 45 Pimli Metalik Gri",
+        "stock_code": "352441113000",
+        "uretici_kodu": "SF.137.04.045",
+        "type": "kutu",
+        "color": "metalik gri",
+        "unit": "Takım",
+        "price": "6,15"
+      },
+      {
+        "description": "137 Yan Kapak 45 Pimli Krem",
+        "stock_code": "352441113100",
+        "uretici_kodu": "SF.137.08.045",
+        "type": "kutu",
+        "color": "krem",
+        "unit": "Takım",
+        "price": "6,15"
+      },
+      {
+        "description": "137 Yan Kapak 45 Pimli Ant. Gri",
+        "stock_code": "352441113400",
+        "uretici_kodu": "SF.137.24.045",
+        "type": "kutu",
+        "color": "antrasit gri",
+        "unit": "Takım",
+        "price": "6,15"
+      },
+      {
+        "description": "137 Yan Kapak 45 Pimli Ral Boya",
+        "stock_code": "352441111000",
+        "uretici_kodu": "SF.137.RA.045",
+        "type": "kutu",
+        "color": "ral boyalı",
+        "unit": "Takım",
+        "price": "6,95"
+      },
+      {
+        "description": "165 Yan Kapak 45 Pimli Pres",
+        "stock_code": "352441210000",
+        "uretici_kodu": "SF.165.00.045",
+        "type": "kutu",
+        "color": "pres",
+        "unit": "Takım",
+        "price": "5,76"
+      },
+      {
+        "description": "165 Yan Kapak 45 Pimli Beyaz",
+        "stock_code": "352441211100",
+        "uretici_kodu": "SF.165.01.045",
+        "type": "kutu",
+        "color": "beyaz",
+        "unit": "Takım",
+        "price": "7,21"
+      },
+      {
+        "description": "165 Yan Kapak 45 Pimli Kahverengi",
+        "stock_code": "352441212000",
+        "uretici_kodu": "SF.165.03.045",
+        "type": "kutu",
+        "color": "kahverengi",
+        "unit": "Takım",
+        "price": "7,21"
+      },
+      {
+        "description": "165 Yan Kapak 45 Pimli Metalik Gri",
+        "stock_code": "352441213000",
+        "uretici_kodu": "SF.165.04.045",
+        "type": "kutu",
+        "color": "metalik gri",
+        "unit": "Takım",
+        "price": "7,21"
+      },
+      {
+        "description": "165 Yan Kapak 45 Pimli Krem",
+        "stock_code": "352441213100",
+        "uretici_kodu": "SF.165.08.045",
+        "type": "kutu",
+        "color": "krem",
+        "unit": "Takım",
+        "price": "7,21"
+      },
+      {
+        "description": "165 Yan Kapak 45 Pimli Ral Boya 8003",
+        "stock_code": "352441215100",
+        "uretici_kodu": "SF.165.17.045",
+        "type": "kutu",
+        "color": "ral boya 8003",
+        "unit": "Takım",
+        "price": "7,21"
+      },
+      {
+        "description": "165 Yan Kapak 45 Pimli Ant. Gri",
+        "stock_code": "352441213400",
+        "uretici_kodu": "SF.165.24.045",
+        "type": "kutu",
+        "color": "antrasit gri",
+        "unit": "Takım",
+        "price": "7,21"
+      },
+      {
+        "description": "165 Yan Kapak 45 Pimli Vizon",
+        "stock_code": "352441213500",
+        "uretici_kodu": "SF.165.32.045",
+        "type": "kutu",
+        "color": "vizon",
+        "unit": "Takım",
+        "price": "7,21"
+      },
+      {
+        "description": "165 Yan Kapak 45 Pimli Ral Boyalı",
+        "stock_code": "352441211000",
+        "uretici_kodu": "SF.165.RA.045",
+        "type": "kutu",
+        "color": "ral boyalı",
+        "unit": "Takım",
+        "price": "8,16"
+      },
+      {
+        "description": "205 Yan Kapak 45 Pimli Pres",
+        "stock_code": "352441410010",
+        "uretici_kodu": "SF.205.00.045",
+        "type": "kutu",
+        "color": "pres",
+        "unit": "Takım",
+        "price": "7,97"
+      },
+      {
+        "description": "205 Yan Kapak 45 Pimli Beyaz",
+        "stock_code": "352441411100",
+        "uretici_kodu": "SF.205.01.045",
+        "type": "kutu",
+        "color": "beyaz",
+        "unit": "Takım",
+        "price": "10,19"
+      },
+      {
+        "description": "205 Yan Kapak 45 Pimli Kahverengi",
+        "stock_code": "352441412000",
+        "uretici_kodu": "SF.205.03.045",
+        "type": "kutu",
+        "color": "kahverengi",
+        "unit": "Takım",
+        "price": "10,19"
+      },
+      {
+        "description": "205 Yan Kapak 45 Pimli Metalik Gri",
+        "stock_code": "352441413000",
+        "uretici_kodu": "SF.205.04.045",
+        "type": "kutu",
+        "color": "metalik gri",
+        "unit": "Takım",
+        "price": "10,19"
+      },
+      {
+        "description": "205 Yan Kapak 45 Pimli Krem",
+        "stock_code": "352441413100",
+        "uretici_kodu": "SF.205.08.045",
+        "type": "kutu",
+        "color": "krem",
+        "unit": "Takım",
+        "price": "10,19"
+      },
+      {
+        "description": "205 Yan Kapak 45 Pimli Ant. Gri",
+        "stock_code": "352441414000",
+        "uretici_kodu": "SF.205.24.045",
+        "type": "kutu",
+        "color": "antrasit gri",
+        "unit": "Takım",
+        "price": "10,19"
+      },
+      {
+        "description": "205 Yan Kapak 45 Pimli Vizon",
+        "stock_code": "352441413500",
+        "uretici_kodu": "SF.205.32.045",
+        "type": "kutu",
+        "color": "vizon",
+        "unit": "Takım",
+        "price": "10,19"
+      },
+      {
+        "description": "205 Yan Kapak 45 Pimli Ral Boya",
+        "stock_code": "352441411000",
+        "uretici_kodu": "SF.205.RA.045",
+        "type": "kutu",
+        "color": "ral boyalı",
+        "unit": "Takım",
+        "price": "11,52"
+      },
+      {
+        "description": "250 Yan Kapak 45 Motor Pres",
+        "stock_code": "352441520010",
+        "uretici_kodu": "SF.250.00.045",
+        "type": "kutu",
+        "color": "pres",
+        "unit": "Takım",
+        "price": "21,12"
+      },
+      {
+        "description": "250 Yan Kapak 45 Motor Beyaz",
+        "stock_code": "352441521100",
+        "uretici_kodu": "SF.250.01.045",
+        "type": "kutu",
+        "color": "beyaz",
+        "unit": "Takım",
+        "price": "23,12"
+      },
+      {
+        "description": "250 Yan Kapak 45 Motor Kahverengi",
+        "stock_code": "352441522000",
+        "uretici_kodu": "SF.250.03.045",
+        "type": "kutu",
+        "color": "kahverengi",
+        "unit": "Takım",
+        "price": "23,12"
+      },
+      {
+        "description": "250 Yan Kapak 45 Motor Metalik Gri",
+        "stock_code": "352441523000",
+        "uretici_kodu": "SF.250.04.045",
+        "type": "kutu",
+        "color": "metalik gri",
+        "unit": "Takım",
+        "price": "23,12"
+      },
+      {
+        "description": "250 Yan Kapak 45 Motor Krem",
+        "stock_code": "352441523100",
+        "uretici_kodu": "SF.255.08.045",
+        "type": "kutu",
+        "color": "krem",
+        "unit": "Takım",
+        "price": "23,12"
+      },
+      {
+        "description": "250 Yan Kapak 45 Motor Antrasit Gri",
+        "stock_code": "352441524000",
+        "uretici_kodu": "SF.250.24.045",
+        "type": "kutu",
+        "color": "antrasit gri",
+        "unit": "Takım",
+        "price": "23,12"
+      },
+      {
+        "description": "250 Yan Kapak 45 Motor Vizon",
+        "stock_code": "352441523500",
+        "uretici_kodu": "SF.250.32.045",
+        "type": "kutu",
+        "color": "vizon",
+        "unit": "Takım",
+        "price": "23,12"
+      },
+      {
+        "description": "250 Yan Kapak 45 Motor RAL",
+        "stock_code": "352441521000",
+        "uretici_kodu": "SF.250.RA.045",
+        "type": "kutu",
+        "color": "ral boyalı",
+        "unit": "Takım",
+        "price": "26,12"
+      },
+      {
+        "description": "Plaket 100x100 12 mm Pimli Galvaniz",
+        "stock_code": "352454116900",
+        "uretici_kodu": "BR.100.00.PIV",
+        "type": "tambur_boru",
+        "color": "galvaniz",
+        "unit": "Adet",
+        "price": "0,83"
+      },
+      {
+        "description": "40 Boru Başı Rulmanlı Siyah",
+        "stock_code": "352451121200",
+        "uretici_kodu": "CP.040.00.PWL",
+        "type": "tambur_boru",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0,30"
+      },
+      {
+        "description": "60 Boru Başı Rulmanlı Siyah",
+        "stock_code": "352451221200",
+        "uretici_kodu": "CP.060.00.PWI",
+        "type": "tambur_boru",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0,55"
+      },
+      {
+        "description": "Winde Otomatik Makara Beyaz",
+        "stock_code": "352455111100",
+        "uretici_kodu": "SB.150.01.OUT",
+        "type": "tambur_boru",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "3,43"
+      },
+      {
+        "description": "Winde Otomatik Makara Kahverengi",
+        "stock_code": "352455112000",
+        "uretici_kodu": "SB.150.03.OUT",
+        "type": "tambur_boru",
+        "color": "kahverengi",
+        "unit": "Adet",
+        "price": "3,67"
+      },
+      {
+        "description": "Winde Otomatik Makara Gri",
+        "stock_code": "352455111900",
+        "uretici_kodu": "SB.150.04.OUT",
+        "type": "tambur_boru",
+        "color": "gri",
+        "unit": "Adet",
+        "price": "3,67"
+      },
+      {
+        "description": "Winde Otomatik Makara Antrasit",
+        "stock_code": "352455113400",
+        "uretici_kodu": "SB.150.24.OUT",
+        "type": "tambur_boru",
+        "color": "antrasit gri",
+        "unit": "Adet",
+        "price": "3,67"
+      },
+      {
+        "description": "Rulman 12x28",
+        "stock_code": "352453112028",
+        "uretici_kodu": "RB.028.00.S12",
+        "type": "tambur_boru",
+        "color": "standart",
+        "unit": "Adet",
+        "price": "0,36"
+      },
+      {
+        "description": "Panjur Redüktörü Beyaz",
+        "stock_code": "352456011100",
+        "uretici_kodu": "ZF.000.0C.371",
+        "type": "tambur_boru",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "19,35"
+      },
+      {
+        "description": "Redüktör boru başı 40 mm-C 371 uyumlu",
+        "stock_code": "Netsim",
+        "uretici_kodu": "ZF.000.A4.37B",
+        "type": "tambur_boru",
+        "color": "standart",
+        "unit": "Adet",
+        "price": "1,68"
+      },
+      {
+        "description": "Ara kol-C 371 uyumlu",
+        "stock_code": "Netsim",
+        "uretici_kodu": "ZF.00N.78.5NG",
+        "type": "tambur_boru",
+        "color": "standart",
+        "unit": "Adet",
+        "price": "23,01"
+      },
+      {
+        "description": "Çevirme kolu-1200 mm",
+        "stock_code": "Netsim",
+        "uretici_kodu": "ZF.000.E6.11A",
+        "type": "tambur_boru",
+        "color": "standart",
+        "unit": "Adet",
+        "price": "17,74"
+      },
+      {
+        "description": "40x125 Kasnak Rulmanlı Siyah",
+        "stock_code": "352452121200",
+        "uretici_kodu": "PU.125.00.B40",
+        "type": "tambur_boru",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0,67"
+      },
+      {
+        "description": "40x140 Kasnak Rulmanlı Siyah",
+        "stock_code": "352452161200",
+        "uretici_kodu": "PU.140.00.B40",
+        "type": "tambur_boru",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0,74"
+      },
+      {
+        "description": "Kordon Klavuzu Beyaz",
+        "stock_code": "352455411100",
+        "uretici_kodu": "2306_3",
+        "type": "tambur_boru",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "0,13"
+      },
+      {
+        "description": "Kordon Klavuzu Kahverengi",
+        "stock_code": "352455412000",
+        "uretici_kodu": "2306_258",
+        "type": "tambur_boru",
+        "color": "kahverengi",
+        "unit": "Adet",
+        "price": "0,14"
+      },
+      {
+        "description": "39'luk Alt Parça Lastiği Gri",
+        "stock_code": "352321211900",
+        "uretici_kodu": "ES.DAP.00.INS",
+        "type": "alt_parça",
+        "color": "gri",
+        "unit": "Metre",
+        "price": "0,18"
+      },
+      {
+        "description": "55'lik Alt Parça Lastiği Gri",
+        "stock_code": "352321511900",
+        "uretici_kodu": "ES.NAP.00.INS",
+        "type": "alt_parça",
+        "color": "gri",
+        "unit": "Metre",
+        "price": "0,29"
+      },
+      {
+        "description": "Stoper Konik Beyaz",
+        "stock_code": "352322921100",
+        "uretici_kodu": "SP.040.01.025",
+        "type": "alt_parça",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "0,15"
+      },
+      {
+        "description": "Stoper Konik Kahverengi",
+        "stock_code": "352322922000",
+        "uretici_kodu": "SP.040.03.025",
+        "type": "alt_parça",
+        "color": "kahverengi",
+        "unit": "Adet",
+        "price": "0,15"
+      },
+      {
+        "description": "Stoper Konik Gri",
+        "stock_code": "352322921900",
+        "uretici_kodu": "SP.040.04.025",
+        "type": "alt_parça",
+        "color": "gri",
+        "unit": "Adet",
+        "price": "0,15"
+      },
+      {
+        "description": "Stoper Konik Ant. Gri",
+        "stock_code": "352322921800",
+        "uretici_kodu": "SP.040.24.025",
+        "type": "alt_parça",
+        "color": "antrasit gri",
+        "unit": "Adet",
+        "price": "0,15"
+      },
+      {
+        "description": "Alt Parça Sürgüsü Yuvarlak Galvaniz",
+        "stock_code": "352323936900",
+        "uretici_kodu": "352323936900",
+        "type": "alt_parça",
+        "color": "galvaniz",
+        "unit": "Adet",
+        "price": "0,58"
+      },
+      {
+        "description": "Alt Parça Sürgüsü Yassı Galvaniz",
+        "stock_code": "352323946900",
+        "uretici_kodu": "352323946900",
+        "type": "alt_parça",
+        "color": "galvaniz",
+        "unit": "Adet",
+        "price": "0,55"
+      },
+      {
+        "description": "Çelik Askı 130 mm ( SL 39 )",
+        "stock_code": "352220200200",
+        "uretici_kodu": "SS.130.04.SCR",
+        "type": "lamel",
+        "color": "standart",
+        "unit": "Adet",
+        "price": "0,35"
+      },
+      {
+        "description": "Çelik Askı 170 mm ( SL 55 )",
+        "stock_code": "352220500200",
+        "uretici_kodu": "SS.170.04.SCR",
+        "type": "lamel",
+        "color": "standart",
+        "unit": "Adet",
+        "price": "0,50"
+      },
+      {
+        "description": "PVC TAPA SL-39",
+        "stock_code": "352212201200",
+        "uretici_kodu": "CA.039.00.CAP",
+        "type": "lamel",
+        "color": "standart",
+        "unit": "Adet",
+        "price": "0,01"
+      },
+      {
+        "description": "PVC TAPA SL-55",
+        "stock_code": "352212501200",
+        "uretici_kodu": "CA.055.00.CAP",
+        "type": "lamel",
+        "color": "standart",
+        "unit": "Adet",
+        "price": "0,02"
+      },
+      {
+        "description": "Askı Kilit ( SL 39 )",
+        "stock_code": "352220201200",
+        "uretici_kodu": "352220201200",
+        "type": "lamel",
+        "color": "standart",
+        "unit": "Adet",
+        "price": "3,12"
+      },
+      {
+        "description": "Zımba Teli 5 mm",
+        "stock_code": "121921000569",
+        "uretici_kodu": "121921000569",
+        "type": "lamel",
+        "color": "standart",
+        "unit": "Adet",
+        "price": "0,00"
+      },
+      {
+        "description": "Panjur Dikme Makası Beyaz",
+        "stock_code": "352332911100",
+        "uretici_kodu": "LO.000.01.PRO",
+        "type": "dikme",
+        "color": "beyaz",
+        "unit": "Takım",
+        "price": "9,92"
+      },
+      {
+        "description": "Panjur Dikme Makası Kahverengi",
+        "stock_code": "352332912000",
+        "uretici_kodu": "LO.000.03.PRO",
+        "type": "dikme",
+        "color": "kahverengi",
+        "unit": "Takım",
+        "price": "10,47"
+      },
+      {
+        "description": "Panjur Dikme Menteşesi Beyaz",
+        "stock_code": "352332921100",
+        "uretici_kodu": "LO.001.01.PRM",
+        "type": "dikme",
+        "color": "beyaz",
+        "unit": "Takım",
+        "price": "0,99"
+      },
+      {
+        "description": "Panjur Dikme Menteşesi Kahverengi",
+        "stock_code": "352332921200",
+        "uretici_kodu": "LO.001.03.PRM",
+        "type": "dikme",
+        "color": "kahverengi",
+        "unit": "Takım",
+        "price": "1,05"
+      },
+      {
+        "description": "55'lik Lamel Denge Makarası",
+        "stock_code": "352331551100",
+        "uretici_kodu": "352331551100",
+        "type": "dikme",
+        "color": "standart",
+        "unit": "Takım",
+        "price": "2,55"
+      }
+    ]
+  }
+}

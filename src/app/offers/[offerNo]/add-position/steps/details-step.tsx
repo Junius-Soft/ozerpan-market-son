@@ -9,15 +9,14 @@ import { ProductPreview, type ProductTab } from "./components/product-preview";
 import { DynamicForm } from "./components/dynamic-form";
 import { type ProductDetails } from "./types";
 import {
+  usePanjurCalculator,
   type PanjurSelections,
-  type CalculationResult,
 } from "./hooks/usePanjurCalculator";
 
 interface DetailsStepProps {
   selectedProduct: Product | null;
   formRef?: React.MutableRefObject<HTMLFormElement | null>;
   onFormChange?: (values: Record<string, unknown>) => void;
-  calculationResult?: CalculationResult;
   tabs?: ProductTab[];
 }
 
@@ -25,7 +24,6 @@ export function DetailsStep({
   selectedProduct,
   formRef,
   onFormChange,
-  calculationResult,
 }: DetailsStepProps) {
   const [productDetails, setProductDetails] = useState<ProductDetails>(() => {
     if (!selectedProduct?.tabs) return {} as ProductDetails;
@@ -124,11 +122,11 @@ export function DetailsStep({
       height: parseFloat(result.height as string) || 0,
     } as PanjurSelections;
 
-    console.log("Updated selections:", parsed); // Debug log final values
     return parsed;
   }, [productDetails, selectedProduct?.id, quantity]);
 
   console.log("Current selections:", selections);
+  const calculationResult = usePanjurCalculator(selections);
 
   // Add quantity change handler
   const handleQuantityChange = useCallback((newQuantity: number) => {
@@ -227,7 +225,6 @@ export function DetailsStep({
       ) => {
         handleProductDetailsChange(activeTab.id, fieldId, value);
       };
-
       // Render form with preview if it's the dimensions tab
       if (activeTab.content.preview) {
         return (

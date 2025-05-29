@@ -102,7 +102,6 @@ const EURO_TO_TL = 40;
 
 // Custom hook
 export const usePanjurCalculator = (selections: PanjurSelections) => {
-  console.log({ selections });
   const [result, setResult] = useState<CalculationResult>({
     systemWidth: 0,
     systemHeight: 0,

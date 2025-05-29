@@ -87,7 +87,7 @@ export function ProductPreview({
   };
 
   if (!selectedProduct) return null;
-
+  console.log({ calculationResult });
   return (
     <Card className="p-6">
       <div className="space-y-6">

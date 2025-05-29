@@ -413,7 +413,6 @@ export function DynamicForm({
       initialValues={initialValues}
       validationSchema={Yup.object().shape(validationSchema)}
       onSubmit={(values) => {
-        console.log({ values });
         // Form is valid, we can process the submission
         Object.entries(values).forEach(([key, value]) => {
           onChange(key, value);

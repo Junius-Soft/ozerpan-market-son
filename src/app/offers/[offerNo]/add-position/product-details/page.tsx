@@ -114,7 +114,6 @@ export default function ProductDetailsPage() {
 
   const result = usePanjurCalculator(selections);
   console.log("Calculator result:", result);
-  console.log({ result });
   if (isLoading) {
     return (
       <div className="py-8">

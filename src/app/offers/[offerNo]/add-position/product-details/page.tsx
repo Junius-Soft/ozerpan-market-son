@@ -2,11 +2,15 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { type Product, getProductTabs } from "@/documents/products";
 import { type Position } from "@/documents/offers";
 import { DetailsStep } from "../steps/details-step";
+import {
+  usePanjurCalculator,
+  PanjurSelections,
+} from "../steps/hooks/usePanjurCalculator";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
@@ -14,12 +18,37 @@ export default function ProductDetailsPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState<Product | null>(null);
-
   const productId = searchParams.get("productId");
   const productName = searchParams.get("productName") || productId;
-
   const typeId = searchParams.get("typeId");
   const optionId = searchParams.get("optionId");
+
+  // Initialize selections from URL parameters
+  const [selections, setSelections] = useState<PanjurSelections>({
+    productId: productId || "panjur",
+    panjurType: (optionId as "distan" | "monoblok" | "yalitimli") || "distan",
+    sectionCount: typeId ? parseInt(typeId) : 1,
+    width: 0,
+    height: 0,
+    quantity: 1,
+    kutuOlcuAlmaSekli: "kutu_dahil",
+    dikmeOlcuAlmaSekli: "dikme_dahil",
+    hareketBaglanti: "sag",
+    movementType: "manuel",
+    manuelSekli: "makarali",
+    makaraliTip: "makassiz",
+    lamelType: "aluminyum_poliuretanli",
+    lamelTickness: "39_sl",
+    aski_kilit_secimi: "yok",
+    boxType: "137mm",
+    dikmeType: "mini_dikme",
+    dikmeAdapter: "yok",
+    subPart: "mini_alt_parca",
+    lamel_color: "antrasit_gri",
+    box_color: "antrasit_gri",
+    subPart_color: "antrasit_gri",
+    dikme_color: "antrasit_gri",
+  });
 
   useEffect(() => {
     const loadProductAndTabs = async () => {
@@ -45,8 +74,9 @@ export default function ProductDetailsPage() {
         setIsLoading(false);
       }
     };
+
     loadProductAndTabs();
-  }, [router, searchParams, productId, productName]);
+  }, [productId, productName, typeId, optionId, router]);
 
   const handlePositionDetailsChange = useCallback(
     (details: Omit<Position, "id" | "total">) => {
@@ -57,6 +87,9 @@ export default function ProductDetailsPage() {
     []
   );
 
+  const result = usePanjurCalculator(selections);
+  console.log("Calculator result:", result);
+  console.log({ result });
   if (isLoading) {
     return (
       <div className="py-8">
@@ -116,6 +149,12 @@ export default function ProductDetailsPage() {
             selectedProduct={product}
             onPositionDetailsChange={handlePositionDetailsChange}
             formRef={formRef}
+            onFormChange={(values) => {
+              setSelections((prev) => ({
+                ...prev,
+                ...values,
+              }));
+            }}
           />
         </div>
       </div>

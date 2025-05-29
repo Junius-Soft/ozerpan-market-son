@@ -6,26 +6,27 @@ import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { type Position } from "@/documents/offers";
 import { type Product } from "@/documents/products";
 import { getProductPreview } from "@/lib/product-preview";
-import { ProductPreview } from "./components/product-preview";
+import { ProductPreview, type ProductTab } from "./components/product-preview";
 import { DynamicForm } from "./components/dynamic-form";
 import { type ProductDetails } from "./types";
+import { type CalculationResult } from "./hooks/usePanjurCalculator";
 
 interface DetailsStepProps {
   selectedProduct: Product | null;
   onPositionDetailsChange: (details: Omit<Position, "id" | "total">) => void;
   formRef?: React.MutableRefObject<HTMLFormElement | null>;
+  onFormChange?: (values: Record<string, unknown>) => void;
+  calculationResult?: CalculationResult;
+  tabs?: ProductTab[];
 }
 
 export function DetailsStep({
   selectedProduct,
   onPositionDetailsChange,
   formRef,
+  onFormChange,
+  calculationResult,
 }: DetailsStepProps) {
-  // Default to first tab if available
-  const [currentTab, setCurrentTab] = useState<string>(
-    selectedProduct?.tabs?.[0].id ?? ""
-  );
-  const [quantity, setQuantity] = useState<number>(1);
   const [productDetails, setProductDetails] = useState<ProductDetails>(() => {
     if (!selectedProduct?.tabs) return {} as ProductDetails;
 
@@ -87,7 +88,10 @@ export function DetailsStep({
       return details;
     }, {} as ProductDetails);
   });
-
+  const [currentTab, setCurrentTab] = useState<string>(
+    selectedProduct?.tabs?.[0].id ?? ""
+  );
+  const [quantity, setQuantity] = useState<number>(1);
   const isInitialMount = useRef(true);
   const availableTabs = useMemo(
     () => selectedProduct?.tabs || [],
@@ -312,7 +316,10 @@ export function DetailsStep({
         <DynamicForm
           fields={activeTab.content.fields}
           values={getValuesForTab()}
-          onChange={handleDynamicFormChange}
+          onChange={(fieldId, value) => {
+            handleDynamicFormChange(fieldId, value);
+            handleFormChange({ [fieldId]: value });
+          }}
           onFormikChange={(formik) => {
             // Değişen alan ve değeri al
             const changedValues = Object.entries(formik.values);
@@ -351,6 +358,14 @@ export function DetailsStep({
     }
   };
 
+  // Form değişiklik handler'ı
+  const handleFormChange = useCallback(
+    (values: Record<string, unknown>) => {
+      onFormChange?.(values);
+    },
+    [onFormChange]
+  );
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Left Side - Tabs and Content */}
@@ -383,6 +398,22 @@ export function DetailsStep({
         currentTab={currentTab}
         quantity={quantity}
         onQuantityChange={handleQuantityChange}
+        calculationResult={calculationResult}
+        tabs={availableTabs.map((tab) => ({
+          id: tab.id,
+          name: tab.name,
+          content: tab.content
+            ? {
+                fields: tab.content.fields?.map((field) => ({
+                  ...field,
+                  options: field.options?.map((opt) => ({
+                    id: opt.id ?? "",
+                    name: opt.name ?? "",
+                  })),
+                })),
+              }
+            : undefined,
+        }))}
       />
     </div>
   );

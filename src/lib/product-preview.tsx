@@ -2,6 +2,10 @@
 
 import { type Product } from "@/documents/products";
 import { DynamicPreview } from "@/app/offers/[offerNo]/add-position/steps/components/dynamic-preview";
+import { ShutterPreview } from "@/app/offers/[offerNo]/add-position/steps/components/shutter-preview";
+import { WindowPreview } from "@/app/offers/[offerNo]/add-position/steps/components/window-preview";
+import { DoorPreview } from "@/app/offers/[offerNo]/add-position/steps/components/door-preview";
+import { InsectScreenPreview } from "@/app/offers/[offerNo]/add-position/steps/components/insect-screen-preview";
 
 interface ProductPreviewProps {
   product: Product | null;
@@ -33,5 +37,31 @@ export function getProductPreview({
         />
       );
     }
+  }
+
+  // Fallback to product type based preview if no tab-specific preview defined
+  switch (product.id) {
+    case "panjur":
+      return (
+        <ShutterPreview width={width} height={height} className={className} />
+      );
+    case "pencere":
+      return (
+        <WindowPreview width={width} height={height} className={className} />
+      );
+    case "kapi":
+      return (
+        <DoorPreview width={width} height={height} className={className} />
+      );
+    case "sineklik":
+      return (
+        <InsectScreenPreview
+          width={width}
+          height={height}
+          className={className}
+        />
+      );
+    default:
+      return null;
   }
 }

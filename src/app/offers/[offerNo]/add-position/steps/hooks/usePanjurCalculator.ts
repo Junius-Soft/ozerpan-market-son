@@ -118,7 +118,8 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
   useEffect(() => {
     const calculate = () => {
       const errors: string[] = [];
-
+      console.log(selections.width);
+      console.log(selections.height);
       // Ölçü validasyonları
       if (selections.width < 250 || selections.width > 5500) {
         errors.push("Width must be between 250mm and 5500mm");

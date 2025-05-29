@@ -1,19 +1,20 @@
 "use client";
 
+import { useState, useCallback, useMemo } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect, useCallback, useRef, useMemo } from "react";
-import { type Position } from "@/documents/offers";
 import { type Product } from "@/documents/products";
 import { getProductPreview } from "@/lib/product-preview";
 import { ProductPreview, type ProductTab } from "./components/product-preview";
 import { DynamicForm } from "./components/dynamic-form";
 import { type ProductDetails } from "./types";
-import { type CalculationResult } from "./hooks/usePanjurCalculator";
+import {
+  type PanjurSelections,
+  type CalculationResult,
+} from "./hooks/usePanjurCalculator";
 
 interface DetailsStepProps {
   selectedProduct: Product | null;
-  onPositionDetailsChange: (details: Omit<Position, "id" | "total">) => void;
   formRef?: React.MutableRefObject<HTMLFormElement | null>;
   onFormChange?: (values: Record<string, unknown>) => void;
   calculationResult?: CalculationResult;
@@ -22,7 +23,6 @@ interface DetailsStepProps {
 
 export function DetailsStep({
   selectedProduct,
-  onPositionDetailsChange,
   formRef,
   onFormChange,
   calculationResult,
@@ -92,99 +92,48 @@ export function DetailsStep({
     selectedProduct?.tabs?.[0].id ?? ""
   );
   const [quantity, setQuantity] = useState<number>(1);
-  const isInitialMount = useRef(true);
   const availableTabs = useMemo(
     () => selectedProduct?.tabs || [],
     [selectedProduct]
   );
 
+  const selections = useMemo<PanjurSelections>(() => {
+    // Flatten the productDetails structure
+    const result: Record<string, string | number> = {};
+    // Using Object.values to ignore tab IDs
+    Object.values(productDetails).forEach((tabValues) => {
+      Object.entries(tabValues).forEach(([key, value]) => {
+        if (key === "width" || key === "height") {
+          const numValue = parseFloat(value as string);
+          result[key] = isNaN(numValue) ? 0 : numValue;
+          console.log(`Setting ${key}:`, value, "->", result[key]); // Debug log
+        } else {
+          result[key] = value;
+        }
+      });
+    });
+
+    const parsed = {
+      ...result,
+      productId: selectedProduct?.id || "",
+      quantity: quantity,
+      panjurType:
+        (result.panjurType as PanjurSelections["panjurType"]) || "distan",
+      sectionCount: parseInt(result.sectionCount as string) || 1,
+      width: parseFloat(result.width as string) || 0,
+      height: parseFloat(result.height as string) || 0,
+    } as PanjurSelections;
+
+    console.log("Updated selections:", parsed); // Debug log final values
+    return parsed;
+  }, [productDetails, selectedProduct?.id, quantity]);
+
+  console.log("Current selections:", selections);
+
   // Add quantity change handler
   const handleQuantityChange = useCallback((newQuantity: number) => {
     setQuantity(newQuantity);
   }, []);
-
-  // Memoize the update function to avoid unnecessary recalculations
-  const updatePositionDetails = useCallback(
-    (details: ProductDetails) => {
-      // Tab değerlerini ve fieldları bul
-      const findTabAndField = (fieldName: string) => {
-        const tab = availableTabs.find((tab) =>
-          tab.content?.fields?.some((field) => field.id === fieldName)
-        );
-        return tab ? details[tab.id] || {} : {};
-      };
-
-      // Gerekli değerleri dinamik olarak al
-      const width = parseFloat(
-        Object.values(details).reduce(
-          (val, tabValues) => tabValues.width?.toString() || val,
-          "0"
-        )
-      );
-      const height = parseFloat(
-        Object.values(details).reduce(
-          (val, tabValues) => tabValues.height?.toString() || val,
-          "0"
-        )
-      );
-      const area = (width * height) / 10000;
-
-      if (!isNaN(area) && area > 0) {
-        // Tab değerlerini dinamik olarak bul
-        const movementValues = findTabAndField("movementType");
-        const lamelValues = findTabAndField("lamelType");
-        const colorValues = findTabAndField("color");
-        const divisionsValues = findTabAndField("kutuOlcuAlmaSekli");
-
-        const movementText =
-          movementValues.movementType === "motorlu" ? "Motorlu" : "Manuel";
-        const lamelText = lamelValues.lamelType || "";
-        const colorText = colorValues.color || "";
-        const kutuText =
-          divisionsValues.kutuOlcuAlmaSekli === "kutu-dahil"
-            ? "Kutu Dahil"
-            : "Kutu Hariç";
-        const dikmeText =
-          divisionsValues.dikmeOlcuAlmaSekli === "dikme-dahil"
-            ? "Dikme Dahil"
-            : divisionsValues.dikmeOlcuAlmaSekli === "dikme-haric"
-            ? "Dikme Hariç"
-            : "Tek Dikme";
-
-        onPositionDetailsChange({
-          pozNo: "PNJ-001",
-          description: `${movementText} ${lamelText} Panjur - ${colorText} (${width}x${height}mm) - ${kutuText}, ${dikmeText}`,
-          unit: "m²",
-          quantity: quantity * area, // Multiply area by quantity
-          unitPrice: 1000,
-        });
-      }
-    },
-    [onPositionDetailsChange, availableTabs, quantity] // Add quantity to dependencies
-  );
-
-  // Update useEffect to use the same dynamic field finding logic
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-    } else {
-      const width = parseFloat(
-        Object.values(productDetails).reduce(
-          (val, tabValues) => tabValues.width?.toString() || val,
-          "0"
-        )
-      );
-      const height = parseFloat(
-        Object.values(productDetails).reduce(
-          (val, tabValues) => tabValues.height?.toString() || val,
-          "0"
-        )
-      );
-      if (!isNaN(width) && !isNaN(height) && width > 0 && height > 0) {
-        updatePositionDetails(productDetails);
-      }
-    }
-  }, [productDetails, updatePositionDetails]);
 
   const handleProductDetailsChange = (
     tabId: string,
@@ -231,11 +180,7 @@ export function DetailsStep({
                   : "0"
                 : tabField.default.toString();
 
-            // Update dependent field while preserving other values
-            newState[tabId] = {
-              ...newState[tabId],
-              [tabField.id]: defaultValue,
-            };
+            newState[tabId][tabField.id] = defaultValue;
           }
         }
       });

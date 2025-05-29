@@ -87,7 +87,6 @@ export function ProductPreview({
   };
 
   if (!selectedProduct) return null;
-  console.log({ calculationResult });
   return (
     <Card className="p-6">
       <div className="space-y-6">
@@ -176,34 +175,6 @@ export function ProductPreview({
             <div className="space-y-2 border-t pt-4">
               <h4 className="font-medium">Hesaplama Sonuçları:</h4>
               <div className="text-sm space-y-1">
-                <div className="flex justify-between">
-                  <span>Sistem Genişliği:</span>
-                  <span>{calculationResult.systemWidth} mm</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Sistem Yüksekliği:</span>
-                  <span>{calculationResult.systemHeight} mm</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Lamel Sayısı:</span>
-                  <span>{calculationResult.lamelCount}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Lamel Kesim Ölçüsü:</span>
-                  <span>{calculationResult.lamelCuttingSize} mm</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Dikme Yüksekliği:</span>
-                  <span>{calculationResult.postHeight} mm</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Dikme Sayısı:</span>
-                  <span>{calculationResult.postCount}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Kutu Yüksekliği:</span>
-                  <span>{calculationResult.boxHeight} mm</span>
-                </div>
                 <div className="flex justify-between font-medium text-base">
                   <span>Toplam Fiyat:</span>
                   <span>

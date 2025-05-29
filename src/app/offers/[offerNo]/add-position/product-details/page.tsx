@@ -2,10 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { type Product, getProductTabs } from "@/documents/products";
-import { type Position } from "@/documents/offers";
 import { DetailsStep } from "../steps/details-step";
 import {
   usePanjurCalculator,
@@ -103,17 +102,7 @@ export default function ProductDetailsPage() {
     loadProductAndTabs();
   }, [productId, productName, typeId, optionId, router]);
 
-  const handlePositionDetailsChange = useCallback(
-    (details: Omit<Position, "id" | "total">) => {
-      if (details.quantity > 0) {
-        console.log("Position details updated:", details);
-      }
-    },
-    []
-  );
-
   const result = usePanjurCalculator(selections);
-  console.log("Calculator result:", result);
   if (isLoading) {
     return (
       <div className="py-8">
@@ -170,8 +159,8 @@ export default function ProductDetailsPage() {
 
           {/* Product Details Form */}
           <DetailsStep
+            calculationResult={result}
             selectedProduct={product}
-            onPositionDetailsChange={handlePositionDetailsChange}
             formRef={formRef}
             onFormChange={(values) => {
               setSelections((prev) => ({

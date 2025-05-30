@@ -76,29 +76,113 @@ export interface CalculationResult {
   errors: string[]; // Any validation errors
 }
 
-// Lamel kalınlıklarına göre fiyat tablosu (Euro/metre)
-const lamelUnitPrices: Record<string, number> = {
-  "39_sl": 1.02,
-  "55_sl": 1.2,
-  "55_se": 1.4,
+// Lamel özellikleri interface
+interface LamelProperties {
+  tavsiyeEdilenMaksimumEn: number; // mm
+  tavsiyeEdilenMaksimumYukseklik: number; // mm
+  maksimumKullanimAlani: number; // m²
+}
+
+// Lamel özellikleri sabitleri
+const lamelProperties: Record<string, LamelProperties> = {
+  "39_sl": {
+    tavsiyeEdilenMaksimumEn: 2300,
+    tavsiyeEdilenMaksimumYukseklik: 2400,
+    maksimumKullanimAlani: 5.5, // m²
+  },
+  "45_se": {
+    tavsiyeEdilenMaksimumEn: 4250,
+    tavsiyeEdilenMaksimumYukseklik: 3500,
+    maksimumKullanimAlani: 14,
+  },
+  "55_sl": {
+    tavsiyeEdilenMaksimumEn: 3200,
+    tavsiyeEdilenMaksimumYukseklik: 3100,
+    maksimumKullanimAlani: 10,
+  },
+  "55_se": {
+    tavsiyeEdilenMaksimumEn: 5500,
+    tavsiyeEdilenMaksimumYukseklik: 4000,
+    maksimumKullanimAlani: 22,
+  },
 };
 
-// Yüksekliğe göre sarım tablosu
-const sarimTablosu: Record<string, Record<string, number>> = {
-  "39_sl": { "1000": 110 },
-  "55_sl": { "1000": 120 },
-  "55_se": { "1000": 125 },
+// Lamel özelliklerini getiren yardımcı fonksiyon
+const getLamelProperties = (lamelTickness: string): LamelProperties => {
+  return lamelProperties[lamelTickness];
 };
 
-// Renk bazlı fiyat çarpanları
-const colorPriceMultipliers: Record<string, number> = {
-  antrasit_gri: 1.0,
-  beyaz: 0.95,
-  kahve: 1.05,
+// Kutu yüksekliği ve kertme payı değerlerini dinamik olarak hesapla
+const getBoxHeight = (boxType: string): number => {
+  return parseInt(boxType.replace("mm", ""));
 };
 
-// Euro/TL kuru
-const EURO_TO_TL = 40;
+const getKertmePayi = (dikmeType: string): number => {
+  // mini_ ile başlayan dikme tipleri için: 20mm
+  // midi_ ile başlayan dikme tipleri için: 25mm
+  return dikmeType.startsWith("mini_") ? 20 : 25;
+};
+
+// Maksimum lamel yüksekliği tablosu (mm)
+interface MaxLamelHeight {
+  manuel: number | null;
+  motorlu: number | null;
+}
+
+interface LamelHeightTable {
+  [boxSize: string]: {
+    [lamelType: string]: MaxLamelHeight;
+  };
+}
+
+const maxLamelHeights: LamelHeightTable = {
+  "137": {
+    "39": { manuel: 1500, motorlu: 1100 },
+    "45": { manuel: 1000, motorlu: 1000 },
+    "55": { manuel: null, motorlu: null },
+  },
+  "165": {
+    "39": { manuel: 2400, motorlu: 2250 },
+    "45": { manuel: 2000, motorlu: 1750 },
+    "55": { manuel: null, motorlu: 1600 },
+  },
+  "205": {
+    "39": { manuel: null, motorlu: 3500 },
+    "45": { manuel: null, motorlu: 3500 },
+    "55": { manuel: null, motorlu: 2750 },
+  },
+  "250": {
+    "39": { manuel: null, motorlu: null },
+    "45": { manuel: null, motorlu: 4000 },
+    "55": { manuel: null, motorlu: 4500 },
+  },
+};
+
+// Maksimum lamel yüksekliği hesaplama (mm)
+const getMaxLamelHeight = (
+  boxType: string,
+  lamelTickness: string,
+  lamelSize: "manuel" | "motorlu"
+): number | null => {
+  const boxSize = boxType.replace("mm", "");
+  const lamelType = lamelTickness.split("_")[0];
+
+  return maxLamelHeights[boxSize]?.[lamelType]?.[lamelSize] ?? null;
+};
+
+// Dikme genişliği hesaplama (mm)
+const getDikmeGenisligi = (dikmeType: string): number => {
+  // mini_ ile başlayan dikme tipleri için: 53mm
+  // midi_ ile başlayan dikme tipleri için: 62mm
+  return dikmeType.startsWith("mini_") ? 53 : 62;
+};
+
+// Lamel düşme değeri (dikme düşme değeri) hesaplama (mm)
+const getLamelDusmeValue = (dikmeType: string): number => {
+  // mini_ ile başlayan dikme tipleri için: 37mm
+  // midi_ ile başlayan dikme tipleri için: 45mm
+  return dikmeType.startsWith("mini_") ? 37 : 45;
+};
 
 // Custom hook
 export const usePanjurCalculator = (selections: PanjurSelections) => {
@@ -118,96 +202,99 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
   useEffect(() => {
     const calculate = () => {
       const errors: string[] = [];
-      console.log(selections.width);
-      console.log(selections.height);
-      console.log("hook selections", selections);
+      let postHeight = 0;
 
-      // Ölçü validasyonları
-      if (selections.width < 250 || selections.width > 5500) {
-        errors.push("Width must be between 250mm and 5500mm");
-      }
-      if (selections.height < 250 || selections.height > 4000) {
-        errors.push("Height must be between 250mm and 4000mm");
-      }
-      if (selections.quantity < 1) {
-        errors.push("Quantity must be at least 1");
-      }
+      // Temel değerleri hesapla
+      const kertmePayi = getKertmePayi(selections.dikmeType);
+      const dikmeGenisligi = getDikmeGenisligi(selections.dikmeType);
+      const kutuYuksekligi = getBoxHeight(selections.boxType);
 
       // Sistem genişliği hesaplama
       let systemWidth = selections.width;
-      if (selections.dikmeOlcuAlmaSekli === "dikme_haric") {
-        const postWidth = selections.lamelTickness === "39_sl" ? 53 : 62;
-        systemWidth = selections.width + 2 * postWidth;
-      } else if (selections.dikmeOlcuAlmaSekli === "tek_dikme") {
-        const postWidth = selections.lamelTickness === "39_sl" ? 53 : 62;
-        systemWidth = selections.width + postWidth;
+      switch (selections.dikmeOlcuAlmaSekli) {
+        case "dikme_haric":
+          // Dikme hariç: Girilen ölçü + 2 adet dikme genişliği - yan kapak payı
+          systemWidth = selections.width + 2 * dikmeGenisligi - 10;
+          break;
+        case "tek_dikme":
+          // Tek dikme: Girilen ölçü + 1 adet dikme genişliği - yan kapak payı
+          systemWidth = selections.width + dikmeGenisligi - 10;
+          break;
+        case "dikme_dahil":
+          // Dikme dahil: Girilen ölçü - yan kapak payı
+          systemWidth = selections.width - 10;
+          break;
       }
-      systemWidth -= 10; // Yan kapak payı düşme
+
+      // Yan kapak payı düşürme (5mm sağ + 5mm sol = 10mm) switch içinde yapılıyor
 
       // Sistem yüksekliği hesaplama
       let systemHeight = selections.height;
-      const boxHeight = parseInt(selections.boxType);
       if (selections.kutuOlcuAlmaSekli === "kutu_haric") {
-        systemHeight = selections.height + boxHeight;
+        // Kutu hariç: Girilen ölçü + kutu yüksekliği
+        systemHeight = selections.height + kutuYuksekligi;
+      }
+
+      // Maksimum lamel yüksekliğini kontrol et
+      const maxHeight = getMaxLamelHeight(
+        selections.boxType,
+        selections.lamelTickness,
+        "motorlu"
+      );
+      if (maxHeight !== null && systemHeight > maxHeight) {
+        errors.push(
+          `Seçilen yükseklik (${systemHeight}mm), bu kutu tipi ve lamel kalınlığı için maksimum değeri (${maxHeight}mm) aşıyor.`
+        );
       }
 
       // Dikme yüksekliği hesaplama
-      const kertmePayi = selections.lamelTickness === "39_sl" ? 20 : 25;
-      const postHeight = systemHeight - boxHeight + kertmePayi;
+      if (!selections.dikmeType.includes("orta")) {
+        postHeight = selections.height - kutuYuksekligi + kertmePayi;
+      }
+
+      // Lamel kesim genişliği hesaplama = Sistem Genişliği – Dikme Düşme Değeri
+      const lamelDusmeValue = getLamelDusmeValue(selections.dikmeType);
+      const lamelCuttingSize = systemWidth - lamelDusmeValue;
 
       // Lamel sayısı hesaplama
-      const lamelWidth = parseInt(selections.lamelTickness?.split("_")[0]);
-      const lamelHeight = (systemHeight - boxHeight) / lamelWidth;
-      const lamelCount = Math.ceil(lamelHeight) + 1;
+      // 1. Dikme Yüksekliği (Kertme Payı Hariç) = Sistem Yüksekliği – Kutu Yüksekliği
+      const dikmeYuksekligiKertmeHaric = systemHeight - kutuYuksekligi;
 
-      // Lamel kesim ölçüsü hesaplama
-      const lamelDusmeDegeri = selections.lamelTickness === "39_sl" ? 37 : 45;
-      const lamelCuttingSize = systemWidth - lamelDusmeDegeri;
+      // 2. Lamel Sayısı = Dikme Yüksekliği / Lamel Panel Genişliği (yukarı yuvarla)
 
-      // Lamel fiyatı hesaplama
-      const lamelUnitPrice = lamelUnitPrices[selections.lamelTickness] || 1.0;
-      const lamelPrice =
-        lamelUnitPrice * lamelCount * (lamelCuttingSize / 1000);
+      const lamelPanelGenisligi = getLamelProperties(
+        selections.lamelTickness
+      )?.tavsiyeEdilenMaksimumEn;
+      console.log({ lamelPanelGenisligi });
+      const lamelSayisi = Math.ceil(
+        dikmeYuksekligiKertmeHaric / lamelPanelGenisligi
+      );
 
-      // Kutu yüksekliği hesaplama
-      const sarimCap =
-        sarimTablosu[selections.lamelTickness]?.[
-          selections.height.toString()
-        ] || 110;
-      const calculatedBoxHeight = Math.max(sarimCap, boxHeight);
+      // 3. Sistem Lamel Adedi = Lamel Sayısı + 1
+      const lamelCount = lamelSayisi + 1;
 
-      // Toplam fiyat hesaplama
-      const colorMultiplier =
-        colorPriceMultipliers[selections.lamel_color] || 1.0;
-      const totalPriceEuro = lamelPrice * colorMultiplier * selections.quantity;
-      const totalPriceTL = totalPriceEuro * EURO_TO_TL;
+      // Lamel özellikleri kontrolü
+      const lamelProps = getLamelProperties(selections.lamelTickness);
 
-      // Dikme ve lamel uyumluluğu kontrolü
-      const miniPosts = [
-        "mini_dikme",
-        "mini_orta_dikme",
-        "mini_pvc_dikme",
-        "mini_pvc_orta_dikme",
-      ];
-      const midiPosts = [
-        "midi_dikme",
-        "midi_orta_dikme",
-        "midi_pvc_dikme",
-        "midi_pvc_orta_dikme",
-      ];
-
-      if (
-        selections.lamelTickness === "39_sl" &&
-        !miniPosts.includes(selections.dikmeType)
-      ) {
-        errors.push("39 SL lamel kalınlığı için mini dikme kullanılmalıdır");
+      // Maksimum alan kontrolü
+      const alanM2 = (systemWidth * systemHeight) / 1000000; // mm2 to m2
+      if (alanM2 > lamelProps?.maksimumKullanimAlani) {
+        errors.push(
+          `Seçilen ölçüler maksimum kullanım alanını (${
+            lamelProps.maksimumKullanimAlani
+          }m²) aşıyor. Mevcut alan: ${alanM2.toFixed(2)}m²`
+        );
       }
-      if (
-        selections.lamelTickness === "55_sl" &&
-        !midiPosts.includes(selections.dikmeType)
-      ) {
-        errors.push("55 SL lamel kalınlığı için midi dikme kullanılmalıdır");
+
+      // Maksimum genişlik kontrolü
+      if (systemWidth > lamelProps?.tavsiyeEdilenMaksimumEn) {
+        errors.push(
+          `Seçilen genişlik (${systemWidth}mm) tavsiye edilen maksimum genişliği (${lamelProps?.tavsiyeEdilenMaksimumEn}mm) aşıyor.`
+        );
       }
+
+      const lamelPrice = 0; // To be implemented
+      const totalPriceTL = 0; // To be implemented
 
       // Sonuçları güncelle
       setResult({
@@ -221,7 +308,7 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
           Number(selections.sectionCount) === 1
             ? 2
             : 2 + Number(selections.sectionCount) - 1,
-        boxHeight: calculatedBoxHeight,
+        boxHeight: kutuYuksekligi,
         totalPriceTL,
         errors,
       });

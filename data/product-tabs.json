@@ -276,12 +276,14 @@
                 "field": "motorMarka",
                 "valueMap": {
                   "mosel": [
+                    "yok",
                     "mosel_vera_dc_318",
                     "mosel_vera__dc_319",
                     "mosel_dc-73a_kutu_ici_panjur_alicisi",
                     "mosel_oval_power_ii_alici"
                   ],
                   "somfy": [
+                    "yok",
                     "pf_receiver_rts_panjur_alicisi",
                     "centralis_uno_rts_buton_alici"
                   ]
@@ -625,9 +627,28 @@
             "type": "select",
             "options": [
               { "id": "mini_alt_parca", "name": "Mini Alt Parça" },
+              { "id": "midi_alt_parca", "name": "Midi Alt Parça" },
               { "id": "kilitli_alt_parca", "name": "Kilitli Alt Parça" }
             ],
-            "default": "mini_alt_parca"
+            "default": "mini_alt_parca",
+            "filterBy": [
+              {
+                "field": "dikmeType",
+                "valueMap": {
+                  "mini_dikme": ["mini_alt_parca", "kilitli_alt_parca"],
+                  "mini_orta_dikme": ["mini_alt_parca", "kilitli_alt_parca"],
+                  "mini_pvc_dikme": ["mini_alt_parca", "kilitli_alt_parca"],
+                  "mini_pvc_orta_dikme": [
+                    "mini_alt_parca",
+                    "kilitli_alt_parca"
+                  ],
+                  "midi_dikme": ["midi_alt_parca", "kilitli_alt_parca"],
+                  "midi_orta_dikme": ["midi_alt_parca", "kilitli_alt_parca"],
+                  "midi_pvc_dikme": ["midi_alt_parca", "kilitli_alt_parca"],
+                  "midi_pvc_orta_dikme": ["midi_alt_parca", "kilitli_alt_parca"]
+                }
+              }
+            ]
           }
         ]
       }

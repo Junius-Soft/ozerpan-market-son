@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 
-const dataFilePath = path.join(process.cwd(), "data", "accessories.json");
+const dataFilePath = path.join(process.cwd(), "data", "product-prices.json");
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const productId = searchParams.get("productId");
@@ -14,8 +14,6 @@ export async function GET(request: NextRequest) {
     );
   }
   const data = JSON.parse(await fs.readFile(dataFilePath, "utf8"));
-  // For now, we're returning all accessories since the JSON structure doesn't have productId mapping
-  // You can implement filtering logic based on productId when needed
 
-  return NextResponse.json(data.accessories[productId]);
+  return NextResponse.json(data.product_prices[productId]);
 }

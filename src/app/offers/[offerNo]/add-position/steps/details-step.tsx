@@ -12,6 +12,7 @@ import {
   usePanjurCalculator,
   type PanjurSelections,
 } from "./hooks/usePanjurCalculator";
+import { useAccessories } from "./hooks/useAccessories";
 
 interface DetailsStepProps {
   selectedProduct: Product | null;
@@ -104,7 +105,7 @@ export function DetailsStep({
         if (key === "width" || key === "height") {
           const numValue = parseFloat(value as string);
           result[key] = isNaN(numValue) ? 0 : numValue;
-          console.log(`Setting ${key}:`, value, "->", result[key]); // Debug log
+          // console.log(`Setting ${key}:`, value, "->", result[key]); // Debug log
         } else {
           result[key] = value;
         }
@@ -125,8 +126,12 @@ export function DetailsStep({
     return parsed;
   }, [productDetails, selectedProduct?.id, quantity]);
 
-  console.log("Current selections:", selections);
+  // console.log("Current selections:", selections);
   const calculationResult = usePanjurCalculator(selections);
+  const { accessories, totalPrice } = useAccessories(selections);
+
+  console.log("Accessory Calculation result:", accessories);
+  console.log("Accessory Calculation result:", totalPrice);
 
   // Add quantity change handler
   const handleQuantityChange = useCallback((newQuantity: number) => {

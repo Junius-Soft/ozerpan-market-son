@@ -1,5 +1,16 @@
 import { useState, useEffect } from "react";
 
+// Define types for price items
+interface PriceItem {
+  description: string;
+  stock_code: string;
+  uretici_kodu: string;
+  type: string;
+  color: string;
+  unit: string;
+  price: string;
+}
+
 // Define types for selections based on the document
 // Interface for calculation results
 export interface CalculationResult {
@@ -201,6 +212,28 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
     errors: [],
   });
 
+  const [prices, setPrices] = useState<PriceItem[]>([]);
+
+  // Fetch prices
+  useEffect(() => {
+    const fetchPrices = async () => {
+      try {
+        const response = await fetch(`/api/product-prices?productId=panjur`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch prices");
+        }
+        const data = await response.json();
+        setPrices(data);
+      } catch (error) {
+        console.error("Error fetching prices:", error);
+      }
+    };
+
+    fetchPrices();
+  }, []); // Run once when component mounts
+
+  console.log({ prices });
+  // Main calculation effect
   useEffect(() => {
     const calculate = () => {
       const errors: string[] = [];

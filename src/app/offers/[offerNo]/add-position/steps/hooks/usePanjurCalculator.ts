@@ -72,6 +72,7 @@ export interface CalculationResult {
   postHeight: number; // Post height in mm
   postCount: number; // Number of posts
   boxHeight: number; // Selected box height in mm
+  subPartWidth: number; // Alt parça genişliği (lamel kesim ölçüsüne eşit)
   totalPriceTL: number; // Total price in TL (placeholder conversion)
   errors: string[]; // Any validation errors
 }
@@ -195,6 +196,7 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
     postHeight: 0,
     postCount: 2,
     boxHeight: 0,
+    subPartWidth: 0,
     totalPriceTL: 0,
     errors: [],
   });
@@ -309,6 +311,7 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
             ? 2
             : 2 + Number(selections.sectionCount) - 1,
         boxHeight: kutuYuksekligi,
+        subPartWidth: lamelCuttingSize, // Alt parça genişliği lamel kesim ölçüsüne eşit
         totalPriceTL,
         errors,
       });

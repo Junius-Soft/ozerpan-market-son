@@ -53,7 +53,7 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
         const data = await response.json();
         const allAccessories: Accessory[] = data;
         const neededAccessories: Accessory[] = [];
-        console.log({ data });
+        // console.log({ data });
         if (allAccessories && selections.productId === "panjur") {
           // Kutu Aksesuarları hesaplama
           let yanKapakDesc: string;

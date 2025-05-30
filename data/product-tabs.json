@@ -499,15 +499,15 @@
             "type": "select",
             "options": [
               {
-                "id": "alüminyum_poliuretanli",
+                "id": "aluminyum_poliuretanli",
                 "name": "Alüminyum Poliüretanlı"
               },
               {
-                "id": "alüminyum_ekstrüzyon",
+                "id": "aluminyum_ekstrüzyon",
                 "name": "Alüminyum Ekstrüzyon"
               }
             ],
-            "default": "alüminyum_poliuretanli"
+            "default": "aluminyum_poliuretanli"
           },
           {
             "id": "lamelTickness",

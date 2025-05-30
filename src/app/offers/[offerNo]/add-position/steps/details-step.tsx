@@ -12,7 +12,6 @@ import {
   usePanjurCalculator,
   type PanjurSelections,
 } from "./hooks/usePanjurCalculator";
-import { useAccessories } from "./hooks/useAccessories";
 
 interface DetailsStepProps {
   selectedProduct: Product | null;
@@ -128,10 +127,10 @@ export function DetailsStep({
 
   // console.log("Current selections:", selections);
   const calculationResult = usePanjurCalculator(selections);
-  const { accessories, totalPrice } = useAccessories(selections);
+  // const { accessories, totalPrice } = useAccessories(selections);
 
-  console.log("Accessory Calculation result:", accessories);
-  console.log("Accessory Calculation result:", totalPrice);
+  // console.log("Accessory Calculation result:", accessories);
+  // console.log("Accessory Calculation result:", totalPrice);
 
   // Add quantity change handler
   const handleQuantityChange = useCallback((newQuantity: number) => {

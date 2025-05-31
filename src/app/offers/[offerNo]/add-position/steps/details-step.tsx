@@ -8,10 +8,8 @@ import { getProductPreview } from "@/lib/product-preview";
 import { ProductPreview, type ProductTab } from "./components/product-preview";
 import { DynamicForm } from "./components/dynamic-form";
 import { type ProductDetails } from "./types";
-import {
-  usePanjurCalculator,
-  type PanjurSelections,
-} from "./hooks/usePanjurCalculator";
+import { usePanjurCalculator } from "./hooks/usePanjurCalculator";
+import { PanjurSelections } from "@/types/panjur";
 
 interface DetailsStepProps {
   selectedProduct: Product | null;

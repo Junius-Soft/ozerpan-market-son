@@ -204,7 +204,7 @@
         "stock_code": "352112506410",
         "uretici_kodu": "SL.055.47.AHO",
         "type": "lamel_profilleri",
-        "color": "a_bronz",
+        "color": "acik_bronz",
         "unit": "Metre",
         "price": "1.58"
       },
@@ -734,7 +734,7 @@
         "description": "Mini Alt Parça Pres",
         "stock_code": "352123900200",
         "uretici_kodu": "ES.427.00.DAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "pres",
         "unit": "Metre",
         "price": "2.21"
@@ -743,7 +743,7 @@
         "description": "Mini Alt Parça Beyaz",
         "stock_code": "352123901110",
         "uretici_kodu": "ES.427.01.DAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "beyaz",
         "unit": "Metre",
         "price": "2.62"
@@ -752,7 +752,7 @@
         "description": "Mini Alt Parça Kahverengi",
         "stock_code": "352123902010",
         "uretici_kodu": "ES.427.03.DAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "kahverengi",
         "unit": "Metre",
         "price": "2.71"
@@ -761,7 +761,7 @@
         "description": "Mini Alt Parça Metalik Gri",
         "stock_code": "352123903010",
         "uretici_kodu": "ES.427.04.DAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "2.71"
@@ -770,7 +770,7 @@
         "description": "Mini Alt Parça Krem",
         "stock_code": "352123903110",
         "uretici_kodu": "ES.427.08.DAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "krem",
         "unit": "Metre",
         "price": "2.71"
@@ -779,7 +779,7 @@
         "description": "Mini Alt Parça Antrasit Gri",
         "stock_code": "352123903410",
         "uretici_kodu": "ES.427.24.DAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "2.71"
@@ -788,7 +788,7 @@
         "description": "Mini Alt Parça Vizon",
         "stock_code": "352123903510",
         "uretici_kodu": "ES.427.32.DAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "vizon",
         "unit": "Metre",
         "price": "2.71"
@@ -797,7 +797,7 @@
         "description": "Mini Alt Parça Altın Meşe",
         "stock_code": "352123905110",
         "uretici_kodu": "ES.427.17.DAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "altın_meşe",
         "unit": "Metre",
         "price": "3.25"
@@ -806,7 +806,7 @@
         "description": "Mini Alt Parça RAL Boyalı",
         "stock_code": "352123901010",
         "uretici_kodu": "ES.427.RA.DAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "ral_boyalı",
         "unit": "Metre",
         "price": "2.83"
@@ -815,7 +815,7 @@
         "description": "Midi Alt Parça Pres",
         "stock_code": "352125500200",
         "uretici_kodu": "ES.361.00.NAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "pres",
         "unit": "Metre",
         "price": "3.10"
@@ -824,7 +824,7 @@
         "description": "Midi Alt Parça Beyaz",
         "stock_code": "352125501110",
         "uretici_kodu": "ES.361.01.NAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "beyaz",
         "unit": "Metre",
         "price": "3.25"
@@ -833,7 +833,7 @@
         "description": "Midi Alt Parça Kahverengi",
         "stock_code": "352125502010",
         "uretici_kodu": "ES.361.03.NAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "kahverengi",
         "unit": "Metre",
         "price": "3.37"
@@ -842,7 +842,7 @@
         "description": "Midi Alt Parça Metalik Gri",
         "stock_code": "352125503010",
         "uretici_kodu": "ES.361.04.NAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "3.37"
@@ -851,7 +851,7 @@
         "description": "Midi Alt Parça Krem",
         "stock_code": "352125503110",
         "uretici_kodu": "ES.361.08.NAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "krem",
         "unit": "Metre",
         "price": "3.37"
@@ -860,7 +860,7 @@
         "description": "Midi Alt Parça Antrasit Gri",
         "stock_code": "352125503410",
         "uretici_kodu": "ES.361.24.NAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "3.37"
@@ -869,7 +869,7 @@
         "description": "Midi Alt Parça Vizon",
         "stock_code": "352125503510",
         "uretici_kodu": "ES.361.32.NAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "vizon",
         "unit": "Metre",
         "price": "3.37"
@@ -878,7 +878,7 @@
         "description": "Midi Alt Parça Altın Meşe",
         "stock_code": "352125505110",
         "uretici_kodu": "ES.361.17.NAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "altın_meşe",
         "unit": "Metre",
         "price": "3.52"
@@ -887,7 +887,7 @@
         "description": "Midi Alt Parça Ral Boyalı",
         "stock_code": "352125501010",
         "uretici_kodu": "ES.361.RA.NAP",
-        "type": "alt_parça",
+        "type": "alt_parca",
         "color": "ral_boyalı",
         "unit": "Metre",
         "price": "3.45"

@@ -22,7 +22,6 @@ interface PanjurSelections {
   lamel_color: string;
   box_color: string;
   dikme_color: string;
-  sectionCount: number;
   movementType: string;
   motorMarka?: string;
   motorSekli?: string;
@@ -53,7 +52,6 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
         const data = await response.json();
         const allAccessories: Accessory[] = data;
         const neededAccessories: Accessory[] = [];
-        // console.log({ data });
         if (allAccessories && selections.productId === "panjur") {
           // Kutu Aksesuarları hesaplama
           let yanKapakDesc: string;

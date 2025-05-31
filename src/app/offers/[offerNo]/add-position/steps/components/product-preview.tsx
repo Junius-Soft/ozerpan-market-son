@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { getProductPreview } from "@/lib/product-preview";
 import { type Product } from "@/documents/products";
 import { ProductDetails } from "../types";
-import { type CalculationResult } from "../hooks/usePanjurCalculator";
+import { CalculationResult } from "@/types/panjur";
 
 interface ProductField {
   id: string;
@@ -177,12 +177,7 @@ export function ProductPreview({
               <div className="text-sm space-y-1">
                 <div className="flex justify-between font-medium text-base">
                   <span>Toplam Fiyat:</span>
-                  <span>
-                    {calculationResult.totalPriceTL.toLocaleString("tr-TR", {
-                      minimumFractionDigits: 2,
-                    })}{" "}
-                    TL
-                  </span>
+                  <span>{calculationResult.totalPriceTL}</span>
                 </div>
               </div>
               {calculationResult.errors.length > 0 && (

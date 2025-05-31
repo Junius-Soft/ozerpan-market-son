@@ -36,7 +36,6 @@ export function DetailsStep({
       // Process fields for this tab
       if (tab.content?.fields) {
         const allFields = tab.content.fields;
-
         // First pass: set all non-dependent fields with default values
         allFields.forEach((field) => {
           if (!field.dependsOn && field.default !== undefined) {
@@ -108,14 +107,12 @@ export function DetailsStep({
         }
       });
     });
-
     const parsed = {
       ...result,
       productId: selectedProduct?.id || "",
       quantity: quantity,
       panjurType:
         (result.panjurType as PanjurSelections["panjurType"]) || "distan",
-      sectionCount: parseInt(result.sectionCount as string) || 1,
       width: parseFloat(result.width as string) || 0,
       height: parseFloat(result.height as string) || 0,
     } as PanjurSelections;

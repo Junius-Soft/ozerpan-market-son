@@ -7,6 +7,13 @@ export interface PriceItem {
   color: string;
   unit: string;
   price: string;
+  quantity?: number; // Optional quantity field for tracking how many of each item is needed
+}
+
+// New interface for tracking selected items
+export interface SelectedProduct extends PriceItem {
+  quantity: number; // Required in selected products
+  totalPrice: number; // Price * quantity
 }
 
 // Interface for calculation results
@@ -16,18 +23,18 @@ export interface CalculationResult {
   lamelCount: number;
   lamelGenisligi: number;
   lamelPrice: number;
-  postHeight: number;
-  postCount: number;
+  dikmeHeight: number;
+  dikmeCount: number;
   boxHeight: number;
   subPartWidth: number;
-  totalPriceTL: number;
+  totalPriceTL: string;
+  selectedProducts: SelectedProduct[]; // Add selected products to the result
   errors: string[];
 }
 
 export interface PanjurSelections {
   productId: string;
   panjurType: "distan" | "monoblok" | "yalitimli";
-  sectionCount: number;
   width: number;
   height: number;
   quantity: number;
@@ -64,7 +71,7 @@ export interface PanjurSelections {
     | "midi_pvc_dikme"
     | "midi_pvc_orta_dikme";
   dikmeAdapter: "yok" | "mini_dikme_adaptoru" | "fulset_dikme_adaptoru";
-  subPart: "mini_alt_parca" | "kilitli_alt_parca";
+  subPart: "mini_alt_parca" | "kilitli_alt_parca" | "midi_alt_parca";
   lamel_color: string;
   box_color: string;
   subPart_color: string;

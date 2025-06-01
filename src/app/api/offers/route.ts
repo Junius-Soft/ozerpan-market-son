@@ -87,44 +87,96 @@ export async function GET() {
   }
 }
 
-// POST /api/offers
+// POST /api/offers - Add a new offer
 export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    // Validate input
-    if (!Array.isArray(body)) {
-      return NextResponse.json(
-        { error: "Invalid input: expected an array of offers" },
-        { status: 400 }
-      );
-    }
-
-    // Validate each offer
-    if (!body.every(isValidOffer)) {
+    // Validate offer
+    if (!isValidOffer(body)) {
       return NextResponse.json(
         { error: "Invalid offer data structure" },
         { status: 400 }
       );
     }
 
-    const offers = body as Offer[];
+    const newOffer = body as Offer;
     await ensureDataDirectory();
 
     try {
+      // Read existing offers
+      let offers: Offer[] = [];
+      try {
+        const data = await fs.readFile(dataFilePath, "utf8");
+        offers = JSON.parse(data);
+      } catch (error) {
+        if (
+          !(
+            error instanceof Error &&
+            "code" in error &&
+            error.code === "ENOENT"
+          )
+        ) {
+          throw error;
+        }
+      }
+
+      // Add new offer
+      offers.push(newOffer);
       await fs.writeFile(dataFilePath, JSON.stringify(offers, null, 2));
-      return NextResponse.json({ success: true });
+      return NextResponse.json({ success: true, offer: newOffer });
     } catch (error) {
-      console.error("Error writing offers:", error);
+      console.error("Error adding offer:", error);
       return NextResponse.json(
-        { error: "Failed to save offers" + error },
+        { error: "Failed to add offer" },
         { status: 500 }
       );
     }
   } catch (error) {
     console.error("Error in POST /api/offers:", error);
     return NextResponse.json(
-      { error: "Internal server error" + error },
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+// DELETE /api/offers/:id - Delete an offer
+export async function DELETE(request: Request) {
+  try {
+    const url = new URL(request.url);
+    const id = url.searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Offer ID is required" },
+        { status: 400 }
+      );
+    }
+
+    await ensureDataDirectory();
+
+    try {
+      // Read existing offers
+      const data = await fs.readFile(dataFilePath, "utf8");
+      let offers: Offer[] = JSON.parse(data);
+
+      // Remove offer
+      offers = offers.filter((offer) => offer.id !== id);
+      await fs.writeFile(dataFilePath, JSON.stringify(offers, null, 2));
+
+      return NextResponse.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting offer:", error);
+      return NextResponse.json(
+        { error: "Failed to delete offer" },
+        { status: 500 }
+      );
+    }
+  } catch (error) {
+    console.error("Error in DELETE /api/offers:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
       { status: 500 }
     );
   }

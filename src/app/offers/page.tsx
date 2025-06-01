@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { Trash2, Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { saveOffers, type Offer, getOffers } from "@/documents/offers";
+import { type Offer, getOffers } from "@/documents/offers";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
@@ -47,13 +47,6 @@ export default function OffersPage() {
     loadOffers();
   }, []);
 
-  // Save offers when they change
-  useEffect(() => {
-    if (allOffers.length > 0) {
-      saveOffers(allOffers);
-    }
-  }, [allOffers]);
-
   useEffect(() => {
     if (isModalOpen) {
       setTimeout(() => {
@@ -69,11 +62,28 @@ export default function OffersPage() {
     );
   };
 
-  const handleDeleteSelected = () => {
-    setAllOffers((prev) =>
-      prev.filter((offer) => !selectedOffers.includes(offer.id))
-    );
-    setSelectedOffers([]);
+  const handleDeleteSelected = async () => {
+    try {
+      for (const offerId of selectedOffers) {
+        const response = await fetch(`/api/offers?id=${offerId}`, {
+          method: "DELETE",
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to delete offer ${offerId}`);
+        }
+      }
+
+      // Update local state after successful deletion
+      const newOffers = allOffers.filter(
+        (offer) => !selectedOffers.includes(offer.id)
+      );
+      setAllOffers(newOffers);
+      setSelectedOffers([]);
+    } catch (error) {
+      console.error("Error deleting offers:", error);
+      // You might want to add error handling UI here
+    }
   };
 
   return (
@@ -108,7 +118,7 @@ export default function OffersPage() {
               <DialogTitle>Yeni Teklif</DialogTitle>
             </DialogHeader>
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
                 if (newOfferName.trim()) {
                   const newOffer: Offer = {
@@ -121,6 +131,18 @@ export default function OffersPage() {
                     status: "Taslak" as const,
                     positions: [],
                   };
+                  const response = await fetch("/api/offers", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(newOffer),
+                  });
+
+                  if (!response.ok) {
+                    throw new Error("Failed to create offer");
+                  }
+
                   setAllOffers((prev) => [...prev, newOffer]);
                   setNewOfferName("");
                   setIsModalOpen(false);

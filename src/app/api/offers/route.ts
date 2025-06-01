@@ -128,14 +128,14 @@ export async function POST(request: Request) {
     } catch (error) {
       console.error("Error adding offer:", error);
       return NextResponse.json(
-        { error: "Failed to add offer" },
+        { error: "Failed to add offer" + error },
         { status: 500 }
       );
     }
   } catch (error) {
     console.error("Error in POST /api/offers:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Internal server error" + error },
       { status: 500 }
     );
   }
@@ -169,14 +169,14 @@ export async function DELETE(request: Request) {
     } catch (error) {
       console.error("Error deleting offer:", error);
       return NextResponse.json(
-        { error: "Failed to delete offer" },
+        { error: "Failed to delete offer" + error },
         { status: 500 }
       );
     }
   } catch (error) {
     console.error("Error in DELETE /api/offers:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Internal server error" + error },
       { status: 500 }
     );
   }

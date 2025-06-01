@@ -173,7 +173,6 @@ export function ProductPreview({
 
           {calculationResult && (
             <div className="space-y-2 border-t pt-4">
-              <h4 className="font-medium">Hesaplama Sonuçları:</h4>
               <div className="text-sm space-y-1">
                 <div className="flex justify-between font-medium text-base">
                   <span>Toplam Fiyat:</span>

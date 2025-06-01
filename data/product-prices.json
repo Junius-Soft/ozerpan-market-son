@@ -1388,6 +1388,46 @@
         "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "0.93"
+      },
+      {
+        "description": "Mosel DC-74 Kutu İçi Panjur Alıcısı",
+        "stock_code": "352521110073",
+        "uretici_kodu": "RC.ALC.DC.73",
+        "type": "otomasyon_alicilar",
+        "unit": "Adet",
+        "price": "25.18"
+      },
+      {
+        "description": "DC 319 İki Kanallı Vera Ankastre Alıcı",
+        "stock_code": "352531210319",
+        "uretici_kodu": "RC.OTM.DC.319",
+        "type": "otomasyon_alicilar",
+        "unit": "Adet",
+        "price": "58.20"
+      },
+      {
+        "description": "DC 318 Tek Kanallı Vera Ankastre Alıcı",
+        "stock_code": "352531210318",
+        "uretici_kodu": "RC.OTM.DC.318",
+        "type": "otomasyon_alicilar",
+        "unit": "Adet",
+        "price": "49.45"
+      },
+      {
+        "description": "PF RECEIVER RTS Panjur Alıcısı",
+        "stock_code": "352522110000",
+        "uretici_kodu": "1810314",
+        "type": "otomasyon_alicilar",
+        "unit": "Adet",
+        "price": "165.00"
+      },
+      {
+        "description": "Centralis Uno RTS Buton Alıcı",
+        "stock_code": "352522310000",
+        "uretici_kodu": "1810217",
+        "type": "otomasyon_alicilar",
+        "unit": "Adet",
+        "price": "188.00"
       }
     ]
   }

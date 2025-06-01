@@ -246,16 +246,16 @@
             "options": [
               { "id": "yok", "name": "Yok" },
               {
-                "id": "mosel_vera_dc_318",
-                "name": "MOSEL VERA DC 318 (Tek Kanallı)"
+                "id": "dc_318_tek_kanalli_vera_ankastre_alici",
+                "name": "DC 318 Tek Kanallı Vera Ankastre Alıcı"
               },
               {
-                "id": "mosel_vera__dc_319",
-                "name": "MOSEL VERA DC 319 (İki Kanallı)"
+                "id": "dc_319_iki_kanalli_vera_ankastre_alici",
+                "name": "DC 319 İki Kanallı Vera Ankastre Alıcı"
               },
               {
-                "id": "mosel_dc-73a_kutu_ici_panjur_alicisi",
-                "name": "Mosel DC-73A Kutu İçi Panjur Alıcısı"
+                "id": "mosel_dc-74_kutu_ici_panjur_alicisi",
+                "name": "Mosel DC-74 Kutu İçi Panjur Alıcısı"
               },
               {
                 "id": "pf_receiver_rts_panjur_alicisi",
@@ -277,9 +277,9 @@
                 "valueMap": {
                   "mosel": [
                     "yok",
-                    "mosel_vera_dc_318",
-                    "mosel_vera__dc_319",
-                    "mosel_dc-73a_kutu_ici_panjur_alicisi",
+                    "dc_318_tek_kanalli_vera_ankastre_alici",
+                    "dc_319_iki_kanalli_vera_ankastre_alici",
+                    "mosel_dc-74_kutu_ici_panjur_alicisi",
                     "mosel_oval_power_ii_alici"
                   ],
                   "somfy": [
@@ -294,9 +294,9 @@
                 "valueMap": {
                   "duz_motorlu": [
                     "yok",
-                    "mosel_vera_dc_318",
-                    "mosel_vera__dc_319",
-                    "mosel_dc-73a_kutu_ici_panjur_alicisi",
+                    "dc_318_tek_kanalli_vera_ankastre_alici",
+                    "dc_319_iki_kanalli_vera_ankastre_alici",
+                    "mosel_dc-74_kutu_ici_panjur_alicisi",
                     "pf_receiver_rts_panjur_alicisi",
                     "centralis_uno_rts_buton_alici",
                     "mosel_oval_power_ii_alici"
@@ -490,15 +490,29 @@
                     "dc_115_a_1_kanalli_verici",
                     "dc_115_b_4_kanalli_verici"
                   ],
-                  "solar-panelli": ["yok", "dd_3000h_bi_direction_elektronik_tekli_verici", "dd_3001h_bi_direction_elektronik_5_1_verici", "dd_3002h_bi_direction_elektronik_15_1_verici"],
-                  "alicili_motorlu_geri_bildirimli": ["yok", "situo_1_io_pure_ii_sea_mea", "situo_5_io_pure_ii_sea_mea", "smoove_origin_io_buton_kumanda"],
+                  "solar-panelli": [
+                    "yok",
+                    "dd_3000h_bi_direction_elektronik_tekli_verici",
+                    "dd_3001h_bi_direction_elektronik_5_1_verici",
+                    "dd_3002h_bi_direction_elektronik_15_1_verici"
+                  ],
+                  "alicili_motorlu_geri_bildirimli": [
+                    "yok",
+                    "situo_1_io_pure_ii_sea_mea",
+                    "situo_5_io_pure_ii_sea_mea",
+                    "smoove_origin_io_buton_kumanda"
+                  ],
                   "alicili_motorlu_geri_bildirimli_engel": [
                     "yok",
                     "situo_1_io_pure_ii_sea_mea",
                     "situo_5_io_pure_ii_sea_mea",
                     "smoove_origin_io_buton_kumanda"
                   ],
-                  "duz_motorlu": ["yok", "siva_alti_kalici_buton", "siva_ustu_buton_kasasi"]
+                  "duz_motorlu": [
+                    "yok",
+                    "siva_alti_kalici_buton",
+                    "siva_ustu_buton_kasasi"
+                  ]
                 }
               }
             ]

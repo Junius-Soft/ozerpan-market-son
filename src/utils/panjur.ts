@@ -1,6 +1,27 @@
 import { LamelProperties } from "@/types/panjur";
 import { lamelProperties, maxLamelHeights } from "@/constants/panjur";
 import { PriceItem, SelectedProduct } from "@/types/panjur";
+import { ProductTab } from "@/documents/products";
+
+// Arayüz tanımları
+export interface TabField {
+  id: string;
+  name: string;
+  type: string;
+  options: Array<{
+    id?: string;
+    name: string;
+  }>;
+}
+
+export interface TabContent {
+  fields: TabField[];
+}
+
+export interface Tab {
+  id: string;
+  content: TabContent;
+}
 
 export const getLamelProperties = (lamelTickness: string): LamelProperties => {
   return lamelProperties[lamelTickness];
@@ -349,4 +370,38 @@ export const findRemotePrice = (
 
   const selectedProduct = createSelectedProduct(matchingRemote, 1);
   return [parseFloat(matchingRemote.price), selectedProduct];
+};
+
+export const findReceiverPrice = (
+  prices: PriceItem[],
+  receiver: string | undefined,
+  movementTab?: ProductTab
+): [number, SelectedProduct | null] => {
+  if (!receiver || receiver === "yok" || !movementTab) return [0, null];
+
+  // Get receiver name from the movement tab's receiver field
+  const receiverField = movementTab.content?.fields?.find(
+    (field) => field.id === "receiver"
+  );
+
+  if (!receiverField?.options) return [0, null];
+
+  // Find the option matching the selected receiver ID
+  const receiverOption = receiverField.options.find(
+    (option) => option.id === receiver
+  );
+  if (!receiverOption?.name) return [0, null];
+
+  // Find matching receiver price in the price list
+  const receiverPrices = prices.filter((p) => p.type === "otomasyon_alicilar");
+  const receiverItem = receiverPrices.find(
+    (price) => price.description === receiverOption.name
+  );
+
+  if (!receiverItem) return [0, null];
+
+  return [
+    parseFloat(receiverItem.price),
+    createSelectedProduct(receiverItem, 1),
+  ];
 };

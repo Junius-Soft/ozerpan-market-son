@@ -121,7 +121,7 @@ export function DetailsStep({
   }, [productDetails, selectedProduct?.id, quantity]);
 
   // console.log("Current selections:", selections);
-  const calculationResult = usePanjurCalculator(selections);
+  const calculationResult = usePanjurCalculator(selections, availableTabs);
   // const { accessories, totalPrice } = useAccessories(selections);
 
   // console.log("Accessory Calculation result:", accessories);

@@ -10,6 +10,7 @@ import {
   findSmartHomePrice,
   findMotorPrice,
   findRemotePrice,
+  findReceiverPrice,
   calculateSystemWidth,
   calculateSystemHeight,
   calculateLamelCount,
@@ -20,9 +21,13 @@ import {
 import { useSearchParams } from "next/navigation";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
 import { useAccessories } from "./useAccessories";
+import { ProductTab } from "@/documents/products";
 
 // Custom hook
-export const usePanjurCalculator = (selections: PanjurSelections) => {
+export const usePanjurCalculator = (
+  selections: PanjurSelections,
+  availableTabs?: ProductTab[]
+) => {
   const [result, setResult] = useState<CalculationResult>({
     systemWidth: 0,
     systemHeight: 0,
@@ -189,6 +194,16 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
         selections.smarthome
       );
 
+      // Get the movement tab
+      const movementTab = availableTabs?.find((tab) => tab.id === "movement");
+
+      // Calculate receiver price
+      const [receiverPrice, receiverSelectedProduct] = findReceiverPrice(
+        prices,
+        selections.receiver,
+        movementTab
+      );
+
       const totalPriceEUR =
         lamelPrice +
         subPartPrice +
@@ -196,7 +211,8 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
         boxPrice +
         motorPrice +
         remotePrice +
-        smarthomePrice;
+        smarthomePrice +
+        receiverPrice;
       const totalPriceTL = isEurRateLoading
         ? "Hesaplanıyor.. "
         : (totalPriceEUR * eurRate).toLocaleString("tr-TR", {
@@ -212,6 +228,7 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
         motorSelectedProduct,
         remoteSelectedProduct,
         smarthomeSelectedProduct,
+        receiverSelectedProduct,
       ].filter(
         (product): product is NonNullable<typeof product> => product !== null
       );

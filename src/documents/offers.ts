@@ -11,28 +11,19 @@ export interface Position {
 export interface Offer {
   id: string;
   name: string;
-  createdAt: string;
+  created_at: string;
   total: string;
   status: "Taslak" | "Kaydedildi" | "Revize";
   positions: Position[];
-  isDirty?: boolean; // pozlarda değişiklik yapıldığını takip etmek için
+  is_dirty?: boolean; // pozlarda değişiklik yapıldığını takip etmek için
 }
 
 // API functions for offer management
 
-const getBaseUrl = () => {
-  if (typeof window !== "undefined") {
-    // Client side
-    return window.location.origin;
-  }
-  // Server side
-  return process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-};
-
-// Function to save offers to JSON file
+// Function to save offers to Supabase
 export const saveOffers = async (offers: Offer[]) => {
   try {
-    await fetch(`${getBaseUrl()}/api/offers`, {
+    await fetch("/api/offers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,10 +35,10 @@ export const saveOffers = async (offers: Offer[]) => {
   }
 };
 
-// Function to get offers from JSON file
+// Function to get offers from Supabase
 export const getOffers = async (): Promise<Offer[]> => {
   try {
-    const response = await fetch(`${getBaseUrl()}/api/offers`);
+    const response = await fetch("/api/offers");
     if (!response.ok) throw new Error("Failed to fetch offers");
     return response.json();
   } catch (error) {
@@ -55,6 +46,3 @@ export const getOffers = async (): Promise<Offer[]> => {
     return [];
   }
 };
-
-// Export empty array initially (will be populated from API)
-export const offers: Offer[] = [];

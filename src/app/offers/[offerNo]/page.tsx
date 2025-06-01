@@ -62,7 +62,7 @@ export default function OfferDetailPage() {
       const updatedOffer = {
         ...offer!,
         name: offerName,
-        isDirty: true,
+        is_dirty: true,
       };
       const offers = await getOffers();
       const updatedOffers = offers.map((o) =>
@@ -310,7 +310,7 @@ export default function OfferDetailPage() {
                   <label className="text-sm text-gray-500">
                     Oluşturma Tarihi
                   </label>
-                  <div className="font-medium">{offer.createdAt}</div>
+                  <div className="font-medium">{offer.created_at}</div>
                 </div>
 
                 {offer.status === "Taslak" && (
@@ -363,12 +363,12 @@ export default function OfferDetailPage() {
                         <Button
                           variant="outline"
                           className="flex-1 gap-2 border-blue-200 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
-                          disabled={!offer.positions?.length || !offer.isDirty}
+                          disabled={!offer.positions?.length || !offer.is_dirty}
                           onClick={async () => {
                             const updatedOffer = {
                               ...offer,
                               status: "Kaydedildi" as const,
-                              isDirty: false,
+                              is_dirty: false,
                             };
                             const offers = await getOffers();
                             const updatedOffers = offers.map((o) =>
@@ -401,7 +401,7 @@ export default function OfferDetailPage() {
                             const updatedOffer = {
                               ...offer,
                               status: "Revize" as const,
-                              isDirty: false,
+                              is_dirty: false,
                             };
                             const offers = await getOffers();
                             const updatedOffers = offers.map((o) =>

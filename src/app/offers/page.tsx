@@ -126,7 +126,7 @@ export default function OffersPage() {
                       allOffers.length + 1
                     ).padStart(3, "0")}`,
                     name: newOfferName,
-                    createdAt: new Date().toLocaleDateString("tr-TR"),
+                    created_at: new Date().toLocaleDateString("tr-TR"),
                     total: "₺0",
                     status: "Taslak" as const,
                     positions: [],
@@ -248,7 +248,7 @@ export default function OffersPage() {
                     </TableCell>
                     <TableCell className="font-medium">{offer.id}</TableCell>
                     <TableCell>{offer.name}</TableCell>
-                    <TableCell>{offer.createdAt}</TableCell>
+                    <TableCell>{offer.created_at}</TableCell>
                     <TableCell>{offer.total}</TableCell>
                     <TableCell>
                       <div className="flex w-full">

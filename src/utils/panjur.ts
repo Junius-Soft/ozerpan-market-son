@@ -176,9 +176,13 @@ export const findSmartHomePrice = (
   const smarthomePrices = prices.filter(
     (price) => price.type.toLowerCase() === "akilli_ev_sistemleri"
   );
-  const searchKey = smartHomeType.toLowerCase().replace(/_/g, " ");
+  const searchKey =
+    smartHomeType === "mosel_dd_7002_b"
+      ? "Mosel DD 7002 B"
+      : "Somfy TAHOMA SWİTCH Pro";
+  console.log({ searchKey });
   const smarthomeItem = smarthomePrices.find((price) =>
-    price.description.toLowerCase().includes(searchKey)
+    price.description.includes(searchKey)
   );
 
   if (!smarthomeItem) return [0, null];

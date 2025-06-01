@@ -1098,6 +1098,22 @@
         "color": "ral_boyalı",
         "unit": "Metre",
         "price": "4.03"
+      },
+      {
+        "description": "Mosel DD 7002 B",
+        "stock_code": "SH.ACA.70.02B",
+        "uretici_kodu": "SH.ACA.70.02B",
+        "type": "akilli_ev_sistemleri",
+        "unit": "Adet",
+        "price": "258.00"
+      },
+      {
+        "description": "Somfy TAHOMA SWİTCH Pro",
+        "stock_code": "1870594",
+        "uretici_kodu": "1870594",
+        "type": "akilli_ev_sistemleri",
+        "unit": "Adet",
+        "price": "287.00"
       }
     ]
   }

@@ -166,3 +166,25 @@ export const findBoxPrice = (
     selectedBackBox,
   };
 };
+
+export const findSmartHomePrice = (
+  prices: PriceItem[],
+  smartHomeType: string | undefined
+): [number, SelectedProduct | null] => {
+  if (!smartHomeType) return [0, null];
+
+  const smarthomePrices = prices.filter(
+    (price) => price.type.toLowerCase() === "akilli_ev_sistemleri"
+  );
+  const searchKey = smartHomeType.toLowerCase().replace(/_/g, " ");
+  const smarthomeItem = smarthomePrices.find((price) =>
+    price.description.toLowerCase().includes(searchKey)
+  );
+
+  if (!smarthomeItem) return [0, null];
+
+  const smarthomePrice = parseFloat(smarthomeItem.price);
+  const smarthomeSelectedProduct = createSelectedProduct(smarthomeItem, 1);
+
+  return [smarthomePrice, smarthomeSelectedProduct];
+};

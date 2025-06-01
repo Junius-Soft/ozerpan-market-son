@@ -293,6 +293,7 @@
                 "field": "motorSekli",
                 "valueMap": {
                   "duz-motorlu": [
+                    "yok",
                     "mosel_vera_dc_318",
                     "mosel_vera__dc_319",
                     "mosel_dc-73a_kutu_ici_panjur_alicisi",
@@ -300,7 +301,10 @@
                     "centralis_uno_rts_buton_alici",
                     "mosel_oval_power_ii_alici"
                   ],
-                  "alicili-motorlu-reduktorlu": ["mosel_oval_power_ii_alici"]
+                  "alicili-motorlu-reduktorlu": [
+                    "yok",
+                    "mosel_oval_power_ii_alici"
+                  ]
                 }
               }
             ],

@@ -11,9 +11,11 @@ import {
   findSubPartPrice,
   findDikmePrice,
   findBoxPrice,
+  findSmartHomePrice,
 } from "@/utils/panjur";
 import { useSearchParams } from "next/navigation";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
+import { useAccessories } from "./useAccessories";
 
 // Custom hook
 export const usePanjurCalculator = (selections: PanjurSelections) => {
@@ -35,6 +37,8 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
   const sectionCount = searchParams.get("typeId");
   const [prices, setPrices] = useState<PriceItem[]>([]);
   const { eurRate, loading: isEurRateLoading } = useExchangeRate();
+  const { accessories, totalPrice: accessoriesTotalPrice } =
+    useAccessories(selections);
 
   useEffect(() => {
     const fetchPrices = async () => {
@@ -56,6 +60,7 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
   useEffect(() => {
     if ((!prices.length || !selections) && !isEurRateLoading) return;
 
+    // Lamel count hesaplanırken çağrılacak
     const calculate = () => {
       const errors: string[] = [];
 
@@ -91,18 +96,18 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
           `Seçilen yükseklik (${systemHeight}mm), bu kutu tipi ve lamel kalınlığı için maksimum değeri (${maxHeight}mm) aşıyor.`
         );
       }
-
-      const lamelHeight = Number(selections.lamelTickness.split("_")[0]);
       const dikmeHeight = !selections.dikmeType.includes("orta")
         ? systemHeight - kutuYuksekligi + kertmePayi
         : 0;
 
+      const lamelHeight = Number(selections.lamelTickness.split("_")[0]);
       const lamelDusmeValue = getLamelDusmeValue(selections.dikmeType);
       const lamelGenisligi = systemWidth - lamelDusmeValue;
 
       const dikmeYuksekligiKertmeHaric = systemHeight - kutuYuksekligi;
       const lamelSayisi = Math.ceil(dikmeYuksekligiKertmeHaric / lamelHeight);
       const lamelCount = lamelSayisi + 1;
+      console.log(`Lamel Count: ${lamelCount},`);
       const dikmeCount = Number(sectionCount) * 2;
 
       // Set initial measurements
@@ -164,7 +169,14 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
         findBoxPrice(prices, selections.boxType, selections.box_color);
       const boxPrice = frontPrice + backPrice;
 
-      const totalPriceEUR = lamelPrice + subPartPrice + dikmePrice + boxPrice;
+      // Akıllı ev sistemi fiyatlandırması
+      const [smarthomePrice, smarthomeSelectedProduct] = findSmartHomePrice(
+        prices,
+        selections.smarthome
+      );
+
+      const totalPriceEUR =
+        lamelPrice + subPartPrice + dikmePrice + boxPrice + smarthomePrice;
       const totalPriceTL = isEurRateLoading
         ? "Hesaplanıyor.. "
         : (totalPriceEUR * eurRate).toLocaleString("tr-TR", {
@@ -177,6 +189,7 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
         dikmeSelectedProduct,
         selectedFrontBox,
         selectedBackBox,
+        smarthomeSelectedProduct,
       ].filter(
         (product): product is NonNullable<typeof product> => product !== null
       );
@@ -187,6 +200,8 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
         totalPriceEUR,
         eurRate,
         totalPriceTL,
+        accessories,
+        accessoriesTotalPrice,
       });
 
       setResult((prev) => ({
@@ -199,7 +214,15 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
     };
 
     calculate();
-  }, [prices, selections, sectionCount, eurRate, isEurRateLoading]);
+  }, [
+    prices,
+    selections,
+    sectionCount,
+    eurRate,
+    isEurRateLoading,
+    accessories,
+    accessoriesTotalPrice,
+  ]);
 
   return result;
 };

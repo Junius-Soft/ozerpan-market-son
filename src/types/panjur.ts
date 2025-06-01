@@ -56,9 +56,9 @@ export interface PanjurSelections {
   buton?: "yok" | "alicili-buton" | "siva-alti-kalici" | "siva-ustu-kasa";
   receiver?: string;
   remote?: string;
-  smarthome?: "yok" | "mosel_dd_7002_b" | "somfy_tahoma";
+  smarthome?: "yok" | "mosel_dd_7002_b" | "somfy_tahoma_switch_pro";
   lamelType: "aluminyum_poliuretanli" | "aluminyum_ekstruzyon";
-  lamelTickness: "39_sl" | "55_sl" | "55_se";
+  lamelTickness: "39_sl" | "45_se" | "55_sl" | "55_se";
   aski_kilit_secimi: "yok" | "aski_kilit";
   boxType: "137mm" | "165mm" | "205mm" | "250mm";
   dikmeType:

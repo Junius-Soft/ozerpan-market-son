@@ -124,7 +124,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Error in POST /api/offers:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Internal server error" + error },
       { status: 500 }
     );
   }

@@ -136,23 +136,23 @@
             "type": "select",
             "options": [
               {
-                "id": "duz-motorlu",
+                "id": "duz_motorlu",
                 "name": "Düz Motorlu (Butonlu)"
               },
               {
-                "id": "alicili-motorlu",
+                "id": "alicili_motorlu",
                 "name": "Alıcılı Motorlu (Kumandalı)"
               },
               {
-                "id": "alicili-motorlu-reduktorlu",
+                "id": "alicili_motorlu_reduktorlu",
                 "name": "Alıcılı Motorlu (Redüktörlü)"
               },
               {
-                "id": "alicili-geri-bildirimli",
+                "id": "alicili_motorlu_geri_bildirimli",
                 "name": "Alıcılı Geri Bildirimli Motor"
               },
               {
-                "id": "alicili-geri-bildirimli-engel",
+                "id": "alicili_motorlu_geri_bildirimli_engel",
                 "name": "Alıcılı Geri Bildirimli Engel Tanımalı Motor"
               },
               {
@@ -164,18 +164,18 @@
               "field": "motorMarka",
               "valueMap": {
                 "mosel": [
-                  "duz-motorlu",
-                  "alicili-motorlu",
-                  "alicili-motorlu-reduktorlu",
+                  "duz_motorlu",
+                  "alicili_motorlu",
+                  "alicili_motorlu_reduktorlu",
                   "solar-panelli"
                 ],
                 "somfy": [
-                  "alicili-geri-bildirimli",
-                  "alicili-geri-bildirimli-engel"
+                  "alicili_motorlu_geri_bildirimli",
+                  "alicili_motorlu_geri_bildirimli_engel"
                 ]
               }
             },
-            "default": "duz-motorlu",
+            "default": "duz_motorlu",
             "dependsOn": {
               "field": "movementType",
               "value": "motorlu"
@@ -188,38 +188,38 @@
             "type": "select",
             "options": [
               {
-                "id": "mosel-60-20",
+                "id": "sel_60-20",
                 "name": "Mosel 60-20"
               },
               {
-                "id": "mosel-60-30",
+                "id": "sel_60-30",
                 "name": "Mosel 60-30"
               },
               {
-                "id": "mosel-d60-50",
-                "name": "Mosel 60-60"
+                "id": "sel_60-50",
+                "name": "Mosel 60-50"
               },
               {
-                "id": "somfy-boost-15",
+                "id": "boost_15",
                 "name": "Boost 15"
               },
               {
-                "id": "somfy-boost-35",
+                "id": "boost_35",
                 "name": "Boost 35"
               },
               {
-                "id": "somfy-boost-55",
+                "id": "boost_55",
                 "name": "Boost 55"
               }
             ],
             "filterBy": {
               "field": "motorMarka",
               "valueMap": {
-                "mosel": ["mosel-60-20", "mosel-60-30", "mosel-d60-50"],
-                "somfy": ["somfy-boost-15", "somfy-boost-35", "somfy-boost-55"]
+                "mosel": ["sel_60-20", "sel_60-30", "sel_60-50"],
+                "somfy": ["boost_15", "boost_35", "boost_55"]
               }
             },
-            "default": "mosel-60-20",
+            "default": "sel_60-20",
             "dependsOn": {
               "field": "movementType",
               "value": "motorlu"
@@ -292,7 +292,7 @@
               {
                 "field": "motorSekli",
                 "valueMap": {
-                  "duz-motorlu": [
+                  "duz_motorlu": [
                     "yok",
                     "mosel_vera_dc_318",
                     "mosel_vera__dc_319",
@@ -301,7 +301,7 @@
                     "centralis_uno_rts_buton_alici",
                     "mosel_oval_power_ii_alici"
                   ],
-                  "alicili-motorlu-reduktorlu": [
+                  "alicili_motorlu_reduktorlu": [
                     "yok",
                     "mosel_oval_power_ii_alici"
                   ]
@@ -310,7 +310,7 @@
             ],
             "dependsOn": {
               "field": "motorSekli",
-              "value": ["duz-motorlu", "alicili-motorlu-reduktorlu"]
+              "value": ["duz_motorlu", "alicili_motorlu_reduktorlu"]
             }
           },
           {
@@ -363,12 +363,12 @@
             "dependsOn": {
               "field": "motorSekli",
               "value": [
-                "duz-motorlu",
-                "alicili-motorlu",
-                "alicili-motorlu-reduktorlu",
+                "duz_motorlu",
+                "alicili_motorlu",
+                "alicili_motorlu_reduktorlu",
                 "solar-panelli",
-                "alicili-geri-bildirimli",
-                "alicili-geri-bildirimli-engel"
+                "alicili_motorlu_geri_bildirimli",
+                "alicili_motorlu_geri_bildirimli_engel"
               ]
             },
             "filterBy": [
@@ -410,7 +410,7 @@
               {
                 "field": "motorSekli",
                 "valueMap": {
-                  "alicili-motorlu": [
+                  "alicili_motorlu": [
                     "yok",
                     "1",
                     "2",
@@ -429,7 +429,7 @@
                     "21",
                     "22"
                   ],
-                  "alicili-motorlu-reduktorlu": [
+                  "alicili_motorlu_reduktorlu": [
                     "yok",
                     "1",
                     "2",
@@ -449,9 +449,14 @@
                     "22"
                   ],
                   "solar-panelli": ["yok", "10", "11", "12"],
-                  "alicili-geri-bildirimli": ["yok", "13", "15", "19"],
-                  "alicili-geri-bildirimli-engel": ["yok", "13", "15", "19"],
-                  "duz-motorlu": ["yok", "23", "24"]
+                  "alicili_motorlu_geri_bildirimli": ["yok", "13", "15", "19"],
+                  "alicili_motorlu_geri_bildirimli_engel": [
+                    "yok",
+                    "13",
+                    "15",
+                    "19"
+                  ],
+                  "duz_motorlu": ["yok", "23", "24"]
                 }
               }
             ]
@@ -473,10 +478,10 @@
             "dependsOn": {
               "field": "motorSekli",
               "value": [
-                "alicili-motorlu",
-                "alicili-motorlu-reduktorlu",
-                "alicili-geri-bildirimli",
-                "alicili-geri-bildirimli-engel"
+                "alicili_motorlu",
+                "alicili_motorlu_reduktorlu",
+                "alicili_motorlu_geri_bildirimli",
+                "alicili_motorlu_geri_bildirimli_engel"
               ]
             },
             "filterBy": [

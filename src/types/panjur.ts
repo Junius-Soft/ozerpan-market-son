@@ -46,11 +46,11 @@ export interface PanjurSelections {
   makaraliTip?: "makassiz" | "makasli";
   motorMarka?: "mosel" | "somfy";
   motorSekli?:
-    | "duz-motorlu"
-    | "alicili-motorlu"
-    | "alicili-motorlu-reduktorlu"
-    | "alicili-geri-bildirimli"
-    | "alicili-geri-bildirimli-engel-tanimali"
+    | "duz_motorlu"
+    | "alicili_motorlu"
+    | "alicili_motorlu_reduktorlu"
+    | "alicili_motorlu_geri_bildirimli"
+    | "alicili_motorlu_geri_bildirimli_engel-tanimali"
     | "solar-panelli";
   motorModel?: string;
   buton?: "yok" | "alicili-buton" | "siva-alti-kalici" | "siva-ustu-kasa";

@@ -12,6 +12,7 @@ import {
   findDikmePrice,
   findBoxPrice,
   findSmartHomePrice,
+  findMotorPrice,
 } from "@/utils/panjur";
 import { useSearchParams } from "next/navigation";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
@@ -169,6 +170,14 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
         findBoxPrice(prices, selections.boxType, selections.box_color);
       const boxPrice = frontPrice + backPrice;
 
+      // Motor fiyatı hesaplama
+      const [motorPrice, motorSelectedProduct] = findMotorPrice(
+        prices,
+        selections.motorMarka,
+        selections.motorModel,
+        selections.motorSekli
+      );
+
       // Akıllı ev sistemi fiyatlandırması
       const [smarthomePrice, smarthomeSelectedProduct] = findSmartHomePrice(
         prices,
@@ -176,7 +185,12 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
       );
 
       const totalPriceEUR =
-        lamelPrice + subPartPrice + dikmePrice + boxPrice + smarthomePrice;
+        lamelPrice +
+        subPartPrice +
+        dikmePrice +
+        boxPrice +
+        motorPrice +
+        smarthomePrice;
       const totalPriceTL = isEurRateLoading
         ? "Hesaplanıyor.. "
         : (totalPriceEUR * eurRate).toLocaleString("tr-TR", {
@@ -189,6 +203,7 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
         dikmeSelectedProduct,
         selectedFrontBox,
         selectedBackBox,
+        motorSelectedProduct,
         smarthomeSelectedProduct,
       ].filter(
         (product): product is NonNullable<typeof product> => product !== null

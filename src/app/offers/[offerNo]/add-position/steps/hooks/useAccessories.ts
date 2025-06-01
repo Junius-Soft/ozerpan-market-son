@@ -381,6 +381,25 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
             }
           }
 
+          // 55'lik Lamel Denge Makarası kontrolü
+          if (
+            selections.dikmeType.startsWith("midi_") &&
+            selections.boxType === "250mm"
+          ) {
+            const dengeMakarasi = allAccessories.find((acc) =>
+              acc.description
+                .toLowerCase()
+                .includes("55'lik lamel denge makarası")
+            );
+            if (dengeMakarasi) {
+              const dengeMakarasiAccessory = {
+                ...dengeMakarasi,
+                quantity: 1,
+              };
+              neededAccessories.push(dengeMakarasiAccessory);
+            }
+          }
+
           // Tambur profili hesaplama
           const tamburDesc =
             selections.movementType === "manuel"

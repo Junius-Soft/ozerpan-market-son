@@ -171,8 +171,7 @@ export const findSmartHomePrice = (
   prices: PriceItem[],
   smartHomeType: string | undefined
 ): [number, SelectedProduct | null] => {
-  if (!smartHomeType) return [0, null];
-
+  if (smartHomeType === "yok") return [0, null];
   const smarthomePrices = prices.filter(
     (price) => price.type.toLowerCase() === "akilli_ev_sistemleri"
   );
@@ -180,7 +179,6 @@ export const findSmartHomePrice = (
     smartHomeType === "mosel_dd_7002_b"
       ? "Mosel DD 7002 B"
       : "Somfy TAHOMA SWİTCH Pro";
-  console.log({ searchKey });
   const smarthomeItem = smarthomePrices.find((price) =>
     price.description.includes(searchKey)
   );
@@ -191,4 +189,34 @@ export const findSmartHomePrice = (
   const smarthomeSelectedProduct = createSelectedProduct(smarthomeItem, 1);
 
   return [smarthomePrice, smarthomeSelectedProduct];
+};
+
+export const findMotorPrice = (
+  prices: PriceItem[],
+  motorMarka?: string,
+  motorModel?: string,
+  motorSekli?: string
+): [number, SelectedProduct | null] => {
+  if (!motorMarka || !motorModel || !motorSekli) return [0, null];
+
+  const motorPrices = prices.filter(
+    (price) => price.type.toLowerCase() === "panjur_motorlari"
+  );
+
+  const motorType = motorSekli.startsWith("alicili_")
+    ? "Alıcılı Motor"
+    : "Motor";
+  const searchKey = `${motorMarka} ${motorModel.replace(
+    /_/g,
+    " "
+  )} ${motorType}`.toLowerCase();
+
+  const motorItem = motorPrices.find((price) =>
+    price.description.toLowerCase().includes(searchKey)
+  );
+
+  if (!motorItem) return [0, null];
+
+  const motorPrice = parseFloat(motorItem.price);
+  return [motorPrice, createSelectedProduct(motorItem, 1)];
 };

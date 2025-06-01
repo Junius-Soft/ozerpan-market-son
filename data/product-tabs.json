@@ -319,45 +319,87 @@
             "type": "select",
             "options": [
               { "id": "yok", "name": "Yok" },
-              { "id": "1", "name": "DC 104 Tek Kanallı" },
-              { "id": "2", "name": "DC 105 4+1 Kanallı" },
-              { "id": "3", "name": "DC 106 10 Kanallı Verici" },
-              { "id": "4", "name": "DC 107 16 Kanallı Verici" },
-              { "id": "5", "name": "DC 315 1 Kanallı Buton Tipi Verici" },
-              { "id": "6", "name": "DC 316 2 Kanallı Buton Tipi Verici" },
-              { "id": "7", "name": "DC 317 16 Kanallı Buton Tipi Verici" },
-              { "id": "8", "name": "DC 168 1 Kanallı Zaman Ayarlı Verici" },
+              { "id": "dc_104_1_kanalli", "name": "DC 104 1 Kanallı" },
+              { "id": "dc_105_5_kanalli", "name": "DC 105 5 Kanallı" },
               {
-                "id": "9",
+                "id": "dc_106_10_kanalli_verici",
+                "name": "DC 106 10 Kanallı Verici"
+              },
+              {
+                "id": "dc_107_16_kanalli_verici",
+                "name": "DC 107 16 Kanallı Verici"
+              },
+              {
+                "id": "dc_315_1_kanalli_buton_tipi_verici",
+                "name": "DC 315 1 Kanallı Buton Tipi Verici"
+              },
+              {
+                "id": "dc_316_2_kanalli_buton_tipi_verici",
+                "name": "DC 316 2 Kanallı Buton Tipi Verici"
+              },
+              {
+                "id": "dc_317_16_kanalli_buton_tipi_verici",
+                "name": "DC 317 16 Kanallı Buton Tipi Verici"
+              },
+              {
+                "id": "dc_168_1_kanalli_zaman_ayarli_verici",
+                "name": "DC 168 1 Kanallı Zaman Ayarlı Verici"
+              },
+              {
+                "id": "dc_169_16_kanalli_zaman_ayarli_verici",
                 "name": "DC 169 16 Kanallı Zaman Ayarlı Verici"
               },
               {
-                "id": "10",
+                "id": "dd_3000h_bi_direction_elektronik_tekli_verici",
                 "name": "DD 3000H Bi-Direction Elektronik Tekli Verici"
               },
               {
-                "id": "11",
+                "id": "dd_3001h_bi_direction_elektronik_5_1_verici",
                 "name": "DD 3001H Bi-Direction Elektronik 5+1 Verici"
               },
               {
-                "id": "12",
+                "id": "dd_3002h_bi_direction_elektronik_15_1_verici",
                 "name": "DD 3002H Bi-Direction Elektronik 15+1 Verici"
               },
-              { "id": "13", "name": "Situo 1 IO Pure II SEA MEA" },
-              { "id": "14", "name": "Situo 1 RTS Pure II" },
-              { "id": "15", "name": "Situo 5 IO Pure II SEA MEA" },
-              { "id": "16", "name": "Situo 5 RTS Pure II" },
-              { "id": "17", "name": "Telis 16 RTS Pure" },
-              { "id": "18", "name": "Smoove Origin RTS Buton Kumanda" },
-              { "id": "19", "name": "Smoove Origin IO Buton Kumanda" },
               {
-                "id": "20",
+                "id": "situo_1_io_pure_ii_sea_mea",
+                "name": "Situo 1 IO Pure II SEA MEA"
+              },
+              { "id": "situo_1_rts_pure_ii", "name": "Situo 1 RTS Pure II" },
+              {
+                "id": "situo_5_io_pure_ii_sea_mea",
+                "name": "Situo 5 IO Pure II SEA MEA"
+              },
+              { "id": "situo_5_rts_pure_ii", "name": "Situo 5 RTS Pure II" },
+              { "id": "telis_16_rts_pure", "name": "Telis 16 RTS Pure" },
+              {
+                "id": "smoove_origin_rts_buton_kumanda",
+                "name": "Smoove Origin RTS Buton Kumanda"
+              },
+              {
+                "id": "smoove_origin_io_buton_kumanda",
+                "name": "Smoove Origin IO Buton Kumanda"
+              },
+              {
+                "id": "telis_6_chronis_rts_zaman_ayarli_kumanda",
                 "name": "Telis 6 Chronis RTS Zaman Ayarlı Kumanda"
               },
-              { "id": "21", "name": "DC 115 A 1 Kanallı Verici" },
-              { "id": "22", "name": "DC 115 B 4 Kanallı Verici" },
-              { "id": "23", "name": "Sıva Altı Kalıcı Buton" },
-              { "id": "24", "name": "Sıva Üstü Buton Kasası" }
+              {
+                "id": "dc_115_a_1_kanalli_verici",
+                "name": "DC 115 A 1 Kanallı Verici"
+              },
+              {
+                "id": "dc_115_b_4_kanalli_verici",
+                "name": "DC 115 B 4 Kanallı Verici"
+              },
+              {
+                "id": "siva_alti_kalici_buton",
+                "name": "Sıva Altı Kalıcı Buton"
+              },
+              {
+                "id": "siva_ustu_buton_kasasi",
+                "name": "Sıva Üstü Buton Kasası"
+              }
             ],
             "default": "yok",
             "dependsOn": {
@@ -377,33 +419,33 @@
                 "valueMap": {
                   "mosel": [
                     "yok",
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "10",
-                    "11",
-                    "12",
-                    "21",
-                    "22",
-                    "23"
+                    "dc_104_1_kanalli",
+                    "dc_105_5_kanalli",
+                    "dc_106_10_kanalli_verici",
+                    "dc_107_16_kanalli_verici",
+                    "dc_315_1_kanalli_buton_tipi_verici",
+                    "dc_316_2_kanalli_buton_tipi_verici",
+                    "dc_317_16_kanalli_buton_tipi_verici",
+                    "dc_168_1_kanalli_zaman_ayarli_verici",
+                    "dc_169_16_kanalli_zaman_ayarli_verici",
+                    "dd_3000h_bi_direction_elektronik_tekli_verici",
+                    "dd_3001h_bi_direction_elektronik_5_1_verici",
+                    "dd_3002h_bi_direction_elektronik_15_1_verici",
+                    "dc_115_a_1_kanalli_verici",
+                    "dc_115_b_4_kanalli_verici",
+                    "siva_alti_kalici_buton"
                   ],
                   "somfy": [
                     "yok",
-                    "13",
-                    "14",
-                    "15",
-                    "16",
-                    "17",
-                    "18",
-                    "19",
-                    "20",
-                    "24"
+                    "situo_1_io_pure_ii_sea_mea",
+                    "situo_1_rts_pure_ii",
+                    "situo_5_io_pure_ii_sea_mea",
+                    "situo_5_rts_pure_ii",
+                    "telis_16_rts_pure",
+                    "smoove_origin_rts_buton_kumanda",
+                    "smoove_origin_io_buton_kumanda",
+                    "telis_6_chronis_rts_zaman_ayarli_kumanda",
+                    "siva_ustu_buton_kasasi"
                   ]
                 }
               },
@@ -412,51 +454,51 @@
                 "valueMap": {
                   "alicili_motorlu": [
                     "yok",
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "14",
-                    "16",
-                    "17",
-                    "18",
-                    "20",
-                    "21",
-                    "22"
+                    "dc_104_1_kanalli",
+                    "dc_105_5_kanalli",
+                    "dc_106_10_kanalli_verici",
+                    "dc_107_16_kanalli_verici",
+                    "dc_315_1_kanalli_buton_tipi_verici",
+                    "dc_316_2_kanalli_buton_tipi_verici",
+                    "dc_317_16_kanalli_buton_tipi_verici",
+                    "dc_168_1_kanalli_zaman_ayarli_verici",
+                    "dc_169_16_kanalli_zaman_ayarli_verici",
+                    "situo_1_rts_pure_ii",
+                    "situo_5_rts_pure_ii",
+                    "telis_16_rts_pure",
+                    "smoove_origin_rts_buton_kumanda",
+                    "telis_6_chronis_rts_zaman_ayarli_kumanda",
+                    "dc_115_a_1_kanalli_verici",
+                    "dc_115_b_4_kanalli_verici"
                   ],
                   "alicili_motorlu_reduktorlu": [
                     "yok",
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "14",
-                    "16",
-                    "17",
-                    "18",
-                    "20",
-                    "21",
-                    "22"
+                    "dc_104_1_kanalli",
+                    "dc_105_5_kanalli",
+                    "dc_106_10_kanalli_verici",
+                    "dc_107_16_kanalli_verici",
+                    "dc_315_1_kanalli_buton_tipi_verici",
+                    "dc_316_2_kanalli_buton_tipi_verici",
+                    "dc_317_16_kanalli_buton_tipi_verici",
+                    "dc_168_1_kanalli_zaman_ayarli_verici",
+                    "dc_169_16_kanalli_zaman_ayarli_verici",
+                    "situo_1_rts_pure_ii",
+                    "situo_5_rts_pure_ii",
+                    "telis_16_rts_pure",
+                    "smoove_origin_rts_buton_kumanda",
+                    "telis_6_chronis_rts_zaman_ayarli_kumanda",
+                    "dc_115_a_1_kanalli_verici",
+                    "dc_115_b_4_kanalli_verici"
                   ],
-                  "solar-panelli": ["yok", "10", "11", "12"],
-                  "alicili_motorlu_geri_bildirimli": ["yok", "13", "15", "19"],
+                  "solar-panelli": ["yok", "dd_3000h_bi_direction_elektronik_tekli_verici", "dd_3001h_bi_direction_elektronik_5_1_verici", "dd_3002h_bi_direction_elektronik_15_1_verici"],
+                  "alicili_motorlu_geri_bildirimli": ["yok", "situo_1_io_pure_ii_sea_mea", "situo_5_io_pure_ii_sea_mea", "smoove_origin_io_buton_kumanda"],
                   "alicili_motorlu_geri_bildirimli_engel": [
                     "yok",
-                    "13",
-                    "15",
-                    "19"
+                    "situo_1_io_pure_ii_sea_mea",
+                    "situo_5_io_pure_ii_sea_mea",
+                    "smoove_origin_io_buton_kumanda"
                   ],
-                  "duz_motorlu": ["yok", "23", "24"]
+                  "duz_motorlu": ["yok", "siva_alti_kalici_buton", "siva_ustu_buton_kasasi"]
                 }
               }
             ]

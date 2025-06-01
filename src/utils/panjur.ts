@@ -284,3 +284,69 @@ export const calculateDikmeHeight = (
   const kertmePayi = getKertmePayi(dikmeType);
   return systemHeight - kutuYuksekligi + kertmePayi;
 };
+
+// Türkçe karakter dönüşümlerini yapan yardımcı fonksiyon
+const turkishToAscii = (text: string): string => {
+  const charMap: { [key: string]: string } = {
+    ı: "i",
+    ğ: "g",
+    ü: "u",
+    ş: "s",
+    ö: "o",
+    ç: "c",
+    İ: "I",
+    Ğ: "G",
+    Ü: "U",
+    Ş: "S",
+    Ö: "O",
+    Ç: "C",
+  };
+  return text
+    .toLowerCase()
+    .replace(/[ıİğĞüÜşŞöÖçÇ]/g, (char) => charMap[char] || char);
+};
+
+// Kumanda model isimlerini normalize eden fonksiyon
+const normalizeRemoteName = (remoteName: string): string => {
+  // Önce alt çizgileri boşluğa çeviriyoruz
+  const spaced = remoteName.replace(/_/g, " ");
+  // Kelimelerin ilk harflerini büyük yapıyoruz
+  const capitalized = spaced
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+  return capitalized;
+};
+
+export const findRemotePrice = (
+  prices: PriceItem[],
+  remote: string | undefined
+): [number, SelectedProduct | null] => {
+  if (!remote) return [0, null];
+
+  // Otomasyon kumandalarını filtrele
+  const remotePrices = prices.filter((p) => p.type === "otomasyon_kumandalari");
+
+  const normalizedSearchName = normalizeRemoteName(remote);
+
+  // Kumandayı bul
+  const matchingRemote = remotePrices.find((p) => {
+    // Hem orijinal stringi hem de ascii versiyonunu kontrol et
+    const description = p.description || "";
+    const normalizedDesc = turkishToAscii(description);
+    const normalizedSearch = turkishToAscii(normalizedSearchName);
+
+    return (
+      normalizedDesc.includes(normalizedSearch) ||
+      description.includes(normalizedSearchName)
+    );
+  });
+
+  if (!matchingRemote) {
+    console.log("Remote not found:", normalizedSearchName);
+    return [0, null];
+  }
+
+  const selectedProduct = createSelectedProduct(matchingRemote, 1);
+  return [parseFloat(matchingRemote.price), selectedProduct];
+};

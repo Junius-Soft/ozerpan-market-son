@@ -9,6 +9,7 @@ import {
   findBoxPrice,
   findSmartHomePrice,
   findMotorPrice,
+  findRemotePrice,
   calculateSystemWidth,
   calculateSystemHeight,
   calculateLamelCount,
@@ -176,6 +177,12 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
         selections.motorSekli
       );
 
+      // Uzaktan kumanda fiyatı hesaplama
+      const [remotePrice, remoteSelectedProduct] = findRemotePrice(
+        prices,
+        selections.remote
+      );
+
       // Akıllı ev sistemi fiyatlandırması
       const [smarthomePrice, smarthomeSelectedProduct] = findSmartHomePrice(
         prices,
@@ -188,6 +195,7 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
         dikmePrice +
         boxPrice +
         motorPrice +
+        remotePrice +
         smarthomePrice;
       const totalPriceTL = isEurRateLoading
         ? "Hesaplanıyor.. "
@@ -202,6 +210,7 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
         selectedFrontBox,
         selectedBackBox,
         motorSelectedProduct,
+        remoteSelectedProduct,
         smarthomeSelectedProduct,
       ].filter(
         (product): product is NonNullable<typeof product> => product !== null

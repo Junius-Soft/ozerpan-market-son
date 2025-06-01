@@ -1217,7 +1217,7 @@
         "description": "DC 315 1 Kanallı Vera Buton Tipi Verici",
         "stock_code": "352531210315",
         "uretici_kodu": "RC.OTM.DC.315",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "19.59"
       },
@@ -1225,7 +1225,7 @@
         "description": "DC 316 5 Kanallı Vera Buton Tipi Verici",
         "stock_code": "352531210316",
         "uretici_kodu": "RC.OTM.DC.316",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "21.19"
       },
@@ -1233,7 +1233,7 @@
         "description": "DC 317 16 Kanallı Vera Buton Tipi Verici",
         "stock_code": "352531210317",
         "uretici_kodu": "RC.OTM.DC.317",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "32.08"
       },
@@ -1241,7 +1241,7 @@
         "description": "DC 168 1 Kanallı Zaman Ayarlı Verici",
         "stock_code": "352531310168",
         "uretici_kodu": "RC.OTM.DC.168",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "30.73"
       },
@@ -1249,7 +1249,7 @@
         "description": "DC 169 16 Kanallı Zaman Ayarlı Verici",
         "stock_code": "352531370169",
         "uretici_kodu": "RC.OTM.DC.169",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "32.79"
       },
@@ -1257,7 +1257,7 @@
         "description": "DC 104 1 Kanallı Verici",
         "stock_code": "352531110104",
         "uretici_kodu": "RC.OTM.DC.104",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "12.44"
       },
@@ -1265,7 +1265,7 @@
         "description": "DC 105 5 Kanallı Verici",
         "stock_code": "352531150105",
         "uretici_kodu": "RC.OTM.DC.105",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "19.59"
       },
@@ -1273,7 +1273,7 @@
         "description": "DC 106 10 Kanallı Verici",
         "stock_code": "352531160106",
         "uretici_kodu": "RC.OTM.DC.106",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "20.40"
       },
@@ -1281,7 +1281,7 @@
         "description": "DC 107 16 Kanallı Verici",
         "stock_code": "352531170107",
         "uretici_kodu": "RC.OTM.DC.107",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "23.17"
       },
@@ -1289,7 +1289,7 @@
         "description": "MOSEL DD 3000H Bi-Direction tek kanallı verici",
         "stock_code": "RC.OTM.DD.3000",
         "uretici_kodu": "RC.OTM.DD.3000",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "18.24"
       },
@@ -1297,7 +1297,7 @@
         "description": "MOSEL DD 3001H Bi-Direction 5+1 kanallı verici",
         "stock_code": "RC.OTM.DD.3001",
         "uretici_kodu": "RC.OTM.DD.3001",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "22.91"
       },
@@ -1305,7 +1305,7 @@
         "description": "MOSEL DD 3002H Bi-Direction 15+1 kanallı verici",
         "stock_code": "RC.OTM.DD.3002",
         "uretici_kodu": "RC.OTM.DD.3002",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "25.34"
       },
@@ -1313,7 +1313,7 @@
         "description": "Situo 1 IO Pure II SEA MEA",
         "stock_code": "352532111100",
         "uretici_kodu": "352532111100",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "62.19"
       },
@@ -1321,7 +1321,7 @@
         "description": "Situo 5 IO Pure II SEA MEA",
         "stock_code": "352532151100",
         "uretici_kodu": "352532151100",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "105.61"
       },
@@ -1329,7 +1329,7 @@
         "description": "Situo 1 RTS Pure II",
         "stock_code": "352532121100",
         "uretici_kodu": "352532121100",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "62.19"
       },
@@ -1337,7 +1337,7 @@
         "description": "Situo 5 RTS Pure II",
         "stock_code": "352532141100",
         "uretici_kodu": "352532141100",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "105.61"
       },
@@ -1345,7 +1345,7 @@
         "description": "Telis 16 RTS Pure",
         "stock_code": "352532171100",
         "uretici_kodu": "352532171100",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "292.03"
       },
@@ -1353,7 +1353,7 @@
         "description": "Smoove Origin RTS Buton Kumanda",
         "stock_code": "352532211100",
         "uretici_kodu": "352532211100",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "54.48"
       },
@@ -1361,7 +1361,7 @@
         "description": "Smoove Origin IO Buton Kumanda",
         "stock_code": "352532211100",
         "uretici_kodu": "352532211100",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "54.48"
       },
@@ -1369,7 +1369,7 @@
         "description": "Telis 6 Chronis RTS Zaman Ayarlı Kumanda",
         "stock_code": "352532321100",
         "uretici_kodu": "352532321100",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "323.50"
       },
@@ -1377,7 +1377,7 @@
         "description": "Sıva Altı Kalıcı Buton",
         "stock_code": "352540211100",
         "uretici_kodu": "352540211100",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "2.56"
       },
@@ -1385,7 +1385,7 @@
         "description": "Sıva Üstü Buton Kasası",
         "stock_code": "352540911100",
         "uretici_kodu": "352540911100",
-        "type": "Otomasyon Kumandalar",
+        "type": "otomasyon_kumandalari",
         "unit": "Adet",
         "price": "0.93"
       }

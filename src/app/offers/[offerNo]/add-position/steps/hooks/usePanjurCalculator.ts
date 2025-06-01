@@ -2,17 +2,19 @@ import { useState, useEffect } from "react";
 import { PriceItem, CalculationResult, PanjurSelections } from "@/types/panjur";
 import {
   getLamelProperties,
-  getBoxHeight,
-  getKertmePayi,
   getMaxLamelHeight,
-  getDikmeGenisligi,
-  getLamelDusmeValue,
   findLamelPrice,
   findSubPartPrice,
   findDikmePrice,
   findBoxPrice,
   findSmartHomePrice,
   findMotorPrice,
+  calculateSystemWidth,
+  calculateSystemHeight,
+  calculateLamelCount,
+  calculateLamelGenisligi,
+  calculateDikmeHeight,
+  getBoxHeight,
 } from "@/utils/panjur";
 import { useSearchParams } from "next/navigation";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
@@ -65,27 +67,19 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
     const calculate = () => {
       const errors: string[] = [];
 
-      const kertmePayi = getKertmePayi(selections.dikmeType);
-      const dikmeGenisligi = getDikmeGenisligi(selections.dikmeType);
+      const systemWidth = calculateSystemWidth(
+        selections.width,
+        selections.dikmeOlcuAlmaSekli,
+        selections.dikmeType
+      );
+
+      const systemHeight = calculateSystemHeight(
+        selections.height,
+        selections.kutuOlcuAlmaSekli,
+        selections.boxType
+      );
+
       const kutuYuksekligi = getBoxHeight(selections.boxType);
-
-      let systemWidth = selections.width;
-      switch (selections.dikmeOlcuAlmaSekli) {
-        case "dikme_haric":
-          systemWidth = selections.width + 2 * dikmeGenisligi - 10;
-          break;
-        case "tek_dikme":
-          systemWidth = selections.width + dikmeGenisligi - 10;
-          break;
-        case "dikme_dahil":
-          systemWidth = selections.width - 10;
-          break;
-      }
-
-      let systemHeight = selections.height;
-      if (selections.kutuOlcuAlmaSekli === "kutu_haric") {
-        systemHeight = selections.height + kutuYuksekligi;
-      }
 
       const maxHeight = getMaxLamelHeight(
         selections.boxType,
@@ -97,17 +91,22 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
           `Seçilen yükseklik (${systemHeight}mm), bu kutu tipi ve lamel kalınlığı için maksimum değeri (${maxHeight}mm) aşıyor.`
         );
       }
-      const dikmeHeight = !selections.dikmeType.includes("orta")
-        ? systemHeight - kutuYuksekligi + kertmePayi
-        : 0;
 
-      const lamelHeight = Number(selections.lamelTickness.split("_")[0]);
-      const lamelDusmeValue = getLamelDusmeValue(selections.dikmeType);
-      const lamelGenisligi = systemWidth - lamelDusmeValue;
+      const dikmeHeight = calculateDikmeHeight(
+        systemHeight,
+        selections.boxType,
+        selections.dikmeType
+      );
 
-      const dikmeYuksekligiKertmeHaric = systemHeight - kutuYuksekligi;
-      const lamelSayisi = Math.ceil(dikmeYuksekligiKertmeHaric / lamelHeight);
-      const lamelCount = lamelSayisi + 1;
+      const lamelGenisligi = calculateLamelGenisligi(
+        systemWidth,
+        selections.dikmeType
+      );
+      const lamelCount = calculateLamelCount(
+        systemHeight,
+        selections.boxType,
+        selections.lamelTickness
+      );
       const dikmeCount = Number(sectionCount) * 2;
 
       // Set initial measurements

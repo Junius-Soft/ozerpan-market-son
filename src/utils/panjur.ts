@@ -220,3 +220,67 @@ export const findMotorPrice = (
   const motorPrice = parseFloat(motorItem.price);
   return [motorPrice, createSelectedProduct(motorItem, 1)];
 };
+
+export const calculateSystemWidth = (
+  width: number,
+  dikmeOlcuAlmaSekli: string,
+  dikmeType: string
+): number => {
+  const dikmeGenisligi = getDikmeGenisligi(dikmeType);
+  let systemWidth = width;
+
+  switch (dikmeOlcuAlmaSekli) {
+    case "dikme_haric":
+      systemWidth = width + 2 * dikmeGenisligi - 10;
+      break;
+    case "tek_dikme":
+      systemWidth = width + dikmeGenisligi - 10;
+      break;
+    case "dikme_dahil":
+      systemWidth = width - 10;
+      break;
+  }
+
+  return systemWidth;
+};
+
+export const calculateSystemHeight = (
+  height: number,
+  kutuOlcuAlmaSekli: string,
+  boxType: string
+): number => {
+  const kutuYuksekligi = getBoxHeight(boxType);
+  return kutuOlcuAlmaSekli === "kutu_haric" ? height + kutuYuksekligi : height;
+};
+
+export const calculateLamelCount = (
+  systemHeight: number,
+  boxType: string,
+  lamelTickness: string
+): number => {
+  const kutuYuksekligi = getBoxHeight(boxType);
+  const lamelHeight = Number(lamelTickness.split("_")[0]);
+  const dikmeYuksekligiKertmeHaric = systemHeight - kutuYuksekligi;
+  const lamelSayisi = Math.ceil(dikmeYuksekligiKertmeHaric / lamelHeight);
+  return lamelSayisi + 1;
+};
+
+export const calculateLamelGenisligi = (
+  systemWidth: number,
+  dikmeType: string
+): number => {
+  const lamelDusmeValue = getLamelDusmeValue(dikmeType);
+  return systemWidth - lamelDusmeValue;
+};
+
+export const calculateDikmeHeight = (
+  systemHeight: number,
+  boxType: string,
+  dikmeType: string
+): number => {
+  if (dikmeType.includes("orta")) return 0;
+
+  const kutuYuksekligi = getBoxHeight(boxType);
+  const kertmePayi = getKertmePayi(dikmeType);
+  return systemHeight - kutuYuksekligi + kertmePayi;
+};

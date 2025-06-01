@@ -1,8 +1,9 @@
 import { PanjurSelections } from "@/types/panjur";
 import {
-  getBoxHeight,
-  getDikmeGenisligi,
-  getLamelDusmeValue,
+  calculateSystemWidth,
+  calculateSystemHeight,
+  calculateLamelCount,
+  calculateLamelGenisligi,
 } from "@/utils/panjur";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -29,13 +30,11 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
   const searchParams = useSearchParams();
 
   const sectionCount = searchParams.get("typeId");
-
   const dikmeCount = Number(sectionCount) * 2;
 
   useEffect(() => {
     const fetchAndCalculateAccessories = async () => {
       try {
-        // Fetch accessories from API
         const response = await fetch(
           `/api/accessories?productId=${selections.productId}`
         );
@@ -45,7 +44,25 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
         const data = await response.json();
         const allAccessories: Accessory[] = data;
         const neededAccessories: Accessory[] = [];
+
         if (allAccessories && selections.productId === "panjur") {
+          const width = calculateSystemWidth(
+            selections.width,
+            selections.dikmeOlcuAlmaSekli,
+            selections.dikmeType
+          );
+
+          const height = calculateSystemHeight(
+            selections.height,
+            selections.kutuOlcuAlmaSekli,
+            selections.boxType
+          );
+
+          const lamelWidth = calculateLamelGenisligi(
+            width,
+            selections.dikmeType
+          );
+
           // Kutu Aksesuarları hesaplama
           let yanKapakDesc: string;
           switch (selections.boxType) {
@@ -70,11 +87,7 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
               acc.description.toLowerCase().includes(yanKapakDesc.toLowerCase())
             );
             if (yanKapak) {
-              const yanKapakAccessory = {
-                ...yanKapak,
-                quantity: 1, // Her kutu için bir takım
-              };
-              neededAccessories.push(yanKapakAccessory);
+              neededAccessories.push({ ...yanKapak, quantity: 1 });
             }
           }
 
@@ -89,38 +102,27 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
           );
 
           if (tamburProfili) {
-            const tamburAccessory = {
-              ...tamburProfili,
-              quantity: selections.width, // Genişlik kadar tambur profili gerekir
-            };
-            neededAccessories.push(tamburAccessory);
+            neededAccessories.push({ ...tamburProfili, quantity: width });
 
             if (selections.movementType === "motorlu") {
-              // Boru Başı Rulmanlı
+              // Motor aksesuarları
               const boruBasi = allAccessories.find((acc) =>
                 acc.description
                   .toLowerCase()
                   .includes("60 boru başı rulmanlı siyah")
               );
-
               if (boruBasi) {
                 neededAccessories.push({ ...boruBasi, quantity: 1 });
               }
 
-              // Rulman 12x28
               const rulman = allAccessories.find((acc) =>
                 acc.description.toLowerCase().includes("rulman 12x28")
               );
-
               if (rulman) {
                 neededAccessories.push({ ...rulman, quantity: 1 });
               }
 
-              // Plaket 100x100 12 mm Pimli Galvaniz - only for 250mm box
-
               if (selections.boxType === "250mm") {
-                console.log("hehe");
-
                 const plaket = allAccessories.find((acc) =>
                   acc.description
                     .toLowerCase()
@@ -134,7 +136,7 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
 
             if (selections.movementType === "manuel") {
               if (selections.manuelSekli === "makarali") {
-                // Boru Başı Rulmanlı
+                // Makaralı aksesuarları
                 const boruBasi = allAccessories.find((acc) =>
                   acc.description
                     .toLowerCase()
@@ -144,7 +146,6 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
                   neededAccessories.push({ ...boruBasi, quantity: 1 });
                 }
 
-                // Kasnak Rulmanlı
                 const kasnakDesc =
                   selections.boxType === "137mm"
                     ? "40x125 kasnak rulmanlı siyah"
@@ -159,7 +160,6 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
                   neededAccessories.push({ ...kasnak, quantity: 1 });
                 }
 
-                // Rulman 12x28 for Makaralı
                 const rulmanMakarali = allAccessories.find((acc) =>
                   acc.description.toLowerCase().includes("rulman 12x28")
                 );
@@ -167,7 +167,6 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
                   neededAccessories.push({ ...rulmanMakarali, quantity: 2 });
                 }
 
-                // Winde Otomatik Makara
                 const windeMakara = allAccessories.find((acc) =>
                   acc.description
                     .toLowerCase()
@@ -177,7 +176,6 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
                   neededAccessories.push({ ...windeMakara, quantity: 1 });
                 }
 
-                // Kordon Geçme Makarası
                 const kordonMakara = allAccessories.find((acc) =>
                   acc.description
                     .toLowerCase()
@@ -187,126 +185,84 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
                   neededAccessories.push({ ...kordonMakara, quantity: 1 });
                 }
               } else if (selections.manuelSekli === "reduktorlu") {
-                // Boru Başı Rulmanlı
-                const boruBasiReduktor = allAccessories.find((acc) =>
-                  acc.description
-                    .toLowerCase()
-                    .includes("40 boru başı rulmanlı siyah")
-                );
-                if (boruBasiReduktor) {
-                  neededAccessories.push({ ...boruBasiReduktor, quantity: 1 });
-                }
+                // Redüktörlü aksesuarlar
+                const accessories = [
+                  {
+                    name: "40 boru başı rulmanlı siyah",
+                    quantity: 1,
+                  },
+                  {
+                    name: "rulman 12x28",
+                    quantity: 1,
+                  },
+                  {
+                    name: "panjur redüktörü beyaz",
+                    quantity: 1,
+                  },
+                  {
+                    name: "redüktör boru başı 40 mm-C 371 uyumlu",
+                    quantity: 1,
+                  },
+                  {
+                    name: "Ara kol-C 371 uyumlu",
+                    quantity: 1,
+                  },
+                  {
+                    name: "Çevirme kolu-1200 mm",
+                    quantity: 1,
+                  },
+                ];
 
-                // Rulman 12x28 for Redüktörlü
-                const rulmanReduktor = allAccessories.find((acc) =>
-                  acc.description.toLowerCase().includes("rulman 12x28")
-                );
-                if (rulmanReduktor) {
-                  neededAccessories.push({ ...rulmanReduktor, quantity: 1 });
-                }
-
-                // Panjur Redüktörü Beyaz
-                const reduktor = allAccessories.find((acc) =>
-                  acc.description
-                    .toLowerCase()
-                    .includes("panjur redüktörü beyaz")
-                );
-                if (reduktor) {
-                  neededAccessories.push({ ...reduktor, quantity: 1 });
-                }
-
-                // Redüktör Boru Başı
-                const reduktorBoruBasi = allAccessories.find((acc) =>
-                  acc.description
-                    .toLowerCase()
-                    .includes("redüktör boru başı 40 mm-C 371 uyumlu")
-                );
-                if (reduktorBoruBasi) {
-                  neededAccessories.push({ ...reduktorBoruBasi, quantity: 1 });
-                }
-
-                // Panjur Redüktörü Ara Kol
-                const araKol = allAccessories.find((acc) =>
-                  acc.description.toLowerCase().includes("Ara kol-C 371 uyumlu")
-                );
-                if (araKol) {
-                  neededAccessories.push({ ...araKol, quantity: 1 });
-                }
-
-                // Panjur Redüktörü Çevirme Kolu
-                const cevirmeKol = allAccessories.find((acc) =>
-                  acc.description.toLowerCase().includes("Çevirme kolu-1200 mm")
-                );
-                if (cevirmeKol) {
-                  neededAccessories.push({ ...cevirmeKol, quantity: 1 });
+                for (const acc of accessories) {
+                  const found = allAccessories.find((a) =>
+                    a.description.toLowerCase().includes(acc.name.toLowerCase())
+                  );
+                  if (found) {
+                    neededAccessories.push({
+                      ...found,
+                      quantity: acc.quantity,
+                    });
+                  }
                 }
               }
             }
           }
 
           // Lamel tipine göre PVC TAPA ve Zımba Teli hesaplama
-
           const tapaType = selections.dikmeType.startsWith("mini_")
             ? "SL-39"
             : "SL-55";
           const searchTapaKey = `pvc tapa ${tapaType}`.toLowerCase();
-          // PVC TAPA hesaplama
+
           const pvcTapa = allAccessories.find((acc) =>
             acc.description.toLowerCase().includes(searchTapaKey)
           );
 
           if (pvcTapa) {
-            let systemHeight = selections.height;
-            if (selections.kutuOlcuAlmaSekli === "kutu_haric") {
-              systemHeight =
-                selections.height + getBoxHeight(selections.boxType);
-            }
-
-            const lamelHeight = Number(selections.lamelTickness.split("_")[0]);
-
-            const dikmeYuksekligiKertmeHaric =
-              systemHeight - getBoxHeight(selections.boxType);
-            const lamelSayisi = Math.ceil(
-              dikmeYuksekligiKertmeHaric / lamelHeight
+            const finalLamelCount = calculateLamelCount(
+              height,
+              selections.boxType,
+              selections.lamelTickness
             );
-            const lamelCount = lamelSayisi + 1;
 
             // Tek sayı ise bir artırıp ikiye böl, çift ise direkt ikiye böl
             const tapaQuantity =
-              lamelCount % 2 === 0 ? lamelCount / 2 : (lamelCount + 1) / 2;
-            const tapaAccessory = { ...pvcTapa, quantity: tapaQuantity };
-            neededAccessories.push(tapaAccessory);
+              finalLamelCount % 2 === 0
+                ? finalLamelCount / 2
+                : (finalLamelCount + 1) / 2;
+
+            neededAccessories.push({ ...pvcTapa, quantity: tapaQuantity });
 
             // Zımba Teli 5mm (PVC tapa miktarı kadar)
             const zimbaTeli = allAccessories.find((acc) =>
               acc.description.toLowerCase().includes("zımba teli 5")
             );
             if (zimbaTeli) {
-              const zimbaTeliAccessory = {
-                ...zimbaTeli,
-                quantity: tapaQuantity,
-              };
-              neededAccessories.push(zimbaTeliAccessory);
+              neededAccessories.push({ ...zimbaTeli, quantity: tapaQuantity });
             }
           }
 
           // Çelik Askı hesaplama
-          const dikmeGenisligi = getDikmeGenisligi(selections.dikmeType);
-
-          let systemWidth = selections.width;
-          switch (selections.dikmeOlcuAlmaSekli) {
-            case "dikme_haric":
-              systemWidth = selections.width + 2 * dikmeGenisligi - 10;
-              break;
-            case "tek_dikme":
-              systemWidth = selections.width + dikmeGenisligi - 10;
-              break;
-            case "dikme_dahil":
-              systemWidth = selections.width - 10;
-              break;
-          }
-          const lamelDusmeValue = getLamelDusmeValue(selections.dikmeType);
-          const lamelGenisligi = systemWidth - lamelDusmeValue;
           const askiType = selections.dikmeType.startsWith("mini_")
             ? "130 mm ( SL 39 )"
             : "170 mm ( SL 55 )";
@@ -320,21 +276,18 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
           if (celikAski) {
             let askiQuantity = 2; // Default miktar
 
-            if (lamelGenisligi > 1000 && lamelGenisligi <= 1500) {
+            if (lamelWidth > 1000 && lamelWidth <= 1500) {
               askiQuantity = 4;
-            } else if (lamelGenisligi > 1500 && lamelGenisligi <= 2250) {
+            } else if (lamelWidth > 1500 && lamelWidth <= 2250) {
               askiQuantity = 6;
-            } else if (lamelGenisligi > 2250 && lamelGenisligi <= 3500) {
+            } else if (lamelWidth > 2250 && lamelWidth <= 3500) {
               askiQuantity = 8;
-            } else if (lamelGenisligi > 3500) {
+            } else if (lamelWidth > 3500) {
               askiQuantity = 10;
             }
 
-            const askiAccessory = { ...celikAski, quantity: askiQuantity };
-            neededAccessories.push(askiAccessory);
+            neededAccessories.push({ ...celikAski, quantity: askiQuantity });
           }
-
-          // Alt Parça Aksesuarları (Tüm lamel tipleri için)
 
           // Alt Parça Lastiği hesaplama
           const lastikType = selections.dikmeType.startsWith("mini_")
@@ -345,11 +298,7 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
             acc.description.toLowerCase().includes(lastikType.toLowerCase())
           );
           if (altParcaLastigi) {
-            const lastikAccessory = {
-              ...altParcaLastigi,
-              quantity: 1, // Her kutu için bir lastik
-            };
-            neededAccessories.push(lastikAccessory);
+            neededAccessories.push({ ...altParcaLastigi, quantity: 1 });
           }
 
           // Stoper Konik (Sadece SL-39 ve SE-45 için makaralı seçiminde)
@@ -362,46 +311,28 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
               acc.description.toLowerCase().includes("stoper konik")
             );
             if (stoperKonik) {
-              const stoperAccessory = {
-                ...stoperKonik,
-                quantity: 1,
-              };
-              neededAccessories.push(stoperAccessory);
+              neededAccessories.push({ ...stoperKonik, quantity: 1 });
             }
           }
 
-          // Kilitli Alt Parça seçildiğinde eklenen aksesuarlar
+          // Kilitli Alt Parça aksesuarları
           if (selections.subPart === "kilitli_alt_parca") {
-            // Alt Parça Sürgüsü Yuvarlak Galvaniz
-            const surguyuvarlak = allAccessories.find((acc) =>
-              acc.description
-                .toLowerCase()
-                .includes("alt parça sürgüsü yuvarlak galvaniz")
-            );
-            if (surguyuvarlak) {
-              const surguYuvarlakAccessory = {
-                ...surguyuvarlak,
-                quantity: 1,
-              };
-              neededAccessories.push(surguYuvarlakAccessory);
-            }
+            const kilitliAccessories = [
+              "alt parça sürgüsü yuvarlak galvaniz",
+              "alt parça sürgüsü yassı galvaniz",
+            ];
 
-            // Alt Parça Sürgüsü Yassı Galvaniz
-            const surguyassi = allAccessories.find((acc) =>
-              acc.description
-                .toLowerCase()
-                .includes("alt parça sürgüsü yassı galvaniz")
-            );
-            if (surguyassi) {
-              const surguYassiAccessory = {
-                ...surguyassi,
-                quantity: 1,
-              };
-              neededAccessories.push(surguYassiAccessory);
+            for (const accName of kilitliAccessories) {
+              const found = allAccessories.find((acc) =>
+                acc.description.toLowerCase().includes(accName)
+              );
+              if (found) {
+                neededAccessories.push({ ...found, quantity: 1 });
+              }
             }
           }
 
-          // 55'lik Lamel Denge Makarası kontrolü
+          // Lamel Denge Makarası kontrolü
           if (
             selections.dikmeType.startsWith("midi_") &&
             selections.boxType === "250mm"
@@ -412,60 +343,35 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
                 .includes("55'lik lamel denge makarası")
             );
             if (dengeMakarasi) {
-              const dengeMakarasiAccessory = {
-                ...dengeMakarasi,
-                quantity: 1,
-              };
-              neededAccessories.push(dengeMakarasiAccessory);
+              neededAccessories.push({ ...dengeMakarasi, quantity: 1 });
             }
           }
 
-          // Panjur Dikme Makası kontrolü - mini dikme ve 39mm Alüminyum Poliüretanlı lamel için
+          // Mini dikme ve 39mm Alüminyum Poliüretanlı lamel aksesuarları
           if (
             selections.dikmeType.startsWith("mini_") &&
             selections.lamelTickness === "39_sl" &&
             selections.lamelType === "aluminyum_poliuretanli"
           ) {
-            // Panjur Dikme Makası
-            const dikmeMakasi = allAccessories.find((acc) =>
-              acc.description.toLowerCase().includes("panjur dikme makası")
-            );
-            if (dikmeMakasi) {
-              const dikmeMakasiAccessory = {
-                ...dikmeMakasi,
+            const miniDikmeAccessories = [
+              {
+                name: "panjur dikme makası",
                 quantity: dikmeCount,
-              };
-              neededAccessories.push(dikmeMakasiAccessory);
-            }
-
-            // Panjur Dikme Menteşesi
-            const dikmeMentesesi = allAccessories.find((acc) =>
-              acc.description.toLowerCase().includes("panjur dikme menteşesi")
-            );
-            if (dikmeMentesesi) {
-              const dikmeMentesesiAccessory = {
-                ...dikmeMentesesi,
+              },
+              {
+                name: "panjur dikme menteşesi",
                 quantity: dikmeCount,
-              };
-              neededAccessories.push(dikmeMentesesiAccessory);
+              },
+            ];
+
+            for (const acc of miniDikmeAccessories) {
+              const found = allAccessories.find((a) =>
+                a.description.toLowerCase().includes(acc.name)
+              );
+              if (found) {
+                neededAccessories.push({ ...found, quantity: acc.quantity });
+              }
             }
-          }
-
-          // Tambur profili hesaplama
-          const tamburDesc =
-            selections.movementType === "manuel"
-              ? "40mm Sekizgen Boru 0,40"
-              : "60mm Sekizgen Boru 0,60";
-
-          const tamburProfile = allAccessories.find((acc) =>
-            acc.description.toLowerCase().includes(tamburDesc.toLowerCase())
-          );
-          if (tamburProfile) {
-            const tamburAccessory = {
-              ...tamburProfile,
-              quantity: 1,
-            };
-            neededAccessories.push(tamburAccessory);
           }
 
           // Calculate total price

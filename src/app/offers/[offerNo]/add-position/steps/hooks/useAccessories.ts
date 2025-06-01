@@ -1,5 +1,10 @@
 import { PanjurSelections } from "@/types/panjur";
-import { getBoxHeight } from "@/utils/panjur";
+import {
+  getBoxHeight,
+  getDikmeGenisligi,
+  getLamelDusmeValue,
+} from "@/utils/panjur";
+import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
 interface Accessory {
@@ -21,6 +26,11 @@ interface AccessoryResult {
 export function useAccessories(selections: PanjurSelections): AccessoryResult {
   const [accessories, setAccessories] = useState<Accessory[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const searchParams = useSearchParams();
+
+  const sectionCount = searchParams.get("typeId");
+
+  const dikmeCount = Number(sectionCount) * 2;
 
   useEffect(() => {
     const fetchAndCalculateAccessories = async () => {
@@ -280,39 +290,49 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
             }
           }
 
-          // // Çelik Askı hesaplama
-          // const celikAski = allAccessories.find((acc) =>
-          //   acc.description.toLowerCase().includes(`çelik askı ${askiType}`)
-          // );
+          // Çelik Askı hesaplama
+          const dikmeGenisligi = getDikmeGenisligi(selections.dikmeType);
 
-          // if (celikAski) {
-          //   let askiQuantity = 2; // Default miktar
+          let systemWidth = selections.width;
+          switch (selections.dikmeOlcuAlmaSekli) {
+            case "dikme_haric":
+              systemWidth = selections.width + 2 * dikmeGenisligi - 10;
+              break;
+            case "tek_dikme":
+              systemWidth = selections.width + dikmeGenisligi - 10;
+              break;
+            case "dikme_dahil":
+              systemWidth = selections.width - 10;
+              break;
+          }
+          const lamelDusmeValue = getLamelDusmeValue(selections.dikmeType);
+          const lamelGenisligi = systemWidth - lamelDusmeValue;
+          const askiType = selections.dikmeType.startsWith("mini_")
+            ? "130 mm ( SL 39 )"
+            : "170 mm ( SL 55 )";
 
-          //   if (selections.width > 1000 && selections.width <= 1500) {
-          //     askiQuantity = 4;
-          //   } else if (selections.width > 1500 && selections.width <= 2250) {
-          //     askiQuantity = 6;
-          //   } else if (selections.width > 2250 && selections.width <= 3500) {
-          //     askiQuantity = 8;
-          //   } else if (selections.width > 3500) {
-          //     askiQuantity = 10;
-          //   }
+          const celikAski = allAccessories.find((acc) =>
+            acc.description
+              .toLowerCase()
+              .includes(`çelik askı ${askiType}`.toLowerCase())
+          );
 
-          //   const askiAccessory = { ...celikAski, quantity: askiQuantity };
-          //   neededAccessories.push(askiAccessory);
+          if (celikAski) {
+            let askiQuantity = 2; // Default miktar
 
-          //   // Askı Teli hesaplama (her çelik askı için bir adet)
-          //   const askiTeli = allAccessories.find((acc) =>
-          //     acc.description.toLowerCase().includes("askı teli")
-          //   );
-          //   if (askiTeli) {
-          //     const askiTeliAccessory = {
-          //       ...askiTeli,
-          //       quantity: askiQuantity,
-          //     };
-          //     neededAccessories.push(askiTeliAccessory);
-          //   }
-          // }
+            if (lamelGenisligi > 1000 && lamelGenisligi <= 1500) {
+              askiQuantity = 4;
+            } else if (lamelGenisligi > 1500 && lamelGenisligi <= 2250) {
+              askiQuantity = 6;
+            } else if (lamelGenisligi > 2250 && lamelGenisligi <= 3500) {
+              askiQuantity = 8;
+            } else if (lamelGenisligi > 3500) {
+              askiQuantity = 10;
+            }
+
+            const askiAccessory = { ...celikAski, quantity: askiQuantity };
+            neededAccessories.push(askiAccessory);
+          }
 
           // Alt Parça Aksesuarları (Tüm lamel tipleri için)
 
@@ -327,7 +347,7 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
           if (altParcaLastigi) {
             const lastikAccessory = {
               ...altParcaLastigi,
-              quantity: selections.width,
+              quantity: 1, // Her kutu için bir lastik
             };
             neededAccessories.push(lastikAccessory);
           }
@@ -400,6 +420,37 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
             }
           }
 
+          // Panjur Dikme Makası kontrolü - mini dikme ve 39mm Alüminyum Poliüretanlı lamel için
+          if (
+            selections.dikmeType.startsWith("mini_") &&
+            selections.lamelTickness === "39_sl" &&
+            selections.lamelType === "aluminyum_poliuretanli"
+          ) {
+            // Panjur Dikme Makası
+            const dikmeMakasi = allAccessories.find((acc) =>
+              acc.description.toLowerCase().includes("panjur dikme makası")
+            );
+            if (dikmeMakasi) {
+              const dikmeMakasiAccessory = {
+                ...dikmeMakasi,
+                quantity: dikmeCount,
+              };
+              neededAccessories.push(dikmeMakasiAccessory);
+            }
+
+            // Panjur Dikme Menteşesi
+            const dikmeMentesesi = allAccessories.find((acc) =>
+              acc.description.toLowerCase().includes("panjur dikme menteşesi")
+            );
+            if (dikmeMentesesi) {
+              const dikmeMentesesiAccessory = {
+                ...dikmeMentesesi,
+                quantity: dikmeCount,
+              };
+              neededAccessories.push(dikmeMentesesiAccessory);
+            }
+          }
+
           // Tambur profili hesaplama
           const tamburDesc =
             selections.movementType === "manuel"
@@ -435,7 +486,7 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
     };
 
     fetchAndCalculateAccessories();
-  }, [selections]);
+  }, [selections, dikmeCount]);
 
   return { accessories, totalPrice };
 }

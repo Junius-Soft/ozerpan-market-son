@@ -108,7 +108,6 @@ export const usePanjurCalculator = (selections: PanjurSelections) => {
       const dikmeYuksekligiKertmeHaric = systemHeight - kutuYuksekligi;
       const lamelSayisi = Math.ceil(dikmeYuksekligiKertmeHaric / lamelHeight);
       const lamelCount = lamelSayisi + 1;
-      console.log(`Lamel Count: ${lamelCount},`);
       const dikmeCount = Number(sectionCount) * 2;
 
       // Set initial measurements

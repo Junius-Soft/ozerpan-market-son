@@ -117,7 +117,7 @@ export async function POST(request: Request) {
     } catch (error) {
       console.error("Error writing offers:", error);
       return NextResponse.json(
-        { error: "Failed to save offers" },
+        { error: "Failed to save offers" + error },
         { status: 500 }
       );
     }

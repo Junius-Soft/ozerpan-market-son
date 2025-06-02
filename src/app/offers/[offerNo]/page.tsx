@@ -20,7 +20,7 @@ import {
   type Offer,
   type Position,
 } from "@/documents/offers";
-import { ArrowLeft, AlertTriangle, Plus, Edit2 } from "lucide-react";
+import { ArrowLeft, AlertTriangle, Plus, Edit2, Copy } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -194,6 +194,45 @@ export default function OfferDetailPage() {
       setOffer(updatedOffer);
     } catch (error) {
       console.error("Error updating offer status:", error);
+    }
+  };
+
+  const handleCopyPosition = async (position: Position) => {
+    if (!offer) return;
+
+    // Create new position with incremented pozNo
+    const lastPos = offer.positions[offer.positions.length - 1];
+    const nextPozNo = String(parseInt(lastPos.pozNo) + 1).padStart(3, "0");
+
+    const newPosition: Position = {
+      ...position,
+      id: `POS-${Date.now()}`,
+      pozNo: nextPozNo,
+    };
+
+    try {
+      // Update offer with new positions array
+      const response = await fetch(`/api/offers?id=${offer.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          positions: [...offer.positions, newPosition],
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to copy position");
+      }
+
+      // Reload offer to get updated data
+      const updatedOffer = await getOffer(offer.id);
+      if (updatedOffer) {
+        setOffer(updatedOffer);
+      }
+    } catch (error) {
+      console.error("Failed to copy position:", error);
     }
   };
 
@@ -405,7 +444,19 @@ export default function OfferDetailPage() {
                             }
                           />
                         </TableCell>
-                        <TableCell>{position.pozNo}</TableCell>
+                        <TableCell className="flex items-center gap-2">
+                          {position.pozNo}
+                          {offer.status === "Taslak" && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-6 w-6"
+                              onClick={() => handleCopyPosition(position)}
+                            >
+                              <Copy className="h-3 w-3" />
+                            </Button>
+                          )}
+                        </TableCell>
                         <TableCell>{position.description}</TableCell>
                         <TableCell>{position.unit}</TableCell>
                         <TableCell>{position.quantity}</TableCell>

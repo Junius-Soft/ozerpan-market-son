@@ -18,7 +18,6 @@ export interface Offer {
   id: string;
   name: string;
   created_at: string;
-  total: number;
   status: "Taslak" | "Kaydedildi" | "Revize";
   positions: Position[];
   is_dirty?: boolean; // pozlarda değişiklik yapıldığını takip etmek için

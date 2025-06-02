@@ -14,7 +14,6 @@ export interface Database {
           id: string;
           name: string;
           created_at: string;
-          total: string;
           status: "Taslak" | "Kaydedildi" | "Revize";
           positions: Json[];
           is_dirty?: boolean;
@@ -24,7 +23,6 @@ export interface Database {
           id: string;
           name: string;
           created_at: string;
-          total: string;
           status: "Taslak" | "Kaydedildi" | "Revize";
           positions: Json[];
           is_dirty?: boolean;
@@ -34,7 +32,6 @@ export interface Database {
           id?: string;
           name?: string;
           created_at?: string;
-          total?: string;
           status?: "Taslak" | "Kaydedildi" | "Revize";
           positions?: Json[];
           is_dirty?: boolean;

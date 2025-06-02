@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { Position } from "@/documents/offers";
 
 // DELETE /api/offers/:offerId/positions - Delete multiple positions
 export async function DELETE(
@@ -30,7 +31,7 @@ export async function DELETE(
 
     // Filter out the positions to be deleted
     const updatedPositions = offer.positions.filter(
-      (pos) => !positionIds.includes(pos.id)
+      (pos: Position) => !positionIds.includes(pos.id)
     );
 
     // Update the offer with remaining positions

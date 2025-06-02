@@ -258,7 +258,7 @@ export function DetailsStep({
           values={getValuesForTab()}
           onChange={(fieldId, value) => {
             handleDynamicFormChange(fieldId, value);
-            handleFormChange({ [fieldId]: value });
+            handleFormChange();
           }}
           onFormikChange={(formik) => {
             // Değişen alan ve değeri al
@@ -298,25 +298,22 @@ export function DetailsStep({
     }
   };
 
-  const handleFormChange = useCallback(
-    (_values: Record<string, unknown>) => {
-      if (onFormChange) {
-        let price = 0;
-        if (calculationResult?.totalPriceTL) {
-          price =
-            typeof calculationResult.totalPriceTL === "string"
-              ? parseFloat(calculationResult.totalPriceTL)
-              : calculationResult.totalPriceTL;
-        }
-        onFormChange({
-          details: productDetails,
-          quantity,
-          unitPrice: price,
-        });
+  const handleFormChange = useCallback(() => {
+    if (onFormChange) {
+      let price = 0;
+      if (calculationResult?.totalPriceTL) {
+        price =
+          typeof calculationResult.totalPriceTL === "string"
+            ? parseFloat(calculationResult.totalPriceTL)
+            : calculationResult.totalPriceTL;
       }
-    },
-    [onFormChange, productDetails, quantity, calculationResult]
-  );
+      onFormChange({
+        details: productDetails,
+        quantity,
+        unitPrice: price,
+      });
+    }
+  }, [onFormChange, productDetails, quantity, calculationResult]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

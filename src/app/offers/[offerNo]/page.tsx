@@ -170,18 +170,15 @@ export default function OfferDetailPage() {
 
     try {
       // Update offer with new positions array
-      const response = await fetch(
-        `/api/offers?id=${offer.id}?id:${offer.id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            positions: [...offer.positions, newPosition],
-          }),
-        }
-      );
+      const response = await fetch(`/api/offers?id=${offer.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          positions: [...offer.positions, newPosition],
+        }),
+      });
 
       if (!response.ok) {
         throw new Error("Failed to copy position");

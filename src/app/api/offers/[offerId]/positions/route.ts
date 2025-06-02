@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { Position } from "@/documents/offers";
 
 // DELETE /api/offers/:offerId/positions - Delete multiple positions
 export async function DELETE(
-  request: Request,
-  context: { params: { offerId: string } }
+  request: NextRequest,
+  { params }: { params: { offerId: string } }
 ) {
   try {
     // Get position IDs from request body
@@ -22,7 +22,7 @@ export async function DELETE(
     const { data: offer, error: getError } = await supabase
       .from("offers")
       .select("*")
-      .eq("id", context.params.offerId)
+      .eq("id", params.offerId)
       .single();
 
     if (getError || !offer) {
@@ -41,7 +41,7 @@ export async function DELETE(
         positions: updatedPositions,
         is_dirty: true,
       })
-      .eq("id", context.params.offerId);
+      .eq("id", params.offerId);
 
     if (updateError) {
       throw updateError;

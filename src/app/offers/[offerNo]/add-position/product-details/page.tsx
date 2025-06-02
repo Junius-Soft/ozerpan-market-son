@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { ArrowLeft } from "lucide-react";
 import { type Product, getProductTabs } from "@/documents/products";
 import { DetailsStep } from "../steps/details-step";
@@ -13,15 +13,26 @@ export default function ProductDetailsPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState<Product | null>(null);
-  const productId = searchParams.get("productId");
-  const productName = searchParams.get("productName") || productId;
-  const typeId = searchParams.get("typeId");
-  const optionId = searchParams.get("optionId");
+  const initialLoadDone = useRef(false);
+
+  // Memoize form values from URL
+  const formValues = useCallback(() => {
+    return {
+      productId: searchParams.get("productId"),
+      productName: searchParams.get("productName"),
+      typeId: searchParams.get("typeId"),
+      optionId: searchParams.get("optionId"),
+    };
+  }, [searchParams]);
 
   useEffect(() => {
     const loadProductAndTabs = async () => {
+      if (initialLoadDone.current) return;
+
       setIsLoading(true);
       try {
+        const { productId, productName, typeId, optionId } = formValues();
+
         if (!productId) {
           router.replace("select-product");
           return;
@@ -33,18 +44,19 @@ export default function ProductDetailsPage() {
         // Create a simple product object with the necessary info
         const product = {
           id: productId,
-          name: productName,
+          name: productName || productId,
           tabs: tabsResponse.tabs,
         } as Product;
 
         setProduct(product);
+        initialLoadDone.current = true;
       } finally {
         setIsLoading(false);
       }
     };
 
     loadProductAndTabs();
-  }, [productId, productName, typeId, optionId, router]);
+  }, [formValues, router]);
 
   if (isLoading) {
     return (
@@ -79,7 +91,8 @@ export default function ProductDetailsPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <h1 className="text-2xl font-bold">
-                {product?.name} Detayları ({typeId})
+                {product?.name} Detayları{" "}
+                {formValues().typeId ? `(${formValues().typeId})` : ""}
               </h1>
               <Button
                 variant="outline"

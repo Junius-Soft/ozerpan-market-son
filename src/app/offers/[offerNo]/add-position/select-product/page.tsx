@@ -2,43 +2,102 @@
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { ArrowLeft } from "lucide-react";
 import { type Product, getProducts } from "@/documents/products";
 import { ProductStep } from "../steps/product-step";
 
 export default function SelectProductPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const initialLoadDone = useRef(false);
+
+  const updateURL = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null) {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
+      router.replace(`?${params.toString()}`, { scroll: false });
+    },
+    [searchParams, router]
+  );
 
   useEffect(() => {
     const loadProducts = async () => {
+      if (initialLoadDone.current) return;
+
       setIsLoading(true);
       try {
         const { products, defaultProduct, defaultType, defaultOption } =
           await getProducts();
         setProducts(products);
-        const defaultProductObj = products.find((p) => p.id === defaultProduct);
-        setSelectedProduct(defaultProductObj || null);
-        setSelectedType(defaultType);
-        setSelectedOption(defaultOption);
+
+        // Get values from URL or use defaults
+        const productId = searchParams.get("productId") || defaultProduct;
+        const typeId = searchParams.get("typeId") || defaultType;
+        const optionId = searchParams.get("optionId") || defaultOption;
+
+        const productObj = products.find((p) => p.id === productId);
+
+        // Set states
+        setSelectedProduct(productObj || null);
+        setSelectedType(typeId);
+        setSelectedOption(optionId);
+
+        // If there are no URL parameters, update URL with default values
+        if (!searchParams.has("productId")) {
+          updateURL({
+            productId: productId,
+            productName: productObj?.name || "",
+            typeId: typeId,
+            optionId: optionId,
+          });
+        }
+
+        initialLoadDone.current = true;
       } finally {
         setIsLoading(false);
       }
     };
     loadProducts();
-  }, []);
+  }, [searchParams, updateURL]);
 
   const handleProductSelect = (product: Product) => {
     setSelectedProduct(product);
+    const updates: Record<string, string | null> = {
+      productId: product.id,
+      productName: product.name,
+    };
+
     if (product.id !== "panjur") {
       setSelectedType(null);
+      setSelectedOption(null);
+      updates.typeId = null;
+      updates.optionId = null;
     }
+
+    updateURL(updates);
+  };
+
+  const handleTypeSelect = (type: string | null) => {
+    setSelectedType(type);
+    updateURL({ typeId: type });
+  };
+
+  const handleOptionSelect = (option: string | null) => {
+    setSelectedOption(option);
+    updateURL({ optionId: option });
   };
 
   if (isLoading) {
@@ -100,8 +159,8 @@ export default function SelectProductPage() {
             selectedType={selectedType}
             selectedOption={selectedOption}
             onProductSelect={handleProductSelect}
-            onTypeSelect={setSelectedType}
-            onOptionSelect={setSelectedOption}
+            onTypeSelect={handleTypeSelect}
+            onOptionSelect={handleOptionSelect}
           />
         </div>
       </div>

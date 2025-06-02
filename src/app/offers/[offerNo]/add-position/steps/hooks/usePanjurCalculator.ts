@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { PriceItem, CalculationResult, PanjurSelections } from "@/types/panjur";
+import {
+  PriceItem,
+  CalculationResult,
+  PanjurSelections,
+  SelectedProduct,
+} from "@/types/panjur";
 import {
   getLamelProperties,
   getMaxLamelHeight,
@@ -46,8 +51,7 @@ export const usePanjurCalculator = (
   const sectionCount = searchParams.get("typeId");
   const [prices, setPrices] = useState<PriceItem[]>([]);
   const { eurRate, loading: isEurRateLoading } = useExchangeRate();
-  const { accessories, totalPrice: accessoriesTotalPrice } =
-    useAccessories(selections);
+  const { accessories } = useAccessories(selections);
 
   useEffect(() => {
     const fetchPrices = async () => {
@@ -204,6 +208,11 @@ export const usePanjurCalculator = (
         movementTab
       );
 
+      // Aksesuarların fiyatını hesapla
+      const accessoriesPrice = (accessories || []).reduce((total, acc) => {
+        return total + parseFloat(acc.price) * (acc.quantity || 1);
+      }, 0);
+
       const totalPriceEUR =
         lamelPrice +
         subPartPrice +
@@ -212,13 +221,16 @@ export const usePanjurCalculator = (
         motorPrice +
         remotePrice +
         smarthomePrice +
-        receiverPrice;
+        receiverPrice +
+        accessoriesPrice;
+
       const totalPriceTL = isEurRateLoading
         ? "Hesaplanıyor.. "
         : (totalPriceEUR * eurRate).toLocaleString("tr-TR", {
             minimumFractionDigits: 2,
           }) + " TL";
 
+      // Aksesuarları SelectedProduct formatına dönüştür ve tüm ürünleri birleştir
       const selectedProducts = [
         lamelSelectedProduct,
         subPartSelectedProduct,
@@ -229,8 +241,10 @@ export const usePanjurCalculator = (
         remoteSelectedProduct,
         smarthomeSelectedProduct,
         receiverSelectedProduct,
+        ...accessories,
       ].filter(
-        (product): product is NonNullable<typeof product> => product !== null
+        (product): product is SelectedProduct =>
+          product !== null && product !== undefined
       );
 
       console.log({
@@ -240,7 +254,6 @@ export const usePanjurCalculator = (
         eurRate,
         totalPriceTL,
         accessories,
-        accessoriesTotalPrice,
       });
 
       setResult((prev) => ({
@@ -260,7 +273,7 @@ export const usePanjurCalculator = (
     eurRate,
     isEurRateLoading,
     accessories,
-    accessoriesTotalPrice,
+    availableTabs,
   ]);
 
   return result;

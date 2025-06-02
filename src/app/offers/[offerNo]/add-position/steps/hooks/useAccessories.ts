@@ -1,4 +1,4 @@
-import { PanjurSelections } from "@/types/panjur";
+import { PanjurSelections, PriceItem } from "@/types/panjur";
 import {
   calculateSystemWidth,
   calculateSystemHeight,
@@ -8,25 +8,12 @@ import {
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
-interface Accessory {
-  description: string;
-  stock_code: string;
-  uretici_kodu: string;
-  type: string;
-  color: string;
-  unit: string;
-  price: string;
-  quantity?: number;
-}
-
 interface AccessoryResult {
-  accessories: Accessory[];
-  totalPrice: number;
+  accessories: PriceItem[];
 }
 
 export function useAccessories(selections: PanjurSelections): AccessoryResult {
-  const [accessories, setAccessories] = useState<Accessory[]>([]);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [accessories, setAccessories] = useState<PriceItem[]>([]);
   const searchParams = useSearchParams();
 
   const sectionCount = searchParams.get("typeId");
@@ -42,8 +29,8 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
           throw new Error("Failed to fetch accessories");
         }
         const data = await response.json();
-        const allAccessories: Accessory[] = data;
-        const neededAccessories: Accessory[] = [];
+        const allAccessories: PriceItem[] = data;
+        const neededAccessories: PriceItem[] = [];
 
         if (allAccessories && selections.productId === "panjur") {
           const width = calculateSystemWidth(
@@ -374,25 +361,16 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
             }
           }
 
-          // Calculate total price
-          const total = neededAccessories.reduce((sum, acc) => {
-            const price = parseFloat(acc.price.replace(",", "."));
-            const quantity = acc.quantity || 1;
-            return sum + price * quantity;
-          }, 0);
-
           setAccessories(neededAccessories);
-          setTotalPrice(total * selections.quantity);
         }
       } catch (error) {
         console.error("Error calculating accessories:", error);
         setAccessories([]);
-        setTotalPrice(0);
       }
     };
 
     fetchAndCalculateAccessories();
   }, [selections, dikmeCount]);
 
-  return { accessories, totalPrice };
+  return { accessories };
 }

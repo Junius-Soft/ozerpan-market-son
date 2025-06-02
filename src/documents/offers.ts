@@ -1,3 +1,5 @@
+import { SelectedProduct } from "@/types/panjur";
+
 export interface Position {
   id: string;
   pozNo: string;
@@ -7,6 +9,8 @@ export interface Position {
   unitPrice: number;
   total: number;
   productDetails?: Record<string, unknown>;
+  selectedProducts?: SelectedProduct[];
+  rawTotal?: number; // Original total before formatting
 }
 
 export interface Offer {

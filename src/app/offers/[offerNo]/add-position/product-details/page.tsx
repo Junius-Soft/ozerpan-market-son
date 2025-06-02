@@ -7,14 +7,8 @@ import { ArrowLeft } from "lucide-react";
 import { type Product, getProductTabs } from "@/documents/products";
 import { DetailsStep } from "../steps/details-step";
 import { type Position } from "@/documents/offers";
-import { type ProductDetails } from "../steps/types";
 import { getOffers } from "@/documents/offers";
-
-interface FormValues {
-  details: ProductDetails;
-  quantity: number;
-  unitPrice: number;
-}
+import type { FormValues } from "../steps/types";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
@@ -27,6 +21,7 @@ export default function ProductDetailsPage() {
     details: {},
     quantity: 1,
     unitPrice: 0,
+    selectedProducts: [],
   });
   const initialLoadDone = useRef(false);
 
@@ -107,6 +102,7 @@ export default function ProductDetailsPage() {
         unitPrice: formValues.unitPrice,
         total: formValues.quantity * formValues.unitPrice,
         productDetails: formValues.details,
+        selectedProducts: formValues.selectedProducts,
       };
 
       // Add the new position to existing positions
@@ -163,6 +159,7 @@ export default function ProductDetailsPage() {
   }
 
   const handleFormChange = (values: FormValues) => {
+    console.log({ values });
     setFormValues(values);
   };
 

@@ -1,24 +1,20 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { type Product } from "@/documents/products";
+import type { Product } from "@/documents/products";
 import { getProductPreview } from "@/lib/product-preview";
 import { ProductPreview, type ProductTab } from "./components/product-preview";
 import { DynamicForm } from "./components/dynamic-form";
-import { type ProductDetails } from "./types";
+import type { ProductDetails, FormValues } from "./types";
 import { usePanjurCalculator } from "./hooks/usePanjurCalculator";
-import { PanjurSelections } from "@/types/panjur";
+import type { PanjurSelections } from "@/types/panjur";
 
 interface DetailsStepProps {
   selectedProduct: Product | null;
   formRef?: React.MutableRefObject<HTMLFormElement | null>;
-  onFormChange?: (values: {
-    details: ProductDetails;
-    quantity: number;
-    unitPrice: number;
-  }) => void;
+  onFormChange?: (values: FormValues) => void;
   tabs?: ProductTab[];
 }
 
@@ -258,7 +254,6 @@ export function DetailsStep({
           values={getValuesForTab()}
           onChange={(fieldId, value) => {
             handleDynamicFormChange(fieldId, value);
-            handleFormChange();
           }}
           onFormikChange={(formik) => {
             // Değişen alan ve değeri al
@@ -298,22 +293,34 @@ export function DetailsStep({
     }
   };
 
-  const handleFormChange = useCallback(() => {
-    if (onFormChange) {
-      let price = 0;
-      if (calculationResult?.totalPriceTL) {
-        price =
-          typeof calculationResult.totalPriceTL === "string"
-            ? parseFloat(calculationResult.totalPriceTL)
-            : calculationResult.totalPriceTL;
+  // Memoize the form values to prevent unnecessary updates
+  const formValues = useMemo<FormValues>(() => {
+    let price = 0;
+    if (calculationResult?.totalPriceTL) {
+      if (typeof calculationResult.totalPriceTL === "string") {
+        // Önce virgülü geçici bir karakterle değiştir
+        const normalized = calculationResult.totalPriceTL
+          .replace(/\./g, "") // Tüm noktaları kaldır
+          .replace(",", "."); // Virgülü noktaya çevir
+        price = parseFloat(normalized);
+      } else {
+        price = calculationResult.totalPriceTL;
       }
-      onFormChange({
-        details: productDetails,
-        quantity,
-        unitPrice: price,
-      });
     }
-  }, [onFormChange, productDetails, quantity, calculationResult]);
+    return {
+      details: productDetails,
+      quantity,
+      unitPrice: price,
+      selectedProducts: calculationResult?.selectedProducts || [],
+    };
+  }, [productDetails, quantity, calculationResult]);
+
+  // Only call onFormChange when the values actually change
+  useEffect(() => {
+    if (onFormChange) {
+      onFormChange(formValues);
+    }
+  }, [onFormChange, formValues]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -32,11 +32,43 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 
-function formatPrice(price: number | null | undefined) {
-  if (price == null) return "0,00";
-  return price.toLocaleString("tr-TR", {
+// Helper function to parse Turkish and standard number formats
+function parsePrice(input: string | number | null | undefined): number {
+  if (input == null) return 0;
+
+  if (typeof input === "number") {
+    return isNaN(input) ? 0 : input;
+  }
+
+  // Remove currency symbols, spaces and any non-numeric characters except . and ,
+  const cleanString = input
+    .toString()
+    .replace(/[TL₺\s]/g, "")
+    .trim();
+
+  if (cleanString === "") return 0;
+
+  // Handle Turkish format (1.234,56) - dots for thousands, comma for decimals
+  if (cleanString.includes(",")) {
+    // Replace all dots (thousand separators) and convert comma to dot for decimal
+    const normalized = cleanString.replace(/\./g, "").replace(",", ".");
+    const parsed = parseFloat(normalized);
+    return isNaN(parsed) ? 0 : parsed;
+  }
+
+  // Handle standard number format
+  const parsed = parseFloat(cleanString);
+  return isNaN(parsed) ? 0 : parsed;
+}
+
+function formatPrice(input: number | string | null | undefined): string {
+  const numericValue = parsePrice(input);
+
+  // Format as Turkish number (1.234,56)
+  return numericValue.toLocaleString("tr-TR", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
+    useGrouping: true, // Use thousand separators
   });
 }
 
@@ -101,11 +133,16 @@ export default function OfferDetailPage() {
   };
 
   const calculateTotals = (positions: Position[]) => {
-    const subtotal = positions.reduce((sum, pos) => sum + pos.total, 0);
+    const subtotal = positions.reduce((sum, pos) => {
+      // Use parsePrice to handle any string or number format
+      const posTotal = parsePrice(pos.total);
+      return sum + posTotal;
+    }, 0);
+    const vat = subtotal * 0.18; // 18% KDV
     return {
       subtotal: subtotal,
-      discount: 0,
-      total: subtotal,
+      vat: vat,
+      total: subtotal + vat,
     };
   };
 
@@ -346,9 +383,7 @@ export default function OfferDetailPage() {
                         <TableCell>
                           ₺{formatPrice(position.unitPrice)}
                         </TableCell>
-                        <TableCell>
-                          ₺{formatPrice(position.total)}
-                        </TableCell>
+                        <TableCell>₺{formatPrice(position.total)}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -412,13 +447,18 @@ export default function OfferDetailPage() {
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <label className="text-sm text-gray-500">Ara Toplam</label>
-                  <div className="font-medium">
-                    ₺{formatPrice(subtotal)}
-                  </div>
+                  <div className="font-medium">₺{formatPrice(subtotal)}</div>
                 </div>
                 <div className="flex justify-between items-center">
-                  <label className="text-sm text-gray-500">İskonto (%0)</label>
-                  <div className="font-medium">₺0,00</div>
+                  <label className="text-sm text-gray-500">KDV (%18)</label>
+                  <div className="font-medium">
+                    ₺
+                    {formatPrice(
+                      offer.positions?.length
+                        ? calculateTotals(offer.positions).vat
+                        : 0
+                    )}
+                  </div>
                 </div>
                 <div className="h-px bg-gray-200" />
                 <div className="flex justify-between items-center">

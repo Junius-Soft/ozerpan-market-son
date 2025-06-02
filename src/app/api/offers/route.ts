@@ -110,3 +110,58 @@ export async function DELETE(request: Request) {
     );
   }
 }
+
+// PATCH /api/offers/:id - Update an offer's positions
+export async function PATCH(request: Request) {
+  try {
+    const url = new URL(request.url);
+    const id = url.searchParams.get("id");
+    const body = await request.json();
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Offer ID is required" },
+        { status: 400 }
+      );
+    }
+
+    if (!body.positions || !Array.isArray(body.positions)) {
+      return NextResponse.json(
+        { error: "Invalid positions data" },
+        { status: 400 }
+      );
+    }
+
+    // Get the current offer
+    const { data: offer, error: getError } = await supabase
+      .from("offers")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (getError || !offer) {
+      throw getError || new Error("Offer not found");
+    }
+
+    // Update the offer with new positions
+    const { error: updateError } = await supabase
+      .from("offers")
+      .update({
+        positions: body.positions,
+        is_dirty: true,
+      })
+      .eq("id", id);
+
+    if (updateError) {
+      throw updateError;
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error in PATCH /api/offers:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}

@@ -3,6 +3,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
   TableBody,
@@ -14,8 +15,10 @@ import {
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
+  getOffer,
   getOffers,
   saveOffers,
+  deletePositions,
   type Offer,
   type Position,
 } from "@/documents/offers";
@@ -35,11 +38,12 @@ export default function OfferDetailPage() {
   const [offer, setOffer] = useState<Offer | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [offerName, setOfferName] = useState("");
+  const [selectedPositions, setSelectedPositions] = useState<string[]>([]);
+  const [isDeletingPositions, setIsDeletingPositions] = useState(false);
 
   useEffect(() => {
     const loadOffer = async () => {
-      const offers = await getOffers();
-      const currentOffer = offers.find((o) => o.id === params.offerNo);
+      const currentOffer = await getOffer(params.offerNo as string);
       if (currentOffer) {
         setOffer(currentOffer);
         setOfferName(currentOffer.name);
@@ -47,6 +51,46 @@ export default function OfferDetailPage() {
     };
     loadOffer();
   }, [params.offerNo]);
+
+  const handleDeletePositions = async () => {
+    if (!offer || selectedPositions.length === 0) return;
+
+    try {
+      setIsDeletingPositions(true);
+      const success = await deletePositions(offer.id, selectedPositions);
+
+      if (success) {
+        // Reload offer to get updated data
+        const updatedOffer = await getOffer(offer.id);
+        if (updatedOffer) {
+          setOffer(updatedOffer);
+          setSelectedPositions([]);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to delete positions:", error);
+    } finally {
+      setIsDeletingPositions(false);
+    }
+  };
+
+  const togglePositionSelection = (positionId: string) => {
+    setSelectedPositions((prev) =>
+      prev.includes(positionId)
+        ? prev.filter((id) => id !== positionId)
+        : [...prev, positionId]
+    );
+  };
+
+  const toggleAllPositions = () => {
+    if (!offer?.positions) return;
+
+    setSelectedPositions(
+      selectedPositions.length === offer.positions.length
+        ? []
+        : offer.positions.map((pos) => pos.id)
+    );
+  };
 
   const calculateTotals = (positions: Position[]) => {
     const subtotal = positions.reduce((sum, pos) => sum + pos.total, 0);
@@ -58,17 +102,22 @@ export default function OfferDetailPage() {
   };
 
   const handleSaveOfferName = async () => {
+    if (!offer) return;
+
     try {
-      const updatedOffer = {
-        ...offer!,
-        name: offerName,
-        is_dirty: true,
-      };
-      const offers = await getOffers();
-      const updatedOffers = offers.map((o) =>
-        o.id === offer?.id ? updatedOffer : o
-      );
-      await saveOffers(updatedOffers);
+      const response = await fetch(`/api/offers/${offer.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: offerName }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update offer name");
+      }
+
+      const updatedOffer = await response.json();
       setOffer(updatedOffer);
       setIsEditDialogOpen(false);
     } catch (error) {
@@ -205,18 +254,34 @@ export default function OfferDetailPage() {
             <Card className="p-6">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-semibold">Pozlar</h2>
-                {offer.positions?.length > 0 && (
-                  <Button
-                    variant="outline"
-                    className="gap-2 border-green-200 text-green-600 hover:bg-green-50 hover:text-green-700"
-                    onClick={() =>
-                      router.push(`/offers/${offer.id}/add-position`)
-                    }
-                  >
-                    <Plus className="h-4 w-4" />
-                    Poz Ekle
-                  </Button>
-                )}
+                <div className="flex gap-2">
+                  {offer.positions?.length > 0 && (
+                    <>
+                      <Button
+                        variant="outline"
+                        className="gap-2 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                        onClick={handleDeletePositions}
+                        disabled={
+                          selectedPositions.length === 0 || isDeletingPositions
+                        }
+                      >
+                        {isDeletingPositions
+                          ? "Siliniyor..."
+                          : "Seçilenleri Sil"}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="gap-2 border-green-200 text-green-600 hover:bg-green-50 hover:text-green-700"
+                        onClick={() =>
+                          router.push(`/offers/${offer.id}/add-position`)
+                        }
+                      >
+                        <Plus className="h-4 w-4" />
+                        Poz Ekle
+                      </Button>
+                    </>
+                  )}
+                </div>
               </div>
 
               {!offer.positions?.length ? (
@@ -239,6 +304,14 @@ export default function OfferDetailPage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
+                      <TableHead className="w-[50px]">
+                        <Checkbox
+                          checked={
+                            selectedPositions.length === offer.positions.length
+                          }
+                          onCheckedChange={toggleAllPositions}
+                        />
+                      </TableHead>
                       <TableHead className="w-[100px]">Poz No</TableHead>
                       <TableHead>Açıklama</TableHead>
                       <TableHead className="w-[100px]">Birim</TableHead>
@@ -250,6 +323,14 @@ export default function OfferDetailPage() {
                   <TableBody>
                     {offer.positions.map((position) => (
                       <TableRow key={position.id}>
+                        <TableCell>
+                          <Checkbox
+                            checked={selectedPositions.includes(position.id)}
+                            onCheckedChange={() =>
+                              togglePositionSelection(position.id)
+                            }
+                          />
+                        </TableCell>
                         <TableCell>{position.pozNo}</TableCell>
                         <TableCell>{position.description}</TableCell>
                         <TableCell>{position.unit}</TableCell>

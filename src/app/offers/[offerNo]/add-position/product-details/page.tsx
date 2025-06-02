@@ -6,17 +6,32 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { ArrowLeft } from "lucide-react";
 import { type Product, getProductTabs } from "@/documents/products";
 import { DetailsStep } from "../steps/details-step";
+import { type Position } from "@/documents/offers";
+import { type ProductDetails } from "../steps/types";
+import { getOffers } from "@/documents/offers";
+
+interface FormValues {
+  details: ProductDetails;
+  quantity: number;
+  unitPrice: number;
+}
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
+  const [formValues, setFormValues] = useState<FormValues>({
+    details: {},
+    quantity: 1,
+    unitPrice: 0,
+  });
   const initialLoadDone = useRef(false);
 
-  // Memoize form values from URL
-  const formValues = useCallback(() => {
+  // URL values
+  const getUrlValues = useCallback(() => {
     return {
       productId: searchParams.get("productId"),
       productName: searchParams.get("productName"),
@@ -31,7 +46,7 @@ export default function ProductDetailsPage() {
 
       setIsLoading(true);
       try {
-        const { productId, productName, typeId, optionId } = formValues();
+        const { productId, productName, typeId, optionId } = getUrlValues();
 
         if (!productId) {
           router.replace("select-product");
@@ -56,7 +71,71 @@ export default function ProductDetailsPage() {
     };
 
     loadProductAndTabs();
-  }, [formValues, router]);
+  }, [getUrlValues, router]);
+
+  const handleComplete = async () => {
+    if (!product) return;
+
+    const offerNo = window.location.pathname.split("/")[2];
+
+    try {
+      setIsSaving(true);
+
+      // Get existing offer first
+      const offers = await getOffers();
+      const currentOffer = offers.find((o) => o.id === offerNo);
+
+      if (!currentOffer) {
+        throw new Error("Offer not found");
+      }
+
+      const lastPos =
+        currentOffer.positions.length > 0
+          ? currentOffer.positions[currentOffer.positions.length - 1]
+          : null;
+      const nextPozNo = lastPos
+        ? String(parseInt(lastPos.pozNo) + 1).padStart(3, "0")
+        : "001";
+
+      // Create new position with calculated values
+      const newPosition: Position = {
+        id: `POS-${Date.now()}`,
+        pozNo: nextPozNo,
+        description: product.name,
+        unit: "adet",
+        quantity: formValues.quantity,
+        unitPrice: formValues.unitPrice,
+        total: formValues.quantity * formValues.unitPrice,
+        productDetails: formValues.details,
+      };
+
+      // Add the new position to existing positions
+      const updatedPositions = [...currentOffer.positions, newPosition];
+
+      // Update offer positions via PATCH endpoint
+      const updateResponse = await fetch(`/api/offers?id=${offerNo}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          positions: updatedPositions,
+        }),
+      });
+
+      if (!updateResponse.ok) {
+        throw new Error("Failed to update offer positions");
+      }
+
+      // Navigate back to offer details
+      router.push(`/offers/${offerNo}`);
+    } catch (error) {
+      console.error("Error updating offer positions:", error);
+      // TODO: Show error message to user
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -83,6 +162,10 @@ export default function ProductDetailsPage() {
     );
   }
 
+  const handleFormChange = (values: FormValues) => {
+    setFormValues(values);
+  };
+
   return (
     <div className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -92,7 +175,7 @@ export default function ProductDetailsPage() {
             <div className="flex items-center gap-4">
               <h1 className="text-2xl font-bold">
                 {product?.name} Detayları{" "}
-                {formValues().typeId ? `(${formValues().typeId})` : ""}
+                {getUrlValues().typeId ? `(${getUrlValues().typeId})` : ""}
               </h1>
               <Button
                 variant="outline"
@@ -104,17 +187,21 @@ export default function ProductDetailsPage() {
               </Button>
             </div>
             <Button
-              onClick={() => {
-                const offerNo = window.location.pathname.split("/")[2];
-                router.push(`/offers/${offerNo}`);
-              }}
+              onClick={handleComplete}
+              disabled={
+                isSaving || !formValues.details || formValues.unitPrice <= 0
+              }
             >
-              Tamamla
+              {isSaving ? "Kaydediliyor..." : "Tamamla"}
             </Button>
           </div>
 
           {/* Product Details Form */}
-          <DetailsStep selectedProduct={product} formRef={formRef} />
+          <DetailsStep
+            selectedProduct={product}
+            formRef={formRef}
+            onFormChange={handleFormChange}
+          />
         </div>
       </div>
     </div>

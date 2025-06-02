@@ -14,7 +14,11 @@ import { PanjurSelections } from "@/types/panjur";
 interface DetailsStepProps {
   selectedProduct: Product | null;
   formRef?: React.MutableRefObject<HTMLFormElement | null>;
-  onFormChange?: (values: Record<string, unknown>) => void;
+  onFormChange?: (values: {
+    details: ProductDetails;
+    quantity: number;
+    unitPrice: number;
+  }) => void;
   tabs?: ProductTab[];
 }
 
@@ -294,12 +298,24 @@ export function DetailsStep({
     }
   };
 
-  // Form değişiklik handler'ı
   const handleFormChange = useCallback(
-    (values: Record<string, unknown>) => {
-      onFormChange?.(values);
+    (_values: Record<string, unknown>) => {
+      if (onFormChange) {
+        let price = 0;
+        if (calculationResult?.totalPriceTL) {
+          price =
+            typeof calculationResult.totalPriceTL === "string"
+              ? parseFloat(calculationResult.totalPriceTL)
+              : calculationResult.totalPriceTL;
+        }
+        onFormChange({
+          details: productDetails,
+          quantity,
+          unitPrice: price,
+        });
+      }
     },
-    [onFormChange]
+    [onFormChange, productDetails, quantity, calculationResult]
   );
 
   return (

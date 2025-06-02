@@ -6,6 +6,7 @@ export interface Position {
   quantity: number;
   unitPrice: number;
   total: number;
+  productDetails?: Record<string, unknown>;
 }
 
 export interface Offer {
@@ -44,5 +45,45 @@ export const getOffers = async (): Promise<Offer[]> => {
   } catch (error) {
     console.error("Failed to get offers:", error);
     return [];
+  }
+};
+
+// Function to get single offer by ID from Supabase
+export const getOffer = async (offerId: string): Promise<Offer | null> => {
+  try {
+    const response = await fetch(`/api/offers/${offerId}`);
+    if (!response.ok) {
+      if (response.status === 404) return null;
+      throw new Error("Failed to fetch offer");
+    }
+    return response.json();
+  } catch (error) {
+    console.error("Failed to get offer:", error);
+    return null;
+  }
+};
+
+// Function to delete multiple positions from an offer
+export const deletePositions = async (
+  offerId: string,
+  positionIds: string[]
+): Promise<boolean> => {
+  try {
+    const response = await fetch(`/api/offers/${offerId}/positions`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ positionIds }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete positions");
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Failed to delete positions:", error);
+    return false;
   }
 };

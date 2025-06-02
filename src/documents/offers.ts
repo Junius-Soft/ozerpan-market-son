@@ -12,6 +12,10 @@ export interface Position {
   productDetails?: Record<string, unknown>;
   selectedProducts?: SelectedProduct[];
   rawTotal?: number; // Original total before formatting
+  productId?: string | null;
+  typeId?: string | null;
+  productName?: string | null;
+  optionId?: string | null;
 }
 
 export interface Offer {

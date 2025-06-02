@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { type Product, getProductTabs } from "@/documents/products";
 import { DetailsStep } from "../steps/details-step";
@@ -24,16 +24,11 @@ export default function ProductDetailsPage() {
     selectedProducts: [],
   });
   const initialLoadDone = useRef(false);
-
-  // URL values
-  const getUrlValues = useCallback(() => {
-    return {
-      productId: searchParams.get("productId"),
-      productName: searchParams.get("productName"),
-      typeId: searchParams.get("typeId"),
-      optionId: searchParams.get("optionId"),
-    };
-  }, [searchParams]);
+  const productId = searchParams.get("productId");
+  const productName = searchParams.get("productName");
+  const typeId = searchParams.get("typeId");
+  const optionId = searchParams.get("optionId");
+  const selectedPosition = searchParams.get("selectedPosition");
 
   useEffect(() => {
     const loadProductAndTabs = async () => {
@@ -41,8 +36,6 @@ export default function ProductDetailsPage() {
 
       setIsLoading(true);
       try {
-        const { productId, productName, typeId, optionId } = getUrlValues();
-
         if (!productId) {
           router.replace("select-product");
           return;
@@ -66,7 +59,7 @@ export default function ProductDetailsPage() {
     };
 
     loadProductAndTabs();
-  }, [getUrlValues, router]);
+  }, [optionId, productId, productName, router, typeId]);
 
   const handleComplete = async () => {
     if (!product) return;
@@ -103,6 +96,10 @@ export default function ProductDetailsPage() {
         total: formValues.quantity * formValues.unitPrice,
         productDetails: formValues.details,
         selectedProducts: formValues.selectedProducts,
+        productId,
+        typeId,
+        productName,
+        optionId,
       };
 
       // Add the new position to existing positions
@@ -171,12 +168,21 @@ export default function ProductDetailsPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <h1 className="text-2xl font-bold">
-                {product?.name} Detayları{" "}
-                {getUrlValues().typeId ? `(${getUrlValues().typeId})` : ""}
+                {product?.name} Detayları {typeId ? `(${typeId})` : ""}
               </h1>
               <Button
                 variant="outline"
-                onClick={() => router.back()}
+                onClick={() =>
+                  router.push(
+                    `/offers/${
+                      window.location.pathname.split("/")[2]
+                    }/add-position/select-product?selectedPosition=${
+                      selectedPosition ?? ""
+                    }&productId=${productId}&productName=${productName}${
+                      typeId ? `&typeId=${typeId}` : ""
+                    }${optionId ? `&optionId=${optionId}` : ""}`
+                  )
+                }
                 className="gap-2"
               >
                 <ArrowLeft className="h-4 w-4" />
@@ -185,11 +191,21 @@ export default function ProductDetailsPage() {
             </div>
             <Button
               onClick={handleComplete}
+              variant={selectedPosition ? "outline" : "default"}
+              className={
+                selectedPosition
+                  ? "border-yellow-400 text-yellow-700 hover:bg-yellow-100 hover:text-yellow-800"
+                  : ""
+              }
               disabled={
                 isSaving || !formValues.details || formValues.unitPrice <= 0
               }
             >
-              {isSaving ? "Kaydediliyor..." : "Tamamla"}
+              {isSaving
+                ? "Kaydediliyor..."
+                : selectedPosition
+                ? "Güncelle"
+                : "Tamamla"}
             </Button>
           </div>
 

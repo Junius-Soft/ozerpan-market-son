@@ -435,7 +435,23 @@ export default function OfferDetailPage() {
                   </TableHeader>
                   <TableBody>
                     {offer.positions.map((position) => (
-                      <TableRow key={position.id}>
+                      <TableRow
+                        key={position.id}
+                        className="cursor-pointer"
+                        onClick={(e) => {
+                          // Don't navigate if clicking on checkbox or copy button
+                          const target = e.target as HTMLElement;
+                          if (
+                            target.closest("button") ||
+                            target.closest('[role="checkbox"]')
+                          ) {
+                            return;
+                          }
+                          router.push(
+                            `/offers/${offer.id}/add-position/product-details?selectedPosition=${position.id}&productId=${position.productId}&productName=${position.productName}&typeId=${position.typeId}&optionId=${position.optionId}`
+                          );
+                        }}
+                      >
                         <TableCell>
                           <Checkbox
                             checked={selectedPositions.includes(position.id)}

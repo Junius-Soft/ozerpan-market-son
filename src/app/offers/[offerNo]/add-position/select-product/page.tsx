@@ -18,6 +18,8 @@ export default function SelectProductPage() {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const initialLoadDone = useRef(false);
 
+  const selectedPosition = searchParams.get("selectedPosition") ?? "";
+
   const updateURL = useCallback(
     (updates: Record<string, string | null>) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -127,7 +129,11 @@ export default function SelectProductPage() {
               <h1 className="text-2xl font-bold">Ürün Seçimi</h1>
               <Button
                 variant="ghost"
-                onClick={() => router.back()}
+                onClick={() =>
+                  router.push(
+                    `/offers/${window.location.pathname.split("/")[2]}`
+                  )
+                }
                 className="gap-2"
               >
                 <ArrowLeft className="h-4 w-4" />
@@ -138,11 +144,11 @@ export default function SelectProductPage() {
               onClick={() => {
                 if (selectedProduct) {
                   const params = new URLSearchParams();
+                  params.set("selectedPosition", selectedPosition);
                   params.set("productId", selectedProduct.id);
                   params.set("productName", selectedProduct.name);
                   if (selectedType) params.set("typeId", selectedType);
                   if (selectedOption) params.set("optionId", selectedOption);
-
                   router.push(`product-details?${params.toString()}`);
                 }
               }}

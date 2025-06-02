@@ -7,6 +7,7 @@ import { getProductPreview } from "@/lib/product-preview";
 import { type Product } from "@/documents/products";
 import { ProductDetails } from "../types";
 import { CalculationResult } from "@/types/panjur";
+import { useExchangeRate } from "@/hooks/useExchangeRate";
 
 interface ProductField {
   id: string;
@@ -70,6 +71,7 @@ export function ProductPreview({
 }: ProductPreviewProps) {
   const [localQuantity, setLocalQuantity] = useState(quantity);
   const [localValues, setLocalValues] = useState(productDetails);
+  const { eurRate, loading: isEurRateLoading } = useExchangeRate();
 
   // Product details değiştiğinde local state'i güncelle
   useEffect(() => {
@@ -176,7 +178,12 @@ export function ProductPreview({
               <div className="text-sm space-y-1">
                 <div className="flex justify-between font-medium text-base">
                   <span>Toplam Fiyat:</span>
-                  <span>{calculationResult.totalPriceTL}</span>
+                  <span>
+                    {isEurRateLoading
+                      ? "Hesaplanıyor.."
+                      : calculationResult.totalPrice * eurRate}
+                    TL
+                  </span>
                 </div>
               </div>
               {calculationResult.errors.length > 0 && (

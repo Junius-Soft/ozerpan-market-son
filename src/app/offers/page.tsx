@@ -23,6 +23,8 @@ import { Input } from "@/components/ui/input";
 import { type Offer, getOffers } from "@/documents/offers";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { useExchangeRate } from "@/hooks/useExchangeRate";
+import { formatPrice } from "./[offerNo]/page";
 
 export default function OffersPage() {
   const router = useRouter();
@@ -32,6 +34,7 @@ export default function OffersPage() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [selectedOffers, setSelectedOffers] = useState<string[]>([]);
   const [allOffers, setAllOffers] = useState<Offer[]>([]);
+  const { eurRate, loading: isEurRateLoading } = useExchangeRate();
 
   // Load offers on mount
   useEffect(() => {
@@ -127,7 +130,7 @@ export default function OffersPage() {
                     ).padStart(3, "0")}`,
                     name: newOfferName,
                     created_at: new Date().toLocaleDateString("tr-TR"),
-                    total: "₺0",
+                    total: 0,
                     status: "Taslak" as const,
                     positions: [],
                   };
@@ -203,7 +206,7 @@ export default function OffersPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {isLoading ? (
+              {isLoading || isEurRateLoading ? (
                 // Loading skeletons
                 <>
                   {[...Array(5)].map((_, i) => (
@@ -249,7 +252,9 @@ export default function OffersPage() {
                     <TableCell className="font-medium">{offer.id}</TableCell>
                     <TableCell>{offer.name}</TableCell>
                     <TableCell>{offer.created_at}</TableCell>
-                    <TableCell>{offer.total}</TableCell>
+                    <TableCell>
+                      {formatPrice(offer.total, eurRate)} TL
+                    </TableCell>
                     <TableCell>
                       <div className="flex w-full">
                         <span

@@ -27,7 +27,7 @@ export interface CalculationResult {
   dikmeCount: number;
   boxHeight: number;
   subPartWidth: number;
-  totalPriceTL: string;
+  totalPrice: number;
   selectedProducts: SelectedProduct[]; // Add selected products to the result
   errors: string[];
 }

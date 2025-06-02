@@ -296,17 +296,9 @@ export function DetailsStep({
   // Memoize the form values to prevent unnecessary updates
   const formValues = useMemo<FormValues>(() => {
     let price = 0;
-    if (calculationResult?.totalPriceTL) {
-      if (typeof calculationResult.totalPriceTL === "string") {
-        // Önce virgülü geçici bir karakterle değiştir
-        const normalized = calculationResult.totalPriceTL
-          .replace(/\./g, "") // Tüm noktaları kaldır
-          .replace(",", "."); // Virgülü noktaya çevir
-        price = parseFloat(normalized);
-      } else {
-        price = calculationResult.totalPriceTL;
-      }
-    }
+
+    price = calculationResult.totalPrice;
+
     return {
       details: productDetails,
       quantity,

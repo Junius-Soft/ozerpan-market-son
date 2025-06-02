@@ -27,21 +27,44 @@ export async function GET(
   }
 }
 
-// PATCH /api/offers/:offerId - Update offer name
+// PATCH /api/offers/:offerId - Update offer name or status
 export async function PATCH(
   request: Request,
   { params }: { params: { offerId: string } }
 ) {
   try {
-    const { name } = await request.json();
+    const body = await request.json();
 
-    if (!name) {
-      return NextResponse.json({ error: "Name is required" }, { status: 400 });
+    if (!body.name && !body.status) {
+      return NextResponse.json(
+        { error: "Name or status is required" },
+        { status: 400 }
+      );
+    }
+
+    // If status is provided, validate it
+    if (
+      body.status &&
+      !["Taslak", "Kaydedildi", "Revize"].includes(body.status)
+    ) {
+      return NextResponse.json({ error: "Invalid status" }, { status: 400 });
+    }
+
+    // Build update object based on provided fields
+    const updateData: { name?: string; status?: string; is_dirty?: boolean } =
+      {};
+    if (body.name) updateData.name = body.name;
+    if (body.status) {
+      updateData.status = body.status;
+      // When saving a draft, mark it as not dirty
+      if (body.status === "Kaydedildi") {
+        updateData.is_dirty = false;
+      }
     }
 
     const { data: offer, error: updateError } = await supabase
       .from("offers")
-      .update({ name })
+      .update(updateData)
       .eq("id", params.offerId)
       .select()
       .single();
@@ -52,7 +75,7 @@ export async function PATCH(
 
     return NextResponse.json(offer);
   } catch (error) {
-    console.error("Error updating offer name:", error);
+    console.error("Error updating offer:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

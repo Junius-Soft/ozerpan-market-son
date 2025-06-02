@@ -135,6 +135,8 @@ export default function ProductDetailsPage() {
         body: JSON.stringify({
           positions: updatedPositions,
           total: `₺${formatPrice(newGrandTotal)}`,
+          subtotal: `₺${formatPrice(newSubtotal)}`,
+          vat: `₺${formatPrice(newVat)}`,
         }),
       });
 

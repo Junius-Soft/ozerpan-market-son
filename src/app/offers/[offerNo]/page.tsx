@@ -16,8 +16,6 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   getOffer,
-  getOffers,
-  saveOffers,
   deletePositions,
   type Offer,
   type Position,
@@ -31,6 +29,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { useExchangeRate } from "@/hooks/useExchangeRate";
 
 // Helper function to parse Turkish and standard number formats
 function parsePrice(input: string | number | null | undefined): number {
@@ -61,8 +60,11 @@ function parsePrice(input: string | number | null | undefined): number {
   return isNaN(parsed) ? 0 : parsed;
 }
 
-function formatPrice(input: number | string | null | undefined): string {
-  const numericValue = parsePrice(input);
+export function formatPrice(
+  input: number | string | null | undefined,
+  eurRate: number
+): string {
+  const numericValue = parsePrice(input) * eurRate;
 
   // Format as Turkish number (1.234,56)
   return numericValue.toLocaleString("tr-TR", {
@@ -80,6 +82,7 @@ export default function OfferDetailPage() {
   const [offerName, setOfferName] = useState("");
   const [selectedPositions, setSelectedPositions] = useState<string[]>([]);
   const [isDeletingPositions, setIsDeletingPositions] = useState(false);
+  const { eurRate, loading: isEurRateLoading } = useExchangeRate();
 
   useEffect(() => {
     const loadOffer = async () => {
@@ -170,7 +173,28 @@ export default function OfferDetailPage() {
     }
   };
 
-  if (!offer) {
+  const updateOfferStatus = async (newStatus: string) => {
+    if (!offer) return;
+
+    try {
+      const response = await fetch(`/api/offers/${offer.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (!response.ok) throw new Error("Failed to update offer status");
+
+      const updatedOffer = await response.json();
+      setOffer(updatedOffer);
+    } catch (error) {
+      console.error("Error updating offer status:", error);
+    }
+  };
+
+  if (!offer || isEurRateLoading) {
     return (
       <div className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
@@ -381,9 +405,11 @@ export default function OfferDetailPage() {
                         <TableCell>{position.unit}</TableCell>
                         <TableCell>{position.quantity}</TableCell>
                         <TableCell>
-                          ₺{formatPrice(position.unitPrice)}
+                          ₺{formatPrice(position.unitPrice, eurRate)}
                         </TableCell>
-                        <TableCell>₺{formatPrice(position.total)}</TableCell>
+                        <TableCell>
+                          ₺{formatPrice(position.total, eurRate)}
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -447,7 +473,9 @@ export default function OfferDetailPage() {
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <label className="text-sm text-gray-500">Ara Toplam</label>
-                  <div className="font-medium">₺{formatPrice(subtotal)}</div>
+                  <div className="font-medium">
+                    ₺{formatPrice(subtotal, eurRate)}
+                  </div>
                 </div>
                 <div className="flex justify-between items-center">
                   <label className="text-sm text-gray-500">KDV (%18)</label>
@@ -456,7 +484,8 @@ export default function OfferDetailPage() {
                     {formatPrice(
                       offer.positions?.length
                         ? calculateTotals(offer.positions).vat
-                        : 0
+                        : 0,
+                      eurRate
                     )}
                   </div>
                 </div>
@@ -464,7 +493,7 @@ export default function OfferDetailPage() {
                 <div className="flex justify-between items-center">
                   <label className="font-medium">Genel Toplam</label>
                   <div className="font-medium text-lg">
-                    ₺{formatPrice(total)}
+                    ₺{formatPrice(total, eurRate)}
                   </div>
                 </div>
 
@@ -477,19 +506,7 @@ export default function OfferDetailPage() {
                           variant="outline"
                           className="flex-1 gap-2 border-blue-200 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
                           disabled={!offer.positions?.length || !offer.is_dirty}
-                          onClick={async () => {
-                            const updatedOffer = {
-                              ...offer,
-                              status: "Kaydedildi" as const,
-                              is_dirty: false,
-                            };
-                            const offers = await getOffers();
-                            const updatedOffers = offers.map((o) =>
-                              o.id === offer.id ? updatedOffer : o
-                            );
-                            await saveOffers(updatedOffers);
-                            setOffer(updatedOffer);
-                          }}
+                          onClick={() => updateOfferStatus("Kaydedildi")}
                         >
                           Kaydet
                         </Button>
@@ -510,19 +527,7 @@ export default function OfferDetailPage() {
                           variant="outline"
                           className="flex-1 gap-2 border-yellow-200 text-yellow-600 hover:bg-yellow-50 hover:text-yellow-700"
                           disabled={!offer.positions?.length}
-                          onClick={async () => {
-                            const updatedOffer = {
-                              ...offer,
-                              status: "Revize" as const,
-                              is_dirty: false,
-                            };
-                            const offers = await getOffers();
-                            const updatedOffers = offers.map((o) =>
-                              o.id === offer.id ? updatedOffer : o
-                            );
-                            await saveOffers(updatedOffers);
-                            setOffer(updatedOffer);
-                          }}
+                          onClick={() => updateOfferStatus("Revize")}
                         >
                           Revize Et
                         </Button>

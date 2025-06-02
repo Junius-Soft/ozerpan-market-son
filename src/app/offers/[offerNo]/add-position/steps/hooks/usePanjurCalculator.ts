@@ -24,7 +24,6 @@ import {
   getBoxHeight,
 } from "@/utils/panjur";
 import { useSearchParams } from "next/navigation";
-import { useExchangeRate } from "@/hooks/useExchangeRate";
 import { useAccessories } from "./useAccessories";
 import { ProductTab } from "@/documents/products";
 
@@ -43,14 +42,13 @@ export const usePanjurCalculator = (
     dikmeCount: 2,
     boxHeight: 0,
     subPartWidth: 0,
-    totalPriceTL: "0 TL",
+    totalPrice: 0,
     selectedProducts: [],
     errors: [],
   });
   const searchParams = useSearchParams();
   const sectionCount = searchParams.get("typeId");
   const [prices, setPrices] = useState<PriceItem[]>([]);
-  const { eurRate, loading: isEurRateLoading } = useExchangeRate();
   const { accessories } = useAccessories(selections);
 
   useEffect(() => {
@@ -71,7 +69,7 @@ export const usePanjurCalculator = (
   }, []);
 
   useEffect(() => {
-    if ((!prices.length || !selections) && !isEurRateLoading) return;
+    if (!prices.length || !selections) return;
 
     // Lamel count hesaplanırken çağrılacak
     const calculate = () => {
@@ -213,7 +211,7 @@ export const usePanjurCalculator = (
         return total + parseFloat(acc.price) * (acc.quantity || 1);
       }, 0);
 
-      const totalPriceEUR =
+      const rawTotalPriceEUR =
         lamelPrice +
         subPartPrice +
         dikmePrice +
@@ -224,11 +222,7 @@ export const usePanjurCalculator = (
         receiverPrice +
         accessoriesPrice;
 
-      const totalPriceTL = isEurRateLoading
-        ? "Hesaplanıyor.. "
-        : (totalPriceEUR * eurRate).toLocaleString("tr-TR", {
-            minimumFractionDigits: 2,
-          }) + " TL";
+      const totalPrice = rawTotalPriceEUR;
 
       // Aksesuarları SelectedProduct formatına dönüştür ve tüm ürünleri birleştir
       const selectedProducts = [
@@ -250,31 +244,21 @@ export const usePanjurCalculator = (
       console.log({
         selectedProducts,
         lamelGenisligiMetre,
-        totalPriceEUR,
-        eurRate,
-        totalPriceTL,
+        totalPrice,
         accessories,
       });
 
       setResult((prev) => ({
         ...prev,
         lamelPrice,
-        totalPriceTL,
+        totalPrice,
         selectedProducts,
         errors,
       }));
     };
 
     calculate();
-  }, [
-    prices,
-    selections,
-    sectionCount,
-    eurRate,
-    isEurRateLoading,
-    accessories,
-    availableTabs,
-  ]);
+  }, [prices, selections, sectionCount, accessories, availableTabs]);
 
   return result;
 };

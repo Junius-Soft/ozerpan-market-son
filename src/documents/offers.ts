@@ -8,6 +8,7 @@ export interface Position {
   quantity: number;
   unitPrice: number;
   total: number;
+  totalEUR?: number; // Euro cinsinden toplam
   productDetails?: Record<string, unknown>;
   selectedProducts?: SelectedProduct[];
   rawTotal?: number; // Original total before formatting
@@ -17,7 +18,7 @@ export interface Offer {
   id: string;
   name: string;
   created_at: string;
-  total: string;
+  total: number;
   status: "Taslak" | "Kaydedildi" | "Revize";
   positions: Position[];
   is_dirty?: boolean; // pozlarda değişiklik yapıldığını takip etmek için

@@ -82,7 +82,9 @@ export default function OfferDetailPage() {
   const [offerName, setOfferName] = useState("");
   const [selectedPositions, setSelectedPositions] = useState<string[]>([]);
   const [isDeletingPositions, setIsDeletingPositions] = useState(false);
-  const { eurRate, loading: isEurRateLoading } = useExchangeRate();
+  const { eurRate, loading: isEurRateLoading } = useExchangeRate({
+    offerId: params.offerNo as string,
+  });
 
   useEffect(() => {
     const loadOffer = async () => {
@@ -173,16 +175,17 @@ export default function OfferDetailPage() {
     }
   };
 
-  const updateOfferStatus = async (newStatus: string) => {
+  const updateOfferStatus = async (newStatus: string, eurRate?: number) => {
     if (!offer) return;
-
+    console.log({ eurRate });
+    console.log({ newStatus });
     try {
       const response = await fetch(`/api/offers/${offer.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ status: newStatus }),
+        body: JSON.stringify({ status: newStatus, eurRate: eurRate }),
       });
 
       if (!response.ok) throw new Error("Failed to update offer status");
@@ -261,7 +264,7 @@ export default function OfferDetailPage() {
   }
 
   const { subtotal, total } = calculateTotals(offer.positions);
-
+  console.log({ eurRate });
   return (
     <div className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
@@ -324,7 +327,7 @@ export default function OfferDetailPage() {
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-semibold">Pozlar</h2>
                 <div className="flex gap-2">
-                  {offer.positions?.length > 0 && (
+                  {offer.positions?.length > 0 && offer.status === "Taslak" && (
                     <>
                       <Button
                         variant="outline"
@@ -358,16 +361,18 @@ export default function OfferDetailPage() {
                   <p className="text-gray-500 mb-4">
                     Sipariş vermek için lütfen poz ekleyin
                   </p>
-                  <Button
-                    variant="outline"
-                    className="gap-2 border-green-200 text-green-600 hover:bg-green-50 hover:text-green-700"
-                    onClick={() =>
-                      router.push(`/offers/${offer.id}/add-position`)
-                    }
-                  >
-                    <Plus className="h-4 w-4" />
-                    Poz Ekle
-                  </Button>
+                  {offer.status !== "Kaydedildi" && (
+                    <Button
+                      variant="outline"
+                      className="gap-2 border-green-200 text-green-600 hover:bg-green-50 hover:text-green-700"
+                      onClick={() =>
+                        router.push(`/offers/${offer.id}/add-position`)
+                      }
+                    >
+                      <Plus className="h-4 w-4" />
+                      Poz Ekle
+                    </Button>
+                  )}
                 </div>
               ) : (
                 <Table>
@@ -502,11 +507,14 @@ export default function OfferDetailPage() {
                   <div className="flex gap-3">
                     {offer.status === "Taslak" ? (
                       <>
+                        {/* Save button */}
                         <Button
                           variant="outline"
                           className="flex-1 gap-2 border-blue-200 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
                           disabled={!offer.positions?.length || !offer.is_dirty}
-                          onClick={() => updateOfferStatus("Kaydedildi")}
+                          onClick={async () => {
+                            await updateOfferStatus("Kaydedildi", eurRate);
+                          }}
                         >
                           Kaydet
                         </Button>

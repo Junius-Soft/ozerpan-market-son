@@ -6,13 +6,32 @@ interface ExchangeRateResponse {
   fallback?: boolean;
 }
 
-export const useExchangeRate = () => {
+interface UseExchangeRateProps {
+  offerId?: string;
+}
+
+export const useExchangeRate = ({ offerId }: UseExchangeRateProps = {}) => {
   const [eurRate, setEurRate] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchExchangeRate = async () => {
+      // If we have an offerId, first try to get the saved rate from the offer
+      if (offerId) {
+        try {
+          const offerResponse = await fetch(`/api/offers/${offerId}`);
+          const offerData = await offerResponse.json();
+          if (offerData.eurRate) {
+            setEurRate(offerData.eurRate);
+            setLoading(false);
+            return;
+          }
+        } catch (err) {
+          console.error("Error fetching offer:", err);
+          // Continue to fetch current rate if offer fetch fails
+        }
+      }
       try {
         const response = await fetch("/api/exchange-rates");
         if (!response.ok) {

@@ -34,7 +34,6 @@ export async function PATCH(
 ) {
   try {
     const body = await request.json();
-
     if (!body.name && !body.status) {
       return NextResponse.json(
         { error: "Name or status is required" },
@@ -51,14 +50,19 @@ export async function PATCH(
     }
 
     // Build update object based on provided fields
-    const updateData: { name?: string; status?: string; is_dirty?: boolean } =
-      {};
+    const updateData: {
+      name?: string;
+      status?: string;
+      is_dirty?: boolean;
+      eurRate?: number;
+    } = {};
     if (body.name) updateData.name = body.name;
     if (body.status) {
       updateData.status = body.status;
       // When saving a draft, mark it as not dirty
       if (body.status === "Kaydedildi") {
         updateData.is_dirty = false;
+        updateData.eurRate = body.eurRate; // Save EUR rate if provided
       }
     }
 

@@ -22,6 +22,7 @@ export interface Offer {
   status: "Taslak" | "Kaydedildi" | "Revize";
   positions: Position[];
   is_dirty?: boolean; // pozlarda değişiklik yapıldığını takip etmek için
+  eurRate?: number;
 }
 
 // API functions for offer management

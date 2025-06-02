@@ -15,7 +15,7 @@ const isValidOffer = (offer: unknown): offer is Offer => {
     typeof obj.id === "string" &&
     typeof obj.name === "string" &&
     typeof obj.created_at === "string" &&
-    typeof obj.total === "string" &&
+    typeof obj.total === "number" &&
     typeof obj.status === "string" &&
     ["Taslak", "Kaydedildi", "Revize"].includes(obj.status) &&
     Array.isArray(obj.positions)
@@ -26,10 +26,10 @@ const isValidOffer = (offer: unknown): offer is Offer => {
 export async function GET() {
   try {
     const { data: offers, error } = await supabase.from("offers").select("*");
-
     if (error) {
       throw error;
     }
+    console.log("HEHEHEHEHEHEHEEHEHEHH", offers);
 
     // Validate each offer
     if (!offers.every(isValidOffer)) {

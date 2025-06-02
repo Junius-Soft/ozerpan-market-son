@@ -18,6 +18,7 @@ export interface Database {
           status: "Taslak" | "Kaydedildi" | "Revize";
           positions: Json[];
           is_dirty?: boolean;
+          eurRate?: number; // EUR/TL exchange rate
         };
         Insert: {
           id: string;
@@ -27,6 +28,7 @@ export interface Database {
           status: "Taslak" | "Kaydedildi" | "Revize";
           positions: Json[];
           is_dirty?: boolean;
+          eurRate?: number;
         };
         Update: {
           id?: string;
@@ -36,6 +38,7 @@ export interface Database {
           status?: "Taslak" | "Kaydedildi" | "Revize";
           positions?: Json[];
           is_dirty?: boolean;
+          eurRate?: number;
         };
       };
     };

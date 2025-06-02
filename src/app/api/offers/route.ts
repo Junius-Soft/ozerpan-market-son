@@ -143,11 +143,12 @@ export async function PATCH(request: Request) {
       throw getError || new Error("Offer not found");
     }
 
-    // Update the offer with new positions
+    // Update the offer with new positions and totals
     const { error: updateError } = await supabase
       .from("offers")
       .update({
         positions: body.positions,
+        total: body.total || "0",
         is_dirty: true,
       })
       .eq("id", id);

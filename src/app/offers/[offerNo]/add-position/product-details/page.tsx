@@ -108,6 +108,24 @@ export default function ProductDetailsPage() {
       // Add the new position to existing positions
       const updatedPositions = [...currentOffer.positions, newPosition];
 
+      // Calculate new total for the offer
+      const newTotal = updatedPositions.reduce(
+        (sum, pos) => sum + pos.total,
+        0
+      );
+      const newSubtotal = newTotal;
+      const newVat = newSubtotal * 0.18;
+      const newGrandTotal = newSubtotal + newVat;
+
+      // Format numbers for Turkish currency display
+      const formatPrice = (num: number): string => {
+        return num.toLocaleString("tr-TR", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+          useGrouping: true,
+        });
+      };
+
       // Update offer positions via PATCH endpoint
       const updateResponse = await fetch(`/api/offers?id=${offerNo}`, {
         method: "PATCH",
@@ -116,6 +134,7 @@ export default function ProductDetailsPage() {
         },
         body: JSON.stringify({
           positions: updatedPositions,
+          total: `₺${formatPrice(newGrandTotal)}`,
         }),
       });
 

@@ -5,7 +5,7 @@ import { Position } from "@/documents/offers";
 // DELETE /api/offers/:offerId/positions - Delete multiple positions
 export async function DELETE(
   request: Request,
-  { params }: { params: { offerId: string } }
+  context: { params: { offerId: string } }
 ) {
   try {
     // Get position IDs from request body
@@ -22,7 +22,7 @@ export async function DELETE(
     const { data: offer, error: getError } = await supabase
       .from("offers")
       .select("*")
-      .eq("id", params.offerId)
+      .eq("id", context.params.offerId)
       .single();
 
     if (getError || !offer) {
@@ -41,7 +41,7 @@ export async function DELETE(
         positions: updatedPositions,
         is_dirty: true,
       })
-      .eq("id", params.offerId);
+      .eq("id", context.params.offerId);
 
     if (updateError) {
       throw updateError;

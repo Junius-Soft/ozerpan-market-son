@@ -32,6 +32,14 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 
+function formatPrice(price: number | null | undefined) {
+  if (price == null) return "0,00";
+  return price.toLocaleString("tr-TR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
+
 export default function OfferDetailPage() {
   const params = useParams();
   const router = useRouter();
@@ -336,18 +344,10 @@ export default function OfferDetailPage() {
                         <TableCell>{position.unit}</TableCell>
                         <TableCell>{position.quantity}</TableCell>
                         <TableCell>
-                          ₺
-                          {position.unitPrice.toLocaleString("tr-TR", {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          })}
+                          ₺{formatPrice(position.unitPrice)}
                         </TableCell>
                         <TableCell>
-                          ₺
-                          {position.total.toLocaleString("tr-TR", {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          })}
+                          ₺{formatPrice(position.total)}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -413,11 +413,7 @@ export default function OfferDetailPage() {
                 <div className="flex justify-between items-center">
                   <label className="text-sm text-gray-500">Ara Toplam</label>
                   <div className="font-medium">
-                    ₺
-                    {subtotal.toLocaleString("tr-TR", {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
+                    ₺{formatPrice(subtotal)}
                   </div>
                 </div>
                 <div className="flex justify-between items-center">
@@ -428,11 +424,7 @@ export default function OfferDetailPage() {
                 <div className="flex justify-between items-center">
                   <label className="font-medium">Genel Toplam</label>
                   <div className="font-medium text-lg">
-                    ₺
-                    {total.toLocaleString("tr-TR", {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
+                    ₺{formatPrice(total)}
                   </div>
                 </div>
 

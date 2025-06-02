@@ -78,13 +78,16 @@ export const deletePositions = async (
   positionIds: string[]
 ): Promise<boolean> => {
   try {
-    const response = await fetch(`/api/offers/${offerId}/positions`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ positionIds }),
-    });
+    const response = await fetch(
+      `/api/offers/${offerId}/positions?id=${offerId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ positionIds }),
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to delete positions");

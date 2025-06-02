@@ -3,14 +3,12 @@ import { supabase } from "@/lib/supabase";
 import { Position } from "@/documents/offers";
 
 // DELETE /api/offers/:offerId/positions - Delete multiple positions
-export async function DELETE(
-  request: Request,
-  { params }: { params: Promise<{ offerId: string }> }
-) {
+export async function DELETE(request: Request) {
   try {
+    const url = new URL(request.url);
+    const offerId = url.searchParams.get("id");
     // Get position IDs from request body
     const { positionIds } = await request.json();
-    const offerId = (await params).offerId;
     if (!Array.isArray(positionIds) || positionIds.length === 0) {
       return NextResponse.json(
         { error: "Position IDs array is required" },

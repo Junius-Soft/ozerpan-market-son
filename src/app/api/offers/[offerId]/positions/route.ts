@@ -2,11 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { Position } from "@/documents/offers";
 
+export type PositionContext = {
+  params: {
+    offerId: string;
+  };
+};
+
 // DELETE /api/offers/:offerId/positions - Delete multiple positions
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { offerId: string } }
-) {
+export async function DELETE(request: NextRequest, context: PositionContext) {
   try {
     // Get position IDs from request body
     const { positionIds } = await request.json();
@@ -22,7 +25,7 @@ export async function DELETE(
     const { data: offer, error: getError } = await supabase
       .from("offers")
       .select("*")
-      .eq("id", params.offerId)
+      .eq("id", context.params.offerId)
       .single();
 
     if (getError || !offer) {
@@ -41,7 +44,7 @@ export async function DELETE(
         positions: updatedPositions,
         is_dirty: true,
       })
-      .eq("id", params.offerId);
+      .eq("id", context.params.offerId);
 
     if (updateError) {
       throw updateError;

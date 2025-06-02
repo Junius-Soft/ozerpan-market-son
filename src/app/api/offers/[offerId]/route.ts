@@ -1,16 +1,19 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
+export type OfferContext = {
+  params: {
+    offerId: string;
+  };
+};
+
 // GET /api/offers/:offerId - Get a single offer
-export async function GET(
-  request: Request,
-  { params }: { params: { offerId: string } }
-) {
+export async function GET(request: NextRequest, context: OfferContext) {
   try {
     const { data: offer, error } = await supabase
       .from("offers")
       .select("*")
-      .eq("id", params.offerId)
+      .eq("id", context.params.offerId)
       .single();
 
     if (error) throw error;
@@ -28,10 +31,7 @@ export async function GET(
 }
 
 // PATCH /api/offers/:offerId - Update offer name or status
-export async function PATCH(
-  request: Request,
-  { params }: { params: { offerId: string } }
-) {
+export async function PATCH(request: NextRequest, context: OfferContext) {
   try {
     const body = await request.json();
     if (!body.name && !body.status) {
@@ -69,7 +69,7 @@ export async function PATCH(
     const { data: offer, error: updateError } = await supabase
       .from("offers")
       .update(updateData)
-      .eq("id", params.offerId)
+      .eq("id", context.params.offerId)
       .select()
       .single();
 

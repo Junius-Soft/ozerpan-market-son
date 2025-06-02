@@ -2,15 +2,14 @@ import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
 // GET /api/offers/:offerId - Get a single offer
-export async function GET(
-  request: Request,
-  { params }: { params: { offerId: string } }
-) {
+export async function GET(request: Request) {
   try {
+    const url = new URL(request.url);
+    const offerId = url.searchParams.get("id");
     const { data: offer, error } = await supabase
       .from("offers")
       .select("*")
-      .eq("id", params.offerId)
+      .eq("id", offerId)
       .single();
 
     if (error) throw error;
@@ -28,11 +27,10 @@ export async function GET(
 }
 
 // PATCH /api/offers/:offerId - Update offer name or status
-export async function PATCH(
-  request: Request,
-  { params }: { params: { offerId: string } }
-) {
+export async function PATCH(request: Request) {
   try {
+    const url = new URL(request.url);
+    const offerId = url.searchParams.get("id");
     const body = await request.json();
     if (!body.name && !body.status) {
       return NextResponse.json(
@@ -69,7 +67,7 @@ export async function PATCH(
     const { data: offer, error: updateError } = await supabase
       .from("offers")
       .update(updateData)
-      .eq("id", params.offerId)
+      .eq("id", offerId)
       .select()
       .single();
 

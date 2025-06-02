@@ -24,7 +24,7 @@ import { type Offer, getOffers } from "@/documents/offers";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
-import { formatPrice } from "./[offerNo]/page";
+import { formatPrice } from "@/utils/price-formatter";
 
 export default function OffersPage() {
   const router = useRouter();

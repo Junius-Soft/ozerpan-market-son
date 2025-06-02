@@ -60,7 +60,7 @@ export const getOffers = async (): Promise<Offer[]> => {
 // Function to get single offer by ID from Supabase
 export const getOffer = async (offerId: string): Promise<Offer | null> => {
   try {
-    const response = await fetch(`/api/offers/${offerId}`);
+    const response = await fetch(`/api/offers/${offerId}?id=${offerId}`);
     if (!response.ok) {
       if (response.status === 404) return null;
       throw new Error("Failed to fetch offer");

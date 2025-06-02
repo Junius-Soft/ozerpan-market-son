@@ -1,19 +1,16 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { Position } from "@/documents/offers";
 
-export type PositionContext = {
-  params: {
-    offerId: string;
-  };
-};
-
 // DELETE /api/offers/:offerId/positions - Delete multiple positions
-export async function DELETE(request: NextRequest, context: PositionContext) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ offerId: string }> }
+) {
   try {
     // Get position IDs from request body
     const { positionIds } = await request.json();
-
+    const offerId = (await params).offerId;
     if (!Array.isArray(positionIds) || positionIds.length === 0) {
       return NextResponse.json(
         { error: "Position IDs array is required" },
@@ -25,7 +22,7 @@ export async function DELETE(request: NextRequest, context: PositionContext) {
     const { data: offer, error: getError } = await supabase
       .from("offers")
       .select("*")
-      .eq("id", context.params.offerId)
+      .eq("id", offerId)
       .single();
 
     if (getError || !offer) {
@@ -44,7 +41,7 @@ export async function DELETE(request: NextRequest, context: PositionContext) {
         positions: updatedPositions,
         is_dirty: true,
       })
-      .eq("id", context.params.offerId);
+      .eq("id", offerId);
 
     if (updateError) {
       throw updateError;

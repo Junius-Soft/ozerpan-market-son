@@ -8,12 +8,17 @@ import { type Product } from "@/documents/products";
 import { ProductDetails } from "../types";
 import { CalculationResult } from "@/types/panjur";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
+import { checkDependencyChain } from "@/utils/dependencies";
 
 interface ProductField {
   id: string;
   name: string;
   type: string;
   options?: Array<{ id: string; name: string }>;
+  dependsOn?: {
+    field: string;
+    value: string | string[];
+  };
 }
 
 export interface ProductTab {
@@ -122,20 +127,20 @@ export function ProductPreview({
             <h4 className="font-medium">Seçilen Özellikler</h4>
             {tabs.map((tab) => {
               const tabValues = localValues[tab.id] || {};
-              if (!tab.content?.fields?.length) return null;
+              const fields = tab.content?.fields || [];
+              
+              if (fields.length === 0) return null;
 
-              const fields = tab.content.fields.reduce<
-                Array<{ name: string; value: string }>
-              >((acc, field) => {
+              const displayFields = fields.reduce<Array<{ name: string; value: string }>>((acc, field) => {
+                // Field'ın dependency kontrolü
+                if (!checkDependencyChain(field, tabValues, fields)) {
+                  return acc;
+                }
+
                 const fieldValue = tabValues[field.id];
                 if (fieldValue === undefined || fieldValue === "") return acc;
 
-                const displayValue = formatFieldValue(
-                  fieldValue,
-                  field.id,
-                  field
-                );
-
+                const displayValue = formatFieldValue(fieldValue, field.id, field);
                 acc.push({
                   name: field.name,
                   value: displayValue,
@@ -143,7 +148,7 @@ export function ProductPreview({
                 return acc;
               }, []);
 
-              if (fields.length === 0) return null;
+              if (displayFields.length === 0) return null;
 
               return (
                 <div
@@ -154,7 +159,7 @@ export function ProductPreview({
                     {tab.name}
                   </div>
                   <div className="space-y-1">
-                    {fields.map((field, index) => (
+                    {displayFields.map((field, index) => (
                       <div
                         key={index}
                         className="flex items-baseline text-sm justify-between"

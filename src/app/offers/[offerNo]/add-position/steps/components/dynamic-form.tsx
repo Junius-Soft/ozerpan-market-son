@@ -233,41 +233,8 @@ const CheckboxInput: React.FC<FormikInputProps> = ({
   </div>
 );
 
-const checkDependencyChain = (
-  currentField: ProductTabField,
-  values: FormValues,
-  fields: ProductTabField[],
-  visited = new Set<string>()
-): boolean => {
-  if (!currentField.dependsOn) return true;
-  if (visited.has(currentField.id)) return true;
-
-  visited.add(currentField.id);
-  const { field: parentField, value: requiredValue } = currentField.dependsOn;
-  const currentValue = values[parentField]?.toString();
-
-  // Check if no current value
-  if (!currentValue) return false;
-
-  // Check if requiredValue is an array (multiple values in OR condition)
-  if (Array.isArray(requiredValue)) {
-    // Return true if currentValue matches any of the required values
-    if (!requiredValue.map(String).includes(currentValue)) {
-      return false;
-    }
-  } else {
-    // Single value check
-    if (currentValue !== requiredValue?.toString()) {
-      return false;
-    }
-  }
-
-  // Continue checking parent dependencies
-  const parentFieldDef = fields.find((f) => f.id === parentField);
-  return parentFieldDef
-    ? checkDependencyChain(parentFieldDef, values, fields, visited)
-    : true;
-};
+// Utils'e taşındı
+import { checkDependencyChain } from "@/utils/dependencies";
 
 const FormikInputs = (props: FormikInputProps) => {
   switch (props.fieldDef.type) {

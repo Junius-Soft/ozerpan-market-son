@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ozerpan Market",
+  title: "Özerpan Market",
   description: "Panjur, Pencere ve Kapı Sistemleri",
 };
 

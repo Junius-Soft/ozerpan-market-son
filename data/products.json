@@ -27,12 +27,12 @@
         {
           "id": "monoblok",
           "name": "Monoblok Panjur",
-          "disabled": false
+          "disabled": true
         },
         {
           "id": "yalitimli",
           "name": "Yalıtımlı Panjur",
-          "disabled": false
+          "disabled": true
         }
       ],
       "types": [

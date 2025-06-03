@@ -30,7 +30,7 @@ export function Navbar() {
                 <Link href="/" className="relative w-[60px] h-[60px]">
                   <Image
                     src="/logo.jpg"
-                    alt="Ozerpan Logo"
+                    alt="Özerpan Logo"
                     fill
                     className="object-cover"
                     priority

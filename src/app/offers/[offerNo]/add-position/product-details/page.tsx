@@ -77,18 +77,19 @@ export default function ProductDetailsPage() {
         throw new Error("Offer not found");
       }
 
-      const lastPos =
-        currentOffer.positions.length > 0
-          ? currentOffer.positions[currentOffer.positions.length - 1]
-          : null;
-      const nextPozNo = lastPos
-        ? String(parseInt(lastPos.pozNo) + 1).padStart(3, "0")
-        : "001";
-
       // Create new position with calculated values
       const newPosition: Position = {
-        id: `POS-${Date.now()}`,
-        pozNo: nextPozNo,
+        id: selectedPosition || `POS-${Date.now()}`,
+        pozNo: selectedPosition
+          ? currentOffer.positions.find((p) => p.id === selectedPosition)
+              ?.pozNo || "001"
+          : currentOffer.positions.length > 0
+          ? String(
+              parseInt(
+                currentOffer.positions[currentOffer.positions.length - 1].pozNo
+              ) + 1
+            ).padStart(3, "0")
+          : "001",
         description: product.name,
         unit: "adet",
         quantity: formValues.quantity,
@@ -102,8 +103,17 @@ export default function ProductDetailsPage() {
         optionId,
       };
 
-      // Add the new position to existing positions
-      const updatedPositions = [...currentOffer.positions, newPosition];
+      // Update or add the position
+      let updatedPositions: Position[];
+      if (selectedPosition) {
+        // Update existing position
+        updatedPositions = currentOffer.positions.map((pos) =>
+          pos.id === selectedPosition ? newPosition : pos
+        );
+      } else {
+        // Add new position
+        updatedPositions = [...currentOffer.positions, newPosition];
+      }
 
       // Update offer positions via PATCH endpoint
       const updateResponse = await fetch(`/api/offers?id=${offerNo}`, {

@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export function useAuth() {
+  const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
@@ -14,26 +16,23 @@ export function useAuth() {
         .split("; ")
         .find((row) => row.startsWith("token="));
 
-      // Token yoksa localStorage'ı temizle
-      if (!token) {
+      const isAuthed = !!token;
+      setIsAuthenticated(isAuthed);
+
+      if (!isAuthed) {
         localStorage.removeItem("isAuthenticated");
-        setIsAuthenticated(false);
       } else {
-        // Token varsa authenticated olarak işaretle
         localStorage.setItem("isAuthenticated", "true");
-        setIsAuthenticated(true);
       }
 
       setIsInitialized(true);
     };
 
-    // İlk yüklemede kontrol et
+    // İlk yüklemede ve cookie değişimlerinde kontrol et
     checkAuth();
 
-    // Cookie değişikliklerini dinle
-    const handleCookieChange = () => {
-      checkAuth();
-    };
+    // Cookie değişikliklerini kontrol etmek için interval
+    const cookieCheckInterval = setInterval(checkAuth, 1000);
 
     // Storage değişikliklerini dinle
     const handleStorageChange = (e: StorageEvent) => {
@@ -42,11 +41,10 @@ export function useAuth() {
       }
     };
 
-    document.addEventListener("visibilitychange", handleCookieChange);
     window.addEventListener("storage", handleStorageChange);
 
     return () => {
-      document.removeEventListener("visibilitychange", handleCookieChange);
+      clearInterval(cookieCheckInterval);
       window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
@@ -67,6 +65,20 @@ export function useAuth() {
     }
   };
 
+  const handleLogout = () => {
+    // Token ve localStorage temizle
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    localStorage.removeItem("isAuthenticated");
+
+    // State'i güncelle ve modal'ı sıfırla
+    setIsAuthenticated(false);
+    setShowLoginModal(false);
+    setIsInitialized(true);
+
+    // Ana sayfaya yönlendir
+    router.push("/");
+  };
+
   return {
     isAuthenticated,
     isInitialized,
@@ -74,5 +86,6 @@ export function useAuth() {
     openLoginModal,
     closeLoginModal,
     handleLoginSuccess,
+    handleLogout,
   };
 }

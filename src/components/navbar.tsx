@@ -13,6 +13,7 @@ export function Navbar() {
     openLoginModal,
     closeLoginModal,
     handleLoginSuccess,
+    handleLogout,
   } = useAuth();
 
   return (
@@ -49,13 +50,22 @@ export function Navbar() {
             </div>
             <div className="flex items-center">
               {isAuthenticated ? (
-                <Link
-                  href="/offers"
-                  className="inline-flex items-center px-4 py-2 border border-green-200 text-sm font-medium rounded-md text-green-600 bg-white hover:bg-green-50 hover:text-green-700 focus:outline-none gap-2"
-                >
-                  <ShoppingCart className="h-4 w-4" />
-                  Teklifler
-                </Link>
+                <>
+                  <Link
+                    href="/offers"
+                    className="mr-4 inline-flex items-center px-4 py-2 border border-green-200 text-sm font-medium rounded-md text-green-600 bg-white hover:bg-green-50 hover:text-green-700 focus:outline-none gap-2"
+                  >
+                    <ShoppingCart className="h-4 w-4" />
+                    Teklifler
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="inline-flex items-center px-4 py-2 border border-red-200 text-sm font-medium rounded-md text-red-600 bg-white hover:bg-red-50 hover:text-red-700 focus:outline-none gap-2"
+                  >
+                    <LogIn className="h-4 w-4" />
+                    Çıkış
+                  </button>
+                </>
               ) : (
                 <button
                   onClick={openLoginModal}

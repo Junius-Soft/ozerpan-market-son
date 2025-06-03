@@ -128,10 +128,12 @@ export function ProductPreview({
             {tabs.map((tab) => {
               const tabValues = localValues[tab.id] || {};
               const fields = tab.content?.fields || [];
-              
+
               if (fields.length === 0) return null;
 
-              const displayFields = fields.reduce<Array<{ name: string; value: string }>>((acc, field) => {
+              const displayFields = fields.reduce<
+                Array<{ name: string; value: string }>
+              >((acc, field) => {
                 // Field'ın dependency kontrolü
                 if (!checkDependencyChain(field, tabValues, fields)) {
                   return acc;
@@ -140,7 +142,11 @@ export function ProductPreview({
                 const fieldValue = tabValues[field.id];
                 if (fieldValue === undefined || fieldValue === "") return acc;
 
-                const displayValue = formatFieldValue(fieldValue, field.id, field);
+                const displayValue = formatFieldValue(
+                  fieldValue,
+                  field.id,
+                  field
+                );
                 acc.push({
                   name: field.name,
                   value: displayValue,

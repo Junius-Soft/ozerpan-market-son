@@ -51,7 +51,7 @@ export interface PanjurSelections {
     | "alicili_motorlu_reduktorlu"
     | "alicili_motorlu_geri_bildirimli"
     | "alicili_motorlu_geri_bildirimli_engel-tanimali"
-    | "solar-panelli";
+    | "solar_panelli";
   motorModel?: string;
   buton?: "yok" | "alicili-buton" | "siva-alti-kalici" | "siva-ustu-kasa";
   receiver?: string;

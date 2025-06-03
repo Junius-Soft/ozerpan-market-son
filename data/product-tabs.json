@@ -156,7 +156,7 @@
                 "name": "Alıcılı Geri Bildirimli Engel Tanımalı Motor"
               },
               {
-                "id": "solar-panelli",
+                "id": "solar_panelli",
                 "name": "Solar Panelli Alıcılı Motor"
               }
             ],
@@ -167,9 +167,13 @@
                   "duz_motorlu",
                   "alicili_motorlu",
                   "alicili_motorlu_reduktorlu",
-                  "solar-panelli"
+                  "solar_panelli"
                 ],
                 "somfy": [
+                  "duz_motorlu",
+                  "alicili_motorlu",
+                  "alicili_motorlu_reduktorlu",
+                  "solar_panelli",
                   "alicili_motorlu_geri_bildirimli",
                   "alicili_motorlu_geri_bildirimli_engel"
                 ]
@@ -310,7 +314,14 @@
             ],
             "dependsOn": {
               "field": "motorSekli",
-              "value": ["duz_motorlu", "alicili_motorlu_reduktorlu"]
+              "value": [
+                "duz_motorlu",
+                "alicili_motorlu",
+                "alicili_motorlu_reduktorlu",
+                "alicili_motorlu_geri_bildirimli",
+                "alicili_motorlu_geri_bildirimli_engel",
+                "solar_panelli"
+              ]
             }
           },
           {
@@ -408,7 +419,7 @@
                 "duz_motorlu",
                 "alicili_motorlu",
                 "alicili_motorlu_reduktorlu",
-                "solar-panelli",
+                "solar_panelli",
                 "alicili_motorlu_geri_bildirimli",
                 "alicili_motorlu_geri_bildirimli_engel"
               ]
@@ -490,7 +501,7 @@
                     "dc_115_a_1_kanalli_verici",
                     "dc_115_b_4_kanalli_verici"
                   ],
-                  "solar-panelli": [
+                  "solar_panelli": [
                     "yok",
                     "dd_3000h_bi_direction_elektronik_tekli_verici",
                     "dd_3001h_bi_direction_elektronik_5_1_verici",

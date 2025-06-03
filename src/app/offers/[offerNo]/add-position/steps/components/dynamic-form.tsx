@@ -16,7 +16,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { ProductTabField } from "@/documents/products";
 import { type ChangeEvent, type FocusEvent } from "react";
-import { usePanjurFormRules } from "../hooks/usePanjurFormRules";
+import { usePanjurFormRules } from "../hooks/useFormRules";
 
 interface DynamicFormProps {
   fields: ProductTabField[];

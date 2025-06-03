@@ -137,12 +137,16 @@ export default function OffersPage() {
               onSubmit={async (e) => {
                 e.preventDefault();
                 if (newOfferName.trim()) {
+                  const currentDate = new Date();
+                  const randomNumber = Math.floor(Math.random() * 1000)
+                    .toString()
+                    .padStart(3, "0");
                   const newOffer: Offer = {
-                    id: `TEK-${new Date().getFullYear()}-${String(
-                      allOffers.length + 1
-                    ).padStart(3, "0")}`,
+                    id: `TEK-${currentDate.getFullYear()}-${String(
+                      currentDate.getMonth() + 1
+                    ).padStart(2, "0")}-${randomNumber}`,
                     name: newOfferName,
-                    created_at: new Date().toLocaleDateString("tr-TR"),
+                    created_at: currentDate.toLocaleDateString("tr-TR"),
                     status: "Taslak" as const,
                     positions: [],
                   };

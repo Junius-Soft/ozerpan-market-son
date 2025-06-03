@@ -375,14 +375,17 @@ export default function OfferDetailPage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="w-[50px]">
-                        <Checkbox
-                          checked={
-                            selectedPositions.length === offer.positions.length
-                          }
-                          onCheckedChange={toggleAllPositions}
-                        />
-                      </TableHead>
+                      {offer.status === "Taslak" && (
+                        <TableHead className="w-[50px]">
+                          <Checkbox
+                            checked={
+                              selectedPositions.length ===
+                              offer.positions.length
+                            }
+                            onCheckedChange={toggleAllPositions}
+                          />
+                        </TableHead>
+                      )}
                       <TableHead className="w-[100px]">Poz No</TableHead>
                       <TableHead>Açıklama</TableHead>
                       <TableHead className="w-[100px]">Birim</TableHead>
@@ -410,14 +413,16 @@ export default function OfferDetailPage() {
                           );
                         }}
                       >
-                        <TableCell>
-                          <Checkbox
-                            checked={selectedPositions.includes(position.id)}
-                            onCheckedChange={() =>
-                              togglePositionSelection(position.id)
-                            }
-                          />
-                        </TableCell>
+                        {offer.status === "Taslak" && (
+                          <TableCell>
+                            <Checkbox
+                              checked={selectedPositions.includes(position.id)}
+                              onCheckedChange={() =>
+                                togglePositionSelection(position.id)
+                              }
+                            />
+                          </TableCell>
+                        )}
                         <TableCell className="flex items-center gap-2">
                           {position.pozNo}
                           {offer.status === "Taslak" && (

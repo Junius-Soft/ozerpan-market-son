@@ -5,6 +5,8 @@ import { ShoppingCart, LogIn } from "lucide-react";
 import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
 import { LoginModal } from "./login-modal";
+import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 export function Navbar() {
   const {
@@ -15,6 +17,8 @@ export function Navbar() {
     handleLoginSuccess,
     handleLogout,
   } = useAuth();
+
+  const router = useRouter();
 
   return (
     <>
@@ -51,29 +55,31 @@ export function Navbar() {
             <div className="flex items-center">
               {isAuthenticated ? (
                 <>
-                  <Link
-                    href="/offers"
-                    className="mr-4 inline-flex items-center px-4 py-2 border border-green-200 text-sm font-medium rounded-md text-green-600 bg-white hover:bg-green-50 hover:text-green-700 focus:outline-none gap-2"
+                  <Button
+                    onClick={() => router.push("/offers")}
+                    variant="outline"
+                    className="mr-4 inline-flex items-center px-4 py-2  gap-2"
                   >
                     <ShoppingCart className="h-4 w-4" />
                     Teklifler
-                  </Link>
-                  <button
+                  </Button>
+                  <Button
                     onClick={handleLogout}
-                    className="inline-flex items-center px-4 py-2 border border-red-200 text-sm font-medium rounded-md text-red-600 bg-white hover:bg-red-50 hover:text-red-700 focus:outline-none gap-2"
+                    variant="secondary"
+                    className=" inline-flex items-center px-4 py-2 "
                   >
                     <LogIn className="h-4 w-4" />
                     Çıkış
-                  </button>
+                  </Button>
                 </>
               ) : (
-                <button
+                <Button
                   onClick={openLoginModal}
-                  className="inline-flex items-center px-4 py-2 border border-green-200 text-sm font-medium rounded-md text-green-600 bg-white hover:bg-green-50 hover:text-green-700 focus:outline-none gap-2"
+                  className="inline-flex items-center px-4 py-2  gap-2"
                 >
                   <LogIn className="h-4 w-4" />
                   Giriş Yap
-                </button>
+                </Button>
               )}
             </div>
           </div>

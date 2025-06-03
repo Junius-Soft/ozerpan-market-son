@@ -20,7 +20,14 @@ import {
   type Offer,
   type Position,
 } from "@/documents/offers";
-import { ArrowLeft, AlertTriangle, Plus, Edit2, Copy } from "lucide-react";
+import {
+  ArrowLeft,
+  AlertTriangle,
+  Plus,
+  Edit2,
+  Copy,
+  Trash2,
+} from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -334,13 +341,14 @@ export default function OfferDetailPage() {
                           selectedPositions.length === 0 || isDeletingPositions
                         }
                       >
+                        <Trash2 className="h-4 w-4" />
                         {isDeletingPositions
                           ? "Siliniyor..."
                           : "Seçilenleri Sil"}
                       </Button>
                       <Button
                         variant="outline"
-                        className="gap-2 border-green-200 text-green-600 hover:bg-green-50 hover:text-green-700"
+                        className="gap-2"
                         onClick={() =>
                           router.push(`/offers/${offer.id}/add-position`)
                         }
@@ -361,7 +369,7 @@ export default function OfferDetailPage() {
                   {offer.status !== "Kaydedildi" && (
                     <Button
                       variant="outline"
-                      className="gap-2 border-green-200 text-green-600 hover:bg-green-50 hover:text-green-700"
+                      className="gap-2"
                       onClick={() =>
                         router.push(`/offers/${offer.id}/add-position`)
                       }

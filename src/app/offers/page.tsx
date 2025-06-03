@@ -111,7 +111,7 @@ export default function OffersPage() {
                 variant="outline"
                 onClick={handleDeleteSelected}
                 disabled={selectedOffers.length === 0}
-                className="gap-2 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                className="gap-2  border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
               >
                 <Trash2 className="h-4 w-4" />
                 Seçilenleri Sil
@@ -119,7 +119,7 @@ export default function OffersPage() {
               <Button
                 onClick={() => setIsModalOpen(true)}
                 variant="outline"
-                className="gap-2 border-green-200 text-green-600 hover:bg-green-50 hover:text-green-700"
+                className="gap-2"
               >
                 <Plus className="h-4 w-4" />
                 Yeni Teklif

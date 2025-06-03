@@ -171,7 +171,7 @@ export default function ProductDetailsPage() {
                 {product?.name} Detayları {typeId ? `(${typeId})` : ""}
               </h1>
               <Button
-                variant="outline"
+                variant="ghost"
                 onClick={() =>
                   router.push(
                     `/offers/${
@@ -191,12 +191,7 @@ export default function ProductDetailsPage() {
             </div>
             <Button
               onClick={handleComplete}
-              variant={selectedPosition ? "outline" : "default"}
-              className={
-                selectedPosition
-                  ? "border-yellow-400 text-yellow-700 hover:bg-yellow-100 hover:text-yellow-800"
-                  : ""
-              }
+              variant="default"
               disabled={
                 isSaving || !formValues.details || formValues.unitPrice <= 0
               }

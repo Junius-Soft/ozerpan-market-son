@@ -16,6 +16,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { ProductTabField } from "@/documents/products";
 import { type ChangeEvent, type FocusEvent } from "react";
+import { usePanjurFormRules } from "../hooks/usePanjurFormRules";
 
 interface DynamicFormProps {
   fields: ProductTabField[];
@@ -340,6 +341,9 @@ export function DynamicForm({
       }
     }
   }, [values]);
+
+  // Add the form rules hook
+  usePanjurFormRules(values, fields, onChange);
 
   const processQueue = useCallback(() => {
     const state = stateRef.current;

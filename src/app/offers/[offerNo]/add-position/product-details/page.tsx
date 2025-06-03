@@ -166,7 +166,6 @@ export default function ProductDetailsPage() {
   }
 
   const handleFormChange = (values: FormValues) => {
-    console.log({ values });
     setFormValues(values);
   };
 

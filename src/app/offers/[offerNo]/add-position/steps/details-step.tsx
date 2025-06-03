@@ -101,7 +101,6 @@ export function DetailsStep({
         if (key === "width" || key === "height") {
           const numValue = parseFloat(value as string);
           result[key] = isNaN(numValue) ? 0 : numValue;
-          // console.log(`Setting ${key}:`, value, "->", result[key]); // Debug log
         } else {
           result[key] = value;
         }
@@ -121,7 +120,6 @@ export function DetailsStep({
   }, [productDetails, selectedProduct?.id, quantity]);
 
   const calculationResult = usePanjurCalculator(selections, availableTabs);
-  console.log({ calculationResult });
   // Add quantity change handler
   const handleQuantityChange = useCallback((newQuantity: number) => {
     setQuantity(newQuantity);

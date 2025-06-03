@@ -142,8 +142,6 @@ export default function OfferDetailPage() {
 
   const updateOfferStatus = async (newStatus: string, eurRate?: number) => {
     if (!offer) return;
-    console.log({ eurRate });
-    console.log({ newStatus });
     try {
       const response = await fetch(`/api/offers/${offer.id}?id=${offer.id}`, {
         method: "PATCH",
@@ -268,7 +266,6 @@ export default function OfferDetailPage() {
   }
 
   const { subtotal, total } = calculateTotals(offer.positions);
-  console.log({ eurRate });
   return (
     <div className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">

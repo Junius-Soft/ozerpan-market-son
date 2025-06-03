@@ -32,6 +32,7 @@ export function usePanjurFormRules(
     timeoutRef.current = setTimeout(() => {
       // Execute all rules in sequence
       if (productId === "panjur") {
+        console.log({ values });
         handleColorSync(values, fields, onChange);
         // Add more rule handlers here as needed
         // handleOtherRule(values, fields, onChange);

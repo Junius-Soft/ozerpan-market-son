@@ -6,8 +6,6 @@ import {
   SelectedProduct,
 } from "@/types/panjur";
 import {
-  getLamelProperties,
-  getMaxLamelHeight,
   findLamelPrice,
   findSubPartPrice,
   findDikmePrice,
@@ -89,17 +87,6 @@ export const usePanjurCalculator = (
 
       const kutuYuksekligi = getBoxHeight(selections.boxType);
 
-      const maxHeight = getMaxLamelHeight(
-        selections.boxType,
-        selections.lamelTickness,
-        selections.movementType
-      );
-      if (maxHeight !== null && systemHeight > maxHeight) {
-        errors.push(
-          `Seçilen yükseklik (${systemHeight}mm), bu kutu tipi ve lamel kalınlığı için maksimum değeri (${maxHeight}mm) aşıyor.`
-        );
-      }
-
       const dikmeHeight = calculateDikmeHeight(
         systemHeight,
         selections.boxType,
@@ -129,23 +116,6 @@ export const usePanjurCalculator = (
         boxHeight: kutuYuksekligi,
         subPartWidth: lamelGenisligi,
       }));
-
-      const lamelProps = getLamelProperties(selections.lamelTickness);
-
-      const alanM2 = (systemWidth * systemHeight) / 1000000;
-      if (alanM2 > lamelProps?.maksimumKullanimAlani) {
-        errors.push(
-          `Seçilen ölçüler maksimum kullanım alanını (${
-            lamelProps.maksimumKullanimAlani
-          }m²) aşıyor. Mevcut alan: ${alanM2.toFixed(2)}m²`
-        );
-      }
-
-      if (systemWidth > lamelProps?.tavsiyeEdilenMaksimumEn) {
-        errors.push(
-          `Seçilen genişlik (${systemWidth}mm) tavsiye edilen maksimum genişliği (${lamelProps?.tavsiyeEdilenMaksimumEn}mm) aşıyor.`
-        );
-      }
 
       // Price calculations
       const [lamelUnitPrice, lamelSelectedProduct] = findLamelPrice(

@@ -469,10 +469,10 @@ export default function OfferDetailPage() {
                     inline-block px-2 py-1 rounded-full text-xs font-medium
                     ${
                       offer.status === "Kaydedildi"
-                        ? "bg-green-100 text-green-700"
+                        ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400"
                         : offer.status === "Revize"
-                        ? "bg-orange-100 text-orange-700"
-                        : "bg-yellow-100 text-yellow-700"
+                        ? "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400"
+                        : "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400"
                     }
                   `}
                 >
@@ -496,9 +496,9 @@ export default function OfferDetailPage() {
                 </div>
 
                 {offer.status === "Taslak" && (
-                  <div className="mt-6 flex items-start gap-2 p-3 bg-yellow-50 rounded-md border border-yellow-200">
-                    <AlertTriangle className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
-                    <p className="text-sm text-yellow-600">
+                  <div className="mt-6 flex items-start gap-2 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-md border border-yellow-200 dark:border-yellow-700/50">
+                    <AlertTriangle className="h-5 w-5 text-yellow-600 dark:text-yellow-500 flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-yellow-600 dark:text-yellow-400">
                       Taslak durumundaki tekliflerde fiyat yeniden hesaplanır.
                       Fiyatı korumak için lütfen teklifi kaydediniz!
                     </p>

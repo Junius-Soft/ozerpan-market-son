@@ -41,6 +41,6 @@ export async function GET() {
     if (cachedData) {
       return NextResponse.json({ rate: cachedData.rate, cached: true });
     }
-    return NextResponse.json({ rate: 32.5, fallback: true });
+    return NextResponse.json({ rate: 44.88, fallback: true });
   }
 }

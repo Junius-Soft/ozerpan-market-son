@@ -10,6 +10,12 @@ import { checkDependencyChain } from "@/utils/dependencies";
 import { formatPrice } from "@/utils/price-formatter";
 import { CustomDialog } from "@/components/ui/custom-dialog";
 import { Info } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface ProductField {
   id: string;
@@ -127,66 +133,82 @@ export function ProductPreview({
               {" "}
               <div className="text-sm space-y-1">
                 <div className="flex justify-between font-medium text-base">
-                  <span className="flex items-center gap-2">
-                    Toplam Fiyat:
-                    <CustomDialog
-                      trigger={
-                        <button className="rounded-full w-4 h-4 inline-flex items-center justify-center text-muted-foreground hover:bg-muted">
-                          <Info className="w-3 h-3" />
-                        </button>
-                      }
-                      title="Ürün Detayları"
-                      description="Seçilen ürünün detaylı fiyat bilgileri ve özellikleri"
-                    >
-                      {calculationResult.selectedProducts.map(
-                        (product, index) => (
-                          <div
-                            key={index}
-                            className="border-b border-border last:border-b-0 py-3"
-                          >
-                            <h3 className="font-medium mb-2 text-foreground">
-                              {product.description}
-                            </h3>
-                            <div className="space-y-1 text-sm">
-                              <div className="grid grid-cols-2 gap-2">
-                                <span className="text-muted-foreground">
-                                  Birim Fiyat:
-                                </span>
-                                <span className="text-foreground font-mono">
-                                  € {product.price}
-                                </span>
-                              </div>
-                              <div className="grid grid-cols-2 gap-2">
-                                <span className="text-muted-foreground">
-                                  Adet:
-                                </span>
-                                <span className="text-foreground font-mono">
-                                  {product.quantity}
-                                </span>
-                              </div>
-                              <div className="grid grid-cols-2 gap-2">
-                                <span className="text-muted-foreground">
-                                  Toplam Fiyat:
-                                </span>
-                                <span className="text-foreground font-mono">
-                                  €{" "}
-                                  {parseFloat(product.price) * product.quantity}
-                                </span>
+                  <span>
+                    <span className="flex items-center gap-2">
+                      Toplam Fiyat:
+                      <CustomDialog
+                        trigger={
+                          <button className="rounded-full w-4 h-4 inline-flex items-center justify-center text-muted-foreground hover:bg-muted">
+                            <Info className="w-3 h-3" />
+                          </button>
+                        }
+                        title="Ürün Detayları"
+                        description="Seçilen ürünün detaylı fiyat bilgileri ve özellikleri"
+                      >
+                        {calculationResult.selectedProducts.map(
+                          (product, index) => (
+                            <div
+                              key={index}
+                              className="border-b border-border last:border-b-0 py-3"
+                            >
+                              <h3 className="font-medium mb-2 text-foreground">
+                                {product.description}
+                              </h3>
+                              <div className="space-y-1 text-sm">
+                                <div className="grid grid-cols-2 gap-2">
+                                  <span className="text-muted-foreground">
+                                    Birim Fiyat:
+                                  </span>
+                                  <span className="text-foreground font-mono">
+                                    € {product.price}
+                                  </span>
+                                </div>
+                                <div className="grid grid-cols-2 gap-2">
+                                  <span className="text-muted-foreground">
+                                    Adet:
+                                  </span>
+                                  <span className="text-foreground font-mono">
+                                    {product.quantity}
+                                  </span>
+                                </div>
+                                <div className="grid grid-cols-2 gap-2">
+                                  <span className="text-muted-foreground">
+                                    Toplam Fiyat:
+                                  </span>
+                                  <span className="text-foreground font-mono">
+                                    €{" "}
+                                    {parseFloat(product.price) *
+                                      product.quantity}
+                                  </span>
+                                </div>
                               </div>
                             </div>
+                          )
+                        )}
+                      </CustomDialog>
+                    </span>
+                  </span>
+                  {loading ? (
+                    <div className="text-muted-foreground">Hesaplanıyor..</div>
+                  ) : (
+                    <TooltipProvider>
+                      <Tooltip delayDuration={0}>
+                        <TooltipTrigger className="text-base">
+                          ₺{formatPrice(calculationResult.totalPrice, eurRate)}
+                        </TooltipTrigger>
+                        <TooltipContent
+                          side="top"
+                          align="end"
+                          className="flex flex-col gap-1"
+                        >
+                          <div>€ {calculationResult.totalPrice.toFixed(2)}</div>
+                          <div className="text-muted-foreground">
+                            1€ = ₺{eurRate.toFixed(2)}
                           </div>
-                        )
-                      )}
-                    </CustomDialog>
-                  </span>
-                  <span>
-                    {loading
-                      ? "Hesaplanıyor.."
-                      : `₺${formatPrice(
-                          calculationResult.totalPrice,
-                          eurRate
-                        )}`}
-                  </span>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  )}
                 </div>
               </div>
               {calculationResult.errors.length > 0 && (

@@ -23,6 +23,7 @@ export const useExchangeRate = ({ offerId }: UseExchangeRateProps = {}) => {
           const offerResponse = await fetch(`/api/offers/${offerId}`);
           const offerData = await offerResponse.json();
           if (offerData.eurRate) {
+            console.log(offerData.eurRate);
             setEurRate(offerData.eurRate);
             setLoading(false);
             return;
@@ -62,6 +63,6 @@ export const useExchangeRate = ({ offerId }: UseExchangeRateProps = {}) => {
     const interval = setInterval(fetchExchangeRate, 5 * 60 * 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [offerId]);
   return { eurRate, loading, error };
 };

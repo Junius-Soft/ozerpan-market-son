@@ -123,7 +123,35 @@ export function ProductPreview({
               }
             />
           </div>
-
+          {calculationResult && (
+            <div className="space-y-2 border-t pt-4">
+              <div className="text-sm space-y-1">
+                <div className="flex justify-between font-medium text-base">
+                  <span>Toplam Fiyat:</span>
+                  <span>
+                    {loading
+                      ? "Hesaplanıyor.."
+                      : `₺${formatPrice(
+                          calculationResult.totalPrice,
+                          eurRate
+                        )}`}
+                  </span>
+                </div>
+              </div>
+              {calculationResult.errors.length > 0 && (
+                <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
+                  <h5 className="font-medium text-red-700 mb-1">Uyarılar:</h5>
+                  <ul className="list-disc list-inside text-sm text-red-600">
+                    {calculationResult.errors.map(
+                      (error: string, index: number) => (
+                        <li key={index}>{error}</li>
+                      )
+                    )}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
           <div className="space-y-2 border-t pt-4">
             <h4 className="font-medium">Seçilen Özellikler</h4>
             {tabs.map((tab) => {
@@ -184,36 +212,6 @@ export function ProductPreview({
               );
             })}
           </div>
-
-          {calculationResult && (
-            <div className="space-y-2 border-t pt-4">
-              <div className="text-sm space-y-1">
-                <div className="flex justify-between font-medium text-base">
-                  <span>Toplam Fiyat:</span>
-                  <span>
-                    {loading
-                      ? "Hesaplanıyor.."
-                      : `₺${formatPrice(
-                          calculationResult.totalPrice,
-                          eurRate
-                        )}`}
-                  </span>
-                </div>
-              </div>
-              {calculationResult.errors.length > 0 && (
-                <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
-                  <h5 className="font-medium text-red-700 mb-1">Uyarılar:</h5>
-                  <ul className="list-disc list-inside text-sm text-red-600">
-                    {calculationResult.errors.map(
-                      (error: string, index: number) => (
-                        <li key={index}>{error}</li>
-                      )
-                    )}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
         </div>
       </div>
     </Card>

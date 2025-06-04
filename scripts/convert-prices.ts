@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 
 // Dosya yolu
-const filePath = path.join(__dirname, "../data/product-prices.json");
+const filePath = path.join(__dirname, "../data/accessories.json");
 
 try {
   // Dosyayı oku
@@ -10,8 +10,8 @@ try {
 
   // Noktalı fiyatları virgüllü formata çevir
   fileContent = fileContent.replace(
-    /"price": "(\d+)\.(\d+)"/g,
-    '"price": "$1,$2"'
+    /"price": "(\d+)\,(\d+)"/g,
+    '"price": "$1.$2"'
   );
 
   // Dosyayı yaz

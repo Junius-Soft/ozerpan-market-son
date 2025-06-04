@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,6 +8,8 @@ import { CalculationResult } from "@/types/panjur";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
 import { checkDependencyChain } from "@/utils/dependencies";
 import { formatPrice } from "@/utils/price-formatter";
+import * as Dialog from "@radix-ui/react-dialog";
+import { Info, X } from "lucide-react";
 
 interface ProductField {
   id: string;
@@ -93,7 +93,6 @@ export function ProductPreview({
     setLocalQuantity(newValue);
     onQuantityChange(newValue);
   };
-
   if (!selectedProduct) return null;
   return (
     <Card className="p-6">
@@ -125,9 +124,85 @@ export function ProductPreview({
           </div>
           {calculationResult && (
             <div className="space-y-2 border-t pt-4">
+              {" "}
               <div className="text-sm space-y-1">
                 <div className="flex justify-between font-medium text-base">
-                  <span>Toplam Fiyat:</span>
+                  <span className="flex items-center gap-2">
+                    Toplam Fiyat:
+                    <Dialog.Root>
+                      <Dialog.Trigger asChild>
+                        <button className="rounded-full w-4 h-4 inline-flex items-center justify-center text-muted-foreground hover:bg-muted">
+                          <Info className="w-3 h-3" />
+                        </button>
+                      </Dialog.Trigger>
+                      <Dialog.Portal>
+                        <Dialog.Overlay className="bg-black/50 dark:bg-black/80 data-[state=open]:animate-overlayShow fixed inset-0" />
+                        <Dialog.Content
+                          aria-describedby="product-details-description"
+                          className="data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[600px] translate-x-[-50%] translate-y-[-50%] rounded-lg bg-background border p-6 shadow-lg"
+                        >
+                          <div className="flex justify-between items-center mb-4">
+                            <Dialog.Title className="font-medium text-lg text-foreground">
+                              Ürün Detayları
+                            </Dialog.Title>
+                            <Dialog.Close asChild>
+                              <button className="rounded-full w-6 h-6 inline-flex items-center justify-center text-muted-foreground hover:bg-muted hover:text-foreground">
+                                <X className="w-4 h-4" />
+                              </button>
+                            </Dialog.Close>
+                          </div>
+                          <p
+                            id="product-details-description"
+                            className="sr-only"
+                          >
+                            Seçilen ürünün detaylı fiyat bilgileri ve
+                            özellikleri
+                          </p>
+                          <div className="overflow-auto max-h-[60vh]">
+                            {calculationResult.selectedProducts.map(
+                              (product, index) => (
+                                <div
+                                  key={index}
+                                  className="border-b border-border last:border-b-0 py-3"
+                                >
+                                  <h3 className="font-medium mb-2 text-foreground">
+                                    {product.description}
+                                  </h3>
+                                  <div className="space-y-1 text-sm">
+                                    <div className="grid grid-cols-2 gap-2">
+                                      <span className="text-muted-foreground">
+                                        Birim Fiyat:
+                                      </span>
+                                      <span className="text-foreground font-mono">
+                                        {product.price}
+                                      </span>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-2">
+                                      <span className="text-muted-foreground">
+                                        Adet:
+                                      </span>
+                                      <span className="text-foreground font-mono">
+                                        {product.quantity}
+                                      </span>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-2">
+                                      <span className="text-muted-foreground">
+                                        Toplam Fiyat:
+                                      </span>
+                                      <span className="text-foreground font-mono">
+                                        {parseFloat(product.price) *
+                                          product.quantity}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              )
+                            )}
+                          </div>
+                        </Dialog.Content>
+                      </Dialog.Portal>
+                    </Dialog.Root>
+                  </span>
                   <span>
                     {loading
                       ? "Hesaplanıyor.."

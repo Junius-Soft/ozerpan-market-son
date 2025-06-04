@@ -65,8 +65,6 @@ export function filterMotorOptions(
   const lamelType = selections?.lamelType;
   const movementType = formRef.current?.values.movementType;
   const motorModel = formRef.current?.values.motorModel;
-  console.log({ movementType });
-  console.log(formRef.current?.values);
 
   // Eğer motorlu değilse veya gerekli veriler eksikse işlem yapamayız
   if (movementType !== "motorlu" || !width || !height || !lamelType) {

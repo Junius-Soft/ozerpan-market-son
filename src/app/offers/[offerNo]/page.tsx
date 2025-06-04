@@ -283,7 +283,7 @@ export default function OfferDetailPage() {
           </div>
           <Button
             variant="outline"
-            className="gap-2 border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-gray-700"
+            className="gap-2 border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300"
             onClick={() => router.push("/offers")}
           >
             <ArrowLeft className="h-4 w-4" />

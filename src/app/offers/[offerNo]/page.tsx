@@ -545,7 +545,7 @@ export default function OfferDetailPage() {
                         {/* Save button */}
                         <Button
                           variant="outline"
-                          className="flex-1 gap-2 border-blue-200 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
+                          className="flex-1 gap-2"
                           disabled={!offer.positions?.length || !offer.is_dirty}
                           onClick={async () => {
                             await updateOfferStatus("Kaydedildi", eurRate);
@@ -554,8 +554,7 @@ export default function OfferDetailPage() {
                           Kaydet
                         </Button>
                         <Button
-                          variant="outline"
-                          className="flex-1 gap-2 border-green-200 text-green-600 hover:bg-green-50 hover:text-green-700"
+                          className="flex-1 gap-2"
                           disabled={!offer.positions?.length}
                           onClick={() => {
                             // TODO: Implement order functionality
@@ -568,21 +567,20 @@ export default function OfferDetailPage() {
                       <>
                         <Button
                           variant="outline"
-                          className="flex-1 gap-2 border-yellow-200 text-yellow-600 hover:bg-yellow-50 hover:text-yellow-700"
+                          className="flex-1 gap-2"
                           disabled={!offer.positions?.length}
                           onClick={() => updateOfferStatus("Revize")}
                         >
                           Revize Et
                         </Button>
                         <Button
-                          variant="outline"
-                          className="flex-1 gap-2 border-green-200 text-green-600 hover:bg-green-50 hover:text-green-700"
+                          className="flex-1 gap-2"
                           disabled={!offer.positions?.length}
                           onClick={() => {
                             // TODO: Implement purchase functionality
                           }}
                         >
-                          Satın Al
+                          Sipariş Ver
                         </Button>
                       </>
                     ) : null}

@@ -89,7 +89,7 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
           );
 
           if (tamburProfili) {
-            neededAccessories.push({ ...tamburProfili, quantity: width });
+            neededAccessories.push({ ...tamburProfili, quantity: 1 });
 
             if (selections.movementType === "motorlu") {
               // Motor aksesuarları

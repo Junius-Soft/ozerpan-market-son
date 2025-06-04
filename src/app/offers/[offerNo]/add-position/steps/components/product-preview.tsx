@@ -169,7 +169,7 @@ export function ProductPreview({
                                   Toplam Fiyat:
                                 </span>
                                 <span className="text-foreground font-mono">
-                                  €
+                                  €{" "}
                                   {parseFloat(product.price) * product.quantity}
                                 </span>
                               </div>

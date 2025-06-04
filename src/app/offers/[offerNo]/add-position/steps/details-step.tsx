@@ -223,7 +223,9 @@ export function DetailsStep({
           <>
             <DynamicForm
               fields={activeTab.content.fields}
+              formDataResponse={availableTabs}
               values={getValuesForTab()}
+              selections={selections}
               onChange={handleDynamicFormChange}
               formRef={formRef}
             />
@@ -249,7 +251,9 @@ export function DetailsStep({
       return (
         <DynamicForm
           fields={activeTab.content.fields}
+          formDataResponse={availableTabs}
           values={getValuesForTab()}
+          selections={selections}
           onChange={(fieldId, value) => {
             handleDynamicFormChange(fieldId, value);
           }}

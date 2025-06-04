@@ -211,12 +211,12 @@ export const usePanjurCalculator = (
           product !== null && product !== undefined
       );
 
-      console.log({
-        selectedProducts,
-        lamelGenisligiMetre,
-        totalPrice,
-        accessories,
-      });
+      // console.log({
+      //   selectedProducts,
+      //   lamelGenisligiMetre,
+      //   totalPrice,
+      //   accessories,
+      // });
 
       setResult((prev) => ({
         ...prev,

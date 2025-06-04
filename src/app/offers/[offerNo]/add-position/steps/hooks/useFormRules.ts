@@ -1,21 +1,30 @@
-import { useEffect, useRef } from "react";
-import { ProductTabField } from "@/documents/products";
-import { handleColorSync } from "@/utils/form-rules/panjur-form-rules";
+import { RefObject, useEffect, useRef } from "react";
+import { ProductTab, ProductTabField } from "@/documents/products";
+import {
+  filterMotorOptions,
+  handleColorSync,
+} from "@/utils/form-rules/panjur-form-rules";
 import { useSearchParams } from "next/navigation";
+import { PanjurSelections } from "@/types/panjur";
+import { FormikProps } from "formik";
+import { useMotorOptionsToast } from "./useMotorOptionsToast";
 
-type FormValues = Record<string, string | number | boolean>;
-type OnChangeHandler = (name: string, value: string | number | boolean) => void;
+export type FormValues = Record<string, string | number | boolean>;
 
 // Main hook that manages all form rules
-export function usePanjurFormRules(
-  values: FormValues,
+export function useFormRules(
+  formikRef: RefObject<FormikProps<FormValues> | null>,
   fields: ProductTabField[],
-  onChange: OnChangeHandler
+  formDataResponse: ProductTab[],
+  selections: PanjurSelections
 ) {
   const searchParams = useSearchParams();
   const isInitialRender = useRef(true);
   const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
   const productId = searchParams.get("productId");
+  const values = formikRef?.current?.values;
+  const handleNoMotorOptions = useMotorOptionsToast();
+
   useEffect(() => {
     // Skip the initial render
     if (isInitialRender.current) {
@@ -32,11 +41,16 @@ export function usePanjurFormRules(
     timeoutRef.current = setTimeout(() => {
       // Execute all rules in sequence
       if (productId === "panjur") {
-        console.log({ values });
-        handleColorSync(values, fields, onChange);
+        // console.log({ values });
+        handleColorSync(fields, formikRef, values);
+        filterMotorOptions(
+          selections,
+          formikRef,
+          fields,
+          formDataResponse,
+          handleNoMotorOptions
+        );
         // Add more rule handlers here as needed
-        // handleOtherRule(values, fields, onChange);
-        // handleAnotherRule(values, fields, onChange);
       }
     }, 0);
 
@@ -46,7 +60,7 @@ export function usePanjurFormRules(
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [values.lamel_color, fields, onChange, values, productId]);
+  }, [fields, values, productId, formikRef, selections, handleNoMotorOptions]);
 
   return {
     // You can add more utility functions here if needed

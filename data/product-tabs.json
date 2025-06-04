@@ -11,7 +11,7 @@
             "type": "number",
             "min": 250,
             "max": 5500,
-            "default": 250
+            "default": 5500
           },
           {
             "id": "height",
@@ -19,7 +19,7 @@
             "type": "number",
             "min": 250,
             "max": 4000,
-            "default": 250
+            "default": 4000
           }
         ],
         "preview": {
@@ -98,7 +98,7 @@
           },
           {
             "id": "makaraliTip",
-            "name": "Makara Tipi",
+            "name": "Makas Seçeneği",
             "type": "select",
             "options": [
               { "id": "makassiz", "name": "Makassız" },
@@ -579,7 +579,7 @@
                 "name": "Alüminyum Poliüretanlı"
               },
               {
-                "id": "aluminyum_ekstrüzyon",
+                "id": "aluminyum_ekstruzyon",
                 "name": "Alüminyum Ekstrüzyon"
               }
             ],
@@ -600,8 +600,8 @@
               {
                 "field": "lamelType",
                 "valueMap": {
-                  "alüminyum_poliuretanli": ["39_sl", "55_sl"],
-                  "alüminyum_ekstrüzyon": ["45_se", "55_se"]
+                  "aluminyum_poliuretanli": ["39_sl", "55_sl"],
+                  "aluminyum_ekstruzyon": ["45_se", "55_se"]
                 }
               }
             ]

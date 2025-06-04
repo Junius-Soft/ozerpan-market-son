@@ -48,7 +48,7 @@ const formatFieldValue = (
   if (field?.options) {
     const option = field.options.find((opt) => opt.id === value);
     if (option) return option.name;
-    else return field.options[0].name;
+    else return field.options[0]?.name;
   }
 
   if (typeof value === "boolean") return value ? "Evet" : "Hayır";

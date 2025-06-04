@@ -364,7 +364,7 @@ export const findRemotePrice = (
   });
 
   if (!matchingRemote) {
-    console.log("Remote not found:", normalizedSearchName);
+    // console.log("Remote not found:", normalizedSearchName);
     return [0, null];
   }
 

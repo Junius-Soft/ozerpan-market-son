@@ -14,13 +14,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ProductTabField } from "@/documents/products";
+import { ProductTab, ProductTabField } from "@/documents/products";
 import { type ChangeEvent, type FocusEvent } from "react";
-import { usePanjurFormRules } from "../hooks/useFormRules";
 
 interface DynamicFormProps {
   fields: ProductTabField[];
+  formDataResponse: ProductTab[];
   values: Record<string, string | number | boolean>;
+  selections: PanjurSelections;
   onChange: (fieldId: string, value: string | number | boolean) => void;
   onFormikChange?: (formik: FormikProps<FormValues>) => void;
   formRef?: React.MutableRefObject<HTMLFormElement | null>;
@@ -148,7 +149,24 @@ const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
   }, [filteredOptions, field.name, field.value, form]);
 
   const handleChange = (newValue: string) => {
+    // Önce normal form değerini güncelle
     form.setFieldValue(field.name, newValue, false);
+
+    // Özel ID'ye sahip alan için ek işlemler
+    if (fieldDef.id === "xx") {
+      // Burada "xx" ID'sine sahip select için özel işlemler yapabilirsiniz
+      // Örneğin:
+      // - Başka bir alanın değerini güncelleyebilirsiniz
+      // form.setFieldValue("digerAlanId", "yeniDeger");
+      // - Birden fazla alanı güncelleyebilirsiniz
+      // form.setValues({
+      //   ...form.values,
+      //   alan1: "deger1",
+      //   alan2: "deger2"
+      // });
+      // - Validasyon tetikleyebilirsiniz
+      // form.validateField("validasyonGerekliAlan");
+    }
   };
 
   const currentValue = field.value?.toString() ?? "";
@@ -236,6 +254,8 @@ const CheckboxInput: React.FC<FormikInputProps> = ({
 
 // Utils'e taşındı
 import { checkDependencyChain } from "@/utils/dependencies";
+import { useFormRules } from "../hooks/useFormRules";
+import { PanjurSelections } from "@/types/panjur";
 
 const FormikInputs = (props: FormikInputProps) => {
   switch (props.fieldDef.type) {
@@ -256,7 +276,9 @@ const FormikInputs = (props: FormikInputProps) => {
 
 export function DynamicForm({
   fields,
+  formDataResponse,
   values,
+  selections,
   onChange,
   formRef,
 }: DynamicFormProps) {
@@ -342,9 +364,6 @@ export function DynamicForm({
     }
   }, [values]);
 
-  // Add the form rules hook
-  usePanjurFormRules(values, fields, onChange);
-
   const processQueue = useCallback(() => {
     const state = stateRef.current;
     if (!state.processing && state.updateQueue.length > 0) {
@@ -377,6 +396,9 @@ export function DynamicForm({
     },
     [onChange, processQueue]
   );
+
+  // Add custom hooks
+  useFormRules(formikRef, fields,formDataResponse, selections);
 
   return (
     <Formik

@@ -23,28 +23,18 @@ export function CustomDialog({
       <Dialog.Portal>
         <Dialog.Overlay className="bg-black/50 dark:bg-black/80 data-[state=open]:animate-overlayShow fixed inset-0" />
         <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[600px] translate-x-[-50%] translate-y-[-50%] rounded-lg bg-background border p-6 shadow-lg">
-          <Dialog.Title
-            className={
-              showTitle === false
-                ? "sr-only"
-                : "font-medium text-lg text-foreground"
-            }
-          >
-            {title}
-          </Dialog.Title>
-          <div className="flex justify-between items-center mb-4 -mt-1">
-            <div
+          <div className="flex justify-between items-center mb-4">
+            <Dialog.Title
               className={
-                showTitle
-                  ? "opacity-0 pointer-events-none"
-                  : "opacity-0 pointer-events-none absolute"
+                showTitle === false
+                  ? "sr-only"
+                  : "font-medium text-lg text-foreground"
               }
-              aria-hidden
             >
               {title}
-            </div>
+            </Dialog.Title>
             <Dialog.Close asChild>
-              <button className="rounded-full w-6 h-6 inline-flex items-center justify-center text-muted-foreground hover:bg-muted hover:text-foreground ml-auto">
+              <button className="rounded-full w-6 h-6 inline-flex items-center justify-center text-muted-foreground hover:bg-muted hover:text-foreground">
                 <X className="w-4 h-4" />
               </button>
             </Dialog.Close>

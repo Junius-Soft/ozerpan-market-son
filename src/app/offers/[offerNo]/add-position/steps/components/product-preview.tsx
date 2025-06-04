@@ -153,7 +153,7 @@ export function ProductPreview({
                                   Birim Fiyat:
                                 </span>
                                 <span className="text-foreground font-mono">
-                                  {product.price}
+                                  € {product.price}
                                 </span>
                               </div>
                               <div className="grid grid-cols-2 gap-2">
@@ -169,6 +169,7 @@ export function ProductPreview({
                                   Toplam Fiyat:
                                 </span>
                                 <span className="text-foreground font-mono">
+                                  €
                                   {parseFloat(product.price) * product.quantity}
                                 </span>
                               </div>

@@ -148,16 +148,16 @@ export default function ProductDetailsPage() {
             {/* Title and Buttons Skeleton */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="h-8 w-48 bg-gray-200 rounded"></div>
-                <div className="h-10 w-32 bg-gray-200 rounded"></div>
+                <div className="h-8 w-48 bg-muted animate-pulse rounded"></div>
+                <div className="h-10 w-32 bg-muted animate-pulse rounded"></div>
               </div>
-              <div className="h-10 w-24 bg-gray-200 rounded"></div>
+              <div className="h-10 w-24 bg-muted animate-pulse rounded"></div>
             </div>
 
             {/* Content Skeleton */}
             <div className="space-y-6">
-              <div className="h-32 bg-gray-200 rounded"></div>
-              <div className="h-32 bg-gray-200 rounded"></div>
+              <div className="h-32 bg-muted animate-pulse rounded"></div>
+              <div className="h-32 bg-muted animate-pulse rounded"></div>
             </div>
           </div>
         </div>

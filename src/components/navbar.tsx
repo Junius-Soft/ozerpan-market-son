@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
 import { LoginModal } from "./login-modal";
 import { Button } from "./ui/button";
+import { ThemeToggle } from "./theme-toggle";
 import { useRouter } from "next/navigation";
 
 export function Navbar() {
@@ -22,7 +23,7 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="bg-white border-b">
+      <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex">
@@ -40,25 +41,26 @@ export function Navbar() {
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                 <Link
                   href="/"
-                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900"
+                  className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-muted-foreground hover:border-foreground hover:text-foreground transition-colors"
                 >
                   Ana Sayfa
                 </Link>
                 <Link
                   href="/"
-                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900"
+                  className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-muted-foreground hover:border-foreground hover:text-foreground transition-colors"
                 >
                   Ürünler
                 </Link>
               </div>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
               {isAuthenticated ? (
                 <>
                   <Button
                     onClick={() => router.push("/offers")}
                     variant="outline"
-                    className="mr-4 inline-flex items-center px-4 py-2  gap-2"
+                    className="inline-flex items-center px-4 py-2 gap-2"
                   >
                     <ShoppingCart className="h-4 w-4" />
                     Teklifler
@@ -66,7 +68,7 @@ export function Navbar() {
                   <Button
                     onClick={handleLogout}
                     variant="secondary"
-                    className=" inline-flex items-center px-4 py-2 "
+                    className="inline-flex items-center px-4 py-2"
                   >
                     <LogIn className="h-4 w-4" />
                     Çıkış
@@ -75,7 +77,7 @@ export function Navbar() {
               ) : (
                 <Button
                   onClick={openLoginModal}
-                  className="inline-flex items-center px-4 py-2  gap-2"
+                  className="inline-flex items-center px-4 py-2 gap-2"
                 >
                   <LogIn className="h-4 w-4" />
                   Giriş Yap

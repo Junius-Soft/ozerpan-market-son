@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Navbar } from "@/components/navbar";
 import { AuthGuard } from "@/components/auth-guard";
 import { ToastProvider } from "@/contexts/toast-context";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,14 +27,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr">
+    <html lang="tr" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background font-sans antialiased`}
+        suppressHydrationWarning
       >
-        <ToastProvider>
-          <Navbar />
-          <AuthGuard>{children}</AuthGuard>
-        </ToastProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+          storageKey="ozerpan-theme"
+        >
+          <ToastProvider>
+            <Navbar />
+            <AuthGuard>{children}</AuthGuard>
+          </ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
+import { useTheme } from "next-themes";
 
 interface ShutterPreviewProps {
   width: number;
@@ -15,6 +16,7 @@ export function ShutterPreview({
 }: ShutterPreviewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
 
   // Function to draw the shutter
   const drawShutter = useCallback(
@@ -27,6 +29,18 @@ export function ShutterPreview({
     ) => {
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
+
+      // Define colors based on theme
+      const colors = {
+        frame: theme === "dark" ? "#94a3b8" : "#475569",
+        frameBackground: theme === "dark" ? "#64748b" : "#94a3b8",
+        frameBorder: theme === "dark" ? "#94a3b8" : "#64748b",
+        motor: theme === "dark" ? "#64748b" : "#475569",
+        lamelLight: theme === "dark" ? "#94a3b8" : "#e2e8f0",
+        lamelDark: theme === "dark" ? "#64748b" : "#94a3b8",
+        text: theme === "dark" ? "#e2e8f0" : "#1e293b",
+        lamelBorder: theme === "dark" ? "#94a3b8" : "#64748b",
+      };
 
       // Clear canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -67,27 +81,27 @@ export function ShutterPreview({
       const adjustedLamelHeight = remainingHeight / numberOfLamels;
 
       // Draw outer frame
-      ctx.strokeStyle = "#475569";
+      ctx.strokeStyle = colors.frame;
       ctx.lineWidth = 3;
       ctx.strokeRect(x - 3, y - 3, finalWidth + 6, finalHeight + 6);
-      ctx.fillStyle = "#94a3b8";
+      ctx.fillStyle = colors.frameBackground;
       ctx.fillRect(x - 3, y - 3, finalWidth + 6, finalHeight + 6);
 
       // Draw inner frame
-      ctx.strokeStyle = "#64748b";
+      ctx.strokeStyle = colors.frameBorder;
       ctx.lineWidth = 2;
       ctx.strokeRect(x, y, finalWidth, finalHeight);
 
       // Draw motor section
       const motorGradient = ctx.createLinearGradient(x, y, x, y + motorHeight);
-      motorGradient.addColorStop(0, "#64748b");
-      motorGradient.addColorStop(0.5, "#94a3b8");
-      motorGradient.addColorStop(1, "#64748b");
+      motorGradient.addColorStop(0, colors.frameBorder);
+      motorGradient.addColorStop(0.5, colors.frameBackground);
+      motorGradient.addColorStop(1, colors.frameBorder);
       ctx.fillStyle = motorGradient;
       ctx.fillRect(x, y, finalWidth, motorHeight);
 
       // Add motor section details
-      ctx.fillStyle = "#475569";
+      ctx.fillStyle = colors.motor;
       ctx.fillRect(
         x + finalWidth * 0.1,
         y + motorHeight * 0.3,
@@ -99,7 +113,7 @@ export function ShutterPreview({
       ctx.beginPath();
       ctx.moveTo(x, y + motorHeight);
       ctx.lineTo(x + finalWidth, y + motorHeight);
-      ctx.strokeStyle = "#475569";
+      ctx.strokeStyle = colors.frame;
       ctx.lineWidth = 2;
       ctx.stroke();
 
@@ -114,14 +128,18 @@ export function ShutterPreview({
           x,
           lamelY + adjustedLamelHeight
         );
-        mainGradient.addColorStop(0, "#94a3b8");
-        mainGradient.addColorStop(0.4, "#e2e8f0");
-        mainGradient.addColorStop(0.6, "#e2e8f0");
-        mainGradient.addColorStop(1, "#94a3b8");
+        mainGradient.addColorStop(0, colors.lamelDark);
+        mainGradient.addColorStop(0.4, colors.lamelLight);
+        mainGradient.addColorStop(0.6, colors.lamelLight);
+        mainGradient.addColorStop(1, colors.lamelDark);
 
         // Draw main lamel body
         ctx.fillStyle = mainGradient;
         ctx.fillRect(x, lamelY, finalWidth, adjustedLamelHeight);
+
+        // Add highlight and shadow with theme-appropriate opacity
+        const highlightOpacity = theme === "dark" ? "0.2" : "0.4";
+        const shadowOpacity = theme === "dark" ? "0.3" : "0.1";
 
         // Add highlight to top edge
         const highlightGradient = ctx.createLinearGradient(
@@ -130,7 +148,10 @@ export function ShutterPreview({
           x,
           lamelY + adjustedLamelHeight * 0.3
         );
-        highlightGradient.addColorStop(0, "rgba(255, 255, 255, 0.4)");
+        highlightGradient.addColorStop(
+          0,
+          `rgba(255, 255, 255, ${highlightOpacity})`
+        );
         highlightGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
         ctx.fillStyle = highlightGradient;
         ctx.fillRect(x, lamelY, finalWidth, adjustedLamelHeight * 0.3);
@@ -143,7 +164,7 @@ export function ShutterPreview({
           lamelY + adjustedLamelHeight
         );
         shadowGradient.addColorStop(0, "rgba(0, 0, 0, 0)");
-        shadowGradient.addColorStop(1, "rgba(0, 0, 0, 0.1)");
+        shadowGradient.addColorStop(1, `rgba(0, 0, 0, ${shadowOpacity})`);
         ctx.fillStyle = shadowGradient;
         ctx.fillRect(
           x,
@@ -156,13 +177,13 @@ export function ShutterPreview({
         ctx.beginPath();
         ctx.moveTo(x, lamelY);
         ctx.lineTo(x + finalWidth, lamelY);
-        ctx.strokeStyle = "#64748b";
+        ctx.strokeStyle = colors.lamelBorder;
         ctx.lineWidth = 0.5;
         ctx.stroke();
       }
 
       // Add dimensions text
-      ctx.fillStyle = "#1e293b";
+      ctx.fillStyle = colors.text;
       ctx.font = "bold 16px Inter";
       ctx.textAlign = "center";
 
@@ -176,7 +197,7 @@ export function ShutterPreview({
       ctx.fillText(`${height}mm`, 0, 0);
       ctx.restore();
     },
-    []
+    [theme] // theme'i dependency array'e ekledik
   );
 
   const updateCanvasSize = useCallback(() => {
@@ -214,7 +235,7 @@ export function ShutterPreview({
   return (
     <div
       ref={containerRef}
-      className={`w-full h-full grid place-items-center bg-white ${className}`}
+      className={`w-full h-full grid place-items-center bg-background ${className}`}
     >
       <canvas ref={canvasRef} className="w-full h-full" />
     </div>

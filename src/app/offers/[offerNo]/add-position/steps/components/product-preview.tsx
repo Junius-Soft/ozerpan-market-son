@@ -139,9 +139,11 @@ export function ProductPreview({
                 </div>
               </div>
               {calculationResult.errors.length > 0 && (
-                <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
-                  <h5 className="font-medium text-red-700 mb-1">Uyarılar:</h5>
-                  <ul className="list-disc list-inside text-sm text-red-600">
+                <div className="mt-4 p-3 bg-destructive/10 border border-destructive/20 rounded-md">
+                  <h5 className="font-medium text-destructive mb-1">
+                    Uyarılar:
+                  </h5>
+                  <ul className="list-disc list-inside text-sm text-destructive">
                     {calculationResult.errors.map(
                       (error: string, index: number) => (
                         <li key={index}>{error}</li>
@@ -190,7 +192,7 @@ export function ProductPreview({
                   key={tab.id}
                   className="border-t first:border-t-0 pt-2 first:pt-0"
                 >
-                  <div className="text-sm font-medium text-gray-500 mb-1.5">
+                  <div className="text-sm font-medium text-muted-foreground mb-1.5">
                     {tab.name}
                   </div>
                   <div className="space-y-1">
@@ -199,10 +201,10 @@ export function ProductPreview({
                         key={index}
                         className="flex items-baseline text-sm justify-between"
                       >
-                        <span className="flex-none font-medium text-gray-900">
+                        <span className="flex-none font-medium text-foreground">
                           {field.name}
                         </span>
-                        <span className="text-gray-700 text-right">
+                        <span className="text-muted-foreground text-right">
                           {field.value}
                         </span>
                       </div>

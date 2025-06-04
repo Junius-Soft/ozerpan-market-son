@@ -19,6 +19,7 @@ export interface ProductTabField {
   max?: number;
   default?: string | number | boolean;
   filterBy?: FilterItem | FilterItem[];
+  disabled?: boolean;
   dependsOn?: {
     field: string;
     value: string | string[]; // Allow either a single string or an array of strings

@@ -190,6 +190,7 @@
             "id": "motorModel",
             "name": "Motor Modeli",
             "type": "select",
+            "disabled": true,
             "options": [
               {
                 "id": "sel_60-20",

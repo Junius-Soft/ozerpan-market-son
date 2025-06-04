@@ -67,6 +67,7 @@ const TextInput: React.FC<FormikInputProps> = ({ field, fieldDef }) => (
     onChange={field.onChange}
     onBlur={field.onBlur}
     name={field.name}
+    disabled={fieldDef.disabled}
   />
 );
 
@@ -95,6 +96,7 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => (
     min={fieldDef.min}
     max={fieldDef.max}
     name={field.name}
+    disabled={fieldDef.disabled}
   />
 );
 
@@ -172,8 +174,13 @@ const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
   const currentValue = field.value?.toString() ?? "";
 
   return (
-    <Select value={currentValue} onValueChange={handleChange} name={field.name}>
-      <SelectTrigger className="w-full">
+    <Select
+      value={currentValue}
+      onValueChange={handleChange}
+      name={field.name}
+      disabled={fieldDef.disabled}
+    >
+      <SelectTrigger className="w-full" disabled={fieldDef.disabled}>
         <SelectValue placeholder={fieldDef.name} />
       </SelectTrigger>
       <SelectContent>
@@ -217,6 +224,7 @@ const RadioInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
       }}
       className="flex flex-col space-y-2"
       name={field.name}
+      disabled={fieldDef.disabled}
     >
       {fieldDef.options.map((option) => (
         <div
@@ -247,6 +255,7 @@ const CheckboxInput: React.FC<FormikInputProps> = ({
       checked={!!field.value}
       onCheckedChange={(checked) => form.setFieldValue(field.name, !!checked)}
       name={field.name}
+      disabled={fieldDef.disabled}
     />
     <Label htmlFor={fieldDef.id}>{fieldDef.name}</Label>
   </div>
@@ -398,7 +407,7 @@ export function DynamicForm({
   );
 
   // Add custom hooks
-  useFormRules(formikRef, fields,formDataResponse, selections);
+  useFormRules(formikRef, fields, formDataResponse, selections);
 
   return (
     <Formik

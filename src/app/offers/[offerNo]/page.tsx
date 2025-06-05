@@ -276,7 +276,6 @@ export default function OfferDetailPage() {
               variant="ghost"
               size="icon"
               onClick={() => setIsEditDialogOpen(true)}
-              className="hover:bg-gray-100"
             >
               <Edit2 className="h-4 w-4" />
             </Button>

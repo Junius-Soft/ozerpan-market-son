@@ -131,7 +131,8 @@ export function filterMotorOptions(
       motorModelOptions[0]?.id || ""
     );
   }
-
+  console.log({ squareMeters });
+  console.log({ motorModelOptions });
   return motorModelOptions;
 }
 

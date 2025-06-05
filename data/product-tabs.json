@@ -11,7 +11,7 @@
             "type": "number",
             "min": 250,
             "max": 5500,
-            "default": 5500
+            "default": 1000
           },
           {
             "id": "height",
@@ -19,7 +19,7 @@
             "type": "number",
             "min": 250,
             "max": 4000,
-            "default": 4000
+            "default": 1000
           }
         ],
         "preview": {
@@ -190,7 +190,6 @@
             "id": "motorModel",
             "name": "Motor Modeli",
             "type": "select",
-            "disabled": true,
             "options": [
               {
                 "id": "sel_60-20",

@@ -6,9 +6,54 @@ import { useState, useRef, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { type Product, getProductTabs } from "@/documents/products";
 import { DetailsStep } from "../steps/details-step";
-import { type Position } from "@/documents/offers";
+import { getOffer, type Position } from "@/documents/offers";
 import { getOffers } from "@/documents/offers";
 import type { FormValues } from "../steps/types";
+
+const updateProductTabsWithPositionDetails = async (
+  product: Product,
+  selectedPosition: string
+): Promise<Product> => {
+  const offerNo = window.location.pathname.split("/")[2];
+  const currentOffer = await getOffer(offerNo);
+  const position = currentOffer?.positions.find(
+    (p) => p.id === selectedPosition
+  );
+
+  if (position && position.productDetails && Array.isArray(product.tabs)) {
+    // Update each tab's field default values with values from position.productDetails
+    const productDetails = position.productDetails as Record<
+      string,
+      Record<string, string | number | boolean>
+    >;
+
+    product.tabs = product.tabs.map((tab) => {
+      if (tab.content?.fields && productDetails[tab.id]) {
+        const updatedFields = tab.content.fields.map((field) => {
+          // If there's a value for this field in position details, use it as the new default
+          if (productDetails[tab.id][field.id] !== undefined) {
+            return {
+              ...field,
+              default: productDetails[tab.id][field.id],
+            };
+          }
+          return field;
+        });
+
+        return {
+          ...tab,
+          content: {
+            ...tab.content,
+            fields: updatedFields,
+          },
+        };
+      }
+      return tab;
+    });
+  }
+
+  return product;
+};
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
@@ -51,7 +96,16 @@ export default function ProductDetailsPage() {
           tabs: tabsResponse.tabs,
         } as Product;
 
-        setProduct(product);
+        if (selectedPosition) {
+          const updatedProduct = await updateProductTabsWithPositionDetails(
+            product,
+            selectedPosition
+          );
+          setProduct(updatedProduct);
+        } else {
+          setProduct(product);
+        }
+
         initialLoadDone.current = true;
       } finally {
         setIsLoading(false);
@@ -59,7 +113,15 @@ export default function ProductDetailsPage() {
     };
 
     loadProductAndTabs();
-  }, [optionId, productId, productName, router, typeId]);
+  }, [
+    optionId,
+    productId,
+    productName,
+    router,
+    typeId,
+    selectedPosition,
+    formValues,
+  ]);
 
   const handleComplete = async () => {
     if (!product) return;

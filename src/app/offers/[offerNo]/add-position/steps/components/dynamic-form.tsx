@@ -299,7 +299,7 @@ export function DynamicForm({
   });
 
   const [initialValues, validationSchema] = useMemo(() => {
-    const initValues: FormValues = { ...values };
+    const initValues: FormValues = { ...selections };
     const schema: Record<
       string,
       Yup.StringSchema | Yup.NumberSchema | Yup.BooleanSchema | Yup.MixedSchema

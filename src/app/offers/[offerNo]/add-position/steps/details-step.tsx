@@ -151,6 +151,11 @@ export function DetailsStep({
         [field]: processedValue,
       };
 
+      // Prevent width and height from being copied to other tabs
+      if (tabId === "dimensions" && (field === "width" || field === "height")) {
+        return newState;
+      }
+
       // Handle dependent fields
       currentTab.content?.fields?.forEach((tabField) => {
         if (

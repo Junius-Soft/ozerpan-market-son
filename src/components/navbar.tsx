@@ -30,7 +30,7 @@ export function Navbar() {
               <div className="flex-shrink-0 flex items-center">
                 <Link href="/" className="relative w-[60px] h-[60px]">
                   <Image
-                    src="/logo.jpg"
+                    src="/logo.png"
                     alt="Özerpan Logo"
                     fill
                     className="object-cover"

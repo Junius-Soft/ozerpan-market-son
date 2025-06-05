@@ -228,21 +228,6 @@ export default function OfferDetailPage() {
             {/* Sağ Taraf - Bilgi Kartları Skeleton */}
             <div className="w-[400px] space-y-6">
               <Card className="p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <Skeleton className="h-6 w-32" />
-                  <Skeleton className="h-6 w-20 rounded-full" />
-                </div>
-                <div className="space-y-4">
-                  {[...Array(3)].map((_, i) => (
-                    <div key={i}>
-                      <Skeleton className="h-4 w-24 mb-2" />
-                      <Skeleton className="h-6 w-full" />
-                    </div>
-                  ))}
-                </div>
-              </Card>
-
-              <Card className="p-6">
                 <Skeleton className="h-6 w-36 mb-4" />
                 <div className="space-y-4">
                   {[...Array(3)].map((_, i) => (

@@ -800,7 +800,7 @@
             "type": "select",
             "options": [
               { "id": "antrasit_gri", "name": "Antrasit Gri" },
-              { "id": "metalic_gray", "name": "Metalik Gri" },
+              { "id": "metalik_gri", "name": "Metalik Gri" },
               { "id": "beyaz", "name": "Beyaz" },
               { "id": "kahve", "name": "Kahve" },
               { "id": "krem", "name": "Krem" },

@@ -89,7 +89,7 @@ export const findLamelPrice = (
   const matchingLamel = lamelPrices.find(
     (p) => p.description === searchPattern
   );
-
+  console.log({ matchingLamel });
   if (!matchingLamel) return [0, null];
 
   const selectedProduct = createSelectedProduct(matchingLamel, quantity);

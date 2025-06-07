@@ -2,7 +2,6 @@ import { RefObject, useEffect, useMemo, useRef } from "react";
 import { ProductTab, ProductTabField } from "@/documents/products";
 import {
   filterMotorOptions,
-  handleColorSync,
 } from "@/utils/form-rules/panjur-form-rules";
 import { useSearchParams } from "next/navigation";
 import { PanjurSelections } from "@/types/panjur";
@@ -45,9 +44,7 @@ export function useFormRules(
       // Execute all rules in sequence
       if (productId === "panjur") {
         // console.log({ values });
-        handleColorSync(fields, formikRef, values);
 
-        // filterLamelThickness(formikRef, values, formDataResponse);
 
         // Filter motor options
         filterMotorOptions(

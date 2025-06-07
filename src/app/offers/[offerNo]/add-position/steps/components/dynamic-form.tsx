@@ -16,6 +16,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { ProductTab, ProductTabField } from "@/documents/products";
 import { type ChangeEvent, type FocusEvent } from "react";
+import { PanjurSelections } from "@/types/panjur";
 
 interface DynamicFormProps {
   fields: ProductTabField[];
@@ -100,7 +101,7 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => (
   />
 );
 
-const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
+const SelectInput: React.FC<FormikInputProps & { allFields?: ProductTabField[] }> = ({ field, form, fieldDef, allFields }) => {
   const { values } = form;
 
   const filteredOptions = useMemo(() => {
@@ -191,6 +192,26 @@ const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
 
   const handleChange = (newValue: string) => {
     form.setFieldValue(field.name, newValue, false);
+    
+    if (field.name === "lamel_color" && allFields) {
+      // Find all color fields except lamel_color
+      const colorFields = ["box_color", "subPart_color", "dikme_color"];
+
+      // Update each color field
+      colorFields.forEach((colorField: string) => {
+        const fieldDef = allFields.find((f) => f.id === colorField);
+        if (!fieldDef?.options) return;
+
+        // Check if the selected lamel_color exists in the current field's options
+        const hasColor = fieldDef.options.some(
+          (option) => option.id === newValue || option.name === newValue
+        );
+
+        // Set the new value based on whether the color exists in options
+        const newValueToChange = hasColor ? newValue : "ral_boyali";
+        form.setFieldValue(colorField, newValueToChange, false);
+      });
+    }
   };
 
   return (
@@ -284,16 +305,15 @@ const CheckboxInput: React.FC<FormikInputProps> = ({
 // Utils'e taşındı
 import { checkDependencyChain } from "@/utils/dependencies";
 import { useFormRules } from "../hooks/useFormRules";
-import { PanjurSelections } from "@/types/panjur";
 
-const FormikInputs = (props: FormikInputProps) => {
+const FormikInputs = (props: FormikInputProps & { allFields?: ProductTabField[] }) => {
   switch (props.fieldDef.type) {
     case "text":
       return <TextInput {...props} />;
     case "number":
       return <NumberInput {...props} />;
     case "select":
-      return <SelectInput {...props} />;
+      return <SelectInput {...props} allFields={props.allFields} />;
     case "radio":
       return <RadioInput {...props} />;
     case "checkbox":
@@ -460,6 +480,7 @@ export function DynamicForm({
                     name={field.id}
                     component={FormikInputs}
                     fieldDef={field}
+                    allFields={fields}
                   />
                   {formikProps.errors[field.id] &&
                     formikProps.touched[field.id] && (

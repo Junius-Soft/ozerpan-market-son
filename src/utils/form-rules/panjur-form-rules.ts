@@ -1,6 +1,7 @@
 import { FormValues } from "@/app/offers/[offerNo]/add-position/steps/hooks/useFormRules";
 import { ProductTab, ProductTabField } from "@/documents/products";
 import { PanjurSelections } from "@/types/panjur";
+import { lamelProperties } from "@/constants/panjur";
 import { FormikProps } from "formik";
 import { RefObject } from "react";
 
@@ -166,3 +167,58 @@ export const handleColorSync = (
     }
   });
 };
+
+// Helper function to filter lamel thickness options based on dimensions and lamel type
+export function filterLamelThickness(
+  formikRef: RefObject<FormikProps<FormValues> | null>,
+  values?: FormValues,
+  formDataResponse?: ProductTab[]
+): ProductTabField["options"] | null {
+  // Filter lamel thickness options based on dimensions
+  const width = values?.width ? parseFloat(String(values.width)) : 0;
+  const height = values?.height ? parseFloat(String(values.height)) : 0;
+  const lamelType = values?.lamelType as string;
+  if (!formDataResponse || !width || !height || !lamelType) {
+    return null;
+  }
+
+  // Get all lamelThickness options from response data
+  const lamelThicknessField = formDataResponse
+    .find((tab) => tab.id === "lamel")
+    ?.content?.fields.find((field) => field.id === "lamelTickness");
+
+  if (!lamelThicknessField?.options) {
+    return null;
+  }
+
+  // Filter options based on lamel type
+  const typeBasedOptions = lamelThicknessField.options.filter((option) =>
+    lamelType === "aluminyum_ekstruzyon"
+      ? option.id?.includes("_se")
+      : option.id?.includes("_sl")
+  );
+
+  // Filter by dimension constraints
+  const validOptions = typeBasedOptions.filter((option) => {
+    if (!option.id) return false;
+    const props = lamelProperties[option.id as keyof typeof lamelProperties];
+    if (!props) return false;
+
+    return width <= props.maxWidth && height <= props.maxHeight;
+  });
+  const thicknessOptions = validOptions.length > 0 ? validOptions : null;
+  // If current lamelTickness is not valid, select the first valid option
+  const currentThickness = values?.lamelTickness;
+  const isCurrentThicknessValid = thicknessOptions?.some(
+    (option) => option.id === currentThickness
+  );
+
+  if (!isCurrentThicknessValid && thicknessOptions?.length) {
+    formikRef?.current?.setFieldValue(
+      "lamelTickness",
+      thicknessOptions[0].id || ""
+    );
+  }
+
+  return thicknessOptions;
+}

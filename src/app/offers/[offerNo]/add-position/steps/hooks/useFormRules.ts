@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useMemo, useRef } from "react";
 import { ProductTab, ProductTabField } from "@/documents/products";
 import {
   filterMotorOptions,
@@ -20,13 +20,18 @@ export function useFormRules(
 ) {
   const searchParams = useSearchParams();
   const isInitialRender = useRef(true);
-  const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
   const productId = searchParams.get("productId");
   const values = formikRef?.current?.values;
   const handleNoMotorOptions = useMotorOptionsToast();
-  const [motorOptions, setMotorOptions] = useState<
-    ProductTabField["options"] | null
-  >(null);
+
+  // Debounce form rule updates
+  const debouncedUpdateRules = useMemo(() => {
+    let timeoutId: NodeJS.Timeout;
+    return (callback: () => void) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(callback, 300);
+    };
+  }, []);
 
   useEffect(() => {
     // Skip the initial render
@@ -35,33 +40,24 @@ export function useFormRules(
       return;
     }
 
-    // Clear any existing timeout
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-
     // Delay rules execution to avoid rapid updates
-    timeoutRef.current = setTimeout(() => {
+    debouncedUpdateRules(() => {
       // Execute all rules in sequence
       if (productId === "panjur") {
         // console.log({ values });
         handleColorSync(fields, formikRef, values);
-        const options = filterMotorOptions(
+
+        // filterLamelThickness(formikRef, values, formDataResponse);
+
+        // Filter motor options
+        filterMotorOptions(
           selections,
           formikRef,
           formDataResponse,
           handleNoMotorOptions
         );
-        setMotorOptions(options);
       }
-    }, 0);
-
-    // Cleanup timeout on unmount or when dependencies change
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
+    });
   }, [
     fields,
     values,
@@ -70,9 +66,8 @@ export function useFormRules(
     selections,
     handleNoMotorOptions,
     formDataResponse,
+    debouncedUpdateRules,
   ]);
 
-  return {
-    motorOptions,
-  };
+  return {};
 }

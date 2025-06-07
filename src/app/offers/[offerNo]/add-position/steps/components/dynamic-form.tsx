@@ -14,11 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  OptionWithBrand,
-  ProductTab,
-  ProductTabField,
-} from "@/documents/products";
+import { ProductTab, ProductTabField } from "@/documents/products";
 import { type ChangeEvent, type FocusEvent } from "react";
 
 interface DynamicFormProps {
@@ -104,17 +100,11 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => (
   />
 );
 
-const customOptionFilter = (options: OptionWithBrand[]) => {
-  return options;
-};
-
 const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
   const { values } = form;
 
-  // Filtreleme mantığını useMemo ile optimize edelim
   const filteredOptions = useMemo(() => {
     if (!fieldDef.options) return [];
-
     let options = [...fieldDef.options];
 
     if (fieldDef.filterBy) {
@@ -122,64 +112,86 @@ const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
         ? fieldDef.filterBy
         : [fieldDef.filterBy];
 
-      // Her bir filtre için options'ı filtrele
-      filters.forEach((filter) => {
+      options = filters.reduce((filteredOpts, filter) => {
+        // ValueMap filtresi
         const filterValue = values[filter.field]?.toString();
         if (filterValue && filter.valueMap && filter.valueMap[filterValue]) {
-          options = options.filter((option) => {
+          return filteredOpts.filter((option) => {
             const optionId = option.id || option.name;
-            return filter.valueMap[filterValue].includes(optionId);
+            return filter.valueMap?.[filterValue].includes(optionId);
           });
         }
-      });
+        console.log(filter);
+
+        // CustomFilter kontrolü
+        if (filter.field === "customFilter" && filter.properties) {
+          if (fieldDef.id === "lamelTickness") {
+            const width = Number(values["width"]) || 0;
+            const height = Number(values["height"]) || 0;
+
+            return filteredOpts.filter((option) => {
+              const optionId = option.id || option.name;
+              const properties = filter.properties?.[optionId];
+
+              if (properties) {
+                const withinMaxWidth =
+                  !properties.maxWidth || width <= properties.maxWidth;
+                const withinMaxHeight =
+                  !properties.maxHeight || height <= properties.maxHeight;
+                return withinMaxWidth && withinMaxHeight;
+              }
+              return true;
+            });
+          }
+        }
+        console.log({ filteredOpts });
+        return filteredOpts;
+      }, options);
     }
 
-    return customOptionFilter(options);
-  }, [fieldDef.options, fieldDef.filterBy, values]);
+    return options;
+  }, [fieldDef.options, fieldDef.filterBy, fieldDef.id, values]);
 
   // Handle default value and first option selection after filtering
-  useEffect(() => {
-    if (filteredOptions.length > 0) {
-      const currentValue = field.value?.toString();
-      const isCurrentValueInOptions = filteredOptions.some(
-        (opt) => (opt.id || opt.name) === currentValue
-      );
+  const currentValue = field.value?.toString() ?? "";
+  const isCurrentValueInOptions = filteredOptions.some(
+    (opt) => (opt.id || opt.name) === currentValue
+  );
 
-      // Select first option if:
-      // 1. There's no current value, or
-      // 2. Current value is not in filtered options
-      if (!currentValue || !isCurrentValueInOptions) {
-        const firstOption = filteredOptions[0];
-        const firstOptionValue = firstOption.id || firstOption.name;
+  useEffect(() => {
+    if (filteredOptions.length === 0) return;
+
+    // Eğer sadece 1 seçenek kaldıysa otomatik olarak onu seç
+    if (filteredOptions.length === 1) {
+      const onlyOption = filteredOptions[0];
+      const onlyOptionValue = onlyOption.id || onlyOption.name;
+      if (currentValue !== onlyOptionValue) {
         Promise.resolve().then(() => {
-          form.setFieldValue(field.name, firstOptionValue, false);
+          form.setFieldValue(field.name, onlyOptionValue, false);
         });
       }
+      return;
     }
-  }, [filteredOptions, field.name, field.value, form]);
+
+    // Birden fazla seçenek varsa ve mevcut seçim geçerli değilse ilk seçeneği seç
+    if (!isCurrentValueInOptions) {
+      const firstOption = filteredOptions[0];
+      const firstOptionValue = firstOption.id || firstOption.name;
+      Promise.resolve().then(() => {
+        form.setFieldValue(field.name, firstOptionValue, false);
+      });
+    }
+  }, [
+    filteredOptions,
+    currentValue,
+    isCurrentValueInOptions,
+    field.name,
+    form,
+  ]);
 
   const handleChange = (newValue: string) => {
-    // Önce normal form değerini güncelle
     form.setFieldValue(field.name, newValue, false);
-
-    // Özel ID'ye sahip alan için ek işlemler
-    if (fieldDef.id === "xx") {
-      // Burada "xx" ID'sine sahip select için özel işlemler yapabilirsiniz
-      // Örneğin:
-      // - Başka bir alanın değerini güncelleyebilirsiniz
-      // form.setFieldValue("digerAlanId", "yeniDeger");
-      // - Birden fazla alanı güncelleyebilirsiniz
-      // form.setValues({
-      //   ...form.values,
-      //   alan1: "deger1",
-      //   alan2: "deger2"
-      // });
-      // - Validasyon tetikleyebilirsiniz
-      // form.validateField("validasyonGerekliAlan");
-    }
   };
-
-  const currentValue = field.value?.toString() ?? "";
 
   return (
     <Select
@@ -415,13 +427,7 @@ export function DynamicForm({
   );
 
   // Add custom hooks
-  const { motorOptions } = useFormRules(
-    formikRef,
-    fields,
-    formDataResponse,
-    selections
-  );
-  console.log({ motorOptions });
+  useFormRules(formikRef, fields, formDataResponse, selections);
   return (
     <Formik
       innerRef={formikRef}

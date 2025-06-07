@@ -4,6 +4,7 @@ import {
   calculateSystemHeight,
   calculateLamelCount,
   calculateLamelGenisligi,
+  normalizeColor,
 } from "@/utils/panjur";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -54,21 +55,29 @@ export function useAccessories(selections: PanjurSelections): AccessoryResult {
           let yanKapakDesc: string;
           switch (selections.boxType) {
             case "137mm":
-              yanKapakDesc = "137 yan kapak 45 pimli";
+              yanKapakDesc = `137 Yan Kapak 45 Pimli ${normalizeColor(
+                selections.box_color
+              )}`;
               break;
             case "165mm":
-              yanKapakDesc = "165 yan kapak 45 pimli";
+              yanKapakDesc = `165 Yan Kapak 45 Pimli ${normalizeColor(
+                selections.box_color
+              )}`;
               break;
             case "205mm":
-              yanKapakDesc = "205 yan kapak 45 pimli";
+              yanKapakDesc = `205 Yan Kapak 45 Pimli ${normalizeColor(
+                selections.box_color
+              )}`;
               break;
             case "250mm":
-              yanKapakDesc = "250 yan kapak 45 motor";
+              yanKapakDesc = `250 Yan Kapak 45 Motor ${normalizeColor(
+                selections.box_color
+              )}`;
               break;
             default:
               yanKapakDesc = "";
           }
-
+          console.log({ yanKapakDesc });
           if (yanKapakDesc) {
             const yanKapak = allAccessories.find((acc) =>
               acc.description.toLowerCase().includes(yanKapakDesc.toLowerCase())

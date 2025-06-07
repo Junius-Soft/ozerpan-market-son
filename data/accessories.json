@@ -47,7 +47,7 @@
         "price": "6.15"
       },
       {
-        "description": "137 Yan Kapak 45 Pimli Ant. Gri",
+        "description": "137 Yan Kapak 45 Pimli Antrasit Gri",
         "stock_code": "352441113400",
         "uretici_kodu": "SF.137.24.045",
         "type": "kutu",
@@ -56,7 +56,7 @@
         "price": "6.15"
       },
       {
-        "description": "137 Yan Kapak 45 Pimli Ral Boya",
+        "description": "137 Yan Kapak 45 Pimli Ral Boyalı",
         "stock_code": "352441111000",
         "uretici_kodu": "SF.137.RA.045",
         "type": "kutu",
@@ -110,7 +110,7 @@
         "price": "7.21"
       },
       {
-        "description": "165 Yan Kapak 45 Pimli Ral Boya 8003",
+        "description": "165 Yan Kapak 45 Pimli Ral Boyalı",
         "stock_code": "352441215100",
         "uretici_kodu": "SF.165.17.045",
         "type": "kutu",
@@ -119,7 +119,7 @@
         "price": "7.21"
       },
       {
-        "description": "165 Yan Kapak 45 Pimli Ant. Gri",
+        "description": "165 Yan Kapak 45 Pimli Antrasit Gri",
         "stock_code": "352441213400",
         "uretici_kodu": "SF.165.24.045",
         "type": "kutu",
@@ -191,7 +191,7 @@
         "price": "10.19"
       },
       {
-        "description": "205 Yan Kapak 45 Pimli Ant. Gri",
+        "description": "205 Yan Kapak 45 Pimli Antrasit Gri",
         "stock_code": "352441414000",
         "uretici_kodu": "SF.205.24.045",
         "type": "kutu",
@@ -281,7 +281,7 @@
         "price": "23.12"
       },
       {
-        "description": "250 Yan Kapak 45 Motor RAL",
+        "description": "250 Yan Kapak 45 Motor Ral Boyalı",
         "stock_code": "352441521000",
         "uretici_kodu": "SF.250.RA.045",
         "type": "kutu",

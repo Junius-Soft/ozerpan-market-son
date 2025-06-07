@@ -591,11 +591,10 @@
             "type": "select",
             "options": [
               { "id": "39_sl", "name": "SL 39 MM" },
-              { "id": "55_sl", "name": "SL 55 MM" },
               { "id": "45_se", "name": "SE 45 MM" },
+              { "id": "55_sl", "name": "SL 55 MM" },
               { "id": "55_se", "name": "SE 55 MM" }
             ],
-            "default": "39_sl",
             "filterBy": [
               {
                 "field": "lamelType",
@@ -603,8 +602,18 @@
                   "aluminyum_poliuretanli": ["39_sl", "55_sl"],
                   "aluminyum_ekstruzyon": ["45_se", "55_se"]
                 }
+              },
+              {
+                "field": "customFilter",
+                "properties": {
+                  "39_sl": { "maxWidth": 2300, "maxHeight": 2400 },
+                  "45_se": { "maxWidth": 4250, "maxHeight": 3500 },
+                  "55_sl": { "maxWidth": 3200, "maxHeight": 3100 },
+                  "55_se": { "maxWidth": 5500, "maxHeight": 4000 }
+                }
               }
-            ]
+            ],
+            "default": "39_sl"
           },
           {
             "id": "aski_kilit_secimi",

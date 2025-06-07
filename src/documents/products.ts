@@ -1,8 +1,13 @@
+export interface CustomFilterProperties {
+  maxWidth?: number;
+  maxHeight?: number;
+  // İleride eklenebilecek diğer özellikler için açık
+}
+
 export interface FilterItem {
   field: string;
-  valueMap: {
-    [key: string]: string[];
-  };
+  valueMap?: Record<string, string[]>;
+  properties?: Record<string, CustomFilterProperties>;
 }
 
 export interface OptionWithBrand {

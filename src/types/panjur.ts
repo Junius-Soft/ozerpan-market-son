@@ -79,9 +79,8 @@ export interface PanjurSelections {
 }
 
 export interface LamelProperties {
-  tavsiyeEdilenMaksimumEn: number;
-  tavsiyeEdilenMaksimumYukseklik: number;
-  maksimumKullanimAlani: number;
+  maxWidth: number;
+  maxHeight: number;
 }
 
 export interface MaxLamelHeight {

@@ -14,7 +14,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ProductTab, ProductTabField } from "@/documents/products";
+import {
+  OptionWithBrand,
+  ProductTab,
+  ProductTabField,
+} from "@/documents/products";
 import { type ChangeEvent, type FocusEvent } from "react";
 
 interface DynamicFormProps {
@@ -100,6 +104,10 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => (
   />
 );
 
+const customOptionFilter = (options: OptionWithBrand[]) => {
+  return options;
+};
+
 const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
   const { values } = form;
 
@@ -126,7 +134,7 @@ const SelectInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
       });
     }
 
-    return options;
+    return customOptionFilter(options);
   }, [fieldDef.options, fieldDef.filterBy, values]);
 
   // Handle default value and first option selection after filtering
@@ -351,7 +359,7 @@ export function DynamicForm({
     });
 
     return [initValues, schema];
-  }, [fields, values]);
+  }, [fields, selections]);
 
   useEffect(() => {
     const state = stateRef.current;
@@ -407,8 +415,13 @@ export function DynamicForm({
   );
 
   // Add custom hooks
-  useFormRules(formikRef, fields, formDataResponse, selections);
-
+  const { motorOptions } = useFormRules(
+    formikRef,
+    fields,
+    formDataResponse,
+    selections
+  );
+  console.log({ motorOptions });
   return (
     <Formik
       innerRef={formikRef}

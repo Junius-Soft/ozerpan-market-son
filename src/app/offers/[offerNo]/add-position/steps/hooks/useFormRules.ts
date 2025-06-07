@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { ProductTab, ProductTabField } from "@/documents/products";
 import {
   filterMotorOptions,
@@ -24,6 +24,9 @@ export function useFormRules(
   const productId = searchParams.get("productId");
   const values = formikRef?.current?.values;
   const handleNoMotorOptions = useMotorOptionsToast();
+  const [motorOptions, setMotorOptions] = useState<
+    ProductTabField["options"] | null
+  >(null);
 
   useEffect(() => {
     // Skip the initial render
@@ -43,14 +46,13 @@ export function useFormRules(
       if (productId === "panjur") {
         // console.log({ values });
         handleColorSync(fields, formikRef, values);
-        filterMotorOptions(
+        const options = filterMotorOptions(
           selections,
           formikRef,
-          fields,
           formDataResponse,
           handleNoMotorOptions
         );
-        // Add more rule handlers here as needed
+        setMotorOptions(options);
       }
     }, 0);
 
@@ -60,9 +62,17 @@ export function useFormRules(
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [fields, values, productId, formikRef, selections, handleNoMotorOptions]);
+  }, [
+    fields,
+    values,
+    productId,
+    formikRef,
+    selections,
+    handleNoMotorOptions,
+    formDataResponse,
+  ]);
 
   return {
-    // You can add more utility functions here if needed
+    motorOptions,
   };
 }

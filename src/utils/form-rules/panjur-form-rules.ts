@@ -50,7 +50,6 @@ type MotorModel = keyof (typeof MOTOR_CAPACITY_MAP)[LamelThickness];
 export function filterMotorOptions(
   selections: PanjurSelections,
   formRef: RefObject<FormikProps<FormValues> | null>,
-  fields?: ProductTabField[],
   formDataResponse?: ProductTab[],
   onNoMotorOptions?: () => void
 ) {
@@ -131,8 +130,7 @@ export function filterMotorOptions(
       motorModelOptions[0]?.id || ""
     );
   }
-  console.log({ squareMeters });
-  console.log({ motorModelOptions });
+
   return motorModelOptions;
 }
 

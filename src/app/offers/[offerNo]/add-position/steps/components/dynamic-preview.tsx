@@ -4,25 +4,24 @@ import { ShutterPreview } from "./shutter-preview";
 import { WindowPreview } from "./window-preview";
 import { DoorPreview } from "./door-preview";
 import { InsectScreenPreview } from "./insect-screen-preview";
-import { ProductPreview } from "@/documents/products";
 
 interface DynamicPreviewProps {
-  preview: ProductPreview;
   width: number;
   height: number;
   className?: string;
+  productId: string;
 }
 
 export function DynamicPreview({
-  preview,
   width,
   height,
   className = "",
+  productId,
 }: DynamicPreviewProps) {
   // Select the appropriate preview component based on the component name
   const renderPreview = () => {
-    switch (preview.component) {
-      case "ShutterPreview":
+    switch (productId) {
+      case "panjur":
         return (
           <ShutterPreview width={width} height={height} className={className} />
         );

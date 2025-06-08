@@ -2,58 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { ArrowLeft } from "lucide-react";
 import { type Product, getProductTabs } from "@/documents/products";
 import { DetailsStep } from "../steps/details-step";
 import { getOffer, type Position } from "@/documents/offers";
 import { getOffers } from "@/documents/offers";
-import type { FormValues } from "../steps/types";
-
-const updateProductTabsWithPositionDetails = async (
-  product: Product,
-  selectedPosition: string
-): Promise<Product> => {
-  const offerNo = window.location.pathname.split("/")[2];
-  const currentOffer = await getOffer(offerNo);
-  const position = currentOffer?.positions.find(
-    (p) => p.id === selectedPosition
-  );
-
-  if (position && position.productDetails && Array.isArray(product.tabs)) {
-    // Update each tab's field default values with values from position.productDetails
-    const productDetails = position.productDetails as Record<
-      string,
-      Record<string, string | number | boolean>
-    >;
-
-    product.tabs = product.tabs.map((tab) => {
-      if (tab.content?.fields && productDetails[tab.id]) {
-        const updatedFields = tab.content.fields.map((field) => {
-          // If there's a value for this field in position details, use it as the new default
-          if (productDetails[tab.id][field.id] !== undefined) {
-            return {
-              ...field,
-              default: productDetails[tab.id][field.id],
-            };
-          }
-          return field;
-        });
-
-        return {
-          ...tab,
-          content: {
-            ...tab.content,
-            fields: updatedFields,
-          },
-        };
-      }
-      return tab;
-    });
-  }
-
-  return product;
-};
+import { PanjurSelections } from "@/types/panjur";
+import { Formik, Form } from "formik";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
@@ -62,18 +18,59 @@ export default function ProductDetailsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
-  const [formValues, setFormValues] = useState<FormValues>({
-    details: {},
-    quantity: 1,
-    unitPrice: 0,
-    selectedProducts: [],
-  });
+
   const initialLoadDone = useRef(false);
   const productId = searchParams.get("productId");
   const productName = searchParams.get("productName");
   const typeId = searchParams.get("typeId");
   const optionId = searchParams.get("optionId");
   const selectedPosition = searchParams.get("selectedPosition");
+
+  // Transform tabs into initialValues with default field values and dependencies
+  const getInitialValues = useCallback(() => {
+    const initialValues = {} as PanjurSelections &
+      Record<string, string | number | boolean>;
+
+    product?.tabs?.forEach((tab) => {
+      if (tab.content?.fields) {
+        tab.content.fields.forEach((field) => {
+          const defaultValue = field.default ?? "";
+
+          switch (field.type) {
+            case "number":
+              initialValues[field.id] =
+                defaultValue !== undefined
+                  ? parseFloat(defaultValue.toString())
+                  : 1000;
+              break;
+            case "checkbox":
+              initialValues[field.id] = defaultValue === "1";
+              break;
+            default:
+              initialValues[field.id] = defaultValue || "";
+          }
+
+          // Handle dependencies
+          if (field.dependsOn) {
+            const dependencyField = initialValues[field.dependsOn.field];
+            if (dependencyField !== field.dependsOn.value) {
+              initialValues[field.id] = ""; // Reset if dependency is not met
+            }
+          }
+        });
+      }
+    });
+
+    return initialValues;
+  }, [product]);
+
+  const initialValues = useMemo(() => {
+    const values = getInitialValues();
+    values.quantity = 1; // Add quantity to initial values
+    values.unitPrice = 0; // Default unit price
+    values.productId = productId || ""; // Add productId to initial values
+    return values;
+  }, [getInitialValues, productId]);
 
   useEffect(() => {
     const loadProductAndTabs = async () => {
@@ -96,16 +93,46 @@ export default function ProductDetailsPage() {
           tabs: tabsResponse.tabs,
         } as Product;
 
+        // If selectedPosition exists, update defaults from existing position
         if (selectedPosition) {
-          const updatedProduct = await updateProductTabsWithPositionDetails(
-            product,
-            selectedPosition
+          const offerNo = window.location.pathname.split("/")[2];
+          const currentOffer = await getOffer(offerNo);
+          const position = currentOffer?.positions.find(
+            (p) => p.id === selectedPosition
           );
-          setProduct(updatedProduct);
-        } else {
-          setProduct(product);
+
+          if (position && Array.isArray(product.tabs)) {
+            const productDetails = position.productDetails as PanjurSelections;
+
+            // Update each tab's fields with values from position.productDetails
+            product.tabs = product.tabs.map((tab) => {
+              if (tab.content?.fields) {
+                const updatedFields = tab.content.fields.map((field) => {
+                  const fieldValue =
+                    productDetails[field.id as keyof PanjurSelections];
+                  if (fieldValue !== undefined) {
+                    return {
+                      ...field,
+                      default: fieldValue.toString(),
+                    };
+                  }
+                  return field;
+                });
+
+                return {
+                  ...tab,
+                  content: {
+                    ...tab.content,
+                    fields: updatedFields,
+                  },
+                };
+              }
+              return tab;
+            });
+          }
         }
 
+        setProduct(product);
         initialLoadDone.current = true;
       } finally {
         setIsLoading(false);
@@ -113,17 +140,9 @@ export default function ProductDetailsPage() {
     };
 
     loadProductAndTabs();
-  }, [
-    optionId,
-    productId,
-    productName,
-    router,
-    typeId,
-    selectedPosition,
-    formValues,
-  ]);
+  }, [optionId, productId, productName, router, typeId, selectedPosition]);
 
-  const handleComplete = async () => {
+  const handleComplete = async (values: PanjurSelections) => {
     if (!product) return;
 
     const offerNo = window.location.pathname.split("/")[2];
@@ -152,18 +171,18 @@ export default function ProductDetailsPage() {
               ) + 1
             ).padStart(3, "0")
           : "001",
-        description: product.name,
         unit: "adet",
-        quantity: formValues.quantity,
-        unitPrice: formValues.unitPrice,
-        total: formValues.quantity * formValues.unitPrice,
-        productDetails: formValues.details,
-        selectedProducts: formValues.selectedProducts,
+        quantity: values.quantity || 1,
+        unitPrice: values.unitPrice || 0,
+        selectedProducts: values.selectedProducts || [],
         productId,
         typeId,
         productName,
         optionId,
+        productDetails: values,
+        total: (values.unitPrice || 0) * (values.quantity || 1), // Calculate total
       };
+      console.log({ newPosition });
 
       // Update or add the position
       let updatedPositions: Position[];
@@ -227,60 +246,53 @@ export default function ProductDetailsPage() {
     );
   }
 
-  const handleFormChange = (values: FormValues) => {
-    setFormValues(values);
-  };
-
   return (
     <div className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-8">
           {/* Title and Buttons */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <h1 className="text-2xl font-bold">
-                {product?.name} Detayları {typeId ? `(${typeId})` : ""}
-              </h1>
-              <Button
-                variant="ghost"
-                onClick={() =>
-                  router.push(
-                    `/offers/${
-                      window.location.pathname.split("/")[2]
-                    }/add-position/select-product?selectedPosition=${
-                      selectedPosition ?? ""
-                    }&productId=${productId}&productName=${productName}${
-                      typeId ? `&typeId=${typeId}` : ""
-                    }${optionId ? `&optionId=${optionId}` : ""}`
-                  )
-                }
-                className="gap-2"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Ürün Seçimi
-              </Button>
-            </div>
-            <Button
-              onClick={handleComplete}
-              variant="default"
-              disabled={
-                isSaving || !formValues.details || formValues.unitPrice <= 0
-              }
-            >
-              {isSaving
-                ? "Kaydediliyor..."
-                : selectedPosition
-                ? "Güncelle"
-                : "Tamamla"}
-            </Button>
-          </div>
+          <Formik initialValues={initialValues} onSubmit={handleComplete}>
+            {(formik) => (
+              <Form ref={formRef} className="space-y-6">
+                {/* Product Details Form */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <h1 className="text-2xl font-bold">
+                      {product?.name} Detayları {typeId ? `(${typeId})` : ""}
+                    </h1>
+                    <Button
+                      variant="ghost"
+                      onClick={() =>
+                        router.push(
+                          `/offers/${
+                            window.location.pathname.split("/")[2]
+                          }/add-position/select-product?selectedPosition=${
+                            selectedPosition ?? ""
+                          }&productId=${productId}&productName=${productName}${
+                            typeId ? `&typeId=${typeId}` : ""
+                          }${optionId ? `&optionId=${optionId}` : ""}`
+                        )
+                      }
+                      className="gap-2"
+                      type="button"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                      Ürün Seçimi
+                    </Button>
+                  </div>
+                  <Button variant="default" disabled={isSaving} type="submit">
+                    {isSaving
+                      ? "Kaydediliyor..."
+                      : selectedPosition
+                      ? "Güncelle"
+                      : "Tamamla"}
+                  </Button>
+                </div>
 
-          {/* Product Details Form */}
-          <DetailsStep
-            selectedProduct={product}
-            formRef={formRef}
-            onFormChange={handleFormChange}
-          />
+                <DetailsStep formik={formik} selectedProduct={product} />
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
     </div>

@@ -5,6 +5,8 @@ import { AuthGuard } from "@/components/auth-guard";
 import { ToastProvider } from "@/contexts/toast-context";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,6 +44,7 @@ export default function RootLayout({
           <ToastProvider>
             <Navbar />
             <AuthGuard>{children}</AuthGuard>
+            <ToastContainer />
           </ToastProvider>
         </ThemeProvider>
       </body>

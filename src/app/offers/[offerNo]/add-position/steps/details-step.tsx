@@ -1,292 +1,74 @@
 "use client";
 
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/documents/products";
 import { getProductPreview } from "@/lib/product-preview";
-import { ProductPreview, type ProductTab } from "./components/product-preview";
 import { DynamicForm } from "./components/dynamic-form";
-import type { ProductDetails, FormValues } from "./types";
+
+import { FormikProps } from "formik";
+import { ProductPreview } from "./components/product-preview";
+import { PanjurSelections } from "@/types/panjur";
+import { useFormRules } from "./hooks/useFormRules";
 import { usePanjurCalculator } from "./hooks/usePanjurCalculator";
-import type { PanjurSelections } from "@/types/panjur";
 
 interface DetailsStepProps {
+  formik: FormikProps<
+    PanjurSelections & Record<string, string | number | boolean>
+  >;
   selectedProduct: Product | null;
-  formRef?: React.MutableRefObject<HTMLFormElement | null>;
-  onFormChange?: (values: FormValues) => void;
-  tabs?: ProductTab[];
 }
 
-export function DetailsStep({
-  selectedProduct,
-  formRef,
-  onFormChange,
-}: DetailsStepProps) {
-  const [productDetails, setProductDetails] = useState<ProductDetails>(() => {
-    if (!selectedProduct?.tabs) return {} as ProductDetails;
+export function DetailsStep({ formik, selectedProduct }: DetailsStepProps) {
+  useFormRules(formik, selectedProduct);
+  const { totalPrice, selectedProducts } = usePanjurCalculator(
+    formik.values,
+    selectedProduct?.tabs ?? []
+  );
+  useEffect(() => {
+    formik.setFieldValue("unitPrice", totalPrice);
+    formik.setFieldValue("selectedProducts", selectedProducts);
+  }, [totalPrice]);
 
-    // Initialize state from product configuration
-    return selectedProduct.tabs.reduce((details, tab) => {
-      // Create tab entry if it doesn't exist
-      if (!details[tab.id]) {
-        details[tab.id] = {};
-      }
-
-      // Process fields for this tab
-      if (tab.content?.fields) {
-        const allFields = tab.content.fields;
-        // First pass: set all non-dependent fields with default values
-        allFields.forEach((field) => {
-          if (!field.dependsOn && field.default !== undefined) {
-            const defaultValue =
-              typeof field.default === "boolean"
-                ? field.default
-                  ? "1"
-                  : "0"
-                : field.default.toString();
-
-            // Always set default value for non-dependent fields during initialization
-            details[tab.id][field.id] = defaultValue;
-          }
-        });
-
-        // Second pass: handle dependent fields and their defaults
-        allFields.forEach((field) => {
-          if (field.dependsOn) {
-            const parentField = field.dependsOn.field;
-            const requiredValue = field.dependsOn.value;
-            const parentValue = details[tab.id][parentField];
-
-            // If parent field matches the required value, set the default
-            if (parentValue === requiredValue && field.default !== undefined) {
-              const defaultValue =
-                typeof field.default === "boolean"
-                  ? field.default
-                    ? "1"
-                    : "0"
-                  : field.default.toString();
-
-              details[tab.id][field.id] = defaultValue;
-            }
-          }
-        });
-
-        // Third pass: ensure all remaining fields have at least an empty value
-        allFields.forEach((field) => {
-          if (details[tab.id][field.id] === undefined) {
-            details[tab.id][field.id] = "";
-          }
-        });
-      }
-
-      return details;
-    }, {} as ProductDetails);
-  });
+  const availableTabs = useMemo(
+    () => selectedProduct?.tabs ?? [],
+    [selectedProduct]
+  );
   const [currentTab, setCurrentTab] = useState<string>(
     selectedProduct?.tabs?.[0].id ?? ""
   );
-  const [quantity, setQuantity] = useState<number>(1);
-  const availableTabs = useMemo(
-    () => selectedProduct?.tabs || [],
-    [selectedProduct]
-  );
 
-  const selections = useMemo<PanjurSelections>(() => {
-    // Flatten the productDetails structure
-    const result: Record<string, string | number> = {};
-    // Using Object.values to ignore tab IDs
-    Object.values(productDetails).forEach((tabValues) => {
-      Object.entries(tabValues).forEach(([key, value]) => {
-        if (key === "width" || key === "height") {
-          const numValue = parseFloat(value as string);
-          result[key] = isNaN(numValue) ? 0 : numValue;
-        } else {
-          result[key] = value;
-        }
-      });
-    });
-    const parsed = {
-      ...result,
-      productId: selectedProduct?.id || "",
-      quantity: quantity,
-      panjurType:
-        (result.panjurType as PanjurSelections["panjurType"]) || "distan",
-      width: parseFloat(result.width as string) || 0,
-      height: parseFloat(result.height as string) || 0,
-    } as PanjurSelections;
-
-    return parsed;
-  }, [productDetails, selectedProduct?.id, quantity]);
-
-  const calculationResult = usePanjurCalculator(selections, availableTabs);
-  // Add quantity change handler
-  const handleQuantityChange = useCallback((newQuantity: number) => {
-    setQuantity(newQuantity);
-  }, []);
-
-  const handleProductDetailsChange = (
-    tabId: string,
-    field: string,
-    value: string | number | boolean
+  const renderTabContent = (
+    formik: FormikProps<
+      PanjurSelections & Record<string, string | number | boolean>
+    >
   ) => {
-    const processedValue =
-      typeof value === "boolean" ? (value ? "1" : "0") : value.toString();
-
-    setProductDetails((prev) => {
-      const currentTab = availableTabs.find((tab) => tab.id === tabId);
-      if (!currentTab) return prev;
-
-      // Build the new state starting with all previous values
-      const newState = { ...prev };
-
-      // Create or update the tab if it doesn't exist
-      if (!newState[tabId]) {
-        newState[tabId] = {};
-      }
-
-      // Update the field value while preserving other fields in the tab
-      newState[tabId] = {
-        ...newState[tabId],
-        [field]: processedValue,
-      };
-
-      // Prevent width and height from being copied to other tabs
-      if (tabId === "dimensions" && (field === "width" || field === "height")) {
-        return newState;
-      }
-
-      // Handle dependent fields
-      currentTab.content?.fields?.forEach((tabField) => {
-        if (
-          tabField.dependsOn?.field === field &&
-          tabField.default !== undefined
-        ) {
-          const requiredValue = tabField.dependsOn.value;
-          const shouldSetDefault = Array.isArray(requiredValue)
-            ? requiredValue.includes(processedValue)
-            : requiredValue === processedValue;
-
-          if (shouldSetDefault) {
-            const defaultValue =
-              typeof tabField.default === "boolean"
-                ? tabField.default
-                  ? "1"
-                  : "0"
-                : tabField.default.toString();
-
-            newState[tabId][tabField.id] = defaultValue;
-          }
-        }
-      });
-
-      return newState;
-    });
-  };
-
-  const renderTabContent = () => {
-    // Get tab by ID from available tabs
     const activeTab = availableTabs.find((tab) => tab.id === currentTab);
 
-    // If the tab has content with fields defined, use dynamic form
     if (activeTab?.content?.fields && activeTab.content.fields.length > 0) {
-      // Get values for the fields from productDetails based on tab category
-      const getValuesForTab = (): Record<string, string | number | boolean> => {
-        if (!activeTab?.content?.fields) return {};
-
-        const tabValues = productDetails[activeTab.id] || {};
-        return activeTab.content.fields.reduce((acc, field) => {
-          if (!field) return acc;
-
-          const value = tabValues[field.id];
-
-          // Convert string values to appropriate types based on field type
-          switch (field.type) {
-            case "number":
-              acc[field.id] =
-                value !== undefined ? parseFloat(value.toString()) : 0;
-              break;
-            case "checkbox":
-              acc[field.id] = value === "1";
-              break;
-            default:
-              acc[field.id] = value || "";
-          }
-          return acc;
-        }, {} as Record<string, string | number | boolean>);
-      };
-
-      const handleDynamicFormChange = (
-        fieldId: string,
-        value: string | number | boolean
-      ) => {
-        handleProductDetailsChange(activeTab.id, fieldId, value);
-      };
-      // Render form with preview if it's the dimensions tab
-      if (activeTab.content.preview) {
-        return (
-          <>
-            <DynamicForm
-              fields={activeTab.content.fields}
-              formDataResponse={availableTabs}
-              values={getValuesForTab()}
-              selections={selections}
-              onChange={handleDynamicFormChange}
-              formRef={formRef}
-            />
+      const values = formik.values;
+      return (
+        <>
+          <DynamicForm fields={activeTab.content.fields} values={values} />
+          {activeTab.content.preview && (
             <div className="mt-6">
               <h4 className="text-md font-medium mb-3">Ürün Önizleme</h4>
               <div className="aspect-square w-full max-w-xl mx-auto border rounded-lg overflow-hidden shadow-sm">
                 {getProductPreview({
                   product: selectedProduct,
-                  width: parseFloat(productDetails.dimensions.width.toString()),
-                  height: parseFloat(
-                    productDetails.dimensions.height.toString()
-                  ),
+                  width: values.width,
+                  height: values.height,
                   className: "p-4",
-                  tabId: activeTab.id,
+                  productId: selectedProduct?.id || "",
                 })}
               </div>
             </div>
-          </>
-        );
-      }
-
-      // Otherwise just render the form
-      return (
-        <DynamicForm
-          fields={activeTab.content.fields}
-          formDataResponse={availableTabs}
-          values={getValuesForTab()}
-          selections={selections}
-          onChange={(fieldId, value) => {
-            handleDynamicFormChange(fieldId, value);
-          }}
-        />
+          )}
+        </>
       );
     }
   };
-
-  // Memoize the form values to prevent unnecessary updates
-  const formValues = useMemo<FormValues>(() => {
-    let price = 0;
-
-    price = calculationResult.totalPrice;
-
-    return {
-      details: productDetails,
-      quantity,
-      unitPrice: price,
-      selectedProducts: calculationResult?.selectedProducts || [],
-    };
-  }, [productDetails, quantity, calculationResult]);
-
-  // Only call onFormChange when the values actually change
-  useEffect(() => {
-    if (onFormChange) {
-      onFormChange(formValues);
-    }
-  }, [onFormChange, formValues]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -299,6 +81,7 @@ export function DetailsStep({
               key={tab.id}
               variant={currentTab === tab.id ? "default" : "outline"}
               onClick={() => setCurrentTab(tab.id)}
+              type="button" // Form submit davranışını engellemek için type="button" eklendi
               className="flex-1"
             >
               {tab.name}
@@ -308,34 +91,14 @@ export function DetailsStep({
 
         {/* Tab Content */}
         <Card className="p-6">
-          <div className="space-y-6">{renderTabContent()}</div>
-          <input type="submit" hidden />
+          <div className="space-y-6">{renderTabContent(formik)}</div>
         </Card>
       </div>
 
       {/* Right Side - Preview */}
       <ProductPreview
         selectedProduct={selectedProduct}
-        productDetails={productDetails}
         currentTab={currentTab}
-        quantity={quantity}
-        onQuantityChange={handleQuantityChange}
-        calculationResult={calculationResult}
-        tabs={availableTabs.map((tab) => ({
-          id: tab.id,
-          name: tab.name,
-          content: tab.content
-            ? {
-                fields: tab.content.fields?.map((field) => ({
-                  ...field,
-                  options: field.options?.map((opt) => ({
-                    id: opt.id ?? "",
-                    name: opt.name ?? "",
-                  })),
-                })),
-              }
-            : undefined,
-        }))}
       />
     </div>
   );

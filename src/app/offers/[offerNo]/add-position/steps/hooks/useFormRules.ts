@@ -1,28 +1,27 @@
-import { RefObject, useEffect, useMemo, useRef } from "react";
-import { ProductTab, ProductTabField } from "@/documents/products";
+import { useEffect, useMemo, useRef } from "react";
+
 import {
   filterLamelThickness,
   filterMotorOptions,
 } from "@/utils/form-rules/panjur-form-rules";
 import { useSearchParams } from "next/navigation";
-import { PanjurSelections } from "@/types/panjur";
 import { FormikProps } from "formik";
-import { useMotorOptionsToast } from "./useMotorOptionsToast";
+import { PanjurSelections } from "@/types/panjur";
+import { Product } from "@/documents/products";
 
 export type FormValues = Record<string, string | number | boolean>;
 
 // Main hook that manages all form rules
 export function useFormRules(
-  formikRef: RefObject<FormikProps<FormValues> | null>,
-  fields: ProductTabField[],
-  formDataResponse: ProductTab[],
-  selections: PanjurSelections
+  formik: FormikProps<
+    PanjurSelections & Record<string, string | number | boolean>
+  >,
+  selectedProduct: Product | null
 ) {
   const searchParams = useSearchParams();
   const isInitialRender = useRef(true);
   const productId = searchParams.get("productId");
-  const values = formikRef?.current?.values;
-  const handleNoMotorOptions = useMotorOptionsToast();
+  const values = formik.values;
 
   // Debounce form rule updates
   const debouncedUpdateRules = useMemo(() => {
@@ -44,28 +43,13 @@ export function useFormRules(
     debouncedUpdateRules(() => {
       // Execute all rules in sequence
       if (productId === "panjur") {
-        // console.log({ values });
-        filterLamelThickness(formikRef, values, formDataResponse);
+        filterLamelThickness(formik, values);
 
         // Filter motor options
-        filterMotorOptions(
-          selections,
-          formikRef,
-          formDataResponse,
-          handleNoMotorOptions
-        );
+        filterMotorOptions(values, formik, selectedProduct);
       }
     });
-  }, [
-    fields,
-    values,
-    productId,
-    formikRef,
-    selections,
-    handleNoMotorOptions,
-    formDataResponse,
-    debouncedUpdateRules,
-  ]);
+  }, [values, productId, debouncedUpdateRules, formik, selectedProduct]);
 
   return {};
 }

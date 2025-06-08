@@ -1,3 +1,5 @@
+import { PanjurSelections } from "@/types/panjur";
+
 interface DependentField {
   id: string;
   dependsOn?: {
@@ -8,7 +10,7 @@ interface DependentField {
 
 export function checkDependencyChain<T extends DependentField>(
   currentField: T,
-  values: Record<string, string | number | boolean>,
+  values: PanjurSelections,
   fields: T[],
   visited = new Set<string>()
 ): boolean {
@@ -17,7 +19,8 @@ export function checkDependencyChain<T extends DependentField>(
 
   visited.add(currentField.id);
   const { field: parentField, value: requiredValue } = currentField.dependsOn;
-  const currentValue = values[parentField]?.toString();
+  const currentValue =
+    values[parentField as keyof PanjurSelections]?.toString();
 
   // Eğer değer yoksa false dön
   if (!currentValue) return false;

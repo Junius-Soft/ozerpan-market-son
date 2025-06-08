@@ -1,9 +1,8 @@
-import { FormValues } from "@/app/offers/[offerNo]/add-position/steps/hooks/useFormRules";
-import { ProductTab, ProductTabField } from "@/documents/products";
+import { Product, ProductTabField } from "@/documents/products";
 import { PanjurSelections } from "@/types/panjur";
 import { lamelProperties } from "@/constants/panjur";
 import { FormikProps } from "formik";
-import { RefObject } from "react";
+import { toast } from "react-toastify";
 
 // Constants for motor capacities based on lamel thickness
 const MOTOR_CAPACITY_MAP = {
@@ -49,22 +48,16 @@ type LamelThickness = keyof typeof MOTOR_CAPACITY_MAP;
 type MotorModel = keyof (typeof MOTOR_CAPACITY_MAP)[LamelThickness];
 
 export function filterMotorOptions(
-  selections: PanjurSelections,
-  formRef: RefObject<FormikProps<FormValues> | null>,
-  formDataResponse?: ProductTab[],
-  onNoMotorOptions?: () => void
+  values: PanjurSelections,
+  formik: FormikProps<PanjurSelections & Record<string, string | number | boolean>>,
+  selectedProduct: Product | null
 ) {
-  // Eğer form data yoksa işlem yapamayız
-  if (!formDataResponse) {
-    return null;
-  }
-
-  const width = selections?.width ? parseFloat(String(selections.width)) : 0;
-  const height = selections?.height ? parseFloat(String(selections.height)) : 0;
+  const width = values?.width ? parseFloat(String(values.width)) : 0;
+  const height = values?.height ? parseFloat(String(values.height)) : 0;
   const squareMeters = (width * height) / 1000000; // Convert from mm² to m²
-  const lamelType = selections?.lamelType;
-  const movementType = formRef.current?.values.movementType;
-  const motorModel = formRef.current?.values.motorModel;
+  const lamelType = values?.lamelType;
+  const movementType = values.movementType;
+  const motorModel = values.motorModel;
 
   // Eğer motorlu değilse veya gerekli veriler eksikse işlem yapamayız
   if (movementType !== "motorlu" || !width || !height || !lamelType) {
@@ -91,7 +84,7 @@ export function filterMotorOptions(
   const validMotors = motorModels.filter((motor) => {
     // First check if the motor matches the selected brand
     const isValidMotorMarka =
-      selections?.motorMarka === "mosel"
+      values?.motorMarka === "mosel"
         ? motor.startsWith("sel_")
         : motor.startsWith("boost_");
 
@@ -105,8 +98,8 @@ export function filterMotorOptions(
   });
 
   // get motorModel form select input options
-  const motorModelOptions = formDataResponse
-    .find((tab) => tab.id === "movement")
+  const motorModelOptions = selectedProduct?.tabs
+    ?.find((tab) => tab.id === "movement")
     ?.content?.fields.find((field) => field.id === "motorModel")
     ?.options?.filter((option) =>
       validMotors.includes(option.id as MotorModel)
@@ -114,8 +107,12 @@ export function filterMotorOptions(
 
   // Eğer motorlu seçiliyse ve uygun motor seçeneği yoksa manuel'e çevir
   if (movementType === "motorlu" && !motorModelOptions?.length) {
-    formRef?.current?.setFieldValue("movementType", "manuel");
-    onNoMotorOptions?.();
+    formik.setFieldValue("movementType", "manuel");
+    formik.setFieldValue("manuelSekli", "makarali");
+    formik.setFieldValue("makaraliTip", "makassiz");
+    toast.warn(
+      "Seçilen ölçüler için uygun motor bulunamadı. Hareket tipi manuel olarak ayarlandı."
+    );
     return null;
   }
 
@@ -126,98 +123,56 @@ export function filterMotorOptions(
   );
 
   if (!isCurrentModelValid && motorModelOptions?.length) {
-    formRef?.current?.setFieldValue(
-      "motorModel",
-      motorModelOptions[0]?.id || ""
-    );
+    formik.setFieldValue("motorModel", motorModelOptions[0]?.id || "");
   }
 
   return motorModelOptions;
 }
 
-export const handleColorSync = (
-  fields: ProductTabField[],
-  formRef: RefObject<FormikProps<FormValues> | null>,
-  values?: FormValues
-) => {
-  const currentLamelColor = values?.lamel_color;
-  if (!currentLamelColor) return;
-
-  // Find all color fields except lamel_color
-  const colorFields = fields.filter(
-    (field) =>
-      field.id !== "lamel_color" &&
-      field.id.toLowerCase().includes("_color") &&
-      values[field.id as keyof PanjurSelections] !== currentLamelColor
-  );
-
-  // Update each color field that has a matching option
-  colorFields.forEach((field) => {
-    const newValue = field.options?.find(
-      (fieldItem) => fieldItem.id === currentLamelColor
-    )
-      ? currentLamelColor
-      : "ral_boyali";
-
-    if (values[field.id as keyof PanjurSelections] !== newValue) {
-      formRef?.current?.setFieldValue(
-        field.id as keyof PanjurSelections,
-        newValue
-      );
-    }
-  });
-};
-
-// Helper function to filter lamel thickness options based on dimensions and lamel type
+// Updated `filterLamelThickness` to accept `FormikProps<PanjurSelections>`.
 export function filterLamelThickness(
-  formikRef: RefObject<FormikProps<FormValues> | null>,
-  values?: FormValues,
-  formDataResponse?: ProductTab[]
+  formik: FormikProps<PanjurSelections & Record<string, string | number | boolean>>,
+  values: PanjurSelections
 ): ProductTabField["options"] | null {
-  // Filter lamel thickness options based on dimensions
-  const width = values?.width ? parseFloat(String(values.width)) : 0;
-  const height = values?.height ? parseFloat(String(values.height)) : 0;
+  const width = Number(values.width);
+  const height = Number(values.height);
   const lamelType = values?.lamelType as string;
-  if (!formDataResponse || !width || !height || !lamelType) {
+
+  if (!lamelType) {
     return null;
   }
 
-  // Get all lamelThickness options from response data
-  const lamelThicknessField = formDataResponse
-    .find((tab) => tab.id === "lamel")
-    ?.content?.fields.find((field) => field.id === "lamelTickness");
+  // Filter valid options based on dimensions
+  const validOptions = Object.entries(lamelProperties)
+    .filter(([key, props]) => {
+      const isTypeValid =
+        lamelType === "aluminyum_ekstruzyon"
+          ? key.includes("_se")
+          : key.includes("_sl");
 
-  if (!lamelThicknessField?.options) {
-    return null;
-  }
+      return (
+        isTypeValid && width <= props.maxWidth && height <= props.maxHeight
+      );
+    })
+    .map(([key]) => ({ id: key, label: key, name: key }));
 
-  // Filter options based on lamel type
-  const typeBasedOptions = lamelThicknessField.options.filter((option) =>
-    lamelType === "aluminyum_ekstruzyon"
-      ? option.id?.includes("_se")
-      : option.id?.includes("_sl")
-  );
-
-  // Filter by dimension constraints
-  const validOptions = typeBasedOptions.filter((option) => {
-    if (!option.id) return false;
-    const props = lamelProperties[option.id as keyof typeof lamelProperties];
-    if (!props) return false;
-
-    return width <= props.maxWidth && height <= props.maxHeight;
-  });
   const thicknessOptions = validOptions.length > 0 ? validOptions : null;
-  // If current lamelTickness is not valid, select the first valid option
-  const currentThickness = values?.lamelTickness;
-  const isCurrentThicknessValid = thicknessOptions?.some(
-    (option) => option.id === currentThickness
-  );
 
-  if (!isCurrentThicknessValid && thicknessOptions?.length) {
-    formikRef?.current?.setFieldValue(
-      "lamelTickness",
-      thicknessOptions[0].id || ""
+  // Always select the first valid option
+  if (thicknessOptions?.length) {
+    formik.setFieldValue("lamelTickness", thicknessOptions[0].id || "");
+  } else {
+    const alternativeLamelType =
+      lamelType === "aluminyum_ekstruzyon"
+        ? "aluminyum_poliuretanli"
+        : "aluminyum_ekstruzyon";
+    formik.setFieldValue("lamelType", alternativeLamelType);
+
+    // Show toast warning message
+    toast.warn(
+      "Uygun lamel kalınlığı bulunamadı, alternatif bir lamel tipi seçildi."
     );
+    return null;
   }
 
   return thicknessOptions;

@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  PriceItem,
-  CalculationResult,
-  PanjurSelections,
-  SelectedProduct,
-} from "@/types/panjur";
+import { PriceItem, CalculationResult, SelectedProduct, PanjurSelections } from "@/types/panjur";
 import {
   findLamelPrice,
   findSubPartPrice,
@@ -27,7 +22,7 @@ import { ProductTab } from "@/documents/products";
 
 // Custom hook
 export const usePanjurCalculator = (
-  selections: PanjurSelections,
+  values: PanjurSelections,
   availableTabs?: ProductTab[]
 ) => {
   const [result, setResult] = useState<CalculationResult>({
@@ -47,7 +42,7 @@ export const usePanjurCalculator = (
   const searchParams = useSearchParams();
   const sectionCount = searchParams.get("typeId");
   const [prices, setPrices] = useState<PriceItem[]>([]);
-  const { accessories } = useAccessories(selections);
+  const { accessories } = useAccessories(values);
 
   useEffect(() => {
     const fetchPrices = async () => {
@@ -67,40 +62,40 @@ export const usePanjurCalculator = (
   }, []);
 
   useEffect(() => {
-    if (!prices.length || !selections) return;
+    if (!prices.length || !values) return;
 
     // Lamel count hesaplanırken çağrılacak
     const calculate = () => {
       const errors: string[] = [];
 
       const systemWidth = calculateSystemWidth(
-        selections.width,
-        selections.dikmeOlcuAlmaSekli,
-        selections.dikmeType
+        values.width,
+        values.dikmeOlcuAlmaSekli,
+        values.dikmeType
       );
 
       const systemHeight = calculateSystemHeight(
-        selections.height,
-        selections.kutuOlcuAlmaSekli,
-        selections.boxType
+        values.height,
+        values.kutuOlcuAlmaSekli,
+        values.boxType
       );
 
-      const kutuYuksekligi = getBoxHeight(selections.boxType);
+      const kutuYuksekligi = getBoxHeight(values.boxType);
 
       const dikmeHeight = calculateDikmeHeight(
         systemHeight,
-        selections.boxType,
-        selections.dikmeType
+        values.boxType,
+        values.dikmeType
       );
 
       const lamelGenisligi = calculateLamelGenisligi(
         systemWidth,
-        selections.dikmeType
+        values.dikmeType
       );
       const lamelCount = calculateLamelCount(
         systemHeight,
-        selections.boxType,
-        selections.lamelTickness
+        values.boxType,
+        values.lamelTickness
       );
       const dikmeCount = Number(sectionCount) * 2;
 
@@ -120,9 +115,9 @@ export const usePanjurCalculator = (
       // Price calculations
       const [lamelUnitPrice, lamelSelectedProduct] = findLamelPrice(
         prices,
-        selections.lamelTickness,
-        selections.lamelType,
-        selections.lamel_color,
+        values.lamelTickness,
+        values.lamelType,
+        values.lamel_color,
         lamelCount
       );
       const lamelGenisligiMetre = lamelGenisligi / 1000;
@@ -130,40 +125,40 @@ export const usePanjurCalculator = (
 
       const [subPartPrice, subPartSelectedProduct] = findSubPartPrice(
         prices,
-        selections.subPart,
-        selections.subPart_color || selections.lamel_color
+        values.subPart,
+        values.subPart_color || values.lamel_color
       );
 
       const [dikmeUnitPrice, dikmeSelectedProduct] = findDikmePrice(
         prices,
-        selections.dikmeType,
-        selections.dikme_color || selections.lamel_color,
+        values.dikmeType,
+        values.dikme_color || values.lamel_color,
         dikmeCount
       );
       const dikmePrice = dikmeUnitPrice * dikmeCount;
 
       const { frontPrice, backPrice, selectedFrontBox, selectedBackBox } =
-        findBoxPrice(prices, selections.boxType, selections.box_color);
+        findBoxPrice(prices, values.boxType, values.box_color);
       const boxPrice = frontPrice + backPrice;
 
       // Motor fiyatı hesaplama
       const [motorPrice, motorSelectedProduct] = findMotorPrice(
         prices,
-        selections.motorMarka,
-        selections.motorModel,
-        selections.motorSekli
+        values.motorMarka,
+        values.motorModel,
+        values.motorSekli
       );
 
       // Uzaktan kumanda fiyatı hesaplama
       const [remotePrice, remoteSelectedProduct] = findRemotePrice(
         prices,
-        selections.remote
+        values.remote
       );
 
       // Akıllı ev sistemi fiyatlandırması
       const [smarthomePrice, smarthomeSelectedProduct] = findSmartHomePrice(
         prices,
-        selections.smarthome
+        values.smarthome
       );
 
       // Get the movement tab
@@ -172,7 +167,7 @@ export const usePanjurCalculator = (
       // Calculate receiver price
       const [receiverPrice, receiverSelectedProduct] = findReceiverPrice(
         prices,
-        selections.receiver,
+        values.receiver,
         movementTab
       );
 
@@ -228,7 +223,7 @@ export const usePanjurCalculator = (
     };
 
     calculate();
-  }, [prices, selections, sectionCount, accessories, availableTabs]);
+  }, [prices, values, sectionCount, accessories, availableTabs]);
 
   return result;
 };

@@ -76,6 +76,8 @@ export interface PanjurSelections {
   box_color: string;
   subPart_color: string;
   dikme_color: string;
+  unitPrice: number; // Added `unitPrice` property
+  selectedProducts: SelectedProduct[]; // Added `total` property,
 }
 
 export interface LamelProperties {

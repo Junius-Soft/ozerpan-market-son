@@ -1,21 +1,18 @@
-import { SelectedProduct } from "@/types/panjur";
+import { PanjurSelections, SelectedProduct } from "@/types/panjur";
 
 export interface Position {
   id: string;
   pozNo: string;
-  description: string;
   unit: string;
   quantity: number;
   unitPrice: number;
-  total: number;
-  totalEUR?: number; // Euro cinsinden toplam
-  productDetails?: Record<string, unknown>;
   selectedProducts?: SelectedProduct[];
-  rawTotal?: number; // Original total before formatting
-  productId?: string | null;
-  typeId?: string | null;
-  productName?: string | null;
-  optionId?: string | null;
+  productId: string | null;
+  typeId: string | null;
+  productName: string | null;
+  optionId: string | null;
+  productDetails: PanjurSelections;
+  total: number; // Toplam fiyat
 }
 
 export interface Offer {

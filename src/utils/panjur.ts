@@ -89,7 +89,6 @@ export const findLamelPrice = (
   const matchingLamel = lamelPrices.find(
     (p) => p.description === searchPattern
   );
-  console.log({ matchingLamel });
   if (!matchingLamel) return [0, null];
 
   const selectedProduct = createSelectedProduct(matchingLamel, quantity);
@@ -192,7 +191,6 @@ export const findSmartHomePrice = (
   prices: PriceItem[],
   smartHomeType: string | undefined
 ): [number, SelectedProduct | null] => {
-  console.log({ smartHomeType });
   if (smartHomeType === "yok" || smartHomeType === "") return [0, null];
   const smarthomePrices = prices.filter(
     (price) => price.type.toLowerCase() === "akilli_ev_sistemleri"

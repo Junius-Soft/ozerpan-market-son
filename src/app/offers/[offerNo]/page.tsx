@@ -376,7 +376,7 @@ export default function OfferDetailPage() {
                         </TableHead>
                       )}
                       <TableHead className="w-[100px]">Poz No</TableHead>
-                      <TableHead>Açıklama</TableHead>
+                      <TableHead>Ürün</TableHead>
                       <TableHead className="w-[100px]">Birim</TableHead>
                       <TableHead className="w-[100px]">Miktar</TableHead>
                       <TableHead className="w-[150px]">Birim Fiyat</TableHead>
@@ -425,7 +425,7 @@ export default function OfferDetailPage() {
                             </Button>
                           )}
                         </TableCell>
-                        <TableCell>{position.description}</TableCell>
+                        <TableCell>{position.productName}</TableCell>
                         <TableCell>{position.unit}</TableCell>
                         <TableCell>{position.quantity}</TableCell>
                         <TableCell>

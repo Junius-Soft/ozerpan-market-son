@@ -1,10 +1,7 @@
-import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { getProductPreview } from "@/lib/product-preview";
 import { type Product } from "@/documents/products";
-import { ProductDetails } from "../types";
-import { CalculationResult } from "@/types/panjur";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
 import { checkDependencyChain } from "@/utils/dependencies";
 import { formatPrice } from "@/utils/price-formatter";
@@ -16,12 +13,15 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { usePanjurCalculator } from "../hooks/usePanjurCalculator";
+import { useFormikContext } from "formik";
+import { PanjurSelections, SelectedProduct } from "@/types/panjur";
 
 interface ProductField {
   id: string;
   name: string;
   type: string;
-  options?: Array<{ id: string; name: string }>;
+  options?: Array<{ id?: string; name: string }>;
   dependsOn?: {
     field: string;
     value: string | string[];
@@ -38,17 +38,12 @@ export interface ProductTab {
 
 interface ProductPreviewProps {
   selectedProduct: Product | null;
-  productDetails: ProductDetails;
   currentTab: string;
-  quantity: number;
-  onQuantityChange: (newQuantity: number) => void;
-  calculationResult?: CalculationResult;
-  tabs?: ProductTab[];
 }
 
 // Helper function to format field value
 const formatFieldValue = (
-  value: string | number | boolean,
+  value: string | number | boolean | SelectedProduct[],
   fieldId: string,
   field?: ProductField
 ): string => {
@@ -72,33 +67,14 @@ const formatFieldValue = (
   return String(value);
 };
 
-export function ProductPreview({
-  selectedProduct,
-  productDetails,
-  currentTab,
-  quantity,
-  onQuantityChange,
-  calculationResult,
-  tabs = [],
-}: ProductPreviewProps) {
-  const [localQuantity, setLocalQuantity] = useState(quantity);
-  const [localValues, setLocalValues] = useState(productDetails);
+export function ProductPreview({ selectedProduct }: ProductPreviewProps) {
   const { loading, eurRate } = useExchangeRate();
+  const { values, handleChange } = useFormikContext<PanjurSelections>();
+  const calculationResult = usePanjurCalculator(
+    values,
+    selectedProduct?.tabs ?? []
+  );
 
-  // Product details değiştiğinde local state'i güncelle
-  useEffect(() => {
-    setLocalValues(productDetails);
-  }, [productDetails]);
-
-  // Quantity değiştiğinde local state'i güncelle
-  useEffect(() => {
-    setLocalQuantity(quantity);
-  }, [quantity]);
-
-  const handleQuantityChange = (newValue: number) => {
-    setLocalQuantity(newValue);
-    onQuantityChange(newValue);
-  };
   if (!selectedProduct) return null;
   return (
     <Card className="p-6">
@@ -107,12 +83,10 @@ export function ProductPreview({
         <div className="aspect-video w-full max-w-xl mx-auto border rounded-lg overflow-hidden shadow-sm">
           {getProductPreview({
             product: selectedProduct,
-            width: parseFloat(localValues.dimensions?.width?.toString() ?? "0"),
-            height: parseFloat(
-              localValues.dimensions?.height?.toString() ?? "0"
-            ),
+            width: parseFloat(values.width?.toString() ?? "0"),
+            height: parseFloat(values.height?.toString() ?? "0"),
             className: "p-4",
-            tabId: currentTab,
+            productId: selectedProduct.id,
           })}
         </div>
 
@@ -122,15 +96,13 @@ export function ProductPreview({
             <Input
               type="number"
               min={1}
-              value={localQuantity}
-              onChange={(e) =>
-                handleQuantityChange(parseInt(e.target.value) || 1)
-              }
+              name="quantity"
+              value={Number(values.quantity)}
+              onChange={(e) => handleChange(e)}
             />
           </div>
           {calculationResult && (
             <div className="space-y-2 border-t pt-4">
-              {" "}
               <div className="text-sm space-y-1">
                 <div className="flex justify-between font-medium text-base">
                   <span>
@@ -229,8 +201,7 @@ export function ProductPreview({
           )}
           <div className="space-y-2 border-t pt-4">
             <h4 className="font-medium">Seçilen Özellikler</h4>
-            {tabs.map((tab) => {
-              const tabValues = localValues[tab.id] || {};
+            {selectedProduct?.tabs?.map((tab) => {
               const fields = tab.content?.fields || [];
 
               if (fields.length === 0) return null;
@@ -239,11 +210,15 @@ export function ProductPreview({
                 Array<{ name: string; value: string }>
               >((acc, field) => {
                 // Field'ın dependency kontrolü
-                if (!checkDependencyChain(field, tabValues, fields)) {
+                if (!checkDependencyChain(field, values, fields)) {
                   return acc;
                 }
 
-                const fieldValue = tabValues[field.id];
+                const fieldValue =
+                  field.id &&
+                  Object.prototype.hasOwnProperty.call(values, field.id)
+                    ? values[field.id as keyof typeof values]
+                    : "";
                 if (fieldValue === undefined || fieldValue === "") return acc;
 
                 const displayValue = formatFieldValue(

@@ -262,39 +262,6 @@ export function DetailsStep({
           onChange={(fieldId, value) => {
             handleDynamicFormChange(fieldId, value);
           }}
-          onFormikChange={(formik) => {
-            // Değişen alan ve değeri al
-            const changedValues = Object.entries(formik.values);
-
-            // Önce normal değişiklikleri uygula
-            changedValues.forEach(([key, value]) => {
-              handleDynamicFormChange(key, value);
-            });
-
-            // Bağımlı alanları kontrol et
-            activeTab.content?.fields?.forEach((field) => {
-              if (field.dependsOn) {
-                const mainField = changedValues.find(
-                  ([key]) => key === field.dependsOn?.field
-                );
-                if (
-                  mainField &&
-                  mainField[1].toString() === field.dependsOn.value
-                ) {
-                  // Bağımlı alan için varsayılan değeri ayarla
-                  const defaultValue =
-                    field.default !== undefined
-                      ? typeof field.default === "boolean"
-                        ? field.default
-                          ? "1"
-                          : "0"
-                        : field.default.toString()
-                      : "";
-                  handleDynamicFormChange(field.id, defaultValue);
-                }
-              }
-            });
-          }}
         />
       );
     }

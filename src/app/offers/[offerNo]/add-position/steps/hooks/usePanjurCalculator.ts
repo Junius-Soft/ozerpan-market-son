@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { PriceItem, CalculationResult, SelectedProduct, PanjurSelections } from "@/types/panjur";
+import {
+  PriceItem,
+  CalculationResult,
+  SelectedProduct,
+  PanjurSelections,
+} from "@/types/panjur";
 import {
   findLamelPrice,
   findSubPartPrice,

@@ -10,8 +10,10 @@ import { DynamicForm } from "./components/dynamic-form";
 import { FormikProps } from "formik";
 import { ProductPreview } from "./components/product-preview";
 import { PanjurSelections } from "@/types/panjur";
-import { useFormRules } from "./hooks/useFormRules";
 import { usePanjurCalculator } from "./hooks/usePanjurCalculator";
+import { useFilterLamelThickness } from "./hooks/form-rules/useFilterLamelThickness";
+import { useFilterMotorModel } from "./hooks/form-rules/useFilterMotorModel";
+import { useFilterBoxSize } from "./hooks/form-rules/useFilterBoxSize";
 
 interface DetailsStepProps {
   formik: FormikProps<
@@ -21,7 +23,9 @@ interface DetailsStepProps {
 }
 
 export function DetailsStep({ formik, selectedProduct }: DetailsStepProps) {
-  useFormRules(formik, selectedProduct);
+  useFilterLamelThickness(formik);
+  useFilterMotorModel(formik, selectedProduct);
+  useFilterBoxSize(formik);
   const { totalPrice, selectedProducts } = usePanjurCalculator(
     formik.values,
     selectedProduct?.tabs ?? []

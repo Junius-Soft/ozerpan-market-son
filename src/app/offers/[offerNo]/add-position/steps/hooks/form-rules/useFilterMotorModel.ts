@@ -1,8 +1,12 @@
-import { Product, ProductTabField } from "@/documents/products";
-import { PanjurSelections } from "@/types/panjur";
-import { lamelProperties } from "@/constants/panjur";
+import { useEffect } from "react";
+
+import { useSearchParams } from "next/navigation";
 import { FormikProps } from "formik";
+import { PanjurSelections } from "@/types/panjur";
+import { Product } from "@/documents/products";
 import { toast } from "react-toastify";
+
+export type FormValues = Record<string, string | number | boolean>;
 
 // Constants for motor capacities based on lamel thickness
 const MOTOR_CAPACITY_MAP = {
@@ -48,10 +52,12 @@ type LamelThickness = keyof typeof MOTOR_CAPACITY_MAP;
 type MotorModel = keyof (typeof MOTOR_CAPACITY_MAP)[LamelThickness];
 
 export function filterMotorOptions(
-  values: PanjurSelections,
-  formik: FormikProps<PanjurSelections & Record<string, string | number | boolean>>,
+  formik: FormikProps<
+    PanjurSelections & Record<string, string | number | boolean>
+  >,
   selectedProduct: Product | null
 ) {
+  const values = formik.values;
   const width = values?.width ? parseFloat(String(values.width)) : 0;
   const height = values?.height ? parseFloat(String(values.height)) : 0;
   const squareMeters = (width * height) / 1000000; // Convert from mm² to m²
@@ -129,51 +135,34 @@ export function filterMotorOptions(
   return motorModelOptions;
 }
 
-// Updated `filterLamelThickness` to accept `FormikProps<PanjurSelections>`.
-export function filterLamelThickness(
-  formik: FormikProps<PanjurSelections & Record<string, string | number | boolean>>,
-  values: PanjurSelections
-): ProductTabField["options"] | null {
-  const width = Number(values.width);
-  const height = Number(values.height);
-  const lamelType = values?.lamelType as string;
+// Main hook that manages all form rules
+export function useFilterMotorModel(
+  formik: FormikProps<
+    PanjurSelections & Record<string, string | number | boolean>
+  >,
+  selectedProduct: Product | null
+) {
+  const searchParams = useSearchParams();
+  const productId = searchParams.get("productId");
+  const { width, height, lamelType, movementType, motorMarka, motorModel } =
+    formik.values;
 
-  if (!lamelType) {
-    return null;
-  }
+  useEffect(() => {
+    if (productId === "panjur") {
+      // Filter motor options
+      filterMotorOptions(formik, selectedProduct);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    width,
+    height,
+    lamelType,
+    movementType,
+    motorMarka,
+    motorModel,
+    productId,
+    selectedProduct,
+  ]);
 
-  // Filter valid options based on dimensions
-  const validOptions = Object.entries(lamelProperties)
-    .filter(([key, props]) => {
-      const isTypeValid =
-        lamelType === "aluminyum_ekstruzyon"
-          ? key.includes("_se")
-          : key.includes("_sl");
-
-      return (
-        isTypeValid && width <= props.maxWidth && height <= props.maxHeight
-      );
-    })
-    .map(([key]) => ({ id: key, label: key, name: key }));
-
-  const thicknessOptions = validOptions.length > 0 ? validOptions : null;
-
-  // Always select the first valid option
-  if (thicknessOptions?.length) {
-    formik.setFieldValue("lamelTickness", thicknessOptions[0].id || "");
-  } else {
-    const alternativeLamelType =
-      lamelType === "aluminyum_ekstruzyon"
-        ? "aluminyum_poliuretanli"
-        : "aluminyum_ekstruzyon";
-    formik.setFieldValue("lamelType", alternativeLamelType);
-
-    // Show toast warning message
-    toast.warn(
-      "Uygun lamel kalınlığı bulunamadı, alternatif bir lamel tipi seçildi."
-    );
-    return null;
-  }
-
-  return thicknessOptions;
+  return {};
 }

@@ -34,7 +34,7 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
 
         if (allAccessories && productId === "panjur") {
           const width = calculateSystemWidth(
-            values.width,
+            values?.width,
             values.dikmeOlcuAlmaSekli,
             values.dikmeType
           );

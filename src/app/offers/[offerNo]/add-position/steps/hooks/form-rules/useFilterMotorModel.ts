@@ -114,8 +114,6 @@ export function filterMotorOptions(
   // Eğer motorlu seçiliyse ve uygun motor seçeneği yoksa manuel'e çevir
   if (movementType === "motorlu" && !motorModelOptions?.length) {
     formik.setFieldValue("movementType", "manuel");
-    formik.setFieldValue("manuelSekli", "makarali");
-    formik.setFieldValue("makaraliTip", "makassiz");
     toast.warn(
       "Seçilen ölçüler için uygun motor bulunamadı. Hareket tipi manuel olarak ayarlandı."
     );

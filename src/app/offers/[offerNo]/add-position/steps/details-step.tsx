@@ -14,6 +14,7 @@ import { usePanjurCalculator } from "./hooks/usePanjurCalculator";
 import { useFilterLamelThickness } from "./hooks/form-rules/useFilterLamelThickness";
 import { useFilterMotorModel } from "./hooks/form-rules/useFilterMotorModel";
 import { useFilterBoxSize } from "./hooks/form-rules/useFilterBoxSize";
+import { useAutoDependencyDefaults } from "./hooks/form-rules/useAutoDependencyDefaults";
 
 interface DetailsStepProps {
   formik: FormikProps<
@@ -23,6 +24,7 @@ interface DetailsStepProps {
 }
 
 export function DetailsStep({ formik, selectedProduct }: DetailsStepProps) {
+  useAutoDependencyDefaults(formik, "panjur");
   useFilterLamelThickness(formik);
   useFilterMotorModel(formik, selectedProduct);
   useFilterBoxSize(formik);

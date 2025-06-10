@@ -52,12 +52,18 @@ export function filterBoxSize(
 
   // If there are no valid box sizes and the boxType has a value
   if (validBoxSizes.length === 0 && values.boxType) {
-    formik.setFieldValue("boxType", "");
-    toast.warn("Seçilen ölçüler için uygun kutu ölçüsü bulunamadı.");
+    formik.setFieldValue("boxType", "137mm");
+    formik.setFieldValue("width", 1000);
+    formik.setFieldValue("height", 1000);
+    toast.warn(
+      "Seçilen ölçüler için uygun kutu ölçüsü bulunamadı. Genişlik ve yükseklik varsayılan olarak 1000x1000 ayarlandı."
+    );
     return null;
   }
 
   if (validBoxSizes.length === 0) {
+    formik.setFieldValue("width", 1000);
+    formik.setFieldValue("height", 1000);
     return null;
   }
   // Select the smallest valid box size if it's different from current

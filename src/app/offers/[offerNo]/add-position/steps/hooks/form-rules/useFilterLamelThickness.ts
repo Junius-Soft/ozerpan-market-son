@@ -16,47 +16,56 @@ function filterLamelThickness(
 ): ProductTabField["options"] | null {
   const values = formik.values;
   const width = Number(values.width);
-  const height = values.height;
-  const lamelType = values.lamelType;
+  const height = Number(values.height);
 
-  if (!lamelType) {
-    return null;
-  }
+  // En uygun lamel tipini bul
+  let selectedLamelKey: string | null = null;
+  let selectedLamelType: string | null = null;
+  const validOptions: { id: string; label: string; name: string }[] = [];
 
-  // Filter valid options based on dimensions
-  const validOptions = Object.entries(lamelProperties)
-    .filter(([key, props]) => {
-      const isTypeValid =
-        lamelType === "aluminyum_ekstruzyon"
-          ? key.includes("_se")
-          : key.includes("_sl");
-
-      return (
-        isTypeValid && width <= props.maxWidth && height <= props.maxHeight
-      );
-    })
-    .map(([key]) => ({ id: key, label: key, name: key }));
-
-  const thicknessOptions = validOptions.length > 0 ? validOptions : null;
-
-  // Always select the first valid option
-  if (thicknessOptions?.length) {
-    formik.setFieldValue("lamelTickness", thicknessOptions[0].id || "");
-  } else {
-    const alternativeLamelType =
-      lamelType === "aluminyum_ekstruzyon"
+  for (const [key, props] of Object.entries(lamelProperties)) {
+    const isValid = width <= props.maxWidth && height <= props.maxHeight;
+    if (isValid && !selectedLamelKey) {
+      selectedLamelKey = key;
+      selectedLamelType = key.includes("_se")
+        ? "aluminyum_ekstruzyon"
+        : key.includes("_sl")
         ? "aluminyum_poliuretanli"
-        : "aluminyum_ekstruzyon";
-    formik.setFieldValue("lamelType", alternativeLamelType);
-
-    // Show toast warning message
-    toast.warn(
-      "Uygun lamel kalınlığı bulunamadı, alternatif bir lamel tipi seçildi."
-    );
+        : null;
+    }
+    if (isValid) {
+      validOptions.push({ id: key, label: key, name: key });
+    }
+  }
+  console.log({ validOptions });
+  if (!selectedLamelKey || !selectedLamelType) {
     return null;
   }
 
-  return thicknessOptions;
+  // Sadece movementType'ı güncelle
+  if (selectedLamelKey === "39_sl" && formik.values.movementType !== "manuel") {
+    formik.setFieldValue("movementType", "manuel");
+    toast.warn("Hareket şekli manuel olarak güncellendi.");
+  } else if (
+    selectedLamelKey !== "39_sl" &&
+    formik.values.movementType !== "motorlu"
+  ) {
+    formik.setFieldValue("movementType", "motorlu");
+    toast.warn("Hareket şekli motorlu olarak güncellendi.");
+  }
+
+  // lamelType'ı uygun şekilde güncelle
+  if (formik.values.lamelType !== selectedLamelType) {
+    formik.setFieldValue("lamelType", selectedLamelType);
+    toast.warn("Lamel tipi uygun şekilde güncellendi.");
+  }
+  // lamelTickness'ı güncelle
+  if (formik.values.lamelTickness !== selectedLamelKey) {
+    formik.setFieldValue("lamelTickness", selectedLamelKey);
+    toast.warn("Lamel kalınlığı uygun şekilde güncellendi.");
+  }
+
+  return validOptions.length > 0 ? validOptions : null;
 }
 
 // Main hook that manages all form rules

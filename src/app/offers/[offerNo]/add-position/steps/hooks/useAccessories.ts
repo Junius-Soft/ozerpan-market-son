@@ -289,7 +289,12 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
             acc.description.toLowerCase().includes(lastikType.toLowerCase())
           );
           if (altParcaLastigi) {
-            neededAccessories.push({ ...altParcaLastigi, quantity: 1 });
+            // Alt parça lastiği miktarı, alt parça ölçüsü (genişlik) metre cinsinden olmalı
+            const widthInMeters = width / 1000;
+            neededAccessories.push({
+              ...altParcaLastigi,
+              quantity: widthInMeters,
+            });
           }
 
           // Stoper Konik (Sadece SL-39 ve SE-45 için makaralı seçiminde)

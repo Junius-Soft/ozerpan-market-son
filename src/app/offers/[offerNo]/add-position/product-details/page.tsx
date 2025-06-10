@@ -280,13 +280,26 @@ export default function ProductDetailsPage() {
                       Ürün Seçimi
                     </Button>
                   </div>
-                  <Button variant="default" disabled={isSaving} type="submit">
-                    {isSaving
-                      ? "Kaydediliyor..."
-                      : selectedPosition
-                      ? "Güncelle"
-                      : "Tamamla"}
-                  </Button>
+                  <div className="flex items-center gap-4">
+                    <Button
+                      variant="ghost"
+                      type="button"
+                      onClick={() =>
+                        router.push(
+                          `/offers/${window.location.pathname.split("/")[2]}`
+                        )
+                      }
+                    >
+                      Teklif Detayı
+                    </Button>
+                    <Button variant="default" disabled={isSaving} type="submit">
+                      {isSaving
+                        ? "Kaydediliyor..."
+                        : selectedPosition
+                        ? "Güncelle"
+                        : "Tamamla"}
+                    </Button>
+                  </div>
                 </div>
 
                 <DetailsStep formik={formik} selectedProduct={product} />

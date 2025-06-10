@@ -202,6 +202,13 @@ export default function OfferDetailPage() {
           offerName={offer.name}
           onEdit={() => setIsEditDialogOpen(true)}
           onBack={() => router.push("/offers")}
+          onImalatList={() => {
+            /* TODO: Poz İmalat Listesi fonksiyonu */
+          }}
+          onFiyatAnaliz={() => {
+            /* TODO: Fiyat Analizi fonksiyonu */
+          }}
+          hasSelectedPosition={selectedPositions.length > 0}
         />
         {/* Edit Dialog */}
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>

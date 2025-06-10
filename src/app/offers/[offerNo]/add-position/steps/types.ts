@@ -16,7 +16,10 @@ export interface FormValues {
   details: TabData;
   quantity: number;
   unitPrice: number;
-  selectedProducts: SelectedProduct[];
+  selectedProducts: {
+    products: SelectedProduct[];
+    accessories: import("@/types/panjur").PriceItem[];
+  };
 }
 
 // What we use for individual tab data

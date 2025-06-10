@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/tooltip";
 import { usePanjurCalculator } from "../hooks/usePanjurCalculator";
 import { useFormikContext } from "formik";
-import { PanjurSelections, SelectedProduct } from "@/types/panjur";
+import { PanjurSelections, PriceItem, SelectedProduct } from "@/types/panjur";
 
 interface ProductField {
   id: string;
@@ -43,7 +43,12 @@ interface ProductPreviewProps {
 
 // Helper function to format field value
 const formatFieldValue = (
-  value: string | number | boolean | SelectedProduct[],
+  value:
+    | string
+    | number
+    | boolean
+    | SelectedProduct[]
+    | { products: SelectedProduct[]; accessories: PriceItem[] },
   fieldId: string,
   field?: ProductField
 ): string => {
@@ -117,46 +122,73 @@ export function ProductPreview({ selectedProduct }: ProductPreviewProps) {
                         title="Ürün Detayları"
                         description="Seçilen ürünün detaylı fiyat bilgileri ve özellikleri"
                       >
-                        {calculationResult.selectedProducts.map(
-                          (product, index) => (
-                            <div
-                              key={index}
-                              className="border-b border-border last:border-b-0 py-3"
-                            >
-                              <h3 className="font-medium mb-2 text-foreground">
-                                {product.description}
-                              </h3>
-                              <div className="space-y-1 text-sm">
-                                <div className="grid grid-cols-2 gap-2">
-                                  <span className="text-muted-foreground">
-                                    Birim Fiyat:
-                                  </span>
-                                  <span className="text-foreground font-mono">
-                                    € {product.price}
-                                  </span>
-                                </div>
-                                <div className="grid grid-cols-2 gap-2">
-                                  <span className="text-muted-foreground">
-                                    Adet:
-                                  </span>
-                                  <span className="text-foreground font-mono">
-                                    {product.quantity}
-                                  </span>
-                                </div>
-                                <div className="grid grid-cols-2 gap-2">
-                                  <span className="text-muted-foreground">
-                                    Toplam Fiyat:
-                                  </span>
-                                  <span className="text-foreground font-mono">
-                                    €{" "}
-                                    {parseFloat(product.price) *
-                                      product.quantity}
-                                  </span>
-                                </div>
-                              </div>
+                        {Array.isArray(
+                          calculationResult.selectedProducts.products
+                        ) &&
+                          calculationResult.selectedProducts.products.length >
+                            0 && (
+                            <div className="mt-4">
+                              <h4 className="font-semibold mb-2">Ürünler</h4>
+                              {calculationResult.selectedProducts.products.map(
+                                (product, index) => (
+                                  <div
+                                    key={index}
+                                    className="border-b border-border last:border-b-0 py-2 pl-2"
+                                  >
+                                    <div className="flex justify-between">
+                                      <span>{product.description}</span>
+                                      <span className="font-mono">
+                                        € {product.price}
+                                      </span>
+                                    </div>
+                                    <div className="flex justify-between text-xs text-muted-foreground">
+                                      <span>Adet: {product.quantity}</span>
+                                      <span>
+                                        Toplam: € {product.totalPrice}
+                                      </span>
+                                    </div>
+                                  </div>
+                                )
+                              )}
                             </div>
-                          )
-                        )}
+                          )}
+                        {/* Accessories */}
+                        {Array.isArray(
+                          calculationResult.selectedProducts.accessories
+                        ) &&
+                          calculationResult.selectedProducts.accessories
+                            .length > 0 && (
+                            <div className="mt-4">
+                              <h4 className="font-semibold mb-2">
+                                Aksesuarlar
+                              </h4>
+                              {calculationResult.selectedProducts.accessories.map(
+                                (acc, idx) => (
+                                  <div
+                                    key={idx}
+                                    className="border-b border-border last:border-b-0 py-2 pl-2"
+                                  >
+                                    <div className="flex justify-between">
+                                      <span>{acc.description}</span>
+                                      <span className="font-mono">
+                                        € {acc.price}
+                                      </span>
+                                    </div>
+                                    <div className="flex justify-between text-xs text-muted-foreground">
+                                      <span>Adet: {acc.quantity}</span>
+                                      <span>
+                                        Toplam: €{" "}
+                                        {(
+                                          Number(acc.price) *
+                                          (acc.quantity || 1)
+                                        ).toFixed(2)}
+                                      </span>
+                                    </div>
+                                  </div>
+                                )
+                              )}
+                            </div>
+                          )}
                       </CustomDialog>
                     </span>
                   </span>
@@ -217,42 +249,29 @@ export function ProductPreview({ selectedProduct }: ProductPreviewProps) {
                 const fieldValue =
                   field.id &&
                   Object.prototype.hasOwnProperty.call(values, field.id)
-                    ? values[field.id as keyof typeof values]
+                    ? values[field.id as keyof typeof values] ?? ""
                     : "";
-                if (fieldValue === undefined || fieldValue === "") return acc;
+                if (fieldValue === "" || fieldValue === null) return acc;
 
-                const displayValue = formatFieldValue(
-                  fieldValue,
-                  field.id,
-                  field
-                );
-                acc.push({
-                  name: field.name,
-                  value: displayValue,
-                });
-                return acc;
+                return [
+                  ...acc,
+                  {
+                    name: field.name,
+                    value: formatFieldValue(fieldValue, field.id, field),
+                  },
+                ];
               }, []);
 
-              if (displayFields.length === 0) return null;
-
               return (
-                <div
-                  key={tab.id}
-                  className="border-t first:border-t-0 pt-2 first:pt-0"
-                >
-                  <div className="text-sm font-medium text-muted-foreground mb-1.5">
-                    {tab.name}
-                  </div>
-                  <div className="space-y-1">
+                <div key={tab.id} className="pt-4">
+                  <div className="font-medium text-sm mb-2">{tab.name}</div>
+                  <div className="grid grid-cols-2 gap-2">
                     {displayFields.map((field, index) => (
-                      <div
-                        key={index}
-                        className="flex items-baseline text-sm justify-between"
-                      >
-                        <span className="flex-none font-medium text-foreground">
+                      <div key={index} className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">
                           {field.name}
                         </span>
-                        <span className="text-muted-foreground text-right">
+                        <span className="font-medium text-foreground">
                           {field.value}
                         </span>
                       </div>

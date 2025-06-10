@@ -28,7 +28,10 @@ export interface CalculationResult {
   boxHeight: number;
   subPartWidth: number;
   totalPrice: number;
-  selectedProducts: SelectedProduct[]; // Add selected products to the result
+  selectedProducts: {
+    products: SelectedProduct[];
+    accessories: PriceItem[];
+  }; // Artık iki obje içeriyor
   errors: string[];
 }
 
@@ -77,7 +80,10 @@ export interface PanjurSelections {
   subPart_color: string;
   dikme_color: string;
   unitPrice: number; // Added `unitPrice` property
-  selectedProducts: SelectedProduct[]; // Added `total` property,
+  selectedProducts: {
+    products: SelectedProduct[];
+    accessories: import("@/types/panjur").PriceItem[];
+  };
 }
 
 export interface LamelProperties {

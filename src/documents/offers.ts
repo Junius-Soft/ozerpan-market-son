@@ -6,7 +6,10 @@ export interface Position {
   unit: string;
   quantity: number;
   unitPrice: number;
-  selectedProducts?: SelectedProduct[];
+  selectedProducts?: {
+    products: SelectedProduct[];
+    accessories: import("@/types/panjur").PriceItem[];
+  };
   productId: string | null;
   typeId: string | null;
   productName: string | null;

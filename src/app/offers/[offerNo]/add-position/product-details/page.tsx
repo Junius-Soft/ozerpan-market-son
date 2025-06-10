@@ -174,7 +174,10 @@ export default function ProductDetailsPage() {
         unit: "adet",
         quantity: values.quantity || 1,
         unitPrice: values.unitPrice || 0,
-        selectedProducts: values.selectedProducts || [],
+        selectedProducts: values.selectedProducts || {
+          products: [],
+          accessories: [],
+        },
         productId,
         typeId,
         productName,

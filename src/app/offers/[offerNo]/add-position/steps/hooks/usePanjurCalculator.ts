@@ -41,7 +41,7 @@ export const usePanjurCalculator = (
     boxHeight: 0,
     subPartWidth: 0,
     totalPrice: 0,
-    selectedProducts: [],
+    selectedProducts: { products: [], accessories: [] },
     errors: [],
   });
   const searchParams = useSearchParams();
@@ -195,7 +195,7 @@ export const usePanjurCalculator = (
       const totalPrice = rawTotalPriceEUR;
 
       // Aksesuarları SelectedProduct formatına dönüştür ve tüm ürünleri birleştir
-      const selectedProducts = [
+      const productItems = [
         lamelSelectedProduct,
         subPartSelectedProduct,
         dikmeSelectedProduct,
@@ -205,11 +205,15 @@ export const usePanjurCalculator = (
         remoteSelectedProduct,
         smarthomeSelectedProduct,
         receiverSelectedProduct,
-        ...accessories,
       ].filter(
         (product): product is SelectedProduct =>
           product !== null && product !== undefined
       );
+
+      const selectedProducts = {
+        products: productItems,
+        accessories: accessories || [],
+      };
 
       setResult((prev) => ({
         ...prev,

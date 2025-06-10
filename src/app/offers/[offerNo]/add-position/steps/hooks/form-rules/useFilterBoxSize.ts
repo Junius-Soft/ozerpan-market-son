@@ -66,12 +66,17 @@ export function filterBoxSize(
     formik.setFieldValue("height", 1000);
     return null;
   }
-  // Select the smallest valid box size if it's different from current
-  if (validBoxSizes[0].id !== values.boxType) {
-    formik.setFieldValue("boxType", validBoxSizes[0].name);
 
-    return validBoxSizes;
+  // Eğer mevcut boxType validBoxSizes içinde varsa, otomatik güncelleme yapma
+  const isCurrentBoxTypeValid = validBoxSizes.some(
+    (option) => option.name === values.boxType
+  );
+  if (!isCurrentBoxTypeValid) {
+    // Sadece mevcut boxType valid değilse, ilk valid olanı set et
+    formik.setFieldValue("boxType", validBoxSizes[0].name);
+    console.log({ validBoxSizes });
   }
+  return validBoxSizes;
 }
 // Main hook that manages all form rules
 export function useFilterBoxSize(

@@ -3,31 +3,9 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import {
-  getOffer,
-  deletePositions,
-  type Offer,
-  type Position,
-} from "@/documents/offers";
-import {
-  ArrowLeft,
-  AlertTriangle,
-  Plus,
-  Edit2,
-  Copy,
-  Trash2,
-} from "lucide-react";
+import { getOffer, type Offer, type Position } from "@/documents/offers";
 import {
   Dialog,
   DialogContent,
@@ -37,7 +15,18 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
-import { parsePrice, formatPrice } from "@/utils/price-formatter";
+import { OfferHeader } from "./components/offer-header";
+import { OfferPositionsTable } from "./components/offer-positions-table";
+import { OfferSummaryCard } from "./components/offer-summary-card";
+import {
+  calculateTotals,
+  togglePositionSelection,
+  toggleAllPositions,
+  apiCopyPosition,
+  apiDeletePositions,
+  apiSaveOfferName,
+  apiUpdateOfferStatus,
+} from "@/utils/offer-utils";
 
 export default function OfferDetailPage() {
   const params = useParams();
@@ -50,6 +39,8 @@ export default function OfferDetailPage() {
   const { eurRate, loading: isEurRateLoading } = useExchangeRate({
     offerId: params.offerNo as string,
   });
+  const [sortKey, setSortKey] = useState<string>("pozNo");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
   useEffect(() => {
     const loadOffer = async () => {
@@ -64,18 +55,14 @@ export default function OfferDetailPage() {
 
   const handleDeletePositions = async () => {
     if (!offer || selectedPositions.length === 0) return;
-
     try {
       setIsDeletingPositions(true);
-      const success = await deletePositions(offer.id, selectedPositions);
-
-      if (success) {
-        // Reload offer to get updated data
-        const updatedOffer = await getOffer(offer.id);
-        if (updatedOffer) {
-          setOffer(updatedOffer);
-          setSelectedPositions([]);
-        }
+      await apiDeletePositions(offer.id, selectedPositions);
+      // Reload offer to get updated data
+      const updatedOffer = await getOffer(offer.id);
+      if (updatedOffer) {
+        setOffer(updatedOffer);
+        setSelectedPositions([]);
       }
     } catch (error) {
       console.error("Failed to delete positions:", error);
@@ -84,55 +71,11 @@ export default function OfferDetailPage() {
     }
   };
 
-  const togglePositionSelection = (positionId: string) => {
-    setSelectedPositions((prev) =>
-      prev.includes(positionId)
-        ? prev.filter((id) => id !== positionId)
-        : [...prev, positionId]
-    );
-  };
-
-  const toggleAllPositions = () => {
-    if (!offer?.positions) return;
-
-    setSelectedPositions(
-      selectedPositions.length === offer.positions.length
-        ? []
-        : offer.positions.map((pos) => pos.id)
-    );
-  };
-
-  const calculateTotals = (positions: Position[]) => {
-    const subtotal = positions.reduce((sum, pos) => {
-      // Use parsePrice to handle any string or number format
-      const posTotal = parsePrice(pos.total);
-      return sum + posTotal;
-    }, 0);
-    const vat = subtotal * 0.18; // 18% KDV
-    return {
-      subtotal: subtotal,
-      vat: vat,
-      total: subtotal + vat,
-    };
-  };
-
   const handleSaveOfferName = async () => {
     if (!offer) return;
-
     try {
-      const response = await fetch(`/api/offers/${offer.id}?id=${offer.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: offerName }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to update offer name");
-      }
-
-      const updatedOffer = await response.json();
+      await apiSaveOfferName(offer.id, offerName);
+      const updatedOffer = await getOffer(offer.id);
       setOffer(updatedOffer);
       setIsEditDialogOpen(false);
     } catch (error) {
@@ -143,17 +86,8 @@ export default function OfferDetailPage() {
   const updateOfferStatus = async (newStatus: string, eurRate?: number) => {
     if (!offer) return;
     try {
-      const response = await fetch(`/api/offers/${offer.id}?id=${offer.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status: newStatus, eurRate: eurRate }),
-      });
-
-      if (!response.ok) throw new Error("Failed to update offer status");
-
-      const updatedOffer = await response.json();
+      await apiUpdateOfferStatus(offer.id, newStatus, eurRate);
+      const updatedOffer = await getOffer(offer.id);
       setOffer(updatedOffer);
     } catch (error) {
       console.error("Error updating offer status:", error);
@@ -162,34 +96,8 @@ export default function OfferDetailPage() {
 
   const handleCopyPosition = async (position: Position) => {
     if (!offer) return;
-
-    // Create new position with incremented pozNo
-    const lastPos = offer.positions[offer.positions.length - 1];
-    const nextPozNo = String(parseInt(lastPos.pozNo) + 1).padStart(3, "0");
-
-    const newPosition: Position = {
-      ...position,
-      id: `POS-${Date.now()}`,
-      pozNo: nextPozNo,
-    };
-
     try {
-      // Update offer with new positions array
-      const response = await fetch(`/api/offers?id=${offer.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          positions: [...offer.positions, newPosition],
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to copy position");
-      }
-
-      // Reload offer to get updated data
+      await apiCopyPosition(offer.id, offer.positions, position);
       const updatedOffer = await getOffer(offer.id);
       if (updatedOffer) {
         setOffer(updatedOffer);
@@ -197,6 +105,42 @@ export default function OfferDetailPage() {
     } catch (error) {
       console.error("Failed to copy position:", error);
     }
+  };
+
+  const handleSort = (key: string) => {
+    if (sortKey === key) {
+      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(key);
+      setSortDirection("asc");
+    }
+  };
+
+  const sortedPositions = (offer?.positions ?? []).slice().sort((a, b) => {
+    const aValue = a[sortKey as keyof Position];
+    const bValue = b[sortKey as keyof Position];
+    if (typeof aValue === "string" && typeof bValue === "string") {
+      return sortDirection === "asc"
+        ? aValue.localeCompare(bValue)
+        : bValue.localeCompare(aValue);
+    }
+    if (typeof aValue === "number" && typeof bValue === "number") {
+      return sortDirection === "asc" ? aValue - bValue : bValue - aValue;
+    }
+    return 0;
+  });
+
+  // handleTogglePositionSelection fonksiyonu
+  const handleTogglePositionSelection = (positionId: string) => {
+    setSelectedPositions((prev) => togglePositionSelection(prev, positionId));
+  };
+
+  // handleToggleAllPositions fonksiyonu
+  const handleToggleAllPositions = () => {
+    if (!offer?.positions) return;
+    setSelectedPositions(
+      toggleAllPositions(offer.positions, selectedPositions)
+    );
   };
 
   if (!offer || isEurRateLoading) {
@@ -250,31 +194,15 @@ export default function OfferDetailPage() {
     );
   }
 
-  const { subtotal, total } = calculateTotals(offer.positions);
+  const { subtotal, vat, total } = calculateTotals(offer.positions);
   return (
     <div className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <h1 className="text-2xl font-bold">{offer.name}</h1>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsEditDialogOpen(true)}
-            >
-              <Edit2 className="h-4 w-4" />
-            </Button>
-          </div>
-          <Button
-            variant="outline"
-            className="gap-2 "
-            onClick={() => router.push("/offers")}
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Tekliflere Dön
-          </Button>
-        </div>
-
+        <OfferHeader
+          offerName={offer.name}
+          onEdit={() => setIsEditDialogOpen(true)}
+          onBack={() => router.push("/offers")}
+        />
         {/* Edit Dialog */}
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
           <DialogContent>
@@ -306,250 +234,39 @@ export default function OfferDetailPage() {
         </Dialog>
 
         <div className="flex gap-6">
-          {/* Sol Taraf - Poz Tablosu */}
           <div className="flex-1">
-            <Card className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-semibold">Pozlar</h2>
-                <div className="flex gap-2">
-                  {offer.positions?.length > 0 && offer.status === "Taslak" && (
-                    <>
-                      <Button
-                        variant="outline"
-                        className="gap-2 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
-                        onClick={handleDeletePositions}
-                        disabled={
-                          selectedPositions.length === 0 || isDeletingPositions
-                        }
-                      >
-                        <Trash2 className="h-4 w-4" />
-                        {isDeletingPositions
-                          ? "Siliniyor..."
-                          : "Seçilenleri Sil"}
-                      </Button>
-                      <Button
-                        variant="outline"
-                        className="gap-2"
-                        onClick={() =>
-                          router.push(`/offers/${offer.id}/add-position`)
-                        }
-                      >
-                        <Plus className="h-4 w-4" />
-                        Poz Ekle
-                      </Button>
-                    </>
-                  )}
-                </div>
-              </div>
-
-              {!offer.positions?.length ? (
-                <div className="py-12 flex flex-col items-center justify-center text-center">
-                  <p className="text-gray-500 mb-4">
-                    Sipariş vermek için lütfen poz ekleyin
-                  </p>
-                  {offer.status !== "Kaydedildi" && (
-                    <Button
-                      variant="outline"
-                      className="gap-2"
-                      onClick={() =>
-                        router.push(`/offers/${offer.id}/add-position`)
-                      }
-                    >
-                      <Plus className="h-4 w-4" />
-                      Poz Ekle
-                    </Button>
-                  )}
-                </div>
-              ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      {offer.status === "Taslak" && (
-                        <TableHead className="w-[50px]">
-                          <Checkbox
-                            checked={
-                              selectedPositions.length ===
-                              offer.positions.length
-                            }
-                            onCheckedChange={toggleAllPositions}
-                          />
-                        </TableHead>
-                      )}
-                      <TableHead className="w-[100px]">Poz No</TableHead>
-                      <TableHead>Ürün</TableHead>
-                      <TableHead className="w-[100px]">Birim</TableHead>
-                      <TableHead className="w-[100px]">Miktar</TableHead>
-                      <TableHead className="w-[150px]">Birim Fiyat</TableHead>
-                      <TableHead className="w-[150px]">Toplam</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {offer.positions.map((position) => (
-                      <TableRow
-                        key={position.id}
-                        className="cursor-pointer"
-                        onClick={(e) => {
-                          // Don't navigate if clicking on checkbox or copy button
-                          const target = e.target as HTMLElement;
-                          if (
-                            target.closest("button") ||
-                            target.closest('[role="checkbox"]')
-                          ) {
-                            return;
-                          }
-                          router.push(
-                            `/offers/${offer.id}/add-position/product-details?selectedPosition=${position.id}&productId=${position.productId}&productName=${position.productName}&typeId=${position.typeId}&optionId=${position.optionId}`
-                          );
-                        }}
-                      >
-                        {offer.status === "Taslak" && (
-                          <TableCell>
-                            <Checkbox
-                              checked={selectedPositions.includes(position.id)}
-                              onCheckedChange={() =>
-                                togglePositionSelection(position.id)
-                              }
-                            />
-                          </TableCell>
-                        )}
-                        <TableCell className="flex items-center gap-2">
-                          {position.pozNo}
-                          {offer.status === "Taslak" && (
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-6 w-6"
-                              onClick={() => handleCopyPosition(position)}
-                            >
-                              <Copy className="h-3 w-3" />
-                            </Button>
-                          )}
-                        </TableCell>
-                        <TableCell>{position.productName}</TableCell>
-                        <TableCell>{position.unit}</TableCell>
-                        <TableCell>{position.quantity}</TableCell>
-                        <TableCell>
-                          ₺{formatPrice(position.unitPrice, eurRate)}
-                        </TableCell>
-                        <TableCell>
-                          ₺{formatPrice(position.total, eurRate)}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              )}
-            </Card>
+            <OfferPositionsTable
+              positions={sortedPositions}
+              offerId={offer.id}
+              offerStatus={offer.status}
+              selectedPositions={selectedPositions}
+              onSelect={handleTogglePositionSelection}
+              onSelectAll={handleToggleAllPositions}
+              onDelete={handleDeletePositions}
+              onCopy={handleCopyPosition}
+              onAdd={() => router.push(`/offers/${offer.id}/add-position`)}
+              isDeleting={isDeletingPositions}
+              sortKey={sortKey}
+              sortDirection={sortDirection}
+              onSort={handleSort}
+              eurRate={eurRate}
+            />
           </div>
-
-          {/* Sağ Taraf - Bilgi Kartları */}
           <div className="w-[400px] space-y-6">
-            {/* Alt Card - Toplam Bilgileri */}
-            <Card className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-semibold">Toplam Bilgileri</h2>
-                <span
-                  className={`
-                    inline-block px-2 py-1 rounded-full text-xs font-medium
-                    ${
-                      offer.status === "Kaydedildi"
-                        ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400"
-                        : offer.status === "Revize"
-                        ? "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400"
-                        : "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400"
-                    }
-                  `}
-                >
-                  {offer.status}
-                </span>
-              </div>
-              {offer.status === "Taslak" && (
-                <div className="my-6 flex items-start gap-2 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-md border border-yellow-200 dark:border-yellow-700/50">
-                  <AlertTriangle className="h-5 w-5 text-yellow-600 dark:text-yellow-500 flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-yellow-600 dark:text-yellow-400">
-                    Taslak durumundaki tekliflerde fiyat yeniden hesaplanır.
-                    Fiyatı korumak için lütfen teklifi kaydediniz!
-                  </p>
-                </div>
-              )}
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <label className="text-sm text-gray-500">Ara Toplam</label>
-                  <div className="font-medium">
-                    ₺{formatPrice(subtotal, eurRate)}
-                  </div>
-                </div>
-                <div className="flex justify-between items-center">
-                  <label className="text-sm text-gray-500">KDV (%18)</label>
-                  <div className="font-medium">
-                    ₺
-                    {formatPrice(
-                      offer.positions?.length
-                        ? calculateTotals(offer.positions).vat
-                        : 0,
-                      eurRate
-                    )}
-                  </div>
-                </div>
-                <div className="h-px bg-gray-200" />
-                <div className="flex justify-between items-center">
-                  <label className="font-medium">Genel Toplam</label>
-                  <div className="font-medium text-lg">
-                    ₺{formatPrice(total, eurRate)}
-                  </div>
-                </div>
-
-                <div className="h-px bg-gray-200 my-4" />
-                {offer.status !== "Revize" && (
-                  <div className="flex gap-3">
-                    {offer.status === "Taslak" ? (
-                      <>
-                        {/* Save button */}
-                        <Button
-                          variant="outline"
-                          className="flex-1 gap-2"
-                          disabled={!offer.positions?.length || !offer.is_dirty}
-                          onClick={async () => {
-                            await updateOfferStatus("Kaydedildi", eurRate);
-                          }}
-                        >
-                          Kaydet
-                        </Button>
-                        <Button
-                          className="flex-1 gap-2"
-                          disabled={!offer.positions?.length}
-                          onClick={() => {
-                            // TODO: Implement order functionality
-                          }}
-                        >
-                          Sipariş Ver
-                        </Button>
-                      </>
-                    ) : offer.status === "Kaydedildi" ? (
-                      <>
-                        <Button
-                          variant="outline"
-                          className="flex-1 gap-2"
-                          disabled={!offer.positions?.length}
-                          onClick={() => updateOfferStatus("Revize")}
-                        >
-                          Revize Et
-                        </Button>
-                        <Button
-                          className="flex-1 gap-2"
-                          disabled={!offer.positions?.length}
-                          onClick={() => {
-                            // TODO: Implement purchase functionality
-                          }}
-                        >
-                          Sipariş Ver
-                        </Button>
-                      </>
-                    ) : null}
-                  </div>
-                )}
-              </div>
-            </Card>
+            <OfferSummaryCard
+              subtotal={subtotal}
+              vat={vat}
+              total={total}
+              offerStatus={offer.status}
+              isDirty={!!offer.is_dirty}
+              positionsLength={offer.positions.length}
+              eurRate={eurRate}
+              onSave={async () =>
+                await updateOfferStatus("Kaydedildi", eurRate)
+              }
+              onOrder={() => {}}
+              onRevise={() => updateOfferStatus("Revize")}
+            />
           </div>
         </div>
       </div>

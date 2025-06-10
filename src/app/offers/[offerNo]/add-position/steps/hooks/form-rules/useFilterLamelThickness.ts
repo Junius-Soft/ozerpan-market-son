@@ -42,27 +42,38 @@ function filterLamelThickness(
     return null;
   }
 
-  // Sadece movementType'ı güncelle
-  if (selectedLamelKey === "39_sl" && formik.values.movementType !== "manuel") {
-    formik.setFieldValue("movementType", "manuel");
-    toast.warn("Hareket şekli manuel olarak güncellendi.");
-  } else if (
-    selectedLamelKey !== "39_sl" &&
-    formik.values.movementType !== "motorlu"
-  ) {
-    formik.setFieldValue("movementType", "motorlu");
-    toast.warn("Hareket şekli motorlu olarak güncellendi.");
-  }
+  // Eğer mevcut lamelTickness validOptions içinde varsa, otomatik güncelleme yapma
+  const currentLamelTickness = formik.values.lamelTickness;
+  const isCurrentValid = validOptions.some(
+    (option) => option.id === currentLamelTickness
+  );
 
-  // lamelType'ı uygun şekilde güncelle
-  if (formik.values.lamelType !== selectedLamelType) {
-    formik.setFieldValue("lamelType", selectedLamelType);
-    toast.warn("Lamel tipi uygun şekilde güncellendi.");
-  }
-  // lamelTickness'ı güncelle
-  if (formik.values.lamelTickness !== selectedLamelKey) {
-    formik.setFieldValue("lamelTickness", selectedLamelKey);
-    toast.warn("Lamel kalınlığı uygun şekilde güncellendi.");
+  if (!isCurrentValid) {
+    // Sadece movementType'ı güncelle
+    if (
+      selectedLamelKey === "39_sl" &&
+      formik.values.movementType !== "manuel"
+    ) {
+      formik.setFieldValue("movementType", "manuel");
+      toast.warn("Hareket şekli manuel olarak güncellendi.");
+    } else if (
+      selectedLamelKey !== "39_sl" &&
+      formik.values.movementType !== "motorlu"
+    ) {
+      formik.setFieldValue("movementType", "motorlu");
+      toast.warn("Hareket şekli motorlu olarak güncellendi.");
+    }
+
+    // lamelType'ı uygun şekilde güncelle
+    if (formik.values.lamelType !== selectedLamelType) {
+      formik.setFieldValue("lamelType", selectedLamelType);
+      toast.warn("Lamel tipi uygun şekilde güncellendi.");
+    }
+    // lamelTickness'ı güncelle
+    if (formik.values.lamelTickness !== selectedLamelKey) {
+      formik.setFieldValue("lamelTickness", selectedLamelKey);
+      toast.warn("Lamel kalınlığı uygun şekilde güncellendi.");
+    }
   }
 
   return validOptions.length > 0 ? validOptions : null;

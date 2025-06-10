@@ -112,12 +112,8 @@ export function OfferPositionsTable({
                 {sortKey === "productName" &&
                   (sortDirection === "asc" ? "▲" : "▼")}
               </TableHead>
-              <TableHead
-                className="w-[100px] cursor-pointer"
-                onClick={() => onSort("unit")}
-              >
-                Birim{" "}
-                {sortKey === "unit" && (sortDirection === "asc" ? "▲" : "▼")}
+              <TableHead className="w-[120px] cursor-pointer">
+                Gen x Yük
               </TableHead>
               <TableHead
                 className="w-[100px] cursor-pointer"
@@ -184,8 +180,15 @@ export function OfferPositionsTable({
                   )}
                 </TableCell>
                 <TableCell>{position.productName}</TableCell>
-                <TableCell>{position.unit}</TableCell>
-                <TableCell>{position.quantity}</TableCell>
+                <TableCell>
+                  {position.productDetails.width &&
+                  position.productDetails.height
+                    ? `${position.productDetails.width} x ${position.productDetails.height}`
+                    : "-"}
+                </TableCell>
+                <TableCell>
+                  {position.quantity} {position.unit}
+                </TableCell>
                 <TableCell>
                   ₺{formatPrice(position.unitPrice, eurRate)}
                 </TableCell>

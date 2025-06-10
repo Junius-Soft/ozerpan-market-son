@@ -265,7 +265,7 @@ export function ProductPreview({ selectedProduct }: ProductPreviewProps) {
               return (
                 <div key={tab.id} className="pt-4">
                   <div className="font-medium text-sm mb-2">{tab.name}</div>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="flex flex-col gap-1">
                     {displayFields.map((field, index) => (
                       <div key={index} className="flex justify-between text-sm">
                         <span className="text-muted-foreground">

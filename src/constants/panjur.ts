@@ -6,13 +6,13 @@ export const lamelProperties: Record<string, LamelProperties> = {
     maxWidth: 2300,
     maxHeight: 2400,
   },
-  "45_se": {
-    maxWidth: 4250,
-    maxHeight: 3500,
-  },
   "55_sl": {
     maxWidth: 3200,
     maxHeight: 3100,
+  },
+  "45_se": {
+    maxWidth: 4250,
+    maxHeight: 3500,
   },
   "55_se": {
     maxWidth: 5500,

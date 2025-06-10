@@ -14,7 +14,7 @@ import { usePanjurCalculator } from "./hooks/usePanjurCalculator";
 import { useFilterLamelThickness } from "./hooks/form-rules/useFilterLamelThickness";
 import { useFilterMotorModel } from "./hooks/form-rules/useFilterMotorModel";
 import { useFilterBoxSize } from "./hooks/form-rules/useFilterBoxSize";
-import { useAutoDependencyAndFilterBy } from "./hooks/form-rules/useAutoDependencyDefaults";
+import { useAutoDependencyAndFilterBy } from "./hooks/useAutoDependencyDefaults";
 
 interface DetailsStepProps {
   formik: FormikProps<

@@ -129,7 +129,7 @@ export function filterMotorOptions(
   if (!isCurrentModelValid && motorModelOptions?.length) {
     formik.setFieldValue("motorModel", motorModelOptions[0]?.id || "");
   }
-
+  console.log({ motorModelOptions });
   return motorModelOptions;
 }
 

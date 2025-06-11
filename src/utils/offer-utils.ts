@@ -1,5 +1,109 @@
 import { Position } from "@/documents/offers";
 import { parsePrice } from "@/utils/price-formatter";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import { Offer } from "@/documents/offers";
+
+// Turkish PDF font fix: embed DejaVuSans (or fallback to Arial Unicode MS if available)
+// 1. Import the font file (base64 or .ttf converted to js)
+// 2. Register the font with jsPDF
+// 3. Set font to 'DejaVu' for all text
+// NOTE: You must have the font file loaded in public or as a base64 string for this to work in browser
+
+// Example for DejaVuSans (if you have the .ttf or .js font file):
+// import DejaVuSans from "./DejaVuSans-normal.js";
+// if (typeof window !== "undefined" && (window as any).jsPDF) {
+//   (window as any).jsPDF.API.events.push(["addFonts", function() {
+//     this.addFileToVFS("DejaVuSans.ttf", DejaVuSans);
+//     this.addFont("DejaVuSans.ttf", "DejaVu", "normal");
+//   }]);
+// }
+
+// For now, use built-in 'times' font which has better Turkish support than 'helvetica'
+export function openImalatListPDF(offer: Offer, position: Position) {
+  const doc = new jsPDF({
+    orientation: "p",
+    unit: "mm",
+    format: "a4",
+  });
+  doc.setFont("times", "");
+
+  // Header
+  doc.setFontSize(14);
+  doc.text(`${offer.name} / ${offer.id}`, 10, 15);
+  doc.setFontSize(10);
+  doc.text(`Miktar: ${position.quantity} Adet`, 160, 15, { align: "right" });
+  doc.setFontSize(12);
+  doc.text("POZ İMALAT LİSTESİ", 10, 30);
+
+  // Profil Listesi Table
+  autoTable(doc, {
+    startY: 40,
+    head: [
+      [
+        "S.No",
+        "StokKodu",
+        "Konum",
+        "Açıklama",
+        "Ölçü",
+        "Sol/Sağ Açık",
+        "Miktar",
+        "Ok",
+      ],
+    ],
+    body: (position.selectedProducts?.products || []).map((item, idx) => [
+      idx + 1,
+      item.stock_code,
+      item.type || "",
+      item.description,
+      "", // Ölçü (size) alanı yoksa boş bırak
+      "", // Sol/Sağ Açık (side) alanı yoksa boş bırak
+      item.quantity,
+      "",
+    ]),
+    theme: "grid",
+    headStyles: { fillColor: [230, 230, 230] },
+    styles: { fontSize: 9, font: "times" },
+    margin: { left: 10, right: 10 },
+    didDrawPage: (data: { settings: { startY: number } }) => {
+      doc.setFontSize(11);
+      doc.setFont("times", "");
+      doc.text("Profil Listesi", 10, data.settings.startY - 6);
+    },
+  });
+
+  // Aksesuar Listesi Table
+  const lastY =
+    (doc as unknown as { lastAutoTable?: { finalY?: number } }).lastAutoTable
+      ?.finalY || 60;
+  autoTable(doc, {
+    startY: lastY + 10,
+    head: [["S.No", "StokKodu", "Açıklama", "Miktar"]],
+    body: (position.selectedProducts?.accessories || []).map((item, idx) => [
+      idx + 1,
+      item.stock_code,
+      item.description,
+      `${item.quantity || 1} Adet`,
+    ]),
+    theme: "grid",
+    headStyles: { fillColor: [230, 230, 230] },
+    styles: { fontSize: 9, font: "times" },
+    margin: { left: 10, right: 10 },
+    didDrawPage: (data: { settings: { startY: number } }) => {
+      doc.setFontSize(11);
+      doc.setFont("times", "");
+      doc.text("Aksesuar Listesi", 10, data.settings.startY - 6);
+    },
+  });
+
+  // Footer
+  doc.setFontSize(8);
+  doc.setFont("times", "");
+  doc.text(`${offer.id} / 1    Sayfa : 1-2`, 200, 290, { align: "right" });
+
+  // Open in new tab
+  window.open(doc.output("bloburl"), "_blank");
+}
 
 export function calculateTotals(positions: Position[]) {
   const subtotal = positions.reduce((sum, pos) => {

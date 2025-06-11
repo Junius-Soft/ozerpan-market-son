@@ -23,23 +23,27 @@ export const lamelProperties: Record<string, LamelProperties> = {
 // Maksimum lamel yüksekliği tablosu (mm)
 export const maxLamelHeights: LamelHeightTable = {
   "137": {
-    "39": { manuel: 1500, motorlu: 1100 },
-    "45": { manuel: 1000, motorlu: 1000 },
-    "55": { manuel: null, motorlu: null },
+    "39_sl": { manuel: 1500, motorlu: 1100 },
+    "45_se": { manuel: 1000, motorlu: 1000 },
+    "55_sl": { manuel: null, motorlu: null },
+    "55_se": { manuel: null, motorlu: null },
   },
   "165": {
-    "39": { manuel: 2400, motorlu: 2250 },
-    "45": { manuel: 2000, motorlu: 1750 },
-    "55": { manuel: null, motorlu: 1600 },
+    "39_sl": { manuel: 2400, motorlu: 2250 },
+    "45_se": { manuel: 2000, motorlu: 1750 },
+    "55_sl": { manuel: null, motorlu: 1600 },
+    "55_se": { manuel: null, motorlu: null },
   },
   "205": {
-    "39": { manuel: null, motorlu: 3500 },
-    "45": { manuel: null, motorlu: 3500 },
-    "55": { manuel: null, motorlu: 2750 },
+    "39_sl": { manuel: null, motorlu: 3500 },
+    "45_se": { manuel: null, motorlu: 3500 },
+    "55_sl": { manuel: null, motorlu: 2750 },
+    "55_se": { manuel: null, motorlu: null },
   },
   "250": {
-    "39": { manuel: null, motorlu: null },
-    "45": { manuel: null, motorlu: 4000 },
-    "55": { manuel: null, motorlu: 4500 },
+    "39_sl": { manuel: null, motorlu: null },
+    "45_se": { manuel: null, motorlu: 4000 },
+    "55_sl": { manuel: null, motorlu: 4500 },
+    "55_se": { manuel: null, motorlu: null },
   },
 };

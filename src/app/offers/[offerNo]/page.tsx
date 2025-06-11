@@ -26,6 +26,7 @@ import {
   apiDeletePositions,
   apiSaveOfferName,
   apiUpdateOfferStatus,
+  openImalatListPDF,
 } from "@/utils/offer-utils";
 
 export default function OfferDetailPage() {
@@ -203,7 +204,11 @@ export default function OfferDetailPage() {
           onEdit={() => setIsEditDialogOpen(true)}
           onBack={() => router.push("/offers")}
           onImalatList={() => {
-            /* TODO: Poz İmalat Listesi fonksiyonu */
+            if (!offer || selectedPositions.length === 0) return;
+            const pos = offer.positions.find(
+              (p) => p.id === selectedPositions[0]
+            );
+            if (pos) openImalatListPDF(offer, pos);
           }}
           onFiyatAnaliz={() => {
             /* TODO: Fiyat Analizi fonksiyonu */

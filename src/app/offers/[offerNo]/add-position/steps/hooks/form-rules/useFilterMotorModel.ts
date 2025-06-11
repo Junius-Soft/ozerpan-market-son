@@ -110,6 +110,7 @@ export function filterMotorOptions(
     ?.options?.filter((option) =>
       validMotors.includes(option.id as MotorModel)
     );
+  console.log({ motorModelOptions });
 
   // Eğer motorlu seçiliyse ve uygun motor seçeneği yoksa manuel'e çevir
   if (movementType === "motorlu" && !motorModelOptions?.length) {
@@ -129,7 +130,6 @@ export function filterMotorOptions(
   if (!isCurrentModelValid && motorModelOptions?.length) {
     formik.setFieldValue("motorModel", motorModelOptions[0]?.id || "");
   }
-  console.log({ motorModelOptions });
   return motorModelOptions;
 }
 

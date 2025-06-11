@@ -19,45 +19,36 @@ function filterLamelThickness(
   const height = Number(values.height);
 
   // En uygun lamel tipini bul
-  let selectedLamelKey: string | null = null;
-  let selectedLamelType: string | null = null;
+
   const validOptions: { id: string; label: string; name: string }[] = [];
 
   for (const [key, props] of Object.entries(lamelProperties)) {
     const isValid = width <= props.maxWidth && height <= props.maxHeight;
-    if (isValid && !selectedLamelKey) {
-      selectedLamelKey = key;
-      selectedLamelType = key.includes("_se")
-        ? "aluminyum_ekstruzyon"
-        : key.includes("_sl")
-        ? "aluminyum_poliuretanli"
-        : null;
-    }
+
     if (isValid) {
       validOptions.push({ id: key, label: key, name: key });
     }
   }
-  console.log({ validOptions });
-  if (!selectedLamelKey || !selectedLamelType) {
-    return null;
-  }
+  console.log("validLamelThickness", validOptions);
 
   // Eğer mevcut lamelTickness validOptions içinde varsa, otomatik güncelleme yapma
   const currentLamelTickness = formik.values.lamelTickness;
   const isCurrentValid = validOptions.some(
     (option) => option.id === currentLamelTickness
   );
-
+  const selectedLamel = validOptions[0].id;
+  const selectedType = selectedLamel.includes("_se")
+    ? "aluminyum_ekstruzyon"
+    : selectedLamel.includes("_sl")
+    ? "aluminyum_poliuretanli"
+    : null;
   if (!isCurrentValid) {
     // Sadece movementType'ı güncelle
-    if (
-      selectedLamelKey === "39_sl" &&
-      formik.values.movementType !== "manuel"
-    ) {
+    if (selectedLamel === "39_sl" && formik.values.movementType !== "manuel") {
       formik.setFieldValue("movementType", "manuel");
       toast.warn("Hareket şekli manuel olarak güncellendi.");
     } else if (
-      selectedLamelKey !== "39_sl" &&
+      selectedLamel !== "39_sl" &&
       formik.values.movementType !== "motorlu"
     ) {
       formik.setFieldValue("movementType", "motorlu");
@@ -65,13 +56,13 @@ function filterLamelThickness(
     }
 
     // lamelType'ı uygun şekilde güncelle
-    if (formik.values.lamelType !== selectedLamelType) {
-      formik.setFieldValue("lamelType", selectedLamelType);
+    if (formik.values.lamelType !== selectedType) {
+      formik.setFieldValue("lamelType", selectedType);
       toast.warn("Lamel tipi uygun şekilde güncellendi.");
     }
     // lamelTickness'ı güncelle
-    if (formik.values.lamelTickness !== selectedLamelKey) {
-      formik.setFieldValue("lamelTickness", selectedLamelKey);
+    if (formik.values.lamelTickness !== selectedLamel) {
+      formik.setFieldValue("lamelTickness", selectedLamel);
       toast.warn("Lamel kalınlığı uygun şekilde güncellendi.");
     }
   }

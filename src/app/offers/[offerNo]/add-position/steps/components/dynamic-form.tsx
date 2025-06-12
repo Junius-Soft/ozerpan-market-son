@@ -101,32 +101,36 @@ const SelectInput: React.FC<
         }
 
         // CustomFilter kontrolü
-        if (filter.field === "customFilter" && filter.properties) {
-          if (fieldDef.id === "lamelTickness") {
-            const width = Number(values["width"]) || 0;
-            const height = Number(values["height"]) || 0;
+        // if (filter.field === "customFilter" && filter.properties) {
+        //   if (fieldDef.id === "lamelTickness") {
+        //     const width = Number(values["width"]) || 0;
+        //     const height = Number(values["height"]) || 0;
+        //     const area = (width * height) / 1_000_000;
+        //     return filteredOpts.filter((option) => {
+        //       const optionId = option.id || option.name;
+        //       const properties = filter.properties?.[optionId] as
+        //         | LamelProperties
+        //         | undefined;
 
-            return filteredOpts.filter((option) => {
-              const optionId = option.id || option.name;
-              const properties = filter.properties?.[optionId];
-
-              if (properties) {
-                const withinMaxWidth =
-                  !properties.maxWidth || width <= properties.maxWidth;
-                const withinMaxHeight =
-                  !properties.maxHeight || height <= properties.maxHeight;
-                return withinMaxWidth && withinMaxHeight;
-              }
-              return true;
-            });
-          }
-        }
+        //       if (properties) {
+        //         const withinArea =
+        //           !properties.maxArea || area <= properties.maxArea;
+        //         const withinMaxWidth =
+        //           !properties.maxWidth || width <= properties.maxWidth;
+        //         const withinMaxHeight =
+        //           !properties.maxHeight || height <= properties.maxHeight;
+        //         return (withinMaxWidth && withinMaxHeight) || withinArea;
+        //       }
+        //       return true;
+        //     });
+        //   }
+        // }
         return filteredOpts;
       }, options);
     }
 
     return options;
-  }, [fieldDef.options, fieldDef.filterBy, fieldDef.id, values]);
+  }, [fieldDef.options, fieldDef.filterBy, values]);
 
   // Handle default value and first option selection after filtering
   const currentValue = field.value?.toString() ?? "";

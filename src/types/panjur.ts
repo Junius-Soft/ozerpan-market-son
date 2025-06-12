@@ -89,6 +89,7 @@ export interface PanjurSelections {
 export interface LamelProperties {
   maxWidth: number;
   maxHeight: number;
+  maxArea: number;
 }
 
 export interface MaxLamelHeight {

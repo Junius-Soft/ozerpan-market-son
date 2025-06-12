@@ -23,7 +23,11 @@ function filterLamelThickness(
   const validOptions: { id: string; label: string; name: string }[] = [];
 
   for (const [key, props] of Object.entries(lamelProperties)) {
-    const isValid = width <= props.maxWidth && height <= props.maxHeight;
+    const area = (width * height) / 1_000_000; // mm^2'den m^2'ye çevir
+    const isValid =
+      width <= props.maxWidth &&
+      height <= props.maxHeight &&
+      area <= props.maxArea;
 
     if (isValid) {
       validOptions.push({ id: key, label: key, name: key });
@@ -43,18 +47,6 @@ function filterLamelThickness(
     ? "aluminyum_poliuretanli"
     : null;
   if (!isCurrentValid) {
-    // Sadece movementType'ı güncelle
-    if (selectedLamel === "39_sl" && formik.values.movementType !== "manuel") {
-      formik.setFieldValue("movementType", "manuel");
-      toast.warn("Hareket şekli manuel olarak güncellendi.");
-    } else if (
-      selectedLamel !== "39_sl" &&
-      formik.values.movementType !== "motorlu"
-    ) {
-      formik.setFieldValue("movementType", "motorlu");
-      toast.warn("Hareket şekli motorlu olarak güncellendi.");
-    }
-
     // lamelType'ı uygun şekilde güncelle
     if (formik.values.lamelType !== selectedType) {
       formik.setFieldValue("lamelType", selectedType);
@@ -84,7 +76,7 @@ export function useFilterLamelThickness(
     if (productId === "panjur") {
       filterLamelThickness(formik);
     }
-  }, [width, height, lamelType, productId]);
+  }, [width, height, lamelType, productId, formik]);
 
   return {};
 }

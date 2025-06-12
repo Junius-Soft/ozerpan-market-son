@@ -5,18 +5,22 @@ export const lamelProperties: Record<string, LamelProperties> = {
   "39_sl": {
     maxWidth: 2300,
     maxHeight: 2400,
+    maxArea: 5.50, // m2
   },
   "55_sl": {
     maxWidth: 3200,
     maxHeight: 3100,
+    maxArea: 10.00, // m2
   },
   "45_se": {
     maxWidth: 4250,
     maxHeight: 3500,
+    maxArea: 14.00, // m2
   },
   "55_se": {
     maxWidth: 5500,
     maxHeight: 4000,
+    maxArea: 22.00, // m2
   },
 };
 

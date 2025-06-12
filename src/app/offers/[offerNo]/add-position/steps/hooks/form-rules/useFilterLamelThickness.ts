@@ -28,7 +28,6 @@ function filterLamelThickness(
     const isValid =
       (width <= props.maxWidth && height <= props.maxHeight) ||
       area <= props.maxArea;
-    console.log({ key, area, isValid, props });
     if (isValid) {
       validOptions.push({ id: key, label: key, name: key });
     }

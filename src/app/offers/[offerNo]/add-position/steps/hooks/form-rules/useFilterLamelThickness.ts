@@ -5,7 +5,6 @@ import { FormikProps } from "formik";
 import { PanjurSelections } from "@/types/panjur";
 import { lamelProperties } from "@/constants/panjur";
 import { ProductTabField } from "@/documents/products";
-import { toast } from "react-toastify";
 
 export type FormValues = Record<string, string | number | boolean>;
 
@@ -32,30 +31,30 @@ function filterLamelThickness(
       validOptions.push({ id: key, label: key, name: key });
     }
   }
-  console.log("validLamelThickness", validOptions);
 
   // Eğer mevcut lamelTickness validOptions içinde varsa, otomatik güncelleme yapma
-  const currentLamelTickness = formik.values.lamelTickness;
-  const isCurrentValid = validOptions.some(
-    (option) => option.id === currentLamelTickness
-  );
+  // const currentLamelTickness = formik.values.lamelTickness;
+  // const isCurrentValid = validOptions.some(
+  //   (option) => option.id === currentLamelTickness
+  // );
   const selectedLamel = validOptions[0].id;
   const selectedType = selectedLamel.includes("_se")
     ? "aluminyum_ekstruzyon"
     : selectedLamel.includes("_sl")
     ? "aluminyum_poliuretanli"
     : null;
-  if (!isCurrentValid) {
-    // lamelType'ı uygun şekilde güncelle
-    if (formik.values.lamelType !== selectedType) {
-      formik.setFieldValue("lamelType", selectedType);
-      toast.warn("Lamel tipi uygun şekilde güncellendi.");
-    }
-    // lamelTickness'ı güncelle
-    if (formik.values.lamelTickness !== selectedLamel) {
-      formik.setFieldValue("lamelTickness", selectedLamel);
-      toast.warn("Lamel kalınlığı uygun şekilde güncellendi.");
-    }
+
+  // lamelType'ı uygun şekilde güncelle
+  if (formik.values.lamelType !== selectedType) {
+    console.log("validLamelThickness", validOptions);
+
+    formik.setFieldValue("lamelType", selectedType);
+    // toast.warn("Lamel tipi uygun şekilde güncellendi.");
+  }
+  // lamelTickness'ı güncelle
+  if (formik.values.lamelTickness !== selectedLamel) {
+    formik.setFieldValue("lamelTickness", selectedLamel);
+    // toast.warn("Lamel kalınlığı uygun şekilde güncellendi.");
   }
 
   return validOptions.length > 0 ? validOptions : null;
@@ -69,13 +68,13 @@ export function useFilterLamelThickness(
 ) {
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
-  const { width, height, lamelType } = formik.values;
+  const { width, height } = formik.values;
 
   useEffect(() => {
     if (productId === "panjur") {
       filterLamelThickness(formik);
     }
-  }, [width, height, lamelType, productId, formik]);
+  }, [width, height, productId, formik]);
 
   return {};
 }

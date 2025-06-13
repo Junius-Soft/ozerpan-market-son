@@ -75,12 +75,9 @@ export function filterBoxSize(
   }
   console.log("validBoxOptions", validOptions);
   // Eğer mevcut boxType valid değilse ilk uygun kutuya set et
-  if (
-    validOptions.length > 0 &&
-    !validOptions.some((opt) => opt.id === formik.values.boxType)
-  ) {
+  if (validOptions.length > 0 && validOptions[0].id !== formik.values.boxType) {
     formik.setFieldValue("boxType", validOptions[0].id);
-    toast.warn("Kutu ölçüsü uygun şekilde güncellendi.");
+    // toast.warn("Kutu ölçüsü uygun şekilde güncellendi.");
   }
   return validOptions.length > 0 ? validOptions : null;
 }
@@ -93,29 +90,15 @@ export function useFilterBoxSize(
 ) {
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
-  const {
-    width,
-    height,
-    lamelType,
-    kutuOlcuAlmaSekli,
-    lamelTickness,
-    boxType,
-  } = formik.values;
+  const { width, height, lamelType, kutuOlcuAlmaSekli, lamelTickness } =
+    formik.values;
 
   useEffect(() => {
     if (productId === "panjur") {
       filterBoxSize(formik);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    width,
-    height,
-    lamelType,
-    kutuOlcuAlmaSekli,
-    lamelTickness,
-    productId,
-    boxType,
-  ]);
+  }, [width, height, lamelType, kutuOlcuAlmaSekli, lamelTickness, productId]);
 
   return {};
 }

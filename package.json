@@ -27,6 +27,7 @@
     "clsx": "^2.1.1",
     "dotenv": "^16.5.0",
     "formik": "^2.4.6",
+    "jsbarcode": "^3.12.1",
     "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",
     "lucide-react": "^0.511.0",
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/jsbarcode": "^3.11.4",
     "@types/node": "^20.17.57",
     "@types/react": "^19",
     "@types/react-dom": "^19",

@@ -142,9 +142,9 @@ export default function OffersPage() {
                     .toString()
                     .padStart(3, "0");
                   const newOffer: Offer = {
-                    id: `TEK-${currentDate.getFullYear()}-${String(
+                    id: `${currentDate.getFullYear()}${String(
                       currentDate.getMonth() + 1
-                    ).padStart(2, "0")}-${randomNumber}`,
+                    ).padStart(2, "0")}${randomNumber}`,
                     name: newOfferName,
                     created_at: currentDate.toLocaleDateString("tr-TR"),
                     status: "Taslak" as const,

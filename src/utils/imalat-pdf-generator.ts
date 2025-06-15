@@ -50,6 +50,12 @@ export class ImalatPDFGenerator {
   }
 
   public generateImalatList(data: ImalatPDFData): void {
+    // PDF başlığı (metadata)
+    this.doc.setProperties({
+      title:
+        (data.offer.name ? data.offer.name + " - " : "") + "Poz İmalat Listesi",
+    });
+
     const totalPages = data.positions.length;
     data.positions.forEach((position, idx) => {
       if (idx > 0) this.doc.addPage();

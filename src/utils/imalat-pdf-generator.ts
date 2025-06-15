@@ -34,7 +34,23 @@ export class ImalatPDFGenerator {
     this.doc.setFont("NotoSans");
   }
 
+  private addFooter(
+    offerId: string,
+    pozNo: string,
+    currentPage: number,
+    totalPages: number
+  ): void {
+    const footerText = `${offerId} / ${pozNo}    Sayfa : ${currentPage}-${totalPages}`;
+    this.doc.setFontSize(8);
+    this.doc.setFont("NotoSans", "normal");
+    const textWidth = this.doc.getTextWidth(footerText);
+    const x = this.pageWidth - this.margin - textWidth;
+    const y = this.pageHeight - 10;
+    this.doc.text(footerText, x, y);
+  }
+
   public generateImalatList(data: ImalatPDFData): void {
+    const totalPages = data.positions.length;
     data.positions.forEach((position, idx) => {
       if (idx > 0) this.doc.addPage();
       // pozNo'yu baştaki sıfırları atarak sayıya çevir
@@ -49,6 +65,8 @@ export class ImalatPDFGenerator {
       this.addOrderInfo();
       this.addProfileList(singleData);
       this.addAccessoryList(singleData);
+      // Footer ekle
+      this.addFooter(data.offer.id, pozNoNumber, idx + 1, totalPages);
     });
 
     // Open PDF in new tab using Blob URL for better compatibility
@@ -121,7 +139,7 @@ export class ImalatPDFGenerator {
       25
     );
     // Barkodun altına değerini yaz (en sağa dayalı)
-    this.doc.setFontSize(18);
+    this.doc.setFontSize(16);
     this.doc.setFont("NotoSans", "normal");
     const offerId = data.offer.id;
     const textY = barcodeY + 25 + 8;
@@ -165,7 +183,7 @@ export class ImalatPDFGenerator {
             (profileData.length + 1).toString(),
             product.stock_code || "",
             product.description || "",
-            "0",
+            product.size || "", // Ürün ölçüsü zorunlu
             "0,0/0,0", // Sol/Sağ Açı default
             product.quantity?.toString() || "1",
             "☐", // Ok sütunu: boş checkbox

@@ -26,7 +26,6 @@ import {
   apiDeletePositions,
   apiSaveOfferName,
   apiUpdateOfferStatus,
-  openImalatListPDF,
 } from "@/utils/offer-utils";
 
 export default function OfferDetailPage() {
@@ -205,10 +204,15 @@ export default function OfferDetailPage() {
           onBack={() => router.push("/offers")}
           onImalatList={() => {
             if (!offer || selectedPositions.length === 0) return;
-            const pos = offer.positions.find(
-              (p) => p.id === selectedPositions[0]
+            const positions = offer.positions.filter((p) =>
+              selectedPositions.includes(p.id)
             );
-            if (pos) openImalatListPDF(offer, pos);
+            if (positions.length > 0) {
+              // Çoklu pozisyonu tek PDF'te göstermek için yeni fonksiyon
+              import("@/utils/offer-utils").then((utils) => {
+                utils.openImalatListPDFMulti(offer, positions);
+              });
+            }
           }}
           onFiyatAnaliz={() => {
             /* TODO: Fiyat Analizi fonksiyonu */

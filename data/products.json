@@ -39,27 +39,32 @@
         {
           "id": "1",
           "name": "1'li Panjur",
-          "image": "/images/products/subProducts/panjur-1.png"
+          "image": "/images/products/subProducts/panjur-1.png",
+          "disabled": false
         },
         {
           "id": "2",
           "name": "2'li Panjur",
-          "image": "/images/products/subProducts/panjur-1.png"
+          "image": "/images/products/subProducts/panjur-1.png",
+          "disabled": true
         },
         {
           "id": "3",
           "name": "3'lü Panjur",
-          "image": "/images/products/subProducts/panjur-1.png"
+          "image": "/images/products/subProducts/panjur-1.png",
+          "disabled": true
         },
         {
           "id": "4",
           "name": "4'lü Panjur",
-          "image": "/images/products/subProducts/panjur-1.png"
+          "image": "/images/products/subProducts/panjur-1.png",
+          "disabled": true
         },
         {
           "id": "5",
           "name": "5'li Panjur",
-          "image": "/images/products/subProducts/panjur-1.png"
+          "image": "/images/products/subProducts/panjur-1.png",
+          "disabled": true
         }
       ]
     },

@@ -103,12 +103,17 @@ export function ProductStep({
                   className={`
                     relative p-6 cursor-pointer transition-all
                     ${
-                      selectedType === type.id
-                        ? "border-2 border-blue-500"
-                        : "hover:border-blue-500"
+                      !type.disabled
+                        ? "hover:border-blue-500"
+                        : "opacity-50 cursor-not-allowed"
+                    }
+                    ${
+                      selectedType === type.id ? "border-2 border-blue-500" : ""
                     }
                   `}
-                  onClick={() => onTypeSelect(type.id)}
+                  onClick={() =>
+                    (type && !type.disabled) ?? onTypeSelect(type.id)
+                  }
                 >
                   <div className="aspect-video relative mb-4 rounded-lg overflow-hidden bg-gray-100">
                     <Image
@@ -122,6 +127,13 @@ export function ProductStep({
                   <div>
                     <h3 className="text-lg font-semibold">{type.name}</h3>
                   </div>
+                  {type.disabled && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-900/10 rounded-lg">
+                      <span className="bg-gray-100 px-3 py-1 rounded-full text-sm font-medium text-gray-800">
+                        Yakında
+                      </span>
+                    </div>
+                  )}
                 </Card>
               ))}
           </div>

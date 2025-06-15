@@ -20,13 +20,26 @@ import { Offer } from "@/documents/offers";
 // }
 
 // For now, use built-in 'times' font which has better Turkish support than 'helvetica'
+// Noto Sans fontunu jsPDF'ye ekle (ilk PDF fonksiyonu çağrısında bir kez çalışır)
+import NotoSansRegular from "./NotoSans-Regular.js";
+
+// NOT: Tüm doc.setFont("times", "") ve doc.setFont("times") satırlarını doc.setFont("NotoSans", "normal") ile değiştiriyoruz.
+// Ayrıca autoTable'da styles: { font: "NotoSans" } kullanılacak.
+
+function registerNotoSans(doc: jsPDF) {
+  // @ts-expect-error: jsPDF VFS API tip tanımı yok, bilinçli olarak kullanılıyor
+  if (!doc.__notoSansRegistered) {
+    doc.addFileToVFS("NotoSans-Regular.ttf", NotoSansRegular);
+    doc.addFont("NotoSans-Regular.ttf", "NotoSans", "normal");
+    // @ts-expect-error: jsPDF'ye özel property, bilinçli olarak kullanılıyor
+    doc.__notoSansRegistered = true;
+  }
+}
+
 export function openImalatListPDF(offer: Offer, position: Position) {
-  const doc = new jsPDF({
-    orientation: "p",
-    unit: "mm",
-    format: "a4",
-  });
-  doc.setFont("times", "");
+  const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
+  registerNotoSans(doc);
+  doc.setFont("NotoSans", "normal");
 
   // Header
   doc.setFontSize(14);
@@ -56,18 +69,18 @@ export function openImalatListPDF(offer: Offer, position: Position) {
       item.stock_code,
       item.type || "",
       item.description,
-      "", // Ölçü (size) alanı yoksa boş bırak
-      "", // Sol/Sağ Açık (side) alanı yoksa boş bırak
+      "",
+      "",
       item.quantity,
       "",
     ]),
     theme: "grid",
     headStyles: { fillColor: [230, 230, 230] },
-    styles: { fontSize: 9, font: "times" },
+    styles: { fontSize: 9, font: "NotoSans" },
     margin: { left: 10, right: 10 },
     didDrawPage: (data: { settings: { startY: number } }) => {
       doc.setFontSize(11);
-      doc.setFont("times", "");
+      doc.setFont("NotoSans", "normal");
       doc.text("Profil Listesi", 10, data.settings.startY - 6);
     },
   });
@@ -87,21 +100,111 @@ export function openImalatListPDF(offer: Offer, position: Position) {
     ]),
     theme: "grid",
     headStyles: { fillColor: [230, 230, 230] },
-    styles: { fontSize: 9, font: "times" },
+    styles: { fontSize: 9, font: "NotoSans" },
     margin: { left: 10, right: 10 },
     didDrawPage: (data: { settings: { startY: number } }) => {
       doc.setFontSize(11);
-      doc.setFont("times", "");
+      doc.setFont("NotoSans", "normal");
       doc.text("Aksesuar Listesi", 10, data.settings.startY - 6);
     },
   });
 
   // Footer
   doc.setFontSize(8);
-  doc.setFont("times", "");
+  doc.setFont("NotoSans", "normal");
   doc.text(`${offer.id} / 1    Sayfa : 1-2`, 200, 290, { align: "right" });
 
   // Open in new tab
+  window.open(doc.output("bloburl"), "_blank");
+}
+
+export function openImalatListPDFMulti(offer: Offer, positions: Position[]) {
+  const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
+  registerNotoSans(doc);
+  doc.setFont("NotoSans", "normal");
+
+  positions.forEach((position, idx) => {
+    if (idx > 0) doc.addPage();
+    // Header
+    doc.setFontSize(14);
+    doc.text(`${offer.name} / ${offer.id}`, 10, 15);
+    doc.setFontSize(10);
+    doc.text(`Miktar: ${position.quantity} Adet`, 160, 15, { align: "right" });
+    doc.setFontSize(12);
+    doc.text("POZ İMALAT LİSTESİ", 10, 30);
+
+    // Profil Listesi Table
+    autoTable(doc, {
+      startY: 40,
+      head: [
+        [
+          "S.No",
+          "StokKodu",
+          "Konum",
+          "Açıklama",
+          "Ölçü",
+          "Sol/Sağ Açık",
+          "Miktar",
+          "Ok",
+        ],
+      ],
+      body: (position.selectedProducts?.products || []).map((item, pidx) => [
+        pidx + 1,
+        item.stock_code,
+        item.type || "",
+        item.description,
+        "",
+        "",
+        item.quantity,
+        "",
+      ]),
+      theme: "grid",
+      headStyles: { fillColor: [230, 230, 230] },
+      styles: { fontSize: 9, font: "NotoSans" },
+      margin: { left: 10, right: 10 },
+      didDrawPage: (data: { settings: { startY: number } }) => {
+        doc.setFontSize(11);
+        doc.setFont("NotoSans", "normal");
+        doc.text("Profil Listesi", 10, data.settings.startY - 6);
+      },
+    });
+
+    // Aksesuar Listesi Table
+    const lastY =
+      (doc as unknown as { lastAutoTable?: { finalY?: number } }).lastAutoTable
+        ?.finalY || 60;
+    autoTable(doc, {
+      startY: lastY + 10,
+      head: [["S.No", "StokKodu", "Açıklama", "Miktar"]],
+      body: (position.selectedProducts?.accessories || []).map((item, aidx) => [
+        aidx + 1,
+        item.stock_code,
+        item.description,
+        `${item.quantity || 1} Adet`,
+      ]),
+      theme: "grid",
+      headStyles: { fillColor: [230, 230, 230] },
+      styles: { fontSize: 9, font: "NotoSans" },
+      margin: { left: 10, right: 10 },
+      didDrawPage: (data: { settings: { startY: number } }) => {
+        doc.setFontSize(11);
+        doc.setFont("NotoSans", "normal");
+        doc.text("Aksesuar Listesi", 10, data.settings.startY - 6);
+      },
+    });
+
+    // Footer
+    doc.setFontSize(8);
+    doc.setFont("NotoSans", "normal");
+    doc.text(
+      `${offer.id} / ${idx + 1}    Sayfa : ${idx + 1}-${positions.length}`,
+      200,
+      290,
+      { align: "right" }
+    );
+  });
+
+  // Tek PDF olarak aç
   window.open(doc.output("bloburl"), "_blank");
 }
 

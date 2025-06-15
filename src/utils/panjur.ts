@@ -213,11 +213,13 @@ export const findSmartHomePrice = (
 
 export const findMotorPrice = (
   prices: PriceItem[],
+  movementType: "manuel" | "motorlu",
   motorMarka?: string,
   motorModel?: string,
   motorSekli?: string
 ): [number, SelectedProduct | null] => {
-  if (!motorMarka || !motorModel || !motorSekli) return [0, null];
+  if (movementType !== "motorlu" || !motorMarka || !motorModel || !motorSekli)
+    return [0, null];
 
   const motorPrices = prices.filter(
     (price) => price.type.toLowerCase() === "panjur_motorlari"

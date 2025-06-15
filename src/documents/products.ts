@@ -104,6 +104,7 @@ export interface ProductType {
   id: string;
   name: string;
   image: string;
+  disabled: boolean;
 }
 
 // Function to get products from JSON file

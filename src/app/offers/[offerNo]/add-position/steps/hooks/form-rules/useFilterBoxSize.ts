@@ -6,7 +6,6 @@ import { PanjurSelections } from "@/types/panjur";
 import { maxLamelHeights } from "@/constants/panjur";
 import { ProductTabField } from "@/documents/products";
 import { getBoxHeight } from "@/utils/panjur";
-import { toast } from "react-toastify";
 
 export type FormValues = Record<string, string | number | boolean>;
 
@@ -19,7 +18,6 @@ export function filterBoxSize(
   const height = Number(values.height);
   const selectedLamelTickness = values.lamelTickness as string;
   const kutuOlcuAlmaSekli = values.kutuOlcuAlmaSekli as string;
-  const currentMovementType = values.movementType as "manuel" | "motorlu";
 
   // Kutu ölçüleri ve label'ları
   const boxOptions = [
@@ -64,13 +62,13 @@ export function filterBoxSize(
     if (isValid && movementType) {
       validOptions.push({ id: box.id, name: box.name });
       // Eğer mevcut kutu seçiliyse movementType'ı da güncelle
-      if (
-        formik.values.boxType === box.id &&
-        currentMovementType !== movementType
-      ) {
-        formik.setFieldValue("movementType", movementType);
-        toast.warn(`Hareket tipi ${movementType} olarak güncellendi.`);
-      }
+      // if (
+      //   formik.values.boxType === box.id &&
+      //   currentMovementType !== movementType
+      // ) {
+      //   formik.setFieldValue("movementType", movementType);
+      //   toast.warn(`Hareket tipi ${movementType} olarak güncellendi.`);
+      // }
     }
   }
   console.log("validBoxOptions", validOptions);
@@ -90,15 +88,29 @@ export function useFilterBoxSize(
 ) {
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
-  const { width, height, lamelType, kutuOlcuAlmaSekli, lamelTickness } =
-    formik.values;
+  const {
+    width,
+    height,
+    lamelType,
+    kutuOlcuAlmaSekli,
+    lamelTickness,
+    movementType,
+  } = formik.values;
 
   useEffect(() => {
     if (productId === "panjur") {
       filterBoxSize(formik);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width, height, lamelType, kutuOlcuAlmaSekli, lamelTickness, productId]);
+  }, [
+    width,
+    height,
+    lamelType,
+    kutuOlcuAlmaSekli,
+    lamelTickness,
+    productId,
+    movementType,
+  ]);
 
   return {};
 }

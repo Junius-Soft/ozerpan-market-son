@@ -149,6 +149,7 @@ export const usePanjurCalculator = (
       // Motor fiyatı hesaplama
       const [motorPrice, motorSelectedProduct] = findMotorPrice(
         prices,
+        values.movementType,
         values.motorMarka,
         values.motorModel,
         values.motorSekli

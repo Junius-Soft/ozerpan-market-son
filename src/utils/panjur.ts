@@ -62,12 +62,14 @@ export const normalizeColor = (color: string): string => {
 
 export const createSelectedProduct = (
   priceItem: PriceItem,
-  quantity: number
+  quantity: number,
+  size: string = "-"
 ): SelectedProduct => {
   return {
     ...priceItem,
     quantity,
     totalPrice: parseFloat(priceItem.price) * quantity,
+    size,
   };
 };
 

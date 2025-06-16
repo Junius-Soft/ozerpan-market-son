@@ -97,31 +97,6 @@ const SelectInput: React.FC<
           });
         }
 
-        // CustomFilter kontrolü
-        // if (filter.field === "customFilter" && filter.properties) {
-        //   if (fieldDef.id === "lamelTickness") {
-        //     const width = Number(values["width"]) || 0;
-        //     const height = Number(values["height"]) || 0;
-        //     const area = (width * height) / 1_000_000;
-        //     return filteredOpts.filter((option) => {
-        //       const optionId = option.id || option.name;
-        //       const properties = filter.properties?.[optionId] as
-        //         | LamelProperties
-        //         | undefined;
-
-        //       if (properties) {
-        //         const withinArea =
-        //           !properties.maxArea || area <= properties.maxArea;
-        //         const withinMaxWidth =
-        //           !properties.maxWidth || width <= properties.maxWidth;
-        //         const withinMaxHeight =
-        //           !properties.maxHeight || height <= properties.maxHeight;
-        //         return (withinMaxWidth && withinMaxHeight) || withinArea;
-        //       }
-        //       return true;
-        //     });
-        //   }
-        // }
         return filteredOpts;
       }, options);
     }
@@ -190,6 +165,26 @@ const SelectInput: React.FC<
   // Eğer sadece 1 seçenek varsa, butonu disabled yap ve modal açılmasın
   const isSingleOption = filteredOptions.length === 1;
 
+  // Yardımcı fonksiyon: Arka plan rengine göre uygun text rengi seç (siyah/beyaz)
+  function getContrastTextColor(bgColor: string): string {
+    // Hex kodunu temizle
+    const hex = bgColor.replace("#", "");
+    // Kısa hex (#abc) -> uzun hex (#aabbcc)
+    const fullHex =
+      hex.length === 3
+        ? hex
+            .split("")
+            .map((x) => x + x)
+            .join("")
+        : hex;
+    const r = parseInt(fullHex.substring(0, 2), 16);
+    const g = parseInt(fullHex.substring(2, 4), 16);
+    const b = parseInt(fullHex.substring(4, 6), 16);
+    // Luminance hesapla
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return luminance > 0.6 ? "#222" : "#fff";
+  }
+
   return (
     <CustomDialog
       open={open}
@@ -206,6 +201,28 @@ const SelectInput: React.FC<
             if (!isSingleOption) setOpen(true);
           }}
           disabled={isSingleOption || fieldDef.disabled}
+          style={(() => {
+            // Seçili option'da color varsa uygula
+            if (selectedOption?.color) {
+              return {
+                backgroundColor: selectedOption.color,
+                color: getContrastTextColor(selectedOption.color),
+              };
+            }
+            // Eğer field id'si ..._color ile bitiyorsa ve seçili option yoksa, mevcut value'ya karşılık gelen option'u bul
+            if (fieldDef.id.endsWith("_color")) {
+              const currentOpt = filteredOptions.find(
+                (opt) => (opt.id || opt.name) === currentValue
+              );
+              if (currentOpt?.color) {
+                return {
+                  backgroundColor: currentOpt.color,
+                  color: getContrastTextColor(currentOpt.color),
+                };
+              }
+            }
+            return {};
+          })()}
         >
           {selectedOption?.image && (
             <Image
@@ -225,33 +242,44 @@ const SelectInput: React.FC<
       showTitle={true}
     >
       <div className="grid grid-cols-2 gap-4">
-        {filteredOptions.map((option) => (
-          <button
-            key={option.id || option.name}
-            type="button"
-            className={`flex flex-col items-center justify-center border rounded-lg p-2 transition hover:border-blue-500 focus:outline-none ${
-              (option.id || option.name) === currentValue
-                ? "border-blue-500 ring-2 ring-blue-300"
-                : "border-muted"
-            }`}
-            onClick={() => handleSelect(option.id || option.name)}
-            tabIndex={0}
-            autoFocus={false}
-          >
-            {option.image && (
-              <Image
-                src={option.image}
-                alt={option.name}
-                width={96}
-                height={96}
-                className="object-contain rounded mb-2"
-              />
-            )}
-            <span className="text-center font-medium break-words max-w-[140px]">
-              {option.name}
-            </span>
-          </button>
-        ))}
+        {filteredOptions.map((option) => {
+          const hasColor = !!option.color;
+          const style =
+            hasColor && option.color
+              ? {
+                  backgroundColor: option.color,
+                  color: getContrastTextColor(option.color),
+                }
+              : {};
+          return (
+            <button
+              key={option.id || option.name}
+              type="button"
+              className={`flex flex-col items-center justify-center border rounded-lg p-2 transition hover:border-blue-500 focus:outline-none ${
+                (option.id || option.name) === currentValue
+                  ? "border-blue-500 ring-2 ring-blue-300"
+                  : "border-muted"
+              }`}
+              onClick={() => handleSelect(option.id || option.name)}
+              tabIndex={0}
+              autoFocus={false}
+              style={style}
+            >
+              {option.image && (
+                <Image
+                  src={option.image}
+                  alt={option.name}
+                  width={96}
+                  height={96}
+                  className="object-contain rounded mb-2"
+                />
+              )}
+              <span className="text-center font-medium break-words max-w-[140px]">
+                {option.name}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </CustomDialog>
   );

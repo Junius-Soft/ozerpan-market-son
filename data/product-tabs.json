@@ -846,18 +846,26 @@
             "name": "Lamel Rengi ",
             "type": "select",
             "options": [
-              { "id": "antrasit_gri", "name": "Antrasit Gri" },
-              { "id": "metalik_gri", "name": "Metalik Gri" },
-              { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahverengi", "name": "Kahverengi" },
-              { "id": "krem", "name": "Krem" },
-              { "id": "vizon", "name": "Vizon" },
-              { "id": "altın_meşe", "name": "Altın Meşe" },
-              { "id": "fındık", "name": "Fındık" },
-              { "id": "açık_bej", "name": "Açık Bej" },
-              { "id": "koyu_bej", "name": "Koyu Bej" },
-              { "id": "açık_bronz", "name": "Açık Bronz" },
-              { "id": "kül_siyahı", "name": "Kül Siyahı" }
+              {
+                "id": "antrasit_gri",
+                "name": "Antrasit Gri",
+                "color": "#4B4B4B"
+              },
+              {
+                "id": "metalik_gri",
+                "name": "Metalik Gri",
+                "color": "#7D7D7D"
+              },
+              { "id": "beyaz", "name": "Beyaz", "color": "#FFFFFF" },
+              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
+              { "id": "krem", "name": "Krem", "color": "#E6D8C9" },
+              { "id": "vizon", "name": "Vizon", "color": "#A89F91" },
+              { "id": "altın_meşe", "name": "Altın Meşe", "color": "#D1B48C" },
+              { "id": "fındık", "name": "Fındık", "color": "#8B5B29" },
+              { "id": "açık_bej", "name": "Açık Bej", "color": "#F5F5DC" },
+              { "id": "koyu_bej", "name": "Koyu Bej", "color": "#D2B48C" },
+              { "id": "açık_bronz", "name": "Açık Bronz", "color": "#CD853F" },
+              { "id": "kül_siyahı", "name": "Kül Siyahı", "color": "#696969" }
             ],
             "default": "antrasit_gri"
           },
@@ -866,13 +874,21 @@
             "name": "Kutu Rengi ",
             "type": "select",
             "options": [
-              { "id": "antrasit_gri", "name": "Antrasit Gri" },
-              { "id": "metalik_gri", "name": "Metalik Gri" },
-              { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahverengi", "name": "Kahverengi" },
-              { "id": "krem", "name": "Krem" },
-              { "id": "altın_meşe", "name": "Altın Meşe" },
-              { "id": "ral_boyalı", "name": "Ral Boyalı" }
+              {
+                "id": "antrasit_gri",
+                "name": "Antrasit Gri",
+                "color": "#4B4B4B"
+              },
+              {
+                "id": "metalik_gri",
+                "name": "Metalik Gri",
+                "color": "#7D7D7D"
+              },
+              { "id": "beyaz", "name": "Beyaz", "color": "#FFFFFF" },
+              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
+              { "id": "krem", "name": "Krem", "color": "#E6D8C9" },
+              { "id": "altın_meşe", "name": "Altın Meşe", "color": "#D1B48C" },
+              { "id": "ral_boyalı", "name": "Ral Boyalı", "color": "#FFFFFF" }
             ],
             "default": "antrasit_gri"
           },
@@ -881,14 +897,22 @@
             "name": "Alt Parça Rengi ",
             "type": "select",
             "options": [
-              { "id": "antrasit_gri", "name": "Antrasit Gri" },
-              { "id": "metalik_gri", "name": "Metalik Gri" },
-              { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahverengi", "name": "Kahverengi" },
-              { "id": "krem", "name": "Krem" },
-              { "id": "altın_meşe", "name": "Altın Meşe" },
-              { "id": "findik", "name": "Fındık" },
-              { "id": "ral_boyalı", "name": "Ral Boyalı" }
+              {
+                "id": "antrasit_gri",
+                "name": "Antrasit Gri",
+                "color": "#4B4B4B"
+              },
+              {
+                "id": "metalik_gri",
+                "name": "Metalik Gri",
+                "color": "#7D7D7D"
+              },
+              { "id": "beyaz", "name": "Beyaz", "color": "#FFFFFF" },
+              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
+              { "id": "krem", "name": "Krem", "color": "#E6D8C9" },
+              { "id": "altın_meşe", "name": "Altın Meşe", "color": "#D1B48C" },
+              { "id": "fındık", "name": "Fındık", "color": "#8B5B29" },
+              { "id": "ral_boyalı", "name": "Ral Boyalı", "color": "#FFFFFF" }
             ],
             "default": "antrasit_gri"
           },
@@ -897,14 +921,22 @@
             "name": "Dikme Rengi ",
             "type": "select",
             "options": [
-              { "id": "antrasit_gri", "name": "Antrasit Gri" },
-              { "id": "metalik_gri", "name": "Metalik Gri" },
-              { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahverengi", "name": "Kahverengi" },
-              { "id": "krem", "name": "Krem" },
-              { "id": "altın_meşe", "name": "Altın Meşe" },
-              { "id": "findik", "name": "Fındık" },
-              { "id": "ral_boyalı", "name": "Ral Boyalı" }
+              {
+                "id": "antrasit_gri",
+                "name": "Antrasit Gri",
+                "color": "#4B4B4B"
+              },
+              {
+                "id": "metalik_gri",
+                "name": "Metalik Gri",
+                "color": "#7D7D7D"
+              },
+              { "id": "beyaz", "name": "Beyaz", "color": "#FFFFFF" },
+              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
+              { "id": "krem", "name": "Krem", "color": "#E6D8C9" },
+              { "id": "altın_meşe", "name": "Altın Meşe", "color": "#D1B48C" },
+              { "id": "fındık", "name": "Fındık", "color": "#8B5B29" },
+              { "id": "ral_boyalı", "name": "Ral Boyalı", "color": "#FFFFFF" }
             ],
             "default": "antrasit_gri"
           }
@@ -990,7 +1022,7 @@
             "type": "select",
             "options": [
               { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahverengi", "name": "Kahverengi" },
+              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
               { "id": "antrasit", "name": "Antrasit" }
             ],
             "default": "beyaz"
@@ -1078,7 +1110,7 @@
             "type": "select",
             "options": [
               { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahverengi", "name": "Kahverengi" },
+              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
               { "id": "siyah", "name": "Siyah" }
             ],
             "default": "beyaz"
@@ -1195,7 +1227,7 @@
             "type": "select",
             "options": [
               { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahverengi", "name": "Kahverengi" },
+              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
               { "id": "siyah", "name": "Siyah" },
               { "id": "wenge", "name": "Wenge" },
               { "id": "meşe", "name": "Meşe" }

@@ -14,6 +14,7 @@ export interface OptionWithBrand {
   id?: string;
   name: string;
   image?: string; // opsiyonel resim desteği
+  color?: string; // renk desteği eklendi
 }
 
 export interface ProductTabField {

@@ -1,5 +1,4 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { X } from "lucide-react";
 import { ReactNode } from "react";
 
 interface CustomDialogProps {
@@ -16,13 +15,18 @@ export function CustomDialog({
   description,
   showTitle = true,
   children,
-}: CustomDialogProps) {
+  open,
+  onOpenChange,
+}: CustomDialogProps & {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}) {
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay className="bg-black/50 dark:bg-black/80 data-[state=open]:animate-overlayShow fixed inset-0" />
-        <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[600px] translate-x-[-50%] translate-y-[-50%] rounded-lg bg-background border p-6 shadow-lg">
+        <Dialog.Overlay className="bg-black/50 dark:bg-black/80 fixed inset-0" />
+        <Dialog.Content className="fixed top-1/2 left-1/2 max-h-[85vh] w-[90vw] max-w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-lg bg-background border p-6 shadow-lg">
           <div className="flex justify-between items-center mb-4">
             <Dialog.Title
               className={
@@ -33,11 +37,6 @@ export function CustomDialog({
             >
               {title}
             </Dialog.Title>
-            <Dialog.Close asChild>
-              <button className="rounded-full w-6 h-6 inline-flex items-center justify-center text-muted-foreground hover:bg-muted hover:text-foreground">
-                <X className="w-4 h-4" />
-              </button>
-            </Dialog.Close>
           </div>
           {description && (
             <Dialog.Description className="sr-only">

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useSearchParams } from "next/navigation";
 import { FormikProps } from "formik";
@@ -69,12 +69,15 @@ export function useFilterLamelThickness(
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
   const { width, height } = formik.values;
+  const [validLamelThickness, setValidLamelThickness] = useState<
+    ProductTabField["options"] | null
+  >(null);
 
   useEffect(() => {
     if (productId === "panjur") {
-      filterLamelThickness(formik);
+      setValidLamelThickness(filterLamelThickness(formik));
     }
   }, [width, height, productId, formik]);
 
-  return {};
+  return { validLamelThickness };
 }

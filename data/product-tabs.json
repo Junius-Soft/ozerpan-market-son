@@ -845,17 +845,17 @@
             "type": "select",
             "options": [
               { "id": "antrasit_gri", "name": "Antrasit Gri" },
-              { "id": "metalic_gray", "name": "Metalik Gri" },
+              { "id": "metalik_gri", "name": "Metalik Gri" },
               { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahve", "name": "Kahve" },
+              { "id": "kahverengi", "name": "Kahverengi" },
               { "id": "krem", "name": "Krem" },
               { "id": "vizon", "name": "Vizon" },
-              { "id": "altin_mese", "name": "Altın Meşe" },
-              { "id": "findik", "name": "Fındık" },
-              { "id": "acik_bej", "name": "Açık Bej" },
+              { "id": "altın_meşe", "name": "Altın Meşe" },
+              { "id": "fındık", "name": "Fındık" },
+              { "id": "açık_bej", "name": "Açık Bej" },
               { "id": "koyu_bej", "name": "Koyu Bej" },
-              { "id": "acik_bronz", "name": "Açık Bronz" },
-              { "id": "kul_siyahi", "name": "Kül Siyahı" }
+              { "id": "açık_bronz", "name": "Açık Bronz" },
+              { "id": "kül_siyahı", "name": "Kül Siyahı" }
             ],
             "default": "antrasit_gri"
           },
@@ -865,12 +865,12 @@
             "type": "select",
             "options": [
               { "id": "antrasit_gri", "name": "Antrasit Gri" },
-              { "id": "metalic_gray", "name": "Metalik Gri" },
+              { "id": "metalik_gri", "name": "Metalik Gri" },
               { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahve", "name": "Kahve" },
+              { "id": "kahverengi", "name": "Kahverengi" },
               { "id": "krem", "name": "Krem" },
-              { "id": "altin_mese", "name": "Altın Meşe" },
-              { "id": "ral_boyali", "name": "Ral Boyalı" }
+              { "id": "altın_meşe", "name": "Altın Meşe" },
+              { "id": "ral_boyalı", "name": "Ral Boyalı" }
             ],
             "default": "antrasit_gri"
           },
@@ -880,13 +880,13 @@
             "type": "select",
             "options": [
               { "id": "antrasit_gri", "name": "Antrasit Gri" },
-              { "id": "metalic_gray", "name": "Metalik Gri" },
+              { "id": "metalik_gri", "name": "Metalik Gri" },
               { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahve", "name": "Kahve" },
+              { "id": "kahverengi", "name": "Kahverengi" },
               { "id": "krem", "name": "Krem" },
-              { "id": "altin_mese", "name": "Altın Meşe" },
+              { "id": "altın_meşe", "name": "Altın Meşe" },
               { "id": "findik", "name": "Fındık" },
-              { "id": "ral_boyali", "name": "Ral Boyalı" }
+              { "id": "ral_boyalı", "name": "Ral Boyalı" }
             ],
             "default": "antrasit_gri"
           },
@@ -898,11 +898,11 @@
               { "id": "antrasit_gri", "name": "Antrasit Gri" },
               { "id": "metalik_gri", "name": "Metalik Gri" },
               { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahve", "name": "Kahve" },
+              { "id": "kahverengi", "name": "Kahverengi" },
               { "id": "krem", "name": "Krem" },
-              { "id": "altin_mese", "name": "Altın Meşe" },
+              { "id": "altın_meşe", "name": "Altın Meşe" },
               { "id": "findik", "name": "Fındık" },
-              { "id": "ral_boyali", "name": "Ral Boyalı" }
+              { "id": "ral_boyalı", "name": "Ral Boyalı" }
             ],
             "default": "antrasit_gri"
           }
@@ -988,7 +988,7 @@
             "type": "select",
             "options": [
               { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahve", "name": "Kahve" },
+              { "id": "kahverengi", "name": "Kahverengi" },
               { "id": "antrasit", "name": "Antrasit" }
             ],
             "default": "beyaz"
@@ -1076,7 +1076,7 @@
             "type": "select",
             "options": [
               { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahve", "name": "Kahve" },
+              { "id": "kahverengi", "name": "Kahverengi" },
               { "id": "siyah", "name": "Siyah" }
             ],
             "default": "beyaz"
@@ -1193,7 +1193,7 @@
             "type": "select",
             "options": [
               { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahve", "name": "Kahve" },
+              { "id": "kahverengi", "name": "Kahverengi" },
               { "id": "siyah", "name": "Siyah" },
               { "id": "wenge", "name": "Wenge" },
               { "id": "meşe", "name": "Meşe" }

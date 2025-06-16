@@ -10,6 +10,10 @@ interface DynamicPreviewProps {
   height: number;
   className?: string;
   productId: string;
+  lamelColor?: string;
+  boxColor?: string;
+  subPartColor?: string;
+  dikmeColor?: string;
 }
 
 export function DynamicPreview({
@@ -17,13 +21,25 @@ export function DynamicPreview({
   height,
   className = "",
   productId,
+  lamelColor,
+  boxColor,
+  subPartColor,
+  dikmeColor,
 }: DynamicPreviewProps) {
   // Select the appropriate preview component based on the component name
   const renderPreview = () => {
     switch (productId) {
       case "panjur":
         return (
-          <ShutterPreview width={width} height={height} className={className} />
+          <ShutterPreview
+            width={width}
+            height={height}
+            className={className}
+            lamelColor={lamelColor}
+            boxColor={boxColor}
+            subPartColor={subPartColor}
+            dikmeColor={dikmeColor}
+          />
         );
       case "WindowPreview":
         return (

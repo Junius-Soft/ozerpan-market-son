@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import type { Product } from "@/documents/products";
 import { getProductPreview } from "@/lib/product-preview";
 import { DynamicForm } from "./components/dynamic-form";
+import { getColorHexFromProductTabs } from "@/utils/get-color-hex";
 
 import { FormikProps } from "formik";
 import { ProductPreview } from "./components/product-preview";
@@ -52,6 +53,16 @@ export function DetailsStep({ formik, selectedProduct }: DetailsStepProps) {
   ) => {
     const activeTab = availableTabs.find((tab) => tab.id === currentTab);
 
+    // --- Renk kodlarını bulmak için yardımcı fonksiyon ---
+    function getColorHex(fieldId: string): string | undefined {
+      return getColorHexFromProductTabs(
+        selectedProduct?.tabs ?? [],
+        formik.values as Record<string, unknown>,
+        fieldId
+      );
+    }
+    // ---
+
     if (activeTab?.content?.fields && activeTab.content.fields.length > 0) {
       const values = formik.values;
       return (
@@ -67,6 +78,10 @@ export function DetailsStep({ formik, selectedProduct }: DetailsStepProps) {
                   height: values.height,
                   className: "p-4",
                   productId: selectedProduct?.id || "",
+                  lamelColor: getColorHex("lamel_color"),
+                  boxColor: getColorHex("box_color"),
+                  subPartColor: getColorHex("subPart_color"),
+                  dikmeColor: getColorHex("dikme_color"),
                 })}
               </div>
             </div>

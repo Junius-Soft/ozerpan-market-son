@@ -7,12 +7,20 @@ interface ShutterPreviewProps {
   width: number;
   height: number;
   className?: string;
+  lamelColor?: string;
+  boxColor?: string;
+  subPartColor?: string;
+  dikmeColor?: string;
 }
 
 export function ShutterPreview({
   width = 1000,
   height = 1000,
   className = "",
+  lamelColor,
+  boxColor,
+  subPartColor,
+  dikmeColor,
 }: ShutterPreviewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -30,16 +38,16 @@ export function ShutterPreview({
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
-      // Define colors based on theme
+      // Define colors based on theme and props
       const colors = {
-        frame: theme === "dark" ? "#94a3b8" : "#475569",
-        frameBackground: theme === "dark" ? "#64748b" : "#94a3b8",
-        frameBorder: theme === "dark" ? "#94a3b8" : "#64748b",
-        motor: theme === "dark" ? "#64748b" : "#475569",
-        lamelLight: theme === "dark" ? "#94a3b8" : "#e2e8f0",
-        lamelDark: theme === "dark" ? "#64748b" : "#94a3b8",
+        frame: dikmeColor || (theme === "dark" ? "#94a3b8" : "#475569"),
+        frameBackground: boxColor || (theme === "dark" ? "#64748b" : "#94a3b8"),
+        frameBorder: dikmeColor || (theme === "dark" ? "#94a3b8" : "#64748b"),
+        motor: subPartColor || (theme === "dark" ? "#64748b" : "#475569"),
+        lamelLight: lamelColor || (theme === "dark" ? "#94a3b8" : "#e2e8f0"),
+        lamelDark: lamelColor || (theme === "dark" ? "#64748b" : "#94a3b8"),
         text: theme === "dark" ? "#e2e8f0" : "#1e293b",
-        lamelBorder: theme === "dark" ? "#94a3b8" : "#64748b",
+        lamelBorder: lamelColor || (theme === "dark" ? "#94a3b8" : "#64748b"),
       };
 
       // Clear canvas
@@ -197,7 +205,7 @@ export function ShutterPreview({
       ctx.fillText(`${height}mm`, 0, 0);
       ctx.restore();
     },
-    [theme] // theme'i dependency array'e ekledik
+    [theme, lamelColor, boxColor, subPartColor, dikmeColor] // theme'i dependency array'e ekledik
   );
 
   const updateCanvasSize = useCallback(() => {

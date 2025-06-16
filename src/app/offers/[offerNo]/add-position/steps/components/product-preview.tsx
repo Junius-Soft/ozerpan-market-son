@@ -16,6 +16,7 @@ import {
 import { usePanjurCalculator } from "../hooks/usePanjurCalculator";
 import { useFormikContext } from "formik";
 import { PanjurSelections, PriceItem, SelectedProduct } from "@/types/panjur";
+import { getColorHexFromProductTabs } from "@/utils/get-color-hex";
 
 interface ProductField {
   id: string;
@@ -80,6 +81,16 @@ export function ProductPreview({ selectedProduct }: ProductPreviewProps) {
     selectedProduct?.tabs ?? []
   );
 
+  // --- Renk kodlarını bulmak için yardımcı fonksiyon ---
+  function getColorHex(fieldId: string): string | undefined {
+    return getColorHexFromProductTabs(
+      selectedProduct?.tabs ?? [],
+      values as unknown as Record<string, unknown>,
+      fieldId
+    );
+  }
+  // ---
+
   if (!selectedProduct) return null;
   return (
     <Card className="p-6">
@@ -92,6 +103,10 @@ export function ProductPreview({ selectedProduct }: ProductPreviewProps) {
             height: parseFloat(values.height?.toString() ?? "0"),
             className: "p-4",
             productId: selectedProduct.id,
+            lamelColor: getColorHex("lamel_color"),
+            boxColor: getColorHex("box_color"),
+            subPartColor: getColorHex("subPart_color"),
+            dikmeColor: getColorHex("dikme_color"),
           })}
         </div>
 

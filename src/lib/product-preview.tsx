@@ -9,6 +9,10 @@ interface ProductPreviewProps {
   height?: number;
   className?: string;
   productId: string;
+  lamelColor?: string;
+  boxColor?: string;
+  subPartColor?: string;
+  dikmeColor?: string;
 }
 
 export function getProductPreview({
@@ -17,6 +21,10 @@ export function getProductPreview({
   height = 0,
   className = "",
   productId,
+  lamelColor,
+  boxColor,
+  subPartColor,
+  dikmeColor,
 }: ProductPreviewProps) {
   if (!product) return null;
 
@@ -28,6 +36,10 @@ export function getProductPreview({
       width={width}
       height={height}
       className={className}
+      lamelColor={lamelColor}
+      boxColor={boxColor}
+      subPartColor={subPartColor}
+      dikmeColor={dikmeColor}
     />
   );
 }

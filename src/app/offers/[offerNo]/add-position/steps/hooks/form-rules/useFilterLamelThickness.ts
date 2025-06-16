@@ -5,6 +5,7 @@ import { FormikProps } from "formik";
 import { PanjurSelections } from "@/types/panjur";
 import { lamelProperties } from "@/constants/panjur";
 import { ProductTabField } from "@/documents/products";
+import { toast } from "react-toastify";
 
 export type FormValues = Record<string, string | number | boolean>;
 
@@ -37,7 +38,11 @@ function filterLamelThickness(
   // const isCurrentValid = validOptions.some(
   //   (option) => option.id === currentLamelTickness
   // );
-  const selectedLamel = validOptions[0].id;
+  if (validOptions.length === 0) {
+    toast.warn("Seçilen ölçülere uygun lamel bulunamadı.");
+    return null;
+  }
+  const selectedLamel = validOptions[0]?.id;
   const selectedType = selectedLamel.includes("_se")
     ? "aluminyum_ekstruzyon"
     : selectedLamel.includes("_sl")
@@ -46,8 +51,6 @@ function filterLamelThickness(
 
   // lamelType'ı uygun şekilde güncelle
   if (formik.values.lamelType !== selectedType) {
-    console.log("validLamelThickness", validOptions);
-
     formik.setFieldValue("lamelType", selectedType);
     // toast.warn("Lamel tipi uygun şekilde güncellendi.");
   }
@@ -56,6 +59,7 @@ function filterLamelThickness(
     formik.setFieldValue("lamelTickness", selectedLamel);
     // toast.warn("Lamel kalınlığı uygun şekilde güncellendi.");
   }
+  console.log("validLamelThickness", validOptions);
 
   return validOptions.length > 0 ? validOptions : null;
 }
@@ -77,7 +81,7 @@ export function useFilterLamelThickness(
     if (productId === "panjur") {
       setValidLamelThickness(filterLamelThickness(formik));
     }
-  }, [width, height, productId, formik]);
+  }, [width, height, productId]);
 
   return { validLamelThickness };
 }

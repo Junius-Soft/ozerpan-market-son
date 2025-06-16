@@ -51,14 +51,14 @@ export function filterBoxSize(
       isValid = true;
       movementType = "motorlu";
     }
-    console.log({
-      selectedLamelTickness,
-      isValid,
-      boxSize,
-      lamelYuksekligi,
-      maxManuel,
-      maxMotorlu,
-    });
+    // console.log({
+    //   selectedLamelTickness,
+    //   isValid,
+    //   boxSize,
+    //   lamelYuksekligi,
+    //   maxManuel,
+    //   maxMotorlu,
+    // });
     if (isValid && movementType) {
       validOptions.push({ id: box.id, name: box.name });
       // Eğer mevcut kutu seçiliyse movementType'ı da güncelle

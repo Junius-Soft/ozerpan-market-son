@@ -63,7 +63,6 @@ export function filterMotorOptions(
   const squareMeters = (width * height) / 1000000; // Convert from mm² to m²
   const lamelType = values?.lamelType;
   const movementType = values.movementType;
-  const motorModel = values.motorModel;
 
   // Eğer motorlu değilse veya gerekli veriler eksikse işlem yapamayız
   if (movementType !== "motorlu" || !width || !height || !lamelType) {
@@ -122,12 +121,12 @@ export function filterMotorOptions(
   }
 
   // Only update motorModel if current value is not in valid options
-  const currentMotorModel = motorModel;
-  const isCurrentModelValid = motorModelOptions?.some(
-    (option) => option.id === currentMotorModel
-  );
+  // const currentMotorModel = motorModel;
+  // const isCurrentModelValid = motorModelOptions?.some(
+  //   (option) => option.id === currentMotorModel
+  // );
 
-  if (!isCurrentModelValid && motorModelOptions?.length) {
+  if (motorModelOptions?.length) {
     formik.setFieldValue("motorModel", motorModelOptions[0]?.id || "");
   }
   return motorModelOptions;

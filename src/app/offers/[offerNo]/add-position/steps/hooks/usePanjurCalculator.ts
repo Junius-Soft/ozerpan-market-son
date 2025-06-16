@@ -146,7 +146,7 @@ export const usePanjurCalculator = (
       const dikmePrice = dikmeUnitPrice * dikmeCount;
 
       const { frontPrice, backPrice, selectedFrontBox, selectedBackBox } =
-        findBoxPrice(prices, values.boxType, values.box_color);
+        findBoxPrice(prices, values.boxType, values.box_color, systemWidth);
       const boxPrice = frontPrice + backPrice;
 
       // Motor fiyatı hesaplama

@@ -42,7 +42,7 @@ export default function OffersPage() {
         (sum, position) => sum + position.unitPrice * position.quantity,
         0
       );
-      const vat = subtotal * 0.18; // %18 KDV
+      const vat = subtotal * 0.2; // %20 KDV
       return subtotal + vat;
     };
   }, []);

@@ -3,13 +3,14 @@
 import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ClipboardList } from "lucide-react";
 import { type Product, getProductTabs } from "@/documents/products";
 import { DetailsStep } from "../steps/details-step";
 import { getOffer, type Position } from "@/documents/offers";
 import { getOffers } from "@/documents/offers";
 import { PanjurSelections } from "@/types/panjur";
 import { Formik, Form } from "formik";
+import { handleImalatListesiPDF } from "@/utils/handle-imalat-listesi";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
@@ -256,7 +257,19 @@ export default function ProductDetailsPage() {
           {/* Title and Buttons */}
           <Formik initialValues={initialValues} onSubmit={handleComplete}>
             {(formik) => (
-              <Form ref={formRef} className="space-y-6">
+              <Form
+                ref={formRef}
+                className="space-y-6"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    // Eğer bir textarea veya button değilse, submit'i engelle
+                    const tag = (e.target as HTMLElement).tagName.toLowerCase();
+                    if (tag !== "textarea" && tag !== "button") {
+                      e.preventDefault();
+                    }
+                  }
+                }}
+              >
                 {/* Product Details Form */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
@@ -281,6 +294,25 @@ export default function ProductDetailsPage() {
                     >
                       <ArrowLeft className="h-4 w-4" />
                       Ürün Seçimi
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      type="button"
+                      onClick={async () => {
+                        const offerNo = window.location.pathname.split("/")[2];
+                        await handleImalatListesiPDF({
+                          offerNo,
+                          product: product!,
+                          values: formik.values,
+                          selectedPosition,
+                          typeId,
+                          optionId,
+                        });
+                      }}
+                      className="gap-2"
+                    >
+                      <ClipboardList className="h-4 w-4" />
+                      İmalat Listesi
                     </Button>
                   </div>
                   <div className="flex items-center gap-4">

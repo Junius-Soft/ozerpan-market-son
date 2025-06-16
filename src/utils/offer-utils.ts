@@ -10,7 +10,7 @@ export function calculateTotals(positions: Position[]) {
     const posTotal = parsePrice(pos.total);
     return sum + posTotal;
   }, 0);
-  const vat = subtotal * 0.18; // 18% KDV
+  const vat = subtotal * 0.2; // 20% KDV
   return {
     subtotal: subtotal,
     vat: vat,

@@ -63,7 +63,7 @@ export function OfferSummaryCard({
           <div className="font-medium">₺{formatPrice(subtotal, eurRate)}</div>
         </div>
         <div className="flex justify-between items-center">
-          <label className="text-sm text-gray-500">KDV (%18)</label>
+          <label className="text-sm text-gray-500">KDV (%20)</label>
           <div className="font-medium">₺{formatPrice(vat, eurRate)}</div>
         </div>
         <div className="h-px bg-gray-200" />

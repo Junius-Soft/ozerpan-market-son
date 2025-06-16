@@ -183,7 +183,8 @@ export const findDikmePrice = (
 export const findBoxPrice = (
   prices: PriceItem[],
   boxType: string,
-  color: string
+  color: string,
+  systemWidth: number
 ): {
   frontPrice: number;
   backPrice: number;
@@ -220,10 +221,10 @@ export const findBoxPrice = (
     frontPrice: matchingFrontBox ? parseFloat(matchingFrontBox.price) : 0,
     backPrice: matchingBackBox ? parseFloat(matchingBackBox.price) : 0,
     selectedFrontBox: matchingFrontBox
-      ? createSelectedProduct(matchingFrontBox, 1)
+      ? createSelectedProduct(matchingFrontBox, 1, systemWidth + " mm")
       : undefined,
     selectedBackBox: matchingBackBox
-      ? createSelectedProduct(matchingBackBox, 1)
+      ? createSelectedProduct(matchingBackBox, 1, systemWidth + " mm")
       : undefined,
   };
 };

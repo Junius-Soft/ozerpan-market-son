@@ -88,52 +88,45 @@ export function ShutterPreview({
       const numberOfLamels = Math.floor(remainingHeight / lamelHeight);
       const adjustedLamelHeight = remainingHeight / numberOfLamels;
 
-      // Draw outer frame
-      ctx.strokeStyle = colors.frame;
-      ctx.lineWidth = 3;
-      ctx.strokeRect(x - 3, y - 3, finalWidth + 6, finalHeight + 6);
-      ctx.fillStyle = colors.frameBackground;
-      ctx.fillRect(x - 3, y - 3, finalWidth + 6, finalHeight + 6);
-
-      // Draw inner frame
-      ctx.strokeStyle = colors.frameBorder;
+      // Draw inner frame (en dıştaki çerçeve, alt parçayı da kapsayacak şekilde)
+      ctx.strokeStyle = theme === "dark" ? "#94a3b8" : "#475569";
       ctx.lineWidth = 2;
-      ctx.strokeRect(x, y, finalWidth, finalHeight);
+      ctx.strokeRect(x, y, finalWidth, finalHeight + adjustedLamelHeight);
 
-      // Draw motor section
-      const motorGradient = ctx.createLinearGradient(x, y, x, y + motorHeight);
-      motorGradient.addColorStop(0, colors.frameBorder);
-      motorGradient.addColorStop(0.5, colors.frameBackground);
-      motorGradient.addColorStop(1, colors.frameBorder);
-      ctx.fillStyle = motorGradient;
+      // Draw kutu (üstteki alan)
+      ctx.fillStyle = boxColor || colors.frameBackground;
       ctx.fillRect(x, y, finalWidth, motorHeight);
 
-      // Add motor section details
-      ctx.fillStyle = colors.motor;
+      // --- Dikey dikmeler (kutudan sonra başlasın, daha ince) ---
+      const dikmeWidth = Math.max(8, finalWidth * 0.03); // min 8px, %3 genişlik
+      ctx.fillStyle = dikmeColor || colors.frameBorder;
+      // Sol dikme
       ctx.fillRect(
-        x + finalWidth * 0.1,
-        y + motorHeight * 0.3,
-        finalWidth * 0.8,
-        motorHeight * 0.4
+        x,
+        y + motorHeight,
+        dikmeWidth,
+        finalHeight + adjustedLamelHeight - motorHeight
       );
+      // Sağ dikme
+      ctx.fillRect(
+        x + finalWidth - dikmeWidth,
+        y + motorHeight,
+        dikmeWidth,
+        finalHeight + adjustedLamelHeight - motorHeight
+      );
+      // ---
 
-      // Add motor section border
-      ctx.beginPath();
-      ctx.moveTo(x, y + motorHeight);
-      ctx.lineTo(x + finalWidth, y + motorHeight);
-      ctx.strokeStyle = colors.frame;
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      // Draw lamels
+      // Lamellerin genişliği kutudan biraz az olacak (dikmelerin arasında kalacak)
+      const lamelX = x + dikmeWidth;
+      const lamelWidth = finalWidth - dikmeWidth * 2;
       for (let i = 0; i < numberOfLamels; i++) {
         const lamelY = y + motorHeight + i * adjustedLamelHeight;
 
         // Create main gradient for lamel
         const mainGradient = ctx.createLinearGradient(
-          x,
+          lamelX,
           lamelY,
-          x,
+          lamelX,
           lamelY + adjustedLamelHeight
         );
         mainGradient.addColorStop(0, colors.lamelDark);
@@ -143,17 +136,14 @@ export function ShutterPreview({
 
         // Draw main lamel body
         ctx.fillStyle = mainGradient;
-        ctx.fillRect(x, lamelY, finalWidth, adjustedLamelHeight);
+        ctx.fillRect(lamelX, lamelY, lamelWidth, adjustedLamelHeight);
 
-        // Add highlight and shadow with theme-appropriate opacity
+        // Highlight
         const highlightOpacity = theme === "dark" ? "0.2" : "0.4";
-        const shadowOpacity = theme === "dark" ? "0.3" : "0.1";
-
-        // Add highlight to top edge
         const highlightGradient = ctx.createLinearGradient(
-          x,
+          lamelX,
           lamelY,
-          x,
+          lamelX,
           lamelY + adjustedLamelHeight * 0.3
         );
         highlightGradient.addColorStop(
@@ -162,33 +152,42 @@ export function ShutterPreview({
         );
         highlightGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
         ctx.fillStyle = highlightGradient;
-        ctx.fillRect(x, lamelY, finalWidth, adjustedLamelHeight * 0.3);
+        ctx.fillRect(lamelX, lamelY, lamelWidth, adjustedLamelHeight * 0.3);
 
-        // Add shadow to bottom edge
+        // Shadow
+        const shadowOpacity = theme === "dark" ? "0.3" : "0.1";
         const shadowGradient = ctx.createLinearGradient(
-          x,
+          lamelX,
           lamelY + adjustedLamelHeight * 0.7,
-          x,
+          lamelX,
           lamelY + adjustedLamelHeight
         );
         shadowGradient.addColorStop(0, "rgba(0, 0, 0, 0)");
         shadowGradient.addColorStop(1, `rgba(0, 0, 0, ${shadowOpacity})`);
         ctx.fillStyle = shadowGradient;
         ctx.fillRect(
-          x,
+          lamelX,
           lamelY + adjustedLamelHeight * 0.7,
-          finalWidth,
+          lamelWidth,
           adjustedLamelHeight * 0.3
         );
 
-        // Draw lamel border
+        // Lamel border
         ctx.beginPath();
-        ctx.moveTo(x, lamelY);
-        ctx.lineTo(x + finalWidth, lamelY);
+        ctx.moveTo(lamelX, lamelY);
+        ctx.lineTo(lamelX + lamelWidth, lamelY);
         ctx.strokeStyle = colors.lamelBorder;
         ctx.lineWidth = 0.5;
         ctx.stroke();
       }
+      // Alt parça da aynı şekilde dikmelerin arasında olmalı
+      ctx.fillStyle = subPartColor || colors.lamelDark;
+      ctx.fillRect(
+        lamelX,
+        y + motorHeight + numberOfLamels * adjustedLamelHeight,
+        lamelWidth,
+        adjustedLamelHeight
+      );
 
       // Add dimensions text
       ctx.fillStyle = colors.text;

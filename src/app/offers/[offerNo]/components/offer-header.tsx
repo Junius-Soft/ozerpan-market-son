@@ -20,7 +20,7 @@ export function OfferHeader({
 }: OfferHeaderProps) {
   return (
     <div className="flex justify-between items-center">
-      <div className="flex items-center gap-4 ">
+      <div className="flex items-center gap-4">
         <h1 className="text-2xl font-bold">{offerName}</h1>
         <Button variant="ghost" size="icon" onClick={onEdit}>
           <Edit2 className="h-4 w-4" />

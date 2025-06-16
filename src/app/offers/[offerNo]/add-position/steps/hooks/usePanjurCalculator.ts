@@ -123,7 +123,8 @@ export const usePanjurCalculator = (
         values.lamelTickness,
         values.lamelType,
         values.lamel_color,
-        lamelCount
+        lamelCount,
+        lamelGenisligi
       );
       const lamelGenisligiMetre = lamelGenisligi / 1000;
       const lamelPrice = lamelUnitPrice * lamelGenisligiMetre * lamelCount;
@@ -131,14 +132,16 @@ export const usePanjurCalculator = (
       const [subPartPrice, subPartSelectedProduct] = findSubPartPrice(
         prices,
         values.subPart,
-        values.subPart_color || values.lamel_color
+        values.subPart_color || values.lamel_color,
+        lamelGenisligi
       );
 
       const [dikmeUnitPrice, dikmeSelectedProduct] = findDikmePrice(
         prices,
         values.dikmeType,
         values.dikme_color || values.lamel_color,
-        dikmeCount
+        dikmeCount,
+        dikmeHeight
       );
       const dikmePrice = dikmeUnitPrice * dikmeCount;
 

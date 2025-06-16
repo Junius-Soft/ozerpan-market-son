@@ -78,7 +78,8 @@ export const findLamelPrice = (
   lamelTickness: string,
   lamelType: string,
   color: string,
-  quantity: number
+  quantity: number,
+  lamelGenisligi: number
 ): [number, SelectedProduct | null] => {
   const lamelPrices = prices.filter((p) => p.type === "lamel_profilleri");
   const normalizedColor = normalizeColor(color);
@@ -93,14 +94,19 @@ export const findLamelPrice = (
   );
   if (!matchingLamel) return [0, null];
 
-  const selectedProduct = createSelectedProduct(matchingLamel, quantity);
+  const selectedProduct = createSelectedProduct(
+    matchingLamel,
+    quantity,
+    lamelGenisligi + " mm"
+  );
   return [parseFloat(matchingLamel.price), selectedProduct];
 };
 
 export const findSubPartPrice = (
   prices: PriceItem[],
   subPart: string,
-  color: string
+  color: string,
+  lamelGenisligi: number
 ): [number, SelectedProduct | null] => {
   const subPartPrices = prices.filter((p) => p.type === "alt_parca");
   const normalizedColor = normalizeColor(color);
@@ -117,7 +123,11 @@ export const findSubPartPrice = (
 
   if (!matchingSubPart) return [0, null];
 
-  const selectedProduct = createSelectedProduct(matchingSubPart, 1);
+  const selectedProduct = createSelectedProduct(
+    matchingSubPart,
+    1,
+    lamelGenisligi + " mm"
+  );
   return [parseFloat(matchingSubPart.price), selectedProduct];
 };
 
@@ -125,7 +135,8 @@ export const findDikmePrice = (
   prices: PriceItem[],
   dikmeType: string,
   color: string,
-  quantity: number
+  quantity: number,
+  dikmeHeight: number
 ): [number, SelectedProduct | null] => {
   const dikmePrices = prices.filter((p) => p.type === "dikme_profilleri");
   const normalizedColor = normalizeColor(color);
@@ -141,7 +152,11 @@ export const findDikmePrice = (
 
   if (!matchingDikme) return [0, null];
 
-  const selectedProduct = createSelectedProduct(matchingDikme, quantity);
+  const selectedProduct = createSelectedProduct(
+    matchingDikme,
+    quantity,
+    dikmeHeight + " mm"
+  );
   return [parseFloat(matchingDikme.price), selectedProduct];
 };
 

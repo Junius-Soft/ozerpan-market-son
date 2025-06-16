@@ -48,7 +48,7 @@ export function ProductStep({
               src={product.image}
               alt={product.name}
               fill
-              className="object-contain"
+              className="object-cover"
               priority
             />
           </div>
@@ -120,7 +120,7 @@ export function ProductStep({
                       src={type.image}
                       alt={type.name}
                       fill
-                      className="object-contain"
+                      className="object-cover"
                       priority
                     />
                   </div>

@@ -82,16 +82,22 @@ export const findLamelPrice = (
   lamelGenisligi: number
 ): [number, SelectedProduct | null] => {
   const lamelPrices = prices.filter((p) => p.type === "lamel_profilleri");
-  const normalizedColor = normalizeColor(color);
+  let normalizedColor = normalizeColor(color);
 
   const thickness = lamelTickness.split("_")[0];
   const typeStr =
     lamelType === "aluminyum_poliuretanli" ? "Poliüretanlı" : "Ekstrüzyon";
-  const searchPattern = `${thickness} mm Alüminyum ${typeStr} Lamel ${normalizedColor}`;
+  let searchPattern = `${thickness} mm Alüminyum ${typeStr} Lamel ${normalizedColor}`;
 
-  const matchingLamel = lamelPrices.find(
-    (p) => p.description === searchPattern
-  );
+  let matchingLamel = lamelPrices.find((p) => p.description === searchPattern);
+
+  // Eğer bulunamazsa, Beyaz ile tekrar dene
+  if (!matchingLamel && normalizedColor !== "Beyaz") {
+    normalizedColor = "Beyaz";
+    searchPattern = `${thickness} mm Alüminyum ${typeStr} Lamel ${normalizedColor}`;
+    matchingLamel = lamelPrices.find((p) => p.description === searchPattern);
+  }
+
   if (!matchingLamel) return [0, null];
 
   const selectedProduct = createSelectedProduct(
@@ -109,17 +115,26 @@ export const findSubPartPrice = (
   lamelGenisligi: number
 ): [number, SelectedProduct | null] => {
   const subPartPrices = prices.filter((p) => p.type === "alt_parca");
-  const normalizedColor = normalizeColor(color);
+  let normalizedColor = normalizeColor(color);
 
   const subPartType = subPart.split("_")[0];
   const normalizedSubPart =
     subPartType.charAt(0).toUpperCase() + subPartType.slice(1).toLowerCase();
 
-  const searchPattern = `${normalizedSubPart} Alt Parça ${normalizedColor}`;
+  let searchPattern = `${normalizedSubPart} Alt Parça ${normalizedColor}`;
 
-  const matchingSubPart = subPartPrices.find(
+  let matchingSubPart = subPartPrices.find(
     (p) => p.description === searchPattern
   );
+
+  // Eğer bulunamazsa, Beyaz ile tekrar dene
+  if (!matchingSubPart && normalizedColor !== "Beyaz") {
+    normalizedColor = "Beyaz";
+    searchPattern = `${normalizedSubPart} Alt Parça ${normalizedColor}`;
+    matchingSubPart = subPartPrices.find(
+      (p) => p.description === searchPattern
+    );
+  }
 
   if (!matchingSubPart) return [0, null];
 
@@ -139,16 +154,21 @@ export const findDikmePrice = (
   dikmeHeight: number
 ): [number, SelectedProduct | null] => {
   const dikmePrices = prices.filter((p) => p.type === "dikme_profilleri");
-  const normalizedColor = normalizeColor(color);
+  let normalizedColor = normalizeColor(color);
 
   const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
   const dikmeWidth = dikmeType.startsWith("mini_") ? "53" : "60";
 
-  const searchPattern = `${typePrefix} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+  let searchPattern = `${typePrefix} Dikme ${dikmeWidth} mm ${normalizedColor}`;
 
-  const matchingDikme = dikmePrices.find(
-    (p) => p.description === searchPattern
-  );
+  let matchingDikme = dikmePrices.find((p) => p.description === searchPattern);
+
+  // Eğer bulunamazsa, Beyaz ile tekrar dene
+  if (!matchingDikme && normalizedColor !== "Beyaz") {
+    normalizedColor = "Beyaz";
+    searchPattern = `${typePrefix} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+    matchingDikme = dikmePrices.find((p) => p.description === searchPattern);
+  }
 
   if (!matchingDikme) return [0, null];
 
@@ -171,36 +191,40 @@ export const findBoxPrice = (
   selectedBackBox?: SelectedProduct;
 } => {
   const boxPrices = prices.filter((p) => p.type === "kutu_profilleri");
-  const normalizedColor = normalizeColor(color);
+  let normalizedColor = normalizeColor(color);
 
   // Convert box type (e.g., "137mm" to "137")
   const boxSize = boxType.replace("mm", "");
 
   // Search patterns for front and back box profiles
-  const frontPattern = `${boxSize} - ÖN 45 Alüminyum Kutu ${normalizedColor}`;
-  const backPattern = `${boxSize} - ARKA 90 Alüminyum Kutu ${normalizedColor}`;
+  let frontPattern = `${boxSize} - ÖN 45 Alüminyum Kutu ${normalizedColor}`;
+  let backPattern = `${boxSize} - ARKA 90 Alüminyum Kutu ${normalizedColor}`;
 
-  const matchingFrontBox = boxPrices.find(
-    (p) => p.description === frontPattern
-  );
-  const matchingBackBox = boxPrices.find((p) => p.description === backPattern);
+  let matchingFrontBox = boxPrices.find((p) => p.description === frontPattern);
+  let matchingBackBox = boxPrices.find((p) => p.description === backPattern);
 
-  const frontPrice = matchingFrontBox ? parseFloat(matchingFrontBox.price) : 0;
-  const backPrice = matchingBackBox ? parseFloat(matchingBackBox.price) : 0;
-
-  // Create selected products
-  const selectedFrontBox = matchingFrontBox
-    ? createSelectedProduct(matchingFrontBox, 1)
-    : undefined;
-  const selectedBackBox = matchingBackBox
-    ? createSelectedProduct(matchingBackBox, 1)
-    : undefined;
+  // Eğer bulunamazsa, Beyaz ile tekrar dene
+  if ((!matchingFrontBox || !matchingBackBox) && normalizedColor !== "Beyaz") {
+    normalizedColor = "Beyaz";
+    frontPattern = `${boxSize} - ÖN 45 Alüminyum Kutu ${normalizedColor}`;
+    backPattern = `${boxSize} - ARKA 90 Alüminyum Kutu ${normalizedColor}`;
+    if (!matchingFrontBox) {
+      matchingFrontBox = boxPrices.find((p) => p.description === frontPattern);
+    }
+    if (!matchingBackBox) {
+      matchingBackBox = boxPrices.find((p) => p.description === backPattern);
+    }
+  }
 
   return {
-    frontPrice,
-    backPrice,
-    selectedFrontBox,
-    selectedBackBox,
+    frontPrice: matchingFrontBox ? parseFloat(matchingFrontBox.price) : 0,
+    backPrice: matchingBackBox ? parseFloat(matchingBackBox.price) : 0,
+    selectedFrontBox: matchingFrontBox
+      ? createSelectedProduct(matchingFrontBox, 1)
+      : undefined,
+    selectedBackBox: matchingBackBox
+      ? createSelectedProduct(matchingBackBox, 1)
+      : undefined,
   };
 };
 

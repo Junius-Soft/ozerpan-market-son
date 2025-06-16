@@ -479,20 +479,20 @@
         "price": "8.56"
       },
       {
-        "description": "165 - ÖN 45 Alüminyum Kutu Altınmeşe",
+        "description": "165 - ÖN 45 Alüminyum Kutu Altın Meşe",
         "stock_code": "352141235110",
         "uretici_kodu": "SK.165.17.F45",
         "type": "kutu_profilleri",
-        "color": "altınmeşe",
+        "color": "altın_meşe",
         "unit": "Metre",
         "price": "5.97"
       },
       {
-        "description": "165 - ARKA 90 Alüminyum Kutu Altınmeşe",
+        "description": "165 - ARKA 90 Alüminyum Kutu Altın Meşe",
         "stock_code": "352141225110",
         "uretici_kodu": "SK.165.17.T90",
         "type": "kutu_profilleri",
-        "color": "altınmeşe",
+        "color": "altın_meşe",
         "unit": "Metre",
         "price": "8.73"
       },

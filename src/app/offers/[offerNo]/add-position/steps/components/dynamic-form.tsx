@@ -1,23 +1,18 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Field, FormikProps } from "formik";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import { ProductTabField } from "@/documents/products";
 import { type ChangeEvent, type FocusEvent } from "react";
 import { checkDependencyChain } from "@/utils/dependencies";
 import { PanjurSelections } from "@/types/panjur";
 import Image from "next/image";
+import { CustomDialog } from "@/components/ui/custom-dialog";
 
 interface DynamicFormProps {
   fields: ProductTabField[];
@@ -81,6 +76,7 @@ const SelectInput: React.FC<
   FormikInputProps & { allFields?: ProductTabField[] }
 > = ({ field, form, fieldDef, allFields }) => {
   const { values } = form;
+  const [open, setOpen] = useState(false);
 
   const filteredOptions = useMemo(() => {
     if (!fieldDef.options) return [];
@@ -133,8 +129,29 @@ const SelectInput: React.FC<
     return options;
   }, [fieldDef.options, fieldDef.filterBy, values]);
 
-  // Handle default value and first option selection after filtering
   const currentValue = field.value?.toString() ?? "";
+  const selectedOption = filteredOptions.find(
+    (opt) => (opt.id || opt.name) === currentValue
+  );
+
+  const handleSelect = (optionValue: string) => {
+    form.setFieldValue(field.name, optionValue, false);
+    // lamel_color seçildiyse diğer renk alanını da güncelle
+    if (field.name === "lamel_color" && allFields) {
+      const colorFields = ["box_color", "subPart_color", "dikme_color"];
+      colorFields.forEach((colorField: string) => {
+        const colorFieldDef = allFields.find((f) => f.id === colorField);
+        if (!colorFieldDef?.options) return;
+        const hasColor = colorFieldDef.options.some(
+          (option) => option.id === optionValue || option.name === optionValue
+        );
+        const newValueToChange = hasColor ? optionValue : "ral_boyalı";
+        form.setFieldValue(colorField, newValueToChange, false);
+      });
+    }
+    setOpen(false);
+  };
+
   const isCurrentValueInOptions = filteredOptions.some(
     (opt) => (opt.id || opt.name) === currentValue
   );
@@ -170,63 +187,73 @@ const SelectInput: React.FC<
     form,
   ]);
 
-  const handleChange = (newValue: string) => {
-    form.setFieldValue(field.name, newValue, false);
-
-    if (field.name === "lamel_color" && allFields) {
-      // Find all color fields except lamel_color
-      const colorFields = ["box_color", "subPart_color", "dikme_color"];
-
-      // Update each color field
-      colorFields.forEach((colorField: string) => {
-        const fieldDef = allFields.find((f) => f.id === colorField);
-        if (!fieldDef?.options) return;
-
-        // Check if the selected lamel_color exists in the current field's options
-        const hasColor = fieldDef.options.some(
-          (option) => option.id === newValue || option.name === newValue
-        );
-
-        // Set the new value based on whether the color exists in options
-        const newValueToChange = hasColor ? newValue : "ral_boyali";
-        form.setFieldValue(colorField, newValueToChange, false);
-      });
-    }
-  };
+  // Eğer sadece 1 seçenek varsa, butonu disabled yap ve modal açılmasın
+  const isSingleOption = filteredOptions.length === 1;
 
   return (
-    <Select
-      value={currentValue}
-      onValueChange={handleChange}
-      name={field.name}
-      disabled={fieldDef.disabled}
+    <CustomDialog
+      open={open}
+      onOpenChange={setOpen}
+      trigger={
+        <button
+          type="button"
+          className={`w-full flex items-center border rounded-md px-3 py-2 min-h-[44px] transition ${
+            isSingleOption || fieldDef.disabled
+              ? "bg-muted text-muted-foreground opacity-60 cursor-not-allowed"
+              : "bg-background hover:bg-muted"
+          }`}
+          onClick={() => {
+            if (!isSingleOption) setOpen(true);
+          }}
+          disabled={isSingleOption || fieldDef.disabled}
+        >
+          {selectedOption?.image && (
+            <Image
+              src={selectedOption.image}
+              alt={selectedOption.name}
+              width={32}
+              height={32}
+              className="object-contain rounded mr-2"
+            />
+          )}
+          <span className="truncate">
+            {selectedOption?.name || fieldDef.name}
+          </span>
+        </button>
+      }
+      title={fieldDef.name}
+      showTitle={true}
     >
-      <SelectTrigger className="w-full" disabled={fieldDef.disabled}>
-        <SelectValue placeholder={fieldDef.name} />
-      </SelectTrigger>
-      <SelectContent>
+      <div className="grid grid-cols-2 gap-4">
         {filteredOptions.map((option) => (
-          <SelectItem
+          <button
             key={option.id || option.name}
-            value={option.id || option.name}
+            type="button"
+            className={`flex flex-col items-center justify-center border rounded-lg p-2 transition hover:border-blue-500 focus:outline-none ${
+              (option.id || option.name) === currentValue
+                ? "border-blue-500 ring-2 ring-blue-300"
+                : "border-muted"
+            }`}
+            onClick={() => handleSelect(option.id || option.name)}
+            tabIndex={0}
+            autoFocus={false}
           >
-            <div className="flex items-center space-x-2">
-              {option.image && (
-                <Image
-                  src={option.image}
-                  alt={option.name}
-                  width={24}
-                  height={24}
-                  className="object-contain rounded"
-                  style={{ minWidth: 24, minHeight: 24 }}
-                />
-              )}
-              <span>{option.name}</span>
-            </div>
-          </SelectItem>
+            {option.image && (
+              <Image
+                src={option.image}
+                alt={option.name}
+                width={96}
+                height={96}
+                className="object-contain rounded mb-2"
+              />
+            )}
+            <span className="text-center font-medium break-words max-w-[140px]">
+              {option.name}
+            </span>
+          </button>
         ))}
-      </SelectContent>
-    </Select>
+      </div>
+    </CustomDialog>
   );
 };
 

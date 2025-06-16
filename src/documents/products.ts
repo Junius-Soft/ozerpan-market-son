@@ -13,6 +13,7 @@ export interface FilterItem {
 export interface OptionWithBrand {
   id?: string;
   name: string;
+  image?: string; // opsiyonel resim desteği
 }
 
 export interface ProductTabField {

@@ -77,7 +77,10 @@
             "name": "Hareket Tipi",
             "type": "select",
             "options": [
-              { "id": "manuel", "name": "Manuel" },
+              {
+                "id": "manuel",
+                "name": "Manuel"
+              },
               { "id": "motorlu", "name": "Motorlu" }
             ],
             "default": "manuel"
@@ -87,8 +90,16 @@
             "name": "Manuel Şekli",
             "type": "select",
             "options": [
-              { "id": "makarali", "name": "Makaralı" },
-              { "id": "reduktorlu", "name": "Redüktörlü" }
+              {
+                "id": "makarali",
+                "name": "Makaralı",
+                "image": "/images/products/panjur/movement-type/manual/manuel_makarali.png"
+              },
+              {
+                "id": "reduktorlu",
+                "name": "Redüktörlü",
+                "image": "/images/products/panjur/movement-type/manual/manuel_reduktorlu.png"
+              }
             ],
             "default": "makarali",
             "dependsOn": {
@@ -102,7 +113,11 @@
             "type": "select",
             "options": [
               { "id": "makassiz", "name": "Makassız" },
-              { "id": "makasli", "name": "Makaslı" }
+              {
+                "id": "makasli",
+                "name": "Makaslı",
+                "image": "/images/products/panjur/makas/makas.png"
+              }
             ],
             "default": "makassiz",
             "dependsOn": {
@@ -117,11 +132,13 @@
             "options": [
               {
                 "id": "mosel",
-                "name": "Mosel"
+                "name": "Mosel",
+                "image": "/images/products/panjur/motor-brand/mosel_motor.png"
               },
               {
                 "id": "somfy",
-                "name": "Somfy"
+                "name": "Somfy",
+                "image": "/images/products/panjur/motor-brand/somfy_motor.png"
               }
             ],
             "default": "mosel",
@@ -137,27 +154,33 @@
             "options": [
               {
                 "id": "duz_motorlu",
-                "name": "Düz Motorlu (Butonlu)"
+                "name": "Düz Motorlu (Butonlu)",
+                "image": "/images/products/panjur/motor-type/düz motorlu butonlu.png"
               },
               {
                 "id": "alicili_motorlu",
-                "name": "Alıcılı Motorlu (Kumandalı)"
+                "name": "Alıcılı Motorlu (Kumandalı)",
+                "image": "/images/products/panjur/motor-type/alıcılı motorlu kumandalı.png"
               },
               {
                 "id": "alicili_motorlu_reduktorlu",
-                "name": "Alıcılı Motorlu (Redüktörlü)"
+                "name": "Alıcılı Motorlu (Redüktörlü)",
+                "image": "/images/products/panjur/motor-type/alıcılı motorlu redüktörlü.png"
               },
               {
                 "id": "alicili_motorlu_geri_bildirimli",
-                "name": "Alıcılı Geri Bildirimli Motor"
+                "name": "Alıcılı Geri Bildirimli Motor",
+                "image": "/images/products/panjur/motor-type/alıcılı geri bildirimli motor.png"
               },
               {
                 "id": "alicili_motorlu_geri_bildirimli_engel",
-                "name": "Alıcılı Geri Bildirimli Engel Tanımalı Motor"
+                "name": "Alıcılı Geri Bildirimli Engel Tanımalı Motor",
+                "image": "/images/products/panjur/motor-type/alıcılı geri bildirimli engel tanımalı motor.png"
               },
               {
                 "id": "solar_panelli",
-                "name": "Solar Panelli Alıcılı Motor"
+                "name": "Solar Panelli Alıcılı Motor",
+                "image": "/images/products/panjur/motor-type/solar panelli alıcılı motor.png"
               }
             ],
             "filterBy": {
@@ -193,27 +216,33 @@
             "options": [
               {
                 "id": "sel_60-20",
-                "name": "Mosel 60-20"
+                "name": "Mosel 60-20",
+                "image": "/images/products/panjur/motor-model/Mosel 60-20.png"
               },
               {
                 "id": "sel_60-30",
-                "name": "Mosel 60-30"
+                "name": "Mosel 60-30",
+                "image": "/images/products/panjur/motor-model/Mosel 60-30.png"
               },
               {
                 "id": "sel_60-50",
-                "name": "Mosel 60-50"
+                "name": "Mosel 60-50",
+                "image": "/images/products/panjur/motor-model/Mosel 60-50.png"
               },
               {
                 "id": "boost_15",
-                "name": "Boost 15"
+                "name": "Boost 15",
+                "image": "/images/products/panjur/motor-model/Boost15.png"
               },
               {
                 "id": "boost_35",
-                "name": "Boost 35"
+                "name": "Boost 35",
+                "image": "/images/products/panjur/motor-model/Boost35.png"
               },
               {
                 "id": "boost_55",
-                "name": "Boost 55"
+                "name": "Boost 55",
+                "image": "/images/products/panjur/motor-model/Boost55.png"
               }
             ],
             "filterBy": {
@@ -235,7 +264,11 @@
             "type": "select",
             "options": [
               { "id": "yok", "name": "Yok" },
-              { "id": "alicili-buton", "name": "Alıcılı Buton" }
+              {
+                "id": "alicili-buton",
+                "name": "Alıcılı Buton",
+                "image": "/images/products/panjur/button/butonlu.png"
+              }
             ],
             "default": "yok",
             "dependsOn": {
@@ -259,11 +292,13 @@
               },
               {
                 "id": "mosel_dc-74_kutu_ici_panjur_alicisi",
-                "name": "Mosel DC-74 Kutu İçi Panjur Alıcısı"
+                "name": "Mosel DC-74 Kutu İçi Panjur Alıcısı",
+                "image": "/images/products/panjur/receiver/Mosel DC-73A Kutu İçi Panjur Alıcısı.png"
               },
               {
                 "id": "pf_receiver_rts_panjur_alicisi",
-                "name": "PF RECEIVER RTS Panjur Alıcısı"
+                "name": "PF RECEIVER RTS Panjur Alıcısı",
+                "image": "/images/products/panjur/receiver/PF RECEIVER RTS Panjur Alıcısı.png"
               },
               {
                 "id": "centralis_uno_rts_buton_alici",
@@ -271,7 +306,8 @@
               },
               {
                 "id": "mosel_oval_power_ii_alici",
-                "name": "Mosel Oval Power II Alıcı + 2 -4 Kanallı Verici"
+                "name": "Mosel Oval Power II Alıcı + 2 -4 Kanallı Verici",
+                "image": "/images/products/panjur/receiver/Mosel Oval Power II Alıcı + 2 -4 Kanallı Verici.png"
               }
             ],
             "default": "yok",
@@ -330,78 +366,115 @@
             "type": "select",
             "options": [
               { "id": "yok", "name": "Yok" },
-              { "id": "dc_104_1_kanalli", "name": "DC 104 1 Kanallı" },
-              { "id": "dc_105_5_kanalli", "name": "DC 105 5 Kanallı" },
+              {
+                "id": "dc_104_1_kanalli",
+                "name": "DC 104 1 Kanallı",
+                "image": "/images/products/panjur/remote/DC 104 Tek Kanallı.png"
+              },
+              {
+                "id": "dc_105_5_kanalli",
+                "name": "DC 105 5 Kanallı",
+                "image": "/images/products/panjur/remote/DC 105 4+1 Kanallı.png"
+              },
               {
                 "id": "dc_106_10_kanalli_verici",
-                "name": "DC 106 10 Kanallı Verici"
+                "name": "DC 106 10 Kanallı Verici",
+                "image": "/images/products/panjur/remote/DC 106 10 Kanallı Verici.png"
               },
               {
                 "id": "dc_107_16_kanalli_verici",
-                "name": "DC 107 16 Kanallı Verici"
+                "name": "DC 107 16 Kanallı Verici",
+                "image": "/images/products/panjur/remote/DC 107 16 Kanallı Verici.png"
               },
               {
                 "id": "dc_315_1_kanalli_buton_tipi_verici",
-                "name": "DC 315 1 Kanallı Buton Tipi Verici"
+                "name": "DC 315 1 Kanallı Buton Tipi Verici",
+                "image": "/images/products/panjur/remote/DC 315 1 Kanallı Buton Tipi Verici.png"
               },
               {
                 "id": "dc_316_2_kanalli_buton_tipi_verici",
-                "name": "DC 316 2 Kanallı Buton Tipi Verici"
+                "name": "DC 316 2 Kanallı Buton Tipi Verici",
+                "image": "/images/products/panjur/remote/DC 316 2 Kanallı Buton Tipi Verici.png"
               },
               {
                 "id": "dc_317_16_kanalli_buton_tipi_verici",
-                "name": "DC 317 16 Kanallı Buton Tipi Verici"
+                "name": "DC 317 16 Kanallı Buton Tipi Verici",
+                "image": "/images/products/panjur/remote/DC 317 16 Kanallı Buton Tipi Verici.png"
               },
               {
                 "id": "dc_168_1_kanalli_zaman_ayarli_verici",
-                "name": "DC 168 1 Kanallı Zaman Ayarlı Verici"
+                "name": "DC 168 1 Kanallı Zaman Ayarlı Verici",
+                "image": "/images/products/panjur/remote/DC 168 1 Kanallı Zaman Ayarlı Verici.png"
               },
               {
                 "id": "dc_169_16_kanalli_zaman_ayarli_verici",
-                "name": "DC 169 16 Kanallı Zaman Ayarlı Verici"
+                "name": "DC 169 16 Kanallı Zaman Ayarlı Verici",
+                "image": "/images/products/panjur/remote/DC 169 16 Kanallı Zaman Ayarlı Verici.png"
               },
               {
                 "id": "dd_3000h_bi_direction_elektronik_tekli_verici",
-                "name": "DD 3000H Bi-Direction Elektronik Tekli Verici"
+                "name": "DD 3000H Bi-Direction Elektronik Tekli Verici",
+                "image": "/images/products/panjur/remote/DD 3000H.png"
               },
               {
                 "id": "dd_3001h_bi_direction_elektronik_5_1_verici",
-                "name": "DD 3001H Bi-Direction Elektronik 5+1 Verici"
+                "name": "DD 3001H Bi-Direction Elektronik 5+1 Verici",
+                "image": "/images/products/panjur/remote/DD 3001H.png"
               },
               {
                 "id": "dd_3002h_bi_direction_elektronik_15_1_verici",
-                "name": "DD 3002H Bi-Direction Elektronik 15+1 Verici"
+                "name": "DD 3002H Bi-Direction Elektronik 15+1 Verici",
+                "image": "/images/products/panjur/remote/DD 3002H.png"
               },
               {
                 "id": "situo_1_io_pure_ii_sea_mea",
-                "name": "Situo 1 IO Pure II SEA MEA"
+                "name": "Situo 1 IO Pure II SEA MEA",
+                "image": "/images/products/panjur/remote/Situo 1 IO Pure II SEA MEA.png"
               },
-              { "id": "situo_1_rts_pure_ii", "name": "Situo 1 RTS Pure II" },
+              {
+                "id": "situo_1_rts_pure_ii",
+                "name": "Situo 1 RTS Pure II",
+                "image": "/images/products/panjur/remote/Situo 1 RTS Pure II.png"
+              },
               {
                 "id": "situo_5_io_pure_ii_sea_mea",
-                "name": "Situo 5 IO Pure II SEA MEA"
+                "name": "Situo 5 IO Pure II SEA MEA",
+                "image": "/images/products/panjur/remote/Situo 5 IO Pure II SEA MEA.png"
               },
-              { "id": "situo_5_rts_pure_ii", "name": "Situo 5 RTS Pure II" },
-              { "id": "telis_16_rts_pure", "name": "Telis 16 RTS Pure" },
+              {
+                "id": "situo_5_rts_pure_ii",
+                "name": "Situo 5 RTS Pure II",
+                "image": "/images/products/panjur/remote/Situo 5 RTS Pure II.png"
+              },
+              {
+                "id": "telis_16_rts_pure",
+                "name": "Telis 16 RTS Pure",
+                "image": "/images/products/panjur/remote/Telis 16 RTS Pure.png"
+              },
               {
                 "id": "smoove_origin_rts_buton_kumanda",
-                "name": "Smoove Origin RTS Buton Kumanda"
+                "name": "Smoove Origin RTS Buton Kumanda",
+                "image": "/images/products/panjur/remote/Smoove Origin RTS Buton Kumanda.png"
               },
               {
                 "id": "smoove_origin_io_buton_kumanda",
-                "name": "Smoove Origin IO Buton Kumanda"
+                "name": "Smoove Origin IO Buton Kumanda",
+                "image": "/images/products/panjur/remote/Smoove Origin IO Buton Kumanda.png"
               },
               {
                 "id": "telis_6_chronis_rts_zaman_ayarli_kumanda",
-                "name": "Telis 6 Chronis RTS Zaman Ayarlı Kumanda"
+                "name": "Telis 6 Chronis RTS Zaman Ayarlı Kumanda",
+                "image": "/images/products/panjur/remote/Telis 6 Chronis RTS Zaman Ayarlı Kumanda.png"
               },
               {
                 "id": "dc_115_a_1_kanalli_verici",
-                "name": "DC 115 A 1 Kanallı Verici"
+                "name": "DC 115 A 1 Kanallı Verici",
+                "image": "/images/products/panjur/remote/DC 115 A 1 Kanallı Verici (Oval Alıcı).png"
               },
               {
                 "id": "dc_115_b_4_kanalli_verici",
-                "name": "DC 115 B 4 Kanallı Verici"
+                "name": "DC 115 B 4 Kanallı Verici",
+                "image": "/images/products/panjur/remote/DC 115 B 4 Kanallı Verici (Oval Alıcı).png"
               },
               {
                 "id": "siva_alti_kalici_buton",
@@ -535,10 +608,15 @@
             "type": "select",
             "options": [
               { "id": "yok", "name": "Yok" },
-              { "id": "mosel_dd_7002_b", "name": "Mosel DD 7002 B" },
+              {
+                "id": "mosel_dd_7002_b",
+                "name": "Mosel DD 7002 B",
+                "image": "/images/products/panjur/smart-home/Mosel DD 7002 B.png"
+              },
               {
                 "id": "somfy_tahoma_switch_pro",
-                "name": "Somfy TAHOMA SWITCH Pro"
+                "name": "Somfy TAHOMA SWITCH Pro",
+                "image": "/images/products/panjur/smart-home/Somfy Tahoma Switch Pro.png"
               }
             ],
             "default": "yok",
@@ -576,11 +654,13 @@
             "options": [
               {
                 "id": "aluminyum_poliuretanli",
-                "name": "Alüminyum Poliüretanlı"
+                "name": "Alüminyum Poliüretanlı",
+                "image": "/images/products/panjur/lamel-type/poliüretan_dolgulu.png"
               },
               {
                 "id": "aluminyum_ekstruzyon",
-                "name": "Alüminyum Ekstrüzyon"
+                "name": "Alüminyum Ekstrüzyon",
+                "image": "/images/products/panjur/lamel-type/aluminyum_ekstruzyon.png"
               }
             ],
             "default": "aluminyum_poliuretanli"
@@ -590,10 +670,26 @@
             "name": "Lamel Kalınlığı",
             "type": "select",
             "options": [
-              { "id": "39_sl", "name": "SL 39 MM" },
-              { "id": "45_se", "name": "SE 45 MM" },
-              { "id": "55_sl", "name": "SL 55 MM" },
-              { "id": "55_se", "name": "SE 55 MM" }
+              {
+                "id": "39_sl",
+                "name": "SL 39 MM",
+                "image": "/images/products/panjur/lamel/sl-39.png"
+              },
+              {
+                "id": "45_se",
+                "name": "SE 45 MM",
+                "image": "/images/products/panjur/lamel/se-45.png"
+              },
+              {
+                "id": "55_sl",
+                "name": "SL 55 MM",
+                "image": "/images/products/panjur/lamel/sl-55.png"
+              },
+              {
+                "id": "55_se",
+                "name": "SE 55 MM",
+                "image": "/images/products/panjur/lamel/se-55.png"
+              }
             ],
             "filterBy": [
               {

@@ -17,6 +17,7 @@ import { ProductTabField } from "@/documents/products";
 import { type ChangeEvent, type FocusEvent } from "react";
 import { checkDependencyChain } from "@/utils/dependencies";
 import { PanjurSelections } from "@/types/panjur";
+import Image from "next/image";
 
 interface DynamicFormProps {
   fields: ProductTabField[];
@@ -209,7 +210,19 @@ const SelectInput: React.FC<
             key={option.id || option.name}
             value={option.id || option.name}
           >
-            {option.name}
+            <div className="flex items-center space-x-2">
+              {option.image && (
+                <Image
+                  src={option.image}
+                  alt={option.name}
+                  width={24}
+                  height={24}
+                  className="object-contain rounded"
+                  style={{ minWidth: 24, minHeight: 24 }}
+                />
+              )}
+              <span>{option.name}</span>
+            </div>
           </SelectItem>
         ))}
       </SelectContent>

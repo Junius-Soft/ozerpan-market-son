@@ -1,11 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Edit2, ArrowLeft, ClipboardList, PieChart } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 interface OfferHeaderProps {
   offerName: string;
@@ -26,59 +20,31 @@ export function OfferHeader({
 }: OfferHeaderProps) {
   return (
     <div className="flex justify-between items-center">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 ">
         <h1 className="text-2xl font-bold">{offerName}</h1>
         <Button variant="ghost" size="icon" onClick={onEdit}>
           <Edit2 className="h-4 w-4" />
         </Button>
-        <TooltipProvider delayDuration={100}>
-          <Tooltip disableHoverableContent={false}>
-            <TooltipTrigger asChild>
-              <span>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={onImalatList}
-                  disabled={!hasSelectedPosition}
-                >
-                  <ClipboardList className="h-4 w-4" />
-                </Button>
-              </span>
-            </TooltipTrigger>
-            <TooltipContent
-              className={
-                !hasSelectedPosition
-                  ? "bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700/50 text-yellow-700 dark:text-yellow-400"
-                  : undefined
-              }
-            >
-              {!hasSelectedPosition ? "Poz Seçiniz" : "Poz İmalat Listesi"}
-            </TooltipContent>
-          </Tooltip>
-          <Tooltip disableHoverableContent={false}>
-            <TooltipTrigger asChild>
-              <span>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={onFiyatAnaliz}
-                  disabled={!hasSelectedPosition}
-                >
-                  <PieChart className="h-4 w-4" />
-                </Button>
-              </span>
-            </TooltipTrigger>
-            <TooltipContent
-              className={
-                !hasSelectedPosition
-                  ? "bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700/50 text-yellow-700 dark:text-yellow-400"
-                  : undefined
-              }
-            >
-              {!hasSelectedPosition ? "Poz Seçiniz" : "Fiyat Analizi"}
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+
+        <Button
+          variant="ghost"
+          type="button"
+          onClick={onImalatList}
+          disabled={!hasSelectedPosition}
+        >
+          <ClipboardList className="h-4 w-4" />
+          Poz İmalat Listesi
+        </Button>
+
+        <Button
+          variant="ghost"
+          type="button"
+          onClick={onFiyatAnaliz}
+          disabled={!hasSelectedPosition}
+        >
+          <PieChart className="h-4 w-4" />
+          Fiyat Analizi
+        </Button>
       </div>
       <Button variant="outline" className="gap-2 " onClick={onBack}>
         <ArrowLeft className="h-4 w-4" />

@@ -119,14 +119,14 @@ export function filterMotorOptions(
     );
     return null;
   }
-
+  const motorModel = values.motorModel as MotorModel;
   // Only update motorModel if current value is not in valid options
-  // const currentMotorModel = motorModel;
-  // const isCurrentModelValid = motorModelOptions?.some(
-  //   (option) => option.id === currentMotorModel
-  // );
+  const currentMotorModel = motorModel;
+  const isCurrentModelValid = motorModelOptions?.some(
+    (option) => option.id === currentMotorModel
+  );
 
-  if (motorModelOptions?.length) {
+  if (motorModelOptions?.length && !isCurrentModelValid) {
     formik.setFieldValue("motorModel", motorModelOptions[0]?.id || "");
   }
   return motorModelOptions;

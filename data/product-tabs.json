@@ -213,7 +213,6 @@
             "id": "motorModel",
             "name": "Motor Modeli",
             "type": "select",
-            "disabled": true,
             "options": [
               {
                 "id": "sel_60-20",
@@ -740,8 +739,7 @@
               { "id": "205mm", "name": "205MM" },
               { "id": "250mm", "name": "250MM" }
             ],
-            "default": "137mm",
-            "disabled": true
+            "default": "137mm"
           },
           {
             "id": "dikmeType",

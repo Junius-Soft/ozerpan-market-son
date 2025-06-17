@@ -17,6 +17,7 @@ import { usePanjurCalculator } from "../hooks/usePanjurCalculator";
 import { useFormikContext } from "formik";
 import { PanjurSelections, PriceItem, SelectedProduct } from "@/types/panjur";
 import { getColorHexFromProductTabs } from "@/utils/get-color-hex";
+import { calculateSystemHeight, calculateSystemWidth } from "@/utils/panjur";
 
 interface ProductField {
   id: string;
@@ -261,12 +262,37 @@ export function ProductPreview({ selectedProduct }: ProductPreviewProps) {
                   return acc;
                 }
 
-                const fieldValue =
+                let fieldValue =
                   field.id &&
                   Object.prototype.hasOwnProperty.call(values, field.id)
                     ? values[field.id as keyof typeof values] ?? ""
                     : "";
                 if (fieldValue === "" || fieldValue === null) return acc;
+
+                // PANJUR ürününde yükseklik için özel gösterim
+                if (selectedProduct.id === "panjur") {
+                  if (field.id === "height") {
+                    fieldValue = calculateSystemHeight(
+                      values.height,
+                      values.kutuOlcuAlmaSekli,
+                      values.boxType
+                    );
+                  }
+                  if (field.id === "width") {
+                    fieldValue = calculateSystemWidth(
+                      values.width,
+                      values.dikmeOlcuAlmaSekli,
+                      values.dikmeType
+                    );
+                  }
+                  return [
+                    ...acc,
+                    {
+                      name: field.name,
+                      value: formatFieldValue(fieldValue, field.id, field),
+                    },
+                  ];
+                }
 
                 return [
                   ...acc,

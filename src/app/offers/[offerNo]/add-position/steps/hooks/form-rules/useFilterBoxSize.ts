@@ -51,31 +51,19 @@ export function filterBoxSize(
       isValid = true;
       movementType = "motorlu";
     }
-    // console.log({
-    //   selectedLamelTickness,
-    //   isValid,
-    //   boxSize,
-    //   lamelYuksekligi,
-    //   maxManuel,
-    //   maxMotorlu,
-    // });
+
     if (isValid && movementType) {
       validOptions.push({ id: box.id, name: box.name });
-      // Eğer mevcut kutu seçiliyse movementType'ı da güncelle
-      // if (
-      //   formik.values.boxType === box.id &&
-      //   currentMovementType !== movementType
-      // ) {
-      //   formik.setFieldValue("movementType", movementType);
-      //   toast.warn(`Hareket tipi ${movementType} olarak güncellendi.`);
-      // }
     }
   }
   console.log("validBoxOptions", validOptions);
-  // Eğer mevcut boxType valid değilse ilk uygun kutuya set et
-  if (validOptions.length > 0 && validOptions[0].id !== formik.values.boxType) {
+
+  const isCurrentValid = validOptions.some(
+    (opt) => opt.id === formik.values.boxType
+  );
+  console.log({ isCurrentValid });
+  if (validOptions.length > 0 && !isCurrentValid) {
     formik.setFieldValue("boxType", validOptions[0].id);
-    // toast.warn("Kutu ölçüsü uygun şekilde güncellendi.");
   }
   return validOptions.length > 0 ? validOptions : null;
 }
@@ -95,6 +83,7 @@ export function useFilterBoxSize(
     kutuOlcuAlmaSekli,
     lamelTickness,
     movementType,
+    boxType,
   } = formik.values;
 
   useEffect(() => {
@@ -110,6 +99,7 @@ export function useFilterBoxSize(
     lamelTickness,
     productId,
     movementType,
+    boxType,
   ]);
 
   return {};

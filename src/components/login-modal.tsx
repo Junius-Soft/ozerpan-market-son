@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -18,23 +19,52 @@ interface LoginModalProps {
 }
 
 export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("test@market.com");
+  const [password, setPassword] = useState("MarketTest1.");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement actual login logic here
-    // For now, just simulate a successful login
-    document.cookie = "token=dummy-token; path=/";
-    onSuccess();
-    onClose();
-
-    // Redirect to the intended path if it exists
-    const intendedPath = sessionStorage.getItem("intendedPath");
-    if (intendedPath) {
-      sessionStorage.removeItem("intendedPath"); // Clear it after use
-      router.push(intendedPath);
+    setError(null);
+    setLoading(true);
+    try {
+      const response = await fetch(
+        "http://erp.ozerpan.com.tr:8001/api/method/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            usr: email,
+            pwd: password,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (data.message === "Logged In") {
+        toast.success("Giriş başarılı!", {
+          position: "top-center",
+          autoClose: 2000,
+          closeButton: false,
+        });
+        document.cookie = "token=erp-session; path=/"; // İsteğe göre session id alınabilir
+        onSuccess();
+        onClose();
+        const intendedPath = sessionStorage.getItem("intendedPath");
+        if (intendedPath) {
+          sessionStorage.removeItem("intendedPath");
+          router.push(intendedPath);
+        }
+      } else {
+        setError("Hatalı e-posta veya şifre.");
+      }
+    } catch {
+      setError("Bir hata oluştu. Lütfen tekrar deneyin.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -45,6 +75,9 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
           <DialogTitle className="text-center">Giriş Yap</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <div className="text-red-500 text-sm text-center">{error}</div>
+          )}
           <div>
             <label
               htmlFor="email"
@@ -59,6 +92,7 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="mt-1"
+              disabled={loading}
             />
           </div>
           <div>
@@ -75,10 +109,11 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
               onChange={(e) => setPassword(e.target.value)}
               required
               className="mt-1"
+              disabled={loading}
             />
           </div>
-          <Button type="submit" className="w-full">
-            Giriş Yap
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? "Giriş Yapılıyor..." : "Giriş Yap"}
           </Button>
         </form>
       </DialogContent>

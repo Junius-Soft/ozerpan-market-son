@@ -26,46 +26,63 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
     setLoading(true);
-    try {
-      const response = await fetch(
-        "http://erp.ozerpan.com.tr:8001/api/method/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            usr: email,
-            pwd: password,
-          }),
-        }
-      );
-      const data = await response.json();
-      if (data.message === "Logged In") {
-        toast.success("Giriş başarılı!", {
-          position: "top-center",
-          autoClose: 2000,
-          closeButton: false,
-        });
-        document.cookie = "token=erp-session; path=/"; // İsteğe göre session id alınabilir
-        onSuccess();
-        onClose();
-        const intendedPath = sessionStorage.getItem("intendedPath");
-        if (intendedPath) {
-          sessionStorage.removeItem("intendedPath");
-          router.push(intendedPath);
-        }
-      } else {
-        setError("Hatalı e-posta veya şifre.");
-      }
-    } catch {
-      setError("Bir hata oluştu. Lütfen tekrar deneyin.");
-    } finally {
+    e.preventDefault();
+    document.cookie = "token=dummy-token; path=/";
+    onSuccess();
+    onClose();
+    setError(null);
+
+    // Redirect to the intended path if it exists
+    const intendedPath = sessionStorage.getItem("intendedPath");
+    if (intendedPath) {
+      sessionStorage.removeItem("intendedPath"); // Clear it after use
       setLoading(false);
+      toast.success("Giriş başarılı!", {
+        position: "top-center",
+        autoClose: 2000,
+        closeButton: false,
+      });
+      router.push(intendedPath);
     }
+    // setError(null);
+    // setLoading(true);
+    // try {
+    //   const response = await fetch(
+    //     "http://erp.ozerpan.com.tr:8001/api/method/login",
+    //     {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         usr: email,
+    //         pwd: password,
+    //       }),
+    //     }
+    //   );
+    //   const data = await response.json();
+    //   if (data.message === "Logged In") {
+    //     toast.success("Giriş başarılı!", {
+    //       position: "top-center",
+    //       autoClose: 2000,
+    //       closeButton: false,
+    //     });
+    //     onSuccess();
+    //     onClose();
+    //     const intendedPath = sessionStorage.getItem("intendedPath");
+    //     if (intendedPath) {
+    //       sessionStorage.removeItem("intendedPath");
+    //       router.push(intendedPath);
+    //     }
+    //   } else {
+    //     setError("Hatalı e-posta veya şifre.");
+    //   }
+    // } catch {
+    //   setError("Bir hata oluştu. Lütfen tekrar deneyin.");
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (

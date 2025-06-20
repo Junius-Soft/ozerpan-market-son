@@ -31,7 +31,7 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://erp.ozerpan.com.tr:8001/api/method/login",
+        "http://erp.ozerpan.com.tr:8001/api/method/login",
         {
           method: "POST",
           headers: {
@@ -52,6 +52,8 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
         });
         onSuccess();
         onClose();
+        document.cookie = "token=dummy-token; path=/";
+
         const intendedPath = sessionStorage.getItem("intendedPath");
         if (intendedPath) {
           sessionStorage.removeItem("intendedPath");
@@ -61,6 +63,8 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
         setError("Hatalı e-posta veya şifre.");
       }
     } catch {
+      document.cookie = "token=dummy-token; path=/";
+
       setError("Bir hata oluştu. Lütfen tekrar deneyin.");
     } finally {
       setLoading(false);

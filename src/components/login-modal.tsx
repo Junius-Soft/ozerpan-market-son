@@ -31,7 +31,7 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
     setLoading(true);
     try {
       const response = await fetch(
-        "http://erp.ozerpan.com.tr:8001/api/method/login",
+        "https://erp.ozerpan.com.tr:8001/api/method/login",
         {
           method: "POST",
           headers: {

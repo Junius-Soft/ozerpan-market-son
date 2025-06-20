@@ -9,7 +9,7 @@ export function useErcomOrders() {
     setIsLoading(true);
     setIsError(false);
     fetch(
-      "http://erp.ozerpan.com.tr:8001/api/method/ozerpan_ercom_sync.market.api.get_ercom_orders"
+      "https://erp.ozerpan.com.tr:8001/api/method/ozerpan_ercom_sync.market.api.get_ercom_orders"
     )
       .then((res) => res.json())
       .then((data) => {

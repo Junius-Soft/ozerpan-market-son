@@ -2,7 +2,15 @@ import { Card } from "@/components/ui/card";
 import { AlertTriangle } from "lucide-react";
 import { formatPrice } from "@/utils/price-formatter";
 import { Button } from "@/components/ui/button";
-import React from "react";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "@/components/ui/select";
+import { useErcomOrders } from "@/hooks/useErcomOrders";
+import React, { useState } from "react";
 
 interface OfferSummaryCardProps {
   subtotal: number;
@@ -29,6 +37,17 @@ export function OfferSummaryCard({
   onOrder,
   onRevise,
 }: OfferSummaryCardProps) {
+  // Sipariş numarası seçimi için state
+  const { orders, isLoading: ordersLoading } = useErcomOrders();
+  const [selectedOrder, setSelectedOrder] = useState<string>(
+    orders[0]?.name || ""
+  );
+
+  // orders değiştiğinde ilkini seçili yap
+  React.useEffect(() => {
+    if (orders.length > 0) setSelectedOrder(orders[0].name);
+  }, [orders]);
+
   return (
     <Card className="p-6">
       <div className="flex justify-between items-center mb-4">
@@ -58,6 +77,28 @@ export function OfferSummaryCard({
         </div>
       )}
       <div className="space-y-4">
+        {/* Ara Toplam üstüne sipariş numarası seçimi */}
+        <div className="mb-2">
+          <label className="block text-xs text-gray-500 mb-1">
+            Sipariş Numarası
+          </label>
+          <Select
+            value={selectedOrder}
+            onValueChange={setSelectedOrder}
+            disabled={ordersLoading || orders.length === 0}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Sipariş seçin" />
+            </SelectTrigger>
+            <SelectContent>
+              {orders.map((order: { name: string }) => (
+                <SelectItem key={order.name} value={order.name}>
+                  {order.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
         <div className="flex justify-between items-center">
           <label className="text-sm text-gray-500">Ara Toplam</label>
           <div className="font-medium">₺{formatPrice(subtotal, eurRate)}</div>

@@ -9,13 +9,14 @@ import { DetailsStep } from "../steps/details-step";
 import { getOffer, type Position } from "@/documents/offers";
 import { getOffers } from "@/documents/offers";
 import { PanjurSelections } from "@/types/panjur";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikProps } from "formik";
 import { handleImalatListesiPDF } from "@/utils/handle-imalat-listesi";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
+  const formikRef = useRef<FormikProps<PanjurSelections & Record<string, string | number | boolean>>>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
@@ -26,6 +27,19 @@ export default function ProductDetailsPage() {
   const typeId = searchParams.get("typeId");
   const optionId = searchParams.get("optionId");
   const selectedPosition = searchParams.get("selectedPosition");
+
+  const getSelectedPosition = useMemo(async () => {
+    const offerNo = window.location.pathname.split("/")[2];
+    const currentOffer = await getOffer(offerNo);
+    const position = currentOffer?.positions.find(
+      (p) => p.id === selectedPosition
+    );
+    // Set quantity from position if available
+    if (position && formikRef.current) {
+      formikRef.current.setFieldValue("quantity", Number(position.quantity));
+    }
+    return position || null;
+  }, [selectedPosition]);
 
   // Transform tabs into initialValues with default field values and dependencies
   const getInitialValues = useCallback(() => {
@@ -61,14 +75,13 @@ export default function ProductDetailsPage() {
         });
       }
     });
-
+    initialValues.quantity = 1; // Default quantity
+    initialValues.unitPrice = 0; // Default unit price
     return initialValues;
   }, [product]);
 
   const initialValues = useMemo(() => {
     const values = getInitialValues();
-    values.quantity = 1; // Add quantity to initial values
-    values.unitPrice = 0; // Default unit price
     values.productId = productId || ""; // Add productId to initial values
     return values;
   }, [getInitialValues, productId]);
@@ -96,11 +109,7 @@ export default function ProductDetailsPage() {
 
         // If selectedPosition exists, update defaults from existing position
         if (selectedPosition) {
-          const offerNo = window.location.pathname.split("/")[2];
-          const currentOffer = await getOffer(offerNo);
-          const position = currentOffer?.positions.find(
-            (p) => p.id === selectedPosition
-          );
+          const position = await getSelectedPosition;
 
           if (position && Array.isArray(product.tabs)) {
             const productDetails = position.productDetails as PanjurSelections;
@@ -141,7 +150,15 @@ export default function ProductDetailsPage() {
     };
 
     loadProductAndTabs();
-  }, [optionId, productId, productName, router, typeId, selectedPosition]);
+  }, [
+    optionId,
+    productId,
+    productName,
+    router,
+    typeId,
+    selectedPosition,
+    getSelectedPosition,
+  ]);
 
   const handleComplete = async (values: PanjurSelections) => {
     if (!product) return;
@@ -255,7 +272,11 @@ export default function ProductDetailsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-8">
           {/* Title and Buttons */}
-          <Formik initialValues={initialValues} onSubmit={handleComplete}>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleComplete}
+            innerRef={formikRef}
+          >
             {(formik) => (
               <Form
                 ref={formRef}

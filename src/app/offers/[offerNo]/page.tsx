@@ -194,7 +194,7 @@ export default function OfferDetailPage() {
     );
   }
 
-  const { subtotal, vat, total } = calculateTotals(offer.positions);
+  const { subtotal } = calculateTotals(offer.positions);
   return (
     <div className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
@@ -271,8 +271,6 @@ export default function OfferDetailPage() {
           <div className="w-[400px] space-y-6">
             <OfferSummaryCard
               subtotal={subtotal}
-              vat={vat}
-              total={total}
               offerStatus={offer.status}
               isDirty={!!offer.is_dirty}
               positionsLength={offer.positions.length}

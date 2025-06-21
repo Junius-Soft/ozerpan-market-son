@@ -10,12 +10,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useErcomOrders } from "@/hooks/useErcomOrders";
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 interface OfferSummaryCardProps {
   subtotal: number;
-  vat: number;
-  total: number;
   offerStatus: string;
   isDirty: boolean;
   positionsLength: number;
@@ -27,8 +25,6 @@ interface OfferSummaryCardProps {
 
 export function OfferSummaryCard({
   subtotal,
-  vat,
-  total,
   offerStatus,
   isDirty,
   positionsLength,
@@ -42,11 +38,34 @@ export function OfferSummaryCard({
   const [selectedOrder, setSelectedOrder] = useState<string>(
     orders[0]?.name || ""
   );
+  const [vatRate, setVatRate] = useState<number>(20);
+  const [discountRate, setDiscountRate] = useState<number>(0);
+  const [assemblyRate, setAssemblyRate] = useState<number>(0);
 
   // orders değiştiğinde ilkini seçili yap
   React.useEffect(() => {
     if (orders.length > 0) setSelectedOrder(orders[0].name);
   }, [orders]);
+
+  const calculateTotal = useCallback(
+    (
+      subtotal: number,
+      vatRate: number,
+      discountRate: number,
+      assemblyRate: number
+    ) => {
+      const discounted = subtotal - (subtotal * discountRate) / 100;
+      const assembly = (subtotal * assemblyRate) / 100;
+      const vatAmount = ((discounted + assembly) * vatRate) / 100;
+      return discounted + assembly + vatAmount;
+    },
+    []
+  );
+
+  const total = useMemo(
+    () => calculateTotal(subtotal, vatRate, discountRate, assemblyRate),
+    [subtotal, vatRate, discountRate, assemblyRate, calculateTotal]
+  );
 
   return (
     <Card className="p-6">
@@ -104,8 +123,55 @@ export function OfferSummaryCard({
           <div className="font-medium">₺{formatPrice(subtotal, eurRate)}</div>
         </div>
         <div className="flex justify-between items-center">
-          <label className="text-sm text-gray-500">KDV (%20)</label>
-          <div className="font-medium">₺{formatPrice(vat, eurRate)}</div>
+          <label className="text-sm text-gray-500 flex items-center gap-2">
+            KDV (
+            <input
+              type="number"
+              min={0}
+              max={100}
+              value={vatRate}
+              onChange={(e) => setVatRate(Number(e.target.value))}
+              className="w-12 px-1 py-0.5 border rounded text-xs text-center bg-transparent border-gray-300 focus:outline-none focus:ring-1 focus:ring-primary"
+            />
+            %)
+          </label>
+          <div className="font-medium">
+            ₺{formatPrice((subtotal * vatRate) / 100, eurRate)}
+          </div>
+        </div>
+        <div className="flex justify-between items-center">
+          <label className="text-sm text-gray-500 flex items-center gap-2">
+            İskonto (
+            <input
+              type="number"
+              min={0}
+              max={100}
+              value={discountRate}
+              onChange={(e) => setDiscountRate(Number(e.target.value))}
+              className="w-12 px-1 py-0.5 border rounded text-xs text-center bg-transparent border-gray-300 focus:outline-none focus:ring-1 focus:ring-primary"
+            />
+            %)
+          </label>
+          <div className="font-medium">
+            -₺{formatPrice((subtotal * discountRate) / 100, eurRate)}
+          </div>
+        </div>
+        <div className="flex justify-between items-center">
+          <label className="text-sm text-gray-500 flex items-center gap-2">
+            Montaj (
+            <input
+              type="number"
+              min={0}
+              max={100}
+              value={assemblyRate}
+              onChange={(e) => setAssemblyRate(Number(e.target.value))}
+              className="w-12 px-1 py-0.5 border rounded text-xs text-center bg-transparent border-gray-300 focus:outline-none focus:ring-1 focus:ring-primary"
+            />
+            %)
+          </label>
+          <div className="font-medium">
+            ₺{formatPrice((subtotal * assemblyRate) / 100, eurRate)}
+          </div>
         </div>
         <div className="h-px bg-gray-200" />
         <div className="flex justify-between items-center">

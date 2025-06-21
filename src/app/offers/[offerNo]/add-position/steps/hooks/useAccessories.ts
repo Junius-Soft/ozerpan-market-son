@@ -78,7 +78,7 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
               acc.description.toLowerCase().includes(yanKapakDesc.toLowerCase())
             );
             if (yanKapak) {
-              neededAccessories.push({ ...yanKapak, quantity: 1 });
+              neededAccessories.push({ ...yanKapak, quantity: 2 });
             }
           }
 

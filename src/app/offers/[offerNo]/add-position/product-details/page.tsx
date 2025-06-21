@@ -9,17 +9,18 @@ import { DetailsStep } from "../steps/details-step";
 import { getOffer, type Position } from "@/documents/offers";
 import { getOffers } from "@/documents/offers";
 import { PanjurSelections } from "@/types/panjur";
-import { Formik, Form, FormikProps } from "formik";
+import { Formik, Form } from "formik";
 import { handleImalatListesiPDF } from "@/utils/handle-imalat-listesi";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
-  const formikRef = useRef<FormikProps<PanjurSelections & Record<string, string | number | boolean>>>(null);
+
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
+  const [quantity, setQuantity] = useState<number>(1);
 
   const initialLoadDone = useRef(false);
   const productId = searchParams.get("productId");
@@ -34,10 +35,6 @@ export default function ProductDetailsPage() {
     const position = currentOffer?.positions.find(
       (p) => p.id === selectedPosition
     );
-    // Set quantity from position if available
-    if (position && formikRef.current) {
-      formikRef.current.setFieldValue("quantity", Number(position.quantity));
-    }
     return position || null;
   }, [selectedPosition]);
 
@@ -75,7 +72,7 @@ export default function ProductDetailsPage() {
         });
       }
     });
-    initialValues.quantity = 1; // Default quantity
+    initialValues.quantity = quantity; // Default quantity
     initialValues.unitPrice = 0; // Default unit price
     return initialValues;
   }, [product]);
@@ -139,6 +136,10 @@ export default function ProductDetailsPage() {
               }
               return tab;
             });
+          }
+          // Set quantity from position if available
+          if (position) {
+            setQuantity(position.quantity || 1);
           }
         }
 
@@ -272,11 +273,7 @@ export default function ProductDetailsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-8">
           {/* Title and Buttons */}
-          <Formik
-            initialValues={initialValues}
-            onSubmit={handleComplete}
-            innerRef={formikRef}
-          >
+          <Formik initialValues={initialValues} onSubmit={handleComplete}>
             {(formik) => (
               <Form
                 ref={formRef}

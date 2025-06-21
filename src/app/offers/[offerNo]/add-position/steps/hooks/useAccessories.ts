@@ -238,9 +238,7 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
 
             // Tek sayı ise bir artırıp ikiye böl, çift ise direkt ikiye böl
             const tapaQuantity =
-              finalLamelCount % 2 === 0
-                ? finalLamelCount / 2
-                : (finalLamelCount + 1) / 2;
+              finalLamelCount % 2 === 0 ? finalLamelCount : finalLamelCount + 1;
 
             neededAccessories.push({ ...pvcTapa, quantity: tapaQuantity });
 

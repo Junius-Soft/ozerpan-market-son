@@ -23,8 +23,6 @@ import { Input } from "@/components/ui/input";
 import { type Offer, getOffers } from "@/documents/offers";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { useExchangeRate } from "@/hooks/useExchangeRate";
-import { formatPrice } from "@/utils/price-formatter";
 
 export default function OffersPage() {
   const router = useRouter();
@@ -34,7 +32,6 @@ export default function OffersPage() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [selectedOffers, setSelectedOffers] = useState<string[]>([]);
   const [allOffers, setAllOffers] = useState<Offer[]>([]);
-  const { eurRate, loading: isEurRateLoading } = useExchangeRate();
 
   const calculateOfferTotal = useMemo(() => {
     return (offer: Offer) => {
@@ -43,7 +40,7 @@ export default function OffersPage() {
         0
       );
       const vat = subtotal * 0.2; // %20 KDV
-      return subtotal + vat;
+      return "€ " + (subtotal + vat).toFixed(2); // İki ondalık basamakla göster
     };
   }, []);
 
@@ -198,7 +195,7 @@ export default function OffersPage() {
         </Dialog>
 
         <div className="rounded-md border">
-          {allOffers.length === 0 && !isLoading && !isEurRateLoading ? (
+          {allOffers.length === 0 && !isLoading ? (
             <div className="flex flex-col items-center justify-center py-12 px-4">
               <p className="text-gray-500 mb-4">
                 Henüz hiç teklif oluşturulmamış
@@ -237,7 +234,7 @@ export default function OffersPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {isLoading || isEurRateLoading ? (
+                {isLoading ? (
                   // Loading skeletons
                   <>
                     {[...Array(5)].map((_, i) => (
@@ -283,9 +280,7 @@ export default function OffersPage() {
                       <TableCell className="font-medium">{offer.id}</TableCell>
                       <TableCell>{offer.name}</TableCell>
                       <TableCell>{offer.created_at}</TableCell>
-                      <TableCell>
-                        {formatPrice(calculateOfferTotal(offer), eurRate)} TL
-                      </TableCell>
+                      <TableCell>{calculateOfferTotal(offer)}</TableCell>
                       <TableCell>
                         <div className="flex w-full">
                           <span

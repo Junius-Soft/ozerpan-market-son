@@ -214,14 +214,17 @@ export function ProductPreview({ selectedProduct }: ProductPreviewProps) {
                     <TooltipProvider>
                       <Tooltip delayDuration={0}>
                         <TooltipTrigger className="text-base">
-                          ₺{formatPrice(calculationResult.totalPrice, eurRate)}
+                          € {calculationResult.totalPrice.toFixed(2)}
                         </TooltipTrigger>
                         <TooltipContent
                           side="top"
                           align="end"
                           className="flex flex-col gap-1"
                         >
-                          <div>€ {calculationResult.totalPrice.toFixed(2)}</div>
+                          <div>
+                            ₺{" "}
+                            {formatPrice(calculationResult.totalPrice, eurRate)}
+                          </div>
                           <div className="text-muted-foreground">
                             1€ = ₺{eurRate.toFixed(2)}
                           </div>

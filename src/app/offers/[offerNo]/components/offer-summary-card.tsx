@@ -120,7 +120,7 @@ export function OfferSummaryCard({
         </div>
         <div className="flex justify-between items-center">
           <label className="text-sm text-gray-500">Ara Toplam</label>
-          <div className="font-medium">₺{formatPrice(subtotal, eurRate)}</div>
+          <div className="font-medium">€ {subtotal.toFixed(2)}</div>
         </div>
         <div className="flex justify-between items-center">
           <label className="text-sm text-gray-500 flex items-center gap-2">
@@ -136,7 +136,7 @@ export function OfferSummaryCard({
             %)
           </label>
           <div className="font-medium">
-            ₺{formatPrice((subtotal * vatRate) / 100, eurRate)}
+            € {((subtotal * vatRate) / 100 / eurRate).toFixed(2)}
           </div>
         </div>
         <div className="flex justify-between items-center">
@@ -153,7 +153,7 @@ export function OfferSummaryCard({
             %)
           </label>
           <div className="font-medium">
-            -₺{formatPrice((subtotal * discountRate) / 100, eurRate)}
+            -€ {((subtotal * discountRate) / 100 / eurRate).toFixed(2)}
           </div>
         </div>
         <div className="flex justify-between items-center">
@@ -170,14 +170,17 @@ export function OfferSummaryCard({
             %)
           </label>
           <div className="font-medium">
-            ₺{formatPrice((subtotal * assemblyRate) / 100, eurRate)}
+            € {((subtotal * assemblyRate) / 100 / eurRate).toFixed(2)}
           </div>
         </div>
         <div className="h-px bg-gray-200" />
         <div className="flex justify-between items-center">
           <label className="font-medium">Genel Toplam</label>
-          <div className="font-medium text-lg">
-            ₺{formatPrice(total, eurRate)}
+          <div className="font-medium text-lg flex flex-col items-end">
+            <span>€ {(total / eurRate).toFixed(2)}</span>
+            <span className="text-xs text-muted-foreground">
+              ₺ {formatPrice(total, eurRate)}
+            </span>
           </div>
         </div>
         <div className="h-px bg-gray-200 my-4" />

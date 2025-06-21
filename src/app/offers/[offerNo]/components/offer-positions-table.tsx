@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Plus, Trash2, Copy } from "lucide-react";
-import { formatPrice } from "@/utils/price-formatter";
 import { Position } from "@/documents/offers";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -46,7 +45,6 @@ export function OfferPositionsTable({
   sortKey,
   sortDirection,
   onSort,
-  eurRate,
 }: OfferPositionsTableProps) {
   const router = useRouter();
   return (
@@ -189,10 +187,8 @@ export function OfferPositionsTable({
                 <TableCell>
                   {position.quantity} {position.unit}
                 </TableCell>
-                <TableCell>
-                  ₺{formatPrice(position.unitPrice, eurRate)}
-                </TableCell>
-                <TableCell>₺{formatPrice(position.total, eurRate)}</TableCell>
+                <TableCell>€ {position.unitPrice.toFixed(2)}</TableCell>
+                <TableCell>€ {position.total.toFixed(2)}</TableCell>
               </TableRow>
             ))}
           </TableBody>

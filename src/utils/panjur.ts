@@ -50,7 +50,7 @@ export const getDikmeGenisligi = (dikmeType: string): number => {
 };
 
 export const getLamelDusmeValue = (dikmeType: string): number => {
-  return dikmeType.startsWith("mini_") ? 37 : 45;
+  return dikmeType.startsWith("mini_") ? 75 : 90;
 };
 
 export const normalizeColor = (color: string): string => {

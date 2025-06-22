@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { type Offer, getOffers } from "@/documents/offers";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import MobileOffersGrid from "./MobileOffersGrid";
 
 export default function OffersPage() {
   const router = useRouter();
@@ -100,7 +101,37 @@ export default function OffersPage() {
   return (
     <div className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-        <div className="flex justify-between items-center">
+        {/* Sticky başlık ve butonlar sadece mobilde */}
+        <div className="md:hidden flex flex-col gap-2">
+          <div className="flex items-center">
+            <h1 className="text-2xl font-bold">Teklifler</h1>
+          </div>
+          {allOffers.length > 0 && (
+            <div className="fixed left-0 right-0 bottom-0 z-40 flex gap-2 bg-white p-4 border-t md:hidden">
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={handleDeleteSelected}
+                disabled={selectedOffers.length === 0}
+                className="gap-2 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 w-full"
+              >
+                <Trash2 className="h-5 w-5" />
+                Seçilenleri Sil
+              </Button>
+              <Button
+                onClick={() => setIsModalOpen(true)}
+                variant="outline"
+                size="lg"
+                className="gap-2 w-full py-4 text-base"
+              >
+                <Plus className="h-5 w-5" />
+                Yeni Teklif
+              </Button>
+            </div>
+          )}
+        </div>
+        {/* Masaüstü başlık ve butonlar */}
+        <div className="hidden md:flex justify-between items-center">
           <h1 className="text-2xl font-bold">Teklifler</h1>
           {allOffers.length > 0 && (
             <div className="space-x-2">
@@ -194,115 +225,131 @@ export default function OffersPage() {
           </DialogContent>
         </Dialog>
 
-        <div className="rounded-md border">
-          {allOffers.length === 0 && !isLoading ? (
-            <div className="flex flex-col items-center justify-center py-12 px-4">
-              <p className="text-gray-500 mb-4">
-                Henüz hiç teklif oluşturulmamış
-              </p>
-              <Button
-                onClick={() => setIsModalOpen(true)}
-                variant="outline"
-                className="gap-2 border-green-200 text-green-600 hover:bg-green-50 hover:text-green-700"
-              >
-                <Plus className="h-4 w-4" />
-                Teklif Oluştur
-              </Button>
-            </div>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[50px]">
-                    <Checkbox
-                      checked={
-                        selectedOffers.length === allOffers.length &&
-                        allOffers.length > 0
-                      }
-                      onCheckedChange={(checked) => {
-                        setSelectedOffers(
-                          checked ? allOffers.map((o) => o.id) : []
-                        );
-                      }}
-                    />
-                  </TableHead>
-                  <TableHead className="w-[100px]">Teklif No</TableHead>
-                  <TableHead>Teklif Adı</TableHead>
-                  <TableHead>Oluşturulma Tarihi</TableHead>
-                  <TableHead>Toplam</TableHead>
-                  <TableHead>Durumu</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {isLoading ? (
-                  // Loading skeletons
-                  <>
-                    {[...Array(5)].map((_, i) => (
-                      <TableRow key={i}>
-                        <TableCell>
-                          <Skeleton className="h-4 w-4" />
+        <div>
+          {/* Mobilde kart/grid, masaüstünde tablo */}
+          <MobileOffersGrid
+            offers={allOffers}
+            isLoading={isLoading}
+            onCreate={() => setIsModalOpen(true)}
+            calculateOfferTotal={calculateOfferTotal}
+            selectedOffers={selectedOffers}
+            toggleOffer={toggleOffer}
+          />
+          {/* Masaüstü tablo */}
+          <div className="hidden md:block rounded-md border">
+            {allOffers.length === 0 && !isLoading ? (
+              <div className="flex flex-col items-center justify-center py-12 px-4">
+                <p className="text-gray-500 mb-4">
+                  Henüz hiç teklif oluşturulmamış
+                </p>
+                <Button
+                  onClick={() => setIsModalOpen(true)}
+                  variant="outline"
+                  className="gap-2 border-green-200 text-green-600 hover:bg-green-50 hover:text-green-700"
+                >
+                  <Plus className="h-4 w-4" />
+                  Teklif Oluştur
+                </Button>
+              </div>
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[50px]">
+                      <Checkbox
+                        checked={
+                          selectedOffers.length === allOffers.length &&
+                          allOffers.length > 0
+                        }
+                        onCheckedChange={(checked) => {
+                          setSelectedOffers(
+                            checked ? allOffers.map((o) => o.id) : []
+                          );
+                        }}
+                      />
+                    </TableHead>
+                    <TableHead className="w-[100px]">Teklif No</TableHead>
+                    <TableHead>Teklif Adı</TableHead>
+                    <TableHead>Oluşturulma Tarihi</TableHead>
+                    <TableHead>Toplam</TableHead>
+                    <TableHead>Durumu</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {isLoading ? (
+                    // Loading skeletons
+                    <>
+                      {[...Array(5)].map((_, i) => (
+                        <TableRow key={i}>
+                          <TableCell>
+                            <Skeleton className="h-4 w-4" />
+                          </TableCell>
+                          <TableCell>
+                            <Skeleton className="h-4 w-20" />
+                          </TableCell>
+                          <TableCell>
+                            <Skeleton className="h-4 w-40" />
+                          </TableCell>
+                          <TableCell>
+                            <Skeleton className="h-4 w-24" />
+                          </TableCell>
+                          <TableCell>
+                            <Skeleton className="h-4 w-16" />
+                          </TableCell>
+                          <TableCell>
+                            <Skeleton className="h-6 w-20 rounded-full" />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </>
+                  ) : (
+                    allOffers.map((offer) => (
+                      <TableRow
+                        key={offer.id}
+                        className="cursor-pointer"
+                        onClick={(e) => {
+                          if (
+                            (e.target as HTMLElement).closest(".checkbox-cell")
+                          )
+                            return;
+                          router.push(`/offers/${offer.id}`);
+                        }}
+                      >
+                        <TableCell className="w-[50px] checkbox-cell">
+                          <Checkbox
+                            checked={selectedOffers.includes(offer.id)}
+                            onCheckedChange={() => toggleOffer(offer.id)}
+                          />
                         </TableCell>
-                        <TableCell>
-                          <Skeleton className="h-4 w-20" />
+                        <TableCell className="font-medium">
+                          {offer.id}
                         </TableCell>
+                        <TableCell>{offer.name}</TableCell>
+                        <TableCell>{offer.created_at}</TableCell>
+                        <TableCell>{calculateOfferTotal(offer)}</TableCell>
                         <TableCell>
-                          <Skeleton className="h-4 w-40" />
-                        </TableCell>
-                        <TableCell>
-                          <Skeleton className="h-4 w-24" />
-                        </TableCell>
-                        <TableCell>
-                          <Skeleton className="h-4 w-16" />
-                        </TableCell>
-                        <TableCell>
-                          <Skeleton className="h-6 w-20 rounded-full" />
+                          <div className="flex w-full">
+                            <span
+                              className={`
+                                px-2 py-1 rounded-full text-xs font-medium
+                                ${
+                                  offer.status === "Kaydedildi"
+                                    ? "bg-green-100 text-green-700"
+                                    : "bg-yellow-100 text-yellow-700"
+                                }
+                              `}
+                            >
+                              {offer.status}
+                            </span>
+                          </div>
                         </TableCell>
                       </TableRow>
-                    ))}
-                  </>
-                ) : (
-                  allOffers.map((offer) => (
-                    <TableRow
-                      key={offer.id}
-                      className="cursor-pointer"
-                      onClick={(e) => {
-                        if ((e.target as HTMLElement).closest(".checkbox-cell"))
-                          return;
-                        router.push(`/offers/${offer.id}`);
-                      }}
-                    >
-                      <TableCell className="w-[50px] checkbox-cell">
-                        <Checkbox
-                          checked={selectedOffers.includes(offer.id)}
-                          onCheckedChange={() => toggleOffer(offer.id)}
-                        />
-                      </TableCell>
-                      <TableCell className="font-medium">{offer.id}</TableCell>
-                      <TableCell>{offer.name}</TableCell>
-                      <TableCell>{offer.created_at}</TableCell>
-                      <TableCell>{calculateOfferTotal(offer)}</TableCell>
-                      <TableCell>
-                        <div className="flex w-full">
-                          <span
-                            className={`
-                              px-2 py-1 rounded-full text-xs font-medium
-                              ${
-                                offer.status === "Kaydedildi"
-                                  ? "bg-green-100 text-green-700"
-                                  : "bg-yellow-100 text-yellow-700"
-                              }
-                            `}
-                          >
-                            {offer.status}
-                          </span>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          )}
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            )}
+          </div>
         </div>
       </div>
     </div>

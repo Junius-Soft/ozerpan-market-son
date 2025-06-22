@@ -54,12 +54,25 @@ export function OfferSummaryCard({
       discountRate: number,
       assemblyRate: number
     ) => {
+      // İskonto ve montajdan sonra kalan tutarı hesapla
       const discounted = subtotal - (subtotal * discountRate) / 100;
       const assembly = (subtotal * assemblyRate) / 100;
-      const vatAmount = ((discounted + assembly) * vatRate) / 100;
-      return discounted + assembly + vatAmount;
+      const base = discounted + assembly;
+      const vatAmount = (base * vatRate) / 100;
+      return base + vatAmount;
     },
     []
+  );
+
+  // KDV satırı için ayrı bir hesaplama
+  const baseForVat = useMemo(() => {
+    const discounted = subtotal - (subtotal * discountRate) / 100;
+    const assembly = (subtotal * assemblyRate) / 100;
+    return discounted + assembly;
+  }, [subtotal, discountRate, assemblyRate]);
+  const vatAmount = useMemo(
+    () => (baseForVat * vatRate) / 100,
+    [baseForVat, vatRate]
   );
 
   const total = useMemo(
@@ -135,9 +148,7 @@ export function OfferSummaryCard({
             />
             %)
           </label>
-          <div className="font-medium">
-            € {((subtotal * vatRate) / 100 / eurRate).toFixed(2)}
-          </div>
+          <div className="font-medium">€ {vatAmount.toFixed(2)}</div>
         </div>
         <div className="flex justify-between items-center">
           <label className="text-sm text-gray-500 flex items-center gap-2">
@@ -153,7 +164,7 @@ export function OfferSummaryCard({
             %)
           </label>
           <div className="font-medium">
-            -€ {((subtotal * discountRate) / 100 / eurRate).toFixed(2)}
+            - € {((subtotal * discountRate) / 100).toFixed(2)}
           </div>
         </div>
         <div className="flex justify-between items-center">
@@ -170,14 +181,14 @@ export function OfferSummaryCard({
             %)
           </label>
           <div className="font-medium">
-            € {((subtotal * assemblyRate) / 100 / eurRate).toFixed(2)}
+            € {((subtotal * assemblyRate) / 100).toFixed(2)}
           </div>
         </div>
         <div className="h-px bg-gray-200" />
         <div className="flex justify-between items-center">
           <label className="font-medium">Genel Toplam</label>
           <div className="font-medium text-lg flex flex-col items-end">
-            <span>€ {(total / eurRate).toFixed(2)}</span>
+            <span>€ {total.toFixed(2)}</span>
             <span className="text-xs text-muted-foreground">
               ₺ {formatPrice(total, eurRate)}
             </span>

@@ -54,15 +54,18 @@ export function PozImalatListesiDialog({
               key={option.value}
               type="button"
               className={`relative flex-1 flex items-center justify-center px-3 py-2 rounded border font-medium transition-colors
-                ${selectedTypes.includes(option.value)
-                  ? 'border-green-500 ring-[0.5px] ring-green-500 ring-offset-2 ring-offset-background dark:border-green-500 dark:ring-green-500 dark:bg-zinc-800 dark:text-zinc-100 dark:shadow-md dark:ring-offset-zinc-900'
-                  : 'bg-muted text-muted-foreground border-border hover:border-primary'}
+                ${
+                  selectedTypes.includes(option.value)
+                    ? "border-green-500 ring-[0.5px] ring-green-500 ring-offset-2 ring-offset-background dark:border-green-500 dark:ring-green-500 dark:bg-zinc-800 dark:text-zinc-100 dark:shadow-md dark:ring-offset-zinc-900"
+                    : "bg-muted text-muted-foreground border-border hover:border-primary"
+                }
                 dark:bg-zinc-800 dark:text-zinc-100 dark:border-zinc-700 dark:hover:border-primary`}
               onClick={() => handleCheckboxChange(option.value)}
               style={{
                 boxShadow: selectedTypes.includes(option.value)
-                  ? '0 0 0 1px #22c55e' : undefined,
-                outline: 'none',
+                  ? "0 0 0 1px #22c55e"
+                  : undefined,
+                outline: "none",
                 backgroundColor: undefined,
               }}
             >

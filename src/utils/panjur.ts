@@ -253,38 +253,6 @@ export const findSmartHomePrice = (
   return [smarthomePrice, smarthomeSelectedProduct];
 };
 
-export const findMotorPrice = (
-  prices: PriceItem[],
-  movementType: "manuel" | "motorlu",
-  motorMarka?: string,
-  motorModel?: string,
-  motorSekli?: string
-): [number, SelectedProduct | null] => {
-  if (movementType !== "motorlu" || !motorMarka || !motorModel || !motorSekli)
-    return [0, null];
-
-  const motorPrices = prices.filter(
-    (price) => price.type.toLowerCase() === "panjur_motorlari"
-  );
-
-  const motorType = motorSekli.startsWith("alicili_")
-    ? "Alıcılı Motor"
-    : "Motor";
-  const searchKey = `${motorMarka} ${motorModel.replace(
-    /_/g,
-    " "
-  )} ${motorType}`.toLowerCase();
-
-  const motorItem = motorPrices.find((price) =>
-    price.description.toLowerCase().includes(searchKey)
-  );
-
-  if (!motorItem) return [0, null];
-
-  const motorPrice = parseFloat(motorItem.price);
-  return [motorPrice, createSelectedProduct(motorItem, 1)];
-};
-
 export const calculateSystemWidth = (
   width: number,
   dikmeOlcuAlmaSekli: string,

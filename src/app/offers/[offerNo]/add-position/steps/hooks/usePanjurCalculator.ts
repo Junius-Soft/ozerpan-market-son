@@ -11,7 +11,6 @@ import {
   findDikmePrice,
   findBoxPrice,
   findSmartHomePrice,
-  findMotorPrice,
   findRemotePrice,
   findReceiverPrice,
   calculateSystemWidth,
@@ -149,15 +148,6 @@ export const usePanjurCalculator = (
         findBoxPrice(prices, values.boxType, values.box_color, systemWidth);
       const boxPrice = frontPrice + backPrice;
 
-      // Motor fiyatı hesaplama
-      const [motorPrice, motorSelectedProduct] = findMotorPrice(
-        prices,
-        values.movementType,
-        values.motorMarka,
-        values.motorModel,
-        values.motorSekli
-      );
-
       // Uzaktan kumanda fiyatı hesaplama
       const [remotePrice, remoteSelectedProduct] = findRemotePrice(
         prices,
@@ -190,7 +180,6 @@ export const usePanjurCalculator = (
         subPartPrice +
         dikmePrice +
         boxPrice +
-        motorPrice +
         remotePrice +
         smarthomePrice +
         receiverPrice +
@@ -205,7 +194,6 @@ export const usePanjurCalculator = (
         dikmeSelectedProduct,
         selectedFrontBox,
         selectedBackBox,
-        motorSelectedProduct,
         remoteSelectedProduct,
         smarthomeSelectedProduct,
         receiverSelectedProduct,

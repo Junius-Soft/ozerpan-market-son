@@ -34,7 +34,7 @@ export function FloatingTotalButton({
   return (
     <button
       type="button"
-      className={`fixed bottom-20 right-4 z-40 flex items-center gap-2 bg-blue-600 text-white px-4 py-3 rounded-full shadow-lg font-semibold text-base md:hidden transition-opacity duration-300 hover:bg-blue-700 ${
+      className={`fixed bottom-6 right-4 z-40 flex items-center gap-2 bg-blue-600 text-white px-4 py-3 rounded-full shadow-lg font-semibold text-base md:hidden transition-opacity duration-300 hover:bg-blue-700 ${
         visible
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"

@@ -107,7 +107,7 @@ export default function OffersPage() {
             <h1 className="text-2xl font-bold">Teklifler</h1>
           </div>
           {allOffers.length > 0 && (
-            <div className="fixed left-0 right-0 bottom-0 z-40 flex gap-2 bg-white p-4 border-t md:hidden">
+            <div className="fixed left-0 right-0 bottom-0 z-40 flex gap-2 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md border-t border-zinc-200 dark:border-zinc-800 md:hidden p-4">
               <Button
                 variant="outline"
                 size="lg"

@@ -34,11 +34,17 @@ export function FloatingTotalButton({
   return (
     <button
       type="button"
-      className={`fixed bottom-6 right-4 z-40 flex items-center gap-2 bg-blue-600 text-white px-4 py-3 rounded-full shadow-lg font-semibold text-base md:hidden transition-opacity duration-300 hover:bg-blue-700 ${
-        visible
-          ? "opacity-100 pointer-events-auto"
-          : "opacity-0 pointer-events-none"
-      }`}
+      className={`fixed bottom-6 right-4 z-40 flex items-center gap-2
+        bg-black text-white
+        dark:bg-white/80 dark:text-zinc-900
+        backdrop-blur-lg border border-zinc-200 dark:border-zinc-700 shadow-2xl font-semibold text-base px-5 py-3 rounded-full md:hidden transition-opacity duration-300
+        hover:bg-zinc-800/90 dark:hover:bg-white/90 hover:shadow-xl
+        ${
+          visible
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }
+      `}
       onClick={() => {
         summaryRef.current?.scrollIntoView({ behavior: "smooth" });
       }}

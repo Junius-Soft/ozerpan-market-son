@@ -42,7 +42,7 @@ export default function MobileOffersGrid({
             ? [...Array(4)].map((_, i) => (
                 <div
                   key={i}
-                  className="bg-white rounded-lg shadow p-4 flex flex-col gap-2"
+                  className="bg-white dark:bg-zinc-900 rounded-lg shadow p-4 flex flex-col gap-2"
                 >
                   <Skeleton className="h-4 w-20 mb-2" />
                   <Skeleton className="h-4 w-32" />
@@ -56,9 +56,9 @@ export default function MobileOffersGrid({
                 return (
                   <div
                     key={offer.id}
-                    className={`bg-white rounded-lg shadow p-4 flex flex-col border cursor-pointer relative transition-all duration-150 min-h-[170px] ${
+                    className={`bg-white dark:bg-zinc-900 rounded-lg shadow p-4 flex flex-col border cursor-pointer relative transition-all duration-150 min-h-[170px] ${
                       isSelected
-                        ? "border-green-500 border-[1px] bg-blue-50"
+                        ? "border-green-500 border-[1px] bg-blue-50 dark:bg-blue-900/30"
                         : ""
                     }`}
                     onClick={() => toggleOffer(offer.id)}
@@ -67,23 +67,25 @@ export default function MobileOffersGrid({
                     <div className="flex items-start justify-between mb-2">
                       <div className="flex flex-col max-w-[70%]">
                         <div className="flex items-center gap-1">
-                          <span className="text-base font-semibold text-gray-900 truncate">
+                          <span className="text-base font-semibold text-gray-900 dark:text-white truncate">
                             {offer.name}
                           </span>
-                          <span className="text-xs text-gray-400">-</span>
-                          <span className="text-xs text-gray-500 truncate">
+                          <span className="text-xs text-gray-400 dark:text-gray-500">
+                            -
+                          </span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400 truncate">
                             {offer.created_at}
                           </span>
                         </div>
-                        <div className="text-xs text-gray-400 mt-0.5 truncate">
+                        <div className="text-xs text-gray-400 dark:text-gray-500 mt-0.5 truncate">
                           {offer.id}
                         </div>
                       </div>
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-medium ml-2 whitespace-nowrap ${
                           offer.status === "Kaydedildi"
-                            ? "bg-green-100 text-green-700"
-                            : "bg-yellow-100 text-yellow-700"
+                            ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200"
+                            : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200"
                         }`}
                       >
                         {offer.status}
@@ -92,8 +94,8 @@ export default function MobileOffersGrid({
                     {/* Alt bilgiler */}
                     <div className="flex flex-col items-start gap-1 mb-2"></div>
                     {/* Toplam fiyat */}
-                    <div className="text-sm text-gray-700 font-semibold mb-2 text-left">
-                      <span className="text-xs text-gray-500 font-normal mr-1">
+                    <div className="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-2 text-left">
+                      <span className="text-xs text-gray-500 dark:text-gray-400 font-normal mr-1">
                         Toplam:
                       </span>
                       {calculateOfferTotal(offer)}
@@ -103,7 +105,7 @@ export default function MobileOffersGrid({
                       type="button"
                       size="sm"
                       variant="outline"
-                      className="w-full mt-auto"
+                      className="w-full mt-auto h-10"
                       onClick={(e) => {
                         e.stopPropagation();
                         router.push(`/offers/${offer.id}`);

@@ -34,7 +34,7 @@ export default function MobilePositionsGrid({
         {[...Array(1)].map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-lg shadow p-4 flex flex-col gap-2"
+            className="bg-white dark:bg-zinc-900 rounded-lg shadow p-4 flex flex-col gap-2"
           >
             <Skeleton className="h-4 w-20 mb-2" />
             <Skeleton className="h-4 w-32" />
@@ -85,23 +85,27 @@ export default function MobilePositionsGrid({
             return (
               <div
                 key={position.id}
-                className={`bg-white rounded-lg shadow p-4 flex flex-col border cursor-pointer relative transition-all duration-150 min-h-[170px] ${
-                  isSelected ? "border-green-500 border-[1px] bg-blue-50" : ""
+                className={`bg-white dark:bg-zinc-900 rounded-lg shadow p-4 flex flex-col border cursor-pointer relative transition-all duration-150 min-h-[170px] ${
+                  isSelected
+                    ? "border-green-500 border-[1px] bg-blue-50 dark:bg-blue-900/30"
+                    : ""
                 }`}
                 onClick={() => onSelect(position.id)}
               >
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex flex-col max-w-[70%]">
                     <div className="flex items-center gap-1">
-                      <span className="text-base font-semibold text-gray-900 truncate">
+                      <span className="text-base font-semibold text-gray-900 dark:text-white truncate">
                         {position.pozNo}
                       </span>
-                      <span className="text-xs text-gray-400">-</span>
-                      <span className="text-xs text-gray-500 truncate">
+                      <span className="text-xs text-gray-400 dark:text-gray-500">
+                        -
+                      </span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400 truncate">
                         {position.productName}
                       </span>
                     </div>
-                    <div className="text-xs text-gray-400 mt-0.5 truncate">
+                    <div className="text-xs text-gray-400 dark:text-gray-500 mt-0.5 truncate">
                       {position.id}
                     </div>
                   </div>
@@ -121,35 +125,35 @@ export default function MobilePositionsGrid({
                   )}
                 </div>
                 <div className="flex flex-col items-start gap-1 mb-2">
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
                     {position.productDetails.width &&
                     position.productDetails.height
                       ? `${position.productDetails.width} x ${position.productDetails.height}`
                       : "-"}
                   </span>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
                     {position.quantity} {position.unit}
                   </span>
                 </div>
-                <div className="text-sm text-gray-700 font-semibold mb-2 text-left">
-                  <span className="text-xs text-gray-500 font-normal mr-1">
+                <div className="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-2 text-left">
+                  <span className="text-xs text-gray-500 dark:text-gray-400 font-normal mr-1">
                     Birim Fiyat:
                   </span>
                   € {position.unitPrice.toFixed(2)}
                 </div>
-                <div className="text-sm text-gray-700 font-semibold mb-2 text-left">
-                  <span className="text-xs text-gray-500 font-normal mr-1">
+                <div className="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-2 text-left">
+                  <span className="text-xs text-gray-500 dark:text-gray-400 font-normal mr-1">
                     Toplam:
                   </span>
                   € {position.total.toFixed(2)}
                 </div>
                 {offerStatus === "Taslak" && (
-                  <div className="flex gap-2 mt-auto">
+                  <div className="flex gap-2 mt-4">
                     <Button
                       type="button"
                       size="sm"
                       variant="outline"
-                      className="flex-1"
+                      className="flex-1 h-10"
                       onClick={(e) => {
                         e.stopPropagation();
                         router.push(

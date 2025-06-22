@@ -9,7 +9,6 @@ import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import {
   findYanKapakAccessoryPrice,
-  findTamburProfiliAccessoryPrice,
   findBoruBasiAccessoryPrice,
   findRulmanAccessoryPrice,
   findPlaketAccessoryPrice,
@@ -71,14 +70,6 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
             values.box_color
           );
           if (yanKapak) neededAccessories.push({ ...yanKapak, quantity: 2 });
-
-          // Tambur Profili
-          const tamburProfili = findTamburProfiliAccessoryPrice(
-            allAccessories,
-            values.movementType
-          );
-          if (tamburProfili)
-            neededAccessories.push({ ...tamburProfili, quantity: 1 });
 
           // Motorlu aksesuarlar
           if (values.movementType === "motorlu") {

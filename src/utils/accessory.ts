@@ -31,22 +31,6 @@ export function findYanKapakAccessoryPrice(
   );
 }
 
-// Tambur Profili fiyatı bulucu
-export function findTamburProfiliAccessoryPrice(
-  accessories: PriceItem[],
-  movementType: string
-): PriceItem | null {
-  const tamburType =
-    movementType === "manuel"
-      ? "40mm Sekizgen Boru 0,40"
-      : "60mm Sekizgen Boru 0,60";
-  return (
-    accessories.find((acc) =>
-      acc.description.toLowerCase().includes(tamburType.toLowerCase())
-    ) || null
-  );
-}
-
 // Boru Başı fiyatı bulucu (motorlu/manuel)
 export function findBoruBasiAccessoryPrice(
   accessories: PriceItem[],

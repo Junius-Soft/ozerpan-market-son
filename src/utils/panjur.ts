@@ -416,3 +416,19 @@ export const findReceiverPrice = (
     createSelectedProduct(receiverItem, 1),
   ];
 };
+
+// Tambur Profili fiyatı bulucu
+export function findTamburProfiliAccessoryPrice(
+  prices: PriceItem[],
+  movementType: string
+): [number, SelectedProduct | null] {
+  const tamburType =
+    movementType === "manuel"
+      ? "40mm Sekizgen Boru 0,40"
+      : "60mm Sekizgen Boru 0,60";
+  const tambur = prices.find((acc) =>
+    acc.description.toLowerCase().includes(tamburType.toLowerCase())
+  );
+  if (!tambur) return [0, null];
+  return [parseFloat(tambur.price), createSelectedProduct(tambur, 1)];
+}

@@ -13,6 +13,7 @@ import {
   findSmartHomePrice,
   findRemotePrice,
   findReceiverPrice,
+  findTamburProfiliAccessoryPrice,
   calculateSystemWidth,
   calculateSystemHeight,
   calculateLamelCount,
@@ -170,6 +171,12 @@ export const usePanjurCalculator = (
         movementTab
       );
 
+      // Tambur Profili fiyatı hesaplama
+      const [tamburPrice, tamburSelectedProduct] = findTamburProfiliAccessoryPrice(
+        prices,
+        values.movementType
+      );
+
       // Aksesuarların fiyatını hesapla
       const accessoriesPrice = (accessories || []).reduce((total, acc) => {
         return total + parseFloat(acc.price) * (acc.quantity || 1);
@@ -180,6 +187,7 @@ export const usePanjurCalculator = (
         subPartPrice +
         dikmePrice +
         boxPrice +
+        tamburPrice +
         remotePrice +
         smarthomePrice +
         receiverPrice +
@@ -194,6 +202,7 @@ export const usePanjurCalculator = (
         dikmeSelectedProduct,
         selectedFrontBox,
         selectedBackBox,
+        tamburSelectedProduct,
         remoteSelectedProduct,
         smarthomeSelectedProduct,
         receiverSelectedProduct,

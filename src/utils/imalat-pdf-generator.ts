@@ -15,6 +15,15 @@ interface ImalatPDFData {
   quantity?: string;
 }
 
+// Uygun SelectedProduct tipini tanımla (Product yerine)
+type SelectedProduct = {
+  stock_code?: string;
+  description?: string;
+  size?: string;
+  quantity?: number;
+  type?: string;
+};
+
 export class ImalatPDFGenerator {
   private doc: jsPDF;
   private pageWidth: number;
@@ -56,24 +65,107 @@ export class ImalatPDFGenerator {
         (data.offer.name ? data.offer.name + " - " : "") + "Poz İmalat Listesi",
     });
 
-    const totalPages = data.positions.length;
-    data.positions.forEach((position, idx) => {
-      if (idx > 0) this.doc.addPage();
-      // pozNo'yu baştaki sıfırları atarak sayıya çevir
-      const pozNoNumber = position.pozNo ? String(Number(position.pozNo)) : "";
-      // Her sayfa için tek pozisyonluk data oluştur
-      const singleData: ImalatPDFData = {
-        ...data,
-        positions: [position],
-        quantity: position.quantity.toString(),
-      };
-      this.addHeader(singleData, pozNoNumber); // pozisyon sırası 1'den başlasın
-      this.addOrderInfo();
-      this.addProfileList(singleData);
-      // this.addAccessoryList(singleData);
-      // Footer ekle
-      this.addFooter(data.offer.id, pozNoNumber, idx + 1, totalPages);
+    // Tüm pozisyonların ürünlerini tek dizide topla
+    const allProducts: Array<{
+      pozNo: string;
+      product: SelectedProduct;
+    }> = [];
+    data.positions.forEach((position) => {
+      if (
+        position.selectedProducts?.products &&
+        Array.isArray(position.selectedProducts.products)
+      ) {
+        position.selectedProducts.products.forEach((product) => {
+          allProducts.push({ pozNo: position.pozNo, product });
+        });
+      }
     });
+
+    // Tip sıralaması (önce lamel, sonra alt parça, dikme, kutu, boru, diğer)
+    const typeOrder = ["Lamel", "Alt Parça", "Dikme", "Kutu", "Boru"];
+    allProducts.sort((a, b) => {
+      const aType = a.product.type || "Diğer";
+      const bType = b.product.type || "Diğer";
+      const aIdx = typeOrder.indexOf(aType);
+      const bIdx = typeOrder.indexOf(bType);
+      if (aIdx === -1 && bIdx === -1) return aType.localeCompare(bType);
+      if (aIdx === -1) return 1;
+      if (bIdx === -1) return -1;
+      return aIdx - bIdx;
+    });
+
+    // Başlık ve üst bilgiler
+    this.addHeader(data);
+    this.addOrderInfo();
+
+    // Tek tabloya tüm ürünleri ekle (tip sütunu olmadan)
+    const startY = 85;
+    this.doc.setFontSize(11);
+    this.doc.setFont("NotoSans", "bold");
+    this.doc.setFillColor(230, 230, 230);
+    this.doc.rect(
+      this.margin,
+      startY,
+      this.pageWidth - 2 * this.margin,
+      8,
+      "F"
+    );
+    this.doc.text("Profil Listesi", this.margin + 2, startY + 5);
+    // Tablo verisi hazırla
+    const profileData: RowInput[] = allProducts.map((item, i): RowInput => {
+      // Pozun adedini bul
+      const poz = data.positions.find((p) => p.pozNo === item.pozNo);
+      const pozQuantity = Number(poz?.quantity ?? 1);
+      const productQuantity = Number(item.product.quantity ?? 1);
+      const totalQuantity = (productQuantity * pozQuantity).toString();
+      return [
+        (i + 1).toString(),
+        item.product.stock_code || "",
+        item.product.description || "",
+        item.product.size || "",
+        "0,0/0,0",
+        totalQuantity,
+        item.pozNo || "",
+        "☐",
+      ];
+    });
+    autoTable(this.doc, {
+      startY: startY + 10,
+      head: [
+        [
+          "S.No",
+          "Stok Kodu",
+          "Açıklama",
+          "Ölçü",
+          "Sol/Sağ Açı",
+          "Miktar",
+          "Poz No",
+          "Ok", // Yeni sütun başlığı
+        ],
+      ],
+      body:
+        profileData.length > 0
+          ? profileData
+          : [["1", "", "Profil bulunmuyor", "", "0,0/0,0", "", "", "☐"]],
+      theme: "grid",
+      tableWidth: this.pageWidth - 2 * this.margin,
+      margin: { left: this.margin, right: this.margin },
+      headStyles: {
+        fillColor: [240, 240, 240],
+        textColor: [0, 0, 0],
+        fontStyle: "bold",
+        fontSize: 9,
+        font: "NotoSans",
+      },
+      bodyStyles: {
+        fontSize: 8,
+        cellPadding: 2,
+        font: "NotoSans",
+      },
+    });
+
+    // Footer ekle
+    this.addFooter(data.offer.id, data.positions[0]?.pozNo || "", 1, 1);
 
     // Open PDF in new tab using Blob URL for better compatibility
     const pdfBlob = this.doc.output("blob");
@@ -81,7 +173,7 @@ export class ImalatPDFGenerator {
     window.open(pdfUrl, "_blank");
   }
 
-  private addHeader(data: ImalatPDFData, pozNo: string): void {
+  private addHeader(data: ImalatPDFData): void {
     // Company info
     this.doc.setFontSize(12);
     this.doc.setFont("NotoSans", "bold");
@@ -92,34 +184,26 @@ export class ImalatPDFGenerator {
     this.doc.setFont("NotoSans", "bold");
     this.doc.text("POZ İMALAT LİSTESİ", this.margin, 40);
 
-    // Miktar bilgisi (altına)
-    const miktarY = 48;
-    const totalQuantity = data.positions.reduce(
-      (sum, pos) => sum + pos.quantity,
-      0
-    );
-    this.doc.setFontSize(12);
-    this.doc.setFont("NotoSans", "bold");
-    this.doc.text(`Miktar: ${totalQuantity} Adet`, this.margin, miktarY);
+    // Miktar bilgisi kaldırıldı
 
-    // Tarih ve Hazırlayan (sola, miktarın altına)
+    // Tarih ve Hazırlayan (sola, başlığın altına)
+    const miktarY = 48;
     this.doc.setFontSize(9);
     this.doc.setFont("NotoSans", "normal");
     const tarihDate = new Date();
     const tarihStr = `Tarih: ${tarihDate.toLocaleDateString(
       "tr-TR"
     )} ${tarihDate.toLocaleTimeString("tr-TR")}`;
-    this.doc.text(tarihStr, this.margin, miktarY + 7);
-    this.doc.text("Hazırlayan:", this.margin, miktarY + 13);
+    this.doc.text(tarihStr, this.margin, miktarY);
+    this.doc.text("Hazırlayan:", this.margin, miktarY + 6);
 
     // Barcode area (Profil Listesi tablosunun sağ kenarıyla hizalı)
     const tableRight = this.pageWidth - this.margin;
     const barcodeWidth = 60;
-    const barcodeX = tableRight - barcodeWidth;
     const barcodeY = 15;
 
     // Generate barcode
-    const barcodeValue = `${data.offer.id}${pozNo}`;
+    const barcodeValue = data.offer.id; // Sadece teklif no
     const canvas = document.createElement("canvas");
     JsBarcode(canvas, barcodeValue, {
       format: "CODE128",
@@ -144,19 +228,19 @@ export class ImalatPDFGenerator {
       barcodeDrawWidth,
       25
     );
-    // Barkodun altına değerini yaz (en sağa dayalı)
+    // Barkodun altına değerini yaz (barcode ile ortalı)
     this.doc.setFontSize(16);
     this.doc.setFont("NotoSans", "normal");
     const offerId = data.offer.id;
     const textY = barcodeY + 25 + 8;
+    // Barkodun genişliğini ve yazının genişliğini al
+    const barcodeCenterX = barcodeDrawX + barcodeDrawWidth / 2;
     const offerIdWidth = this.doc.getTextWidth(offerId);
-    const pozNoWidth = this.doc.getTextWidth(pozNo);
-    const totalWidth = offerIdWidth + 10 + pozNoWidth; // 10 birim boşluk
-    const textX = barcodeX + barcodeWidth - totalWidth;
+    // Ortalamak için x koordinatını hesapla
+    const textX = barcodeCenterX - offerIdWidth / 2;
     this.doc.text(offerId, textX, textY);
-    this.doc.text(pozNo, textX + offerIdWidth + 10, textY);
 
-    // Eski tarih ve hazırlayan bilgisi kaldırıldı (en sağda tekrar yazılmayacak)
+    // Eski miktar bilgisi kaldırıldı
   }
 
   private addOrderInfo(): void {

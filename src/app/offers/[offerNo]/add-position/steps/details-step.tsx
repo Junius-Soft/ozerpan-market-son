@@ -22,9 +22,16 @@ interface DetailsStepProps {
     PanjurSelections & Record<string, string | number | boolean>
   >;
   selectedProduct: Product | null;
+  onTotalChange?: (total: number) => void;
+  summaryRef: React.RefObject<HTMLDivElement>;
 }
 
-export function DetailsStep({ formik, selectedProduct }: DetailsStepProps) {
+export function DetailsStep({
+  formik,
+  selectedProduct,
+  onTotalChange,
+  summaryRef,
+}: DetailsStepProps) {
   useAutoDependencyAndFilterBy(formik, "panjur");
   useFilterLamelThickness(formik);
   useFilterMotorModel(formik, selectedProduct);
@@ -120,6 +127,8 @@ export function DetailsStep({ formik, selectedProduct }: DetailsStepProps) {
       <ProductPreview
         selectedProduct={selectedProduct}
         currentTab={currentTab}
+        onTotalChange={onTotalChange}
+        summaryRef={summaryRef}
       />
     </div>
   );

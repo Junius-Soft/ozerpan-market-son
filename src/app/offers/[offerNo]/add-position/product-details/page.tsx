@@ -1,9 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { ArrowLeft } from "lucide-react";
 import { type Product, getProductTabs } from "@/documents/products";
 import { DetailsStep } from "../steps/details-step";
 import { getOffer, type Position } from "@/documents/offers";
@@ -11,17 +9,20 @@ import { getOffers } from "@/documents/offers";
 import { PanjurSelections } from "@/types/panjur";
 import { Formik, Form } from "formik";
 import { handleImalatListesiPDF } from "@/utils/handle-imalat-listesi";
-import { PozImalatListesiButton } from "@/components/poz-imalat-listesi-button";
+import { ProductDetailsHeader } from "./ProductDetailsHeader";
+import { FloatingTotalButton } from "../../components/FloatingTotalButton";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
+  const summaryRef = useRef<HTMLDivElement>(null!);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
+  const [previewTotal, setPreviewTotal] = useState(0);
 
   const initialLoadDone = useRef(false);
   const productId = searchParams.get("productId");
@@ -270,7 +271,7 @@ export default function ProductDetailsPage() {
   }
 
   return (
-    <div className="py-8">
+    <div className="pb-8 md:py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-8">
           {/* Title and Buttons */}
@@ -290,69 +291,47 @@ export default function ProductDetailsPage() {
                 }}
               >
                 {/* Product Details Form */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <h1 className="text-2xl font-bold">
-                      {product?.name} Detayları {typeId ? `(${typeId})` : ""}
-                    </h1>
-                    <Button
-                      variant="ghost"
-                      onClick={() =>
-                        router.push(
-                          `/offers/${
-                            window.location.pathname.split("/")[2]
-                          }/add-position/select-product?selectedPosition=${
-                            selectedPosition ?? ""
-                          }&productId=${productId}&productName=${productName}$${
-                            typeId ? `&typeId=${typeId}` : ""
-                          }${optionId ? `&optionId=${optionId}` : ""}`
-                        )
-                      }
-                      className="gap-2"
-                      type="button"
-                    >
-                      <ArrowLeft className="h-4 w-4" />
-                      Ürün Seçimi
-                    </Button>
-                    <PozImalatListesiButton
-                      onConfirm={async (selectedTypes) => {
-                        const offerNo = window.location.pathname.split("/")[2];
-                        await handleImalatListesiPDF({
-                          offerNo,
-                          product: product!,
-                          values: formik.values,
-                          selectedPosition,
-                          typeId,
-                          optionId,
-                          selectedTypes,
-                        });
-                      }}
-                      disabled={isLoading || !product}
-                    />
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <Button
-                      variant="ghost"
-                      type="button"
-                      onClick={() =>
-                        router.push(
-                          `/offers/${window.location.pathname.split("/")[2]}`
-                        )
-                      }
-                    >
-                      Teklif Detayı
-                    </Button>
-                    <Button variant="default" disabled={isSaving} type="submit">
-                      {isSaving
-                        ? "Kaydediliyor..."
-                        : selectedPosition
-                        ? "Güncelle"
-                        : "Tamamla"}
-                    </Button>
-                  </div>
-                </div>
+                <ProductDetailsHeader
+                  product={product}
+                  typeId={typeId}
+                  router={router}
+                  selectedPosition={selectedPosition}
+                  productId={productId}
+                  productName={productName}
+                  optionId={optionId}
+                  isLoading={isLoading}
+                  isSaving={isSaving}
+                  onImalatListesiConfirm={async (selectedTypes) => {
+                    const offerNo = window.location.pathname.split("/")[2];
+                    await handleImalatListesiPDF({
+                      offerNo,
+                      product: product!,
+                      values: formik.values,
+                      selectedPosition,
+                      typeId,
+                      optionId,
+                      selectedTypes,
+                    });
+                  }}
+                  onBackToOffer={() =>
+                    router.push(
+                      `/offers/${window.location.pathname.split("/")[2]}`
+                    )
+                  }
+                  onSubmit={formik.submitForm}
+                />
 
-                <DetailsStep formik={formik} selectedProduct={product} />
+                <DetailsStep
+                  formik={formik}
+                  selectedProduct={product}
+                  onTotalChange={setPreviewTotal}
+                  summaryRef={summaryRef}
+                />
+                {/* Floating toplam buton sadece mobilde */}
+                <FloatingTotalButton
+                  summaryRef={summaryRef}
+                  total={previewTotal}
+                />
               </Form>
             )}
           </Formik>

@@ -1,3 +1,4 @@
+import React from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { getProductPreview } from "@/lib/product-preview";
@@ -41,6 +42,8 @@ export interface ProductTab {
 interface ProductPreviewProps {
   selectedProduct: Product | null;
   currentTab: string;
+  onTotalChange?: (total: number) => void;
+  summaryRef?: React.RefObject<HTMLDivElement>;
 }
 
 // Helper function to format field value
@@ -74,7 +77,11 @@ const formatFieldValue = (
   return String(value);
 };
 
-export function ProductPreview({ selectedProduct }: ProductPreviewProps) {
+export function ProductPreview({
+  selectedProduct,
+  onTotalChange,
+  summaryRef,
+}: ProductPreviewProps) {
   const { loading, eurRate } = useExchangeRate();
   const { values, handleChange } = useFormikContext<PanjurSelections>();
   const calculationResult = usePanjurCalculator(
@@ -92,9 +99,16 @@ export function ProductPreview({ selectedProduct }: ProductPreviewProps) {
   }
   // ---
 
+  // Toplam tutar değişimini parent'a bildir
+  React.useEffect(() => {
+    if (onTotalChange && calculationResult) {
+      onTotalChange(calculationResult.totalPrice);
+    }
+  }, [onTotalChange, calculationResult]);
+
   if (!selectedProduct) return null;
   return (
-    <Card className="p-6">
+    <Card className="p-6" ref={summaryRef}>
       <div className="space-y-6">
         <div className="font-medium text-lg mb-4">Ürün Önizleme</div>
         <div className="aspect-video w-full max-w-xl mx-auto border rounded-lg overflow-hidden shadow-sm">

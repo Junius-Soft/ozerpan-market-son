@@ -13,15 +13,21 @@ export function FloatingTotalButton({
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    function onScroll() {
-      if (!summaryRef.current) return;
-      const rect = summaryRef.current.getBoundingClientRect();
-      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-      setVisible(!isVisible);
-    }
-    window.addEventListener("scroll", onScroll);
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    if (!summaryRef.current) return;
+    const target = summaryRef.current;
+    const observer = new window.IntersectionObserver(
+      ([entry]) => {
+        setVisible(!entry.isIntersecting);
+      },
+      {
+        root: null,
+        threshold: 0.01, // Hemen görünür olunca tetiklenir
+      }
+    );
+    observer.observe(target);
+    return () => {
+      observer.unobserve(target);
+    };
   }, [summaryRef]);
 
   if (total === 0) return null;

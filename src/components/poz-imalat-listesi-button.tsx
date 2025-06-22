@@ -41,7 +41,7 @@ export function PozImalatListesiButton({
         disabled={disabled}
       >
         <ClipboardList className="h-4 w-4" />
-        İmalat Listesi
+        <span className="hidden sm:inline">İmalat Listesi</span>
       </Button>
       <PozImalatListesiDialog
         open={open}

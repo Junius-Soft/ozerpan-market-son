@@ -1,10 +1,8 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { getOffer, type Offer, type Position } from "@/documents/offers";
 import {
   Dialog,
@@ -18,6 +16,7 @@ import { useExchangeRate } from "@/hooks/useExchangeRate";
 import { OfferHeader } from "./components/offer-header";
 import { OfferPositionsTable } from "./components/offer-positions-table";
 import { OfferSummaryCard } from "./components/offer-summary-card";
+import MobilePositionsGrid from "./components/MobilePositionsGrid";
 import {
   calculateTotals,
   togglePositionSelection,
@@ -27,6 +26,7 @@ import {
   apiSaveOfferName,
   apiUpdateOfferStatus,
 } from "@/utils/offer-utils";
+import { FloatingTotalButton } from "./components/FloatingTotalButton";
 
 export default function OfferDetailPage() {
   const params = useParams();
@@ -41,6 +41,8 @@ export default function OfferDetailPage() {
   });
   const [sortKey, setSortKey] = useState<string>("pozNo");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const summaryRef = useRef<HTMLDivElement>(null!);
+  const [summaryTotal, setSummaryTotal] = useState<number>(0);
 
   useEffect(() => {
     const loadOffer = async () => {
@@ -147,46 +149,53 @@ export default function OfferDetailPage() {
     return (
       <div className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-          <div className="flex justify-between items-center">
-            <Skeleton className="h-8 w-40" />
-            <Skeleton className="h-10 w-32" />
-          </div>
-          <div className="flex gap-6">
-            {/* Sol Taraf - Poz Tablosu Skeleton */}
+          <OfferHeader loading />
+          <div className="flex flex-col gap-6 lg:flex-row">
             <div className="flex-1">
-              <Card className="p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <Skeleton className="h-6 w-24" />
-                  <Skeleton className="h-10 w-28" />
-                </div>
-                <div className="space-y-4">
-                  {[...Array(3)].map((_, i) => (
-                    <div key={i} className="flex gap-4">
-                      <Skeleton className="h-12 flex-1" />
-                    </div>
-                  ))}
-                </div>
-              </Card>
+              <div className="block md:hidden">
+                <MobilePositionsGrid
+                  positions={[]}
+                  offerId={params.offerNo as string}
+                  offerStatus={offer?.status || "Taslak"}
+                  selectedPositions={[]}
+                  onSelect={() => {}}
+                  onDelete={() => {}}
+                  onCopy={() => {}}
+                  onAdd={() => {}}
+                  isDeleting={false}
+                />
+                {/* Floating button loadingda gerek yok */}
+              </div>
+              <div className="hidden md:block">
+                <OfferPositionsTable
+                  positions={[]}
+                  offerId={params.offerNo as string}
+                  offerStatus={offer?.status || "Taslak"}
+                  selectedPositions={[]}
+                  onSelect={() => {}}
+                  onSelectAll={() => {}}
+                  onDelete={() => {}}
+                  onCopy={() => {}}
+                  onAdd={() => {}}
+                  isDeleting={false}
+                  sortKey={sortKey}
+                  sortDirection={sortDirection}
+                  onSort={() => {}}
+                />
+              </div>
             </div>
-
-            {/* Sağ Taraf - Bilgi Kartları Skeleton */}
-            <div className="w-[400px] space-y-6">
-              <Card className="p-6">
-                <Skeleton className="h-6 w-36 mb-4" />
-                <div className="space-y-4">
-                  {[...Array(3)].map((_, i) => (
-                    <div key={i} className="flex justify-between items-center">
-                      <Skeleton className="h-4 w-24" />
-                      <Skeleton className="h-6 w-20" />
-                    </div>
-                  ))}
-                  <Skeleton className="h-px w-full" />
-                  <div className="flex gap-3">
-                    <Skeleton className="h-10 flex-1" />
-                    <Skeleton className="h-10 flex-1" />
-                  </div>
-                </div>
-              </Card>
+            <div className="w-full lg:w-[400px] space-y-6">
+              <OfferSummaryCard
+                subtotal={0}
+                offerStatus={offer?.status || "Taslak"}
+                isDirty={false}
+                positionsLength={0}
+                eurRate={eurRate}
+                onSave={async () => {}}
+                onOrder={() => {}}
+                onRevise={() => {}}
+                onTotalChange={() => {}}
+              />
             </div>
           </div>
         </div>
@@ -195,8 +204,9 @@ export default function OfferDetailPage() {
   }
 
   const { subtotal } = calculateTotals(offer.positions);
+
   return (
-    <div className="py-8">
+    <div className="py-8 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <OfferHeader
           offerName={offer.name}
@@ -284,27 +294,46 @@ export default function OfferDetailPage() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-
-        <div className="flex gap-6">
+        <div className="flex flex-col gap-6 lg:flex-row">
+          {/* Mobilde kart grid, masaüstünde tablo */}
           <div className="flex-1">
-            <OfferPositionsTable
-              positions={sortedPositions}
-              offerId={offer.id}
-              offerStatus={offer.status}
-              selectedPositions={selectedPositions}
-              onSelect={handleTogglePositionSelection}
-              onSelectAll={handleToggleAllPositions}
-              onDelete={handleDeletePositions}
-              onCopy={handleCopyPosition}
-              onAdd={() => router.push(`/offers/${offer.id}/add-position`)}
-              isDeleting={isDeletingPositions}
-              sortKey={sortKey}
-              sortDirection={sortDirection}
-              onSort={handleSort}
-              eurRate={eurRate}
-            />
+            <div className="block md:hidden">
+              <MobilePositionsGrid
+                positions={sortedPositions}
+                offerId={offer.id}
+                offerStatus={offer.status}
+                selectedPositions={selectedPositions}
+                onSelect={handleTogglePositionSelection}
+                onDelete={handleDeletePositions}
+                onCopy={handleCopyPosition}
+                onAdd={() => router.push(`/offers/${offer.id}/add-position`)}
+                isDeleting={isDeletingPositions}
+              />
+              {/* Floating toplam button */}
+              <FloatingTotalButton
+                summaryRef={summaryRef}
+                total={summaryTotal}
+              />
+            </div>
+            <div className="hidden md:block">
+              <OfferPositionsTable
+                positions={sortedPositions}
+                offerId={offer.id}
+                offerStatus={offer.status}
+                selectedPositions={selectedPositions}
+                onSelect={handleTogglePositionSelection}
+                onSelectAll={handleToggleAllPositions}
+                onDelete={handleDeletePositions}
+                onCopy={handleCopyPosition}
+                onAdd={() => router.push(`/offers/${offer.id}/add-position`)}
+                isDeleting={isDeletingPositions}
+                sortKey={sortKey}
+                sortDirection={sortDirection}
+                onSort={handleSort}
+              />
+            </div>
           </div>
-          <div className="w-[400px] space-y-6">
+          <div ref={summaryRef} className="w-full lg:w-[400px] space-y-6">
             <OfferSummaryCard
               subtotal={subtotal}
               offerStatus={offer.status}
@@ -316,6 +345,7 @@ export default function OfferDetailPage() {
               }
               onOrder={() => {}}
               onRevise={() => updateOfferStatus("Revize")}
+              onTotalChange={setSummaryTotal}
             />
           </div>
         </div>

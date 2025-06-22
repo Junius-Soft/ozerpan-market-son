@@ -13,6 +13,7 @@ import { Plus, Trash2, Copy } from "lucide-react";
 import { Position } from "@/documents/offers";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface OfferPositionsTableProps {
   positions: Position[];
@@ -28,7 +29,6 @@ interface OfferPositionsTableProps {
   sortKey: string;
   sortDirection: "asc" | "desc";
   onSort: (key: string) => void;
-  eurRate: number;
 }
 
 export function OfferPositionsTable({
@@ -47,6 +47,19 @@ export function OfferPositionsTable({
   onSort,
 }: OfferPositionsTableProps) {
   const router = useRouter();
+  if (!positions.length) {
+    return (
+      <Card className="p-6">
+        <div className="space-y-4">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="flex gap-4">
+              <Skeleton className="h-12 flex-1" />
+            </div>
+          ))}
+        </div>
+      </Card>
+    );
+  }
   return (
     <Card className="p-6">
       <div className="flex justify-between items-center mb-4">

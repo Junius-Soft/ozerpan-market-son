@@ -277,7 +277,6 @@ export const findMotorPrice = (
   const motorItem = motorPrices.find((price) =>
     price.description.toLowerCase().includes(searchKey)
   );
-  console.log({ searchKey });
 
   return motorItem ?? null;
 };

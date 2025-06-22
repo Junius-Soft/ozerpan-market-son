@@ -69,6 +69,7 @@ export const createSelectedProduct = (
     ...priceItem,
     quantity,
     totalPrice: parseFloat(priceItem.price) * quantity,
+    unit: "Adet",
     size,
   };
 };

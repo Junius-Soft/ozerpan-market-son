@@ -158,7 +158,9 @@ export function ProductPreview({ selectedProduct }: ProductPreviewProps) {
                                       </span>
                                     </div>
                                     <div className="flex justify-between text-xs text-muted-foreground">
-                                      <span>Adet: {product.quantity}</span>
+                                      <span>
+                                        {product.unit}: {product.quantity}
+                                      </span>
                                       <span>
                                         Toplam: € {product.totalPrice}
                                       </span>
@@ -191,7 +193,9 @@ export function ProductPreview({ selectedProduct }: ProductPreviewProps) {
                                       </span>
                                     </div>
                                     <div className="flex justify-between text-xs text-muted-foreground">
-                                      <span>Adet: {acc.quantity}</span>
+                                      <span>
+                                        {acc.unit}: {acc.quantity}
+                                      </span>
                                       <span>
                                         Toplam: €{" "}
                                         {(

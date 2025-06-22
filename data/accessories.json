@@ -717,6 +717,14 @@
         "type": "panjur_motorlari",
         "unit": "Adet",
         "price": "206.43"
+      },
+      {
+        "description": "067x550 Standart Kıl Fitil",
+        "stock_code": "124110670550",
+        "uretici_kodu": "GC.055.67.INS",
+        "type": "ortak_fitiller",
+        "unit": "Adet",
+        "price": "0.09"
       }
     ]
   }

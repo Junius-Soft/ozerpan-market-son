@@ -4,6 +4,7 @@ import {
   calculateSystemHeight,
   calculateLamelCount,
   calculateLamelGenisligi,
+  calculateDikmeHeight,
 } from "@/utils/panjur";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -177,11 +178,11 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
             values.dikmeType
           );
           if (altParcaLastigi) {
-            console.log({ lamelWidth });
             const widthInMeters = lamelWidth / 1000;
             neededAccessories.push({
               ...altParcaLastigi,
               quantity: widthInMeters,
+              unit: altParcaLastigi.unit,
             });
           }
 
@@ -243,6 +244,26 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
           );
           if (selectedMotor) {
             neededAccessories.push({ ...selectedMotor, quantity: 1 });
+          }
+
+          // Kıl Fitili ekle
+          const kilFitiliName = "067x550 Standart Kıl Fitil";
+          const kilFitili = allAccessories.find(
+            (acc) => acc.description === kilFitiliName
+          );
+          if (kilFitili) {
+            const dikmeHeightMeter =
+              calculateDikmeHeight(height, values.boxType, values.dikmeType) /
+              1000;
+            const kilFitiliOlcu = dikmeHeightMeter * 2;
+            console.log(kilFitiliOlcu);
+            console.log(kilFitili.price);
+
+            neededAccessories.push({
+              ...kilFitili,
+              quantity: kilFitiliOlcu, // metre cinsinden
+              unit: "Metre",
+            });
           }
 
           setAccessories(neededAccessories);

@@ -70,7 +70,7 @@ export class ImalatPDFGenerator {
       this.addHeader(singleData, pozNoNumber); // pozisyon sırası 1'den başlasın
       this.addOrderInfo();
       this.addProfileList(singleData);
-      this.addAccessoryList(singleData);
+      // this.addAccessoryList(singleData);
       // Footer ekle
       this.addFooter(data.offer.id, pozNoNumber, idx + 1, totalPages);
     });
@@ -232,61 +232,61 @@ export class ImalatPDFGenerator {
     });
   }
 
-  private addAccessoryList(data: ImalatPDFData): void {
-    // @ts-expect-error: lastAutoTable is attached by jsPDF-AutoTable plugin
-    const finalY = this.doc.lastAutoTable?.finalY || 150;
-    const startY = finalY + 15;
-    this.doc.setFontSize(11);
-    this.doc.setFont("NotoSans", "bold");
-    this.doc.setFillColor(230, 230, 230);
-    this.doc.rect(
-      this.margin,
-      startY,
-      this.pageWidth - 2 * this.margin,
-      8,
-      "F"
-    );
-    this.doc.text("Aksesuar Listesi", this.margin + 2, startY + 5);
-    const accessoryData: RowInput[] = [];
-    data.positions.forEach((position) => {
-      if (
-        position.selectedProducts?.accessories &&
-        Array.isArray(position.selectedProducts.accessories)
-      ) {
-        position.selectedProducts.accessories.forEach((accessory) => {
-          accessoryData.push([
-            (accessoryData.length + 1).toString(),
-            accessory.stock_code || "",
-            accessory.description || "",
-            accessory.quantity ? accessory.quantity + " Adet" : "1 Adet",
-          ]);
-        });
-      }
-    });
-    if (accessoryData.length === 0) {
-      accessoryData.push(["1", "", "Aksesuar bulunmuyor", "0 Adet"]);
-    }
-    autoTable(this.doc, {
-      startY: startY + 10,
-      head: [["S.No", "Stok Kodu", "Açıklama", "Miktar"]],
-      body: accessoryData,
-      theme: "grid",
-      tableWidth: this.pageWidth - 2 * this.margin,
-      margin: { left: this.margin, right: this.margin },
-      headStyles: {
-        fillColor: [240, 240, 240],
-        textColor: [0, 0, 0],
-        fontStyle: "bold",
-        fontSize: 9,
-        font: "NotoSans",
-      },
-      bodyStyles: {
-        fontSize: 8,
-        cellPadding: 2,
-        font: "NotoSans",
-      },
-    });
-  }
+  // private addAccessoryList(data: ImalatPDFData): void {
+  //   // @ts-expect-error: lastAutoTable is attached by jsPDF-AutoTable plugin
+  //   const finalY = this.doc.lastAutoTable?.finalY || 150;
+  //   const startY = finalY + 15;
+  //   this.doc.setFontSize(11);
+  //   this.doc.setFont("NotoSans", "bold");
+  //   this.doc.setFillColor(230, 230, 230);
+  //   this.doc.rect(
+  //     this.margin,
+  //     startY,
+  //     this.pageWidth - 2 * this.margin,
+  //     8,
+  //     "F"
+  //   );
+  //   this.doc.text("Aksesuar Listesi", this.margin + 2, startY + 5);
+  //   const accessoryData: RowInput[] = [];
+  //   data.positions.forEach((position) => {
+  //     if (
+  //       position.selectedProducts?.accessories &&
+  //       Array.isArray(position.selectedProducts.accessories)
+  //     ) {
+  //       position.selectedProducts.accessories.forEach((accessory) => {
+  //         accessoryData.push([
+  //           (accessoryData.length + 1).toString(),
+  //           accessory.stock_code || "",
+  //           accessory.description || "",
+  //           accessory.quantity ? accessory.quantity + " Adet" : "1 Adet",
+  //         ]);
+  //       });
+  //     }
+  //   });
+  //   if (accessoryData.length === 0) {
+  //     accessoryData.push(["1", "", "Aksesuar bulunmuyor", "0 Adet"]);
+  //   }
+  //   autoTable(this.doc, {
+  //     startY: startY + 10,
+  //     head: [["S.No", "Stok Kodu", "Açıklama", "Miktar"]],
+  //     body: accessoryData,
+  //     theme: "grid",
+  //     tableWidth: this.pageWidth - 2 * this.margin,
+  //     margin: { left: this.margin, right: this.margin },
+  //     headStyles: {
+  //       fillColor: [240, 240, 240],
+  //       textColor: [0, 0, 0],
+  //       fontStyle: "bold",
+  //       fontSize: 9,
+  //       font: "NotoSans",
+  //     },
+  //     bodyStyles: {
+  //       fontSize: 8,
+  //       cellPadding: 2,
+  //       font: "NotoSans",
+  //     },
+  //   });
+  // }
 }
 
 // Main function to generate PDF for selected positions

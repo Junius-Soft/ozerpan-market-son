@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { ArrowLeft, ClipboardList } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { type Product, getProductTabs } from "@/documents/products";
 import { DetailsStep } from "../steps/details-step";
 import { getOffer, type Position } from "@/documents/offers";
@@ -11,6 +11,7 @@ import { getOffers } from "@/documents/offers";
 import { PanjurSelections } from "@/types/panjur";
 import { Formik, Form } from "formik";
 import { handleImalatListesiPDF } from "@/utils/handle-imalat-listesi";
+import { PozImalatListesiButton } from "@/components/poz-imalat-listesi-button";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
@@ -302,7 +303,7 @@ export default function ProductDetailsPage() {
                             window.location.pathname.split("/")[2]
                           }/add-position/select-product?selectedPosition=${
                             selectedPosition ?? ""
-                          }&productId=${productId}&productName=${productName}${
+                          }&productId=${productId}&productName=${productName}$${
                             typeId ? `&typeId=${typeId}` : ""
                           }${optionId ? `&optionId=${optionId}` : ""}`
                         )
@@ -313,10 +314,8 @@ export default function ProductDetailsPage() {
                       <ArrowLeft className="h-4 w-4" />
                       Ürün Seçimi
                     </Button>
-                    <Button
-                      variant="ghost"
-                      type="button"
-                      onClick={async () => {
+                    <PozImalatListesiButton
+                      onConfirm={async (selectedTypes) => {
                         const offerNo = window.location.pathname.split("/")[2];
                         await handleImalatListesiPDF({
                           offerNo,
@@ -325,13 +324,11 @@ export default function ProductDetailsPage() {
                           selectedPosition,
                           typeId,
                           optionId,
+                          selectedTypes,
                         });
                       }}
-                      className="gap-2"
-                    >
-                      <ClipboardList className="h-4 w-4" />
-                      İmalat Listesi
-                    </Button>
+                      disabled={isLoading || !product}
+                    />
                   </div>
                   <div className="flex items-center gap-4">
                     <Button

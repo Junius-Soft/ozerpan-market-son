@@ -202,15 +202,51 @@ export default function OfferDetailPage() {
           offerName={offer.name}
           onEdit={() => setIsEditDialogOpen(true)}
           onBack={() => router.push("/offers")}
-          onImalatList={() => {
+          onImalatList={(selectedTypes) => {
             if (!offer || selectedPositions.length === 0) return;
             const positions = offer.positions.filter((p) =>
               selectedPositions.includes(p.id)
             );
             if (positions.length > 0) {
-              // Çoklu pozisyonu tek PDF'te göstermek için yeni fonksiyon
               import("@/utils/offer-utils").then((utils) => {
-                utils.openImalatListPDFMulti(offer, positions);
+                // Normalize tipler ve debug
+                const normalizedTypes = selectedTypes.map((t) =>
+                  t.toLowerCase().trim()
+                );
+                const filteredPositions = positions.map((pos) => {
+                  const filteredProducts = (
+                    pos.selectedProducts?.products || []
+                  ).filter((prod) => {
+                    //prod'un descriptionu seçilen tiplerden birini içeriyor mu?
+                    const prodDesc = prod.description.toLowerCase().trim();
+                    return normalizedTypes.some((type) =>
+                      prodDesc.includes(type)
+                    );
+                  });
+                  // Debug için log
+                  if (filteredProducts.length === 0) {
+                    console.warn(
+                      "Pozisyon",
+                      pos.pozNo,
+                      "için eşleşen ürün yok",
+                      {
+                        mevcut: (pos.selectedProducts?.products || []).map(
+                          (p) => p.type
+                        ),
+                        aranan: normalizedTypes,
+                      }
+                    );
+                  }
+                  return {
+                    ...pos,
+                    selectedProducts: {
+                      ...pos.selectedProducts,
+                      products: filteredProducts,
+                      accessories: pos.selectedProducts?.accessories || [],
+                    },
+                  };
+                }) as typeof positions;
+                utils.openImalatListPDFMulti(offer, filteredPositions);
               });
             }
           }}

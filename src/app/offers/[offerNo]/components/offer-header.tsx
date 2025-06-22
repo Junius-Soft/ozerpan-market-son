@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Edit2, ArrowLeft, ClipboardList, PieChart } from "lucide-react";
+import { Edit2, ArrowLeft, PieChart } from "lucide-react";
+import { PozImalatListesiButton } from "@/components/poz-imalat-listesi-button";
 
 interface OfferHeaderProps {
   offerName: string;
   onEdit: () => void;
   onBack: () => void;
-  onImalatList: () => void;
+  onImalatList: (selectedTypes: string[]) => void;
   onFiyatAnaliz: () => void;
   hasSelectedPosition: boolean;
 }
@@ -26,15 +27,10 @@ export function OfferHeader({
           <Edit2 className="h-4 w-4" />
         </Button>
 
-        <Button
-          variant="ghost"
-          type="button"
-          onClick={onImalatList}
+        <PozImalatListesiButton
+          onConfirm={onImalatList}
           disabled={!hasSelectedPosition}
-        >
-          <ClipboardList className="h-4 w-4" />
-          Poz İmalat Listesi
-        </Button>
+        />
 
         <Button
           variant="ghost"

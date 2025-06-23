@@ -20,7 +20,10 @@ export function OfferDetailSkeleton() {
             {/* Mobilde kart grid skeleton */}
             <div className="block md:hidden space-y-4">
               {[1, 2].map((i) => (
-                <div key={i} className="bg-white rounded-lg shadow p-6 flex flex-col gap-2">
+                <div
+                  key={i}
+                  className="bg-white rounded-lg shadow p-6 flex flex-col gap-2"
+                >
                   <div className="flex items-center justify-between mb-2">
                     <Skeleton className="h-5 w-16" />
                     <Skeleton className="h-5 w-6" />

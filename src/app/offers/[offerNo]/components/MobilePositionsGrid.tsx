@@ -2,13 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Copy, Plus, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { Position } from "@/documents/offers";
-import { Skeleton } from "@/components/ui/skeleton";
 
 interface MobilePositionsGridProps {
   positions: Position[];
   offerId: string;
   offerStatus: string;
-  offerLoading: boolean;
   selectedPositions: string[];
   onSelect: (id: string) => void;
   onDelete: () => void;
@@ -21,7 +19,6 @@ export default function MobilePositionsGrid({
   positions,
   offerId,
   offerStatus,
-  offerLoading,
   selectedPositions,
   onSelect,
   onDelete,
@@ -30,24 +27,7 @@ export default function MobilePositionsGrid({
   isDeleting,
 }: MobilePositionsGridProps) {
   const router = useRouter();
-  if (offerLoading) {
-    return (
-      <div className="space-y-4">
-        {[...Array(1)].map((_, i) => (
-          <div
-            key={i}
-            className="bg-white dark:bg-zinc-900 rounded-lg shadow p-4 flex flex-col gap-2"
-          >
-            <Skeleton className="h-4 w-20 mb-2" />
-            <Skeleton className="h-4 w-32" />
-            <Skeleton className="h-4 w-24" />
-            <Skeleton className="h-4 w-16" />
-            <Skeleton className="h-6 w-20 rounded-full" />
-          </div>
-        ))}
-      </div>
-    );
-  }
+
   return (
     <div className="block md:hidden">
       {/* Üstte aksiyon butonları */}

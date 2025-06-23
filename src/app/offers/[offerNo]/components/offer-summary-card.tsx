@@ -11,14 +11,12 @@ import {
 } from "@/components/ui/select";
 import { useErcomOrders } from "@/hooks/useErcomOrders";
 import React, { useCallback, useMemo, useState } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 
 interface OfferSummaryCardProps {
   subtotal: number;
   offerStatus: string;
   isDirty: boolean;
   positionsLength: number;
-  loading: boolean;
   eurRate: number;
   onSave: () => void;
   onOrder: () => void;
@@ -31,7 +29,6 @@ export function OfferSummaryCard({
   offerStatus,
   isDirty,
   positionsLength,
-  loading,
   eurRate,
   onSave,
   onOrder,
@@ -89,27 +86,6 @@ export function OfferSummaryCard({
   React.useEffect(() => {
     if (onTotalChange) onTotalChange(total);
   }, [total, onTotalChange]);
-
-  if (loading) {
-    return (
-      <Card className="p-6">
-        <Skeleton className="h-6 w-36 mb-4" />
-        <div className="space-y-4">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="flex justify-between items-center">
-              <Skeleton className="h-4 w-24" />
-              <Skeleton className="h-6 w-20" />
-            </div>
-          ))}
-          <Skeleton className="h-px w-full" />
-          <div className="flex gap-3">
-            <Skeleton className="h-10 flex-1" />
-            <Skeleton className="h-10 flex-1" />
-          </div>
-        </div>
-      </Card>
-    );
-  }
 
   return (
     <Card className="p-6">

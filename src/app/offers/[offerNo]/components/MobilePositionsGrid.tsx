@@ -8,6 +8,7 @@ interface MobilePositionsGridProps {
   positions: Position[];
   offerId: string;
   offerStatus: string;
+  offerLoading: boolean;
   selectedPositions: string[];
   onSelect: (id: string) => void;
   onDelete: () => void;
@@ -20,6 +21,7 @@ export default function MobilePositionsGrid({
   positions,
   offerId,
   offerStatus,
+  offerLoading,
   selectedPositions,
   onSelect,
   onDelete,
@@ -28,7 +30,7 @@ export default function MobilePositionsGrid({
   isDeleting,
 }: MobilePositionsGridProps) {
   const router = useRouter();
-  if (positions.length === 0) {
+  if (offerLoading) {
     return (
       <div className="space-y-4">
         {[...Array(1)].map((_, i) => (

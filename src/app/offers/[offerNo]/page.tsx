@@ -32,6 +32,7 @@ export default function OfferDetailPage() {
   const params = useParams();
   const router = useRouter();
   const [offer, setOffer] = useState<Offer | null>(null);
+  const [offerLoading, setOfferLoading] = useState<boolean>(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [offerName, setOfferName] = useState("");
   const [selectedPositions, setSelectedPositions] = useState<string[]>([]);
@@ -46,11 +47,13 @@ export default function OfferDetailPage() {
 
   useEffect(() => {
     const loadOffer = async () => {
+      setOfferLoading(true);
       const currentOffer = await getOffer(params.offerNo as string);
       if (currentOffer) {
         setOffer(currentOffer);
         setOfferName(currentOffer.name);
       }
+      setOfferLoading(false);
     };
     loadOffer();
   }, [params.offerNo]);
@@ -149,7 +152,7 @@ export default function OfferDetailPage() {
     return (
       <div className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-          <OfferHeader loading />
+          <OfferHeader loading={offerLoading} />
           <div className="flex flex-col gap-6 lg:flex-row">
             <div className="flex-1">
               <div className="block md:hidden">
@@ -157,6 +160,7 @@ export default function OfferDetailPage() {
                   positions={[]}
                   offerId={params.offerNo as string}
                   offerStatus={offer?.status || "Taslak"}
+                  offerLoading={offerLoading}
                   selectedPositions={[]}
                   onSelect={() => {}}
                   onDelete={() => {}}
@@ -171,6 +175,7 @@ export default function OfferDetailPage() {
                   positions={[]}
                   offerId={params.offerNo as string}
                   offerStatus={offer?.status || "Taslak"}
+                  offerLoading={offerLoading}
                   selectedPositions={[]}
                   onSelect={() => {}}
                   onSelectAll={() => {}}
@@ -190,6 +195,7 @@ export default function OfferDetailPage() {
                 offerStatus={offer?.status || "Taslak"}
                 isDirty={false}
                 positionsLength={0}
+                loading={offerLoading}
                 eurRate={eurRate}
                 onSave={async () => {}}
                 onOrder={() => {}}
@@ -209,6 +215,7 @@ export default function OfferDetailPage() {
     <div className="py-8 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <OfferHeader
+          loading={offerLoading}
           offerName={offer.name}
           onEdit={() => setIsEditDialogOpen(true)}
           onBack={() => router.push("/offers")}
@@ -302,6 +309,7 @@ export default function OfferDetailPage() {
                 positions={sortedPositions}
                 offerId={offer.id}
                 offerStatus={offer.status}
+                offerLoading={offerLoading}
                 selectedPositions={selectedPositions}
                 onSelect={handleTogglePositionSelection}
                 onDelete={handleDeletePositions}
@@ -320,6 +328,7 @@ export default function OfferDetailPage() {
                 positions={sortedPositions}
                 offerId={offer.id}
                 offerStatus={offer.status}
+                offerLoading={offerLoading}
                 selectedPositions={selectedPositions}
                 onSelect={handleTogglePositionSelection}
                 onSelectAll={handleToggleAllPositions}
@@ -339,6 +348,7 @@ export default function OfferDetailPage() {
               offerStatus={offer.status}
               isDirty={!!offer.is_dirty}
               positionsLength={offer.positions.length}
+              loading={offerLoading}
               eurRate={eurRate}
               onSave={async () =>
                 await updateOfferStatus("Kaydedildi", eurRate)

@@ -19,6 +19,7 @@ interface OfferPositionsTableProps {
   positions: Position[];
   offerId: string;
   offerStatus: string;
+  offerLoading: boolean;
   selectedPositions: string[];
   onSelect: (id: string) => void;
   onSelectAll: () => void;
@@ -35,6 +36,7 @@ export function OfferPositionsTable({
   positions,
   offerId,
   offerStatus,
+  offerLoading,
   selectedPositions,
   onSelect,
   onSelectAll,
@@ -47,7 +49,7 @@ export function OfferPositionsTable({
   onSort,
 }: OfferPositionsTableProps) {
   const router = useRouter();
-  if (!positions.length) {
+  if (offerLoading) {
     return (
       <Card className="p-6">
         <div className="space-y-4">

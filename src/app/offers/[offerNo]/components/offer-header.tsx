@@ -10,6 +10,7 @@ interface OfferHeaderProps {
   onImalatList: (selectedTypes: string[]) => void;
   onFiyatAnaliz: () => void;
   hasSelectedPosition: boolean;
+  loading: boolean;
 }
 
 export function OfferHeader({
@@ -19,8 +20,8 @@ export function OfferHeader({
   onImalatList,
   onFiyatAnaliz,
   hasSelectedPosition,
-  loading = false,
-}: OfferHeaderProps & { loading?: boolean }) {
+  loading,
+}: OfferHeaderProps) {
   if (loading) {
     return (
       <>

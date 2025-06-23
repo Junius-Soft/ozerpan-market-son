@@ -18,6 +18,7 @@ interface OfferSummaryCardProps {
   offerStatus: string;
   isDirty: boolean;
   positionsLength: number;
+  loading: boolean;
   eurRate: number;
   onSave: () => void;
   onOrder: () => void;
@@ -30,6 +31,7 @@ export function OfferSummaryCard({
   offerStatus,
   isDirty,
   positionsLength,
+  loading,
   eurRate,
   onSave,
   onOrder,
@@ -88,7 +90,7 @@ export function OfferSummaryCard({
     if (onTotalChange) onTotalChange(total);
   }, [total, onTotalChange]);
 
-  if (positionsLength === 0) {
+  if (loading) {
     return (
       <Card className="p-6">
         <Skeleton className="h-6 w-36 mb-4" />

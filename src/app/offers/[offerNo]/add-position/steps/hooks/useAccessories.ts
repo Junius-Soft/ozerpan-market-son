@@ -70,7 +70,7 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
             values.boxType,
             values.box_color
           );
-          if (yanKapak) neededAccessories.push({ ...yanKapak, quantity: 2 });
+          if (yanKapak) neededAccessories.push({ ...yanKapak, quantity: 1 });
 
           // Motorlu aksesuarlar
           if (values.movementType === "motorlu") {
@@ -256,8 +256,6 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
               calculateDikmeHeight(height, values.boxType, values.dikmeType) /
               1000;
             const kilFitiliOlcu = dikmeHeightMeter * 2;
-            console.log(kilFitiliOlcu);
-            console.log(kilFitili.price);
 
             neededAccessories.push({
               ...kilFitili,

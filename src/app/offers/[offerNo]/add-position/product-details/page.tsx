@@ -206,7 +206,6 @@ export default function ProductDetailsPage() {
         productDetails: values,
         total: (values.unitPrice || 0) * (values.quantity || 1), // Calculate total
       };
-      console.log({ newPosition });
 
       // Update or add the position
       let updatedPositions: Position[];

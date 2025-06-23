@@ -18,6 +18,7 @@ export function filterBoxSize(
   const height = Number(values.height);
   const selectedLamelTickness = values.lamelTickness as string;
   const kutuOlcuAlmaSekli = values.kutuOlcuAlmaSekli as string;
+  const selectedMovementType = values.movementType as "manuel" | "motorlu";
 
   // Kutu ölçüleri ve label'ları
   const boxOptions = [
@@ -38,21 +39,14 @@ export function filterBoxSize(
     } else {
       lamelYuksekligi = height;
     }
-    // Hem manuel hem motorlu için kontrol et
-    const maxManuel = maxLamelHeights[boxSize]?.[selectedLamelTickness]?.manuel;
-    const maxMotorlu =
-      maxLamelHeights[boxSize]?.[selectedLamelTickness]?.motorlu;
+    // Sadece seçili movementType'a göre kontrol et
+    const maxValue =
+      maxLamelHeights[boxSize]?.[selectedLamelTickness]?.[selectedMovementType];
     let isValid = false;
-    let movementType: "manuel" | "motorlu" | null = null;
-    if (maxManuel && lamelYuksekligi <= maxManuel) {
+    if (maxValue && lamelYuksekligi <= maxValue) {
       isValid = true;
-      movementType = "manuel";
-    } else if (maxMotorlu && lamelYuksekligi <= maxMotorlu) {
-      isValid = true;
-      movementType = "motorlu";
     }
-
-    if (isValid && movementType) {
+    if (isValid) {
       validOptions.push({ id: box.id, name: box.name });
     }
   }
@@ -61,7 +55,6 @@ export function filterBoxSize(
   const isCurrentValid = validOptions.some(
     (opt) => opt.id === formik.values.boxType
   );
-  console.log({ isCurrentValid });
   if (validOptions.length > 0 && !isCurrentValid) {
     formik.setFieldValue("boxType", validOptions[0].id);
   }

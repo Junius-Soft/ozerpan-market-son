@@ -295,6 +295,12 @@ export const calculateLamelCount = (
   const lamelHeight = Number(lamelTickness.split("_")[0]);
   const dikmeYuksekligiKertmeHaric = systemHeight - kutuYuksekligi;
   const lamelSayisi = Math.ceil(dikmeYuksekligiKertmeHaric / lamelHeight);
+  console.log({
+    kutuYuksekligi,
+    dikmeYuksekligiKertmeHaric,
+    lamelHeight,
+    lamelSayisi,
+  });
   return lamelSayisi + 1;
 };
 

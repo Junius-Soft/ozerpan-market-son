@@ -52,15 +52,45 @@ export function generateDepoCikisFisiPDF(
       position.selectedProducts?.products &&
       Array.isArray(position.selectedProducts.products)
     ) {
-      position.selectedProducts.products.forEach((product: PriceItem) => {
-        accessoryRows.push({
-          pozNo: position.pozNo || "",
-          stock_code: product.stock_code || "",
-          description: product.description || "",
-          quantity: Number(product.quantity) || 1,
-          unit: product.unit || "Adet",
-        });
-      });
+      position.selectedProducts.products.forEach(
+        (product: PriceItem & { size?: string | number }) => {
+          let miktar = 1;
+          let sizeValue = 1;
+          if (product.size !== undefined) {
+            if (typeof product.size === "number") {
+              sizeValue = product.size;
+            } else if (typeof product.size === "string") {
+              // Örneğin "3400 mm" gibi ise sadece sayıyı al
+              const match = product.size.match(/\d+(?:[\.,]\d+)?/);
+              if (match) {
+                sizeValue = parseFloat(match[0].replace(",", "."));
+              }
+            }
+          }
+          // mm'yi metreye çevir
+          const metreValue = sizeValue / 1000;
+          if (
+            metreValue !== undefined &&
+            product.quantity !== undefined &&
+            !isNaN(Number(metreValue)) &&
+            !isNaN(Number(product.quantity))
+          ) {
+            miktar = Number(metreValue) * Number(product.quantity);
+          }
+          const unit = "Mtül";
+
+          accessoryRows.push({
+            pozNo: position.pozNo || "",
+            stock_code: product.stock_code || "",
+            description: product.description || "",
+            quantity:
+              Number.isFinite(miktar) && miktar > 0
+                ? parseFloat(miktar.toFixed(2))
+                : 1,
+            unit,
+          });
+        }
+      );
     }
     // Aksesuarlar
     if (
@@ -68,12 +98,16 @@ export function generateDepoCikisFisiPDF(
       Array.isArray(position.selectedProducts.accessories)
     ) {
       position.selectedProducts.accessories.forEach((accessory: PriceItem) => {
+        let unit = accessory.unit || "Adet";
+        if (unit.toLowerCase() === "metre") {
+          unit = "Mtül";
+        }
         accessoryRows.push({
           pozNo: position.pozNo || "",
           stock_code: accessory.stock_code || "",
           description: accessory.description || "",
           quantity: Number(accessory.quantity) || 1,
-          unit: accessory.unit || "Adet",
+          unit,
         });
       });
     }

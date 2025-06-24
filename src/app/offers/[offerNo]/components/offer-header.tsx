@@ -25,23 +25,36 @@ export function OfferHeader({
 }: OfferHeaderProps) {
   return (
     <div className="flex justify-between items-center">
-      <div className="flex items-center gap-4">
-        <h1 className="text-2xl font-bold">{offerName}</h1>
-        <Button variant="ghost" size="icon" onClick={onEdit}>
-          <Edit2 className="h-4 w-4" />
-        </Button>
-
-        <OfferActions
-          onImalatList={onImalatList}
-          onDepoCikisFisi={onDepoCikisFisi}
-          onFiyatAnaliz={onFiyatAnaliz}
-          hasSelectedPosition={hasSelectedPosition}
-        />
+      <div className="flex items-center gap-4 justify-between w-full">
+        <div className="flex items-center gap-4">
+          <h1 className="text-2xl font-bold">{offerName}</h1>
+          <Button variant="ghost" size="icon" onClick={onEdit}>
+            <Edit2 className="h-4 w-4" />
+          </Button>
+          <div className="hidden sm:flex">
+            <OfferActions
+              onImalatList={onImalatList}
+              onDepoCikisFisi={onDepoCikisFisi}
+              onFiyatAnaliz={onFiyatAnaliz}
+              hasSelectedPosition={hasSelectedPosition}
+            />
+          </div>
+        </div>
+        <div className="flex items-center gap-2 ">
+          <div className="flex sm:hidden">
+            <OfferActions
+              onImalatList={onImalatList}
+              onDepoCikisFisi={onDepoCikisFisi}
+              onFiyatAnaliz={onFiyatAnaliz}
+              hasSelectedPosition={hasSelectedPosition}
+            />
+          </div>
+          <Button variant="outline" onClick={onBack}>
+            <span className="hidden sm:inline">Tekliflere Dön</span>
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
-      <Button variant="outline" className="gap-2 " onClick={onBack}>
-        <ArrowLeft className="h-4 w-4" />
-        <span className="hidden sm:inline">Tekliflere Dön</span>
-      </Button>
     </div>
   );
 }

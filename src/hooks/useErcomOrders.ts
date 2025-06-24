@@ -1,24 +1,17 @@
+import { useFrappePostCall } from "frappe-react-sdk";
 import { useEffect, useState } from "react";
 
 export function useErcomOrders() {
   const [orders, setOrders] = useState<{ name: string }[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-
+  const { call } = useFrappePostCall(
+    "ozerpan_ercom_sync.market.api.get_ercom_orders"
+  );
   useEffect(() => {
     setIsLoading(true);
     setIsError(false);
-    fetch(
-      "http://localhost:3000/frappe-api/api/method/ozerpan_ercom_sync.market.api.get_ercom_orders",
-      {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => res.json())
+    call({})
       .then((data) => {
         setOrders(data?.message?.sales_orders || []);
         setIsLoading(false);
@@ -27,7 +20,7 @@ export function useErcomOrders() {
         setIsError(true);
         setIsLoading(false);
       });
-  }, []);
+  }, [call]);
 
   return {
     orders,

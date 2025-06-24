@@ -58,8 +58,8 @@ export const ProductDetailsHeaderMobile: React.FC<
             : "Tamamla"}
         </Button>
       </div>
-      <div className="flex gap-2 w-full items-center">
-        <div className="flex gap-2 w-full justify-between">
+      <div className="flex gap-2 w-full items-center justify-between">
+        <div className="flex gap-2">
           <Button
             variant="outline"
             onClick={() =>
@@ -77,7 +77,6 @@ export const ProductDetailsHeaderMobile: React.FC<
             type="button"
           >
             <ArrowLeft className="h-4 w-4" />
-            Ürün Seçimi
           </Button>
           <OfferActions
             onImalatList={onImalatListesiConfirm}
@@ -85,10 +84,10 @@ export const ProductDetailsHeaderMobile: React.FC<
             onFiyatAnaliz={() => {}}
             hasSelectedPosition={!!product && !isLoading}
           />
-          <Button variant="outline" type="button" onClick={onBackToOffer}>
-            Teklif Detayı
-          </Button>
         </div>
+        <Button variant="outline" type="button" onClick={onBackToOffer}>
+          Teklif Detayı
+        </Button>
       </div>
       <hr className="mt-4 mb-2" />
     </div>

@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ClientFrappeProvider } from "@/components/frappe-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,19 +35,21 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background font-sans antialiased`}
         suppressHydrationWarning
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-          storageKey="ozerpan-theme"
-        >
-          <ToastProvider>
-            <Navbar />
-            <AuthGuard>{children}</AuthGuard>
-            <ToastContainer />
-          </ToastProvider>
-        </ThemeProvider>
+        <ClientFrappeProvider url={process.env.NEXT_PUBLIC_FRAPPE_URL || "http://erp.ozerpan.com.tr:8001"}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+            storageKey="ozerpan-theme"
+          >
+            <ToastProvider>
+              <Navbar />
+              <AuthGuard>{children}</AuthGuard>
+              <ToastContainer />
+            </ToastProvider>
+          </ThemeProvider>
+        </ClientFrappeProvider>
       </body>
     </html>
   );

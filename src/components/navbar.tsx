@@ -8,15 +8,19 @@ import { LoginModal } from "./login-modal";
 import { Button } from "./ui/button";
 import { ThemeToggle } from "./theme-toggle";
 import { useRouter } from "next/navigation";
+import { useFrappeAuth } from "frappe-react-sdk";
+import { useState } from "react";
 
 export function Navbar() {
+  const { logout } = useFrappeAuth();
+  const [loggingOut, setLoggingOut] = useState(false);
+
   const {
     isAuthenticated,
     showLoginModal,
     openLoginModal,
     closeLoginModal,
     handleLoginSuccess,
-    handleLogout,
   } = useAuth();
 
   const router = useRouter();
@@ -66,12 +70,16 @@ export function Navbar() {
                     Teklifler
                   </Button>
                   <Button
-                    onClick={handleLogout}
+                    onClick={async () => {
+                      setLoggingOut(true);
+                      await logout();
+                    }}
                     variant="secondary"
+                    disabled={loggingOut}
                     className="inline-flex items-center px-4 py-2"
                   >
                     <LogIn className="h-4 w-4" />
-                    Çıkış
+                    {loggingOut ? "Çıkış Yapılıyor.." : "Çıkış"}
                   </Button>
                 </>
               ) : (

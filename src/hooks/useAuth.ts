@@ -12,11 +12,10 @@ export function useAuth() {
   useEffect(() => {
     // Token kontrolü
     const checkAuth = () => {
-      const token = document.cookie
+      const system_user = document.cookie
         .split("; ")
-        .find((row) => row.startsWith("token="));
-
-      const isAuthed = !!token;
+        .find((row) => row.startsWith("system_user="));
+      const isAuthed = system_user === "system_user=yes";
       setIsAuthenticated(isAuthed);
 
       if (!isAuthed) {
@@ -67,7 +66,6 @@ export function useAuth() {
 
   const handleLogout = () => {
     // Token ve localStorage temizle
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     localStorage.removeItem("isAuthenticated");
 
     // State'i güncelle ve modal'ı sıfırla

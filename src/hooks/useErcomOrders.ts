@@ -9,7 +9,14 @@ export function useErcomOrders() {
     setIsLoading(true);
     setIsError(false);
     fetch(
-      "https://erp.ozerpan.com.tr:8001/api/method/ozerpan_ercom_sync.market.api.get_ercom_orders"
+      "http://localhost:3000/frappe-api/api/method/ozerpan_ercom_sync.market.api.get_ercom_orders",
+      {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     )
       .then((res) => res.json())
       .then((data) => {

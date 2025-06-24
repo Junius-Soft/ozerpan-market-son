@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { useFrappeAuth } from "frappe-react-sdk";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -25,25 +26,18 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  const { login } = useFrappeAuth();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
     try {
-      const response = await fetch(
-        "http://erp.ozerpan.com.tr:8001/api/method/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            usr: email,
-            pwd: password,
-          }),
-        }
-      );
-      const data = await response.json();
+      const data = await login({
+        username: email,
+        password: password,
+      });
+      console.log({ data });
       if (data.message === "Logged In") {
         toast.success("Giriş başarılı!", {
           position: "top-center",
@@ -52,7 +46,6 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
         });
         onSuccess();
         onClose();
-        document.cookie = "token=dummy-token; path=/";
 
         const intendedPath = sessionStorage.getItem("intendedPath");
         if (intendedPath) {
@@ -63,8 +56,6 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
         setError("Hatalı e-posta veya şifre.");
       }
     } catch {
-      document.cookie = "token=dummy-token; path=/";
-
       setError("Bir hata oluştu. Lütfen tekrar deneyin.");
     } finally {
       setLoading(false);

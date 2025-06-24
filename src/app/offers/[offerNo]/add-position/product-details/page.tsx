@@ -312,6 +312,19 @@ export default function ProductDetailsPage() {
                       selectedTypes,
                     });
                   }}
+                  onDepoCikisFisiConfirm={async () => {
+                    if (!product) return;
+                    const offerNo = window.location.pathname.split("/")[2];
+                    await import("@/utils/handle-depo-cikis-fisi").then(
+                      ({ handleDepoCikisFisiPDF }) =>
+                        handleDepoCikisFisiPDF({
+                          product,
+                          values: formik.values,
+                          typeId,
+                          offerNo,
+                        })
+                    );
+                  }}
                   onBackToOffer={() =>
                     router.push(
                       `/offers/${window.location.pathname.split("/")[2]}`

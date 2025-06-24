@@ -1,0 +1,157 @@
+import jsPDF from "jspdf";
+import autoTable, { RowInput } from "jspdf-autotable";
+import JsBarcode from "jsbarcode";
+import NotoSansRegular from "./NotoSans-Regular.js";
+import NotoSansBold from "./NotoSans-Bold.js";
+import { Offer, Position } from "@/documents/offers";
+import { PriceItem } from "@/types/panjur";
+
+export function generateDepoCikisFisiPDF(
+  offer: Offer,
+  selectedPositions: Position[]
+): void {
+  const doc = new jsPDF("p", "mm", "a4");
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const margin = 15;
+
+  // Fontlar
+  doc.addFileToVFS("NotoSans-Regular.ttf", NotoSansRegular);
+  doc.addFont("NotoSans-Regular.ttf", "NotoSans", "normal");
+  doc.addFileToVFS("NotoSans-Bold.ttf", NotoSansBold);
+  doc.addFont("NotoSans-Bold.ttf", "NotoSans", "bold");
+  doc.setFont("NotoSans");
+
+  // Başlık
+  doc.setFontSize(14);
+  doc.setFont("NotoSans", "bold");
+  doc.text("DEPO ÇIKIŞ FİŞİ", margin, 25);
+  doc.setFontSize(11);
+  doc.setFont("NotoSans", "normal");
+  doc.text(offer.name || "Teklif Adı", margin, 35);
+  doc.setFontSize(9);
+  doc.text(
+    `Tarih: ${new Date().toLocaleDateString(
+      "tr-TR"
+    )} ${new Date().toLocaleTimeString("tr-TR")}`,
+    margin,
+    42
+  );
+
+  // Aksesuarları topla ve pozNo'ya göre grupla
+  type AccessoryRow = {
+    pozNo: string;
+    stock_code: string;
+    description: string;
+    quantity: number;
+    unit: string;
+  };
+  const accessoryRows: AccessoryRow[] = [];
+  selectedPositions.forEach((position) => {
+    if (
+      position.selectedProducts?.accessories &&
+      Array.isArray(position.selectedProducts.accessories)
+    ) {
+      position.selectedProducts.accessories.forEach((accessory: PriceItem) => {
+        accessoryRows.push({
+          pozNo: position.pozNo || "",
+          stock_code: accessory.stock_code || "",
+          description: accessory.description || "",
+          quantity: Number(accessory.quantity) || 1,
+          unit: accessory.unit || "Adet",
+        });
+      });
+    }
+  });
+
+  // PozNo, stok kodu, açıklama, birim aynı olanlar gruplanmaz, her pozNo için ayrı satır
+  // Sadece sıralama yapılır: önce stok kodu, sonra pozNo
+  accessoryRows.sort((a, b) => {
+    if (a.stock_code !== b.stock_code)
+      return a.stock_code.localeCompare(b.stock_code);
+    return a.pozNo.localeCompare(b.pozNo);
+  });
+
+  // Tablo verisi
+  const tableData: RowInput[] = accessoryRows.map((item) => [
+    item.pozNo,
+    item.stock_code,
+    item.description,
+    item.quantity.toString(),
+    item.unit,
+    "",
+  ]);
+
+  // Tablo çiz
+  autoTable(doc, {
+    startY: 55,
+    head: [["Poz No", "Stok Kodu", "Açıklama", "Miktar", "Birim", "OK"]],
+    body:
+      tableData.length > 0
+        ? tableData
+        : [["", "", "Aksesuar bulunmuyor", "", "", ""]],
+    theme: "grid",
+    tableWidth: pageWidth - 2 * margin,
+    margin: { left: margin, right: margin },
+    headStyles: {
+      fillColor: [240, 240, 240],
+      textColor: [0, 0, 0],
+      fontStyle: "bold",
+      fontSize: 9,
+      font: "NotoSans",
+    },
+    bodyStyles: {
+      fontSize: 8,
+      cellPadding: 2,
+      font: "NotoSans",
+    },
+  });
+
+  // Barcode area (sağ üst köşe)
+  const tableRight = pageWidth - margin;
+  const barcodeWidth = 60;
+  const barcodeY = 15;
+  const barcodeValue = offer.id;
+  const canvas = document.createElement("canvas");
+  JsBarcode(canvas, barcodeValue, {
+    format: "CODE128",
+    width: 2,
+    height: 40,
+    displayValue: false,
+    fontSize: 12,
+    textMargin: 2,
+    margin: 10,
+  });
+  const barcodeCanvasWidth = canvas.width;
+  const barcodeDrawWidth = Math.min(barcodeCanvasWidth / 4, barcodeWidth);
+  const barcodeDrawX = tableRight - barcodeDrawWidth;
+  const barcodeDataUrl = canvas.toDataURL("image/png");
+  doc.addImage(
+    barcodeDataUrl,
+    "PNG",
+    barcodeDrawX,
+    barcodeY,
+    barcodeDrawWidth,
+    25
+  );
+  // Barkodun altına değerini yaz (barcode ile ortalı)
+  doc.setFontSize(16);
+  doc.setFont("NotoSans", "normal");
+  const offerId = offer.id;
+  const textY = barcodeY + 25 + 8;
+  const barcodeCenterX = barcodeDrawX + barcodeDrawWidth / 2;
+  const offerIdWidth = doc.getTextWidth(offerId);
+  const textX = barcodeCenterX - offerIdWidth / 2;
+  doc.text(offerId, textX, textY);
+
+  // PDF'i yeni sekmede aç
+  const pdfBlob = doc.output("blob");
+  const pdfUrl = URL.createObjectURL(pdfBlob);
+  window.open(pdfUrl, "_blank");
+}
+
+export function openDepoCikisFisiPDFMulti(
+  offer: Offer,
+  positions: Position[]
+): void {
+  generateDepoCikisFisiPDF(offer, positions);
+}

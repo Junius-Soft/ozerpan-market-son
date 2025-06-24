@@ -209,6 +209,17 @@ export default function OfferDetailPage() {
             /* TODO: Fiyat Analizi fonksiyonu */
           }}
           hasSelectedPosition={selectedPositions.length > 0}
+          onDepoCikisFisi={() => {
+            if (!offer || selectedPositions.length === 0) return;
+            const positions = offer.positions.filter((p) =>
+              selectedPositions.includes(p.id)
+            );
+            if (positions.length > 0) {
+              import("@/utils/depo-pdf-generator").then((mod) => {
+                mod.openDepoCikisFisiPDFMulti(offer, positions);
+              });
+            }
+          }}
         />
         {/* Edit Dialog */}
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>

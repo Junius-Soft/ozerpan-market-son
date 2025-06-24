@@ -39,9 +39,10 @@ export function PozImalatListesiButton({
         type="button"
         onClick={handleImalatListClick}
         disabled={disabled}
+        className="justify-start"
       >
         <ClipboardList className="h-4 w-4" />
-        <span className="hidden sm:inline">İmalat Listesi</span>
+        <span>İmalat Listesi</span>
       </Button>
       <PozImalatListesiDialog
         open={open}

@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { PozImalatListesiButton } from "@/components/poz-imalat-listesi-button";
 import React from "react";
 import { type Product } from "@/documents/products";
 import { useRouter } from "next/navigation";
 import { ProductDetailsHeaderMobile } from "./ProductDetailsHeaderMobile";
+import { OfferActions } from "../../components/offer-actions";
 
 interface ProductDetailsHeaderProps {
   product: Product | null;
@@ -17,6 +17,7 @@ interface ProductDetailsHeaderProps {
   isLoading: boolean;
   isSaving: boolean;
   onImalatListesiConfirm: (selectedTypes: string[]) => Promise<void>;
+  onDepoCikisFisiConfirm: () => Promise<void>;
   onBackToOffer: () => void;
   onSubmit: () => void;
 }
@@ -54,9 +55,11 @@ export const ProductDetailsHeader: React.FC<ProductDetailsHeaderProps> = (
             <ArrowLeft className="h-4 w-4" />
             Ürün Seçimi
           </Button>
-          <PozImalatListesiButton
-            onConfirm={props.onImalatListesiConfirm}
-            disabled={props.isLoading || !props.product}
+          <OfferActions
+            onImalatList={props.onImalatListesiConfirm}
+            onDepoCikisFisi={props.onDepoCikisFisiConfirm}
+            onFiyatAnaliz={() => {}}
+            hasSelectedPosition={!!props.product && !props.isLoading}
           />
         </div>
         <div className="flex items-center gap-4">

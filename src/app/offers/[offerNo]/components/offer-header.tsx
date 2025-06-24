@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Edit2, ArrowLeft, PieChart } from "lucide-react";
-import { PozImalatListesiButton } from "@/components/poz-imalat-listesi-button";
+import { Edit2, ArrowLeft } from "lucide-react";
+
+import { OfferActions } from "./offer-actions";
 
 interface OfferHeaderProps {
   offerName: string;
@@ -8,6 +9,7 @@ interface OfferHeaderProps {
   onBack: () => void;
   onImalatList: (selectedTypes: string[]) => void;
   onFiyatAnaliz: () => void;
+  onDepoCikisFisi: () => void;
   hasSelectedPosition: boolean;
   loading: boolean;
 }
@@ -19,6 +21,7 @@ export function OfferHeader({
   onImalatList,
   onFiyatAnaliz,
   hasSelectedPosition,
+  onDepoCikisFisi,
 }: OfferHeaderProps) {
   return (
     <div className="flex justify-between items-center">
@@ -28,20 +31,12 @@ export function OfferHeader({
           <Edit2 className="h-4 w-4" />
         </Button>
 
-        <PozImalatListesiButton
-          onConfirm={onImalatList}
-          disabled={!hasSelectedPosition}
+        <OfferActions
+          onImalatList={onImalatList}
+          onDepoCikisFisi={onDepoCikisFisi}
+          onFiyatAnaliz={onFiyatAnaliz}
+          hasSelectedPosition={hasSelectedPosition}
         />
-
-        <Button
-          variant="ghost"
-          type="button"
-          onClick={onFiyatAnaliz}
-          disabled={!hasSelectedPosition}
-        >
-          <PieChart className="h-4 w-4" />
-          <span className="hidden sm:inline">Fiyat Analizi</span>
-        </Button>
       </div>
       <Button variant="outline" className="gap-2 " onClick={onBack}>
         <ArrowLeft className="h-4 w-4" />
@@ -57,6 +52,7 @@ OfferHeader.defaultProps = {
   onBack: () => {},
   onImalatList: () => {},
   onFiyatAnaliz: () => {},
+  onDepoCikisFisi: () => {},
   hasSelectedPosition: false,
   loading: false,
 };

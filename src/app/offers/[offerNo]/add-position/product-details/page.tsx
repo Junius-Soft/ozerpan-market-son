@@ -12,6 +12,7 @@ import { handleImalatListesiPDF } from "@/utils/handle-imalat-listesi";
 import { ProductDetailsHeader } from "./ProductDetailsHeader";
 import { FloatingTotalButton } from "../../components/FloatingTotalButton";
 import { handleFiyatAnaliziPDF } from "@/utils/handle-fiyat-analizi";
+import { useExchangeRate } from "@/hooks/useExchangeRate";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
@@ -31,9 +32,12 @@ export default function ProductDetailsPage() {
   const typeId = searchParams.get("typeId");
   const optionId = searchParams.get("optionId");
   const selectedPosition = searchParams.get("selectedPosition");
+  const offerNo = window.location.pathname.split("/")[2];
 
+  const { eurRate, loading: isEurRateLoading } = useExchangeRate({
+    offerId: offerNo as string,
+  });
   const getSelectedPosition = useMemo(async () => {
-    const offerNo = window.location.pathname.split("/")[2];
     const currentOffer = await getOffer(offerNo);
     const position = currentOffer?.positions.find(
       (p) => p.id === selectedPosition
@@ -245,7 +249,7 @@ export default function ProductDetailsPage() {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isEurRateLoading) {
     return (
       <div className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -269,9 +273,6 @@ export default function ProductDetailsPage() {
       </div>
     );
   }
-
-  // EUR kuru örnek olarak, ileride arayüzden alınabilir
-  const eurRate = 1;
 
   return (
     <div className="pb-8 md:py-8">

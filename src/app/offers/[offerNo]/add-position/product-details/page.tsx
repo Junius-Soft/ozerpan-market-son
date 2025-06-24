@@ -11,6 +11,7 @@ import { Formik, Form } from "formik";
 import { handleImalatListesiPDF } from "@/utils/handle-imalat-listesi";
 import { ProductDetailsHeader } from "./ProductDetailsHeader";
 import { FloatingTotalButton } from "../../components/FloatingTotalButton";
+import { handleFiyatAnaliziPDF } from "@/utils/handle-fiyat-analizi";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
@@ -269,6 +270,9 @@ export default function ProductDetailsPage() {
     );
   }
 
+  // EUR kuru örnek olarak, ileride arayüzden alınabilir
+  const eurRate = 1;
+
   return (
     <div className="pb-8 md:py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -331,6 +335,19 @@ export default function ProductDetailsPage() {
                     )
                   }
                   onSubmit={formik.submitForm}
+                  onFiyatAnaliz={async () => {
+                    const offerNo = window.location.pathname.split("/")[2];
+                    await handleFiyatAnaliziPDF({
+                      offerNo,
+                      selectedPosition,
+                      formikValues: formik.values,
+                      productId: productId ?? null,
+                      typeId: typeId ?? null,
+                      productName: productName ?? null,
+                      optionId: optionId ?? null,
+                      eurRate,
+                    });
+                  }}
                 />
 
                 <DetailsStep

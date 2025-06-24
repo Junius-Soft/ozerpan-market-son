@@ -206,7 +206,19 @@ export default function OfferDetailPage() {
             }
           }}
           onFiyatAnaliz={() => {
-            /* TODO: Fiyat Analizi fonksiyonu */
+            if (!offer || selectedPositions.length === 0) return;
+            const positions = offer.positions.filter((p) =>
+              selectedPositions.includes(p.id)
+            );
+            if (positions.length > 0) {
+              import("@/utils/fiyat-analizi-pdf-generator").then((mod) => {
+                mod.generateFiyatAnaliziPDFPozListesi(
+                  offer,
+                  positions,
+                  eurRate
+                );
+              });
+            }
           }}
           hasSelectedPosition={selectedPositions.length > 0}
           onDepoCikisFisi={() => {

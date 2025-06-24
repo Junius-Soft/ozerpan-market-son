@@ -20,6 +20,7 @@ interface ProductDetailsHeaderProps {
   onDepoCikisFisiConfirm: () => Promise<void>;
   onBackToOffer: () => void;
   onSubmit: () => void;
+  onFiyatAnaliz: () => void;
 }
 
 export const ProductDetailsHeader: React.FC<ProductDetailsHeaderProps> = (
@@ -58,7 +59,7 @@ export const ProductDetailsHeader: React.FC<ProductDetailsHeaderProps> = (
           <OfferActions
             onImalatList={props.onImalatListesiConfirm}
             onDepoCikisFisi={props.onDepoCikisFisiConfirm}
-            onFiyatAnaliz={() => {}}
+            onFiyatAnaliz={props.onFiyatAnaliz}
             hasSelectedPosition={!!props.product && !props.isLoading}
           />
         </div>

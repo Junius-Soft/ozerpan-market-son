@@ -19,6 +19,7 @@ interface ProductDetailsHeaderMobileProps {
   onDepoCikisFisiConfirm: () => Promise<void>;
   onBackToOffer: () => void;
   onSubmit: () => void;
+  onFiyatAnaliz: () => void;
 }
 
 export const ProductDetailsHeaderMobile: React.FC<
@@ -37,6 +38,7 @@ export const ProductDetailsHeaderMobile: React.FC<
   onDepoCikisFisiConfirm,
   onBackToOffer,
   onSubmit,
+  onFiyatAnaliz,
 }) => {
   return (
     <div className="flex flex-col gap-4 sm:hidden">
@@ -81,7 +83,7 @@ export const ProductDetailsHeaderMobile: React.FC<
           <OfferActions
             onImalatList={onImalatListesiConfirm}
             onDepoCikisFisi={onDepoCikisFisiConfirm}
-            onFiyatAnaliz={() => {}}
+            onFiyatAnaliz={onFiyatAnaliz}
             hasSelectedPosition={!!product && !isLoading}
           />
         </div>

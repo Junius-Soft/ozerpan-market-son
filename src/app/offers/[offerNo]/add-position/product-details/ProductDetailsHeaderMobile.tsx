@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { PozImalatListesiButton } from "@/components/poz-imalat-listesi-button";
+import { OfferActions } from "../../components/offer-actions";
 import React from "react";
 import { type Product } from "@/documents/products";
 import { useRouter } from "next/navigation";
@@ -16,6 +16,7 @@ interface ProductDetailsHeaderMobileProps {
   isLoading: boolean;
   isSaving: boolean;
   onImalatListesiConfirm: (selectedTypes: string[]) => Promise<void>;
+  onDepoCikisFisiConfirm: () => Promise<void>;
   onBackToOffer: () => void;
   onSubmit: () => void;
 }
@@ -33,6 +34,7 @@ export const ProductDetailsHeaderMobile: React.FC<
   isLoading,
   isSaving,
   onImalatListesiConfirm,
+  onDepoCikisFisiConfirm,
   onBackToOffer,
   onSubmit,
 }) => {
@@ -57,7 +59,7 @@ export const ProductDetailsHeaderMobile: React.FC<
         </Button>
       </div>
       <div className="flex gap-2 w-full items-center">
-        <div className="flex gap-2 w-full">
+        <div className="flex gap-2 w-full justify-between">
           <Button
             variant="outline"
             onClick={() =>
@@ -66,7 +68,7 @@ export const ProductDetailsHeaderMobile: React.FC<
                   window.location.pathname.split("/")[2]
                 }/add-position/select-product?selectedPosition=${
                   selectedPosition ?? ""
-                }&productId=${productId}&productName=${productName}${
+                }&productId=${productId}&productName=${productName}$${
                   typeId ? `&typeId=${typeId}` : ""
                 }${optionId ? `&optionId=${optionId}` : ""}`
               )
@@ -77,20 +79,18 @@ export const ProductDetailsHeaderMobile: React.FC<
             <ArrowLeft className="h-4 w-4" />
             Ürün Seçimi
           </Button>
-          <PozImalatListesiButton
-            onConfirm={onImalatListesiConfirm}
-            disabled={isLoading || !product}
+          <OfferActions
+            onImalatList={onImalatListesiConfirm}
+            onDepoCikisFisi={onDepoCikisFisiConfirm}
+            onFiyatAnaliz={() => {}}
+            hasSelectedPosition={!!product && !isLoading}
           />
+          <Button variant="outline" type="button" onClick={onBackToOffer}>
+            Teklif Detayı
+          </Button>
         </div>
-        <Button
-          variant="outline"
-          type="button"
-          onClick={onBackToOffer}
-          className="flex-shrink-0 ml-auto"
-        >
-          Teklif Detayı
-        </Button>
       </div>
+      <hr className="mt-4 mb-2" />
     </div>
   );
 };

@@ -47,6 +47,22 @@ export function generateDepoCikisFisiPDF(
   };
   const accessoryRows: AccessoryRow[] = [];
   selectedPositions.forEach((position) => {
+    // Ürünler
+    if (
+      position.selectedProducts?.products &&
+      Array.isArray(position.selectedProducts.products)
+    ) {
+      position.selectedProducts.products.forEach((product: PriceItem) => {
+        accessoryRows.push({
+          pozNo: position.pozNo || "",
+          stock_code: product.stock_code || "",
+          description: product.description || "",
+          quantity: Number(product.quantity) || 1,
+          unit: product.unit || "Adet",
+        });
+      });
+    }
+    // Aksesuarlar
     if (
       position.selectedProducts?.accessories &&
       Array.isArray(position.selectedProducts.accessories)
@@ -106,7 +122,8 @@ export function generateDepoCikisFisiPDF(
     },
   });
 
-  // Barcode area (sağ üst köşe)
+  // Barcode area (sadece ilk sayfa için sağ üst köşe)
+  doc.setPage(1); // Her zaman ilk sayfaya dön
   const tableRight = pageWidth - margin;
   const barcodeWidth = 60;
   const barcodeY = 15;

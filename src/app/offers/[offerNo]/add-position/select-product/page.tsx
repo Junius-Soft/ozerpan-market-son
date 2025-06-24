@@ -129,33 +129,50 @@ export default function SelectProductPage() {
               <h1 className="text-2xl font-bold">Ürün Seçimi</h1>
               <Button
                 variant="ghost"
+                className="hidden sm:flex"
                 onClick={() =>
                   router.push(
                     `/offers/${window.location.pathname.split("/")[2]}`
                   )
                 }
-                className="gap-2"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Teklif Detayı
               </Button>
             </div>
-            <Button
-              onClick={() => {
-                if (selectedProduct) {
-                  const params = new URLSearchParams();
-                  params.set("selectedPosition", selectedPosition);
-                  params.set("productId", selectedProduct.id);
-                  params.set("productName", selectedProduct.name);
-                  if (selectedType) params.set("typeId", selectedType);
-                  if (selectedOption) params.set("optionId", selectedOption);
-                  router.push(`product-details?${params.toString()}`);
+            <div className="flex gap-4">
+              <Button
+                variant="outline"
+                className="flex sm:hidden"
+                onClick={() =>
+                  router.push(
+                    `/offers/${window.location.pathname.split("/")[2]}`
+                  )
                 }
-              }}
-              disabled={!selectedProduct}
-            >
-              Devam Et
-            </Button>
+              >
+                <ArrowLeft className="h-4 w-4" />
+                <span
+                  className="hidden sm:inline
+                "
+                ></span>
+              </Button>
+              <Button
+                onClick={() => {
+                  if (selectedProduct) {
+                    const params = new URLSearchParams();
+                    params.set("selectedPosition", selectedPosition);
+                    params.set("productId", selectedProduct.id);
+                    params.set("productName", selectedProduct.name);
+                    if (selectedType) params.set("typeId", selectedType);
+                    if (selectedOption) params.set("optionId", selectedOption);
+                    router.push(`product-details?${params.toString()}`);
+                  }
+                }}
+                disabled={!selectedProduct}
+              >
+                Devam Et
+              </Button>
+            </div>
           </div>
 
           {/* Product Selection */}

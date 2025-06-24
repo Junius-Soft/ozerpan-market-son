@@ -4,29 +4,17 @@ import { FrappeProvider } from "frappe-react-sdk";
 
 interface ClientFrappeProviderProps {
   children: React.ReactNode;
-  url: string;
 }
 
-export function ClientFrappeProvider({
-  children,
-  url,
-}: ClientFrappeProviderProps) {
-  // In development, use the rewrite URL to avoid CORS issues
+export function ClientFrappeProvider({ children }: ClientFrappeProviderProps) {
+  // Always use the API proxy route to avoid CORS and mixed content issues
   const frappeUrl =
-    process.env.NODE_ENV === "development"
-      ? `${
-          typeof window !== "undefined"
-            ? window.location.origin
-            : "http://localhost:3000"
-        }/frappe-api`
-      : url;
+    typeof window !== "undefined"
+      ? `${window.location.origin}/api/frappe`
+      : "/api/frappe";
 
   return (
-    <FrappeProvider
-      url={frappeUrl}
-      enableSocket={false}
-      socketPort={process.env.NODE_ENV === "development" ? undefined : "8001"}
-    >
+    <FrappeProvider url={frappeUrl} enableSocket={false} socketPort={undefined}>
       {children}
     </FrappeProvider>
   );

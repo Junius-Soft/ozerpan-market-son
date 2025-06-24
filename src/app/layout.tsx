@@ -35,7 +35,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background font-sans antialiased`}
         suppressHydrationWarning
       >
-        <ClientFrappeProvider url={process.env.NEXT_PUBLIC_FRAPPE_URL || "http://erp.ozerpan.com.tr:8001"}>
+        <ClientFrappeProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

@@ -213,11 +213,7 @@ export default function OffersPage() {
                 >
                   İptal
                 </Button>
-                <Button
-                  type="submit"
-                  variant="outline"
-                  className="gap-2 border-green-200 text-green-600 hover:bg-green-50 hover:text-green-700"
-                >
+                <Button type="submit" variant="default" className="gap-2">
                   Oluştur
                 </Button>
               </DialogFooter>

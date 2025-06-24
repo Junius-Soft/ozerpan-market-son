@@ -3,6 +3,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
@@ -81,12 +82,12 @@ export function PozImalatListesiDialog({
             </button>
           ))}
         </div>
-        <div className="flex justify-end gap-2 mt-4">
+        <DialogFooter>
           <Button variant="outline" onClick={handleCancel}>
             İptal
           </Button>
           <Button onClick={onConfirm}>Onayla</Button>
-        </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

@@ -1,38 +1,24 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { path: string[] } }
-) {
-  return proxyToFrappe(request, params.path);
+export async function GET(request: NextRequest, context: any) {
+  return proxyToFrappe(request, context.params.path as string[]);
 }
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { path: string[] } }
-) {
-  return proxyToFrappe(request, params.path);
+export async function POST(request: NextRequest, context: any) {
+  return proxyToFrappe(request, context.params.path as string[]);
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { path: string[] } }
-) {
-  return proxyToFrappe(request, params.path);
+export async function PUT(request: NextRequest, context: any) {
+  return proxyToFrappe(request, context.params.path as string[]);
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { path: string[] } }
-) {
-  return proxyToFrappe(request, params.path);
+export async function DELETE(request: NextRequest, context: any) {
+  return proxyToFrappe(request, context.params.path as string[]);
 }
 
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: { path: string[] } }
-) {
-  return proxyToFrappe(request, params.path);
+export async function PATCH(request: NextRequest, context: any) {
+  return proxyToFrappe(request, context.params.path as string[]);
 }
 
 export async function OPTIONS() {

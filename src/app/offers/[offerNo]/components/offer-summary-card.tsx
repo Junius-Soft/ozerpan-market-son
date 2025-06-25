@@ -22,6 +22,8 @@ interface OfferSummaryCardProps {
   onOrder: () => void;
   onRevise: () => void;
   onTotalChange?: (total: number) => void;
+  selectedOrder: string;
+  onSelectedOrderChange: (order: string) => void;
 }
 
 export function OfferSummaryCard({
@@ -34,20 +36,20 @@ export function OfferSummaryCard({
   onOrder,
   onRevise,
   onTotalChange,
+  selectedOrder,
+  onSelectedOrderChange,
 }: OfferSummaryCardProps) {
-  // Sipariş numarası seçimi için state
+  // Sipariş numarası seçimi için state kaldırıldı, parenttan geliyor
   const { orders, isLoading: ordersLoading } = useErcomOrders();
-  const [selectedOrder, setSelectedOrder] = useState<string>(
-    orders[0]?.name || ""
-  );
   const [vatRate, setVatRate] = useState<number>(20);
   const [discountRate, setDiscountRate] = useState<number>(0);
   const [assemblyRate, setAssemblyRate] = useState<number>(0);
 
   // orders değiştiğinde ilkini seçili yap
   React.useEffect(() => {
-    if (orders.length > 0) setSelectedOrder(orders[0].name);
-  }, [orders]);
+    if (orders.length > 0 && !selectedOrder)
+      onSelectedOrderChange(orders[0].name);
+  }, [orders, selectedOrder, onSelectedOrderChange]);
 
   const calculateTotal = useCallback(
     (
@@ -123,7 +125,7 @@ export function OfferSummaryCard({
           </label>
           <Select
             value={selectedOrder}
-            onValueChange={setSelectedOrder}
+            onValueChange={onSelectedOrderChange}
             disabled={ordersLoading || orders.length === 0}
           >
             <SelectTrigger className="w-full">

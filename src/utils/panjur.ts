@@ -82,7 +82,9 @@ export const findLamelPrice = (
   quantity: number,
   lamelGenisligi: number
 ): [number, SelectedProduct | null] => {
-  const lamelPrices = prices.filter((p) => p.type === "lamel_profilleri");
+  const lamelPrices = prices.filter(
+    (p) => p.type === "panjur_lamel_profilleri"
+  );
   let normalizedColor = normalizeColor(color);
 
   const thickness = lamelTickness.split("_")[0];
@@ -115,7 +117,9 @@ export const findSubPartPrice = (
   color: string,
   lamelGenisligi: number
 ): [number, SelectedProduct | null] => {
-  const subPartPrices = prices.filter((p) => p.type === "alt_parca");
+  const subPartPrices = prices.filter(
+    (p) => p.type === "panjur_alt_parça_profilleri"
+  );
   let normalizedColor = normalizeColor(color);
 
   const subPartType = subPart.split("_")[0];
@@ -154,7 +158,9 @@ export const findDikmePrice = (
   quantity: number,
   dikmeHeight: number
 ): [number, SelectedProduct | null] => {
-  const dikmePrices = prices.filter((p) => p.type === "dikme_profilleri");
+  const dikmePrices = prices.filter(
+    (p) => p.type === "panjur_dikme_profilleri"
+  );
   let normalizedColor = normalizeColor(color);
 
   const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
@@ -364,7 +370,7 @@ export const findRemotePrice = (
   if (!remote) return [0, null];
 
   // Otomasyon kumandalarını filtrele
-  const remotePrices = prices.filter((p) => p.type === "otomasyon_kumandalari");
+  const remotePrices = prices.filter((p) => p.type === "otomasyon_kumandalar");
 
   const normalizedSearchName = normalizeRemoteName(remote);
 
@@ -411,7 +417,7 @@ export const findReceiverPrice = (
   if (!receiverOption?.name) return [0, null];
 
   // Find matching receiver price in the price list
-  const receiverPrices = prices.filter((p) => p.type === "otomasyon_alicilar");
+  const receiverPrices = prices.filter((p) => p.type === "otomasyon_alıcılar");
   const receiverItem = receiverPrices.find(
     (price) => price.description === receiverOption.name
   );

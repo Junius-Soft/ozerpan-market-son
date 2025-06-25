@@ -28,6 +28,8 @@ import {
 } from "@/utils/offer-utils";
 import { FloatingTotalButton } from "./components/FloatingTotalButton";
 import { OfferDetailSkeleton } from "./components/OfferDetailSkeleton";
+import { useFrappePostCall } from "frappe-react-sdk";
+import { PriceItem, SelectedProduct } from "@/types/panjur";
 
 export default function OfferDetailPage() {
   const params = useParams();
@@ -44,6 +46,10 @@ export default function OfferDetailPage() {
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const summaryRef = useRef<HTMLDivElement>(null!);
   const [summaryTotal, setSummaryTotal] = useState<number>(0);
+  const { call } = useFrappePostCall(
+    "ozerpan_ercom_sync.market.api.sales_order"
+  );
+  const [selectedOrder, setSelectedOrder] = useState<string>("");
 
   useEffect(() => {
     const loadOffer = async () => {
@@ -149,6 +155,48 @@ export default function OfferDetailPage() {
     return <OfferDetailSkeleton />;
   }
   const { subtotal } = calculateTotals(offer.positions);
+
+  // Profil tipini kullanıcı dostu başlığa çeviren fonksiyon
+  function formatProfileType(type: string): string {
+    return type
+      .split("_")
+      .map((word) =>
+        word.length > 0
+          ? word[0].toLocaleUpperCase("tr-TR") +
+            word.slice(1).toLocaleLowerCase("tr-TR")
+          : ""
+      )
+      .join(" ");
+  }
+
+  // Gerçek sipariş datası oluşturucu
+  function buildOrderData(offer: Offer) {
+    return {
+      order_no: selectedOrder || offer.id, // selectedOrder öncelikli
+      data: offer.positions.map((pos) => ({
+        name: pos.pozNo,
+        quantity: pos.quantity,
+        production_materials: {
+          profiles:
+            pos.selectedProducts?.products?.map((profile: SelectedProduct) => ({
+              stock_code: profile.stock_code,
+              type: formatProfileType(profile.type), // Kullanıcı dostu başlık
+              description: profile.description,
+              measure: Number(profile.size),
+              right_angle: 0.0,
+              left_angle: 0.0,
+              quantity: profile.quantity,
+            })) || [],
+          accessories:
+            pos.selectedProducts?.accessories?.map((acc: PriceItem) => ({
+              stock_code: acc.stock_code,
+              description: acc.description,
+              quantity: acc.quantity ?? 0,
+            })) || [],
+        },
+      })),
+    };
+  }
 
   return (
     <div className="py-8 relative">
@@ -311,9 +359,15 @@ export default function OfferDetailPage() {
               onSave={async () =>
                 await updateOfferStatus("Kaydedildi", eurRate)
               }
-              onOrder={() => {}}
+              onOrder={async () => {
+                const orderData = buildOrderData(offer);
+                const response = await call(orderData);
+                console.log({ response });
+              }}
               onRevise={() => updateOfferStatus("Revize")}
               onTotalChange={setSummaryTotal}
+              selectedOrder={selectedOrder}
+              onSelectedOrderChange={setSelectedOrder}
             />
           </div>
         </div>

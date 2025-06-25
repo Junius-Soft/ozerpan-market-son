@@ -5,7 +5,7 @@
         "description": "39 mm Alüminyum Poliüretanlı Lamel Beyaz",
         "stock_code": "352112201110",
         "uretici_kodu": "SL.039.01.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "1.01"
@@ -14,7 +14,7 @@
         "description": "39 mm Alüminyum Poliüretanlı Lamel Metalik Gri",
         "stock_code": "352112203010",
         "uretici_kodu": "SL.039.04.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "1.03"
@@ -23,7 +23,7 @@
         "description": "39 mm Alüminyum Poliüretanlı Lamel Krem",
         "stock_code": "352112203110",
         "uretici_kodu": "SL.039.08.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "krem",
         "unit": "Metre",
         "price": "1.04"
@@ -32,7 +32,7 @@
         "description": "39 mm Alüminyum Poliüretanlı Lamel Koyu Bej",
         "stock_code": "352112203310",
         "uretici_kodu": "SL.039.09.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "koyu_bej",
         "unit": "Metre",
         "price": "1.04"
@@ -41,7 +41,7 @@
         "description": "39 mm Alüminyum Poliüretanlı Lamel Açık Bej",
         "stock_code": "352112203210",
         "uretici_kodu": "SL.039.11.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "açık_bej",
         "unit": "Metre",
         "price": "1.04"
@@ -50,7 +50,7 @@
         "description": "39 mm Alüminyum Poliüretanlı Lamel Kül Siyahı",
         "stock_code": "352112203610",
         "uretici_kodu": "SL.039.13.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "kül_siyahı",
         "unit": "Metre",
         "price": "1.06"
@@ -59,7 +59,7 @@
         "description": "39 mm Alüminyum Poliüretanlı Lamel Altın Meşe",
         "stock_code": "352112205110",
         "uretici_kodu": "SL.039.17.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
         "price": "1.08"
@@ -68,7 +68,7 @@
         "description": "39 mm Alüminyum Poliüretanlı Lamel Antrasit Gri",
         "stock_code": "352112203410",
         "uretici_kodu": "SL.039.24.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "1.06"
@@ -77,7 +77,7 @@
         "description": "39 mm Alüminyum Poliüretanlı Lamel Fındık",
         "stock_code": "352112205210",
         "uretici_kodu": "SL.039.25.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "fındık",
         "unit": "Metre",
         "price": "1.08"
@@ -86,7 +86,7 @@
         "description": "39 mm Alüminyum Poliüretanlı Lamel Vizon",
         "stock_code": "352112203510",
         "uretici_kodu": "SL.039.32.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "vizon",
         "unit": "Metre",
         "price": "1.04"
@@ -95,7 +95,7 @@
         "description": "39 mm Alüminyum Poliüretanlı Lamel Açık Bronz1",
         "stock_code": "352112206410",
         "uretici_kodu": "SL.039.47.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "açık_bronz1",
         "unit": "Metre",
         "price": "1.04"
@@ -104,7 +104,7 @@
         "description": "55 mm Alüminyum Poliüretanlı Lamel Beyaz",
         "stock_code": "352112501110",
         "uretici_kodu": "SL.055.01.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "1.53"
@@ -113,7 +113,7 @@
         "description": "55 mm Alüminyum Poliüretanlı Lamel Metalik Gri",
         "stock_code": "352112503010",
         "uretici_kodu": "SL.055.04.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "1.56"
@@ -122,7 +122,7 @@
         "description": "55 mm Alüminyum Poliüretanlı Lamel Metalik Bronz",
         "stock_code": "352112506310",
         "uretici_kodu": "SL.055.07.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "metalik_bronz",
         "unit": "Metre",
         "price": "1.58"
@@ -131,7 +131,7 @@
         "description": "55 mm Alüminyum Poliüretanlı Lamel Krem",
         "stock_code": "352112503110",
         "uretici_kodu": "SL.055.08.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "krem",
         "unit": "Metre",
         "price": "1.58"
@@ -140,7 +140,7 @@
         "description": "55 mm Alüminyum Poliüretanlı Lamel Koyu Bej",
         "stock_code": "352112503310",
         "uretici_kodu": "SL.055.09.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "koyu_bej",
         "unit": "Metre",
         "price": "1.61"
@@ -149,7 +149,7 @@
         "description": "55 mm Alüminyum Poliüretanlı Lamel Açık Bej",
         "stock_code": "352112503210",
         "uretici_kodu": "SL.055.11.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "açık_bej",
         "unit": "Metre",
         "price": "1.58"
@@ -158,7 +158,7 @@
         "description": "55 mm Alüminyum Poliüretanlı Lamel Kül Siyahı",
         "stock_code": "352112503610",
         "uretici_kodu": "SL.055.13.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "kül_siyahı",
         "unit": "Metre",
         "price": "1.61"
@@ -167,7 +167,7 @@
         "description": "55 mm Alüminyum Poliüretanlı Lamel Altın Meşe",
         "stock_code": "352112505110",
         "uretici_kodu": "SL.055.17.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
         "price": "1.64"
@@ -176,7 +176,7 @@
         "description": "55 mm Alüminyum Poliüretanlı Lamel Antrasit Gri",
         "stock_code": "352112503410",
         "uretici_kodu": "SL.055.24.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "1.61"
@@ -185,7 +185,7 @@
         "description": "55 mm Alüminyum Poliüretanlı Lamel Fındık",
         "stock_code": "352112505210",
         "uretici_kodu": "SL.055.25.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "fındık",
         "unit": "Metre",
         "price": "1.64"
@@ -194,7 +194,7 @@
         "description": "55 mm Alüminyum Poliüretanlı Lamel Vizon",
         "stock_code": "352112503510",
         "uretici_kodu": "SL.055.32.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "vizon",
         "unit": "Metre",
         "price": "1.61"
@@ -203,7 +203,7 @@
         "description": "55 mm Alüminyum Poliüretanlı Lamel Açık Bronz",
         "stock_code": "352112506410",
         "uretici_kodu": "SL.055.47.AHO",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "acik_bronz",
         "unit": "Metre",
         "price": "1.58"
@@ -212,7 +212,7 @@
         "description": "45 mm Alüminyum Ekstrüzyon Lamel Beyaz",
         "stock_code": "352113201110",
         "uretici_kodu": "SE.045.01.EXT",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "2.65"
@@ -221,7 +221,7 @@
         "description": "45 mm Alüminyum Ekstrüzyon Lamel Metalik Gri",
         "stock_code": "352113203010",
         "uretici_kodu": "SE.045.04.EXT",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "2.71"
@@ -230,7 +230,7 @@
         "description": "45 mm Alüminyum Ekstrüzyon Lamel Antrasit Gri",
         "stock_code": "352113203410",
         "uretici_kodu": "SE.045.24.EXT",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "2.71"
@@ -239,7 +239,7 @@
         "description": "45 mm Alüminyum Ekstrüzyon Lamel Vizon",
         "stock_code": "352113203510",
         "uretici_kodu": "SE.045.32.EXT",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "vizon",
         "unit": "Metre",
         "price": "2.71"
@@ -248,7 +248,7 @@
         "description": "45 mm Alüminyum Ekstrüzyon Lamel Ral Boyalı",
         "stock_code": "352113201010",
         "uretici_kodu": "SE.045.RA.EXT",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "ral_boyalı",
         "unit": "Metre",
         "price": "3.21"
@@ -257,7 +257,7 @@
         "description": "55 mm Alüminyum Ekstrüzyon Lamel Beyaz",
         "stock_code": "352113401010",
         "uretici_kodu": "SE.058.01.EXT",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "3.55"
@@ -266,7 +266,7 @@
         "description": "55 mm Alüminyum Ekstrüzyon Lamel Metalik Gri",
         "stock_code": "352113401010",
         "uretici_kodu": "SE.058.04.EXT",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "3.69"
@@ -275,7 +275,7 @@
         "description": "55 mm Alüminyum Ekstrüzyon Lamel Antrasit Gri",
         "stock_code": "352113401010",
         "uretici_kodu": "SE.058.24.EXT",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "3.69"
@@ -284,7 +284,7 @@
         "description": "55 mm Alüminyum Ekstrüzyon Lamel Vizon",
         "stock_code": "352113401010",
         "uretici_kodu": "SE.058.32.EXT",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "vizon",
         "unit": "Metre",
         "price": "3.69"
@@ -293,7 +293,7 @@
         "description": "55 mm Alüminyum Ekstrüzyon Lamel Ral Boyalı",
         "stock_code": "352113401010",
         "uretici_kodu": "SE.058.RA.EXT",
-        "type": "lamel_profilleri",
+        "type": "panjur_lamel_profilleri",
         "color": "ral_boyalı",
         "unit": "Metre",
         "price": "4.30"
@@ -302,7 +302,7 @@
         "description": "40mm Sekizgen Boru 0,40",
         "stock_code": "352151116910",
         "uretici_kodu": "TU.040.00.040",
-        "type": "tambur_boru",
+        "type": "panjur_tambur_boru_profilleri",
         "color": "",
         "unit": "Metre",
         "price": "1.24"
@@ -311,7 +311,7 @@
         "description": "60mm Sekizgen Boru 0,60",
         "stock_code": "352151246910",
         "uretici_kodu": "TU.060.00.060",
-        "type": "tambur_boru",
+        "type": "panjur_tambur_boru_profilleri",
         "color": "",
         "unit": "Metre",
         "price": "2.35"
@@ -320,7 +320,7 @@
         "description": "137 - ÖN 45 Alüminyum Kutu Beyaz",
         "stock_code": "352141131110",
         "uretici_kodu": "SK.137.01.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "4.56"
@@ -329,7 +329,7 @@
         "description": "137 - ARKA 90 Alüminyum Kutu Beyaz",
         "stock_code": "352141121110",
         "uretici_kodu": "SK.137.01.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "6.94"
@@ -338,7 +338,7 @@
         "description": "137 - ÖN 45 Alüminyum Kutu Kahverengi",
         "stock_code": "352141132010",
         "uretici_kodu": "SK.137.03.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
         "price": "4.78"
@@ -347,7 +347,7 @@
         "description": "137 - ARKA 90 Alüminyum Kutu Kahverengi",
         "stock_code": "352141122010",
         "uretici_kodu": "SK.137.03.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
         "price": "7.29"
@@ -356,7 +356,7 @@
         "description": "137 - ÖN 45 Alüminyum Kutu Metalik Gri",
         "stock_code": "352141133010",
         "uretici_kodu": "SK.137.04.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "4.78"
@@ -365,7 +365,7 @@
         "description": "137 - ARKA 90 Alüminyum Kutu Metalik Gri",
         "stock_code": "352141123010",
         "uretici_kodu": "SK.137.04.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "7.29"
@@ -374,7 +374,7 @@
         "description": "137 - ÖN 45 Alüminyum Kutu Krem",
         "stock_code": "352141133110",
         "uretici_kodu": "SK.137.08.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
         "price": "4.78"
@@ -383,7 +383,7 @@
         "description": "137 - ARKA 90 Alüminyum Kutu Krem",
         "stock_code": "352141123110",
         "uretici_kodu": "SK.137.08.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
         "price": "7.29"
@@ -392,7 +392,7 @@
         "description": "137 - ÖN 45 Alüminyum Kutu Antrasit Gri",
         "stock_code": "352141133410",
         "uretici_kodu": "SK.137.24.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "4.78"
@@ -401,7 +401,7 @@
         "description": "137 - ARKA 90 Alüminyum Kutu Antrasit Gri",
         "stock_code": "352141123410",
         "uretici_kodu": "SK.137.24.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "7.29"
@@ -410,7 +410,7 @@
         "description": "165 - ÖN 45 Alüminyum Kutu Beyaz",
         "stock_code": "352141231110",
         "uretici_kodu": "SK.165.01.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "5.58"
@@ -419,7 +419,7 @@
         "description": "165 - ARKA 90 Alüminyum Kutu Beyaz",
         "stock_code": "352141221110",
         "uretici_kodu": "SK.165.01.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "8.16"
@@ -428,7 +428,7 @@
         "description": "165 - ÖN 45 Alüminyum Kutu Kahverengi",
         "stock_code": "352141232010",
         "uretici_kodu": "SK.165.03.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
         "price": "5.86"
@@ -437,7 +437,7 @@
         "description": "165 - ARKA 90 Alüminyum Kutu Kahverengi",
         "stock_code": "352141222010",
         "uretici_kodu": "SK.165.03.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
         "price": "8.56"
@@ -446,7 +446,7 @@
         "description": "165 - ÖN 45 Alüminyum Kutu Metalik Gri",
         "stock_code": "352141233010",
         "uretici_kodu": "SK.165.04.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "5.86"
@@ -455,7 +455,7 @@
         "description": "165 - ARKA 90 Alüminyum Kutu Metalik Gri",
         "stock_code": "352141223010",
         "uretici_kodu": "SK.165.04.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "8.56"
@@ -464,7 +464,7 @@
         "description": "165 - ÖN 45 Alüminyum Kutu Krem",
         "stock_code": "352141233110",
         "uretici_kodu": "SK.165.08.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
         "price": "5.86"
@@ -473,7 +473,7 @@
         "description": "165 - ARKA 90 Alüminyum Kutu Krem",
         "stock_code": "352141223110",
         "uretici_kodu": "SK.165.08.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
         "price": "8.56"
@@ -482,7 +482,7 @@
         "description": "165 - ÖN 45 Alüminyum Kutu Altın Meşe",
         "stock_code": "352141235110",
         "uretici_kodu": "SK.165.17.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
         "price": "5.97"
@@ -491,7 +491,7 @@
         "description": "165 - ARKA 90 Alüminyum Kutu Altın Meşe",
         "stock_code": "352141225110",
         "uretici_kodu": "SK.165.17.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
         "price": "8.73"
@@ -500,7 +500,7 @@
         "description": "165 - ÖN 45 Alüminyum Kutu Antrasit Gri",
         "stock_code": "352141233410",
         "uretici_kodu": "SK.165.24.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "5.86"
@@ -509,7 +509,7 @@
         "description": "165 - ARKA 90 Alüminyum Kutu Antrasit Gri",
         "stock_code": "352141223410",
         "uretici_kodu": "SK.165.24.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "8.56"
@@ -518,7 +518,7 @@
         "description": "165 - ÖN 45 Alüminyum Kutu Vizon",
         "stock_code": "352141233510",
         "uretici_kodu": "SK.165.32.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "vizon",
         "unit": "Metre",
         "price": "5.97"
@@ -527,7 +527,7 @@
         "description": "165 - ARKA 90 Alüminyum Kutu Vizon",
         "stock_code": "352141223510",
         "uretici_kodu": "SK.165.32.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "vizon",
         "unit": "Metre",
         "price": "8.73"
@@ -536,7 +536,7 @@
         "description": "205 - ÖN 45 Alüminyum Kutu Beyaz",
         "stock_code": "352141431110",
         "uretici_kodu": "SK.205.01.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "7.35"
@@ -545,7 +545,7 @@
         "description": "205 - ARKA 90 Alüminyum Kutu Beyaz",
         "stock_code": "352141421110",
         "uretici_kodu": "SK.205.01.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "9.94"
@@ -554,7 +554,7 @@
         "description": "205 - ÖN 45 Alüminyum Kutu Kahverengi",
         "stock_code": "352141432010",
         "uretici_kodu": "SK.205.03.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
         "price": "7.72"
@@ -563,7 +563,7 @@
         "description": "205 - ARKA 90 Alüminyum Kutu Kahverengi",
         "stock_code": "352141422010",
         "uretici_kodu": "SK.205.03.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
         "price": "10.44"
@@ -572,7 +572,7 @@
         "description": "205 - ÖN 45 Alüminyum Kutu Metalik Gri",
         "stock_code": "352141433010",
         "uretici_kodu": "SK.205.04.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "7.72"
@@ -581,7 +581,7 @@
         "description": "205 - ARKA 90 Alüminyum Kutu Metalik Gri",
         "stock_code": "352141423010",
         "uretici_kodu": "SK.205.04.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "10.44"
@@ -590,7 +590,7 @@
         "description": "205 - ÖN 45 Alüminyum Kutu krem",
         "stock_code": "352141433110",
         "uretici_kodu": "SK.205.08.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
         "price": "7.72"
@@ -599,7 +599,7 @@
         "description": "205 - ARKA 90 Alüminyum Kutu Krem",
         "stock_code": "352141423110",
         "uretici_kodu": "SK.205.08.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
         "price": "10.44"
@@ -608,7 +608,7 @@
         "description": "205 - ÖN 45 Alüminyum Kutu Altın Meşe",
         "stock_code": "352141435110",
         "uretici_kodu": "SK.205.17.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
         "price": "7.86"
@@ -617,7 +617,7 @@
         "description": "205 - ARKA 90 Alüminyum Kutu Altın Meşe",
         "stock_code": "352141425110",
         "uretici_kodu": "SK.205.17.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
         "price": "10.63"
@@ -626,7 +626,7 @@
         "description": "205 - ÖN 45 Alüminyum Kutu Antrasit Gri",
         "stock_code": "352141433410",
         "uretici_kodu": "SK.205.24.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "7.72"
@@ -635,7 +635,7 @@
         "description": "205 - ARKA 90 Alüminyum Kutu Antrasit Gri",
         "stock_code": "352141423410",
         "uretici_kodu": "SK.205.24.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "10.44"
@@ -644,7 +644,7 @@
         "description": "205 - ÖN 45 Alüminyum Kutu Vizon",
         "stock_code": "352141433510",
         "uretici_kodu": "SK.205.32.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "vizon",
         "unit": "Metre",
         "price": "7.86"
@@ -653,7 +653,7 @@
         "description": "205 - ARKA 90 Alüminyum Kutu Vizon",
         "stock_code": "352141423510",
         "uretici_kodu": "SK.205.32.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "vizon",
         "unit": "Metre",
         "price": "10.63"
@@ -662,7 +662,7 @@
         "description": "250 - ÖN 45 Alüminyum Kutu Beyaz",
         "stock_code": "352141531110",
         "uretici_kodu": "SK.250.01.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "11.55"
@@ -671,7 +671,7 @@
         "description": "250 - ARKA 90 Alüminyum Kutu Beyaz",
         "stock_code": "352141521110",
         "uretici_kodu": "SK.250.01.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "15.70"
@@ -680,7 +680,7 @@
         "description": "250 - ÖN 45 Alüminyum Kutu Kahverengi",
         "stock_code": "352141532010",
         "uretici_kodu": "SK.250.03.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
         "price": "12.12"
@@ -689,7 +689,7 @@
         "description": "250 - ARKA 90 Alüminyum Kutu Kahverengi",
         "stock_code": "352141522010",
         "uretici_kodu": "SK.250.03.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
         "price": "16.49"
@@ -698,7 +698,7 @@
         "description": "250 - ÖN 45 Alüminyum Kutu Metalik Gri",
         "stock_code": "352141533010",
         "uretici_kodu": "SK.250.04.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "12.12"
@@ -707,7 +707,7 @@
         "description": "250 - ARKA 90 Alüminyum Kutu Metalik Gri",
         "stock_code": "352141523010",
         "uretici_kodu": "SK.250.04.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "16.49"
@@ -716,7 +716,7 @@
         "description": "250 - ÖN 45 Alüminyum Kutu Antrasit Gri",
         "stock_code": "352141533410",
         "uretici_kodu": "SK.250.24.F45",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "12.12"
@@ -725,7 +725,7 @@
         "description": "250 - ARKA 90 Alüminyum Kutu Antrasit Gri",
         "stock_code": "352141523410",
         "uretici_kodu": "SK.250.24.T90",
-        "type": "kutu_profilleri",
+        "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "16.49"
@@ -734,7 +734,7 @@
         "description": "Mini Alt Parça Pres",
         "stock_code": "352123900200",
         "uretici_kodu": "ES.427.00.DAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "pres",
         "unit": "Metre",
         "price": "2.21"
@@ -743,7 +743,7 @@
         "description": "Mini Alt Parça Beyaz",
         "stock_code": "352123901110",
         "uretici_kodu": "ES.427.01.DAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "2.62"
@@ -752,7 +752,7 @@
         "description": "Mini Alt Parça Kahverengi",
         "stock_code": "352123902010",
         "uretici_kodu": "ES.427.03.DAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
         "price": "2.71"
@@ -761,7 +761,7 @@
         "description": "Mini Alt Parça Metalik Gri",
         "stock_code": "352123903010",
         "uretici_kodu": "ES.427.04.DAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "2.71"
@@ -770,7 +770,7 @@
         "description": "Mini Alt Parça Krem",
         "stock_code": "352123903110",
         "uretici_kodu": "ES.427.08.DAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "krem",
         "unit": "Metre",
         "price": "2.71"
@@ -779,7 +779,7 @@
         "description": "Mini Alt Parça Antrasit Gri",
         "stock_code": "352123903410",
         "uretici_kodu": "ES.427.24.DAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "2.71"
@@ -788,7 +788,7 @@
         "description": "Mini Alt Parça Vizon",
         "stock_code": "352123903510",
         "uretici_kodu": "ES.427.32.DAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "vizon",
         "unit": "Metre",
         "price": "2.71"
@@ -797,7 +797,7 @@
         "description": "Mini Alt Parça Altın Meşe",
         "stock_code": "352123905110",
         "uretici_kodu": "ES.427.17.DAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
         "price": "3.25"
@@ -806,7 +806,7 @@
         "description": "Mini Alt Parça Ral Boyalı",
         "stock_code": "352123901010",
         "uretici_kodu": "ES.427.RA.DAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "ral_boyalı",
         "unit": "Metre",
         "price": "2.83"
@@ -815,7 +815,7 @@
         "description": "Midi Alt Parça Pres",
         "stock_code": "352125500200",
         "uretici_kodu": "ES.361.00.NAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "pres",
         "unit": "Metre",
         "price": "3.10"
@@ -824,7 +824,7 @@
         "description": "Midi Alt Parça Beyaz",
         "stock_code": "352125501110",
         "uretici_kodu": "ES.361.01.NAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "3.25"
@@ -833,7 +833,7 @@
         "description": "Midi Alt Parça Kahverengi",
         "stock_code": "352125502010",
         "uretici_kodu": "ES.361.03.NAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
         "price": "3.37"
@@ -842,7 +842,7 @@
         "description": "Midi Alt Parça Metalik Gri",
         "stock_code": "352125503010",
         "uretici_kodu": "ES.361.04.NAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "3.37"
@@ -851,7 +851,7 @@
         "description": "Midi Alt Parça Krem",
         "stock_code": "352125503110",
         "uretici_kodu": "ES.361.08.NAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "krem",
         "unit": "Metre",
         "price": "3.37"
@@ -860,7 +860,7 @@
         "description": "Midi Alt Parça Antrasit Gri",
         "stock_code": "352125503410",
         "uretici_kodu": "ES.361.24.NAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "3.37"
@@ -869,7 +869,7 @@
         "description": "Midi Alt Parça Vizon",
         "stock_code": "352125503510",
         "uretici_kodu": "ES.361.32.NAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "vizon",
         "unit": "Metre",
         "price": "3.37"
@@ -878,7 +878,7 @@
         "description": "Midi Alt Parça Altın Meşe",
         "stock_code": "352125505110",
         "uretici_kodu": "ES.361.17.NAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
         "price": "3.52"
@@ -887,7 +887,7 @@
         "description": "Midi Alt Parça Ral Boyalı",
         "stock_code": "352125501010",
         "uretici_kodu": "ES.361.RA.NAP",
-        "type": "alt_parca",
+        "type": "panjur_alt_parça_profilleri",
         "color": "ral_boyalı",
         "unit": "Metre",
         "price": "3.45"
@@ -896,7 +896,7 @@
         "description": "Mini Dikme 53 mm Pres",
         "stock_code": "352131100200",
         "uretici_kodu": "GC.456.00.DDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "pres",
         "unit": "Metre",
         "price": "3.10"
@@ -905,7 +905,7 @@
         "description": "Mini Dikme 53 mm Beyaz",
         "stock_code": "352131101110",
         "uretici_kodu": "GC.456.01.DDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "3.21"
@@ -914,7 +914,7 @@
         "description": "Mini Dikme 53 mm Kahverengi",
         "stock_code": "352131102010",
         "uretici_kodu": "GC.456.03.DDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
         "price": "3.32"
@@ -923,7 +923,7 @@
         "description": "Mini Dikme 53 mm Metalik Gri",
         "stock_code": "352131103010",
         "uretici_kodu": "GC.456.04.DDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "3.32"
@@ -932,7 +932,7 @@
         "description": "Mini Dikme 53 mm Krem",
         "stock_code": "352131103110",
         "uretici_kodu": "GC.456.08.DDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "krem",
         "unit": "Metre",
         "price": "3.32"
@@ -941,7 +941,7 @@
         "description": "Mini Dikme 53 mm Antrasit Gri",
         "stock_code": "352131103400",
         "uretici_kodu": "GC.456.24.DDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "3.32"
@@ -950,7 +950,7 @@
         "description": "Mini Dikme 53 mm Vizon",
         "stock_code": "352131403500",
         "uretici_kodu": "GC.456.32.DDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
         "price": "3.32"
@@ -959,7 +959,7 @@
         "description": "Mini Dikme 53 mm Ral Boyalı",
         "stock_code": "352131101010",
         "uretici_kodu": "GC.456.RA.DDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "ral_boyalı",
         "unit": "Metre",
         "price": "4.05"
@@ -968,7 +968,7 @@
         "description": "Midi Dikme 60 mm Pres",
         "stock_code": "352131200200",
         "uretici_kodu": "GC.307.00.NDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "pres",
         "unit": "Metre",
         "price": "3.49"
@@ -977,7 +977,7 @@
         "description": "Midi Dikme 60 mm Beyaz",
         "stock_code": "352131201110",
         "uretici_kodu": "GC.307.01.NDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "3.94"
@@ -986,7 +986,7 @@
         "description": "Midi Dikme 60 mm Kahverengi",
         "stock_code": "352131202010",
         "uretici_kodu": "GC.307.03.NDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
         "price": "4.08"
@@ -995,7 +995,7 @@
         "description": "Midi Dikme 60 mm Metalik Gri",
         "stock_code": "352131203010",
         "uretici_kodu": "GC.307.04.NDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
         "price": "4.08"
@@ -1004,7 +1004,7 @@
         "description": "Midi Dikme 60 mm Krem",
         "stock_code": "352131203110",
         "uretici_kodu": "GC.307.08.NDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "krem",
         "unit": "Metre",
         "price": "4.08"
@@ -1013,7 +1013,7 @@
         "description": "Midi Dikme 60 mm Antrasit Gri",
         "stock_code": "352131203410",
         "uretici_kodu": "GC.307.24.NDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
         "price": "4.08"
@@ -1022,7 +1022,7 @@
         "description": "Midi Dikme 60 mm Vizon",
         "stock_code": "352131203510",
         "uretici_kodu": "GC.307.32.NDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
         "price": "4.08"
@@ -1031,7 +1031,7 @@
         "description": "Midi Dikme 60 mm Ral Boyalı",
         "stock_code": "352131201010",
         "uretici_kodu": "GC.307.RA.NDU",
-        "type": "dikme_profilleri",
+        "type": "panjur_dikme_profilleri",
         "color": "ral_boyalı",
         "unit": "Metre",
         "price": "4.35"
@@ -1103,7 +1103,7 @@
         "description": "Mosel DD 7002 B",
         "stock_code": "SH.ACA.70.02B",
         "uretici_kodu": "SH.ACA.70.02B",
-        "type": "akilli_ev_sistemleri",
+        "type": "akıllı_ev_sistemleri",
         "unit": "Adet",
         "price": "258.00"
       },
@@ -1111,7 +1111,7 @@
         "description": "Somfy TAHOMA SWİTCH Pro",
         "stock_code": "1870594",
         "uretici_kodu": "1870594",
-        "type": "akilli_ev_sistemleri",
+        "type": "akıllı_ev_sistemleri",
         "unit": "Adet",
         "price": "287.00"
       },
@@ -1120,7 +1120,7 @@
         "description": "DC 315 1 Kanallı Vera Buton Tipi Verici",
         "stock_code": "352531210315",
         "uretici_kodu": "RC.OTM.DC.315",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "19.59"
       },
@@ -1128,7 +1128,7 @@
         "description": "DC 316 5 Kanallı Vera Buton Tipi Verici",
         "stock_code": "352531210316",
         "uretici_kodu": "RC.OTM.DC.316",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "21.19"
       },
@@ -1136,7 +1136,7 @@
         "description": "DC 317 16 Kanallı Vera Buton Tipi Verici",
         "stock_code": "352531210317",
         "uretici_kodu": "RC.OTM.DC.317",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "32.08"
       },
@@ -1144,7 +1144,7 @@
         "description": "DC 168 1 Kanallı Zaman Ayarlı Verici",
         "stock_code": "352531310168",
         "uretici_kodu": "RC.OTM.DC.168",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "30.73"
       },
@@ -1152,7 +1152,7 @@
         "description": "DC 169 16 Kanallı Zaman Ayarlı Verici",
         "stock_code": "352531370169",
         "uretici_kodu": "RC.OTM.DC.169",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "32.79"
       },
@@ -1160,7 +1160,7 @@
         "description": "DC 104 1 Kanallı Verici",
         "stock_code": "352531110104",
         "uretici_kodu": "RC.OTM.DC.104",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "12.44"
       },
@@ -1168,7 +1168,7 @@
         "description": "DC 105 5 Kanallı Verici",
         "stock_code": "352531150105",
         "uretici_kodu": "RC.OTM.DC.105",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "19.59"
       },
@@ -1176,7 +1176,7 @@
         "description": "DC 106 10 Kanallı Verici",
         "stock_code": "352531160106",
         "uretici_kodu": "RC.OTM.DC.106",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "20.40"
       },
@@ -1184,7 +1184,7 @@
         "description": "DC 107 16 Kanallı Verici",
         "stock_code": "352531170107",
         "uretici_kodu": "RC.OTM.DC.107",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "23.17"
       },
@@ -1192,7 +1192,7 @@
         "description": "MOSEL DD 3000H Bi-Direction tek kanallı verici",
         "stock_code": "RC.OTM.DD.3000",
         "uretici_kodu": "RC.OTM.DD.3000",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "18.24"
       },
@@ -1200,7 +1200,7 @@
         "description": "MOSEL DD 3001H Bi-Direction 5+1 kanallı verici",
         "stock_code": "RC.OTM.DD.3001",
         "uretici_kodu": "RC.OTM.DD.3001",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "22.91"
       },
@@ -1208,7 +1208,7 @@
         "description": "MOSEL DD 3002H Bi-Direction 15+1 kanallı verici",
         "stock_code": "RC.OTM.DD.3002",
         "uretici_kodu": "RC.OTM.DD.3002",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "25.34"
       },
@@ -1216,7 +1216,7 @@
         "description": "Situo 1 IO Pure II SEA MEA",
         "stock_code": "352532111100",
         "uretici_kodu": "352532111100",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "62.19"
       },
@@ -1224,7 +1224,7 @@
         "description": "Situo 5 IO Pure II SEA MEA",
         "stock_code": "352532151100",
         "uretici_kodu": "352532151100",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "105.61"
       },
@@ -1232,7 +1232,7 @@
         "description": "Situo 1 RTS Pure II",
         "stock_code": "352532121100",
         "uretici_kodu": "352532121100",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "62.19"
       },
@@ -1240,7 +1240,7 @@
         "description": "Situo 5 RTS Pure II",
         "stock_code": "352532141100",
         "uretici_kodu": "352532141100",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "105.61"
       },
@@ -1248,7 +1248,7 @@
         "description": "Telis 16 RTS Pure",
         "stock_code": "352532171100",
         "uretici_kodu": "352532171100",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "292.03"
       },
@@ -1256,7 +1256,7 @@
         "description": "Smoove Origin RTS Buton Kumanda",
         "stock_code": "352532211100",
         "uretici_kodu": "352532211100",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "54.48"
       },
@@ -1264,7 +1264,7 @@
         "description": "Smoove Origin IO Buton Kumanda",
         "stock_code": "352532211100",
         "uretici_kodu": "352532211100",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "54.48"
       },
@@ -1272,7 +1272,7 @@
         "description": "Telis 6 Chronis RTS Zaman Ayarlı Kumanda",
         "stock_code": "352532321100",
         "uretici_kodu": "352532321100",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "323.50"
       },
@@ -1280,7 +1280,7 @@
         "description": "Sıva Altı Kalıcı Buton",
         "stock_code": "352540211100",
         "uretici_kodu": "352540211100",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "2.56"
       },
@@ -1288,7 +1288,7 @@
         "description": "Sıva Üstü Buton Kasası",
         "stock_code": "352540911100",
         "uretici_kodu": "352540911100",
-        "type": "otomasyon_kumandalari",
+        "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "0.93"
       },
@@ -1296,7 +1296,7 @@
         "description": "Mosel DC-74 Kutu İçi Panjur Alıcısı",
         "stock_code": "352521110073",
         "uretici_kodu": "RC.ALC.DC.73",
-        "type": "otomasyon_alicilar",
+        "type": "otomasyon_alıcılar",
         "unit": "Adet",
         "price": "25.18"
       },
@@ -1304,7 +1304,7 @@
         "description": "DC 319 İki Kanallı Vera Ankastre Alıcı",
         "stock_code": "352531210319",
         "uretici_kodu": "RC.OTM.DC.319",
-        "type": "otomasyon_alicilar",
+        "type": "otomasyon_alıcılar",
         "unit": "Adet",
         "price": "58.20"
       },
@@ -1312,7 +1312,7 @@
         "description": "DC 318 Tek Kanallı Vera Ankastre Alıcı",
         "stock_code": "352531210318",
         "uretici_kodu": "RC.OTM.DC.318",
-        "type": "otomasyon_alicilar",
+        "type": "otomasyon_alıcılar",
         "unit": "Adet",
         "price": "49.45"
       },
@@ -1320,7 +1320,7 @@
         "description": "PF RECEIVER RTS Panjur Alıcısı",
         "stock_code": "352522110000",
         "uretici_kodu": "1810314",
-        "type": "otomasyon_alicilar",
+        "type": "otomasyon_alıcılar",
         "unit": "Adet",
         "price": "165.00"
       },
@@ -1328,7 +1328,7 @@
         "description": "Centralis Uno RTS Buton Alıcı",
         "stock_code": "352522310000",
         "uretici_kodu": "1810217",
-        "type": "otomasyon_alicilar",
+        "type": "otomasyon_alıcılar",
         "unit": "Adet",
         "price": "188.00"
       }

@@ -22,7 +22,7 @@ export interface Offer {
   id: string;
   name: string;
   created_at: string;
-  status: "Taslak" | "Kaydedildi" | "Revize";
+  status: "Taslak" | "Kaydedildi" | "Revize" | "Sipariş Verildi";
   positions: Position[];
   is_dirty?: boolean; // pozlarda değişiklik yapıldığını takip etmek için
   eurRate?: number;

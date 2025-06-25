@@ -329,7 +329,8 @@ export default function OffersPage() {
                               className={`
                                 px-2 py-1 rounded-full text-xs font-medium
                                 ${
-                                  offer.status === "Kaydedildi"
+                                  offer.status === "Kaydedildi" ||
+                                  offer.status === "Sipariş Verildi"
                                     ? "bg-green-100 text-green-700"
                                     : "bg-yellow-100 text-yellow-700"
                                 }

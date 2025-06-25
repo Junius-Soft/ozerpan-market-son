@@ -16,7 +16,9 @@ const isValidOffer = (offer: unknown): offer is Offer => {
     typeof obj.name === "string" &&
     typeof obj.created_at === "string" &&
     typeof obj.status === "string" &&
-    ["Taslak", "Kaydedildi", "Revize"].includes(obj.status) &&
+    ["Taslak", "Kaydedildi", "Revize", "Sipariş Verildi"].includes(
+      obj.status
+    ) &&
     Array.isArray(obj.positions)
   );
 };

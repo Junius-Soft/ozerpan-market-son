@@ -42,7 +42,7 @@ export async function PATCH(request: Request) {
     // If status is provided, validate it
     if (
       body.status &&
-      !["Taslak", "Kaydedildi", "Revize"].includes(body.status)
+      !["Taslak", "Kaydedildi", "Revize","Sipariş Verildi"].includes(body.status)
     ) {
       return NextResponse.json({ error: "Invalid status" }, { status: 400 });
     }

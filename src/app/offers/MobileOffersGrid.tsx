@@ -83,7 +83,8 @@ export default function MobileOffersGrid({
                       </div>
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-medium ml-2 whitespace-nowrap ${
-                          offer.status === "Kaydedildi"
+                          offer.status === "Kaydedildi" ||
+                          offer.status === "Sipariş Verildi"
                             ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200"
                             : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200"
                         }`}

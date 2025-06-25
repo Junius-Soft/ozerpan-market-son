@@ -24,6 +24,7 @@ interface OfferSummaryCardProps {
   onTotalChange?: (total: number) => void;
   selectedOrder: string;
   onSelectedOrderChange: (order: string) => void;
+  orderLoading?: boolean;
 }
 
 export function OfferSummaryCard({
@@ -38,6 +39,7 @@ export function OfferSummaryCard({
   onTotalChange,
   selectedOrder,
   onSelectedOrderChange,
+  orderLoading = false,
 }: OfferSummaryCardProps) {
   // Sipariş numarası seçimi için state kaldırıldı, parenttan geliyor
   const { orders, isLoading: ordersLoading } = useErcomOrders();
@@ -97,7 +99,7 @@ export function OfferSummaryCard({
           className={`
             inline-block px-2 py-1 rounded-full text-xs font-medium
             ${
-              offerStatus === "Kaydedildi"
+              offerStatus === "Kaydedildi" || offerStatus === "Sipariş Verildi"
                 ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400"
                 : offerStatus === "Revize"
                 ? "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400"
@@ -211,17 +213,17 @@ export function OfferSummaryCard({
                 <Button
                   variant="outline"
                   className="flex-1 gap-2"
-                  disabled={!positionsLength || !isDirty}
+                  disabled={!positionsLength || !isDirty || orderLoading}
                   onClick={onSave}
                 >
                   Kaydet
                 </Button>
                 <Button
                   className="flex-1 gap-2"
-                  disabled={!positionsLength}
+                  disabled={!positionsLength || orderLoading}
                   onClick={onOrder}
                 >
-                  Sipariş Ver
+                  {orderLoading ? "Sipariş Veriliyor..." : "Sipariş Ver"}
                 </Button>
               </>
             ) : offerStatus === "Kaydedildi" ? (
@@ -229,17 +231,17 @@ export function OfferSummaryCard({
                 <Button
                   variant="outline"
                   className="flex-1 gap-2"
-                  disabled={!positionsLength}
+                  disabled={!positionsLength || orderLoading}
                   onClick={onRevise}
                 >
                   Revize Et
                 </Button>
                 <Button
                   className="flex-1 gap-2"
-                  disabled={!positionsLength}
+                  disabled={!positionsLength || orderLoading}
                   onClick={onOrder}
                 >
-                  Sipariş Ver
+                  {orderLoading ? "Sipariş Veriliyor..." : "Sipariş Ver"}
                 </Button>
               </>
             ) : null}

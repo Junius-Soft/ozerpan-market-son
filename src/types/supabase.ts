@@ -14,7 +14,7 @@ export interface Database {
           id: string;
           name: string;
           created_at: string;
-          status: "Taslak" | "Kaydedildi" | "Revize";
+          status: "Taslak" | "Kaydedildi" | "Revize" | "Sipariş Verildi";
           positions: Json[];
           is_dirty?: boolean;
           eurRate?: number; // EUR/TL exchange rate
@@ -23,7 +23,7 @@ export interface Database {
           id: string;
           name: string;
           created_at: string;
-          status: "Taslak" | "Kaydedildi" | "Revize";
+          status: "Taslak" | "Kaydedildi" | "Revize" | "Sipariş Verildi";
           positions: Json[];
           is_dirty?: boolean;
           eurRate?: number;
@@ -32,7 +32,7 @@ export interface Database {
           id?: string;
           name?: string;
           created_at?: string;
-          status?: "Taslak" | "Kaydedildi" | "Revize";
+          status?: "Taslak" | "Kaydedildi" | "Revize" | "Sipariş Verildi";
           positions?: Json[];
           is_dirty?: boolean;
           eurRate?: number;

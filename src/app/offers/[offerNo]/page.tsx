@@ -30,6 +30,7 @@ import { FloatingTotalButton } from "./components/FloatingTotalButton";
 import { OfferDetailSkeleton } from "./components/OfferDetailSkeleton";
 import { useFrappePostCall } from "frappe-react-sdk";
 import { PriceItem, SelectedProduct } from "@/types/panjur";
+import { toast } from "react-toastify";
 
 export default function OfferDetailPage() {
   const params = useParams();
@@ -39,6 +40,7 @@ export default function OfferDetailPage() {
   const [offerName, setOfferName] = useState("");
   const [selectedPositions, setSelectedPositions] = useState<string[]>([]);
   const [isDeletingPositions, setIsDeletingPositions] = useState(false);
+  const [orderLoading, setOrderLoading] = useState(false);
   const { eurRate, loading: isEurRateLoading } = useExchangeRate({
     offerId: params.offerNo as string,
   });
@@ -360,14 +362,35 @@ export default function OfferDetailPage() {
                 await updateOfferStatus("Kaydedildi", eurRate)
               }
               onOrder={async () => {
-                const orderData = buildOrderData(offer);
-                const response = await call(orderData);
-                console.log({ response });
+                setOrderLoading(true);
+                try {
+                  const orderData = buildOrderData(offer);
+                  await call(orderData);
+                  await updateOfferStatus("Sipariş Verildi", eurRate);
+                  toast.success(`Sipariş başarıyla oluşturuldu!`, {
+                    position: "top-center",
+                    autoClose: 2000,
+                    closeButton: false,
+                  });
+                } catch (error) {
+                  const message =
+                    error instanceof Error
+                      ? error.message
+                      : "Bilinmeyen bir hata oluştu.";
+                  toast.error(`Sipariş oluşturulamadı! ${message}`, {
+                    position: "top-center",
+                    autoClose: 2000,
+                    closeButton: false,
+                  });
+                } finally {
+                  setOrderLoading(false);
+                }
               }}
               onRevise={() => updateOfferStatus("Revize")}
               onTotalChange={setSummaryTotal}
               selectedOrder={selectedOrder}
               onSelectedOrderChange={setSelectedOrder}
+              orderLoading={orderLoading}
             />
           </div>
         </div>

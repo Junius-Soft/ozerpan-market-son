@@ -123,7 +123,6 @@ export class ImalatPDFGenerator {
         item.product.stock_code || "",
         item.product.description || "",
         item.product.size || "",
-        "0,0/0,0",
         totalQuantity,
         item.pozNo || "",
         "☐",
@@ -137,7 +136,6 @@ export class ImalatPDFGenerator {
           "Stok Kodu",
           "Açıklama",
           "Ölçü",
-          "Sol/Sağ Açı",
           "Miktar",
           "Poz No",
           "Ok", // Yeni sütun başlığı
@@ -146,7 +144,7 @@ export class ImalatPDFGenerator {
       body:
         profileData.length > 0
           ? profileData
-          : [["1", "", "Profil bulunmuyor", "", "0,0/0,0", "", "", "☐"]],
+          : [["1", "", "Profil bulunmuyor", "", "", "", "☐"]],
       theme: "grid",
       tableWidth: this.pageWidth - 2 * this.margin,
       margin: { left: this.margin, right: this.margin },

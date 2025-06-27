@@ -46,9 +46,9 @@ export function generateFiyatAnaliziPDFPozListesi(
   // Poz Listesi Tablosu
   const pozTableData: RowInput[] = positions.map((pos) => {
     const unitPriceEUR = pos.unitPrice || 0;
-    const unitPriceTL = eurRate ? unitPriceEUR * eurRate : undefined;
+    // const unitPriceTL = eurRate ? unitPriceEUR * eurRate : undefined;
     const totalEUR = unitPriceEUR * pos.quantity;
-    const totalTL = eurRate ? totalEUR * eurRate : undefined;
+    // const totalTL = eurRate ? totalEUR * eurRate : undefined;
     return [
       pos.pozNo,
       pos.productName || "-",
@@ -56,13 +56,13 @@ export function generateFiyatAnaliziPDFPozListesi(
       pos.productDetails?.height ?? "-",
       pos.quantity,
       pos.unit ? pos.unit.charAt(0).toUpperCase() + pos.unit.slice(1) : "-",
-      unitPriceTL !== undefined
-        ? `₺ ${unitPriceTL.toLocaleString("tr-TR", {
+      unitPriceEUR !== undefined
+        ? `€ ${unitPriceEUR.toLocaleString("tr-TR", {
             maximumFractionDigits: 2,
           })}`
         : "-",
-      totalTL !== undefined
-        ? `₺ ${totalTL.toLocaleString("tr-TR", { maximumFractionDigits: 2 })}`
+      totalEUR !== undefined
+        ? `€ ${totalEUR.toLocaleString("tr-TR", { maximumFractionDigits: 2 })}`
         : "-",
     ];
   });

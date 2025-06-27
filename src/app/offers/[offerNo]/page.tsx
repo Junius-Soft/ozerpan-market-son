@@ -299,6 +299,18 @@ export default function OfferDetailPage() {
               });
             }
           }}
+          onTeklifFormu={() => {
+            if (!offer || selectedPositions.length === 0) return;
+            const positions = offer.positions.filter((p) =>
+              selectedPositions.includes(p.id)
+            );
+            if (positions.length > 0) {
+              import("@/utils/offer-utils").then((utils) => {
+                utils.openTeklifFormuPDFMulti(offer, positions);
+              });
+            }
+          }}
+          loading={false}
         />
         {/* Edit Dialog */}
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>

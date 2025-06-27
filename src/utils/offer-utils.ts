@@ -3,6 +3,7 @@ import { parsePrice } from "@/utils/price-formatter";
 
 // Import PDF generation functionality
 import { generateImalatListPDF } from "@/utils/imalat-pdf-generator";
+import { generateTeklifFormuPDF } from "@/utils/teklif-formu-pdf-generator";
 import { Offer } from "@/documents/offers";
 
 export function calculateTotals(positions: Position[]) {
@@ -129,4 +130,9 @@ export async function apiUpdateOfferStatus(
 // PDF generation function for multiple positions
 export function openImalatListPDFMulti(offer: Offer, positions: Position[]) {
   generateImalatListPDF(offer, positions);
+}
+
+// PDF generation function for Teklif Formu
+export function openTeklifFormuPDFMulti(offer: Offer, positions: Position[]) {
+  generateTeklifFormuPDF(offer, positions);
 }

@@ -61,6 +61,7 @@ export const ProductDetailsHeader: React.FC<ProductDetailsHeaderProps> = (
             onDepoCikisFisi={props.onDepoCikisFisiConfirm}
             onFiyatAnaliz={props.onFiyatAnaliz}
             hasSelectedPosition={!!props.product && !props.isLoading}
+            hideOfferForm
           />
         </div>
         <div className="flex items-center gap-4">

@@ -10,6 +10,7 @@ interface OfferHeaderProps {
   onImalatList: (selectedTypes: string[]) => void;
   onFiyatAnaliz: () => void;
   onDepoCikisFisi: () => void;
+  onTeklifFormu: () => void;
   hasSelectedPosition: boolean;
   loading: boolean;
 }
@@ -22,6 +23,7 @@ export function OfferHeader({
   onFiyatAnaliz,
   hasSelectedPosition,
   onDepoCikisFisi,
+  onTeklifFormu,
 }: OfferHeaderProps) {
   return (
     <div className="flex justify-between items-center">
@@ -35,6 +37,7 @@ export function OfferHeader({
             <OfferActions
               onImalatList={onImalatList}
               onDepoCikisFisi={onDepoCikisFisi}
+              onTeklifFormu={onTeklifFormu}
               onFiyatAnaliz={onFiyatAnaliz}
               hasSelectedPosition={hasSelectedPosition}
             />
@@ -45,6 +48,7 @@ export function OfferHeader({
             <OfferActions
               onImalatList={onImalatList}
               onDepoCikisFisi={onDepoCikisFisi}
+              onTeklifFormu={onTeklifFormu}
               onFiyatAnaliz={onFiyatAnaliz}
               hasSelectedPosition={hasSelectedPosition}
             />
@@ -66,6 +70,7 @@ OfferHeader.defaultProps = {
   onImalatList: () => {},
   onFiyatAnaliz: () => {},
   onDepoCikisFisi: () => {},
+  onTeklifFormu: () => {},
   hasSelectedPosition: false,
   loading: false,
 };

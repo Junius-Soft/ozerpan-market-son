@@ -85,6 +85,7 @@ export const ProductDetailsHeaderMobile: React.FC<
             onDepoCikisFisi={onDepoCikisFisiConfirm}
             onFiyatAnaliz={onFiyatAnaliz}
             hasSelectedPosition={!!product && !isLoading}
+            hideOfferForm
           />
         </div>
         <Button variant="outline" type="button" onClick={onBackToOffer}>

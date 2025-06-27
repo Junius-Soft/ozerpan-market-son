@@ -1,5 +1,6 @@
 import { PozImalatListesiButton } from "@/components/poz-imalat-listesi-button";
 import { DepoCikisFisiButton } from "@/components/depo-cikis-fisi-button";
+import { TeklifFormuButton } from "@/components/teklif-formu-button";
 import { Button } from "@/components/ui/button";
 import { PieChart, ChevronDown } from "lucide-react";
 import {
@@ -11,15 +12,19 @@ import {
 interface OfferActionsProps {
   onImalatList: (selectedTypes: string[]) => void;
   onDepoCikisFisi: () => void;
+  onTeklifFormu?: () => void;
   onFiyatAnaliz: () => void;
   hasSelectedPosition: boolean;
+  hideOfferForm?: boolean;
 }
 
 export function OfferActions({
   onImalatList,
   onDepoCikisFisi,
   onFiyatAnaliz,
+  onTeklifFormu,
   hasSelectedPosition,
+  hideOfferForm = false,
 }: OfferActionsProps) {
   return (
     <DropdownMenu>
@@ -39,6 +44,12 @@ export function OfferActions({
             onConfirm={onDepoCikisFisi}
             disabled={!hasSelectedPosition}
           />
+          {!hideOfferForm && (
+            <TeklifFormuButton
+              onConfirm={onTeklifFormu}
+              disabled={!hasSelectedPosition}
+            />
+          )}
           <Button
             variant="ghost"
             type="button"

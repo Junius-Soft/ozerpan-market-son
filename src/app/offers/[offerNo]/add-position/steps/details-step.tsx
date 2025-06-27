@@ -75,7 +75,11 @@ export function DetailsStep({
       const values = formik.values;
       return (
         <>
-          <DynamicForm fields={activeTab.content.fields} values={values} />
+          <DynamicForm
+            formik={formik}
+            fields={activeTab.content.fields}
+            values={values}
+          />
           {activeTab.content.preview && (
             <div className="mt-6">
               <h4 className="text-md font-medium mb-3">Ürün Önizleme</h4>

@@ -13,8 +13,12 @@ import { checkDependencyChain } from "@/utils/dependencies";
 import { PanjurSelections } from "@/types/panjur";
 import Image from "next/image";
 import { CustomDialog } from "@/components/ui/custom-dialog";
+import { useFilterBoxSize } from "../hooks/form-rules/useFilterBoxSize";
 
 interface DynamicFormProps {
+  formik: FormikProps<
+    PanjurSelections & Record<string, string | number | boolean>
+  >;
   fields: ProductTabField[];
   values: PanjurSelections;
 }
@@ -73,10 +77,16 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => (
 );
 
 const SelectInput: React.FC<
-  FormikInputProps & { allFields?: ProductTabField[] }
-> = ({ field, form, fieldDef, allFields }) => {
+  FormikInputProps & {
+    allFields?: ProductTabField[];
+    formik: FormikProps<
+      PanjurSelections & Record<string, string | number | boolean>
+    >;
+  }
+> = ({ field, form, fieldDef, allFields, formik }) => {
   const { values } = form;
   const [open, setOpen] = useState(false);
+  const { validBoxOptions } = useFilterBoxSize(formik);
 
   const filteredOptions = useMemo(() => {
     if (!fieldDef.options) return [];
@@ -123,6 +133,14 @@ const SelectInput: React.FC<
         const newValueToChange = hasColor ? optionValue : "ral_boyalı";
         form.setFieldValue(colorField, newValueToChange, false);
       });
+    }
+    if (field.name === "boxType" && validBoxOptions) {
+      const isValidOption = validBoxOptions.some(
+        (opt) => opt.id === optionValue
+      );
+      if (!isValidOption) {
+        form.setFieldValue("boxType", validBoxOptions[0].id, false);
+      }
     }
     setOpen(false);
   };
@@ -350,7 +368,12 @@ const CheckboxInput: React.FC<FormikInputProps> = ({
 );
 
 const FormikInputs = (
-  props: FormikInputProps & { allFields?: ProductTabField[] }
+  props: FormikInputProps & {
+    allFields?: ProductTabField[];
+    formik: FormikProps<
+      PanjurSelections & Record<string, string | number | boolean>
+    >;
+  }
 ) => {
   switch (props.fieldDef.type) {
     case "text":
@@ -358,7 +381,13 @@ const FormikInputs = (
     case "number":
       return <NumberInput {...props} />;
     case "select":
-      return <SelectInput {...props} allFields={props.allFields} />;
+      return (
+        <SelectInput
+          {...props}
+          allFields={props.allFields}
+          formik={props.formik}
+        />
+      );
     case "radio":
       return <RadioInput {...props} />;
     case "checkbox":
@@ -368,7 +397,7 @@ const FormikInputs = (
   }
 };
 
-export function DynamicForm({ fields, values }: DynamicFormProps) {
+export function DynamicForm({ formik, fields, values }: DynamicFormProps) {
   return (
     <div className="space-y-6">
       {fields.map((field) => {
@@ -390,6 +419,7 @@ export function DynamicForm({ fields, values }: DynamicFormProps) {
               component={FormikInputs}
               fieldDef={field}
               allFields={fields}
+              formik={formik}
             />
           </div>
         );

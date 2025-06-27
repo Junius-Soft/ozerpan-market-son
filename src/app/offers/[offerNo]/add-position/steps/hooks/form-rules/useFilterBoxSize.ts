@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useSearchParams } from "next/navigation";
 import { FormikProps } from "formik";
@@ -55,8 +55,15 @@ export function filterBoxSize(
   const isCurrentValid = validOptions.some(
     (opt) => opt.id === formik.values.boxType
   );
-  if (validOptions.length > 0 && !isCurrentValid) {
-    formik.setFieldValue("boxType", validOptions[0].id);
+  if (validOptions.length > 0) {
+    // En küçük kutuyu seçmek için validOptions'u kutu boyutuna göre sırala
+    const sortedOptions = [...validOptions].sort(
+      (a, b) => parseInt(a.id) - parseInt(b.id)
+    );
+    const smallestValidBoxId = sortedOptions[0].id;
+    if (!isCurrentValid || formik.values.boxType !== smallestValidBoxId) {
+      formik.setFieldValue("boxType", smallestValidBoxId);
+    }
   }
   return validOptions.length > 0 ? validOptions : null;
 }
@@ -76,12 +83,17 @@ export function useFilterBoxSize(
     kutuOlcuAlmaSekli,
     lamelTickness,
     movementType,
-    boxType,
   } = formik.values;
+
+  const [validBoxOptions, setValidBoxOptions] =
+    useState<ReturnType<typeof filterBoxSize>>(null);
 
   useEffect(() => {
     if (productId === "panjur") {
-      filterBoxSize(formik);
+      const result = filterBoxSize(formik);
+      setValidBoxOptions(result);
+    } else {
+      setValidBoxOptions(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -92,8 +104,7 @@ export function useFilterBoxSize(
     lamelTickness,
     productId,
     movementType,
-    boxType,
   ]);
 
-  return {};
+  return { validBoxOptions };
 }

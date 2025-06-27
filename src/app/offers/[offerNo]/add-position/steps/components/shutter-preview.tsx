@@ -242,12 +242,33 @@ export function ShutterPreview({
       );
       ctx.restore();
 
-      // Height text (rotated, toplam yükseklik)
-      // ctx.save();
-      // ctx.translate(Math.max(25, x - 25), y + finalHeight / 2);
-      // ctx.rotate(-Math.PI / 2);
-      // ctx.fillText(`${height}mm`, 0, 0);
-      // ctx.restore();
+      // --- Sağda toplam yükseklik için bracket ve metin (alt parça dahil, çizime yakın) ---
+      const rightBracketOffset = 4; // bracket ve yazı için çizime yakınlık (daha küçük değer daha yakın)
+      ctx.save();
+      ctx.strokeStyle = "#64748b";
+      ctx.lineWidth = 3;
+      // Sağ bracket (dikey), alt parça dahil
+      drawVerticalBracket(
+        ctx,
+        x + finalWidth + rightBracketOffset, // sağdan daha yakın
+        y,
+        y + finalHeight + adjustedLamelHeight,
+        18
+      );
+      ctx.restore();
+
+      // Toplam yükseklik metni (sağda, ortalanmış, dikey ve ters, çizime yakın)
+      ctx.save();
+      ctx.font = "14px 'Noto Sans', 'Arial', sans-serif";
+      ctx.fillStyle = colors.text;
+      ctx.textAlign = "center";
+      ctx.translate(
+        x + finalWidth + rightBracketOffset + 17,
+        y + (finalHeight + adjustedLamelHeight) / 2
+      );
+      ctx.rotate(Math.PI / 2); // ters çevir
+      ctx.fillText(`${height} mm`, 0, 0);
+      ctx.restore();
 
       // Kutu yüksekliği ve kalan yükseklik için ayrı ölçü yazısı ve çizgileri
       if (boxHeight && height > 0) {

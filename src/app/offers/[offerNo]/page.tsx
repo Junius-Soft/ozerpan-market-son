@@ -47,6 +47,9 @@ export default function OfferDetailPage() {
   const [sortKey, setSortKey] = useState<string>("pozNo");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const summaryRef = useRef<HTMLDivElement>(null!);
+  const [vatRate, setVatRate] = useState<number>(20);
+  const [discountRate, setDiscountRate] = useState<number>(0);
+  const [assemblyRate, setAssemblyRate] = useState<number>(0);
   const [summaryTotal, setSummaryTotal] = useState<number>(0);
   const { call } = useFrappePostCall(
     "ozerpan_ercom_sync.market.api.sales_order"
@@ -153,6 +156,17 @@ export default function OfferDetailPage() {
       toggleAllPositions(offer.positions, selectedPositions)
     );
   };
+  // React Hook'lar en üstte olmalı
+  const handleVatChange = React.useCallback((v: number) => setVatRate(v), []);
+  const handleDiscountChange = React.useCallback(
+    (v: number) => setDiscountRate(v),
+    []
+  );
+  const handleAssemblyChange = React.useCallback(
+    (v: number) => setAssemblyRate(v),
+    []
+  );
+
   if (!offer || isEurRateLoading) {
     return <OfferDetailSkeleton />;
   }
@@ -175,18 +189,21 @@ export default function OfferDetailPage() {
   function buildOrderData(offer: Offer) {
     return {
       order_no: selectedOrder || offer.id, // selectedOrder öncelikli
+      kdv: vatRate,
+      iskonto: discountRate,
+      montaj: assemblyRate,
+      genel_toplam: Number((summaryTotal * eurRate).toFixed(2)),
       data: offer.positions.map((pos) => ({
         name: pos.pozNo,
         quantity: pos.quantity,
+        unit_price: Number((pos.unitPrice * eurRate).toFixed(2)), // TL'ye çevrildi
         production_materials: {
           profiles:
             pos.selectedProducts?.products?.map((profile: SelectedProduct) => ({
               stock_code: profile.stock_code,
-              type: formatProfileType(profile.type), // Kullanıcı dostu başlık
+              type: formatProfileType(profile.type),
               description: profile.description,
               measure: Number(profile.size),
-              right_angle: 0.0,
-              left_angle: 0.0,
               quantity: profile.quantity,
             })) || [],
           accessories:
@@ -391,6 +408,9 @@ export default function OfferDetailPage() {
               selectedOrder={selectedOrder}
               onSelectedOrderChange={setSelectedOrder}
               orderLoading={orderLoading}
+              onVatChange={handleVatChange}
+              onDiscountChange={handleDiscountChange}
+              onAssemblyChange={handleAssemblyChange}
             />
           </div>
         </div>

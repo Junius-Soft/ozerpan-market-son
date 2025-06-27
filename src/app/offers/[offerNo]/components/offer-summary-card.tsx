@@ -25,6 +25,9 @@ interface OfferSummaryCardProps {
   selectedOrder: string;
   onSelectedOrderChange: (order: string) => void;
   orderLoading?: boolean;
+  onVatChange?: (v: number) => void;
+  onDiscountChange?: (v: number) => void;
+  onAssemblyChange?: (v: number) => void;
 }
 
 export function OfferSummaryCard({
@@ -40,6 +43,9 @@ export function OfferSummaryCard({
   selectedOrder,
   onSelectedOrderChange,
   orderLoading = false,
+  onVatChange,
+  onDiscountChange,
+  onAssemblyChange,
 }: OfferSummaryCardProps) {
   // Sipariş numarası seçimi için state kaldırıldı, parenttan geliyor
   const { orders, isLoading: ordersLoading } = useErcomOrders();
@@ -90,6 +96,17 @@ export function OfferSummaryCard({
   React.useEffect(() => {
     if (onTotalChange) onTotalChange(total);
   }, [total, onTotalChange]);
+
+  // KDV, iskonto, montaj değişimlerini parent'a ilet
+  React.useEffect(() => {
+    if (onVatChange) onVatChange(vatRate);
+  }, [vatRate]);
+  React.useEffect(() => {
+    if (onDiscountChange) onDiscountChange(discountRate);
+  }, [discountRate]);
+  React.useEffect(() => {
+    if (onAssemblyChange) onAssemblyChange(assemblyRate);
+  }, [assemblyRate]);
 
   return (
     <Card className="p-6">

@@ -111,18 +111,20 @@ export function ProductPreview({
     <Card className="p-6" ref={summaryRef}>
       <div className="space-y-6">
         <div className="font-medium text-lg mb-4">Ürün Önizleme</div>
-        <div className="aspect-video w-full max-w-xl mx-auto border rounded-lg overflow-hidden shadow-sm">
-          {getProductPreview({
-            product: selectedProduct,
-            width: parseFloat(values.width?.toString() ?? "0"),
-            height: parseFloat(values.height?.toString() ?? "0"),
-            className: "p-4",
-            productId: selectedProduct.id,
-            lamelColor: getColorHex("lamel_color"),
-            boxColor: getColorHex("box_color"),
-            subPartColor: getColorHex("subPart_color"),
-            dikmeColor: getColorHex("dikme_color"),
-          })}
+        <div className="aspect-[4/3] w-full max-w-2xl mx-auto border rounded-lg overflow-hidden shadow-sm flex items-center justify-center">
+          <div className="w-full h-full flex items-center justify-center">
+            {getProductPreview({
+              product: selectedProduct,
+              width: parseFloat(values.width?.toString() ?? "0"),
+              height: parseFloat(values.height?.toString() ?? "0"),
+              className: "w-full h-full object-contain pt-2", // preview tam ortalı ve kapsayıcı
+              productId: selectedProduct.id,
+              lamelColor: getColorHex("lamel_color"),
+              boxColor: getColorHex("box_color"),
+              subPartColor: getColorHex("subPart_color"),
+              dikmeColor: getColorHex("dikme_color"),
+            })}
+          </div>
         </div>
 
         <div className="grid gap-4">

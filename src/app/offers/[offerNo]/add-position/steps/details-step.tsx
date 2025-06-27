@@ -78,7 +78,7 @@ export function DetailsStep({
           {activeTab.content.preview && (
             <div className="mt-6">
               <h4 className="text-md font-medium mb-3">Ürün Önizleme</h4>
-              <div className="aspect-square w-full max-w-xl mx-auto border rounded-lg overflow-hidden shadow-sm">
+              <div className="p-6 w-full max-w-xl mx-auto border rounded-lg overflow-hidden shadow-sm">
                 {getProductPreview({
                   product: selectedProduct,
                   width: values.width,

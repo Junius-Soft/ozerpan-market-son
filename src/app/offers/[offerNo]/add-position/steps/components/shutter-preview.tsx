@@ -69,17 +69,22 @@ export function ShutterPreview({
       const scaledWidth = normalizedWidth * displayScale;
       const scaledHeight = normalizedHeight * displayScale;
 
-      // Calculate the final scale to fit in canvas
-      const canvasScale =
-        Math.min(canvasWidth / scaledWidth, canvasHeight / scaledHeight) * 0.8; // 0.8 to leave some margin
+      // --- Genişlik metni için canvas'ın altından sabit boşluk bırak ---
+      const textFontSize = 16; // px
+      const textPadding = 12; // metin ile canvas altı arası boşluk (daha aşağıda)
+      const bottomTextY = canvasHeight - textPadding; // metin her zaman buraya yazılır
+      const availableWidth = canvasWidth;
+      const availableHeight = canvasHeight - textFontSize - textPadding * 2;
 
-      // Calculate final dimensions
+      // Çizimi, canvas'ın altına metin için boşluk bırakacak şekilde dikeyde ortala
+      const canvasScale = Math.min(
+        availableWidth / scaledWidth,
+        availableHeight / scaledHeight
+      );
       const finalWidth = scaledWidth * canvasScale;
       const finalHeight = scaledHeight * canvasScale;
-
-      // Calculate position to center the rectangle
       const x = (canvasWidth - finalWidth) / 2;
-      const y = (canvasHeight - finalHeight) / 2;
+      const y = (availableHeight - finalHeight) / 2;
 
       // Draw shutter-like visualization
       const motorHeight = Math.min(40, finalHeight * 0.15);
@@ -194,12 +199,12 @@ export function ShutterPreview({
       ctx.font = "bold 16px Inter";
       ctx.textAlign = "center";
 
-      // Width text
-      ctx.fillText(`${width}mm`, x + finalWidth / 2, y + finalHeight + 30);
+      // Width text (her zaman canvas'ın altına sabitlenmiş)
+      ctx.fillText(`${width}mm`, x + finalWidth / 2, bottomTextY);
 
       // Height text (rotated)
       ctx.save();
-      ctx.translate(x - 25, y + finalHeight / 2);
+      ctx.translate(Math.max(25, x - 25), y + finalHeight / 2);
       ctx.rotate(-Math.PI / 2);
       ctx.fillText(`${height}mm`, 0, 0);
       ctx.restore();

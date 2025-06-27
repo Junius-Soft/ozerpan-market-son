@@ -13,6 +13,7 @@ interface ProductPreviewProps {
   boxColor?: string;
   subPartColor?: string;
   dikmeColor?: string;
+  boxHeight?: number; // kutu yüksekliği (mm)
 }
 
 export function getProductPreview({
@@ -25,6 +26,7 @@ export function getProductPreview({
   boxColor,
   subPartColor,
   dikmeColor,
+  boxHeight = 0, // kutu yüksekliği (mm)
 }: ProductPreviewProps) {
   if (!product) return null;
 
@@ -40,6 +42,7 @@ export function getProductPreview({
       boxColor={boxColor}
       subPartColor={subPartColor}
       dikmeColor={dikmeColor}
+      boxHeight={boxHeight}
     />
   );
 }

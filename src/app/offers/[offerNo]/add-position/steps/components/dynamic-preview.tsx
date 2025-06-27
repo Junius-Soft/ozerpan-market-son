@@ -14,6 +14,7 @@ interface DynamicPreviewProps {
   boxColor?: string;
   subPartColor?: string;
   dikmeColor?: string;
+  boxHeight?: number; // kutu yüksekliği (mm)
 }
 
 export function DynamicPreview({
@@ -25,6 +26,7 @@ export function DynamicPreview({
   boxColor,
   subPartColor,
   dikmeColor,
+  boxHeight = 0, // kutu yüksekliği (mm)
 }: DynamicPreviewProps) {
   // Select the appropriate preview component based on the component name
   const renderPreview = () => {
@@ -39,6 +41,7 @@ export function DynamicPreview({
             boxColor={boxColor}
             subPartColor={subPartColor}
             dikmeColor={dikmeColor}
+            boxHeight={boxHeight} // kutu yüksekliği (mm)
           />
         );
       case "WindowPreview":

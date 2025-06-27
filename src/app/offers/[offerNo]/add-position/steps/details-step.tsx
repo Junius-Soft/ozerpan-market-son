@@ -16,6 +16,7 @@ import { useFilterLamelThickness } from "./hooks/form-rules/useFilterLamelThickn
 import { useFilterMotorModel } from "./hooks/form-rules/useFilterMotorModel";
 import { useFilterBoxSize } from "./hooks/form-rules/useFilterBoxSize";
 import { useAutoDependencyAndFilterBy } from "./hooks/useAutoDependencyDefaults";
+import { getBoxHeight } from "@/utils/panjur";
 
 interface DetailsStepProps {
   formik: FormikProps<
@@ -78,17 +79,17 @@ export function DetailsStep({
           {activeTab.content.preview && (
             <div className="mt-6">
               <h4 className="text-md font-medium mb-3">Ürün Önizleme</h4>
-              <div className="p-6 w-full max-w-xl mx-auto border rounded-lg overflow-hidden shadow-sm">
+              <div className="p-2 w-full max-w-xl mx-auto border rounded-lg overflow-hidden shadow-sm">
                 {getProductPreview({
                   product: selectedProduct,
                   width: values.width,
                   height: values.height,
-                  className: "p-4",
                   productId: selectedProduct?.id || "",
                   lamelColor: getColorHex("lamel_color"),
                   boxColor: getColorHex("box_color"),
                   subPartColor: getColorHex("subPart_color"),
                   dikmeColor: getColorHex("dikme_color"),
+                  boxHeight: getBoxHeight(values.boxType),
                 })}
               </div>
             </div>

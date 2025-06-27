@@ -18,7 +18,11 @@ import { usePanjurCalculator } from "../hooks/usePanjurCalculator";
 import { useFormikContext } from "formik";
 import { PanjurSelections, PriceItem, SelectedProduct } from "@/types/panjur";
 import { getColorHexFromProductTabs } from "@/utils/get-color-hex";
-import { calculateSystemHeight, calculateSystemWidth } from "@/utils/panjur";
+import {
+  calculateSystemHeight,
+  calculateSystemWidth,
+  getBoxHeight,
+} from "@/utils/panjur";
 
 interface ProductField {
   id: string;
@@ -123,6 +127,7 @@ export function ProductPreview({
               boxColor: getColorHex("box_color"),
               subPartColor: getColorHex("subPart_color"),
               dikmeColor: getColorHex("dikme_color"),
+              boxHeight: getBoxHeight(values.boxType),
             })}
           </div>
         </div>

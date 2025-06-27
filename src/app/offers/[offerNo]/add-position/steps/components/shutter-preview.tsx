@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 interface ShutterPreviewProps {
   width: number;
   height: number;
+  boxHeight?: number; // kutu yüksekliği (mm)
   className?: string;
   lamelColor?: string;
   boxColor?: string;
@@ -16,6 +17,7 @@ interface ShutterPreviewProps {
 export function ShutterPreview({
   width = 1000,
   height = 1000,
+  boxHeight,
   className = "",
   lamelColor,
   boxColor,
@@ -72,9 +74,10 @@ export function ShutterPreview({
       // --- Genişlik metni için canvas'ın altından sabit boşluk bırak ---
       const textFontSize = 16; // px
       const textPadding = 12; // metin ile canvas altı arası boşluk (daha aşağıda)
-      const bottomTextY = canvasHeight - textPadding; // metin her zaman buraya yazılır
-      const availableWidth = canvasWidth;
-      const availableHeight = canvasHeight - textFontSize - textPadding * 2;
+      const canvasPadding = 15; // Her yönden padding (px)
+      const availableWidth = canvasWidth - canvasPadding * 2;
+      const availableHeight =
+        canvasHeight - textFontSize - textPadding * 2 - canvasPadding * 2;
 
       // Çizimi, canvas'ın altına metin için boşluk bırakacak şekilde dikeyde ortala
       const canvasScale = Math.min(
@@ -83,8 +86,9 @@ export function ShutterPreview({
       );
       const finalWidth = scaledWidth * canvasScale;
       const finalHeight = scaledHeight * canvasScale;
+      // Padding'i uygula ve ortala
       const x = (canvasWidth - finalWidth) / 2;
-      const y = (availableHeight - finalHeight) / 2;
+      const y = (canvasHeight - finalHeight) / 2;
 
       // Draw shutter-like visualization
       const motorHeight = Math.min(40, finalHeight * 0.15);
@@ -196,20 +200,127 @@ export function ShutterPreview({
 
       // Add dimensions text
       ctx.fillStyle = colors.text;
-      ctx.font = "bold 16px Inter";
+      ctx.font = "14px 'Noto Sans', 'Arial', sans-serif";
       ctx.textAlign = "center";
 
-      // Width text (her zaman canvas'ın altına sabitlenmiş)
-      ctx.fillText(`${width}mm`, x + finalWidth / 2, bottomTextY);
+      // Width text (artık üstte, kutunun üstüne ortalanmış)
+      ctx.fillText(`${width} mm`, x + finalWidth / 2, y - 16);
 
-      // Height text (rotated)
+      // --- Üst genişlik için bracket çiz (yatay) ---
       ctx.save();
-      ctx.translate(Math.max(25, x - 25), y + finalHeight / 2);
-      ctx.rotate(-Math.PI / 2);
-      ctx.fillText(`${height}mm`, 0, 0);
+      ctx.strokeStyle = "#64748b"; // koyu gri bracket
+      ctx.lineWidth = 3;
+      // Yatay bracket fonksiyonu
+      function drawHorizontalBracket(
+        ctx: CanvasRenderingContext2D,
+        x1: number,
+        x2: number,
+        y: number,
+        height: number
+      ) {
+        // x1: sol, x2: sağ, y: yatay çizgi seviyesi, height: bracket yüksekliği
+        const shortLine = height * 0.8;
+        ctx.beginPath();
+        // Sol dikey çizgi
+        ctx.moveTo(x1, y - shortLine / 2);
+        ctx.lineTo(x1, y + shortLine / 2);
+        // Yatay çizgi
+        ctx.moveTo(x1, y);
+        ctx.lineTo(x2, y);
+        // Sağ dikey çizgi
+        ctx.moveTo(x2, y - shortLine / 2);
+        ctx.lineTo(x2, y + shortLine / 2);
+        ctx.stroke();
+      }
+      // Bracket'ı kutunun üstüne, width yazısının hemen altına çiz
+      drawHorizontalBracket(
+        ctx,
+        x,
+        x + finalWidth,
+        y - 10, // biraz daha yukarı al
+        18
+      );
       ctx.restore();
+
+      // Height text (rotated, toplam yükseklik)
+      // ctx.save();
+      // ctx.translate(Math.max(25, x - 25), y + finalHeight / 2);
+      // ctx.rotate(-Math.PI / 2);
+      // ctx.fillText(`${height}mm`, 0, 0);
+      // ctx.restore();
+
+      // Kutu yüksekliği ve kalan yükseklik için ayrı ölçü yazısı ve çizgileri
+      if (boxHeight && height > 0) {
+        // --- Kutu yüksekliği için bracket çiz ---
+        ctx.save();
+        ctx.strokeStyle = "#64748b"; // yatay bracket ile aynı renk
+        ctx.lineWidth = 3;
+        drawVerticalBracket(ctx, x - 18, y, y + motorHeight, 18);
+        ctx.restore();
+
+        // Kutu kısmının ortasına kutu yüksekliği metni
+        ctx.save();
+        ctx.font = "14px  'Noto Sans', 'Arial', sans-serif";
+        ctx.fillStyle = colors.text;
+        ctx.textAlign = "center";
+        ctx.translate(x - 35, y + motorHeight / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillText(`${boxHeight} mm`, 0, 0);
+        ctx.restore();
+
+        // --- Kalan yükseklik için bracket çiz ---
+        const kalanYukseklik = height - boxHeight;
+        if (kalanYukseklik > 0) {
+          ctx.save();
+          ctx.strokeStyle = "#64748b"; // yatay bracket ile aynı renk
+          ctx.lineWidth = 3;
+          drawVerticalBracket(
+            ctx,
+            x - 18,
+            y + motorHeight,
+            y + motorHeight + remainingHeight + adjustedLamelHeight,
+            18
+          );
+          ctx.restore();
+
+          // Kalan yükseklik metni
+          ctx.save();
+          ctx.font = "14px 'Noto Sans', 'Arial', sans-serif";
+          ctx.fillStyle = colors.text;
+          ctx.textAlign = "center";
+          ctx.translate(x - 35, y + motorHeight + remainingHeight / 2);
+          ctx.rotate(-Math.PI / 2);
+          ctx.fillText(`${kalanYukseklik} mm`, 0, 0);
+          ctx.restore();
+        }
+      }
+
+      // --- Bracket (süslü parantez) fonksiyonu ---
+      function drawVerticalBracket(
+        ctx: CanvasRenderingContext2D,
+        x: number,
+        y1: number,
+        y2: number,
+        width: number
+      ) {
+        // y1: üst, y2: alt, x: bracket'ın sol noktası, width: bracket genişliği
+        // Bu bracket, görseldeki gibi üstte ve altta kısa yatay çizgi, ortada uzun dikey çizgi şeklinde olacak
+        // const h = y2 - y1; // unused
+        const shortLine = width * 0.8; // kısa yatay çizgi uzunluğu
+        ctx.beginPath();
+        // Üst yatay çizgi
+        ctx.moveTo(x, y1);
+        ctx.lineTo(x + shortLine, y1);
+        // Dikey çizgi
+        ctx.moveTo(x + shortLine / 2, y1);
+        ctx.lineTo(x + shortLine / 2, y2);
+        // Alt yatay çizgi
+        ctx.moveTo(x, y2);
+        ctx.lineTo(x + shortLine, y2);
+        ctx.stroke();
+      }
     },
-    [theme, lamelColor, boxColor, subPartColor, dikmeColor] // theme'i dependency array'e ekledik
+    [theme, lamelColor, boxColor, subPartColor, dikmeColor, boxHeight] // theme'i dependency array'e ekledik
   );
 
   const updateCanvasSize = useCallback(() => {

@@ -12,7 +12,6 @@ import { handleImalatListesiPDF } from "@/utils/handle-imalat-listesi";
 import { ProductDetailsHeader } from "./ProductDetailsHeader";
 import { FloatingTotalButton } from "../../components/FloatingTotalButton";
 import { handleFiyatAnaliziPDF } from "@/utils/handle-fiyat-analizi";
-import { useExchangeRate } from "@/hooks/useExchangeRate";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
@@ -34,9 +33,6 @@ export default function ProductDetailsPage() {
   const selectedPosition = searchParams.get("selectedPosition");
   const offerNo = window.location.pathname.split("/")[2];
 
-  const { eurRate, loading: isEurRateLoading } = useExchangeRate({
-    offerId: offerNo as string,
-  });
   const getSelectedPosition = useMemo(async () => {
     const currentOffer = await getOffer(offerNo);
     const position = currentOffer?.positions.find(
@@ -189,14 +185,14 @@ export default function ProductDetailsPage() {
         id: selectedPosition || `POS-${Date.now()}`,
         pozNo: selectedPosition
           ? currentOffer.positions.find((p) => p.id === selectedPosition)
-              ?.pozNo || "001"
+              ?.pozNo || "01"
           : currentOffer.positions.length > 0
           ? String(
               parseInt(
                 currentOffer.positions[currentOffer.positions.length - 1].pozNo
               ) + 1
-            ).padStart(3, "0")
-          : "001",
+            ).padStart(2, "0")
+          : "01",
         unit: "adet",
         quantity: values.quantity || 1,
         unitPrice: values.unitPrice || 0,
@@ -249,7 +245,7 @@ export default function ProductDetailsPage() {
     }
   };
 
-  if (isLoading || isEurRateLoading) {
+  if (isLoading) {
     return (
       <div className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -346,7 +342,6 @@ export default function ProductDetailsPage() {
                       typeId: typeId ?? null,
                       productName: productName ?? null,
                       optionId: optionId ?? null,
-                      eurRate,
                     });
                   }}
                 />

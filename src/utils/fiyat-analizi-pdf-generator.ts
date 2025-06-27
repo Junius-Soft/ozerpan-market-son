@@ -8,7 +8,6 @@ import { Offer, Position } from "@/documents/offers";
 export function generateFiyatAnaliziPDFPozListesi(
   offer: Offer,
   positions: Position[],
-  eurRate?: number
 ): void {
   const doc = new jsPDF("p", "mm", "a4");
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -76,7 +75,6 @@ export function generateFiyatAnaliziPDFPozListesi(
       pos.selectedProducts.products.forEach((prod) => {
         const euroTotal =
           prod.price && prod.quantity ? Number(prod.price) * prod.quantity : 0;
-        const tlTotal = eurRate ? euroTotal * eurRate : undefined;
         malzemeListesiData.push([
           rowIndex++,
           prod.stock_code || "-",
@@ -91,15 +89,9 @@ export function generateFiyatAnaliziPDFPozListesi(
                 maximumFractionDigits: 2,
               })
             : "-",
-          eurRate !== undefined
-            ? eurRate.toLocaleString("tr-TR", { maximumFractionDigits: 2 })
-            : "-",
-          tlTotal !== undefined
-            ? tlTotal.toLocaleString("tr-TR", {
-                style: "currency",
-                currency: "TRY",
-                maximumFractionDigits: 2,
-              })
+          euroTotal !== undefined
+            ? "€ " +
+              euroTotal.toLocaleString("tr-TR", { maximumFractionDigits: 2 })
             : "-",
         ]);
       });
@@ -112,7 +104,6 @@ export function generateFiyatAnaliziPDFPozListesi(
       pos.selectedProducts.accessories.forEach((acc) => {
         const euroTotal =
           acc.price && acc.quantity ? Number(acc.price) * acc.quantity : 0;
-        const tlTotal = eurRate ? euroTotal * eurRate : undefined;
         malzemeListesiData.push([
           rowIndex++,
           acc.stock_code || "-",
@@ -125,15 +116,9 @@ export function generateFiyatAnaliziPDFPozListesi(
                 maximumFractionDigits: 2,
               })
             : "-",
-          eurRate !== undefined
-            ? eurRate.toLocaleString("tr-TR", { maximumFractionDigits: 2 })
-            : "-",
-          tlTotal !== undefined
-            ? tlTotal.toLocaleString("tr-TR", {
-                style: "currency",
-                currency: "TRY",
-                maximumFractionDigits: 2,
-              })
+          euroTotal !== undefined
+            ? "€ " +
+              euroTotal.toLocaleString("tr-TR", { maximumFractionDigits: 2 })
             : "-",
         ]);
       });
@@ -194,8 +179,7 @@ export function generateFiyatAnaliziPDFPozListesi(
         "Miktar",
         "Birim",
         "Birim Fiyat",
-        "Kur",
-        "Tutar",
+        "Tutar (€)",
       ],
     ],
     body: malzemeListesiData,

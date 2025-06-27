@@ -10,7 +10,6 @@ export async function handleFiyatAnaliziPDF({
   typeId,
   productName,
   optionId,
-  eurRate,
 }: {
   offerNo: string;
   selectedPosition?: string | null;
@@ -19,7 +18,6 @@ export async function handleFiyatAnaliziPDF({
   typeId?: string | null;
   productName?: string | null;
   optionId?: string | null;
-  eurRate: number;
 }) {
   const offer = await getOffer(offerNo);
   if (!offer) return;
@@ -49,5 +47,5 @@ export async function handleFiyatAnaliziPDF({
       },
     ];
   }
-  generateFiyatAnaliziPDFPozListesi(offer, pozisyonlar, eurRate);
+  generateFiyatAnaliziPDFPozListesi(offer, pozisyonlar);
 }

@@ -279,11 +279,7 @@ export default function OfferDetailPage() {
             );
             if (positions.length > 0) {
               import("@/utils/fiyat-analizi-pdf-generator").then((mod) => {
-                mod.generateFiyatAnaliziPDFPozListesi(
-                  offer,
-                  positions,
-                  eurRate
-                );
+                mod.generateFiyatAnaliziPDFPozListesi(offer, positions);
               });
             }
           }}

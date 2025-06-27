@@ -29,6 +29,7 @@ export function generateDepoCikisFisiPDF(
   doc.setFont("NotoSans", "normal");
   doc.text(offer.name || "Teklif Adı", margin, 35);
   doc.setFontSize(9);
+  doc.setFont("NotoSans", "normal");
   doc.text(
     `Tarih: ${new Date().toLocaleDateString(
       "tr-TR"
@@ -39,7 +40,6 @@ export function generateDepoCikisFisiPDF(
 
   // Aksesuarları topla ve pozNo'ya göre grupla
   type AccessoryRow = {
-    pozNo: string;
     stock_code: string;
     description: string;
     quantity: number;
@@ -80,7 +80,6 @@ export function generateDepoCikisFisiPDF(
           const unit = "Mtül";
 
           accessoryRows.push({
-            pozNo: position.pozNo || "",
             stock_code: product.stock_code || "",
             description: product.description || "",
             quantity:
@@ -103,7 +102,6 @@ export function generateDepoCikisFisiPDF(
           unit = "Mtül";
         }
         accessoryRows.push({
-          pozNo: position.pozNo || "",
           stock_code: accessory.stock_code || "",
           description: accessory.description || "",
           quantity: Number(accessory.quantity) || 1,
@@ -113,17 +111,19 @@ export function generateDepoCikisFisiPDF(
     }
   });
 
-  // PozNo, stok kodu, açıklama, birim aynı olanlar gruplanmaz, her pozNo için ayrı satır
-  // Sadece sıralama yapılır: önce stok kodu, sonra pozNo
-  accessoryRows.sort((a, b) => {
-    if (a.stock_code !== b.stock_code)
-      return a.stock_code.localeCompare(b.stock_code);
-    return a.pozNo.localeCompare(b.pozNo);
+  // Aynı ürünleri grupla (pozNo bağımsız)
+  const groupedRows: Record<string, AccessoryRow> = {};
+  accessoryRows.forEach((row) => {
+    const key = `${row.stock_code}|${row.description}|${row.unit}`;
+    if (!groupedRows[key]) {
+      groupedRows[key] = { ...row };
+    } else {
+      groupedRows[key].quantity += row.quantity;
+    }
   });
 
   // Tablo verisi
-  const tableData: RowInput[] = accessoryRows.map((item) => [
-    item.pozNo,
+  const tableData: RowInput[] = Object.values(groupedRows).map((item) => [
     item.stock_code,
     item.description,
     item.quantity.toString(),
@@ -134,11 +134,11 @@ export function generateDepoCikisFisiPDF(
   // Tablo çiz
   autoTable(doc, {
     startY: 55,
-    head: [["Poz No", "Stok Kodu", "Açıklama", "Miktar", "Birim", "OK"]],
+    head: [["Stok Kodu", "Açıklama", "Miktar", "Birim", "OK"]],
     body:
       tableData.length > 0
         ? tableData
-        : [["", "", "Aksesuar bulunmuyor", "", "", ""]],
+        : [["", "Aksesuar bulunmuyor", "", "", ""]],
     theme: "grid",
     tableWidth: pageWidth - 2 * margin,
     margin: { left: margin, right: margin },

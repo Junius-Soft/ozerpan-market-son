@@ -232,7 +232,11 @@ export function ProductPreview({
                     <TooltipProvider>
                       <Tooltip delayDuration={0}>
                         <TooltipTrigger className="text-base">
-                          € {calculationResult.totalPrice.toFixed(2)}
+                          €{" "}
+                          {(
+                            calculationResult.totalPrice *
+                            Number(values.quantity || 1)
+                          ).toFixed(2)}
                         </TooltipTrigger>
                         <TooltipContent
                           side="top"

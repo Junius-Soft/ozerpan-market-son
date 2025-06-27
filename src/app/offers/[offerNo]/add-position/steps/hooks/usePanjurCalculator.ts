@@ -172,10 +172,12 @@ export const usePanjurCalculator = (
       );
 
       // Tambur Profili fiyatı hesaplama
-      const [tamburPrice, tamburSelectedProduct] = findTamburProfiliAccessoryPrice(
-        prices,
-        values.movementType
-      );
+      const [tamburPrice, tamburSelectedProduct] =
+        findTamburProfiliAccessoryPrice(
+          prices,
+          values.movementType,
+          values.width
+        );
 
       // Aksesuarların fiyatını hesapla
       const accessoriesPrice = (accessories || []).reduce((total, acc) => {

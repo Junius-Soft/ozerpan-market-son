@@ -433,7 +433,8 @@ export const findReceiverPrice = (
 // Tambur Profili fiyatı bulucu
 export function findTamburProfiliAccessoryPrice(
   prices: PriceItem[],
-  movementType: string
+  movementType: string,
+  width: number
 ): [number, SelectedProduct | null] {
   const tamburType =
     movementType === "manuel"
@@ -443,5 +444,10 @@ export function findTamburProfiliAccessoryPrice(
     acc.description.toLowerCase().includes(tamburType.toLowerCase())
   );
   if (!tambur) return [0, null];
-  return [parseFloat(tambur.price), createSelectedProduct(tambur, 1)];
+  // Tambur ölçüsü: motorlu ise width-80mm, manuel ise width-60mm
+  const tamburWidth = movementType === "motorlu" ? width - 80 : width - 60;
+  return [
+    parseFloat(tambur.price),
+    createSelectedProduct(tambur, 1, tamburWidth + " mm"),
+  ];
 }

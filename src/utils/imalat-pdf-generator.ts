@@ -24,6 +24,25 @@ type SelectedProduct = {
   type?: string;
 };
 
+// Helper to load logo as DataURL (browser only)
+async function getLogoDataUrl(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new window.Image();
+    img.crossOrigin = "anonymous";
+    img.onload = function () {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return reject("Canvas context error");
+      ctx.drawImage(img, 0, 0);
+      resolve(canvas.toDataURL("image/png"));
+    };
+    img.onerror = reject;
+    img.src = "/logo.png";
+  });
+}
+
 export class ImalatPDFGenerator {
   private doc: jsPDF;
   private pageWidth: number;
@@ -58,12 +77,31 @@ export class ImalatPDFGenerator {
     this.doc.text(footerText, x, y);
   }
 
-  public generateImalatList(data: ImalatPDFData): void {
+  public async generateImalatList(data: ImalatPDFData): Promise<void> {
     // PDF başlığı (metadata)
     this.doc.setProperties({
       title:
         (data.offer.name ? data.offer.name + " - " : "") + "Poz İmalat Listesi",
     });
+
+    // LOGO: sol üst köşe, teklif adı ile hizalı
+    // Teklif adı y: 20 idi, logoyu da aynı y'den başlat
+    const logoY = 20;
+    const logoHeight = 18;
+    const logoWidth = 18;
+    try {
+      const logoDataUrl = await getLogoDataUrl();
+      this.doc.addImage(
+        logoDataUrl,
+        "JPG",
+        this.margin,
+        logoY,
+        logoWidth,
+        logoHeight
+      );
+    } catch {
+      // Logo yüklenemezse devam et
+    }
 
     // Tüm pozisyonların ürünlerini tek dizide topla
     const allProducts: Array<{
@@ -173,19 +211,22 @@ export class ImalatPDFGenerator {
 
   private addHeader(data: ImalatPDFData): void {
     // Company info
+    // Teklif adı logonun altına gelsin, logodan daha uzak, başlığa daha yakın
+    const logoY = 20;
+    const logoHeight = 18;
+    // Teklif adı ile başlık arası daha az, logodan sonra 12mm boşluk bırak
+    const teklifAdiY = logoY + logoHeight + 8;
     this.doc.setFontSize(12);
     this.doc.setFont("NotoSans", "bold");
-    this.doc.text(data.offer.name || "Teklif Adı", this.margin, 20);
+    this.doc.text(data.offer.name || "Teklif Adı", this.margin, teklifAdiY);
 
     // Title
     this.doc.setFontSize(14);
     this.doc.setFont("NotoSans", "bold");
-    this.doc.text("POZ İMALAT LİSTESİ", this.margin, 40);
+    this.doc.text("POZ İMALAT LİSTESİ", this.margin, teklifAdiY + 10);
 
-    // Miktar bilgisi kaldırıldı
-
-    // Tarih ve Hazırlayan (sola, başlığın altına)
-    const miktarY = 48;
+    // Tarih ve Hazırlayan (teklif adı ve başlık altına)
+    const miktarY = teklifAdiY + 18;
     this.doc.setFontSize(9);
     this.doc.setFont("NotoSans", "normal");
     const tarihDate = new Date();
@@ -316,10 +357,11 @@ export class ImalatPDFGenerator {
 }
 
 // Main function to generate PDF for selected positions
-export function generateImalatListPDF(
+
+export async function generateImalatListPDF(
   offer: Offer,
   selectedPositions: Position[]
-): void {
+): Promise<void> {
   const generator = new ImalatPDFGenerator();
 
   const data: ImalatPDFData = {
@@ -332,13 +374,13 @@ export function generateImalatListPDF(
       .toString(),
   };
 
-  generator.generateImalatList(data);
+  await generator.generateImalatList(data);
 }
 
 // Export function for use in offer-utils
-export function openImalatListPDFMulti(
+export async function openImalatListPDFMulti(
   offer: Offer,
   positions: Position[]
-): void {
-  generateImalatListPDF(offer, positions);
+): Promise<void> {
+  await generateImalatListPDF(offer, positions);
 }

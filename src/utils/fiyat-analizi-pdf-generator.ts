@@ -5,10 +5,29 @@ import NotoSansRegular from "./NotoSans-Regular.js";
 import NotoSansBold from "./NotoSans-Bold.js";
 import { Offer, Position } from "@/documents/offers";
 
-export function generateFiyatAnaliziPDFPozListesi(
+// Logo'yu base64 olarak yükleyen fonksiyon (imalat-pdf-generator.ts ile aynı)
+export async function getLogoDataUrl(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new window.Image();
+    img.crossOrigin = "anonymous";
+    img.onload = function () {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return reject("Canvas context error");
+      ctx.drawImage(img, 0, 0);
+      resolve(canvas.toDataURL("image/jpg"));
+    };
+    img.onerror = reject;
+    img.src = "/logo.png";
+  });
+}
+
+export async function generateFiyatAnaliziPDFPozListesi(
   offer: Offer,
-  positions: Position[],
-): void {
+  positions: Position[]
+): Promise<void> {
   const doc = new jsPDF("p", "mm", "a4");
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 15;
@@ -20,20 +39,31 @@ export function generateFiyatAnaliziPDFPozListesi(
   doc.addFont("NotoSans-Bold.ttf", "NotoSans", "bold");
   doc.setFont("NotoSans");
 
-  // Başlık
+  // Sol üst köşeye logo ekle (async)
+  // Barcode başlangıcı ile aynı y'de hizala
+  const logoY = 15;
+  try {
+    const logoDataUrl = await getLogoDataUrl();
+    doc.addImage(logoDataUrl, "JPG", margin, logoY, 18, 18);
+  } catch {
+    // Logo eklenemedi, devam et
+  }
+
+  // Başlık biraz aşağıda
+  const titleY = 42;
   doc.setFontSize(14);
   doc.setFont("NotoSans", "bold");
-  doc.text("MALZEME FİYAT ANALİZİ", margin, 20);
+  doc.text("MALZEME FİYAT ANALİZİ", margin, titleY);
   doc.setFontSize(11);
   doc.setFont("NotoSans", "normal");
-  doc.text(offer.name || "Teklif Adı", margin, 28);
+  doc.text(offer.name || "Teklif Adı", margin, titleY + 8);
   doc.setFontSize(9);
   doc.text(
     `Tarih: ${new Date().toLocaleDateString(
       "tr-TR"
     )} ${new Date().toLocaleTimeString("tr-TR")}`,
     margin,
-    34
+    titleY + 14
   );
 
   // Poz Listesi başlığı

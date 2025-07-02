@@ -6,14 +6,15 @@ import JsBarcode from "jsbarcode";
 import { Offer, Position } from "@/documents/offers";
 import { getProductNameById } from "@/lib/product-name";
 import { normalizeColor } from "./panjur";
+import { getLogoDataUrl } from "./fiyat-analizi-pdf-generator";
 
-export function generateTeklifFormuPDF(
+export async function generateTeklifFormuPDF(
   offer: Offer,
   positions: Position[],
   vatRate: number = 20,
   discountRate: number = 0,
   assemblyRate: number = 0
-): void {
+): Promise<void> {
   const doc = new jsPDF("p", "mm", "a4");
   const margin = 15;
 
@@ -23,19 +24,30 @@ export function generateTeklifFormuPDF(
   doc.addFont("NotoSans-Bold.ttf", "NotoSans", "bold");
   doc.setFont("NotoSans");
 
+  // Logo ve başlık hizalama
+  const logoY = 15;
+  let titleY = 25;
+  try {
+    const logoDataUrl = await getLogoDataUrl();
+    doc.addImage(logoDataUrl, "JPG", margin, logoY, 18, 18);
+    titleY = logoY + 18 + 10;
+  } catch {
+    // Logo eklenemedi, devam et
+    titleY = 25;
+  }
   doc.setFontSize(14);
   doc.setFont("NotoSans", "bold");
-  doc.text("Teklif ve Sözleşme Formu", margin, 25);
+  doc.text("Teklif ve Sözleşme Formu", margin, titleY);
   doc.setFontSize(11);
   doc.setFont("NotoSans", "normal");
-  doc.text(offer.name || "Teklif Adı", margin, 35);
+  doc.text(offer.name || "Teklif Adı", margin, titleY + 8);
   doc.setFontSize(9);
   doc.text(
     `Tarih: ${new Date().toLocaleDateString(
       "tr-TR"
     )} ${new Date().toLocaleTimeString("tr-TR")}`,
     margin,
-    42
+    titleY + 14
   );
 
   // Tablo başlıkları ve satırları

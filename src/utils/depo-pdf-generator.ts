@@ -5,11 +5,12 @@ import NotoSansRegular from "./NotoSans-Regular.js";
 import NotoSansBold from "./NotoSans-Bold.js";
 import { Offer, Position } from "@/documents/offers";
 import { PriceItem } from "@/types/panjur";
+import { getLogoDataUrl } from "./fiyat-analizi-pdf-generator";
 
-export function generateDepoCikisFisiPDF(
+export async function generateDepoCikisFisiPDF(
   offer: Offer,
   selectedPositions: Position[]
-): void {
+): Promise<void> {
   const doc = new jsPDF("p", "mm", "a4");
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 15;
@@ -21,13 +22,23 @@ export function generateDepoCikisFisiPDF(
   doc.addFont("NotoSans-Bold.ttf", "NotoSans", "bold");
   doc.setFont("NotoSans");
 
-  // Başlık
+  // Logo ve başlık hizalama
+  const logoY = 15;
+  try {
+    const logoDataUrl = await getLogoDataUrl();
+    doc.addImage(logoDataUrl, "JPG", margin, logoY, 18, 18);
+  } catch {
+    // Logo eklenemedi, devam et
+  }
+
+  // Başlık (logo ile hizalı, biraz aşağıda)
+  const titleY = logoY + 18 + 10;
   doc.setFontSize(14);
   doc.setFont("NotoSans", "bold");
-  doc.text("DEPO ÇIKIŞ FİŞİ", margin, 25);
+  doc.text("DEPO ÇIKIŞ FİŞİ", margin, titleY);
   doc.setFontSize(11);
   doc.setFont("NotoSans", "normal");
-  doc.text(offer.name || "Teklif Adı", margin, 35);
+  doc.text(offer.name || "Teklif Adı", margin, titleY + 8);
   doc.setFontSize(9);
   doc.setFont("NotoSans", "normal");
   doc.text(
@@ -35,7 +46,7 @@ export function generateDepoCikisFisiPDF(
       "tr-TR"
     )} ${new Date().toLocaleTimeString("tr-TR")}`,
     margin,
-    42
+    titleY + 14
   );
 
   // Aksesuarları topla ve pozNo'ya göre grupla
@@ -200,9 +211,9 @@ export function generateDepoCikisFisiPDF(
   window.open(pdfUrl, "_blank");
 }
 
-export function openDepoCikisFisiPDFMulti(
+export async function openDepoCikisFisiPDFMulti(
   offer: Offer,
   positions: Position[]
-): void {
-  generateDepoCikisFisiPDF(offer, positions);
+): Promise<void> {
+  await generateDepoCikisFisiPDF(offer, positions);
 }

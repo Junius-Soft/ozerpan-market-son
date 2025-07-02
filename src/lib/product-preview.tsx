@@ -14,6 +14,8 @@ interface ProductPreviewProps {
   subPartColor?: string;
   dikmeColor?: string;
   boxHeight?: number; // kutu yüksekliği (mm)
+  hareketBaglanti: "sol" | "sag";
+  movementType: "manuel" | "motorlu";
 }
 
 export function getProductPreview({
@@ -27,6 +29,8 @@ export function getProductPreview({
   subPartColor,
   dikmeColor,
   boxHeight = 0, // kutu yüksekliği (mm)
+  hareketBaglanti,
+  movementType,
 }: ProductPreviewProps) {
   if (!product) return null;
 
@@ -43,6 +47,8 @@ export function getProductPreview({
       subPartColor={subPartColor}
       dikmeColor={dikmeColor}
       boxHeight={boxHeight}
+      hareketBaglanti={hareketBaglanti}
+      movementType={movementType}
     />
   );
 }

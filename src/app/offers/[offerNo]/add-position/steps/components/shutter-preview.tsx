@@ -12,6 +12,8 @@ interface ShutterPreviewProps {
   boxColor?: string;
   subPartColor?: string;
   dikmeColor?: string;
+  hareketBaglanti: "sol" | "sag";
+  movementType: "manuel" | "motorlu"
 }
 
 export function ShutterPreview({
@@ -23,6 +25,8 @@ export function ShutterPreview({
   boxColor,
   subPartColor,
   dikmeColor,
+  hareketBaglanti,
+  movementType,
 }: ShutterPreviewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -105,6 +109,42 @@ export function ShutterPreview({
       // Draw kutu (üstteki alan)
       ctx.fillStyle = boxColor || colors.frameBackground;
       ctx.fillRect(x, y, finalWidth, motorHeight);
+
+      // --- Hareket bağlantı kutusu (motor kutusunun içinde) ---
+      const connectionBoxWidth = Math.max(30, finalWidth * 0.15); // %15 genişlik, min 30px
+      const connectionBoxHeight = motorHeight * 0.6; // kutu yüksekliğinin %60'i
+      const connectionBoxY = y + (motorHeight - connectionBoxHeight) / 2; // dikeyde ortala
+      const margin = 10; // kenarlardan boşluk
+      
+      let connectionBoxX = 0;
+      if (hareketBaglanti === "sag") {
+        // Motor kutusunun sağ tarafında
+        connectionBoxX = x + finalWidth - connectionBoxWidth - margin;
+      } else {
+        // Motor kutusunun sol tarafında
+        connectionBoxX = x + margin;
+      }
+
+      // Hareket bağlantı kutusunu çiz
+      ctx.fillStyle = theme === "dark" ? "#374151" : "#f3f4f6"; // Farklı arka plan rengi
+      ctx.fillRect(connectionBoxX, connectionBoxY, connectionBoxWidth, connectionBoxHeight);
+      
+      // Kutu çerçevesi
+      ctx.strokeStyle = dikmeColor || colors.frameBorder;
+      ctx.lineWidth = 1;
+      ctx.strokeRect(connectionBoxX, connectionBoxY, connectionBoxWidth, connectionBoxHeight);
+
+      // Hareket tipi yazısı (K veya M)
+      ctx.fillStyle = colors.text;
+      ctx.font = `${Math.max(10, connectionBoxHeight * 0.4)}px 'Noto Sans', 'Arial', sans-serif`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      const movementText = movementType === "manuel" ? "K" : "M";
+      ctx.fillText(
+        movementText,
+        connectionBoxX + connectionBoxWidth / 2,
+        connectionBoxY + connectionBoxHeight / 2
+      );
 
       // --- Dikey dikmeler (kutudan sonra başlasın, daha ince) ---
       const dikmeWidth = Math.max(8, finalWidth * 0.03); // min 8px, %3 genişlik
@@ -341,7 +381,7 @@ export function ShutterPreview({
         ctx.stroke();
       }
     },
-    [theme, lamelColor, boxColor, subPartColor, dikmeColor, boxHeight] // theme'i dependency array'e ekledik
+    [theme, lamelColor, boxColor, subPartColor, dikmeColor, boxHeight, hareketBaglanti, movementType] // theme'i dependency array'e ekledik
   );
 
   const updateCanvasSize = useCallback(() => {

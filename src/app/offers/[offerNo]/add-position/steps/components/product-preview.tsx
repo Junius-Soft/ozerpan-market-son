@@ -128,6 +128,8 @@ export function ProductPreview({
               subPartColor: getColorHex("subPart_color"),
               dikmeColor: getColorHex("dikme_color"),
               boxHeight: getBoxHeight(values.boxType),
+              hareketBaglanti: values.hareketBaglanti,
+              movementType: values.movementType,
             })}
           </div>
         </div>

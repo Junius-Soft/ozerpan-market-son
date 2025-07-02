@@ -15,6 +15,8 @@ interface DynamicPreviewProps {
   subPartColor?: string;
   dikmeColor?: string;
   boxHeight?: number; // kutu yüksekliği (mm)
+  hareketBaglanti: "sol" | "sag"
+  movementType: "manuel" | "motorlu"
 }
 
 export function DynamicPreview({
@@ -27,6 +29,8 @@ export function DynamicPreview({
   subPartColor,
   dikmeColor,
   boxHeight = 0, // kutu yüksekliği (mm)
+  hareketBaglanti,
+  movementType,
 }: DynamicPreviewProps) {
   // Select the appropriate preview component based on the component name
   const renderPreview = () => {
@@ -42,6 +46,8 @@ export function DynamicPreview({
             subPartColor={subPartColor}
             dikmeColor={dikmeColor}
             boxHeight={boxHeight} // kutu yüksekliği (mm)
+            hareketBaglanti={hareketBaglanti}
+            movementType={movementType}
           />
         );
       case "WindowPreview":

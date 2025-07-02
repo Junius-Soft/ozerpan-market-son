@@ -302,7 +302,13 @@ export default function OfferDetailPage() {
             );
             if (positions.length > 0) {
               import("@/utils/offer-utils").then((utils) => {
-                utils.openTeklifFormuPDFMulti(offer, positions);
+                utils.openTeklifFormuPDFMulti(
+                  offer,
+                  positions,
+                  vatRate,
+                  discountRate,
+                  assemblyRate
+                );
               });
             }
           }}

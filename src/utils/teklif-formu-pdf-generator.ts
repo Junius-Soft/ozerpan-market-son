@@ -4,10 +4,15 @@ import NotoSansRegular from "./NotoSans-Regular.js";
 import NotoSansBold from "./NotoSans-Bold.js";
 import JsBarcode from "jsbarcode";
 import { Offer, Position } from "@/documents/offers";
+import { getProductNameById } from "@/lib/product-name";
+import { normalizeColor } from "./panjur";
 
 export function generateTeklifFormuPDF(
   offer: Offer,
-  positions: Position[]
+  positions: Position[],
+  vatRate: number = 20,
+  discountRate: number = 0,
+  assemblyRate: number = 0
 ): void {
   const doc = new jsPDF("p", "mm", "a4");
   const margin = 15;
@@ -34,15 +39,86 @@ export function generateTeklifFormuPDF(
   );
 
   // Tablo başlıkları ve satırları
-  const tableColumns = ["Poz", "En", "Boy", "Adet", "Fiyat"];
+  const tableColumns = [
+    "Poz",
+    "Ürün",
+    "Kutu",
+    "Lamel",
+    "Mekanizma",
+    "En",
+    "Boy",
+    "Adet",
+    "Kontrol",
+    "Fiyat",
+  ];
   const tableRows = positions.map((pos) => {
+    // Mekanizma sütunu
+    let mekanizmaValue = "-";
+    const movementType = pos.productDetails?.movementType;
+    if (movementType === "manuel") {
+      mekanizmaValue = "Manuel";
+    } else if (movementType === "motorlu") {
+      const marka = pos.productDetails?.motorMarka;
+      const motorSekli = pos.productDetails?.motorSekli;
+      if (marka) {
+        mekanizmaValue = marka.charAt(0).toUpperCase() + marka.slice(1);
+        if (motorSekli && motorSekli.includes("alicili")) {
+          mekanizmaValue += ", Alıcılı";
+        } else {
+          mekanizmaValue += ", Alıcısız";
+        }
+      } else {
+        mekanizmaValue = "Motorlu";
+      }
+    }
     const euroPrice =
       pos.unitPrice && pos.quantity ? pos.unitPrice * pos.quantity : 0;
+    // Ürün adı productId'den alınır
+    const productName = pos.productDetails?.productId
+      ? getProductNameById(pos.productDetails.productId)
+      : "-";
+    // Kutu: box_color (boxType)
+    let boxValue = "-";
+    const boxColor = normalizeColor(pos.productDetails?.box_color);
+    const boxSize = pos.productDetails?.boxType;
+    if (boxColor && boxSize) {
+      boxValue = `${boxColor} (${boxSize})`;
+    } else if (boxColor) {
+      boxValue = boxColor;
+    } else if (boxSize) {
+      boxValue = boxSize;
+    }
+
+    // Lamel: lamel_color (lamelTickness)
+    let lamelValue = "-";
+    const lamelColor = normalizeColor(pos.productDetails?.lamel_color);
+    // Lamel kalınlığı kodunu göster: örn. SL-39, SE-45, SL-55, SE-55
+    let lamelCode = "";
+    const lamelTickness = pos.productDetails?.lamelTickness;
+    if (lamelTickness && lamelTickness.includes("_")) {
+      const [num, code] = lamelTickness.split("_");
+      if (num && code) {
+        lamelCode = `${code.toUpperCase()}-${num}`;
+      }
+    }
+    if (lamelColor && lamelCode) {
+      lamelValue = `${lamelColor} (${lamelCode})`;
+    } else if (lamelColor) {
+      lamelValue = lamelColor;
+    } else if (lamelCode) {
+      lamelValue = lamelCode;
+    }
+
     return [
       pos.pozNo,
+      productName,
+      boxValue,
+      lamelValue,
+      mekanizmaValue,
       pos.productDetails?.width ?? "-",
       pos.productDetails?.height ?? "-",
       pos.quantity,
+      "", // Kontrol sütunu boş
       euroPrice
         ? euroPrice.toLocaleString("tr-TR", {
             style: "currency",
@@ -82,8 +158,15 @@ export function generateTeklifFormuPDF(
     0
   );
   const araToplam = toplam;
-  const kdv = +(toplam * 0.2).toFixed(2); // %20 KDV
-  const genelToplam = +(toplam + kdv).toFixed(2);
+
+  // KDV, iskonto, montaj oranları artık parametre olarak geliyor
+
+  // İskonto ve montaj tutarları
+  const iskonto = (toplam * discountRate) / 100;
+  const montaj = (toplam * assemblyRate) / 100;
+  const base = toplam - iskonto + montaj;
+  const kdv = (base * vatRate) / 100;
+  const genelToplam = base + kdv;
 
   // Format helpers
   const euro = (v: number) =>
@@ -119,11 +202,13 @@ export function generateTeklifFormuPDF(
     y = afterTableY + lastRowHeight;
   }
 
-  // Satır başlıkları ve değerleri
+  // İskonto ve montajı genel toplamdan önce uygula
   const rows = [
     { label: "TOPLAM", value: euro(toplam), bold: true },
     { label: "ARA TOPLAM", value: euro(araToplam), bold: true },
-    { label: "KDV", value: euro(kdv), bold: true },
+    { label: "İSKONTO", value: iskonto ? euro(-iskonto) : "-", bold: false },
+    { label: "MONTAJ", value: montaj ? euro(montaj) : "-", bold: false },
+    { label: "KDV", value: euro(kdv), bold: false },
     { label: "GENEL TOPLAM", value: euro(genelToplam), bold: true },
   ];
 

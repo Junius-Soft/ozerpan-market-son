@@ -133,6 +133,12 @@ export function openImalatListPDFMulti(offer: Offer, positions: Position[]) {
 }
 
 // PDF generation function for Teklif Formu
-export function openTeklifFormuPDFMulti(offer: Offer, positions: Position[]) {
-  generateTeklifFormuPDF(offer, positions);
+export function openTeklifFormuPDFMulti(
+  offer: Offer,
+  positions: Position[],
+  vatRate: number = 20,
+  discountRate: number = 0,
+  assemblyRate: number = 0
+) {
+  generateTeklifFormuPDF(offer, positions, vatRate, discountRate, assemblyRate);
 }

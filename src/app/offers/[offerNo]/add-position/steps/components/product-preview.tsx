@@ -19,6 +19,7 @@ import { useFormikContext } from "formik";
 import { PanjurSelections, PriceItem, SelectedProduct } from "@/types/panjur";
 import { getColorHexFromProductTabs } from "@/utils/get-color-hex";
 import {
+  calculateLamelCount,
   calculateSystemHeight,
   calculateSystemWidth,
   getBoxHeight,
@@ -130,6 +131,15 @@ export function ProductPreview({
               boxHeight: getBoxHeight(values.boxType),
               hareketBaglanti: values.hareketBaglanti,
               movementType: values.movementType,
+              lamelCount: calculateLamelCount(
+                calculateSystemHeight(
+                  values.height,
+                  values.kutuOlcuAlmaSekli,
+                  values.boxType
+                ),
+                values.boxType,
+                values.lamelTickness
+              ),
             })}
           </div>
         </div>

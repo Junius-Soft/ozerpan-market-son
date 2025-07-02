@@ -13,7 +13,8 @@ interface ShutterPreviewProps {
   subPartColor?: string;
   dikmeColor?: string;
   hareketBaglanti: "sol" | "sag";
-  movementType: "manuel" | "motorlu"
+  movementType: "manuel" | "motorlu";
+  lamelCount: number; // Lamel sayısı
 }
 
 export function ShutterPreview({
@@ -27,6 +28,7 @@ export function ShutterPreview({
   dikmeColor,
   hareketBaglanti,
   movementType,
+  lamelCount,
 }: ShutterPreviewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -78,10 +80,12 @@ export function ShutterPreview({
       // --- Genişlik metni için canvas'ın altından sabit boşluk bırak ---
       const textFontSize = 16; // px
       const textPadding = 12; // metin ile canvas altı arası boşluk (daha aşağıda)
-      const canvasPadding = 15; // Her yönden padding (px)
-      const availableWidth = canvasWidth - canvasPadding * 2;
+      const leftPadding = 60; // Sol taraf için ekstra padding (kutu yüksekliği metni ve bracket için)
+      const rightPadding = 60; // Sağ taraf için ekstra padding (yükseklik metni ve bracket için)
+      const topBottomPadding = 15; // Üst ve alt için padding (px)
+      const availableWidth = canvasWidth - leftPadding - rightPadding;
       const availableHeight =
-        canvasHeight - textFontSize - textPadding * 2 - canvasPadding * 2;
+        canvasHeight - textFontSize - textPadding * 2 - topBottomPadding * 2;
 
       // Çizimi, canvas'ın altına metin için boşluk bırakacak şekilde dikeyde ortala
       const canvasScale = Math.min(
@@ -90,16 +94,22 @@ export function ShutterPreview({
       );
       const finalWidth = scaledWidth * canvasScale;
       const finalHeight = scaledHeight * canvasScale;
-      // Padding'i uygula ve ortala
-      const x = (canvasWidth - finalWidth) / 2;
+      // Padding'i uygula ve ortala (sol ve sağ tarafta daha fazla boşluk bırakarak)
+      const x = leftPadding + (availableWidth - finalWidth) / 2;
       const y = (canvasHeight - finalHeight) / 2;
 
       // Draw shutter-like visualization
-      const motorHeight = Math.min(40, finalHeight * 0.15);
+      const motorHeight = Math.min(80, finalHeight * 0.2); // Maksimum sınırı 80'e çıkardık ve yüzdeyi %20'ye çıkardık
       const remainingHeight = finalHeight - motorHeight;
-      const lamelHeight = Math.min(20, remainingHeight / 15);
-      const numberOfLamels = Math.floor(remainingHeight / lamelHeight);
-      const adjustedLamelHeight = remainingHeight / numberOfLamels;
+
+      // --- Lameller için minimum yükseklik kontrolü ---
+      const MIN_LAMEL_HEIGHT = 8; // px
+      let numberOfLamels = lamelCount;
+      let adjustedLamelHeight = remainingHeight / numberOfLamels;
+      if (adjustedLamelHeight < MIN_LAMEL_HEIGHT) {
+        numberOfLamels = Math.floor(remainingHeight / MIN_LAMEL_HEIGHT);
+        adjustedLamelHeight = remainingHeight / numberOfLamels;
+      }
 
       // Draw inner frame (en dıştaki çerçeve, alt parçayı da kapsayacak şekilde)
       ctx.strokeStyle = theme === "dark" ? "#94a3b8" : "#475569";
@@ -115,7 +125,7 @@ export function ShutterPreview({
       const connectionBoxHeight = motorHeight * 0.6; // kutu yüksekliğinin %60'i
       const connectionBoxY = y + (motorHeight - connectionBoxHeight) / 2; // dikeyde ortala
       const margin = 10; // kenarlardan boşluk
-      
+
       let connectionBoxX = 0;
       if (hareketBaglanti === "sag") {
         // Motor kutusunun sağ tarafında
@@ -127,16 +137,29 @@ export function ShutterPreview({
 
       // Hareket bağlantı kutusunu çiz
       ctx.fillStyle = theme === "dark" ? "#374151" : "#f3f4f6"; // Farklı arka plan rengi
-      ctx.fillRect(connectionBoxX, connectionBoxY, connectionBoxWidth, connectionBoxHeight);
-      
+      ctx.fillRect(
+        connectionBoxX,
+        connectionBoxY,
+        connectionBoxWidth,
+        connectionBoxHeight
+      );
+
       // Kutu çerçevesi
       ctx.strokeStyle = dikmeColor || colors.frameBorder;
       ctx.lineWidth = 1;
-      ctx.strokeRect(connectionBoxX, connectionBoxY, connectionBoxWidth, connectionBoxHeight);
+      ctx.strokeRect(
+        connectionBoxX,
+        connectionBoxY,
+        connectionBoxWidth,
+        connectionBoxHeight
+      );
 
       // Hareket tipi yazısı (K veya M)
       ctx.fillStyle = colors.text;
-      ctx.font = `${Math.max(10, connectionBoxHeight * 0.4)}px 'Noto Sans', 'Arial', sans-serif`;
+      ctx.font = `${Math.max(
+        10,
+        connectionBoxHeight * 0.4
+      )}px 'Noto Sans', 'Arial', sans-serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       const movementText = movementType === "manuel" ? "K" : "M";
@@ -171,29 +194,49 @@ export function ShutterPreview({
       for (let i = 0; i < numberOfLamels; i++) {
         const lamelY = y + motorHeight + i * adjustedLamelHeight;
 
-        // Create main gradient for lamel
+        // Lamel arası boşluk için biraz daha küçük lamel yüksekliği
+        const lamelRealHeight = adjustedLamelHeight * 0.85; // %15 boşluk bırak
+        const lamelSpacing = adjustedLamelHeight * 0.15;
+        const adjustedLamelY = lamelY + lamelSpacing / 2;
+
+        // Ana lamel gövdesi için daha belirgin gradient
         const mainGradient = ctx.createLinearGradient(
           lamelX,
-          lamelY,
+          adjustedLamelY,
           lamelX,
-          lamelY + adjustedLamelHeight
+          adjustedLamelY + lamelRealHeight
         );
-        mainGradient.addColorStop(0, colors.lamelDark);
-        mainGradient.addColorStop(0.4, colors.lamelLight);
-        mainGradient.addColorStop(0.6, colors.lamelLight);
-        mainGradient.addColorStop(1, colors.lamelDark);
 
-        // Draw main lamel body
+        // Daha belirgin renk geçişleri
+        const baseColor =
+          lamelColor || (theme === "dark" ? "#94a3b8" : "#e2e8f0");
+        const lightColor = lamelColor
+          ? lightenColor(baseColor, 0.3)
+          : theme === "dark"
+          ? "#cbd5e1"
+          : "#f8fafc";
+        const darkColor = lamelColor
+          ? darkenColor(baseColor, 0.3)
+          : theme === "dark"
+          ? "#64748b"
+          : "#94a3b8";
+
+        mainGradient.addColorStop(0, darkColor);
+        mainGradient.addColorStop(0.2, lightColor);
+        mainGradient.addColorStop(0.8, lightColor);
+        mainGradient.addColorStop(1, darkColor);
+
+        // Ana lamel gövdesi
         ctx.fillStyle = mainGradient;
-        ctx.fillRect(lamelX, lamelY, lamelWidth, adjustedLamelHeight);
+        ctx.fillRect(lamelX, adjustedLamelY, lamelWidth, lamelRealHeight);
 
-        // Highlight
-        const highlightOpacity = theme === "dark" ? "0.2" : "0.4";
+        // Üst highlight (daha belirgin)
+        const highlightOpacity = theme === "dark" ? 0.4 : 0.6;
         const highlightGradient = ctx.createLinearGradient(
           lamelX,
-          lamelY,
+          adjustedLamelY,
           lamelX,
-          lamelY + adjustedLamelHeight * 0.3
+          adjustedLamelY + lamelRealHeight * 0.4
         );
         highlightGradient.addColorStop(
           0,
@@ -201,33 +244,114 @@ export function ShutterPreview({
         );
         highlightGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
         ctx.fillStyle = highlightGradient;
-        ctx.fillRect(lamelX, lamelY, lamelWidth, adjustedLamelHeight * 0.3);
+        ctx.fillRect(lamelX, adjustedLamelY, lamelWidth, lamelRealHeight * 0.4);
 
-        // Shadow
-        const shadowOpacity = theme === "dark" ? "0.3" : "0.1";
+        // Alt gölge (daha belirgin)
+        const shadowOpacity = theme === "dark" ? 0.5 : 0.3;
         const shadowGradient = ctx.createLinearGradient(
           lamelX,
-          lamelY + adjustedLamelHeight * 0.7,
+          adjustedLamelY + lamelRealHeight * 0.6,
           lamelX,
-          lamelY + adjustedLamelHeight
+          adjustedLamelY + lamelRealHeight
         );
         shadowGradient.addColorStop(0, "rgba(0, 0, 0, 0)");
         shadowGradient.addColorStop(1, `rgba(0, 0, 0, ${shadowOpacity})`);
         ctx.fillStyle = shadowGradient;
         ctx.fillRect(
           lamelX,
-          lamelY + adjustedLamelHeight * 0.7,
+          adjustedLamelY + lamelRealHeight * 0.6,
           lamelWidth,
-          adjustedLamelHeight * 0.3
+          lamelRealHeight * 0.4
         );
 
-        // Lamel border
+        // Lamel kenarlıkları (üst ve alt)
+        ctx.strokeStyle = darkColor;
+        ctx.lineWidth = 1;
+
+        // Üst kenarlık
         ctx.beginPath();
-        ctx.moveTo(lamelX, lamelY);
-        ctx.lineTo(lamelX + lamelWidth, lamelY);
-        ctx.strokeStyle = colors.lamelBorder;
-        ctx.lineWidth = 0.5;
+        ctx.moveTo(lamelX, adjustedLamelY);
+        ctx.lineTo(lamelX + lamelWidth, adjustedLamelY);
         ctx.stroke();
+
+        // Alt kenarlık
+        ctx.beginPath();
+        ctx.moveTo(lamelX, adjustedLamelY + lamelRealHeight);
+        ctx.lineTo(lamelX + lamelWidth, adjustedLamelY + lamelRealHeight);
+        ctx.stroke();
+
+        // Yan gölgeler (3D efekti için)
+        const sideGradientLeft = ctx.createLinearGradient(
+          lamelX,
+          adjustedLamelY,
+          lamelX + 8,
+          adjustedLamelY
+        );
+        sideGradientLeft.addColorStop(
+          0,
+          `rgba(0, 0, 0, ${shadowOpacity * 0.5})`
+        );
+        sideGradientLeft.addColorStop(1, "rgba(0, 0, 0, 0)");
+        ctx.fillStyle = sideGradientLeft;
+        ctx.fillRect(lamelX, adjustedLamelY, 8, lamelRealHeight);
+
+        const sideGradientRight = ctx.createLinearGradient(
+          lamelX + lamelWidth - 8,
+          adjustedLamelY,
+          lamelX + lamelWidth,
+          adjustedLamelY
+        );
+        sideGradientRight.addColorStop(0, "rgba(0, 0, 0, 0)");
+        sideGradientRight.addColorStop(
+          1,
+          `rgba(0, 0, 0, ${shadowOpacity * 0.5})`
+        );
+        ctx.fillStyle = sideGradientRight;
+        ctx.fillRect(
+          lamelX + lamelWidth - 8,
+          adjustedLamelY,
+          8,
+          lamelRealHeight
+        );
+      }
+
+      // Renkleri açma/koyulaştırma yardımcı fonksiyonları
+      function lightenColor(color: string, amount: number): string {
+        if (color.startsWith("#")) {
+          const hex = color.slice(1);
+          const num = parseInt(hex, 16);
+          const r = Math.min(
+            255,
+            Math.floor((num >> 16) + (255 - (num >> 16)) * amount)
+          );
+          const g = Math.min(
+            255,
+            Math.floor(
+              ((num >> 8) & 0x00ff) + (255 - ((num >> 8) & 0x00ff)) * amount
+            )
+          );
+          const b = Math.min(
+            255,
+            Math.floor((num & 0x0000ff) + (255 - (num & 0x0000ff)) * amount)
+          );
+          return `rgb(${r}, ${g}, ${b})`;
+        }
+        return color;
+      }
+
+      function darkenColor(color: string, amount: number): string {
+        if (color.startsWith("#")) {
+          const hex = color.slice(1);
+          const num = parseInt(hex, 16);
+          const r = Math.max(0, Math.floor((num >> 16) * (1 - amount)));
+          const g = Math.max(
+            0,
+            Math.floor(((num >> 8) & 0x00ff) * (1 - amount))
+          );
+          const b = Math.max(0, Math.floor((num & 0x0000ff) * (1 - amount)));
+          return `rgb(${r}, ${g}, ${b})`;
+        }
+        return color;
       }
       // Alt parça da aynı şekilde dikmelerin arasında olmalı
       ctx.fillStyle = subPartColor || colors.lamelDark;
@@ -244,7 +368,7 @@ export function ShutterPreview({
       ctx.textAlign = "center";
 
       // Width text (artık üstte, kutunun üstüne ortalanmış)
-      ctx.fillText(`${width} mm`, x + finalWidth / 2, y - 16);
+      ctx.fillText(`${width} mm`, x + finalWidth / 2, y - 25);
 
       // --- Üst genişlik için bracket çiz (yatay) ---
       ctx.save();
@@ -277,7 +401,7 @@ export function ShutterPreview({
         ctx,
         x,
         x + finalWidth,
-        y - 10, // biraz daha yukarı al
+        y - 17, // bracket pozisyonunu da ayarla
         18
       );
       ctx.restore();
@@ -297,17 +421,18 @@ export function ShutterPreview({
       );
       ctx.restore();
 
-      // Toplam yükseklik metni (sağda, ortalanmış, dikey ve ters, çizime yakın)
+      // Toplam yükseklik metni (sağda, ortalanmış, dikey ve ters, çizime yakın, iki satır)
       ctx.save();
       ctx.font = "14px 'Noto Sans', 'Arial', sans-serif";
       ctx.fillStyle = colors.text;
       ctx.textAlign = "center";
       ctx.translate(
-        x + finalWidth + rightBracketOffset + 17,
+        x + finalWidth + rightBracketOffset + 28,
         y + (finalHeight + adjustedLamelHeight) / 2
       );
       ctx.rotate(Math.PI / 2); // ters çevir
-      ctx.fillText(`${height} mm`, 0, 0);
+      ctx.fillText(`${height}`, 0, -6); // Üst satır (sayı)
+      ctx.fillText("mm", 0, 6); // Alt satır (birim)
       ctx.restore();
 
       // Kutu yüksekliği ve kalan yükseklik için ayrı ölçü yazısı ve çizgileri
@@ -319,14 +444,16 @@ export function ShutterPreview({
         drawVerticalBracket(ctx, x - 18, y, y + motorHeight, 18);
         ctx.restore();
 
-        // Kutu kısmının ortasına kutu yüksekliği metni
+        // Kutu kısmının ortasına kutu yüksekliği metni (iki satır)
         ctx.save();
-        ctx.font = "14px  'Noto Sans', 'Arial', sans-serif";
+        ctx.font = "12px 'Noto Sans', 'Arial', sans-serif";
         ctx.fillStyle = colors.text;
         ctx.textAlign = "center";
         ctx.translate(x - 35, y + motorHeight / 2);
         ctx.rotate(-Math.PI / 2);
-        ctx.fillText(`${boxHeight} mm`, 0, 0);
+        // İki satır halinde yaz
+        ctx.fillText(`${boxHeight}`, 0, -6); // Üst satır (sayı)
+        ctx.fillText("mm", 0, 6); // Alt satır (birim)
         ctx.restore();
 
         // --- Kalan yükseklik için bracket çiz ---
@@ -344,14 +471,16 @@ export function ShutterPreview({
           );
           ctx.restore();
 
-          // Kalan yükseklik metni
+          // Kalan yükseklik metni (iki satır)
           ctx.save();
-          ctx.font = "14px 'Noto Sans', 'Arial', sans-serif";
+          ctx.font = "12px 'Noto Sans', 'Arial', sans-serif";
           ctx.fillStyle = colors.text;
           ctx.textAlign = "center";
           ctx.translate(x - 35, y + motorHeight + remainingHeight / 2);
           ctx.rotate(-Math.PI / 2);
-          ctx.fillText(`${kalanYukseklik} mm`, 0, 0);
+          // İki satır halinde yaz
+          ctx.fillText(`${kalanYukseklik}`, 0, -6); // Üst satır (sayı)
+          ctx.fillText("mm", 0, 6); // Alt satır (birim)
           ctx.restore();
         }
       }
@@ -381,7 +510,17 @@ export function ShutterPreview({
         ctx.stroke();
       }
     },
-    [theme, lamelColor, boxColor, subPartColor, dikmeColor, boxHeight, hareketBaglanti, movementType] // theme'i dependency array'e ekledik
+    [
+      theme,
+      lamelColor,
+      boxColor,
+      subPartColor,
+      dikmeColor,
+      boxHeight,
+      hareketBaglanti,
+      movementType,
+      lamelCount,
+    ] // theme'i dependency array'e ekledik
   );
 
   const updateCanvasSize = useCallback(() => {

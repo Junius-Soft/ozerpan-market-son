@@ -16,7 +16,11 @@ import { useFilterLamelThickness } from "./hooks/form-rules/useFilterLamelThickn
 import { useFilterMotorModel } from "./hooks/form-rules/useFilterMotorModel";
 import { useFilterBoxSize } from "./hooks/form-rules/useFilterBoxSize";
 import { useAutoDependencyAndFilterBy } from "./hooks/useAutoDependencyDefaults";
-import { getBoxHeight } from "@/utils/panjur";
+import {
+  calculateLamelCount,
+  calculateSystemHeight,
+  getBoxHeight,
+} from "@/utils/panjur";
 
 interface DetailsStepProps {
   formik: FormikProps<
@@ -96,6 +100,15 @@ export function DetailsStep({
                   boxHeight: getBoxHeight(values.boxType),
                   hareketBaglanti: values.hareketBaglanti,
                   movementType: values.movementType,
+                  lamelCount: calculateLamelCount(
+                    calculateSystemHeight(
+                      values.height,
+                      values.kutuOlcuAlmaSekli,
+                      values.boxType
+                    ),
+                    values.boxType,
+                    values.lamelTickness
+                  ),
                 })}
               </div>
             </div>

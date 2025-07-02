@@ -17,6 +17,7 @@ interface DynamicPreviewProps {
   boxHeight?: number; // kutu yüksekliği (mm)
   hareketBaglanti: "sol" | "sag"
   movementType: "manuel" | "motorlu"
+  lamelCount: number; // Lamel sayısı
 }
 
 export function DynamicPreview({
@@ -31,6 +32,7 @@ export function DynamicPreview({
   boxHeight = 0, // kutu yüksekliği (mm)
   hareketBaglanti,
   movementType,
+  lamelCount
 }: DynamicPreviewProps) {
   // Select the appropriate preview component based on the component name
   const renderPreview = () => {
@@ -48,6 +50,7 @@ export function DynamicPreview({
             boxHeight={boxHeight} // kutu yüksekliği (mm)
             hareketBaglanti={hareketBaglanti}
             movementType={movementType}
+            lamelCount={lamelCount}
           />
         );
       case "WindowPreview":

@@ -195,6 +195,9 @@ export default function OfferDetailPage() {
       genel_toplam: Number((summaryTotal * eurRate).toFixed(2)),
       data: offer.positions.map((pos) => ({
         name: pos.pozNo,
+        productName: pos.productName,
+        productType: pos.typeId,
+        productOptions: pos.optionId,
         quantity: pos.quantity,
         unit_price: Number((pos.unitPrice * eurRate).toFixed(2)), // TL'ye çevrildi
         production_materials: {

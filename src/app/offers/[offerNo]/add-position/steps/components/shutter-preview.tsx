@@ -103,11 +103,14 @@ export function ShutterPreview({
       const remainingHeight = finalHeight - motorHeight;
 
       // --- Lameller için minimum yükseklik kontrolü ---
-      const MIN_LAMEL_HEIGHT = 8; // px
+      const MIN_LAMEL_HEIGHT = 14; // px (daha görünür olması için artırıldı)
       let numberOfLamels = lamelCount;
       let adjustedLamelHeight = remainingHeight / numberOfLamels;
       if (adjustedLamelHeight < MIN_LAMEL_HEIGHT) {
-        numberOfLamels = Math.floor(remainingHeight / MIN_LAMEL_HEIGHT);
+        numberOfLamels = Math.max(
+          1,
+          Math.floor(remainingHeight / MIN_LAMEL_HEIGHT)
+        );
         adjustedLamelHeight = remainingHeight / numberOfLamels;
       }
 

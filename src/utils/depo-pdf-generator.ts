@@ -144,7 +144,7 @@ export async function generateDepoCikisFisiPDF(
 
   // Tablo çiz
   autoTable(doc, {
-    startY: 55,
+    startY: 65,
     head: [["Stok Kodu", "Açıklama", "Miktar", "Birim", "OK"]],
     body:
       tableData.length > 0

@@ -26,6 +26,7 @@ import {
   findDengeMakarasiAccessoryPrice,
   findMiniDikmeAccessories,
   findMotorPrice,
+  findYukseltmeProfiliPrice,
 } from "@/utils/accessory";
 
 interface AccessoryResult {
@@ -184,6 +185,22 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
               quantity: widthInMeters,
               unit: altParcaLastigi.unit,
             });
+          }
+
+          // Yükseltme Profili (type'ı sineklik_profilleri olanlar)
+          // Sadece dikmeAdapter var ise ekle
+          if (values.dikmeAdapter === "var") {
+            const yukseltmeProfilleri = findYukseltmeProfiliPrice(
+              allAccessories,
+              dikmeCount,
+              height,
+              values.boxType,
+              values.dikmeType,
+              values.dikme_color
+            );
+            if (yukseltmeProfilleri) {
+              neededAccessories.push(yukseltmeProfilleri);
+            }
           }
 
           // Stoper Konik

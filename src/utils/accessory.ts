@@ -1,5 +1,9 @@
 import { PriceItem } from "@/types/panjur";
-import { normalizeColor } from "@/utils/panjur";
+import {
+  normalizeColor,
+  calculateDikmeHeight,
+  getKertmePayi,
+} from "@/utils/panjur";
 
 // Yan Kapak fiyatı bulucu
 export function findYanKapakAccessoryPrice(
@@ -280,3 +284,41 @@ export const findMotorPrice = (
 
   return motorItem ?? null;
 };
+
+// Yükseltme Profili fiyatı bulucu (type'ı sineklik_profilleri olanlar, fiyatı metre başı)
+export function findYukseltmeProfiliPrice(
+  accessories: PriceItem[],
+  dikmeCount: number,
+  height: number,
+  boxType: string,
+  dikmeType: string,
+  dikmeColor: string
+): PriceItem | null {
+  // Yükseltme profili için sineklik_profilleri type'ında olan ve rengi eşleşen ürünü bul
+  const profil = accessories.find(
+    (acc) =>
+      acc.type === "sineklik_profilleri" &&
+      acc.description
+        .toLowerCase()
+        .includes(normalizeColor(dikmeColor).toLowerCase())
+  );
+  if (!profil) return null;
+
+  const kertmePayi = getKertmePayi(dikmeType);
+
+  // calculateDikmeHeight fonksiyonunu kullanarak dikme uzunluğunu hesapla
+  const dikmeUzunluguMm =
+    calculateDikmeHeight(height, boxType, dikmeType) - kertmePayi;
+  // mm'den metreye çevir
+  const dikmeUzunlugu = dikmeUzunluguMm / 1000;
+
+  // Her dikme için yükseltme profili gerektiğinden, toplam uzunluk
+  const toplamUzunluk = dikmeUzunlugu * dikmeCount;
+
+  // Fiyat hesaplanması (metre başı fiyat * toplam uzunluk)
+  return {
+    ...profil,
+    quantity: toplamUzunluk,
+    unit: "metre",
+  };
+}

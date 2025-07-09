@@ -11,7 +11,7 @@ import { Formik, Form } from "formik";
 import { handleImalatListesiPDF } from "@/utils/handle-imalat-listesi";
 import { ProductDetailsHeader } from "./ProductDetailsHeader";
 import { FloatingTotalButton } from "../../components/FloatingTotalButton";
-import { handleFiyatAnaliziPDF } from "@/utils/handle-fiyat-analizi";
+// import { handleFiyatAnaliziPDF } from "@/utils/handle-fiyat-analizi";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
@@ -333,16 +333,20 @@ export default function ProductDetailsPage() {
                   }
                   onSubmit={formik.submitForm}
                   onFiyatAnaliz={async () => {
+                    if (!product) return;
                     const offerNo = window.location.pathname.split("/")[2];
-                    await handleFiyatAnaliziPDF({
-                      offerNo,
-                      selectedPosition,
-                      formikValues: formik.values,
-                      productId: productId ?? null,
-                      typeId: typeId ?? null,
-                      productName: productName ?? null,
-                      optionId: optionId ?? null,
-                    });
+                    await import("@/utils/handle-fiyat-analizi").then(
+                      ({ handleFiyatAnaliziPDF }) =>
+                        handleFiyatAnaliziPDF({
+                          offerNo,
+                          product,
+                          formikValues: formik.values,
+                          productId: productId ?? null,
+                          typeId: typeId ?? null,
+                          productName: productName ?? null,
+                          optionId: optionId ?? null,
+                        })
+                    );
                   }}
                 />
 

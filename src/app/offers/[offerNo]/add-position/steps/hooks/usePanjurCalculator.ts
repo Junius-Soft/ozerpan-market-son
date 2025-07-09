@@ -217,7 +217,7 @@ export const usePanjurCalculator = (
         products: productItems,
         accessories: accessories || [],
       };
-
+      console.log({ selectedProducts });
       setResult((prev) => ({
         ...prev,
         lamelPrice,

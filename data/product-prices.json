@@ -1331,6 +1331,62 @@
         "type": "otomasyon_alıcılar",
         "unit": "Adet",
         "price": "188.00"
+      },
+      {
+        "description": "Plise Kasa Profili Pres",
+        "stock_code": "378111600200",
+        "uretici_kodu": "378111600200",
+        "type": "sineklik_profilleri",
+        "unit": "Metre",
+        "price": "2.92"
+      },
+      {
+        "description": "Plise Kasa Profili Beyaz",
+        "stock_code": "378111601100",
+        "uretici_kodu": "378111601100",
+        "type": "sineklik_profilleri",
+        "unit": "Metre",
+        "price": "3.19"
+      },
+      {
+        "description": "Plise Kasa Profili Kahverengi",
+        "stock_code": "378111602000",
+        "uretici_kodu": "378111602000",
+        "type": "sineklik_profilleri",
+        "unit": "Metre",
+        "price": "3.21"
+      },
+      {
+        "description": "Plise Kasa Profili Antrasit Gri",
+        "stock_code": "378111603400",
+        "uretici_kodu": "378111603400",
+        "type": "sineklik_profilleri",
+        "unit": "Metre",
+        "price": "3.21"
+      },
+      {
+        "description": "Plise Kasa Profili Krem",
+        "stock_code": "378111603100",
+        "uretici_kodu": "378111603100",
+        "type": "sineklik_profilleri",
+        "unit": "Metre",
+        "price": "3.21"
+      },
+      {
+        "description": "Plise Kasa Profili Metalik Gri",
+        "stock_code": "378111603000",
+        "uretici_kodu": "378111603000",
+        "type": "sineklik_profilleri",
+        "unit": "Metre",
+        "price": "3.21"
+      },
+      {
+        "description": "Plise Kasa Profili Ral Boyalı",
+        "stock_code": "378111600200",
+        "uretici_kodu": "378111601010",
+        "type": "sineklik_profilleri",
+        "unit": "Metre",
+        "price": "4.03"
       }
     ]
   }

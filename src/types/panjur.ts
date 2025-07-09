@@ -74,7 +74,7 @@ export interface PanjurSelections {
     | "mini_pvc_orta_dikme"
     | "midi_pvc_dikme"
     | "midi_pvc_orta_dikme";
-  dikmeAdapter: "yok" | "mini_dikme_adaptoru" | "fulset_dikme_adaptoru";
+  dikmeAdapter: "yok" | "var";
   subPart: "mini_alt_parca" | "kilitli_alt_parca" | "midi_alt_parca";
   lamel_color: string;
   box_color: string;

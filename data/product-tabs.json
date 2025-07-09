@@ -794,11 +794,7 @@
             "type": "select",
             "options": [
               { "id": "yok", "name": "Yok" },
-              { "id": "mini_dikme_adaptor", "name": "Mini Dikme Adaptörü" },
-              {
-                "id": "fullset_dikme_adapter",
-                "name": "Fulset Dikme Adaptörü"
-              }
+              { "id": "var", "name": "Var" }
             ],
             "default": "yok"
           },

@@ -188,35 +188,43 @@ export default function OfferDetailPage() {
   // Gerçek sipariş datası oluşturucu
   function buildOrderData(offer: Offer) {
     return {
-      order_no: selectedOrder || offer.id, // selectedOrder öncelikli
-      kdv: vatRate,
-      iskonto: discountRate,
-      montaj: assemblyRate,
-      genel_toplam: Number((summaryTotal * eurRate).toFixed(2)),
-      data: offer.positions.map((pos) => ({
-        name: pos.pozNo,
-        productName: pos.productName,
-        productType: pos.typeId,
-        productOptions: pos.optionId,
-        quantity: pos.quantity,
-        unit_price: Number((pos.unitPrice * eurRate).toFixed(2)), // TL'ye çevrildi
-        production_materials: {
-          profiles:
-            pos.selectedProducts?.products?.map((profile: SelectedProduct) => ({
-              stock_code: profile.stock_code,
-              type: formatProfileType(profile.type),
-              description: profile.description,
-              measure: Number(profile.size),
-              quantity: profile.quantity,
-            })) || [],
-          accessories:
-            pos.selectedProducts?.accessories?.map((acc: PriceItem) => ({
-              stock_code: acc.stock_code,
-              description: acc.description,
-              quantity: acc.quantity ?? 0,
-            })) || [],
-        },
-      })),
+      data: {
+        order_no: selectedOrder || offer.id,
+        order_type: "Panjur",
+        tax: vatRate,
+        discount: discountRate,
+        assembly: assemblyRate,
+        total: Number((summaryTotal * eurRate).toFixed(2)),
+        grand_total: Number((summaryTotal * eurRate).toFixed(2)), // örnek oran, gerekirse değiştirin
+        remarks: "",
+        poz_list: offer.positions.map((pos, idx) => ({
+          poz_no: idx + 1,
+          product_name: pos.productName,
+          product_type: pos.typeId,
+          product_option: pos.optionId,
+          quantity: pos.quantity,
+          unit_price: Number((pos.unitPrice * eurRate).toFixed(2)),
+          production_materials: {
+            profiles:
+              pos.selectedProducts?.products?.map(
+                (profile: SelectedProduct) => ({
+                  stock_code: profile.stock_code,
+                  type: formatProfileType(profile.type),
+                  description: profile.description,
+                  unit_of_measure: profile.unit,
+                  quantity: profile.quantity,
+                })
+              ) || [],
+            accessories:
+              pos.selectedProducts?.accessories?.map((acc: PriceItem) => ({
+                stock_code: acc.stock_code,
+                description: acc.description,
+                unit_of_measure: acc.unit,
+                quantity: acc.quantity ?? 0,
+              })) || [],
+          },
+        })),
+      },
     };
   }
 

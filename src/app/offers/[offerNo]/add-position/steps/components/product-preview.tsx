@@ -118,7 +118,7 @@ export function ProductPreview({
     <Card className="p-6" ref={summaryRef}>
       <div className="space-y-6">
         <div className="font-medium text-lg mb-4">Ürün Önizleme</div>
-        <div className="aspect-[4/3] w-full max-w-2xl mx-auto border rounded-lg overflow-hidden shadow-sm flex items-center justify-center">
+        <div className="aspect-[4/4] w-full max-w-2xl mx-auto border rounded-lg overflow-hidden shadow-sm flex items-center justify-center">
           <div className="w-full h-full flex items-center justify-center">
             {getProductPreview({
               product: selectedProduct,

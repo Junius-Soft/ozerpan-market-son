@@ -84,9 +84,16 @@ export function ShutterPreview({
       const leftPadding = 60; // Sol taraf için ekstra padding (kutu yüksekliği metni ve bracket için)
       const rightPadding = 60; // Sağ taraf için ekstra padding (yükseklik metni ve bracket için)
       const topBottomPadding = 15; // Üst ve alt için padding (px)
+      const extraHeight = 60; // Alt bracket/metinler için ek alan (updateCanvasSize ile uyumlu)
+
+      // Main shutter drawing should fit inside the original container area (canvasHeight - extraHeight)
       const availableWidth = canvasWidth - leftPadding - rightPadding;
       const availableHeight =
-        canvasHeight - textFontSize - textPadding * 2 - topBottomPadding * 2;
+        canvasHeight -
+        extraHeight -
+        textFontSize -
+        textPadding * 2 -
+        topBottomPadding * 2;
 
       // Çizimi, canvas'ın altına metin için boşluk bırakacak şekilde dikeyde ortala
       const canvasScale = Math.min(
@@ -97,7 +104,8 @@ export function ShutterPreview({
       const finalHeight = scaledHeight * canvasScale;
       // Padding'i uygula ve ortala (sol ve sağ tarafta daha fazla boşluk bırakarak)
       const x = leftPadding + (availableWidth - finalWidth) / 2;
-      const y = (canvasHeight - finalHeight) / 2;
+      // y: main drawing is centered in the area above the extraHeight
+      const y = (canvasHeight - extraHeight - finalHeight) / 2;
 
       // Draw shutter-like visualization
       const motorHeight = Math.min(80, finalHeight * 0.2); // Maksimum sınırı 80'e çıkardık ve yüzdeyi %20'ye çıkardık
@@ -381,6 +389,54 @@ export function ShutterPreview({
         }
       }
 
+      // Bölme genişliklerini panjurun altına bracket ve metinle göster
+      if (seperation > 1) {
+        const totalSections = seperation;
+        const sectionWidth = (finalWidth - dikmeWidth * 2) / totalSections;
+        // Bracket ve metinleri biraz daha aşağı al
+        const bracketYOffset = 12; // 6'dan 12'ye çıkarıldı, daha aşağı
+        const bracketYNew =
+          y + finalHeight + adjustedLamelHeight + bracketYOffset;
+        ctx.save();
+        ctx.strokeStyle = "#64748b";
+        ctx.lineWidth = 3; // Diğer bracketlarla aynı kalınlık
+        ctx.font = "13px 'Noto Sans', 'Arial', sans-serif";
+        ctx.fillStyle = colors.text;
+        ctx.textAlign = "center";
+        // Her bölmeyi kapsayacak şekilde ayrı ayrı bracket çiz
+        for (let i = 0; i < totalSections; i++) {
+          // İlk bracket: en soldaki dikmeyi de kapsasın
+          let left = x + dikmeWidth + sectionWidth * i;
+          let right = left + sectionWidth;
+          if (i === 0) {
+            left = x; // En soldaki bracket, sol dikmeyi de kapsasın
+          }
+          if (i === totalSections - 1) {
+            right = x + finalWidth; // En sağdaki bracket, sağ dikmeyi de kapsasın
+          }
+          // Bracket çiz (yatay)
+          ctx.beginPath();
+          // Sol dikey
+          ctx.moveTo(left, bracketYNew - 7);
+          ctx.lineTo(left, bracketYNew + 7);
+          // Yatay
+          ctx.moveTo(left, bracketYNew);
+          ctx.lineTo(right, bracketYNew);
+          // Sağ dikey
+          ctx.moveTo(right, bracketYNew - 7);
+          ctx.lineTo(right, bracketYNew + 7);
+          ctx.stroke();
+          // Metin (bölme genişliği): toplam genişliği bölme sayısına bölerek hesapla
+          const bolmeGenislik = Math.round(width / totalSections);
+          ctx.fillText(
+            `${bolmeGenislik} mm`,
+            (left + right) / 2,
+            bracketYNew + 16
+          );
+        }
+        ctx.restore();
+      }
+
       // Add dimensions text
       ctx.fillStyle = colors.text;
       ctx.font = "14px 'Noto Sans', 'Arial', sans-serif";
@@ -550,9 +606,11 @@ export function ShutterPreview({
 
     const containerRect = container.getBoundingClientRect();
     const containerWidth = containerRect.width;
-    const containerHeight = containerRect.height;
+    // Alt bracket ve metinler için ekstra alan ekle
+    const extraHeight = 40;
+    const containerHeight = containerRect.height + extraHeight;
 
-    // Set canvas size to match container
+    // Set canvas size to match container (yükseklik artırıldı)
     canvas.width = containerWidth;
     canvas.height = containerHeight;
 

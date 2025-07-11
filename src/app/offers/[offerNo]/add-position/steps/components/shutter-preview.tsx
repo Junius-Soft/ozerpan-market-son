@@ -42,7 +42,12 @@ export function ShutterPreview({
   const { theme } = useTheme();
 
   // Global state'den middleBarPositions ve setter'ı al
-  const { middleBarPositions, setMiddleBarPositions } = useGlobalState();
+  const {
+    middleBarPositions,
+    setMiddleBarPositions,
+    sectionHeights,
+    setSectionHeights,
+  } = useGlobalState();
 
   // seperation veya width değiştiğinde middleBarPositions'ı eşit aralıklı olarak güncelle
   useEffect(() => {
@@ -61,11 +66,30 @@ export function ShutterPreview({
     index: number;
     value: number | null;
   } | null>(null);
+  // Bölme yüksekliği inputu için state
+  const [selectedSection, setSelectedSection] = useState<{
+    left: number;
+    right: number;
+    index: number;
+    value: number | null;
+  } | null>(null);
   const [inputValue, setInputValue] = useState<string>("");
   // Canvas koordinatlarını tutmak için ref
   const middleBarArrRef = useRef<{ x: number; width: number; index: number }[]>(
     []
   );
+  // Bölme bracket/metin alanlarının koordinatlarını tutmak için ref
+  // Her bölmenin lamel alanı koordinatlarını tutmak için ref
+  const sectionLamelArrRef = useRef<
+    | {
+        left: number;
+        right: number;
+        top: number;
+        bottom: number;
+        index: number;
+      }[]
+    | null
+  >(null);
   const drawShutter = useCallback(
     (
       canvas: HTMLCanvasElement,
@@ -74,6 +98,14 @@ export function ShutterPreview({
       canvasWidth: number,
       canvasHeight: number
     ) => {
+      // Her bölmenin lamel alanı koordinatlarını topla
+      const sectionLamels: {
+        left: number;
+        right: number;
+        top: number;
+        bottom: number;
+        index: number;
+      }[] = [];
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
@@ -154,9 +186,7 @@ export function ShutterPreview({
       }
 
       // Draw inner frame (en dıştaki çerçeve, alt parçayı da kapsayacak şekilde)
-      ctx.strokeStyle = theme === "dark" ? "#94a3b8" : "#475569";
-      ctx.lineWidth = 2;
-      ctx.strokeRect(x, y, finalWidth, finalHeight + adjustedLamelHeight);
+      // En dıştaki çerçeve kaldırıldı
 
       // Draw kutu (üstteki alan)
       ctx.fillStyle = boxColor || colors.frameBackground;
@@ -210,154 +240,347 @@ export function ShutterPreview({
         connectionBoxX + connectionBoxWidth / 2,
         connectionBoxY + connectionBoxHeight / 2
       );
-
       // --- Dikey dikmeler (kutudan sonra başlasın, daha ince) ---
       const dikmeWidth = Math.max(8, finalWidth * 0.03); // min 8px, %3 genişlik
-      // ...lamel çizimi kodu...
-
-      // Lamellerin genişliği kutudan biraz az olacak (dikmelerin arasında kalacak)
-      const lamelX = x + dikmeWidth;
-      const lamelWidth = finalWidth - dikmeWidth * 2;
-      for (let i = 0; i < numberOfLamels; i++) {
-        const lamelY = y + motorHeight + i * adjustedLamelHeight;
-
-        // Lamel arası boşluk için biraz daha küçük lamel yüksekliği
-        const lamelRealHeight = adjustedLamelHeight * 0.85; // %15 boşluk bırak
-        const lamelSpacing = adjustedLamelHeight * 0.15;
-        const adjustedLamelY = lamelY + lamelSpacing / 2;
-
-        // Ana lamel gövdesi için daha belirgin gradient
-        const mainGradient = ctx.createLinearGradient(
-          lamelX,
-          adjustedLamelY,
-          lamelX,
-          adjustedLamelY + lamelRealHeight
+      // Orta dikmelerin ve sectionLamels'ın koordinatlarını topla
+      const middleBarArr: { x: number; width: number; index: number }[] = [];
+      // Only collect dikme positions here, draw dikme after lamels and alt parça
+      if (seperation > 1) {
+        const totalSections = seperation;
+        const sectionWidth = (finalWidth - dikmeWidth * 2) / totalSections;
+        const positions: number[] =
+          middleBarPositions.length === seperation - 1
+            ? middleBarPositions
+            : Array.from({ length: seperation - 1 }, (_, i) =>
+                Math.round((width / seperation) * (i + 1))
+              );
+        const xPositions: number[] = [0, ...middleBarPositions, width].map(
+          (mm) => x + (mm / width) * finalWidth
         );
+        for (let i = 0; i < totalSections; i++) {
+          sectionLamels.push({
+            left: xPositions[i],
+            right: xPositions[i + 1],
+            top: y + motorHeight,
+            bottom: y + motorHeight + remainingHeight,
+            index: i,
+          });
+        }
+        sectionLamelArrRef.current = sectionLamels;
+        // Collect dikme positions
+        middleBarArr.push({ x: x, width: dikmeWidth, index: 0 });
+        for (let i = 1; i < seperation; i++) {
+          let dikmeX;
+          if (middleBarPositions.length === seperation - 1) {
+            dikmeX =
+              x + (positions[i - 1] / width) * finalWidth - dikmeWidth / 2;
+          } else {
+            dikmeX = x + dikmeWidth + sectionWidth * i - dikmeWidth / 2;
+          }
+          middleBarArr.push({ x: dikmeX, width: dikmeWidth, index: i });
+        }
+        middleBarArr.push({
+          x: x + finalWidth - dikmeWidth,
+          width: dikmeWidth,
+          index: seperation,
+        });
+      } else {
+        // Tek bölme: sol ve sağ dikme
+        middleBarArr.push({ x: x, width: dikmeWidth, index: 0 });
+        middleBarArr.push({
+          x: x + finalWidth - dikmeWidth,
+          width: dikmeWidth,
+          index: 1,
+        });
+      }
+      middleBarArrRef.current = middleBarArr;
 
-        // Daha belirgin renk geçişleri
-        const baseColor =
-          lamelColor || (theme === "dark" ? "#94a3b8" : "#e2e8f0");
-        const lightColor = lamelColor
-          ? lightenColor(baseColor, 0.3)
-          : theme === "dark"
-          ? "#cbd5e1"
-          : "#f8fafc";
-        const darkColor = lamelColor
-          ? darkenColor(baseColor, 0.3)
-          : theme === "dark"
-          ? "#64748b"
-          : "#94a3b8";
+      // --- Lamellerin genişliği kutudan biraz az olacak (dikmelerin arasında kalacak) ---
+      // Her bölmeyi ayrı çiz
+      if (seperation > 1 && sectionLamels.length === seperation) {
+        for (let sectionIdx = 0; sectionIdx < seperation; sectionIdx++) {
+          const section = sectionLamels[sectionIdx];
+          // Bölme yüksekliği (mm cinsinden, state'ten)
+          const sectionHeightMm = sectionHeights[sectionIdx] ?? height;
+          // Canvas'ta bölme yüksekliği
+          const totalSectionHeightPx = section.bottom - section.top;
+          // mm -> px oranı
+          const mmToPx = totalSectionHeightPx / height;
+          // Bu bölmenin lamel alanı yüksekliği (mm cinsinden)
+          const sectionHeightPx = sectionHeightMm * mmToPx;
+          // Lamel sayısı (her bölme için eşit dağıtılmış, kalan lameller son bölmeye eklenir)
+          let lamelsInSection = Math.floor(lamelCount / seperation);
+          if (sectionIdx === seperation - 1) {
+            lamelsInSection += lamelCount % seperation;
+          }
+          // Her bölme için lamel yüksekliği
+          let lamelHeightPx = sectionHeightPx / Math.max(1, lamelsInSection);
+          if (lamelHeightPx < MIN_LAMEL_HEIGHT) {
+            lamelsInSection = Math.max(
+              1,
+              Math.floor(sectionHeightPx / MIN_LAMEL_HEIGHT)
+            );
+            lamelHeightPx = sectionHeightPx / lamelsInSection;
+          }
+          const lamelX = section.left;
+          const lamelWidth = section.right - section.left;
+          for (let i = 0; i < lamelsInSection; i++) {
+            const lamelY = section.top + i * lamelHeightPx;
+            const lamelRealHeight = lamelHeightPx * 0.85;
+            const lamelSpacing = lamelHeightPx * 0.15;
+            const adjustedLamelY = lamelY + lamelSpacing / 2;
+            // Guard: skip if any coordinate is not finite or width/height is invalid
+            if (
+              !Number.isFinite(lamelX) ||
+              !Number.isFinite(lamelWidth) ||
+              !Number.isFinite(adjustedLamelY) ||
+              !Number.isFinite(lamelRealHeight) ||
+              lamelWidth <= 0 ||
+              lamelRealHeight <= 0
+            ) {
+              continue;
+            }
 
-        mainGradient.addColorStop(0, darkColor);
-        mainGradient.addColorStop(0.2, lightColor);
-        mainGradient.addColorStop(0.8, lightColor);
-        mainGradient.addColorStop(1, darkColor);
+            // ...existing code for drawing lamel...
+            const mainGradient = ctx.createLinearGradient(
+              lamelX,
+              adjustedLamelY,
+              lamelX,
+              adjustedLamelY + lamelRealHeight
+            );
+            const baseColor =
+              lamelColor || (theme === "dark" ? "#94a3b8" : "#e2e8f0");
+            const lightColor = lamelColor
+              ? lightenColor(baseColor, 0.3)
+              : theme === "dark"
+              ? "#cbd5e1"
+              : "#f8fafc";
+            const darkColor = lamelColor
+              ? darkenColor(baseColor, 0.3)
+              : theme === "dark"
+              ? "#64748b"
+              : "#94a3b8";
+            mainGradient.addColorStop(0, darkColor);
+            mainGradient.addColorStop(0.2, lightColor);
+            mainGradient.addColorStop(0.8, lightColor);
+            mainGradient.addColorStop(1, darkColor);
+            ctx.fillStyle = mainGradient;
+            ctx.fillRect(lamelX, adjustedLamelY, lamelWidth, lamelRealHeight);
 
-        // Ana lamel gövdesi
-        ctx.fillStyle = mainGradient;
-        ctx.fillRect(lamelX, adjustedLamelY, lamelWidth, lamelRealHeight);
+            // ...existing code for highlight, shadow, borders, side gradients...
+            const highlightOpacity = theme === "dark" ? 0.4 : 0.6;
+            const highlightGradient = ctx.createLinearGradient(
+              lamelX,
+              adjustedLamelY,
+              lamelX,
+              adjustedLamelY + lamelRealHeight * 0.4
+            );
+            highlightGradient.addColorStop(
+              0,
+              `rgba(255, 255, 255, ${highlightOpacity})`
+            );
+            highlightGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+            ctx.fillStyle = highlightGradient;
+            ctx.fillRect(
+              lamelX,
+              adjustedLamelY,
+              lamelWidth,
+              lamelRealHeight * 0.4
+            );
 
-        // Üst highlight (daha belirgin)
-        const highlightOpacity = theme === "dark" ? 0.4 : 0.6;
-        const highlightGradient = ctx.createLinearGradient(
-          lamelX,
-          adjustedLamelY,
-          lamelX,
-          adjustedLamelY + lamelRealHeight * 0.4
-        );
-        highlightGradient.addColorStop(
-          0,
-          `rgba(255, 255, 255, ${highlightOpacity})`
-        );
-        highlightGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
-        ctx.fillStyle = highlightGradient;
-        ctx.fillRect(lamelX, adjustedLamelY, lamelWidth, lamelRealHeight * 0.4);
+            const shadowOpacity = theme === "dark" ? 0.5 : 0.3;
+            const shadowGradient = ctx.createLinearGradient(
+              lamelX,
+              adjustedLamelY + lamelRealHeight * 0.6,
+              lamelX,
+              adjustedLamelY + lamelRealHeight
+            );
+            shadowGradient.addColorStop(0, "rgba(0, 0, 0, 0)");
+            shadowGradient.addColorStop(1, `rgba(0, 0, 0, ${shadowOpacity})`);
+            ctx.fillStyle = shadowGradient;
+            ctx.fillRect(
+              lamelX,
+              adjustedLamelY + lamelRealHeight * 0.6,
+              lamelWidth,
+              lamelRealHeight * 0.4
+            );
 
-        // Alt gölge (daha belirgin)
-        const shadowOpacity = theme === "dark" ? 0.5 : 0.3;
-        const shadowGradient = ctx.createLinearGradient(
-          lamelX,
-          adjustedLamelY + lamelRealHeight * 0.6,
-          lamelX,
-          adjustedLamelY + lamelRealHeight
-        );
-        shadowGradient.addColorStop(0, "rgba(0, 0, 0, 0)");
-        shadowGradient.addColorStop(1, `rgba(0, 0, 0, ${shadowOpacity})`);
-        ctx.fillStyle = shadowGradient;
-        ctx.fillRect(
-          lamelX,
-          adjustedLamelY + lamelRealHeight * 0.6,
-          lamelWidth,
-          lamelRealHeight * 0.4
-        );
+            ctx.strokeStyle = darkColor;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(lamelX, adjustedLamelY);
+            ctx.lineTo(lamelX + lamelWidth, adjustedLamelY);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(lamelX, adjustedLamelY + lamelRealHeight);
+            ctx.lineTo(lamelX + lamelWidth, adjustedLamelY + lamelRealHeight);
+            ctx.stroke();
 
-        // Lamel kenarlıkları (üst ve alt)
-        ctx.strokeStyle = darkColor;
-        ctx.lineWidth = 1;
+            const sideGradientLeft = ctx.createLinearGradient(
+              lamelX,
+              adjustedLamelY,
+              lamelX + 8,
+              adjustedLamelY
+            );
+            sideGradientLeft.addColorStop(
+              0,
+              `rgba(0, 0, 0, ${shadowOpacity * 0.5})`
+            );
+            sideGradientLeft.addColorStop(1, "rgba(0, 0, 0, 0)");
+            ctx.fillStyle = sideGradientLeft;
+            ctx.fillRect(lamelX, adjustedLamelY, 8, lamelRealHeight);
 
-        // Üst kenarlık
-        ctx.beginPath();
-        ctx.moveTo(lamelX, adjustedLamelY);
-        ctx.lineTo(lamelX + lamelWidth, adjustedLamelY);
-        ctx.stroke();
+            const sideGradientRight = ctx.createLinearGradient(
+              lamelX + lamelWidth - 8,
+              adjustedLamelY,
+              lamelX + lamelWidth,
+              adjustedLamelY
+            );
+            sideGradientRight.addColorStop(0, "rgba(0, 0, 0, 0)");
+            sideGradientRight.addColorStop(
+              1,
+              `rgba(0, 0, 0, ${shadowOpacity * 0.5})`
+            );
+            ctx.fillStyle = sideGradientRight;
+            ctx.fillRect(
+              lamelX + lamelWidth - 8,
+              adjustedLamelY,
+              8,
+              lamelRealHeight
+            );
+          }
+        }
+      } else {
+        // Tek bölme (eski mantık)
+        const lamelX = x + dikmeWidth;
+        const lamelWidth = finalWidth - dikmeWidth * 2;
+        for (let i = 0; i < numberOfLamels; i++) {
+          const lamelY = y + motorHeight + i * adjustedLamelHeight;
+          const lamelRealHeight = adjustedLamelHeight * 0.85;
+          const lamelSpacing = adjustedLamelHeight * 0.15;
+          const adjustedLamelY = lamelY + lamelSpacing / 2;
+          // Guard: skip if any coordinate is not finite or width/height is invalid
+          if (
+            !Number.isFinite(lamelX) ||
+            !Number.isFinite(lamelWidth) ||
+            !Number.isFinite(adjustedLamelY) ||
+            !Number.isFinite(lamelRealHeight) ||
+            lamelWidth <= 0 ||
+            lamelRealHeight <= 0
+          ) {
+            continue;
+          }
+          // ...existing code for drawing lamel...
+          const mainGradient = ctx.createLinearGradient(
+            lamelX,
+            adjustedLamelY,
+            lamelX,
+            adjustedLamelY + lamelRealHeight
+          );
+          const baseColor =
+            lamelColor || (theme === "dark" ? "#94a3b8" : "#e2e8f0");
+          const lightColor = lamelColor
+            ? lightenColor(baseColor, 0.3)
+            : theme === "dark"
+            ? "#cbd5e1"
+            : "#f8fafc";
+          const darkColor = lamelColor
+            ? darkenColor(baseColor, 0.3)
+            : theme === "dark"
+            ? "#64748b"
+            : "#94a3b8";
+          mainGradient.addColorStop(0, darkColor);
+          mainGradient.addColorStop(0.2, lightColor);
+          mainGradient.addColorStop(0.8, lightColor);
+          mainGradient.addColorStop(1, darkColor);
+          ctx.fillStyle = mainGradient;
+          ctx.fillRect(lamelX, adjustedLamelY, lamelWidth, lamelRealHeight);
 
-        // Alt kenarlık
-        ctx.beginPath();
-        ctx.moveTo(lamelX, adjustedLamelY + lamelRealHeight);
-        ctx.lineTo(lamelX + lamelWidth, adjustedLamelY + lamelRealHeight);
-        ctx.stroke();
+          // ...existing code for highlight, shadow, borders, side gradients...
+          const highlightOpacity = theme === "dark" ? 0.4 : 0.6;
+          const highlightGradient = ctx.createLinearGradient(
+            lamelX,
+            adjustedLamelY,
+            lamelX,
+            adjustedLamelY + lamelRealHeight * 0.4
+          );
+          highlightGradient.addColorStop(
+            0,
+            `rgba(255, 255, 255, ${highlightOpacity})`
+          );
+          highlightGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+          ctx.fillStyle = highlightGradient;
+          ctx.fillRect(
+            lamelX,
+            adjustedLamelY,
+            lamelWidth,
+            lamelRealHeight * 0.4
+          );
 
-        // Yan gölgeler (3D efekti için)
-        const sideGradientLeft = ctx.createLinearGradient(
-          lamelX,
-          adjustedLamelY,
-          lamelX + 8,
-          adjustedLamelY
-        );
-        sideGradientLeft.addColorStop(
-          0,
-          `rgba(0, 0, 0, ${shadowOpacity * 0.5})`
-        );
-        sideGradientLeft.addColorStop(1, "rgba(0, 0, 0, 0)");
-        ctx.fillStyle = sideGradientLeft;
-        ctx.fillRect(lamelX, adjustedLamelY, 8, lamelRealHeight);
+          const shadowOpacity = theme === "dark" ? 0.5 : 0.3;
+          const shadowGradient = ctx.createLinearGradient(
+            lamelX,
+            adjustedLamelY + lamelRealHeight * 0.6,
+            lamelX,
+            adjustedLamelY + lamelRealHeight
+          );
+          shadowGradient.addColorStop(0, "rgba(0, 0, 0, 0)");
+          shadowGradient.addColorStop(1, `rgba(0, 0, 0, ${shadowOpacity})`);
+          ctx.fillStyle = shadowGradient;
+          ctx.fillRect(
+            lamelX,
+            adjustedLamelY + lamelRealHeight * 0.6,
+            lamelWidth,
+            lamelRealHeight * 0.4
+          );
 
-        const sideGradientRight = ctx.createLinearGradient(
-          lamelX + lamelWidth - 8,
-          adjustedLamelY,
-          lamelX + lamelWidth,
-          adjustedLamelY
-        );
-        sideGradientRight.addColorStop(0, "rgba(0, 0, 0, 0)");
-        sideGradientRight.addColorStop(
-          1,
-          `rgba(0, 0, 0, ${shadowOpacity * 0.5})`
-        );
-        ctx.fillStyle = sideGradientRight;
-        ctx.fillRect(
-          lamelX + lamelWidth - 8,
-          adjustedLamelY,
-          8,
-          lamelRealHeight
-        );
+          ctx.strokeStyle = darkColor;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(lamelX, adjustedLamelY);
+          ctx.lineTo(lamelX + lamelWidth, adjustedLamelY);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(lamelX, adjustedLamelY + lamelRealHeight);
+          ctx.lineTo(lamelX + lamelWidth, adjustedLamelY + lamelRealHeight);
+          ctx.stroke();
+
+          const sideGradientLeft = ctx.createLinearGradient(
+            lamelX,
+            adjustedLamelY,
+            lamelX + 8,
+            adjustedLamelY
+          );
+          sideGradientLeft.addColorStop(
+            0,
+            `rgba(0, 0, 0, ${shadowOpacity * 0.5})`
+          );
+          sideGradientLeft.addColorStop(1, "rgba(0, 0, 0, 0)");
+          ctx.fillStyle = sideGradientLeft;
+          ctx.fillRect(lamelX, adjustedLamelY, 8, lamelRealHeight);
+
+          const sideGradientRight = ctx.createLinearGradient(
+            lamelX + lamelWidth - 8,
+            adjustedLamelY,
+            lamelX + lamelWidth,
+            adjustedLamelY
+          );
+          sideGradientRight.addColorStop(0, "rgba(0, 0, 0, 0)");
+          sideGradientRight.addColorStop(
+            1,
+            `rgba(0, 0, 0, ${shadowOpacity * 0.5})`
+          );
+          ctx.fillStyle = sideGradientRight;
+          ctx.fillRect(
+            lamelX + lamelWidth - 8,
+            adjustedLamelY,
+            8,
+            lamelRealHeight
+          );
+        }
       }
 
-      // DİKMELERİ lamellerin üstünde çiz
-      ctx.fillStyle = dikmeColor || colors.frameBorder;
-      // Sol dikme
-      ctx.fillRect(
-        x,
-        y + motorHeight,
-        dikmeWidth,
-        finalHeight + adjustedLamelHeight - motorHeight
-      );
-      // Sağ dikme
-      ctx.fillRect(
-        x + finalWidth - dikmeWidth,
-        y + motorHeight,
-        dikmeWidth,
-        finalHeight + adjustedLamelHeight - motorHeight
-      );
+      // DİKMELERİ lamellerin üstünde çiz (sadece bir kez, yukarıda yapıldı)
 
       // Renkleri açma/koyulaştırma yardımcı fonksiyonları
       function lightenColor(color: string, amount: number): string {
@@ -397,57 +620,119 @@ export function ShutterPreview({
         }
         return color;
       }
-      // Alt parça da aynı şekilde dikmelerin arasında olmalı
 
+      // Alt parça (bottom part) çizimi - lamellerin üstünde olacak şekilde
+      ctx.save();
+      ctx.globalCompositeOperation = "source-over";
       ctx.fillStyle = subPartColor || colors.lamelDark;
-      ctx.fillRect(
-        lamelX,
-        y + motorHeight + numberOfLamels * adjustedLamelHeight,
-        lamelWidth,
-        adjustedLamelHeight
-      );
-
-      // DİKKAT: Orta dikmeleri alt parçadan sonra çiz
-      ctx.fillStyle = dikmeColor || colors.frameBorder;
-      const dikmeHeight = finalHeight + adjustedLamelHeight - motorHeight;
-      // Orta dikmelerin koordinatlarını topla
-      const middleBarArr: { x: number; width: number; index: number }[] = [];
-      if (seperation > 1) {
-        const totalSections = seperation;
-        const sectionWidth = (finalWidth - dikmeWidth * 2) / totalSections;
-        // Eğer pozisyonlar state'te varsa onları kullan, yoksa eşit aralıkla çiz
-        const positions: number[] =
-          middleBarPositions.length === seperation - 1
-            ? middleBarPositions
-            : Array.from({ length: seperation - 1 }, (_, i) =>
-                Math.round((width / seperation) * (i + 1))
-              );
-        // Her pozisyonu mm'den canvas x koordinatına çevir
-        for (let i = 1; i < seperation; i++) {
-          let dikmeX;
-          if (middleBarPositions.length === seperation - 1) {
-            // mm -> canvas koordinatı
-            dikmeX =
-              x + (positions[i - 1] / width) * finalWidth - dikmeWidth / 2;
-          } else {
-            dikmeX = x + dikmeWidth + sectionWidth * i - dikmeWidth / 2;
+      if (seperation > 1 && sectionLamels.length === seperation) {
+        // Her bölmenin altına kendi alt parçasını çiz
+        for (let sectionIdx = 0; sectionIdx < seperation; sectionIdx++) {
+          const section = sectionLamels[sectionIdx];
+          const lamelX = section.left;
+          const lamelWidth = section.right - section.left;
+          // Bölme yüksekliği (mm cinsinden, state'ten)
+          const sectionHeightMm = sectionHeights[sectionIdx] ?? height;
+          const totalSectionHeightPx = section.bottom - section.top;
+          const mmToPx = totalSectionHeightPx / height;
+          const sectionHeightPx = sectionHeightMm * mmToPx;
+          // Alt parça yüksekliği (mm'ye göre ölçekli)
+          let altParcaHeight = 18;
+          if (sectionHeights[sectionIdx]) {
+            altParcaHeight = Math.max(14, Math.round(18 * mmToPx));
           }
-          ctx.fillRect(dikmeX, y + motorHeight, dikmeWidth, dikmeHeight);
-          middleBarArr.push({ x: dikmeX, width: dikmeWidth, index: i });
+          // Alt parça sectionHeightPx'in en altına çizilecek
+          const altParcaY = section.top + sectionHeightPx - altParcaHeight;
+          ctx.fillRect(lamelX, altParcaY, lamelWidth, altParcaHeight);
+        }
+      } else {
+        // Tek bölme için alt parça
+        const lamelX = x + dikmeWidth;
+        const lamelWidth = finalWidth - dikmeWidth * 2;
+        let altParcaHeight = 18;
+        if (height) {
+          const totalSectionHeightPx = finalHeight - motorHeight;
+          const mmToPx = totalSectionHeightPx / height;
+          altParcaHeight = Math.max(14, Math.round(18 * mmToPx));
+        }
+        const altParcaY =
+          y + motorHeight + (finalHeight - motorHeight) - altParcaHeight;
+        ctx.fillRect(lamelX, altParcaY, lamelWidth, altParcaHeight);
+      }
+      ctx.restore();
+
+      // DİKMELERİ lamellerin ve alt parçanın üstünde çiz (her zaman en son, üstte olacak şekilde)
+      ctx.save();
+      ctx.globalCompositeOperation = "source-over";
+      ctx.fillStyle = dikmeColor || colors.frame;
+      // For each dikme, dikme yüksekliği tam olarak sectionHeightPx (alt parça dahil, ama ekstra eklenmeden)
+      if (seperation > 1 && sectionLamels.length === seperation) {
+        for (let i = 0; i < middleBarArrRef.current.length; i++) {
+          const bar = middleBarArrRef.current[i];
+          const dikmeTop = y + motorHeight;
+          let dikmeHeight = 0;
+          if (i === 0) {
+            // Leftmost dikme: ilk bölmenin yüksekliği
+            const section = sectionLamels[0];
+            const sectionHeightMm = sectionHeights[0] ?? height;
+            const totalSectionHeightPx = section.bottom - section.top;
+            const mmToPx = totalSectionHeightPx / height;
+            dikmeHeight = sectionHeightMm * mmToPx;
+          } else if (i === middleBarArrRef.current.length - 1) {
+            // Rightmost dikme: son bölmenin yüksekliği
+            const section = sectionLamels[sectionLamels.length - 1];
+            const sectionHeightMm =
+              sectionHeights[sectionLamels.length - 1] ?? height;
+            const totalSectionHeightPx = section.bottom - section.top;
+            const mmToPx = totalSectionHeightPx / height;
+            dikmeHeight = sectionHeightMm * mmToPx;
+          } else {
+            // Orta dikme: sol ve sağındaki bölmelerin max yüksekliği
+            const leftSection = sectionLamels[i - 1];
+            const rightSection = sectionLamels[i];
+            const leftHeightMm = sectionHeights[leftSection.index] ?? height;
+            const rightHeightMm = sectionHeights[rightSection.index] ?? height;
+            const leftTotalPx = leftSection.bottom - leftSection.top;
+            const rightTotalPx = rightSection.bottom - rightSection.top;
+            const leftMmToPx = leftTotalPx / height;
+            const rightMmToPx = rightTotalPx / height;
+            const leftPx = leftHeightMm * leftMmToPx;
+            const rightPx = rightHeightMm * rightMmToPx;
+            dikmeHeight = Math.max(leftPx, rightPx);
+          }
+          ctx.fillRect(bar.x, dikmeTop, bar.width, dikmeHeight);
+        }
+      } else {
+        // Tek bölme: sol ve sağ dikme tam yükseklik (alt parça dahil, ekstra eklenmeden)
+        const dikmeHeight = finalHeight - motorHeight;
+        for (const bar of middleBarArrRef.current) {
+          ctx.fillRect(bar.x, y + motorHeight, bar.width, dikmeHeight);
         }
       }
-      // Ref'e kaydet
-      middleBarArrRef.current = middleBarArr;
+      ctx.restore();
 
       // Bölme genişliklerini panjurun altına bracket ve metinle göster
       if (seperation > 1) {
+        // En uzun section'ın alt kenarını (alt parça dahil) bul
+        let maxSectionBottom = 0;
+        for (let sectionIdx = 0; sectionIdx < seperation; sectionIdx++) {
+          const section = sectionLamels[sectionIdx];
+          const sectionHeightMm = sectionHeights[sectionIdx] ?? height;
+          const totalSectionHeightPx = section.bottom - section.top;
+          const mmToPx = totalSectionHeightPx / height;
+          const sectionHeightPx = sectionHeightMm * mmToPx;
+          // altParcaHeight is not needed here
+          const sectionBottom = section.top + sectionHeightPx;
+          if (sectionBottom > maxSectionBottom) {
+            maxSectionBottom = sectionBottom;
+          }
+        }
         const totalSections = seperation;
-        const bracketYOffset = 12;
-        const bracketYNew =
-          y + finalHeight + adjustedLamelHeight + bracketYOffset;
+        const bracketYOffset = 8; // az bir boşluk bırakmak için
+        const bracketYNew = maxSectionBottom + bracketYOffset;
         ctx.save();
         ctx.strokeStyle = "#64748b";
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 1;
         ctx.font = "13px 'Noto Sans', 'Arial', sans-serif";
         ctx.fillStyle = colors.text;
         ctx.textAlign = "center";
@@ -476,7 +761,7 @@ export function ShutterPreview({
           ctx.moveTo(right, bracketYNew - 7);
           ctx.lineTo(right, bracketYNew + 7);
           ctx.stroke();
-          // Metin (bölme genişliği): iki dikme arası mm
+          // Metin (bölme genişliği): iki dikme arası mm (sadece dikme konumundan hesaplanır)
           const bolmeGenislik = Math.round(positions[i + 1] - positions[i]);
           // Ölçü değeri üstte, "mm" altta olacak şekilde iki satır yaz
           ctx.save();
@@ -504,7 +789,7 @@ export function ShutterPreview({
       // --- Üst genişlik için bracket çiz (yatay) ---
       ctx.save();
       ctx.strokeStyle = "#64748b"; // koyu gri bracket
-      ctx.lineWidth = 3;
+      ctx.lineWidth = 1;
       // Yatay bracket fonksiyonu
       function drawHorizontalBracket(
         ctx: CanvasRenderingContext2D,
@@ -532,38 +817,58 @@ export function ShutterPreview({
         ctx,
         x,
         x + finalWidth,
-        y - 17, // bracket pozisyonunu da ayarla
+        y - 12, // bracket pozisyonunu biraz yukarı al
         18
       );
       ctx.restore();
 
-      // --- Sağda toplam yükseklik için bracket ve metin (alt parça dahil, çizime yakın) ---
-      const rightBracketOffset = 4; // bracket ve yazı için çizime yakınlık (daha küçük değer daha yakın)
+      // --- Sağda ve solda toplam yükseklik için bracket ve metin (en uzun section'a kadar) ---
+      // En uzun section'ın alt kenarını (alt parça dahil) bul
+      let maxSectionBottom = 0;
+      for (let sectionIdx = 0; sectionIdx < seperation; sectionIdx++) {
+        const section = sectionLamels[sectionIdx];
+        const sectionHeightMm = sectionHeights[sectionIdx] ?? height;
+        const totalSectionHeightPx = section.bottom - section.top;
+        const mmToPx = totalSectionHeightPx / height;
+        const sectionHeightPx = sectionHeightMm * mmToPx;
+        const sectionBottom = section.top + sectionHeightPx;
+        if (sectionBottom > maxSectionBottom) {
+          maxSectionBottom = sectionBottom;
+        }
+      }
+      const rightBracketOffset = 4;
+      // Sağ bracket (dikey), tüm panjurun yüksekliği kadar (kutu dahil)
       ctx.save();
       ctx.strokeStyle = "#64748b";
-      ctx.lineWidth = 3;
-      // Sağ bracket (dikey), alt parça dahil
+      ctx.lineWidth = 1;
       drawVerticalBracket(
         ctx,
-        x + finalWidth + rightBracketOffset, // sağdan daha yakın
+        x + finalWidth + rightBracketOffset,
         y,
-        y + finalHeight + adjustedLamelHeight,
+        y + finalHeight,
         18
       );
       ctx.restore();
 
-      // Toplam yükseklik metni (sağda, ortalanmış, dikey ve ters, çizime yakın, iki satır)
+      // Soldaki 2. bracket: en uzun bölme yüksekliği - motor yüksekliği kadar olmalı
+      ctx.save();
+      ctx.strokeStyle = "#64748b";
+      ctx.lineWidth = 1;
+      drawVerticalBracket(ctx, x - 18, y + motorHeight, maxSectionBottom, 18);
+      ctx.restore();
+
+      // Toplam yükseklik metni (sağda, ortalanmış, dikey ve ters, en uzun section'a ortalı, iki satır)
       ctx.save();
       ctx.font = "14px 'Noto Sans', 'Arial', sans-serif";
       ctx.fillStyle = colors.text;
       ctx.textAlign = "center";
       ctx.translate(
         x + finalWidth + rightBracketOffset + 28,
-        y + (finalHeight + adjustedLamelHeight) / 2
+        y + motorHeight + (maxSectionBottom - (y + motorHeight)) / 2
       );
-      ctx.rotate(Math.PI / 2); // ters çevir
-      ctx.fillText(`${height}`, 0, -6); // Üst satır (sayı)
-      ctx.fillText("mm", 0, 6); // Alt satır (birim)
+      ctx.rotate(Math.PI / 2);
+      ctx.fillText(`${height}`, 0, -6);
+      ctx.fillText("mm", 0, 6);
       ctx.restore();
 
       // Kutu yüksekliği ve kalan yükseklik için ayrı ölçü yazısı ve çizgileri
@@ -571,7 +876,7 @@ export function ShutterPreview({
         // --- Kutu yüksekliği için bracket çiz ---
         ctx.save();
         ctx.strokeStyle = "#64748b"; // yatay bracket ile aynı renk
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 1;
         drawVerticalBracket(ctx, x - 18, y, y + motorHeight, 18);
         ctx.restore();
 
@@ -592,12 +897,13 @@ export function ShutterPreview({
         if (kalanYukseklik > 0) {
           ctx.save();
           ctx.strokeStyle = "#64748b"; // yatay bracket ile aynı renk
-          ctx.lineWidth = 3;
+          ctx.lineWidth = 1;
+          // Kalan yükseklik bracket'ı panjurun alt kenarına hizalı
           drawVerticalBracket(
             ctx,
             x - 18,
             y + motorHeight,
-            y + motorHeight + remainingHeight + adjustedLamelHeight,
+            y + finalHeight,
             18
           );
           ctx.restore();
@@ -607,7 +913,10 @@ export function ShutterPreview({
           ctx.font = "12px 'Noto Sans', 'Arial', sans-serif";
           ctx.fillStyle = colors.text;
           ctx.textAlign = "center";
-          ctx.translate(x - 35, y + motorHeight + remainingHeight / 2);
+          ctx.translate(
+            x - 35,
+            y + motorHeight + (finalHeight - motorHeight) / 2
+          );
           ctx.rotate(-Math.PI / 2);
           // İki satır halinde yaz
           ctx.fillText(`${kalanYukseklik}`, 0, -6); // Üst satır (sayı)
@@ -653,7 +962,8 @@ export function ShutterPreview({
       lamelCount,
       seperation,
       middleBarPositions,
-    ] // seperation ve middleBarPositions eklendi
+      sectionHeights,
+    ]
   );
 
   const updateCanvasSize = useCallback(() => {
@@ -679,32 +989,50 @@ export function ShutterPreview({
     const canvas = canvasRef.current;
     if (!canvas) return;
     const handleClick = (e: MouseEvent) => {
-      // changeMiddlebarPostion false ise input açılmasın
-      if (!changeMiddlebarPostion) return;
       const rect = canvas.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
       const clickY = e.clientY - rect.top;
-      // Orta dikmelerin alanında mı?
-      for (const bar of middleBarArrRef.current) {
-        // Yükseklik alanı: motorHeight'dan başlayıp dikmeHeight kadar
-        // Yatay alan: bar.x ile bar.x + bar.width arası
-        // Yükseklik için yaklaşık alanı container'dan al
-        const container = containerRef.current;
-        if (!container) continue;
-        const containerHeight = canvas.height;
-        // motorHeight ve dikmeHeight'ı tahmini al
-        // Orta dikmelerin alanı: üstten 60px, alttan 60px
-        const dikmeTop = 60;
-        const dikmeBottom = containerHeight - 60;
-        if (
-          clickX >= bar.x &&
-          clickX <= bar.x + bar.width &&
-          clickY >= dikmeTop &&
-          clickY <= dikmeBottom
-        ) {
-          setSelectedBar({ x: bar.x, index: bar.index, value: null });
-          setInputValue("");
-          break;
+      // Orta dikmelerin alanında mı? (sadece orta dikmeler: index > 0 ve index < last)
+      if (changeMiddlebarPostion) {
+        const bars = middleBarArrRef.current;
+        for (const bar of bars) {
+          // Skip first and last dikme (index 0 and last)
+          if (bar.index === 0 || bar.index === bars.length - 1) continue;
+          const container = containerRef.current;
+          if (!container) continue;
+          const containerHeight = canvas.height;
+          const dikmeTop = 60;
+          const dikmeBottom = containerHeight - 60;
+          if (
+            clickX >= bar.x &&
+            clickX <= bar.x + bar.width &&
+            clickY >= dikmeTop &&
+            clickY <= dikmeBottom
+          ) {
+            setSelectedBar({ x: bar.x, index: bar.index, value: null });
+            setInputValue("");
+            return;
+          }
+        }
+      }
+      // Bölme lamel alanına tıklama (yükseklik inputu)
+      if (sectionLamelArrRef.current) {
+        for (const section of sectionLamelArrRef.current) {
+          if (
+            clickX >= section.left &&
+            clickX <= section.right &&
+            clickY >= section.top &&
+            clickY <= section.bottom
+          ) {
+            setSelectedSection({
+              left: section.left,
+              right: section.right,
+              index: section.index,
+              value: sectionHeights[section.index] ?? null,
+            });
+            setInputValue(sectionHeights[section.index]?.toString() ?? "");
+            return;
+          }
         }
       }
     };
@@ -712,7 +1040,25 @@ export function ShutterPreview({
     return () => {
       canvas.removeEventListener("click", handleClick);
     };
-  }, [changeMiddlebarPostion]);
+  }, [changeMiddlebarPostion, sectionHeights]);
+  // Bölme yüksekliği input submit
+  const handleSectionHeightSubmit = (
+    e: React.FormEvent | React.KeyboardEvent | React.MouseEvent
+  ) => {
+    if (e) e.preventDefault?.();
+    if (!selectedSection) return;
+    let val = parseInt(inputValue);
+    if (!isNaN(val) && val > 0) {
+      // Eğer girilen yükseklik genel yüksekse, genel yüksekliğe eşitle
+      if (val > height) {
+        val = height;
+      }
+      const arr = [...sectionHeights];
+      arr[selectedSection.index] = val;
+      setSectionHeights(arr);
+      setSelectedSection(null);
+    }
+  };
 
   // Input submit işlemi
   const handleInputSubmit = (
@@ -748,18 +1094,25 @@ export function ShutterPreview({
 
   // Dışarı tıklama ile overlay'i kapatma
   useEffect(() => {
-    if (!selectedBar) return;
+    if (!selectedBar && !selectedSection) return;
     function handleClickOutside(e: MouseEvent) {
-      const overlay = document.getElementById("middle-bar-input-overlay");
-      if (overlay && !overlay.contains(e.target as Node)) {
+      const barOverlay = document.getElementById("middle-bar-input-overlay");
+      const sectionOverlay = document.getElementById(
+        "section-height-input-overlay"
+      );
+      if (
+        (barOverlay && !barOverlay.contains(e.target as Node)) ||
+        (sectionOverlay && !sectionOverlay.contains(e.target as Node))
+      ) {
         setSelectedBar(null);
+        setSelectedSection(null);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [selectedBar]);
+  }, [selectedBar, selectedSection]);
 
   return (
     <div
@@ -796,6 +1149,7 @@ export function ShutterPreview({
               type="number"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
+              placeholder="Genişlik (mm)"
               style={{ width: 100, fontSize: 15 }}
               autoFocus
               onKeyDown={(e) => {
@@ -816,6 +1170,61 @@ export function ShutterPreview({
                 cursor: "pointer",
               }}
               onClick={handleInputSubmit}
+            >
+              OK
+            </button>
+          </div>
+        </Card>
+      )}
+      {/* Bölme yüksekliği input overlay */}
+      {selectedSection && (
+        <Card
+          id="section-height-input-overlay"
+          style={{
+            position: "absolute",
+            left: (selectedSection.left + selectedSection.right) / 2,
+            top: "80%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 10,
+            background: "white",
+            border: "1px solid #64748b",
+            borderRadius: 6,
+            padding: 8,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            <Input
+              type="number"
+              value={inputValue}
+              placeholder="Yükseklik (mm)"
+              onChange={(e) => setInputValue(e.target.value)}
+              style={{ width: 100, fontSize: 15 }}
+              autoFocus
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSectionHeightSubmit(e);
+                }
+              }}
+            />
+            <button
+              type="button"
+              style={{
+                padding: "4px 12px",
+                fontSize: 14,
+                background: "#64748b",
+                color: "white",
+                border: "none",
+                borderRadius: 4,
+                cursor: "pointer",
+              }}
+              onClick={handleSectionHeightSubmit}
             >
               OK
             </button>

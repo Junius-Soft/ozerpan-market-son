@@ -112,6 +112,7 @@ export function DetailsStep({
                     values.boxType,
                     values.lamelTickness
                   ),
+                  changeMiddlebarPostion: true,
                 })}
               </div>
             </div>

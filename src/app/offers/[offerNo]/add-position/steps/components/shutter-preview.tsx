@@ -1,7 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
 
 interface ShutterPreviewProps {
   width: number;
@@ -16,6 +18,7 @@ interface ShutterPreviewProps {
   movementType: "manuel" | "motorlu";
   seperation: number; // Ayrım sayısı (örneğin, panjur için)
   lamelCount: number; // Lamel sayısı
+  changeMiddlebarPostion: boolean;
 }
 
 export function ShutterPreview({
@@ -31,11 +34,38 @@ export function ShutterPreview({
   movementType,
   seperation,
   lamelCount,
+  changeMiddlebarPostion,
 }: ShutterPreviewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
-  // Function to draw the shutter
+
+  // Orta dikmelerin x pozisyonlarını ve genişliklerini state olarak tut
+  const [middleBarPositions, setMiddleBarPositions] = useState<number[]>([]); // mm cinsinden
+
+  // seperation veya width değiştiğinde middleBarPositions'ı eşit aralıklı olarak güncelle
+  useEffect(() => {
+    if (seperation > 1) {
+      // Her width veya seperation değiştiğinde pozisyonları sıfırla
+      setMiddleBarPositions(
+        Array.from({ length: seperation - 1 }, (_, i) =>
+          Math.round((width / seperation) * (i + 1))
+        )
+      );
+    } else {
+      setMiddleBarPositions([]);
+    }
+  }, [seperation, width]);
+  const [selectedBar, setSelectedBar] = useState<{
+    x: number;
+    index: number;
+    value: number | null;
+  } | null>(null);
+  const [inputValue, setInputValue] = useState<string>("");
+  // Canvas koordinatlarını tutmak için ref
+  const middleBarArrRef = useRef<{ x: number; width: number; index: number }[]>(
+    []
+  );
   const drawShutter = useCallback(
     (
       canvas: HTMLCanvasElement,
@@ -380,40 +410,60 @@ export function ShutterPreview({
       // DİKKAT: Orta dikmeleri alt parçadan sonra çiz
       ctx.fillStyle = dikmeColor || colors.frameBorder;
       const dikmeHeight = finalHeight + adjustedLamelHeight - motorHeight;
+      // Orta dikmelerin koordinatlarını topla
+      const middleBarArr: { x: number; width: number; index: number }[] = [];
       if (seperation > 1) {
         const totalSections = seperation;
         const sectionWidth = (finalWidth - dikmeWidth * 2) / totalSections;
+        // Eğer pozisyonlar state'te varsa onları kullan, yoksa eşit aralıkla çiz
+        const positions: number[] =
+          middleBarPositions.length === seperation - 1
+            ? middleBarPositions
+            : Array.from({ length: seperation - 1 }, (_, i) =>
+                Math.round((width / seperation) * (i + 1))
+              );
+        // Her pozisyonu mm'den canvas x koordinatına çevir
         for (let i = 1; i < seperation; i++) {
-          const dikmeX = x + dikmeWidth + sectionWidth * i - dikmeWidth / 2;
+          let dikmeX;
+          if (middleBarPositions.length === seperation - 1) {
+            // mm -> canvas koordinatı
+            dikmeX =
+              x + (positions[i - 1] / width) * finalWidth - dikmeWidth / 2;
+          } else {
+            dikmeX = x + dikmeWidth + sectionWidth * i - dikmeWidth / 2;
+          }
           ctx.fillRect(dikmeX, y + motorHeight, dikmeWidth, dikmeHeight);
+          middleBarArr.push({ x: dikmeX, width: dikmeWidth, index: i });
         }
       }
+      // Ref'e kaydet
+      middleBarArrRef.current = middleBarArr;
 
       // Bölme genişliklerini panjurun altına bracket ve metinle göster
       if (seperation > 1) {
         const totalSections = seperation;
-        const sectionWidth = (finalWidth - dikmeWidth * 2) / totalSections;
-        // Bracket ve metinleri biraz daha aşağı al
-        const bracketYOffset = 12; // 6'dan 12'ye çıkarıldı, daha aşağı
+        const bracketYOffset = 12;
         const bracketYNew =
           y + finalHeight + adjustedLamelHeight + bracketYOffset;
         ctx.save();
         ctx.strokeStyle = "#64748b";
-        ctx.lineWidth = 3; // Diğer bracketlarla aynı kalınlık
+        ctx.lineWidth = 3;
         ctx.font = "13px 'Noto Sans', 'Arial', sans-serif";
         ctx.fillStyle = colors.text;
         ctx.textAlign = "center";
-        // Her bölmeyi kapsayacak şekilde ayrı ayrı bracket çiz
+
+        // mm pozisyonlarını topla: sol dikme, orta dikmeler, sağ dikme
+        // Canvas x koordinatlarını bul
+        const positions: number[] = [0, ...middleBarPositions, width];
+        // Canvas x koordinatları
+        const xPositions: number[] = positions.map(
+          (mm) => x + (mm / width) * finalWidth
+        );
+
         for (let i = 0; i < totalSections; i++) {
-          // İlk bracket: en soldaki dikmeyi de kapsasın
-          let left = x + dikmeWidth + sectionWidth * i;
-          let right = left + sectionWidth;
-          if (i === 0) {
-            left = x; // En soldaki bracket, sol dikmeyi de kapsasın
-          }
-          if (i === totalSections - 1) {
-            right = x + finalWidth; // En sağdaki bracket, sağ dikmeyi de kapsasın
-          }
+          // Her bracket: xPositions[i] ile xPositions[i+1] arası
+          const left = xPositions[i];
+          const right = xPositions[i + 1];
           // Bracket çiz (yatay)
           ctx.beginPath();
           // Sol dikey
@@ -426,13 +476,19 @@ export function ShutterPreview({
           ctx.moveTo(right, bracketYNew - 7);
           ctx.lineTo(right, bracketYNew + 7);
           ctx.stroke();
-          // Metin (bölme genişliği): toplam genişliği bölme sayısına bölerek hesapla
-          const bolmeGenislik = Math.round(width / totalSections);
+          // Metin (bölme genişliği): iki dikme arası mm
+          const bolmeGenislik = Math.round(positions[i + 1] - positions[i]);
+          // Ölçü değeri üstte, "mm" altta olacak şekilde iki satır yaz
+          ctx.save();
+          ctx.textAlign = "center";
+          ctx.font = "13px 'Noto Sans', 'Arial', sans-serif";
           ctx.fillText(
-            `${bolmeGenislik} mm`,
+            `${bolmeGenislik}`,
             (left + right) / 2,
-            bracketYNew + 16
+            bracketYNew + 13
           );
+          ctx.fillText("mm", (left + right) / 2, bracketYNew + 27);
+          ctx.restore();
         }
         ctx.restore();
       }
@@ -596,7 +652,8 @@ export function ShutterPreview({
       movementType,
       lamelCount,
       seperation,
-    ] // seperation eklendi
+      middleBarPositions,
+    ] // seperation ve middleBarPositions eklendi
   );
 
   const updateCanvasSize = useCallback(() => {
@@ -617,6 +674,64 @@ export function ShutterPreview({
     drawShutter(canvas, width, height, containerWidth, containerHeight);
   }, [width, height, drawShutter]);
 
+  // Canvas'a tıklama olayı ekle (doğrudan component gövdesinde)
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const handleClick = (e: MouseEvent) => {
+      // changeMiddlebarPostion false ise input açılmasın
+      if (!changeMiddlebarPostion) return;
+      const rect = canvas.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+      // Orta dikmelerin alanında mı?
+      for (const bar of middleBarArrRef.current) {
+        // Yükseklik alanı: motorHeight'dan başlayıp dikmeHeight kadar
+        // Yatay alan: bar.x ile bar.x + bar.width arası
+        // Yükseklik için yaklaşık alanı container'dan al
+        const container = containerRef.current;
+        if (!container) continue;
+        const containerHeight = canvas.height;
+        // motorHeight ve dikmeHeight'ı tahmini al
+        // Orta dikmelerin alanı: üstten 60px, alttan 60px
+        const dikmeTop = 60;
+        const dikmeBottom = containerHeight - 60;
+        if (
+          clickX >= bar.x &&
+          clickX <= bar.x + bar.width &&
+          clickY >= dikmeTop &&
+          clickY <= dikmeBottom
+        ) {
+          setSelectedBar({ x: bar.x, index: bar.index, value: null });
+          setInputValue("");
+          break;
+        }
+      }
+    };
+    canvas.addEventListener("click", handleClick);
+    return () => {
+      canvas.removeEventListener("click", handleClick);
+    };
+  }, [changeMiddlebarPostion]);
+
+  // Input submit işlemi
+  const handleInputSubmit = (
+    e: React.FormEvent | React.KeyboardEvent | React.MouseEvent
+  ) => {
+    if (e) e.preventDefault?.();
+    if (!selectedBar) return;
+    const val = parseInt(inputValue);
+    if (!isNaN(val) && val > 0 && val < width) {
+      // Pozisyonu güncelle
+      setMiddleBarPositions((prev) => {
+        const arr = [...prev];
+        arr[selectedBar.index - 1] = val;
+        return arr;
+      });
+      setSelectedBar(null);
+    }
+  };
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -631,14 +746,84 @@ export function ShutterPreview({
     return () => {
       resizeObserver.disconnect();
     };
-  }, [updateCanvasSize]);
+  }, [updateCanvasSize, middleBarPositions]);
+
+  // Dışarı tıklama ile overlay'i kapatma
+  useEffect(() => {
+    if (!selectedBar) return;
+    function handleClickOutside(e: MouseEvent) {
+      const overlay = document.getElementById("middle-bar-input-overlay");
+      if (overlay && !overlay.contains(e.target as Node)) {
+        setSelectedBar(null);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [selectedBar]);
 
   return (
     <div
       ref={containerRef}
       className={`w-full h-full grid place-items-center bg-background ${className}`}
+      style={{ position: "relative" }}
     >
       <canvas ref={canvasRef} className="w-full h-full" />
+      {/* Orta dikme input overlay */}
+      {selectedBar && (
+        <Card
+          id="middle-bar-input-overlay"
+          style={{
+            position: "absolute",
+            left: selectedBar.x,
+            top: "50%",
+            transform: "translateY(-50%)",
+            zIndex: 10,
+            background: "white",
+            border: "1px solid #64748b",
+            borderRadius: 6,
+            padding: 8,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            <Input
+              type="number"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              style={{ width: 100, fontSize: 15 }}
+              autoFocus
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleInputSubmit(e);
+                }
+              }}
+            />
+            <button
+              type="button"
+              style={{
+                padding: "4px 12px",
+                fontSize: 14,
+                background: "#64748b",
+                color: "white",
+                border: "none",
+                borderRadius: 4,
+                cursor: "pointer",
+              }}
+              onClick={handleInputSubmit}
+            >
+              OK
+            </button>
+          </div>
+        </Card>
+      )}
     </div>
   );
 }

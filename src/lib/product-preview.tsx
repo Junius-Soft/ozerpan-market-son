@@ -18,6 +18,7 @@ interface ProductPreviewProps {
   movementType: "manuel" | "motorlu";
   seperation: number; // Ayrım sayısı (örneğin, panjur için)
   lamelCount: number; // Lamel sayısı
+  changeMiddlebarPostion?: boolean;
 }
 
 export function getProductPreview({
@@ -35,6 +36,7 @@ export function getProductPreview({
   movementType,
   seperation,
   lamelCount,
+  changeMiddlebarPostion = false,
 }: ProductPreviewProps) {
   if (!product) return null;
 
@@ -55,6 +57,7 @@ export function getProductPreview({
       movementType={movementType}
       seperation={seperation}
       lamelCount={lamelCount}
+      changeMiddlebarPostion={changeMiddlebarPostion}
     />
   );
 }

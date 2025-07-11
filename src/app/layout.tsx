@@ -8,6 +8,7 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ClientFrappeProvider } from "@/components/frappe-provider";
+import { GlobalStateProvider } from "@/contexts/global-state";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,7 +46,9 @@ export default function RootLayout({
           >
             <ToastProvider>
               <Navbar />
-              <AuthGuard>{children}</AuthGuard>
+              <AuthGuard>
+                <GlobalStateProvider>{children}</GlobalStateProvider>{" "}
+              </AuthGuard>
               <ToastContainer />
             </ToastProvider>
           </ThemeProvider>

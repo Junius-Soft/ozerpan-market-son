@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useGlobalState } from "@/contexts/global-state";
 import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -40,13 +41,12 @@ export function ShutterPreview({
   const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
 
-  // Orta dikmelerin x pozisyonlarını ve genişliklerini state olarak tut
-  const [middleBarPositions, setMiddleBarPositions] = useState<number[]>([]); // mm cinsinden
+  // Global state'den middleBarPositions ve setter'ı al
+  const { middleBarPositions, setMiddleBarPositions } = useGlobalState();
 
   // seperation veya width değiştiğinde middleBarPositions'ı eşit aralıklı olarak güncelle
   useEffect(() => {
     if (seperation > 1) {
-      // Her width veya seperation değiştiğinde pozisyonları sıfırla
       setMiddleBarPositions(
         Array.from({ length: seperation - 1 }, (_, i) =>
           Math.round((width / seperation) * (i + 1))
@@ -55,7 +55,7 @@ export function ShutterPreview({
     } else {
       setMiddleBarPositions([]);
     }
-  }, [seperation, width]);
+  }, [seperation, width, setMiddleBarPositions]);
   const [selectedBar, setSelectedBar] = useState<{
     x: number;
     index: number;
@@ -723,11 +723,9 @@ export function ShutterPreview({
     const val = parseInt(inputValue);
     if (!isNaN(val) && val > 0 && val < width) {
       // Pozisyonu güncelle
-      setMiddleBarPositions((prev) => {
-        const arr = [...prev];
-        arr[selectedBar.index - 1] = val;
-        return arr;
-      });
+      const arr = [...middleBarPositions];
+      arr[selectedBar.index - 1] = val;
+      setMiddleBarPositions(arr);
       setSelectedBar(null);
     }
   };

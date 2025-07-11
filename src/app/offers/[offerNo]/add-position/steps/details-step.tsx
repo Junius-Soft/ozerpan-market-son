@@ -21,6 +21,7 @@ import {
   calculateSystemHeight,
   getBoxHeight,
 } from "@/utils/panjur";
+import { AlertTriangle } from "lucide-react";
 
 interface DetailsStepProps {
   formik: FormikProps<
@@ -89,6 +90,29 @@ export function DetailsStep({
           {activeTab.content.preview && (
             <div className="mt-6">
               <h4 className="text-md font-medium mb-3">Ürün Önizleme</h4>
+              {/* Uyarı: seperation > 1 ise göster */}
+              {typeId > 1 && (
+                <div className="flex w-full max-w-xl mx-auto gap-4 my-4">
+                  <div className="flex items-start gap-2 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-md border border-yellow-200 dark:border-yellow-700/50">
+                    <div className="flex items-start gap-2 p-3">
+                      <AlertTriangle className="h-5 w-5 text-yellow-600 dark:text-yellow-500 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-yellow-600 dark:text-yellow-400">
+                        Dikme konumunu ayarlamak için <b>dikmeye tıklayınız.</b>
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-md border border-yellow-200 dark:border-yellow-700/50">
+                    <div className="flex items-start gap-2 p-3">
+                      <AlertTriangle className="h-5 w-5 text-yellow-600 dark:text-yellow-500 flex-shrink-0 mt-0.5" />
+
+                      <p className="text-sm text-yellow-600 dark:text-yellow-400">
+                        Bölme yüksekliği ayarlamak için{" "}
+                        <b>bölmeye tıklayınız.</b>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
               <div className="p-2 w-full max-w-xl mx-auto border rounded-lg overflow-hidden shadow-sm">
                 {getProductPreview({
                   product: selectedProduct,

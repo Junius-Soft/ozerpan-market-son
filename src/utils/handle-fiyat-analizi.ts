@@ -1,26 +1,27 @@
 import { generateFiyatAnaliziPDFPozListesi } from "@/utils/fiyat-analizi-pdf-generator";
 import { Offer } from "@/documents/offers";
 import { PanjurSelections, PriceItem } from "@/types/panjur";
-import { Product } from "@/types/product";
+import { Product } from "@/documents/products";
+
+interface HandleFiyatAnaliziPDFParams {
+  product: Product;
+  formikValues: PanjurSelections & Record<string, string | number | boolean>;
+  productId?: string | null;
+  typeId?: string | null;
+  productName?: string | null;
+  optionId?: string | null;
+  offerNo: string;
+}
 
 export async function handleFiyatAnaliziPDF({
-  offerNo,
   product,
   formikValues,
   productId,
   typeId,
   productName,
   optionId,
-}: {
-  offerNo: string;
-  product: Product;
-  selectedPosition?: string | null;
-  formikValues: PanjurSelections & Record<string, string | number | boolean>;
-  productId?: string | null;
-  typeId?: string | null;
-  productName?: string | null;
-  optionId?: string | null;
-}) {
+  offerNo,
+}: HandleFiyatAnaliziPDFParams) {
   // Extract accessories from form values
   const accessories: PriceItem[] =
     formikValues.selectedProducts?.accessories || [];

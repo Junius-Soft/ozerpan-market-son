@@ -11,7 +11,8 @@ import { Formik, Form } from "formik";
 import { handleImalatListesiPDF } from "@/utils/handle-imalat-listesi";
 import { ProductDetailsHeader } from "./ProductDetailsHeader";
 import { FloatingTotalButton } from "../../components/FloatingTotalButton";
-// import { handleFiyatAnaliziPDF } from "@/utils/handle-fiyat-analizi";
+import { handleDepoCikisFisiPDF } from "@/utils/handle-depo-cikis-fisi";
+import { handleFiyatAnaliziPDF } from "@/utils/handle-fiyat-analizi";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
@@ -316,15 +317,12 @@ export default function ProductDetailsPage() {
                   onDepoCikisFisiConfirm={async () => {
                     if (!product) return;
                     const offerNo = window.location.pathname.split("/")[2];
-                    await import("@/utils/handle-depo-cikis-fisi").then(
-                      ({ handleDepoCikisFisiPDF }) =>
-                        handleDepoCikisFisiPDF({
-                          product,
-                          values: formik.values,
-                          typeId,
-                          offerNo,
-                        })
-                    );
+                    await handleDepoCikisFisiPDF({
+                      product,
+                      values: formik.values,
+                      typeId,
+                      offerNo,
+                    });
                   }}
                   onBackToOffer={() =>
                     router.push(
@@ -333,20 +331,18 @@ export default function ProductDetailsPage() {
                   }
                   onSubmit={formik.submitForm}
                   onFiyatAnaliz={async () => {
-                    if (!product) return;
+                    if (!product || !product.tabs) return;
                     const offerNo = window.location.pathname.split("/")[2];
-                    await import("@/utils/handle-fiyat-analizi").then(
-                      ({ handleFiyatAnaliziPDF }) =>
-                        handleFiyatAnaliziPDF({
-                          offerNo,
-                          product,
-                          formikValues: formik.values,
-                          productId: productId ?? null,
-                          typeId: typeId ?? null,
-                          productName: productName ?? null,
-                          optionId: optionId ?? null,
-                        })
-                    );
+
+                    await handleFiyatAnaliziPDF({
+                      product: product,
+                      formikValues: formik.values,
+                      productId: productId ?? null,
+                      typeId: typeId ?? null,
+                      productName: productName ?? null,
+                      optionId: optionId ?? null,
+                      offerNo,
+                    });
                   }}
                 />
 

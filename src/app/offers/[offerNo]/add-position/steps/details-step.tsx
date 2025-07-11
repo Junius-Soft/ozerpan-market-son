@@ -152,6 +152,7 @@ export function DetailsStep({
         currentTab={currentTab}
         onTotalChange={onTotalChange}
         summaryRef={summaryRef}
+        seperation={typeId}
       />
     </div>
   );

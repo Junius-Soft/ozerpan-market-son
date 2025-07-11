@@ -49,6 +49,7 @@ interface ProductPreviewProps {
   currentTab: string;
   onTotalChange?: (total: number) => void;
   summaryRef?: React.RefObject<HTMLDivElement>;
+  seperation: number; // Ayrım sayısı (örneğin, panjur için)
 }
 
 // Helper function to format field value
@@ -86,6 +87,7 @@ export function ProductPreview({
   selectedProduct,
   onTotalChange,
   summaryRef,
+  seperation,
 }: ProductPreviewProps) {
   const { loading, eurRate } = useExchangeRate();
   const { values, handleChange } = useFormikContext<PanjurSelections>();
@@ -131,6 +133,7 @@ export function ProductPreview({
               boxHeight: getBoxHeight(values.boxType),
               hareketBaglanti: values.hareketBaglanti,
               movementType: values.movementType,
+              seperation: seperation,
               lamelCount: calculateLamelCount(
                 calculateSystemHeight(
                   values.height,

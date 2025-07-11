@@ -14,6 +14,7 @@ interface ShutterPreviewProps {
   dikmeColor?: string;
   hareketBaglanti: "sol" | "sag";
   movementType: "manuel" | "motorlu";
+  seperation: number; // Ayrım sayısı (örneğin, panjur için)
   lamelCount: number; // Lamel sayısı
 }
 
@@ -28,12 +29,12 @@ export function ShutterPreview({
   dikmeColor,
   hareketBaglanti,
   movementType,
+  seperation,
   lamelCount,
 }: ShutterPreviewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
-
   // Function to draw the shutter
   const drawShutter = useCallback(
     (
@@ -174,22 +175,7 @@ export function ShutterPreview({
 
       // --- Dikey dikmeler (kutudan sonra başlasın, daha ince) ---
       const dikmeWidth = Math.max(8, finalWidth * 0.03); // min 8px, %3 genişlik
-      ctx.fillStyle = dikmeColor || colors.frameBorder;
-      // Sol dikme
-      ctx.fillRect(
-        x,
-        y + motorHeight,
-        dikmeWidth,
-        finalHeight + adjustedLamelHeight - motorHeight
-      );
-      // Sağ dikme
-      ctx.fillRect(
-        x + finalWidth - dikmeWidth,
-        y + motorHeight,
-        dikmeWidth,
-        finalHeight + adjustedLamelHeight - motorHeight
-      );
-      // ---
+      // ...lamel çizimi kodu...
 
       // Lamellerin genişliği kutudan biraz az olacak (dikmelerin arasında kalacak)
       const lamelX = x + dikmeWidth;
@@ -318,6 +304,23 @@ export function ShutterPreview({
         );
       }
 
+      // DİKMELERİ lamellerin üstünde çiz
+      ctx.fillStyle = dikmeColor || colors.frameBorder;
+      // Sol dikme
+      ctx.fillRect(
+        x,
+        y + motorHeight,
+        dikmeWidth,
+        finalHeight + adjustedLamelHeight - motorHeight
+      );
+      // Sağ dikme
+      ctx.fillRect(
+        x + finalWidth - dikmeWidth,
+        y + motorHeight,
+        dikmeWidth,
+        finalHeight + adjustedLamelHeight - motorHeight
+      );
+
       // Renkleri açma/koyulaştırma yardımcı fonksiyonları
       function lightenColor(color: string, amount: number): string {
         if (color.startsWith("#")) {
@@ -357,6 +360,7 @@ export function ShutterPreview({
         return color;
       }
       // Alt parça da aynı şekilde dikmelerin arasında olmalı
+
       ctx.fillStyle = subPartColor || colors.lamelDark;
       ctx.fillRect(
         lamelX,
@@ -364,6 +368,18 @@ export function ShutterPreview({
         lamelWidth,
         adjustedLamelHeight
       );
+
+      // DİKKAT: Orta dikmeleri alt parçadan sonra çiz
+      ctx.fillStyle = dikmeColor || colors.frameBorder;
+      const dikmeHeight = finalHeight + adjustedLamelHeight - motorHeight;
+      if (seperation > 1) {
+        const totalSections = seperation;
+        const sectionWidth = (finalWidth - dikmeWidth * 2) / totalSections;
+        for (let i = 1; i < seperation; i++) {
+          const dikmeX = x + dikmeWidth + sectionWidth * i - dikmeWidth / 2;
+          ctx.fillRect(dikmeX, y + motorHeight, dikmeWidth, dikmeHeight);
+        }
+      }
 
       // Add dimensions text
       ctx.fillStyle = colors.text;
@@ -523,7 +539,8 @@ export function ShutterPreview({
       hareketBaglanti,
       movementType,
       lamelCount,
-    ] // theme'i dependency array'e ekledik
+      seperation,
+    ] // seperation eklendi
   );
 
   const updateCanvasSize = useCallback(() => {

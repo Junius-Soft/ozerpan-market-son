@@ -16,6 +16,7 @@ interface ProductPreviewProps {
   boxHeight?: number; // kutu yüksekliği (mm)
   hareketBaglanti: "sol" | "sag";
   movementType: "manuel" | "motorlu";
+  seperation: number; // Ayrım sayısı (örneğin, panjur için)
   lamelCount: number; // Lamel sayısı
 }
 
@@ -32,7 +33,8 @@ export function getProductPreview({
   boxHeight = 0, // kutu yüksekliği (mm)
   hareketBaglanti,
   movementType,
-  lamelCount
+  seperation,
+  lamelCount,
 }: ProductPreviewProps) {
   if (!product) return null;
 
@@ -51,6 +53,7 @@ export function getProductPreview({
       boxHeight={boxHeight}
       hareketBaglanti={hareketBaglanti}
       movementType={movementType}
+      seperation={seperation}
       lamelCount={lamelCount}
     />
   );

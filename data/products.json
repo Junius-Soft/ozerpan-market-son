@@ -46,25 +46,25 @@
           "id": "2",
           "name": "2'li Panjur",
           "image": "/images/products/panjur/types/2 li.png",
-          "disabled": true
+          "disabled": false
         },
         {
           "id": "3",
           "name": "3'lü Panjur",
           "image": "/images/products/panjur/types/3 lu.png",
-          "disabled": true
+          "disabled": false
         },
         {
           "id": "4",
           "name": "4'lü Panjur",
           "image": "/images/products/panjur/types/4 lu.png",
-          "disabled": true
+          "disabled": false
         },
         {
           "id": "5",
           "name": "5'li Panjur",
           "image": "/images/products/panjur/types/5 li.png",
-          "disabled": true
+          "disabled": false
         }
       ]
     },

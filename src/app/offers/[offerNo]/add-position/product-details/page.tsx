@@ -351,6 +351,7 @@ export default function ProductDetailsPage() {
                   selectedProduct={product}
                   onTotalChange={setPreviewTotal}
                   summaryRef={summaryRef}
+                  typeId={Number(typeId)}
                 />
                 {/* Floating toplam buton sadece mobilde */}
                 <FloatingTotalButton

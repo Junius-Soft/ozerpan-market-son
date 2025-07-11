@@ -29,6 +29,7 @@ interface DetailsStepProps {
   selectedProduct: Product | null;
   onTotalChange?: (total: number) => void;
   summaryRef: React.RefObject<HTMLDivElement>;
+  typeId: number;
 }
 
 export function DetailsStep({
@@ -36,6 +37,7 @@ export function DetailsStep({
   selectedProduct,
   onTotalChange,
   summaryRef,
+  typeId,
 }: DetailsStepProps) {
   useAutoDependencyAndFilterBy(formik, "panjur");
   useFilterLamelThickness(formik);
@@ -74,7 +76,7 @@ export function DetailsStep({
       );
     }
     // ---
-
+    console.log({ typeId });
     if (activeTab?.content?.fields && activeTab.content.fields.length > 0) {
       const values = formik.values;
       return (
@@ -100,6 +102,7 @@ export function DetailsStep({
                   boxHeight: getBoxHeight(values.boxType),
                   hareketBaglanti: values.hareketBaglanti,
                   movementType: values.movementType,
+                  seperation: typeId,
                   lamelCount: calculateLamelCount(
                     calculateSystemHeight(
                       values.height,

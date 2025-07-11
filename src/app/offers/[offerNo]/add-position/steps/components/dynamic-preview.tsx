@@ -15,8 +15,9 @@ interface DynamicPreviewProps {
   subPartColor?: string;
   dikmeColor?: string;
   boxHeight?: number; // kutu yüksekliği (mm)
-  hareketBaglanti: "sol" | "sag"
-  movementType: "manuel" | "motorlu"
+  hareketBaglanti: "sol" | "sag";
+  movementType: "manuel" | "motorlu";
+  seperation: number; // Ayrım sayısı (örneğin, panjur için)
   lamelCount: number; // Lamel sayısı
 }
 
@@ -32,7 +33,8 @@ export function DynamicPreview({
   boxHeight = 0, // kutu yüksekliği (mm)
   hareketBaglanti,
   movementType,
-  lamelCount
+  seperation,
+  lamelCount,
 }: DynamicPreviewProps) {
   // Select the appropriate preview component based on the component name
   const renderPreview = () => {
@@ -50,6 +52,7 @@ export function DynamicPreview({
             boxHeight={boxHeight} // kutu yüksekliği (mm)
             hareketBaglanti={hareketBaglanti}
             movementType={movementType}
+            seperation={seperation}
             lamelCount={lamelCount}
           />
         );

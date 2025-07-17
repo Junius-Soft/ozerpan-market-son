@@ -198,7 +198,7 @@ export const findBoxPrice = (
   selectedFrontBox?: SelectedProduct;
   selectedBackBox?: SelectedProduct;
 } => {
-  const boxPrices = prices.filter((p) => p.type === "kutu_profilleri");
+  const boxPrices = prices.filter((p) => p.type === "panjur_kutu_profilleri");
   let normalizedColor = normalizeColor(color);
 
   // Convert box type (e.g., "137mm" to "137")
@@ -451,3 +451,34 @@ export function findTamburProfiliAccessoryPrice(
     createSelectedProduct(tambur, 1, tamburWidth + " mm"),
   ];
 }
+
+export const findYukseltmeProfiliPrice = (
+  prices: PriceItem[],
+  dikmeColor: string,
+  quantity: number,
+  systemHeight: number
+): [number, SelectedProduct | null] => {
+  const yukseltmeProfiliPrices = prices.filter(
+    (p) => p.type === "sineklik_profilleri"
+  );
+  let normalizedColor = normalizeColor(dikmeColor);
+  let matchingProfili = yukseltmeProfiliPrices.find((p) =>
+    p.description.toLowerCase().includes(normalizedColor.toLowerCase())
+  );
+  console.log({ yukseltmeProfiliPrices, matchingProfili });
+  // Eğer bulunamazsa, Beyaz ile tekrar dene
+  if (!matchingProfili && normalizedColor !== "Beyaz") {
+    normalizedColor = "Beyaz";
+    matchingProfili = yukseltmeProfiliPrices.find((p) =>
+      p.description.includes(normalizedColor)
+    );
+  }
+  if (!matchingProfili) return [0, null];
+
+  const selectedProduct = createSelectedProduct(
+    matchingProfili,
+    quantity,
+    systemHeight + " mm"
+  );
+  return [parseFloat(matchingProfili.price), selectedProduct];
+};

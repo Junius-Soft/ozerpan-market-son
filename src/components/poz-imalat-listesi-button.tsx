@@ -14,14 +14,19 @@ export function PozImalatListesiButton({
   disabled = false,
   options,
 }: PozImalatListesiButtonProps) {
+  const defaultOptions = options || [
+    { label: "Lamel", value: "Lamel" },
+    { label: "Alt Parça", value: "Alt Parça" },
+    { label: "Dikme", value: "Dikme" },
+    { label: "Kutu", value: "Kutu" },
+    { label: "Tambur Borusu", value: "Boru" },
+    { label: "Yükseltme Profili", value: "Kasa Profili" },
+  ];
+
   const [open, setOpen] = useState(false);
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([
-    "Lamel",
-    "Alt Parça",
-    "Dikme",
-    "Kutu",
-    "Boru",
-  ]);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>(
+    defaultOptions.map((opt) => opt.value)
+  );
 
   const handleImalatListClick = () => {
     setOpen(true);
@@ -50,7 +55,7 @@ export function PozImalatListesiButton({
         selectedTypes={selectedTypes}
         onSelectedTypesChange={setSelectedTypes}
         onConfirm={handleDialogConfirm}
-        options={options}
+        options={defaultOptions}
       />
     </>
   );

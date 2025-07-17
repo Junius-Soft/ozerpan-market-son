@@ -29,6 +29,7 @@ export function PozImalatListesiDialog({
     { label: "Dikme", value: "Dikme" },
     { label: "Kutu", value: "Kutu" },
     { label: "Tambur Borusu", value: "Boru" },
+    { label: "Yükseltme Profili", value: "Yükseltme Profili" },
   ],
 }: PozImalatListesiDialogProps) {
   const handleCheckboxChange = (value: string) => {

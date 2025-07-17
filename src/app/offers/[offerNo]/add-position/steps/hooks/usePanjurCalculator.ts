@@ -14,6 +14,7 @@ import {
   findRemotePrice,
   findReceiverPrice,
   findTamburProfiliAccessoryPrice,
+  findYukseltmeProfiliPrice,
   calculateSystemWidth,
   calculateSystemHeight,
   calculateLamelCount,
@@ -148,7 +149,6 @@ export const usePanjurCalculator = (
       const { frontPrice, backPrice, selectedFrontBox, selectedBackBox } =
         findBoxPrice(prices, values.boxType, values.box_color, systemWidth);
       const boxPrice = frontPrice + backPrice;
-
       // Uzaktan kumanda fiyatı hesaplama
       const [remotePrice, remoteSelectedProduct] = findRemotePrice(
         prices,
@@ -179,6 +179,19 @@ export const usePanjurCalculator = (
           values.width
         );
 
+      // Yükseltme Profili fiyatı hesaplama (sadece dikmeAdapter === "var" ise)
+      let yukseltmeProfiliPrice = 0;
+      let yukseltmeProfiliSelectedProduct: SelectedProduct | null = null;
+      if (values.dikmeAdapter === "var") {
+        [yukseltmeProfiliPrice, yukseltmeProfiliSelectedProduct] =
+          findYukseltmeProfiliPrice(
+            prices,
+            values.dikme_color || values.lamel_color,
+            dikmeCount,
+            systemHeight
+          );
+      }
+
       // Aksesuarların fiyatını hesapla
       const accessoriesPrice = (accessories || []).reduce((total, acc) => {
         return total + parseFloat(acc.price) * (acc.quantity || 1);
@@ -190,6 +203,7 @@ export const usePanjurCalculator = (
         dikmePrice +
         boxPrice +
         tamburPrice +
+        yukseltmeProfiliPrice +
         remotePrice +
         smarthomePrice +
         receiverPrice +
@@ -205,6 +219,7 @@ export const usePanjurCalculator = (
         selectedFrontBox,
         selectedBackBox,
         tamburSelectedProduct,
+        yukseltmeProfiliSelectedProduct,
         remoteSelectedProduct,
         smarthomeSelectedProduct,
         receiverSelectedProduct,
@@ -217,7 +232,7 @@ export const usePanjurCalculator = (
         products: productItems,
         accessories: accessories || [],
       };
-      console.log({ selectedProducts });
+
       setResult((prev) => ({
         ...prev,
         lamelPrice,

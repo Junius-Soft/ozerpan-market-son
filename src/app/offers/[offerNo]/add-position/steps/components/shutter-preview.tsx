@@ -20,6 +20,8 @@ interface ShutterPreviewProps {
   seperation: number; // Ayrım sayısı (örneğin, panjur için)
   lamelCount: number; // Lamel sayısı
   changeMiddlebarPostion: boolean;
+  systemHeight: number; // Sistem yüksekliği (mm)
+  systemWidth: number; // Sistem genişliği (mm)
 }
 
 export function ShutterPreview({
@@ -36,6 +38,8 @@ export function ShutterPreview({
   seperation,
   lamelCount,
   changeMiddlebarPostion,
+  systemHeight,
+  systemWidth,
 }: ShutterPreviewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -784,7 +788,7 @@ export function ShutterPreview({
       ctx.textAlign = "center";
 
       // Width text (artık üstte, kutunun üstüne ortalanmış)
-      ctx.fillText(`${width} mm`, x + finalWidth / 2, y - 25);
+      ctx.fillText(`${systemWidth} mm`, x + finalWidth / 2, y - 25);
 
       // --- Üst genişlik için bracket çiz (yatay) ---
       ctx.save();
@@ -874,12 +878,12 @@ export function ShutterPreview({
         rightBracketCenterY
       );
       ctx.rotate(Math.PI / 2);
-      ctx.fillText(`${height}`, 0, -6);
+      ctx.fillText(`${systemHeight}`, 0, -6);
       ctx.fillText("mm", 0, 6);
       ctx.restore();
 
       // Kutu yüksekliği ve kalan yükseklik için ayrı ölçü yazısı ve çizgileri
-      if (boxHeight && height > 0) {
+      if (boxHeight && systemHeight > 0) {
         // --- Kutu yüksekliği için bracket çiz ---
         ctx.save();
         ctx.strokeStyle = "#64748b"; // yatay bracket ile aynı renk
@@ -900,7 +904,7 @@ export function ShutterPreview({
         ctx.restore();
 
         // --- Kalan yükseklik için bracket çiz ---
-        const kalanYukseklik = height - boxHeight;
+        const kalanYukseklik = systemHeight - boxHeight;
         if (kalanYukseklik > 0) {
           ctx.save();
           ctx.strokeStyle = "#64748b"; // yatay bracket ile aynı renk
@@ -970,6 +974,8 @@ export function ShutterPreview({
       seperation,
       middleBarPositions,
       sectionHeights,
+      systemHeight,
+      systemWidth,
     ]
   );
 

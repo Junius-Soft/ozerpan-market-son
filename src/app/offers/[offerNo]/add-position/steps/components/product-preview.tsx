@@ -143,6 +143,17 @@ export function ProductPreview({
                 values.boxType,
                 values.lamelTickness
               ),
+              systemHeight: calculateSystemHeight(
+                values.height,
+                values.kutuOlcuAlmaSekli,
+                values.boxType
+              ),
+              systemWidth:
+                calculateSystemWidth(
+                  values.width,
+                  values.dikmeOlcuAlmaSekli,
+                  values.dikmeType
+                ) + 10,
             })}
           </div>
         </div>
@@ -326,11 +337,12 @@ export function ProductPreview({
                     );
                   }
                   if (field.id === "width") {
-                    fieldValue = calculateSystemWidth(
-                      values.width,
-                      values.dikmeOlcuAlmaSekli,
-                      values.dikmeType
-                    );
+                    fieldValue =
+                      calculateSystemWidth(
+                        values.width,
+                        values.dikmeOlcuAlmaSekli,
+                        values.dikmeType
+                      ) + 10;
                   }
                   return [
                     ...acc,

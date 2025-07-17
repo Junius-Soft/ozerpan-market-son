@@ -18,6 +18,8 @@ interface ProductPreviewProps {
   movementType: "manuel" | "motorlu";
   seperation: number; // Ayrım sayısı (örneğin, panjur için)
   lamelCount: number; // Lamel sayısı
+  systemHeight: number; // Sistem yüksekliği (mm)
+  systemWidth: number; // Sistem genişliği (mm)
   changeMiddlebarPostion?: boolean;
 }
 
@@ -37,6 +39,8 @@ export function getProductPreview({
   seperation,
   lamelCount,
   changeMiddlebarPostion = false,
+  systemHeight,
+  systemWidth,
 }: ProductPreviewProps) {
   if (!product) return null;
 
@@ -58,6 +62,8 @@ export function getProductPreview({
       seperation={seperation}
       lamelCount={lamelCount}
       changeMiddlebarPostion={changeMiddlebarPostion}
+      systemHeight={systemHeight}
+      systemWidth={systemWidth}
     />
   );
 }

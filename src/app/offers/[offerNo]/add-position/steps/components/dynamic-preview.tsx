@@ -20,6 +20,8 @@ interface DynamicPreviewProps {
   seperation: number; // Ayrım sayısı (örneğin, panjur için)
   lamelCount: number; // Lamel sayısı
   changeMiddlebarPostion: boolean; // Orta bar pozisyonu değişikliği için opsiyonel
+  systemHeight: number; // Sistem yüksekliği (mm)
+  systemWidth: number; // Sistem genişliği (mm)
 }
 
 export function DynamicPreview({
@@ -36,7 +38,9 @@ export function DynamicPreview({
   movementType,
   seperation,
   lamelCount,
-  changeMiddlebarPostion
+  changeMiddlebarPostion,
+  systemHeight,
+  systemWidth,
 }: DynamicPreviewProps) {
   // Select the appropriate preview component based on the component name
   const renderPreview = () => {
@@ -57,6 +61,8 @@ export function DynamicPreview({
             seperation={seperation}
             lamelCount={lamelCount}
             changeMiddlebarPostion={changeMiddlebarPostion}
+            systemHeight={systemHeight}
+            systemWidth={systemWidth} // Assuming system width is the same as preview width
           />
         );
       case "WindowPreview":

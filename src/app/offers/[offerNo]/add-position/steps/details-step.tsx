@@ -19,6 +19,7 @@ import { useAutoDependencyAndFilterBy } from "./hooks/useAutoDependencyDefaults"
 import {
   calculateLamelCount,
   calculateSystemHeight,
+  calculateSystemWidth,
   getBoxHeight,
 } from "@/utils/panjur";
 import { AlertTriangle } from "lucide-react";
@@ -77,7 +78,6 @@ export function DetailsStep({
       );
     }
     // ---
-    console.log({ typeId });
     if (activeTab?.content?.fields && activeTab.content.fields.length > 0) {
       const values = formik.values;
       return (
@@ -136,6 +136,17 @@ export function DetailsStep({
                     values.boxType,
                     values.lamelTickness
                   ),
+                  systemHeight: calculateSystemHeight(
+                    values.height,
+                    values.kutuOlcuAlmaSekli,
+                    values.boxType
+                  ),
+                  systemWidth:
+                    calculateSystemWidth(
+                      values.width,
+                      values.dikmeOlcuAlmaSekli,
+                      values.dikmeType
+                    ) + 10,
                   changeMiddlebarPostion: true,
                 })}
               </div>

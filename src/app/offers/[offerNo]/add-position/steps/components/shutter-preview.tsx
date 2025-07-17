@@ -712,16 +712,16 @@ export function ShutterPreview({
       ctx.restore();
 
       // Bölme genişliklerini panjurun altına bracket ve metinle göster
-      if (seperation > 1) {
+      if (seperation > 1 && sectionLamels.length === seperation) {
         // En uzun section'ın alt kenarını (alt parça dahil) bul
         let maxSectionBottom = 0;
         for (let sectionIdx = 0; sectionIdx < seperation; sectionIdx++) {
           const section = sectionLamels[sectionIdx];
+          if (!section) continue;
           const sectionHeightMm = sectionHeights[sectionIdx] ?? height;
           const totalSectionHeightPx = section.bottom - section.top;
           const mmToPx = totalSectionHeightPx / height;
           const sectionHeightPx = sectionHeightMm * mmToPx;
-          // altParcaHeight is not needed here
           const sectionBottom = section.top + sectionHeightPx;
           if (sectionBottom > maxSectionBottom) {
             maxSectionBottom = sectionBottom;
@@ -827,6 +827,7 @@ export function ShutterPreview({
       let maxSectionBottom = 0;
       for (let sectionIdx = 0; sectionIdx < seperation; sectionIdx++) {
         const section = sectionLamels[sectionIdx];
+        if (!section) continue;
         const sectionHeightMm = sectionHeights[sectionIdx] ?? height;
         const totalSectionHeightPx = section.bottom - section.top;
         const mmToPx = totalSectionHeightPx / height;
@@ -851,20 +852,26 @@ export function ShutterPreview({
       ctx.restore();
 
       // Soldaki 2. bracket: en uzun bölme yüksekliği - motor yüksekliği kadar olmalı
-      ctx.save();
-      ctx.strokeStyle = "#64748b";
-      ctx.lineWidth = 1;
-      drawVerticalBracket(ctx, x - 18, y + motorHeight, maxSectionBottom, 18);
-      ctx.restore();
+      // Sadece çoklu bölmede (seperation > 1) bu bracket'ı çiz
+      if (seperation > 1) {
+        ctx.save();
+        ctx.strokeStyle = "#64748b";
+        ctx.lineWidth = 1;
+        drawVerticalBracket(ctx, x - 18, y + motorHeight, maxSectionBottom, 18);
+        ctx.restore();
+      }
 
       // Toplam yükseklik metni (sağda, ortalanmış, dikey ve ters, en uzun section'a ortalı, iki satır)
+      // Sağdaki yükseklik metni: bracket'ın tam ortasına hizala (tekli panjurda da tam ortalı olur)
       ctx.save();
       ctx.font = "14px 'Noto Sans', 'Arial', sans-serif";
       ctx.fillStyle = colors.text;
       ctx.textAlign = "center";
+      // Bracket'ın tam ortasını bul: y ile y+finalHeight arası
+      const rightBracketCenterY = y + finalHeight / 2;
       ctx.translate(
         x + finalWidth + rightBracketOffset + 28,
-        y + motorHeight + (maxSectionBottom - (y + motorHeight)) / 2
+        rightBracketCenterY
       );
       ctx.rotate(Math.PI / 2);
       ctx.fillText(`${height}`, 0, -6);

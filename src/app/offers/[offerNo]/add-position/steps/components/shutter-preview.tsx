@@ -1407,21 +1407,10 @@ export function ShutterPreview({
                 }
               }}
             />
-            <button
-              type="button"
-              style={{
-                padding: "4px 12px",
-                fontSize: 14,
-                background: "#64748b",
-                color: "white",
-                border: "none",
-                borderRadius: 4,
-                cursor: "pointer",
-              }}
-              onClick={handleInputSubmit}
-            >
+
+            <Button variant="secondary" onClick={handleInputSubmit}>
               OK
-            </button>
+            </Button>
           </div>
         </Card>
       )}

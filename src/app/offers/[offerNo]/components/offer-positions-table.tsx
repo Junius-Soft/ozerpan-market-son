@@ -13,6 +13,8 @@ import { Plus, Trash2, Copy } from "lucide-react";
 import { Position } from "@/documents/offers";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { resetShutterState } from "@/store/shutterSlice";
+import { useDispatch } from "react-redux";
 
 interface OfferPositionsTableProps {
   positions: Position[];
@@ -46,6 +48,8 @@ export function OfferPositionsTable({
   onSort,
 }: OfferPositionsTableProps) {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   return (
     <Card className="p-6">
       <div className="flex justify-between items-center mb-4">
@@ -150,6 +154,7 @@ export function OfferPositionsTable({
                   ) {
                     return;
                   }
+                  dispatch(resetShutterState());
                   router.push(
                     `/offers/${offerId}/add-position/product-details?selectedPosition=${position.id}&productId=${position.productId}&productName=${position.productName}&typeId=${position.typeId}&optionId=${position.optionId}`
                   );

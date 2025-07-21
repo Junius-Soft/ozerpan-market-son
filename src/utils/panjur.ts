@@ -23,6 +23,18 @@ export interface Tab {
   content: TabContent;
 }
 
+// Bölme genişliklerini hesaplayan yardımcı fonksiyon
+export function findSectionWidths(
+  middleBarPositions: number[],
+  width: number
+): number[] {
+  let positions = [0, ...middleBarPositions, width];
+  if (middleBarPositions.length === 0) {
+    positions = [0, width];
+  }
+  return positions.slice(0, -1).map((pos, i) => positions[i + 1] - pos);
+}
+
 export const getLamelProperties = (lamelTickness: string): LamelProperties => {
   return lamelProperties[lamelTickness];
 };
@@ -159,11 +171,8 @@ export const findSubPartPrice = (
       .map(() => ({ price: 0, selectedProduct: null, width: 0 }));
   }
 
-  // Bölme genişliklerini hesapla: [0, ...middleBarPositions, width]
-  const positions = [0, ...middleBarPositions, width];
-  const sectionWidths = positions
-    .slice(0, -1)
-    .map((pos, i) => positions[i + 1] - pos);
+  // Bölme genişliklerini hesapla
+  const sectionWidths = findSectionWidths(middleBarPositions, width);
 
   // Her bölme için alt parça fiyatı ve ürününü oluştur
   return sectionWidths.map((sectionWidth) => {

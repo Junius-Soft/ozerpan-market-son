@@ -20,9 +20,14 @@ const shutterSlice = createSlice({
     setSectionHeights(state, action: PayloadAction<number[]>) {
       state.sectionHeights = action.payload;
     },
+    resetShutterState(state) {
+      state.middleBarPositions = [];
+      state.sectionHeights = [];
+    },
   },
 });
 
 export const { setMiddleBarPositions, setSectionHeights } =
   shutterSlice.actions;
+export const { resetShutterState } = shutterSlice.actions;
 export default shutterSlice.reducer;

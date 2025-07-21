@@ -2,6 +2,13 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setMiddleBarPositions } from "@/store/shutterSlice";
+
+interface ShutterState {
+  middleBarPositions: number[];
+  sectionHeights: number[];
+}
 import { type Product, getProductTabs } from "@/documents/products";
 import { DetailsStep } from "../steps/details-step";
 import { getOffer, type Position } from "@/documents/offers";
@@ -27,6 +34,10 @@ export default function ProductDetailsPage() {
   const [previewTotal, setPreviewTotal] = useState(0);
 
   const initialLoadDone = useRef(false);
+  const middleBarPositions = useSelector(
+    (state: { shutter: ShutterState }) => state.shutter.middleBarPositions
+  );
+  const dispatch = useDispatch();
   const productId = searchParams.get("productId");
   const productName = searchParams.get("productName");
   const typeId = searchParams.get("typeId");
@@ -40,7 +51,7 @@ export default function ProductDetailsPage() {
       (p) => p.id === selectedPosition
     );
     return position || null;
-  }, [selectedPosition]);
+  }, [selectedPosition, offerNo]);
 
   // Transform tabs into initialValues with default field values and dependencies
   const getInitialValues = useCallback(() => {
@@ -79,7 +90,7 @@ export default function ProductDetailsPage() {
     initialValues.quantity = quantity; // Default quantity
     initialValues.unitPrice = 0; // Default unit price
     return initialValues;
-  }, [product]);
+  }, [product, quantity]);
 
   const initialValues = useMemo(() => {
     const values = getInitialValues();
@@ -113,7 +124,10 @@ export default function ProductDetailsPage() {
           const position = await getSelectedPosition;
 
           if (position && Array.isArray(product.tabs)) {
-            const productDetails = position.productDetails as PanjurSelections;
+            const productDetails =
+              position.productDetails as PanjurSelections & {
+                middleBarPositions?: number[];
+              };
 
             // Update each tab's fields with values from position.productDetails
             product.tabs = product.tabs.map((tab) => {
@@ -140,6 +154,15 @@ export default function ProductDetailsPage() {
               }
               return tab;
             });
+            // Pozdan middleBarPositions varsa global state'e setle
+            if (
+              productDetails.middleBarPositions &&
+              Array.isArray(productDetails.middleBarPositions)
+            ) {
+              dispatch(
+                setMiddleBarPositions(productDetails.middleBarPositions)
+              );
+            }
           }
           // Set quantity from position if available
           if (position) {
@@ -163,6 +186,8 @@ export default function ProductDetailsPage() {
     typeId,
     selectedPosition,
     getSelectedPosition,
+    product,
+    dispatch,
   ]);
 
   const handleComplete = async (values: PanjurSelections) => {
@@ -205,7 +230,10 @@ export default function ProductDetailsPage() {
         typeId,
         productName,
         optionId,
-        productDetails: values,
+        productDetails: {
+          ...values,
+          middleBarPositions: middleBarPositions,
+        },
         total: (values.unitPrice || 0) * (values.quantity || 1), // Calculate total
       };
 

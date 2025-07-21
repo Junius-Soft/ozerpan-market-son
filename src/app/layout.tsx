@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+"use client";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Navbar } from "@/components/navbar";
 import { AuthGuard } from "@/components/auth-guard";
@@ -8,7 +8,7 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ClientFrappeProvider } from "@/components/frappe-provider";
-import { GlobalStateProvider } from "@/contexts/global-state";
+import { ReduxProvider } from "@/store/provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,11 +19,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-export const metadata: Metadata = {
-  title: "Özerpan Market",
-  description: "Panjur, Pencere ve Kapı Sistemleri",
-};
 
 export default function RootLayout({
   children,
@@ -47,7 +42,7 @@ export default function RootLayout({
             <ToastProvider>
               <Navbar />
               <AuthGuard>
-                <GlobalStateProvider>{children}</GlobalStateProvider>{" "}
+                <ReduxProvider>{children}</ReduxProvider>
               </AuthGuard>
               <ToastContainer />
             </ToastProvider>

@@ -111,27 +111,38 @@ export const findLamelPrice = (
   return [parseFloat(matchingLamel.price), selectedProduct];
 };
 
+/**
+ * Her bölmenin alt parça genişliğini middleBarPositions ve width ile hesaplar.
+ * @param prices
+ * @param subPart
+ * @param color
+ * @param middleBarPositions Bölme ayrım noktaları (mm cinsinden)
+ * @param width Toplam genişlik (mm)
+ * @returns Array<{ price: number, selectedProduct: SelectedProduct | null, width: number }>
+ */
 export const findSubPartPrice = (
   prices: PriceItem[],
   subPart: string,
   color: string,
-  lamelGenisligi: number
-): [number, SelectedProduct | null] => {
+  middleBarPositions: number[],
+  width: number
+): Array<{
+  price: number;
+  selectedProduct: SelectedProduct | null;
+  width: number;
+}> => {
   const subPartPrices = prices.filter(
     (p) => p.type === "panjur_alt_parça_profilleri"
   );
   let normalizedColor = normalizeColor(color);
-
   const subPartType = subPart.split("_")[0];
   const normalizedSubPart =
     subPartType.charAt(0).toUpperCase() + subPartType.slice(1).toLowerCase();
 
   let searchPattern = `${normalizedSubPart} Alt Parça ${normalizedColor}`;
-
   let matchingSubPart = subPartPrices.find(
     (p) => p.description === searchPattern
   );
-
   // Eğer bulunamazsa, Beyaz ile tekrar dene
   if (!matchingSubPart && normalizedColor !== "Beyaz") {
     normalizedColor = "Beyaz";
@@ -140,15 +151,37 @@ export const findSubPartPrice = (
       (p) => p.description === searchPattern
     );
   }
+  if (!matchingSubPart) {
+    // Hiçbir bölme için alt parça bulunamazsa, hepsi null döner
+    const sectionCount = middleBarPositions.length + 1;
+    return Array(sectionCount)
+      .fill(0)
+      .map(() => ({ price: 0, selectedProduct: null, width: 0 }));
+  }
 
-  if (!matchingSubPart) return [0, null];
+  // Bölme genişliklerini hesapla: [0, ...middleBarPositions, width]
+  const positions = [0, ...middleBarPositions, width];
+  const sectionWidths = positions
+    .slice(0, -1)
+    .map((pos, i) => positions[i + 1] - pos);
 
-  const selectedProduct = createSelectedProduct(
-    matchingSubPart,
-    1,
-    lamelGenisligi + " mm"
-  );
-  return [parseFloat(matchingSubPart.price), selectedProduct];
+  // Her bölme için alt parça fiyatı ve ürününü oluştur
+  return sectionWidths.map((sectionWidth) => {
+    // Fiyatı: metre fiyatı * bölme genişliği (metre)
+    const metreFiyati = parseFloat(matchingSubPart.price);
+    const genislikMetre = sectionWidth / 1000;
+    const price = Number((metreFiyati * genislikMetre).toFixed(2));
+    const selectedProduct = createSelectedProduct(
+      matchingSubPart,
+      1,
+      sectionWidth + " mm"
+    );
+    return {
+      price,
+      selectedProduct,
+      width: sectionWidth,
+    };
+  });
 };
 
 export const findDikmePrice = (

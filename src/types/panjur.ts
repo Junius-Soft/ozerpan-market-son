@@ -37,6 +37,7 @@ export interface CalculationResult {
 }
 
 export interface PanjurSelections {
+  middleBarPositions?: number[];
   productId: string;
   panjurType: "distan" | "monoblok" | "yalitimli";
   width: number;

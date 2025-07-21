@@ -25,6 +25,11 @@ import {
 import { useSearchParams } from "next/navigation";
 import { useAccessories } from "./useAccessories";
 import { ProductTab } from "@/documents/products";
+import { useSelector } from "react-redux";
+interface ShutterState {
+  middleBarPositions: number[];
+  sectionHeights: number[];
+}
 
 // Custom hook
 export const usePanjurCalculator = (
@@ -46,9 +51,13 @@ export const usePanjurCalculator = (
     errors: [],
   });
   const searchParams = useSearchParams();
-  const sectionCount = searchParams.get("typeId");
+  const sectionCount = Number(searchParams.get("typeId"));
   const [prices, setPrices] = useState<PriceItem[]>([]);
   const { accessories } = useAccessories(values);
+
+  const middleBarPositions = useSelector(
+    (state: { shutter: ShutterState }) => state.shutter.middleBarPositions
+  );
 
   useEffect(() => {
     const fetchPrices = async () => {
@@ -103,7 +112,7 @@ export const usePanjurCalculator = (
         values.boxType,
         values.lamelTickness
       );
-      const dikmeCount = Number(sectionCount) * 2;
+      const dikmeCount = sectionCount * 2;
 
       // Set initial measurements
       setResult((prev) => ({
@@ -130,12 +139,20 @@ export const usePanjurCalculator = (
       const lamelGenisligiMetre = lamelGenisligi / 1000;
       const lamelPrice = lamelUnitPrice * lamelGenisligiMetre * lamelCount;
 
-      const [subPartPrice, subPartSelectedProduct] = findSubPartPrice(
+      const subPartResults = findSubPartPrice(
         prices,
         values.subPart,
         values.subPart_color || values.lamel_color,
-        lamelGenisligi
+        middleBarPositions,
+        values.width
       );
+      console.log({ subPartResults });
+      // Toplam alt parça fiyatı ve ürünleri
+      const subPartPrice = subPartResults.reduce((sum, r) => sum + r.price, 0);
+      // Alt parça ürünlerini topluca ekle
+      const subPartSelectedProducts: SelectedProduct[] = subPartResults
+        .map((r) => r.selectedProduct)
+        .filter((p): p is SelectedProduct => !!p);
 
       const [dikmeUnitPrice, dikmeSelectedProduct] = findDikmePrice(
         prices,
@@ -214,7 +231,7 @@ export const usePanjurCalculator = (
       // Aksesuarları SelectedProduct formatına dönüştür ve tüm ürünleri birleştir
       const productItems = [
         lamelSelectedProduct,
-        subPartSelectedProduct,
+        ...subPartSelectedProducts,
         dikmeSelectedProduct,
         selectedFrontBox,
         selectedBackBox,
@@ -243,7 +260,14 @@ export const usePanjurCalculator = (
     };
 
     calculate();
-  }, [prices, values, sectionCount, accessories, availableTabs]);
+  }, [
+    prices,
+    values,
+    sectionCount,
+    accessories,
+    availableTabs,
+    middleBarPositions,
+  ]);
 
   return result;
 };

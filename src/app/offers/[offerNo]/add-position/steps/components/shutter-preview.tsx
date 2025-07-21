@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useGlobalState } from "@/contexts/global-state";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/store";
+import { setMiddleBarPositions, setSectionHeights } from "@/store/shutterSlice";
 import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -45,26 +47,42 @@ export function ShutterPreview({
   const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
 
-  // Global state'den middleBarPositions ve setter'ı al
-  const {
-    middleBarPositions,
-    setMiddleBarPositions,
-    sectionHeights,
-    setSectionHeights,
-  } = useGlobalState();
-
+  // Redux state'den middleBarPositions ve sectionHeights'ı al
+  const middleBarPositions = useSelector(
+    (state: RootState) => state.shutter.middleBarPositions
+  );
+  const sectionHeights = useSelector(
+    (state: RootState) => state.shutter.sectionHeights
+  );
+  const dispatch = useDispatch();
+  console.log({ middleBarPositions });
   // seperation veya width değiştiğinde middleBarPositions'ı eşit aralıklı olarak güncelle
+  // On first mount, preserve Redux value (from page.tsx), but on width change after mount, reset to equal intervals
+  const initialLoad = useRef(true);
+  const prevWidth = useRef(width);
   useEffect(() => {
-    if (seperation > 1) {
-      setMiddleBarPositions(
-        Array.from({ length: seperation - 1 }, (_, i) =>
-          Math.round((width / seperation) * (i + 1))
-        )
-      );
-    } else {
-      setMiddleBarPositions([]);
+    if (initialLoad.current) {
+      initialLoad.current = false;
+      prevWidth.current = width;
+      // Do not reset on first mount, let Redux initial value persist
+      return;
     }
-  }, [seperation, width, setMiddleBarPositions]);
+    // Only reset if width actually changed
+    if (width !== prevWidth.current) {
+      prevWidth.current = width;
+      if (seperation > 1) {
+        dispatch(
+          setMiddleBarPositions(
+            Array.from({ length: seperation - 1 }, (_, i) =>
+              Math.round((width / seperation) * (i + 1))
+            )
+          )
+        );
+      } else {
+        dispatch(setMiddleBarPositions([]));
+      }
+    }
+  }, [seperation, width, dispatch]);
   const [selectedBar, setSelectedBar] = useState<{
     x: number;
     index: number;
@@ -1053,7 +1071,7 @@ export function ShutterPreview({
     return () => {
       canvas.removeEventListener("click", handleClick);
     };
-  }, [changeMiddlebarPostion, sectionHeights]);
+  }, [changeMiddlebarPostion, sectionHeights, middleBarPositions]);
   // Bölme yüksekliği input submit
   const handleSectionHeightSubmit = (
     e: React.FormEvent | React.KeyboardEvent | React.MouseEvent
@@ -1068,7 +1086,7 @@ export function ShutterPreview({
       }
       const arr = [...sectionHeights];
       arr[selectedSection.index] = val;
-      setSectionHeights(arr);
+      dispatch(setSectionHeights(arr));
       setSelectedSection(null);
     }
   };
@@ -1084,7 +1102,7 @@ export function ShutterPreview({
       // Pozisyonu güncelle
       const arr = [...middleBarPositions];
       arr[selectedBar.index - 1] = val;
-      setMiddleBarPositions(arr);
+      dispatch(setMiddleBarPositions(arr));
       setSelectedBar(null);
     }
   };

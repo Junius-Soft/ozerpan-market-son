@@ -52,6 +52,7 @@ export function OfferSummaryCard({
   const [vatRate, setVatRate] = useState<number>(20);
   const [discountRate, setDiscountRate] = useState<number>(0);
   const [assemblyRate, setAssemblyRate] = useState<number>(0);
+  const [currency, setCurrency] = useState<"EUR" | "TRY">("EUR");
 
   // orders değiştiğinde ilkini seçili yap
   React.useEffect(() => {
@@ -74,6 +75,16 @@ export function OfferSummaryCard({
       return base + vatAmount;
     },
     []
+  );
+
+  // Tutarları seçilen para birimine göre dönüştür
+  const convertCurrency = useCallback(
+    (amount: number) => {
+      if (currency === "EUR") return amount;
+      // TRY'ye çevir: amount * eurRate
+      return amount * eurRate;
+    },
+    [currency, eurRate]
   );
 
   // KDV satırı için ayrı bir hesaplama
@@ -100,13 +111,13 @@ export function OfferSummaryCard({
   // KDV, iskonto, montaj değişimlerini parent'a ilet
   React.useEffect(() => {
     if (onVatChange) onVatChange(vatRate);
-  }, [vatRate]);
+  }, [vatRate, onVatChange]);
   React.useEffect(() => {
     if (onDiscountChange) onDiscountChange(discountRate);
-  }, [discountRate]);
+  }, [discountRate, onDiscountChange]);
   React.useEffect(() => {
     if (onAssemblyChange) onAssemblyChange(assemblyRate);
-  }, [assemblyRate]);
+  }, [assemblyRate, onAssemblyChange]);
 
   return (
     <Card className="p-6">
@@ -137,31 +148,57 @@ export function OfferSummaryCard({
         </div>
       )}
       <div className="space-y-4">
-        {/* Ara Toplam üstüne sipariş numarası seçimi */}
-        <div className="mb-2">
-          <label className="block text-xs text-gray-500 mb-1">
-            Sipariş Numarası
-          </label>
-          <Select
-            value={selectedOrder}
-            onValueChange={onSelectedOrderChange}
-            disabled={ordersLoading || orders.length === 0}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Sipariş seçin" />
-            </SelectTrigger>
-            <SelectContent>
-              {orders.map((order: { name: string }) => (
-                <SelectItem key={order.name} value={order.name}>
-                  {order.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        {/* Ara Toplam üstüne sipariş numarası ve para birimi seçimi */}
+        <div className="mb-2 flex gap-2 items-end">
+          <div className="flex-1">
+            <label className="block text-xs text-gray-500 mb-1">
+              Sipariş Numarası
+            </label>
+            <Select
+              value={selectedOrder}
+              onValueChange={onSelectedOrderChange}
+              disabled={ordersLoading || orders.length === 0}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Sipariş seçin" />
+              </SelectTrigger>
+              <SelectContent>
+                {orders.map((order: { name: string }) => (
+                  <SelectItem key={order.name} value={order.name}>
+                    {order.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <label className="block text-xs text-gray-500 mb-1">
+              Para Birimi
+            </label>
+            <Select
+              value={currency}
+              onValueChange={(v) => setCurrency(v as "EUR" | "TRY")}
+            >
+              <SelectTrigger className="w-24">
+                <SelectValue placeholder="Para birimi" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="EUR">Euro (€)</SelectItem>
+                <SelectItem value="TRY">Türk Lirası (₺)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
         <div className="flex justify-between items-center">
           <label className="text-sm text-gray-500">Ara Toplam</label>
-          <div className="font-medium">€ {subtotal.toFixed(2)}</div>
+          <div className="font-medium">
+            {currency === "EUR"
+              ? `€ ${Number(convertCurrency(subtotal)).toFixed(2)}`
+              : `₺ ${convertCurrency(subtotal).toLocaleString("tr-TR", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}`}
+          </div>
         </div>
         <div className="flex justify-between items-center">
           <label className="text-sm text-gray-500 flex items-center gap-2">
@@ -176,7 +213,14 @@ export function OfferSummaryCard({
             />
             %)
           </label>
-          <div className="font-medium">€ {vatAmount.toFixed(2)}</div>
+          <div className="font-medium">
+            {currency === "EUR"
+              ? `€ ${Number(convertCurrency(vatAmount)).toFixed(2)}`
+              : `₺ ${convertCurrency(vatAmount).toLocaleString("tr-TR", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}`}
+          </div>
         </div>
         <div className="flex justify-between items-center">
           <label className="text-sm text-gray-500 flex items-center gap-2">
@@ -192,7 +236,17 @@ export function OfferSummaryCard({
             %)
           </label>
           <div className="font-medium">
-            - € {((subtotal * discountRate) / 100).toFixed(2)}
+            -{" "}
+            {currency === "EUR"
+              ? `€ ${Number(
+                  convertCurrency((subtotal * discountRate) / 100)
+                ).toFixed(2)}`
+              : `₺ ${convertCurrency(
+                  (subtotal * discountRate) / 100
+                ).toLocaleString("tr-TR", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}`}
           </div>
         </div>
         <div className="flex justify-between items-center">
@@ -209,17 +263,44 @@ export function OfferSummaryCard({
             %)
           </label>
           <div className="font-medium">
-            € {((subtotal * assemblyRate) / 100).toFixed(2)}
+            {currency === "EUR"
+              ? `€ ${Number(
+                  convertCurrency((subtotal * assemblyRate) / 100)
+                ).toFixed(2)}`
+              : `₺ ${convertCurrency(
+                  (subtotal * assemblyRate) / 100
+                ).toLocaleString("tr-TR", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}`}
           </div>
         </div>
         <div className="h-px bg-gray-200" />
         <div className="flex justify-between items-center">
           <label className="font-medium">Genel Toplam</label>
           <div className="font-medium text-lg flex flex-col items-end">
-            <span>€ {total.toFixed(2)}</span>
-            <span className="text-xs text-muted-foreground">
-              ₺ {formatPrice(total, eurRate)}
+            <span>
+              {currency === "EUR"
+                ? `€ ${Number(convertCurrency(total)).toFixed(2)}`
+                : `₺ ${convertCurrency(total).toLocaleString("tr-TR", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}`}
             </span>
+            {currency === "EUR" && (
+              <span className="text-xs text-muted-foreground">
+                ₺ {formatPrice(total, eurRate)}
+              </span>
+            )}
+            {currency === "TRY" && (
+              <span className="text-xs text-muted-foreground">
+                €{" "}
+                {total.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
+            )}
           </div>
         </div>
         <div className="h-px bg-gray-200 my-4" />

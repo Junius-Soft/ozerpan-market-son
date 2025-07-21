@@ -28,7 +28,7 @@ export async function handleFiyatAnaliziPDF({
   const fakePosition = {
     id: "-",
     pozNo: typeId || "-",
-    unit: "adett",
+    unit: "adet",
     quantity: formikValues.quantity || 1,
     unitPrice: formikValues.unitPrice || 0,
     selectedProducts: formikValues.selectedProducts || {

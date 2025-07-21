@@ -10,6 +10,8 @@ export const store = configureStore({
 export interface ShutterState {
   middleBarPositions: number[];
   sectionHeights: number[];
+  sectionMotors: boolean[];
+  sectionConnections: string[];
 }
 
 export interface RootState {

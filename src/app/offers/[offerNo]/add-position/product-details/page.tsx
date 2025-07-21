@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setMiddleBarPositions } from "@/store/shutterSlice";
+import { setMiddleBarPositions, setSectionHeights } from "@/store/shutterSlice";
 
 interface ShutterState {
   middleBarPositions: number[];
@@ -36,6 +36,9 @@ export default function ProductDetailsPage() {
   const initialLoadDone = useRef(false);
   const middleBarPositions = useSelector(
     (state: { shutter: ShutterState }) => state.shutter.middleBarPositions
+  );
+  const sectionHeights = useSelector(
+    (state: { shutter: ShutterState }) => state.shutter.sectionHeights
   );
   const dispatch = useDispatch();
   const productId = searchParams.get("productId");
@@ -127,6 +130,7 @@ export default function ProductDetailsPage() {
             const productDetails =
               position.productDetails as PanjurSelections & {
                 middleBarPositions?: number[];
+                sectionHeights?: number[];
               };
 
             // Update each tab's fields with values from position.productDetails
@@ -162,6 +166,13 @@ export default function ProductDetailsPage() {
               dispatch(
                 setMiddleBarPositions(productDetails.middleBarPositions)
               );
+            }
+            // Set section heights from position if available
+            if (
+              productDetails.sectionHeights &&
+              Array.isArray(productDetails.sectionHeights)
+            ) {
+              dispatch(setSectionHeights(productDetails.sectionHeights));
             }
           }
           // Set quantity from position if available
@@ -233,6 +244,7 @@ export default function ProductDetailsPage() {
         productDetails: {
           ...values,
           middleBarPositions: middleBarPositions,
+          sectionHeights: sectionHeights,
         },
         total: (values.unitPrice || 0) * (values.quantity || 1), // Calculate total
       };

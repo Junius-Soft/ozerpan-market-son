@@ -1224,7 +1224,8 @@ export function ShutterPreview({
         }
       }
       // Bölme lamel alanına tıklama (yükseklik inputu)
-      if (sectionLamelArrRef.current) {
+      // Tek bölmeli panjurlarda popup açılmamalı
+      if (sectionLamelArrRef.current && seperation > 1) {
         for (const section of sectionLamelArrRef.current) {
           if (
             clickX >= section.left &&
@@ -1248,7 +1249,7 @@ export function ShutterPreview({
     return () => {
       canvas.removeEventListener("click", handleClick);
     };
-  }, [changeMiddlebarPostion, sectionHeights, middleBarPositions]);
+  }, [changeMiddlebarPostion, sectionHeights, middleBarPositions, seperation]);
   // Bölme yüksekliği input submit
   const handleSectionHeightSubmit = (
     e: React.FormEvent | React.KeyboardEvent | React.MouseEvent

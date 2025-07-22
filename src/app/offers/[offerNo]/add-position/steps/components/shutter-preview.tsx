@@ -68,7 +68,11 @@ export function ShutterPreview({
     (state: RootState) => state.shutter.sectionConnections
   );
   const dispatch = useDispatch();
-  console.log({ middleBarPositions });
+  console.log({
+    middleBarPositions,
+    seperation,
+    expectedLength: seperation - 1,
+  });
 
   // movementType motorlu olduğunda ortadaki bölmelerdeki motorları temizle
   useEffect(() => {
@@ -119,32 +123,45 @@ export function ShutterPreview({
   }, [seperation, sectionConnections, dispatch]);
 
   // seperation veya width değiştiğinde middleBarPositions'ı eşit aralıklı olarak güncelle
-  // On first mount, preserve Redux value (from page.tsx), but on width change after mount, reset to equal intervals
+  // Initialize middleBarPositions if empty or incorrect length
   const initialLoad = useRef(true);
   const prevWidth = useRef(width);
+  const prevSeparation = useRef(seperation);
+
   useEffect(() => {
+    const shouldInitialize =
+      (seperation > 1 && middleBarPositions.length !== seperation - 1) ||
+      seperation !== prevSeparation.current ||
+      (width !== prevWidth.current && !initialLoad.current);
+
+    if (shouldInitialize && seperation > 1) {
+      console.log("Initializing middleBarPositions:", {
+        current: middleBarPositions,
+        seperation,
+        expectedLength: seperation - 1,
+      });
+
+      dispatch(
+        setMiddleBarPositions(
+          Array.from({ length: seperation - 1 }, (_, i) =>
+            Math.round((width / seperation) * (i + 1))
+          )
+        )
+      );
+    } else if (seperation === 1 && middleBarPositions.length > 0) {
+      // Only clear if not already empty to prevent infinite loop
+      dispatch(setMiddleBarPositions([]));
+    }
+
+    // Update refs
     if (initialLoad.current) {
       initialLoad.current = false;
-      prevWidth.current = width;
-      // Do not reset on first mount, let Redux initial value persist
-      return;
     }
-    // Only reset if width actually changed
-    if (width !== prevWidth.current) {
-      prevWidth.current = width;
-      if (seperation > 1) {
-        dispatch(
-          setMiddleBarPositions(
-            Array.from({ length: seperation - 1 }, (_, i) =>
-              Math.round((width / seperation) * (i + 1))
-            )
-          )
-        );
-      } else {
-        dispatch(setMiddleBarPositions([]));
-      }
-    }
-  }, [seperation, width, dispatch]);
+    prevWidth.current = width;
+    prevSeparation.current = seperation;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seperation, width, middleBarPositions.length, dispatch]);
+
   const [selectedBar, setSelectedBar] = useState<{
     x: number;
     index: number;
@@ -331,43 +348,49 @@ export function ShutterPreview({
       // Only collect dikme positions here, draw dikme after lamels and alt parça
       if (seperation > 1) {
         const totalSections = seperation;
-        const sectionWidth = (finalWidth - dikmeWidth * 2) / totalSections;
         const positions: number[] =
           middleBarPositions.length === seperation - 1
             ? middleBarPositions
             : Array.from({ length: seperation - 1 }, (_, i) =>
                 Math.round((width / seperation) * (i + 1))
               );
-        const xPositions: number[] = [0, ...middleBarPositions, width].map(
-          (mm) => x + (mm / width) * finalWidth
-        );
+
+        console.log("Drawing dikme positions:", {
+          middleBarPositions,
+          positions,
+          seperation,
+          usingFallback: middleBarPositions.length !== seperation - 1,
+        });
+        // Dikme pozisyonları (canvas koordinatları)
+        const dikmeXPositions: number[] = [x]; // İlk dikme (sol kenar)
+        for (let i = 0; i < positions.length; i++) {
+          dikmeXPositions.push(
+            x + (positions[i] / width) * finalWidth - dikmeWidth / 2
+          );
+        }
+        dikmeXPositions.push(x + finalWidth - dikmeWidth); // Son dikme (sağ kenar)
+
+        // Lamel alanları: dikmelerin iç kısımları
         for (let i = 0; i < totalSections; i++) {
+          const leftDikme = dikmeXPositions[i];
+          const rightDikme = dikmeXPositions[i + 1];
           sectionLamels.push({
-            left: xPositions[i],
-            right: xPositions[i + 1],
+            left: leftDikme + dikmeWidth, // Sol dikmenin sağ kenarı
+            right: rightDikme, // Sağ dikmenin sol kenarı
             top: y + motorHeight,
             bottom: y + motorHeight + remainingHeight,
             index: i,
           });
         }
         sectionLamelArrRef.current = sectionLamels;
-        // Collect dikme positions
-        middleBarArr.push({ x: x, width: dikmeWidth, index: 0 });
-        for (let i = 1; i < seperation; i++) {
-          let dikmeX;
-          if (middleBarPositions.length === seperation - 1) {
-            dikmeX =
-              x + (positions[i - 1] / width) * finalWidth - dikmeWidth / 2;
-          } else {
-            dikmeX = x + dikmeWidth + sectionWidth * i - dikmeWidth / 2;
-          }
-          middleBarArr.push({ x: dikmeX, width: dikmeWidth, index: i });
+        // Collect dikme positions - use the calculated dikmeXPositions
+        for (let i = 0; i < dikmeXPositions.length; i++) {
+          middleBarArr.push({
+            x: dikmeXPositions[i],
+            width: dikmeWidth,
+            index: i,
+          });
         }
-        middleBarArr.push({
-          x: x + finalWidth - dikmeWidth,
-          width: dikmeWidth,
-          index: seperation,
-        });
       } else {
         // Tek bölme: sol ve sağ dikme
         sectionLamels.push({
@@ -820,6 +843,12 @@ export function ShutterPreview({
 
       // Bölme genişliklerini panjurun altına bracket ve metinle göster
       if (seperation > 1 && sectionLamels.length === seperation) {
+        console.log(
+          "Drawing brackets for",
+          seperation,
+          "sections with sectionLamels:",
+          sectionLamels.length
+        );
         // En uzun section'ın alt kenarını (alt parça dahil) bul
         let maxSectionBottom = 0;
         for (let sectionIdx = 0; sectionIdx < seperation; sectionIdx++) {
@@ -848,10 +877,16 @@ export function ShutterPreview({
         ctx.textAlign = "center";
 
         // mm pozisyonlarını topla: sol dikme, orta dikmeler, sağ dikme
-        // Canvas x koordinatlarını bul
-        const positions: number[] = [0, ...middleBarPositions, width];
-        // Canvas x koordinatları
-        const xPositions: number[] = positions.map(
+        // Canvas x koordinatları - dikme merkezleri için
+        // Use same logic as dikme positioning above
+        const positions: number[] =
+          middleBarPositions.length === seperation - 1
+            ? middleBarPositions
+            : Array.from({ length: seperation - 1 }, (_, i) =>
+                Math.round((width / seperation) * (i + 1))
+              );
+        const allPositions: number[] = [0, ...positions, width];
+        const xPositions: number[] = allPositions.map(
           (mm) => x + (mm / width) * finalWidth
         );
 
@@ -872,7 +907,9 @@ export function ShutterPreview({
           ctx.lineTo(right, bracketYNew + 7);
           ctx.stroke();
           // Metin (bölme genişliği): iki dikme arası mm (sadece dikme konumundan hesaplanır)
-          const bolmeGenislik = Math.round(positions[i + 1] - positions[i]);
+          const bolmeGenislik = Math.round(
+            allPositions[i + 1] - allPositions[i]
+          );
           // Ölçü değeri üstte, "mm" altta olacak şekilde iki satır yaz
           ctx.save();
           ctx.textAlign = "center";
@@ -1200,8 +1237,30 @@ export function ShutterPreview({
     canvas.width = containerWidth;
     canvas.height = containerHeight;
 
-    drawShutter(canvas, width, height, containerWidth, containerHeight);
+    // Use requestAnimationFrame to ensure proper timing
+    requestAnimationFrame(() => {
+      drawShutter(canvas, width, height, containerWidth, containerHeight);
+    });
   }, [width, height, drawShutter]);
+
+  // middleBarPositions değişikliklerinde canvas'ı yeniden çiz
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      updateCanvasSize();
+    }, 10);
+
+    return () => clearTimeout(timeoutId);
+  }, [middleBarPositions, updateCanvasSize]);
+
+  // seperation değiştiğinde canvas'ı yeniden çiz
+  useEffect(() => {
+    // Small delay to ensure state updates are complete
+    const timeoutId = setTimeout(() => {
+      updateCanvasSize();
+    }, 50);
+
+    return () => clearTimeout(timeoutId);
+  }, [seperation, updateCanvasSize]);
 
   // Canvas'a tıklama olayı ekle (doğrudan component gövdesinde)
   useEffect(() => {
@@ -1293,6 +1352,11 @@ export function ShutterPreview({
       arr[selectedBar.index - 1] = val;
       dispatch(setMiddleBarPositions(arr));
       setSelectedBar(null);
+
+      // Force canvas redraw immediately
+      setTimeout(() => {
+        updateCanvasSize();
+      }, 10);
     }
   };
 

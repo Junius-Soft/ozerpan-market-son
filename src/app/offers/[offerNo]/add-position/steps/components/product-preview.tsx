@@ -72,7 +72,7 @@ const formatFieldValue = (
 
   if (typeof value === "boolean") return value ? "Evet" : "Hayır";
   if (Array.isArray(value) && typeof value[0] === "number") {
-    return value.map(v => `${v} mm`).join(", ");
+    return value.map((v) => `${v} mm`).join(", ");
   }
   if (field?.type === "number" || fieldId === "width" || fieldId === "height") {
     return `${value} mm`;

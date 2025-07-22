@@ -398,8 +398,9 @@ export function ShutterPreview({
           const totalSectionHeightPx = section.bottom - section.top;
           // mm -> px oranı
           const mmToPx = totalSectionHeightPx / height;
-          // Bu bölmenin lamel alanı yüksekliği (mm cinsinden)
-          const sectionHeightPx = sectionHeightMm * mmToPx;
+          // Bu bölmenin lamel alanı yüksekliği (mm cinsinden) - maksimum height'i aşmasın
+          const clampedSectionHeightMm = Math.min(sectionHeightMm, height);
+          const sectionHeightPx = clampedSectionHeightMm * mmToPx;
           // Lamel sayısı (her bölme için eşit dağıtılmış, kalan lameller son bölmeye eklenir)
           let lamelsInSection = Math.floor(lamelCount / seperation);
           if (sectionIdx === seperation - 1) {
@@ -723,8 +724,11 @@ export function ShutterPreview({
           const section = sectionLamels[sectionIdx];
           const lamelX = section.left;
           const lamelWidth = section.right - section.left;
-          // Bölme yüksekliği (mm cinsinden, state'ten)
-          const sectionHeightMm = sectionHeights[sectionIdx] ?? height;
+          // Bölme yüksekliği (mm cinsinden, state'ten) - maksimum height'i aşmasın
+          const sectionHeightMm = Math.min(
+            sectionHeights[sectionIdx] ?? height,
+            height
+          );
           const totalSectionHeightPx = section.bottom - section.top;
           const mmToPx = totalSectionHeightPx / height;
           const sectionHeightPx = sectionHeightMm * mmToPx;
@@ -766,15 +770,20 @@ export function ShutterPreview({
           if (i === 0) {
             // Leftmost dikme: ilk bölmenin yüksekliği
             const section = sectionLamels[0];
-            const sectionHeightMm = sectionHeights[0] ?? height;
+            const sectionHeightMm = Math.min(
+              sectionHeights[0] ?? height,
+              height
+            );
             const totalSectionHeightPx = section.bottom - section.top;
             const mmToPx = totalSectionHeightPx / height;
             dikmeHeight = sectionHeightMm * mmToPx;
           } else if (i === middleBarArrRef.current.length - 1) {
             // Rightmost dikme: son bölmenin yüksekliği
             const section = sectionLamels[sectionLamels.length - 1];
-            const sectionHeightMm =
-              sectionHeights[sectionLamels.length - 1] ?? height;
+            const sectionHeightMm = Math.min(
+              sectionHeights[sectionLamels.length - 1] ?? height,
+              height
+            );
             const totalSectionHeightPx = section.bottom - section.top;
             const mmToPx = totalSectionHeightPx / height;
             dikmeHeight = sectionHeightMm * mmToPx;
@@ -782,8 +791,14 @@ export function ShutterPreview({
             // Orta dikme: sol ve sağındaki bölmelerin max yüksekliği
             const leftSection = sectionLamels[i - 1];
             const rightSection = sectionLamels[i];
-            const leftHeightMm = sectionHeights[leftSection.index] ?? height;
-            const rightHeightMm = sectionHeights[rightSection.index] ?? height;
+            const leftHeightMm = Math.min(
+              sectionHeights[leftSection.index] ?? height,
+              height
+            );
+            const rightHeightMm = Math.min(
+              sectionHeights[rightSection.index] ?? height,
+              height
+            );
             const leftTotalPx = leftSection.bottom - leftSection.top;
             const rightTotalPx = rightSection.bottom - rightSection.top;
             const leftMmToPx = leftTotalPx / height;
@@ -810,7 +825,10 @@ export function ShutterPreview({
         for (let sectionIdx = 0; sectionIdx < seperation; sectionIdx++) {
           const section = sectionLamels[sectionIdx];
           if (!section) continue;
-          const sectionHeightMm = sectionHeights[sectionIdx] ?? height;
+          const sectionHeightMm = Math.min(
+            sectionHeights[sectionIdx] ?? height,
+            height
+          );
           const totalSectionHeightPx = section.bottom - section.top;
           const mmToPx = totalSectionHeightPx / height;
           const sectionHeightPx = sectionHeightMm * mmToPx;
@@ -920,7 +938,10 @@ export function ShutterPreview({
       for (let sectionIdx = 0; sectionIdx < seperation; sectionIdx++) {
         const section = sectionLamels[sectionIdx];
         if (!section) continue;
-        const sectionHeightMm = sectionHeights[sectionIdx] ?? height;
+        const sectionHeightMm = Math.min(
+          sectionHeights[sectionIdx] ?? height,
+          height
+        );
         const totalSectionHeightPx = section.bottom - section.top;
         const mmToPx = totalSectionHeightPx / height;
         const sectionHeightPx = sectionHeightMm * mmToPx;
@@ -942,16 +963,6 @@ export function ShutterPreview({
         18
       );
       ctx.restore();
-
-      // Soldaki 2. bracket: en uzun bölme yüksekliği - motor yüksekliği kadar olmalı
-      // Sadece çoklu bölmede (seperation > 1) bu bracket'ı çiz
-      if (seperation > 1) {
-        ctx.save();
-        ctx.strokeStyle = "#64748b";
-        ctx.lineWidth = 1;
-        drawVerticalBracket(ctx, x - 18, y + motorHeight, maxSectionBottom, 18);
-        ctx.restore();
-      }
 
       // Toplam yükseklik metni (sağda, ortalanmış, dikey ve ters, en uzun section'a ortalı, iki satır)
       // Sağdaki yükseklik metni: bracket'ın tam ortasına hizala (tekli panjurda da tam ortalı olur)

@@ -10,7 +10,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useErcomOrders } from "@/hooks/useErcomOrders";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrency } from "@/store/appSlice";
+import { RootState } from "@/store";
 
 interface OfferSummaryCardProps {
   subtotal: number;
@@ -52,7 +55,30 @@ export function OfferSummaryCard({
   const [vatRate, setVatRate] = useState<number>(20);
   const [discountRate, setDiscountRate] = useState<number>(0);
   const [assemblyRate, setAssemblyRate] = useState<number>(0);
-  const [currency, setCurrency] = useState<"EUR" | "TRY">("EUR");
+
+  // Redux state ve dispatch
+  const currency = useSelector((state: RootState) => state.app.currency);
+  const dispatch = useDispatch();
+
+  // LocalStorage'dan currency değerini yükle ve Redux'a set et
+  useEffect(() => {
+    const savedCurrency = localStorage.getItem("currency") as
+      | "EUR"
+      | "TRY"
+      | null;
+    if (savedCurrency && (savedCurrency === "EUR" || savedCurrency === "TRY")) {
+      dispatch(setCurrency(savedCurrency));
+    }
+  }, [dispatch]);
+
+  // Currency değiştiğinde localStorage'a kaydet
+  const handleCurrencyChange = useCallback(
+    (newCurrency: "EUR" | "TRY") => {
+      dispatch(setCurrency(newCurrency));
+      localStorage.setItem("currency", newCurrency);
+    },
+    [dispatch]
+  );
 
   // orders değiştiğinde ilkini seçili yap
   React.useEffect(() => {
@@ -175,10 +201,7 @@ export function OfferSummaryCard({
             <label className="block text-xs text-gray-500 mb-1">
               Para Birimi
             </label>
-            <Select
-              value={currency}
-              onValueChange={(v) => setCurrency(v as "EUR" | "TRY")}
-            >
+            <Select value={currency} onValueChange={handleCurrencyChange}>
               <SelectTrigger className="w-24">
                 <SelectValue placeholder="Para birimi" />
               </SelectTrigger>

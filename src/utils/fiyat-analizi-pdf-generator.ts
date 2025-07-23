@@ -4,6 +4,7 @@ import JsBarcode from "jsbarcode";
 import NotoSansRegular from "./NotoSans-Regular.js";
 import NotoSansBold from "./NotoSans-Bold.js";
 import { Offer, Position } from "@/documents/offers";
+import { store } from "@/store";
 
 // Logo'yu base64 olarak yükleyen fonksiyon (imalat-pdf-generator.ts ile aynı)
 export async function getLogoDataUrl(): Promise<string> {
@@ -28,6 +29,32 @@ export async function generateFiyatAnaliziPDFPozListesi(
   offer: Offer,
   positions: Position[]
 ): Promise<void> {
+  // Redux'tan currency ve eurRate değerlerini al
+  const state = store.getState();
+  const currency = state.app.currency;
+  const eurRate = state.app.eurRate;
+
+  // Para birimi dönüştürme fonksiyonu
+  const convertCurrency = (amount: number) => {
+    if (currency === "EUR") return amount;
+    return amount * eurRate;
+  };
+
+  // Fiyat formatı fonksiyonu
+  const formatPrice = (amount: number) => {
+    const convertedAmount = convertCurrency(amount);
+    if (currency === "EUR") {
+      return `€ ${convertedAmount.toLocaleString("tr-TR", {
+        maximumFractionDigits: 2,
+      })}`;
+    } else {
+      return `₺ ${convertedAmount.toLocaleString("tr-TR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}`;
+    }
+  };
+
   const doc = new jsPDF("p", "mm", "a4");
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 15;
@@ -75,9 +102,7 @@ export async function generateFiyatAnaliziPDFPozListesi(
   // Poz Listesi Tablosu
   const pozTableData: RowInput[] = positions.map((pos) => {
     const unitPriceEUR = pos.unitPrice || 0;
-    // const unitPriceTL = eurRate ? unitPriceEUR * eurRate : undefined;
     const totalEUR = unitPriceEUR * pos.quantity;
-    // const totalTL = eurRate ? totalEUR * eurRate : undefined;
     return [
       pos.pozNo,
       pos.productName || "-",
@@ -85,14 +110,8 @@ export async function generateFiyatAnaliziPDFPozListesi(
       pos.productDetails?.height ?? "-",
       pos.quantity,
       pos.unit ? pos.unit.charAt(0).toUpperCase() + pos.unit.slice(1) : "-",
-      unitPriceEUR !== undefined
-        ? `€ ${unitPriceEUR.toLocaleString("tr-TR", {
-            maximumFractionDigits: 2,
-          })}`
-        : "-",
-      totalEUR !== undefined
-        ? `€ ${totalEUR.toLocaleString("tr-TR", { maximumFractionDigits: 2 })}`
-        : "-",
+      unitPriceEUR !== undefined ? formatPrice(unitPriceEUR) : "-",
+      totalEUR !== undefined ? formatPrice(totalEUR) : "-",
     ];
   });
 
@@ -113,16 +132,8 @@ export async function generateFiyatAnaliziPDFPozListesi(
           prod.unit
             ? prod.unit.charAt(0).toUpperCase() + prod.unit.slice(1)
             : "-",
-          prod.price
-            ? "€ " +
-              Number(prod.price).toLocaleString("tr-TR", {
-                maximumFractionDigits: 2,
-              })
-            : "-",
-          euroTotal !== undefined
-            ? "€ " +
-              euroTotal.toLocaleString("tr-TR", { maximumFractionDigits: 2 })
-            : "-",
+          prod.price ? formatPrice(Number(prod.price)) : "-",
+          euroTotal !== undefined ? formatPrice(euroTotal) : "-",
         ]);
       });
     }
@@ -140,16 +151,8 @@ export async function generateFiyatAnaliziPDFPozListesi(
           acc.description || "-",
           acc.quantity ?? 1,
           acc.unit ? acc.unit.charAt(0).toUpperCase() + acc.unit.slice(1) : "-",
-          acc.price
-            ? "€ " +
-              Number(acc.price).toLocaleString("tr-TR", {
-                maximumFractionDigits: 2,
-              })
-            : "-",
-          euroTotal !== undefined
-            ? "€ " +
-              euroTotal.toLocaleString("tr-TR", { maximumFractionDigits: 2 })
-            : "-",
+          acc.price ? formatPrice(Number(acc.price)) : "-",
+          euroTotal !== undefined ? formatPrice(euroTotal) : "-",
         ]);
       });
     }
@@ -209,7 +212,7 @@ export async function generateFiyatAnaliziPDFPozListesi(
         "Miktar",
         "Birim",
         "Birim Fiyat",
-        "Tutar (€)",
+        `Tutar (${currency === "EUR" ? "€" : "₺"})`,
       ],
     ],
     body: malzemeListesiData,

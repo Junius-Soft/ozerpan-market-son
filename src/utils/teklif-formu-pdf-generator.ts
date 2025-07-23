@@ -7,6 +7,7 @@ import { Offer, Position } from "@/documents/offers";
 import { getProductNameById } from "@/lib/product-name";
 import { normalizeColor } from "./panjur";
 import { getLogoDataUrl } from "./fiyat-analizi-pdf-generator";
+import { store } from "@/store";
 
 export async function generateTeklifFormuPDF(
   offer: Offer,
@@ -15,8 +16,35 @@ export async function generateTeklifFormuPDF(
   discountRate: number = 0,
   assemblyRate: number = 0
 ): Promise<void> {
+  // Redux'tan currency ve eurRate değerlerini al
+  const state = store.getState();
+  const currency = state.app.currency;
+  const eurRate = state.app.eurRate;
+  
   const doc = new jsPDF("p", "mm", "a4");
   const margin = 15;
+
+  // Para birimi dönüştürme fonksiyonu
+  const convertCurrency = (amount: number) => {
+    if (currency === "EUR") return amount;
+    return amount * eurRate;
+  };
+
+  // Fiyat formatı fonksiyonu
+  const formatPrice = (amount: number) => {
+    const convertedAmount = convertCurrency(amount);
+    if (currency === "EUR") {
+      return convertedAmount.toLocaleString("tr-TR", {
+        style: "currency",
+        currency: "EUR",
+      });
+    } else {
+      return `₺ ${convertedAmount.toLocaleString("tr-TR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}`;
+    }
+  };
 
   doc.addFileToVFS("NotoSans-Regular.ttf", NotoSansRegular);
   doc.addFont("NotoSans-Regular.ttf", "NotoSans", "normal");
@@ -131,12 +159,7 @@ export async function generateTeklifFormuPDF(
       pos.productDetails?.height ?? "-",
       pos.quantity,
       "", // Kontrol sütunu boş
-      euroPrice
-        ? euroPrice.toLocaleString("tr-TR", {
-            style: "currency",
-            currency: "EUR",
-          })
-        : "-",
+      euroPrice ? formatPrice(euroPrice) : "-",
     ];
   });
 
@@ -180,10 +203,6 @@ export async function generateTeklifFormuPDF(
   const kdv = (base * vatRate) / 100;
   const genelToplam = base + kdv;
 
-  // Format helpers
-  const euro = (v: number) =>
-    v.toLocaleString("tr-TR", { style: "currency", currency: "EUR" });
-
   // Tablo konumu
   // Toplamlar tablosu için üstteki tabloya uyumlu ölçü ve renkler
   // Üstteki tablo ile aynı genişlik ve başlık stili
@@ -216,12 +235,12 @@ export async function generateTeklifFormuPDF(
 
   // İskonto ve montajı genel toplamdan önce uygula
   const rows = [
-    { label: "TOPLAM", value: euro(toplam), bold: true },
-    { label: "ARA TOPLAM", value: euro(araToplam), bold: true },
-    { label: "İSKONTO", value: iskonto ? euro(-iskonto) : "-", bold: false },
-    { label: "MONTAJ", value: montaj ? euro(montaj) : "-", bold: false },
-    { label: "KDV", value: euro(kdv), bold: false },
-    { label: "GENEL TOPLAM", value: euro(genelToplam), bold: true },
+    { label: "TOPLAM", value: formatPrice(toplam), bold: true },
+    { label: "ARA TOPLAM", value: formatPrice(araToplam), bold: true },
+    { label: "İSKONTO", value: iskonto ? formatPrice(-iskonto) : "-", bold: false },
+    { label: "MONTAJ", value: montaj ? formatPrice(montaj) : "-", bold: false },
+    { label: "KDV", value: formatPrice(kdv), bold: false },
+    { label: "GENEL TOPLAM", value: formatPrice(genelToplam), bold: true },
   ];
 
   // Kutunun yüksekliği ve satır yüksekliği

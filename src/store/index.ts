@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import shutterReducer from "./shutterSlice";
+import appReducer from "./appSlice";
 
 export const store = configureStore({
   reducer: {
     shutter: shutterReducer,
+    app: appReducer,
   },
 });
 
@@ -15,8 +17,14 @@ export interface ShutterState {
   sectionMotorPositions: string[];
 }
 
+export interface AppState {
+  currency: "EUR" | "TRY";
+  eurRate: number;
+}
+
 export interface RootState {
   shutter: ShutterState;
+  app: AppState;
 }
 
 // export type RootState = ReturnType<typeof store.getState>;

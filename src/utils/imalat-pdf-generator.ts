@@ -119,8 +119,15 @@ export class ImalatPDFGenerator {
       }
     });
 
-    // Tip sıralaması (önce lamel, sonra alt parça, dikme, kutu, boru, diğer)
-    const typeOrder = ["Lamel", "Alt Parça", "Dikme", "Kutu", "Boru"];
+    // Tip sıralaması (kutu -> lamel -> alt parça -> dikme -> yükseltme profili)
+    const typeOrder = [
+      "panjur_kutu_profilleri",
+      "panjur_lamel_profilleri",
+      "panjur_alt_parça_profilleri",
+      "panjur_dikme_profilleri",
+      "sineklik_profilleri",
+      "panjur_tambur_boru_profilleri",
+    ];
     allProducts.sort((a, b) => {
       const aType = a.product.type || "Diğer";
       const bType = b.product.type || "Diğer";

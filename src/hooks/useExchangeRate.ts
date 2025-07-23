@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setEurRate } from "@/store/appSlice";
+import { RootState } from "@/store";
 
 interface ExchangeRateResponse {
   rate: number;
@@ -11,9 +14,12 @@ interface UseExchangeRateProps {
 }
 
 export const useExchangeRate = ({ offerId }: UseExchangeRateProps = {}) => {
-  const [eurRate, setEurRate] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Redux state ve dispatch
+  const eurRate = useSelector((state: RootState) => state.app.eurRate);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchExchangeRate = async () => {
@@ -23,7 +29,7 @@ export const useExchangeRate = ({ offerId }: UseExchangeRateProps = {}) => {
           const offerResponse = await fetch(`/api/offers/${offerId}`);
           const offerData = await offerResponse.json();
           if (offerData.eurRate) {
-            setEurRate(offerData.eurRate);
+            dispatch(setEurRate(offerData.eurRate));
             setLoading(false);
             return;
           }
@@ -38,7 +44,7 @@ export const useExchangeRate = ({ offerId }: UseExchangeRateProps = {}) => {
           throw new Error("Failed to fetch exchange rate");
         }
         const data: ExchangeRateResponse = await response.json();
-        setEurRate(data.rate);
+        dispatch(setEurRate(data.rate));
         setLoading(false);
 
         if (data.fallback) {
@@ -52,7 +58,7 @@ export const useExchangeRate = ({ offerId }: UseExchangeRateProps = {}) => {
           err instanceof Error ? err.message : "Failed to fetch exchange rate"
         );
         setLoading(false);
-        setEurRate(44); // Varsayılan EUR/TL kuru
+        dispatch(setEurRate(44)); // Varsayılan EUR/TL kuru
       }
     };
 
@@ -62,6 +68,6 @@ export const useExchangeRate = ({ offerId }: UseExchangeRateProps = {}) => {
     const interval = setInterval(fetchExchangeRate, 5 * 60 * 1000);
 
     return () => clearInterval(interval);
-  }, [offerId]);
+  }, [offerId, dispatch]);
   return { eurRate, loading, error };
 };

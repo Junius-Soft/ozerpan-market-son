@@ -8,6 +8,9 @@ import {
   setSectionHeights,
   setSectionConnection,
   setSectionConnections,
+  setSectionMotors,
+  setSectionMotorPositions,
+  setSectionMotorPosition,
   toggleSectionMotor,
 } from "@/store/shutterSlice";
 import { useTheme } from "next-themes";
@@ -42,7 +45,6 @@ export function ShutterPreview({
   boxColor,
   subPartColor,
   dikmeColor,
-  hareketBaglanti,
   movementType,
   seperation,
   lamelCount,
@@ -67,42 +69,15 @@ export function ShutterPreview({
   const sectionConnections = useSelector(
     (state: RootState) => state.shutter.sectionConnections
   );
+  const sectionMotorPositions = useSelector(
+    (state: RootState) => state.shutter.sectionMotorPositions
+  );
   const dispatch = useDispatch();
   console.log({
     middleBarPositions,
     seperation,
     expectedLength: seperation - 1,
   });
-
-  // movementType motorlu olduğunda ortadaki bölmelerdeki motorları temizle
-  useEffect(() => {
-    if (movementType === "motorlu" && sectionMotors.length > 0) {
-      // Son bölme hariç tüm motorları kaldır
-      const newSectionMotors = sectionMotors.map((hasMotor, index) =>
-        index === seperation - 1 ? hasMotor : false
-      );
-
-      // Değişiklik varsa güncelle
-      const hasChanges = sectionMotors.some(
-        (hasMotor, index) => index !== seperation - 1 && hasMotor
-      );
-
-      if (hasChanges) {
-        // Redux store'u güncelle
-        const updatedMotors = Array(seperation).fill(false);
-        if (seperation > 0) {
-          updatedMotors[seperation - 1] = newSectionMotors[seperation - 1];
-        }
-
-        // Her bölme için ayrı ayrı güncelle
-        updatedMotors.forEach((shouldHaveMotor, index) => {
-          if (sectionMotors[index] !== shouldHaveMotor) {
-            dispatch(toggleSectionMotor(index));
-          }
-        });
-      }
-    }
-  }, [movementType, seperation, sectionMotors, dispatch]);
 
   // sectionConnections'ı seperation'a göre initialize et
   useEffect(() => {
@@ -121,6 +96,34 @@ export function ShutterPreview({
       dispatch(setSectionConnections(newConnections));
     }
   }, [seperation, sectionConnections, dispatch]);
+
+  // sectionMotors'ı seperation'a göre initialize et - varsayılan olarak tüm bölmelerde motor/makara ekli
+  useEffect(() => {
+    if (sectionMotors.length !== seperation) {
+      const newMotors = Array(seperation).fill(true); // Tüm bölmelerde motor/makara ekli olarak başla
+      // Mevcut motor durumlarını koru (sadece aynı index'teki bölmeler için)
+      for (let i = 0; i < Math.min(sectionMotors.length, seperation); i++) {
+        newMotors[i] = sectionMotors[i];
+      }
+      dispatch(setSectionMotors(newMotors));
+    }
+  }, [seperation, sectionMotors, dispatch]);
+
+  // sectionMotorPositions'ı seperation'a göre initialize et - varsayılan olarak sol tarafta
+  useEffect(() => {
+    if (sectionMotorPositions.length !== seperation) {
+      const newPositions = Array(seperation).fill("left"); // Tüm motorlar sol tarafta başlasın
+      // Mevcut pozisyonları koru (sadece aynı index'teki bölmeler için)
+      for (
+        let i = 0;
+        i < Math.min(sectionMotorPositions.length, seperation);
+        i++
+      ) {
+        newPositions[i] = sectionMotorPositions[i];
+      }
+      dispatch(setSectionMotorPositions(newPositions));
+    }
+  }, [seperation, sectionMotorPositions, dispatch]);
 
   // seperation veya width değiştiğinde middleBarPositions'ı eşit aralıklı olarak güncelle
   // Initialize middleBarPositions if empty or incorrect length
@@ -174,12 +177,18 @@ export function ShutterPreview({
     index: number;
     value: number | null;
   } | null>(null);
+  // Motor/makara popup için state
+  const [selectedMotor, setSelectedMotor] = useState<{
+    x: number;
+    y: number;
+    index: number;
+    position: "left" | "right";
+  } | null>(null);
   const [inputValue, setInputValue] = useState<string>("");
   // Canvas koordinatlarını tutmak için ref
   const middleBarArrRef = useRef<{ x: number; width: number; index: number }[]>(
     []
   );
-  // Bölme bracket/metin alanlarının koordinatlarını tutmak için ref
   // Her bölmenin lamel alanı koordinatlarını tutmak için ref
   const sectionLamelArrRef = useRef<
     | {
@@ -191,6 +200,16 @@ export function ShutterPreview({
       }[]
     | null
   >(null);
+  // Motor kutularının koordinatlarını tutmak için ref
+  const motorBoxArrRef = useRef<
+    {
+      x: number;
+      y: number;
+      width: number;
+      height: number;
+      index: number;
+    }[]
+  >([]);
   const drawShutter = useCallback(
     (
       canvas: HTMLCanvasElement,
@@ -271,7 +290,7 @@ export function ShutterPreview({
       const y = (canvasHeight - extraHeight - finalHeight) / 2;
 
       // Draw shutter-like visualization
-      const motorHeight = Math.min(80, finalHeight * 0.2); // Maksimum sınırı 80'e çıkardık ve yüzdeyi %20'ye çıkardık
+      const motorHeight = Math.min(50, finalHeight * 0.12); // Kutu yüksekliğini daha da azalttık: max 50px, %12
       const remainingHeight = finalHeight - motorHeight;
 
       // --- Lameller için minimum yükseklik kontrolü ---
@@ -293,54 +312,6 @@ export function ShutterPreview({
       ctx.fillStyle = boxColor || colors.frameBackground;
       ctx.fillRect(x, y, finalWidth, motorHeight);
 
-      // --- Hareket bağlantı kutusu (motor kutusunun içinde) ---
-      const connectionBoxWidth = Math.max(30, finalWidth * 0.15); // %15 genişlik, min 30px
-      const connectionBoxHeight = motorHeight * 0.6; // kutu yüksekliğinin %60'i
-      const connectionBoxY = y + (motorHeight - connectionBoxHeight) / 2; // dikeyde ortala
-      const margin = 10; // kenarlardan boşluk
-
-      let connectionBoxX = 0;
-      if (hareketBaglanti === "sag") {
-        // Motor kutusunun sağ tarafında
-        connectionBoxX = x + finalWidth - connectionBoxWidth - margin;
-      } else {
-        // Motor kutusunun sol tarafında
-        connectionBoxX = x + margin;
-      }
-
-      // Hareket bağlantı kutusunu çiz
-      ctx.fillStyle = theme === "dark" ? "#374151" : "#f3f4f6"; // Farklı arka plan rengi
-      ctx.fillRect(
-        connectionBoxX,
-        connectionBoxY,
-        connectionBoxWidth,
-        connectionBoxHeight
-      );
-
-      // Kutu çerçevesi
-      ctx.strokeStyle = dikmeColor || colors.frameBorder;
-      ctx.lineWidth = 1;
-      ctx.strokeRect(
-        connectionBoxX,
-        connectionBoxY,
-        connectionBoxWidth,
-        connectionBoxHeight
-      );
-
-      // Hareket tipi yazısı (K veya M)
-      ctx.fillStyle = colors.text;
-      ctx.font = `${Math.max(
-        10,
-        connectionBoxHeight * 0.4
-      )}px 'Noto Sans', 'Arial', sans-serif`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      const movementText = movementType === "manuel" ? "K" : "M";
-      ctx.fillText(
-        movementText,
-        connectionBoxX + connectionBoxWidth / 2,
-        connectionBoxY + connectionBoxHeight / 2
-      );
       // --- Dikey dikmeler (kutudan sonra başlasın, daha ince) ---
       const dikmeWidth = Math.max(8, finalWidth * 0.03); // min 8px, %3 genişlik
       // Orta dikmelerin ve sectionLamels'ın koordinatlarını topla
@@ -1099,6 +1070,9 @@ export function ShutterPreview({
 
       // --- Bölme motorlarını çiz ---
       if (sectionLamels.length > 0 && sectionMotors.length > 0) {
+        // Motor kutularının koordinatlarını temizle
+        motorBoxArrRef.current = [];
+
         for (
           let sectionIdx = 0;
           sectionIdx < sectionLamels.length;
@@ -1110,13 +1084,39 @@ export function ShutterPreview({
           const section = sectionLamels[sectionIdx];
           if (!section) continue;
 
-          // Motor kutusu boyutları (sol üstteki connection box ile aynı boyut)
-          const motorBoxWidth = Math.max(30, finalWidth * 0.15); // %15 genişlik, min 30px (connection box ile aynı)
-          const motorBoxHeight = motorHeight * 0.6; // kutu yüksekliğinin %60'i (connection box ile aynı)
+          // Motor kutusu boyutları - sadece harfin arka planını kaplayacak kadar küçük
+          const motorText = movementType === "manuel" ? "K" : "M";
+          const fontSize = Math.max(12, motorHeight * 0.3);
 
-          // Motor kutusunun pozisyonu: kutunun içinde, bölmenin sağ tarafında
-          const motorBoxX = section.right - motorBoxWidth - 10; // 15px kenar boşluğu (daha sola almak için artırıldı)
+          // Font ölçümü için geçici context ayarla
+          ctx.save();
+          ctx.font = `${fontSize}px 'Noto Sans', 'Arial', sans-serif`;
+          const textMetrics = ctx.measureText(motorText);
+          const textWidth = textMetrics.width;
+          const textHeight = fontSize; // yaklaşık font yüksekliği
+          ctx.restore();
+
+          // Kutu boyutları: metin + padding
+          const padding = 1; // Padding'i 0 yap, daha fazla alan için
+          const motorBoxWidth = textWidth + padding * 2;
+          const motorBoxHeight = textHeight + padding * 2;
+
+          // Motor kutusunun pozisyonu: kutunun içinde, motor pozisyonuna göre sol veya sağ tarafta
+          const motorPosition = sectionMotorPositions[sectionIdx] || "left";
+          const motorBoxX =
+            motorPosition === "left"
+              ? section.left + 5 // Sol taraf
+              : section.right - motorBoxWidth - 5; // Sağ taraf
           const motorBoxY = y + (motorHeight - motorBoxHeight) / 2; // Motor kutusunun içinde dikeyde ortala
+
+          // Motor kutusu koordinatlarını kaydet
+          motorBoxArrRef.current.push({
+            x: motorBoxX,
+            y: motorBoxY,
+            width: motorBoxWidth,
+            height: motorBoxHeight,
+            index: sectionIdx,
+          });
 
           // Motor kutusunu çiz
           ctx.fillStyle = theme === "dark" ? "#374151" : "#f3f4f6";
@@ -1129,13 +1129,9 @@ export function ShutterPreview({
 
           // Motor tipi yazısı (K veya M)
           ctx.fillStyle = colors.text;
-          ctx.font = `${Math.max(
-            8,
-            motorBoxHeight * 0.4
-          )}px 'Noto Sans', 'Arial', sans-serif`;
+          ctx.font = `${fontSize}px 'Noto Sans', 'Arial', sans-serif`;
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
-          const motorText = movementType === "manuel" ? "K" : "M";
           ctx.fillText(
             motorText,
             motorBoxX + motorBoxWidth / 2,
@@ -1158,12 +1154,25 @@ export function ShutterPreview({
           const section = sectionLamels[sectionIdx];
           if (!section) continue;
 
-          // Bağlantı kutusu boyutları (motor kutusu ile aynı boyut)
-          const connectionBoxWidth = Math.max(30, finalWidth * 0.15); // %15 genişlik, min 30px
-          const connectionBoxHeight = motorHeight * 0.6; // kutu yüksekliğinin %60'i
+          // Bağlantı kutusu boyutları - sadece harfin arka planını kaplayacak kadar küçük
+          const connectionText = connection === "right" ? ">>" : "<<";
+          const fontSize = Math.max(12, motorHeight * 0.3);
 
-          // Bağlantı kutusunun pozisyonu: kutunun içinde, bölmenin sağ tarafında
-          const connectionBoxX = section.right - connectionBoxWidth - 10; // 10px kenar boşluğu
+          // Font ölçümü için geçici context ayarla
+          ctx.save();
+          ctx.font = `${fontSize}px 'Noto Sans', 'Arial', sans-serif`;
+          const textMetrics = ctx.measureText(connectionText);
+          const textWidth = textMetrics.width;
+          const textHeight = fontSize; // yaklaşık font yüksekliği
+          ctx.restore();
+
+          // Kutu boyutları: metin + padding
+          const padding = 1; // Padding'i 1 yap, daha fazla alan için
+          const connectionBoxWidth = textWidth + padding * 2;
+          const connectionBoxHeight = textHeight + padding * 2;
+
+          // Bağlantı kutusunun pozisyonu: kutunun içinde, bölmenin sol tarafında
+          const connectionBoxX = section.left + 10; // 10px kenar boşluğu sol taraftan
           const connectionBoxY = y + (motorHeight - connectionBoxHeight) / 2; // Motor kutusunun içinde dikeyde ortala
 
           // Bağlantı kutusunu çiz
@@ -1187,13 +1196,9 @@ export function ShutterPreview({
 
           // Bağlantı tipi yazısı (>> veya <<)
           ctx.fillStyle = colors.text;
-          ctx.font = `${Math.max(
-            8,
-            connectionBoxHeight * 0.4
-          )}px 'Noto Sans', 'Arial', sans-serif`;
+          ctx.font = `${fontSize}px 'Noto Sans', 'Arial', sans-serif`;
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
-          const connectionText = connection === "right" ? ">>" : "<<";
           ctx.fillText(
             connectionText,
             connectionBoxX + connectionBoxWidth / 2,
@@ -1209,7 +1214,6 @@ export function ShutterPreview({
       subPartColor,
       dikmeColor,
       boxHeight,
-      hareketBaglanti,
       movementType,
       lamelCount,
       seperation,
@@ -1217,6 +1221,7 @@ export function ShutterPreview({
       sectionHeights,
       sectionMotors,
       sectionConnections,
+      sectionMotorPositions,
       systemHeight,
       systemWidth,
     ]
@@ -1293,6 +1298,28 @@ export function ShutterPreview({
           }
         }
       }
+
+      // Motor kutularına tıklama kontrolü
+      const motorBoxes = motorBoxArrRef.current;
+      for (const motorBox of motorBoxes) {
+        if (
+          clickX >= motorBox.x &&
+          clickX <= motorBox.x + motorBox.width &&
+          clickY >= motorBox.y &&
+          clickY <= motorBox.y + motorBox.height
+        ) {
+          const currentPosition =
+            sectionMotorPositions[motorBox.index] || "left";
+          setSelectedMotor({
+            x: motorBox.x,
+            y: motorBox.y,
+            index: motorBox.index,
+            position: currentPosition as "left" | "right",
+          });
+          return;
+        }
+      }
+
       // Bölme lamel alanına tıklama (yükseklik inputu)
       // Tek bölmeli panjurlarda popup açılmamalı
       if (sectionLamelArrRef.current && seperation > 1) {
@@ -1319,7 +1346,13 @@ export function ShutterPreview({
     return () => {
       canvas.removeEventListener("click", handleClick);
     };
-  }, [changeMiddlebarPostion, sectionHeights, middleBarPositions, seperation]);
+  }, [
+    changeMiddlebarPostion,
+    sectionHeights,
+    middleBarPositions,
+    sectionMotorPositions,
+    seperation,
+  ]);
   // Bölme yüksekliği input submit
   const handleSectionHeightSubmit = (
     e: React.FormEvent | React.KeyboardEvent | React.MouseEvent
@@ -1378,26 +1411,28 @@ export function ShutterPreview({
 
   // Dışarı tıklama ile overlay'i kapatma
   useEffect(() => {
-    if (!selectedBar && !selectedSection) return;
+    if (!selectedBar && !selectedSection && !selectedMotor) return;
     function handleClickOutside(e: MouseEvent) {
       const barOverlay = document.getElementById("middle-bar-input-overlay");
       const sectionOverlay = document.getElementById(
         "section-height-input-overlay"
       );
+      const motorOverlay = document.getElementById("motor-position-overlay");
       if (
         (barOverlay && !barOverlay.contains(e.target as Node)) ||
-        (sectionOverlay && !sectionOverlay.contains(e.target as Node))
+        (sectionOverlay && !sectionOverlay.contains(e.target as Node)) ||
+        (motorOverlay && !motorOverlay.contains(e.target as Node))
       ) {
         setSelectedBar(null);
         setSelectedSection(null);
+        setSelectedMotor(null);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [selectedBar, selectedSection]);
-  const isFirstSection = selectedSection?.index === 0;
+  }, [selectedBar, selectedSection, selectedMotor]);
 
   // Yardımcı fonksiyonlar - bölmelerde motor/makara var mı kontrol et
   // Bu fonksiyon sadece doğrudan motor/makara olan bölmeleri true döndürür
@@ -1412,10 +1447,6 @@ export function ShutterPreview({
 
     // Sol taraftaki tüm bölmeleri kontrol et
     for (let i = 0; i < currentIndex; i++) {
-      if (i === 0) {
-        // İlk bölmede her zaman motor/makara varmış gibi düşün
-        return true;
-      }
       if (hasMotorOrConnection(i)) {
         return true;
       }
@@ -1523,44 +1554,39 @@ export function ShutterPreview({
                   OK
                 </Button>
               </div>
-              {/* Motor/Makara butonu: manuel ise tüm bölmelerde, motorlu ise sadece son bölmede göster */}
-              {(movementType === "manuel" ||
-                (movementType === "motorlu" &&
-                  selectedSection.index === seperation - 1)) &&
-                !isFirstSection && (
-                  <Button
-                    variant={
+              {/* Motor/Makara butonu: tüm bölmelerde göster (ilk bölme dahil) */}
+              <Button
+                variant={
+                  sectionMotors[selectedSection.index]
+                    ? "destructive"
+                    : "default"
+                }
+                onClick={() => {
+                  // Motor/Makara ekleme işlemi burada yapılacak
+                  console.log(
+                    `Motor/Makara ${
                       sectionMotors[selectedSection.index]
-                        ? "destructive"
-                        : "default"
-                    }
-                    onClick={() => {
-                      // Motor/Makara ekleme işlemi burada yapılacak
-                      console.log(
-                        `Motor/Makara ${
-                          sectionMotors[selectedSection.index]
-                            ? "kaldırılıyor"
-                            : "ekleniyor"
-                        } - Bölme: ${selectedSection.index + 1}`
-                      );
-                      // Motor durumunu toggle et
-                      dispatch(toggleSectionMotor(selectedSection.index));
-                      // Popup'ı kapat
-                      setSelectedSection(null);
-                    }}
-                  >
-                    {sectionMotors[selectedSection.index]
-                      ? movementType === "manuel"
-                        ? "Makara Kaldır"
-                        : "Motor Kaldır"
-                      : movementType === "manuel"
-                      ? "Makara Ekle"
-                      : "Motor Ekle"}
-                  </Button>
-                )}
+                        ? "kaldırılıyor"
+                        : "ekleniyor"
+                    } - Bölme: ${selectedSection.index + 1}`
+                  );
+                  // Motor durumunu toggle et
+                  dispatch(toggleSectionMotor(selectedSection.index));
+                  // Popup'ı kapat
+                  setSelectedSection(null);
+                }}
+              >
+                {sectionMotors[selectedSection.index]
+                  ? movementType === "manuel"
+                    ? "Makara Kaldır"
+                    : "Motor Kaldır"
+                  : movementType === "manuel"
+                  ? "Makara Ekle"
+                  : "Motor Ekle"}
+              </Button>
 
               {/* Sağa Bağla ve Sola Bağla butonları: motor/makara yoksa göster */}
-              {!sectionMotors[selectedSection.index] && !isFirstSection && (
+              {!sectionMotors[selectedSection.index] && (
                 <div className="flex justify-between gap-2">
                   {/* Sola Bağla butonu: sol tarafta motor/makara varsa göster */}
                   {hasLeftMotorOrConnection(selectedSection.index) && (
@@ -1619,6 +1645,65 @@ export function ShutterPreview({
                   )}
                 </div>
               )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Motor pozisyon popup overlay */}
+      {selectedMotor && (
+        <Card
+          id="motor-position-overlay"
+          style={{
+            position: "absolute",
+            left: selectedMotor.x,
+            top: selectedMotor.y + 40, // Motor kutusunun biraz altında
+            transform: "translateX(-50%)",
+            zIndex: 10,
+            width: 180,
+          }}
+        >
+          <CardContent className="p-3">
+            <CardTitle className="text-sm mb-3">
+              Motor Pozisyonu - Bölme {selectedMotor.index + 1}
+            </CardTitle>
+            <div className="flex gap-2">
+              <Button
+                variant={
+                  selectedMotor.position === "left" ? "default" : "outline"
+                }
+                size="sm"
+                className="flex-1"
+                onClick={() => {
+                  dispatch(
+                    setSectionMotorPosition({
+                      index: selectedMotor.index,
+                      position: "left",
+                    })
+                  );
+                  setSelectedMotor(null);
+                }}
+              >
+                Sol
+              </Button>
+              <Button
+                variant={
+                  selectedMotor.position === "right" ? "default" : "outline"
+                }
+                size="sm"
+                className="flex-1"
+                onClick={() => {
+                  dispatch(
+                    setSectionMotorPosition({
+                      index: selectedMotor.index,
+                      position: "right",
+                    })
+                  );
+                  setSelectedMotor(null);
+                }}
+              >
+                Sağ
+              </Button>
             </div>
           </CardContent>
         </Card>

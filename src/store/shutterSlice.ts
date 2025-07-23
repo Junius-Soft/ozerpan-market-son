@@ -5,6 +5,7 @@ interface ShutterState {
   sectionHeights: number[];
   sectionMotors: boolean[]; // Her bölmenin motor durumu (true = motor var, false = yok)
   sectionConnections: string[]; // Her bölmenin bağlantı durumu ("left", "right", "none")
+  sectionMotorPositions: string[]; // Her bölmenin motor pozisyonu ("left", "right")
 }
 
 const initialState: ShutterState = {
@@ -12,6 +13,7 @@ const initialState: ShutterState = {
   sectionHeights: [],
   sectionMotors: [],
   sectionConnections: [],
+  sectionMotorPositions: [],
 };
 
 const shutterSlice = createSlice({
@@ -29,6 +31,16 @@ const shutterSlice = createSlice({
     },
     setSectionConnections(state, action: PayloadAction<string[]>) {
       state.sectionConnections = action.payload;
+    },
+    setSectionMotorPositions(state, action: PayloadAction<string[]>) {
+      state.sectionMotorPositions = action.payload;
+    },
+    setSectionMotorPosition(
+      state,
+      action: PayloadAction<{ index: number; position: string }>
+    ) {
+      const { index, position } = action.payload;
+      state.sectionMotorPositions[index] = position;
     },
     toggleSectionMotor(state, action: PayloadAction<number>) {
       const index = action.payload;
@@ -60,6 +72,7 @@ const shutterSlice = createSlice({
       state.sectionHeights = [];
       state.sectionMotors = [];
       state.sectionConnections = [];
+      state.sectionMotorPositions = [];
     },
   },
 });
@@ -69,6 +82,8 @@ export const {
   setSectionHeights,
   setSectionMotors,
   setSectionConnections,
+  setSectionMotorPositions,
+  setSectionMotorPosition,
   toggleSectionMotor,
   setSectionConnection,
 } = shutterSlice.actions;

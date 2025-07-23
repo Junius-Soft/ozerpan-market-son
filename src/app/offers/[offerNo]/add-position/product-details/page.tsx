@@ -3,12 +3,22 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setMiddleBarPositions, setSectionHeights } from "@/store/shutterSlice";
+import {
+  setMiddleBarPositions,
+  setSectionHeights,
+  setSectionMotors,
+  setSectionConnections,
+  setSectionMotorPositions,
+} from "@/store/shutterSlice";
 
 interface ShutterState {
   middleBarPositions: number[];
   sectionHeights: number[];
+  sectionMotors: boolean[]; // Her bölmenin motor durumu (true = motor var, false = yok)
+  sectionConnections: string[]; // Her bölmenin bağlantı durumu ("left", "right", "none")
+  sectionMotorPositions: string[]; // Her bölmenin motor pozisyonu ("left", "right")
 }
+
 import { type Product, getProductTabs } from "@/documents/products";
 import { DetailsStep } from "../steps/details-step";
 import { getOffer, type Position } from "@/documents/offers";
@@ -39,6 +49,15 @@ export default function ProductDetailsPage() {
   );
   const sectionHeights = useSelector(
     (state: { shutter: ShutterState }) => state.shutter.sectionHeights
+  );
+  const sectionMotors = useSelector(
+    (state: { shutter: ShutterState }) => state.shutter.sectionMotors
+  );
+  const sectionConnections = useSelector(
+    (state: { shutter: ShutterState }) => state.shutter.sectionConnections
+  );
+  const sectionMotorPositions = useSelector(
+    (state: { shutter: ShutterState }) => state.shutter.sectionMotorPositions
   );
   const dispatch = useDispatch();
   const productId = searchParams.get("productId");
@@ -131,6 +150,9 @@ export default function ProductDetailsPage() {
               position.productDetails as PanjurSelections & {
                 middleBarPositions?: number[];
                 sectionHeights?: number[];
+                sectionMotors?: boolean[];
+                sectionConnections?: string[];
+                sectionMotorPositions?: string[];
               };
 
             // Update each tab's fields with values from position.productDetails
@@ -173,6 +195,31 @@ export default function ProductDetailsPage() {
               Array.isArray(productDetails.sectionHeights)
             ) {
               dispatch(setSectionHeights(productDetails.sectionHeights));
+            }
+            // Set section motors from position if available
+            if (
+              productDetails.sectionMotors &&
+              Array.isArray(productDetails.sectionMotors)
+            ) {
+              dispatch(setSectionMotors(productDetails.sectionMotors));
+            }
+            // Set section connections from position if available
+            if (
+              productDetails.sectionConnections &&
+              Array.isArray(productDetails.sectionConnections)
+            ) {
+              dispatch(
+                setSectionConnections(productDetails.sectionConnections)
+              );
+            }
+            // Set section motor positions from position if available
+            if (
+              productDetails.sectionMotorPositions &&
+              Array.isArray(productDetails.sectionMotorPositions)
+            ) {
+              dispatch(
+                setSectionMotorPositions(productDetails.sectionMotorPositions)
+              );
             }
           }
           // Set quantity from position if available
@@ -245,6 +292,9 @@ export default function ProductDetailsPage() {
           ...values,
           middleBarPositions: middleBarPositions,
           sectionHeights: sectionHeights,
+          sectionMotors: sectionMotors,
+          sectionConnections: sectionConnections,
+          sectionMotorPositions: sectionMotorPositions,
         },
         total: (values.unitPrice || 0) * (values.quantity || 1), // Calculate total
       };

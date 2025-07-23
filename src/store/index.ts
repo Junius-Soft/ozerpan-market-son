@@ -12,6 +12,7 @@ export interface ShutterState {
   sectionHeights: number[];
   sectionMotors: boolean[];
   sectionConnections: string[];
+  sectionMotorPositions: string[];
 }
 
 export interface RootState {

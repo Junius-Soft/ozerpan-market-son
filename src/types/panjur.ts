@@ -39,6 +39,9 @@ export interface CalculationResult {
 export interface PanjurSelections {
   middleBarPositions?: number[];
   sectionHeights?: number[];
+  sectionMotors?: boolean[];
+  sectionConnections?: string[];
+  sectionMotorPositions?: string[];
   productId: string;
   panjurType: "distan" | "monoblok" | "yalitimli";
   width: number;

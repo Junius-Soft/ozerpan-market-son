@@ -1664,9 +1664,6 @@ export function ShutterPreview({
           }}
         >
           <CardContent className="p-3">
-            <CardTitle className="text-sm mb-3">
-              Motor Pozisyonu - Bölme {selectedMotor.index + 1}
-            </CardTitle>
             <div className="flex gap-2">
               <Button
                 variant={

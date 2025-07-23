@@ -20,7 +20,7 @@ export async function generateTeklifFormuPDF(
   const state = store.getState();
   const currency = state.app.currency;
   const eurRate = state.app.eurRate;
-  
+
   const doc = new jsPDF("p", "mm", "a4");
   const margin = 15;
 
@@ -237,7 +237,11 @@ export async function generateTeklifFormuPDF(
   const rows = [
     { label: "TOPLAM", value: formatPrice(toplam), bold: true },
     { label: "ARA TOPLAM", value: formatPrice(araToplam), bold: true },
-    { label: "İSKONTO", value: iskonto ? formatPrice(-iskonto) : "-", bold: false },
+    {
+      label: "İSKONTO",
+      value: iskonto ? formatPrice(-iskonto) : "-",
+      bold: false,
+    },
     { label: "MONTAJ", value: montaj ? formatPrice(montaj) : "-", bold: false },
     { label: "KDV", value: formatPrice(kdv), bold: false },
     { label: "GENEL TOPLAM", value: formatPrice(genelToplam), bold: true },

@@ -524,3 +524,15 @@ export const findYukseltmeProfiliPrice = (
   );
   return [parseFloat(matchingProfili.price), selectedProduct];
 };
+
+// En geniş bölmenin genişliğini hesaplayan fonksiyon
+export const calculateMaxSectionWidth = (
+  totalWidth: number,
+  middleBarPositions: number[]
+): number => {
+  if (middleBarPositions.length === 0) {
+    return totalWidth;
+  }
+  const sectionWidths = findSectionWidths(middleBarPositions, totalWidth);
+  return Math.max(...sectionWidths);
+};

@@ -5,9 +5,12 @@ import {
   calculateLamelCount,
   calculateLamelGenisligi,
   calculateDikmeHeight,
+  calculateMaxSectionWidth,
 } from "@/utils/panjur";
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 import {
   findYanKapakAccessoryPrice,
   findBoruBasiAccessoryPrice,
@@ -36,9 +39,30 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
   const [accessories, setAccessories] = useState<PriceItem[]>([]);
   const searchParams = useSearchParams();
 
+  // Redux state'lerini çek
+  const middleBarPositions = useSelector(
+    (state: RootState) => state.shutter.middleBarPositions
+  );
+  // const sectionHeights = useSelector(
+  //   (state: RootState) => state.shutter.sectionHeights
+  // );
+  const sectionMotors = useSelector(
+    (state: RootState) => state.shutter.sectionMotors
+  );
+  const sectionConnections = useSelector(
+    (state: RootState) => state.shutter.sectionConnections
+  );
+  const sectionMotorPositions = useSelector(
+    (state: RootState) => state.shutter.sectionMotorPositions
+  );
+
   const sectionCount = searchParams.get("typeId");
   const productId = searchParams.get("productId");
   const dikmeCount = Number(sectionCount) * 2;
+
+  const calculateMotorQuantity = useMemo(() => {
+    return sectionMotors.filter((motor) => motor).length;
+  }, [sectionMotors]);
 
   useEffect(() => {
     const fetchAndCalculateAccessories = async () => {
@@ -52,8 +76,13 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
         const neededAccessories: PriceItem[] = [];
 
         if (allAccessories && productId === "panjur") {
+          // En geniş bölmenin genişliğini hesapla
+          const maxSectionWidth = calculateMaxSectionWidth(
+            values?.width || 0,
+            middleBarPositions
+          );
           const width = calculateSystemWidth(
-            values?.width,
+            maxSectionWidth,
             values.dikmeOlcuAlmaSekli,
             values.dikmeType
           );
@@ -64,13 +93,18 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
           );
           const lamelWidth = calculateLamelGenisligi(width, values.dikmeType);
 
-          // Yan Kapak
+          // Yan Kapak - bölme sayısı kadar
           const yanKapak = findYanKapakAccessoryPrice(
             allAccessories,
             values.boxType,
             values.box_color
           );
-          if (yanKapak) neededAccessories.push({ ...yanKapak, quantity: 1 });
+          if (yanKapak) {
+            neededAccessories.push({
+              ...yanKapak,
+              quantity: middleBarPositions.length + 1,
+            });
+          }
 
           // Motorlu aksesuarlar
           if (values.movementType === "motorlu") {
@@ -78,15 +112,27 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
               allAccessories,
               "motorlu"
             );
-            if (boruBasi) neededAccessories.push({ ...boruBasi, quantity: 1 });
+            if (boruBasi)
+              neededAccessories.push({
+                ...boruBasi,
+                quantity: calculateMotorQuantity,
+              });
             const rulman = findRulmanAccessoryPrice(allAccessories);
-            if (rulman) neededAccessories.push({ ...rulman, quantity: 1 });
+            if (rulman)
+              neededAccessories.push({
+                ...rulman,
+                quantity: calculateMotorQuantity,
+              });
             const plaket = findPlaketAccessoryPrice(
               allAccessories,
               values.boxType,
               values.movementType
             );
-            if (plaket) neededAccessories.push({ ...plaket, quantity: 1 });
+            if (plaket)
+              neededAccessories.push({
+                ...plaket,
+                quantity: calculateMotorQuantity,
+              });
           }
 
           // Manuel makaralı aksesuarlar
@@ -98,20 +144,38 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
               allAccessories,
               "manuel"
             );
-            if (boruBasi) neededAccessories.push({ ...boruBasi, quantity: 1 });
+            if (boruBasi)
+              neededAccessories.push({
+                ...boruBasi,
+                quantity: calculateMotorQuantity,
+              });
             const kasnak = findKasnakAccessoryPrice(
               allAccessories,
               values.boxType
             );
-            if (kasnak) neededAccessories.push({ ...kasnak, quantity: 1 });
+            if (kasnak)
+              neededAccessories.push({
+                ...kasnak,
+                quantity: calculateMotorQuantity,
+              });
             const rulman = findRulmanAccessoryPrice(allAccessories);
-            if (rulman) neededAccessories.push({ ...rulman, quantity: 2 });
+            if (rulman)
+              neededAccessories.push({
+                ...rulman,
+                quantity: calculateMotorQuantity * 2,
+              });
             const windeMakara = findWindeMakaraAccessoryPrice(allAccessories);
             if (windeMakara)
-              neededAccessories.push({ ...windeMakara, quantity: 1 });
+              neededAccessories.push({
+                ...windeMakara,
+                quantity: calculateMotorQuantity,
+              });
             const kordonMakara = findKordonMakaraAccessoryPrice(allAccessories);
             if (kordonMakara)
-              neededAccessories.push({ ...kordonMakara, quantity: 1 });
+              neededAccessories.push({
+                ...kordonMakara,
+                quantity: calculateMotorQuantity,
+              });
           }
 
           // Manuel redüktörlü aksesuarlar
@@ -120,12 +184,27 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
             values.manuelSekli === "reduktorlu"
           ) {
             const redAksesuarlar = [
-              { name: "40 boru başı rulmanlı siyah", quantity: 1 },
-              { name: "rulman 12x28", quantity: 1 },
-              { name: "panjur redüktörü beyaz", quantity: 1 },
-              { name: "redüktör boru başı 40 mm-C 371 uyumlu", quantity: 1 },
-              { name: "Ara kol-C 371 uyumlu", quantity: 1 },
-              { name: "Çevirme kolu-1200 mm", quantity: 1 },
+              {
+                name: "40 boru başı rulmanlı siyah",
+                quantity: calculateMotorQuantity,
+              },
+              { name: "rulman 12x28", quantity: calculateMotorQuantity },
+              {
+                name: "panjur redüktörü beyaz",
+                quantity: calculateMotorQuantity,
+              },
+              {
+                name: "redüktör boru başı 40 mm-C 371 uyumlu",
+                quantity: calculateMotorQuantity,
+              },
+              {
+                name: "Ara kol-C 371 uyumlu",
+                quantity: calculateMotorQuantity,
+              },
+              {
+                name: "Çevirme kolu-1200 mm",
+                quantity: calculateMotorQuantity,
+              },
             ];
             for (const acc of redAksesuarlar) {
               const found = findAccessoryByName(allAccessories, acc.name);
@@ -194,7 +273,10 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
           ) {
             const stoperKonik = findStoperKonikAccessoryPrice(allAccessories);
             if (stoperKonik)
-              neededAccessories.push({ ...stoperKonik, quantity: 1 });
+              neededAccessories.push({
+                ...stoperKonik,
+                quantity: Number(sectionCount) * 2,
+              });
           }
 
           // Kilitli Alt Parça
@@ -202,7 +284,10 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
             const kilitliAccessories =
               findKilitliAltParcaAccessories(allAccessories);
             for (const acc of kilitliAccessories) {
-              neededAccessories.push({ ...acc, quantity: 1 });
+              neededAccessories.push({
+                ...acc,
+                quantity: Number(sectionCount),
+              });
             }
           }
 
@@ -214,7 +299,10 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
             const dengeMakarasi =
               findDengeMakarasiAccessoryPrice(allAccessories);
             if (dengeMakarasi)
-              neededAccessories.push({ ...dengeMakarasi, quantity: 1 });
+              neededAccessories.push({
+                ...dengeMakarasi,
+                quantity: Number(sectionCount),
+              });
           }
 
           // Mini dikme ve 39mm Alüminyum Poliüretanlı lamel aksesuarları
@@ -243,7 +331,10 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
             values.motorSekli
           );
           if (selectedMotor) {
-            neededAccessories.push({ ...selectedMotor, quantity: 1 });
+            neededAccessories.push({
+              ...selectedMotor,
+              quantity: calculateMotorQuantity,
+            });
           }
 
           // Kıl Fitili ekle
@@ -272,7 +363,17 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
       }
     };
     fetchAndCalculateAccessories();
-  }, [values, dikmeCount, productId]);
+  }, [
+    values,
+    dikmeCount,
+    productId,
+    middleBarPositions,
+    sectionMotors,
+    sectionConnections,
+    sectionMotorPositions,
+    calculateMotorQuantity,
+    sectionCount,
+  ]);
 
   return { accessories };
 }

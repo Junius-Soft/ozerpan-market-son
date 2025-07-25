@@ -22,8 +22,11 @@ import {
   calculateLamelCount,
   calculateSystemHeight,
   calculateSystemWidth,
+  calculateMaxSectionWidth,
   getBoxHeight,
 } from "@/utils/panjur";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 interface ProductField {
   id: string;
@@ -58,7 +61,9 @@ const formatFieldValue = (
     | string
     | number
     | boolean
+    | string[]
     | number[]
+    | boolean[]
     | SelectedProduct[]
     | { products: SelectedProduct[]; accessories: PriceItem[] },
   fieldId: string,
@@ -71,8 +76,16 @@ const formatFieldValue = (
   }
 
   if (typeof value === "boolean") return value ? "Evet" : "Hayır";
-  if (Array.isArray(value) && typeof value[0] === "number") {
-    return value.map((v) => `${v} mm`).join(", ");
+  if (Array.isArray(value)) {
+    if (typeof value[0] === "number") {
+      return value.map((v) => `${v} mm`).join(", ");
+    }
+    if (typeof value[0] === "string") {
+      return value.join(", ");
+    }
+    if (typeof value[0] === "boolean") {
+      return value.map((v) => (v ? "Evet" : "Hayır")).join(", ");
+    }
   }
   if (field?.type === "number" || fieldId === "width" || fieldId === "height") {
     return `${value} mm`;
@@ -95,6 +108,12 @@ export function ProductPreview({
 }: ProductPreviewProps) {
   const { loading, eurRate } = useExchangeRate();
   const { values, handleChange } = useFormikContext<PanjurSelections>();
+
+  // Redux state'lerini çek
+  const middleBarPositions = useSelector(
+    (state: RootState) => state.shutter.middleBarPositions
+  );
+
   const calculationResult = usePanjurCalculator(
     values,
     selectedProduct?.tabs ?? []
@@ -341,12 +360,12 @@ export function ProductPreview({
                     );
                   }
                   if (field.id === "width") {
-                    fieldValue =
-                      calculateSystemWidth(
-                        values.width,
-                        values.dikmeOlcuAlmaSekli,
-                        values.dikmeType
-                      ) + 10;
+                    // En geniş bölmenin genişliğini hesapla
+                    const maxSectionWidth = calculateMaxSectionWidth(
+                      values.width,
+                      middleBarPositions
+                    );
+                    fieldValue = maxSectionWidth + 10;
                   }
                   return [
                     ...acc,

@@ -19,15 +19,6 @@ export interface SelectedProduct extends PriceItem {
 
 // Interface for calculation results
 export interface CalculationResult {
-  systemWidth: number;
-  systemHeight: number;
-  lamelCount: number;
-  lamelGenisligi: number;
-  lamelPrice: number;
-  dikmeHeight: number;
-  dikmeCount: number;
-  boxHeight: number;
-  subPartWidth: number;
   totalPrice: number;
   selectedProducts: {
     products: SelectedProduct[];

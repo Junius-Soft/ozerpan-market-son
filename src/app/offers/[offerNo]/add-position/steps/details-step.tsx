@@ -11,7 +11,6 @@ import { getColorHexFromProductTabs } from "@/utils/get-color-hex";
 import { FormikProps } from "formik";
 import { ProductPreview } from "./components/product-preview";
 import { PanjurSelections } from "@/types/panjur";
-import { usePanjurCalculator } from "./hooks/usePanjurCalculator";
 import { useFilterLamelThickness } from "./hooks/form-rules/useFilterLamelThickness";
 import { useFilterMotorModel } from "./hooks/form-rules/useFilterMotorModel";
 import { useFilterBoxSize } from "./hooks/form-rules/useFilterBoxSize";
@@ -23,6 +22,7 @@ import {
   getBoxHeight,
 } from "@/utils/panjur";
 import { AlertTriangle } from "lucide-react";
+import { useCalculator } from "./hooks/useCalculator";
 
 interface DetailsStepProps {
   formik: FormikProps<
@@ -45,8 +45,9 @@ export function DetailsStep({
   useFilterLamelThickness(formik);
   useFilterMotorModel(formik, selectedProduct);
   useFilterBoxSize(formik);
-  const { totalPrice, selectedProducts } = usePanjurCalculator(
+  const { totalPrice, selectedProducts } = useCalculator(
     formik.values,
+    selectedProduct?.id ?? "",
     selectedProduct?.tabs ?? []
   );
   useEffect(() => {

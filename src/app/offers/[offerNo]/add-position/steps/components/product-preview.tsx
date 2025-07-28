@@ -14,7 +14,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { usePanjurCalculator } from "../hooks/usePanjurCalculator";
 import { useFormikContext } from "formik";
 import { PanjurSelections, PriceItem, SelectedProduct } from "@/types/panjur";
 import { getColorHexFromProductTabs } from "@/utils/get-color-hex";
@@ -27,6 +26,7 @@ import {
 } from "@/utils/panjur";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { useCalculator } from "../hooks/useCalculator";
 
 interface ProductField {
   id: string;
@@ -114,8 +114,9 @@ export function ProductPreview({
     (state: RootState) => state.shutter.middleBarPositions
   );
 
-  const calculationResult = usePanjurCalculator(
+  const calculationResult = useCalculator(
     values,
+    selectedProduct?.id ?? "",
     selectedProduct?.tabs ?? []
   );
 

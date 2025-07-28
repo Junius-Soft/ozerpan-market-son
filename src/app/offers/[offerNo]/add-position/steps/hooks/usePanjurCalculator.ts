@@ -21,15 +21,13 @@ import {
   calculateLamelGenisligi,
   calculateDikmeHeight,
   getBoxHeight,
+  findSectionWidths,
 } from "@/utils/panjur";
 import { useSearchParams } from "next/navigation";
 import { useAccessories } from "./useAccessories";
 import { ProductTab } from "@/documents/products";
 import { useSelector } from "react-redux";
-interface ShutterState {
-  middleBarPositions: number[];
-  sectionHeights: number[];
-}
+import { RootState } from "@/store";
 
 // Custom hook
 export const usePanjurCalculator = (
@@ -55,8 +53,12 @@ export const usePanjurCalculator = (
   const [prices, setPrices] = useState<PriceItem[]>([]);
   const { accessories } = useAccessories(values);
 
+  // Redux state'lerini çek
   const middleBarPositions = useSelector(
-    (state: { shutter: ShutterState }) => state.shutter.middleBarPositions
+    (state: RootState) => state.shutter.middleBarPositions
+  );
+  const sectionHeights = useSelector(
+    (state: RootState) => state.shutter.sectionHeights
   );
 
   useEffect(() => {
@@ -95,49 +97,159 @@ export const usePanjurCalculator = (
         values.boxType
       );
 
+      // Her bölmenin genişliklerini hesapla
+      const sectionWidths = findSectionWidths(middleBarPositions, values.width);
+
+      // Her bölme için sistem genişliklerini hesapla
+      const sectionSystemWidths = sectionWidths.map((sectionWidth) =>
+        calculateSystemWidth(
+          sectionWidth,
+          values.dikmeOlcuAlmaSekli,
+          values.dikmeType
+        )
+      );
+
+      // Her bölme için sistem yüksekliklerini hesapla
+      const sectionSystemHeights = sectionHeights.map((sectionHeight) =>
+        calculateSystemHeight(
+          sectionHeight,
+          values.kutuOlcuAlmaSekli,
+          values.boxType
+        )
+      );
+
       const kutuYuksekligi = getBoxHeight(values.boxType);
 
-      const dikmeHeight = calculateDikmeHeight(
-        systemHeight,
-        values.boxType,
-        values.dikmeType
+      // Her dikme için yüksekliği hesapla (bitişik bölmelerin maksimumuna göre)
+      const calculateDikmeHeightsForSections = (
+        sectionSystemHeights: number[]
+      ): number[] => {
+        if (sectionSystemHeights.length === 1) {
+          // Tek bölme: sadece o bölmenin yüksekliği
+          return [
+            calculateDikmeHeight(
+              sectionSystemHeights[0],
+              values.boxType,
+              values.dikmeType
+            ),
+            calculateDikmeHeight(
+              sectionSystemHeights[0],
+              values.boxType,
+              values.dikmeType
+            ),
+          ];
+        }
+
+        const dikmeHeights: number[] = [];
+
+        // Sol dikme (sadece ilk bölme)
+        dikmeHeights.push(
+          calculateDikmeHeight(
+            sectionSystemHeights[0],
+            values.boxType,
+            values.dikmeType
+          )
+        );
+
+        // Orta dikmeler (bitişik iki bölmenin maksimumu)
+        for (let i = 0; i < sectionSystemHeights.length - 1; i++) {
+          const maxHeight = Math.max(
+            sectionSystemHeights[i],
+            sectionSystemHeights[i + 1]
+          );
+          dikmeHeights.push(
+            calculateDikmeHeight(maxHeight, values.boxType, values.dikmeType)
+          );
+        }
+
+        // Sağ dikme (sadece son bölme)
+        dikmeHeights.push(
+          calculateDikmeHeight(
+            sectionSystemHeights[sectionSystemHeights.length - 1],
+            values.boxType,
+            values.dikmeType
+          )
+        );
+
+        return dikmeHeights;
+      };
+
+      const dikmeHeights =
+        calculateDikmeHeightsForSections(sectionSystemHeights);
+      // Her bölme için lamel genişlikleri
+      const sectionLamelWidths = sectionSystemWidths.map((sectionSystemWidth) =>
+        calculateLamelGenisligi(sectionSystemWidth, values.dikmeType)
       );
 
-      const lamelGenisligi = calculateLamelGenisligi(
-        systemWidth,
-        values.dikmeType
+      // Her bölme için lamel sayıları
+      const sectionLamelCounts = sectionSystemHeights.map(
+        (sectionSystemHeight) =>
+          calculateLamelCount(
+            sectionSystemHeight,
+            values.boxType,
+            values.lamelTickness
+          )
       );
-      const lamelCount = calculateLamelCount(
-        systemHeight,
-        values.boxType,
-        values.lamelTickness
-      );
-      const dikmeCount = sectionCount * 2;
 
-      // Set initial measurements
+      // Gerçek dikme sayısı: sol ve sağ 1'er adet, ortalar 2'şer adet
+      const dikmeCount =
+        dikmeHeights.length === 1
+          ? 2 // Tek bölme: sol ve sağ dikme
+          : 2 + (dikmeHeights.length - 2) * 2; // Sol(1) + Orta(2*n) + Sağ(1)
+
+      // Set initial measurements - ortalama değerleri kullan
+      const avgLamelGenisligi =
+        sectionLamelWidths.reduce((sum, w) => sum + w, 0) /
+        sectionLamelWidths.length;
+      const totalLamelCount = sectionLamelCounts.reduce((sum, c) => sum + c, 0);
+      const avgDikmeHeight =
+        dikmeHeights.reduce((sum: number, h: number) => sum + h, 0) /
+        dikmeHeights.length;
+
       setResult((prev) => ({
         ...prev,
         systemWidth,
         systemHeight,
-        lamelCount,
-        lamelGenisligi,
-        dikmeHeight,
+        lamelCount: totalLamelCount,
+        lamelGenisligi: avgLamelGenisligi,
+        dikmeHeight: avgDikmeHeight,
         dikmeCount,
         boxHeight: kutuYuksekligi,
-        subPartWidth: lamelGenisligi,
+        subPartWidth: avgLamelGenisligi,
       }));
 
-      // Price calculations
-      const [lamelUnitPrice, lamelSelectedProduct] = findLamelPrice(
-        prices,
-        values.lamelTickness,
-        values.lamelType,
-        values.lamel_color,
-        lamelCount,
-        lamelGenisligi
-      );
-      const lamelGenisligiMetre = lamelGenisligi / 1000;
-      const lamelPrice = lamelUnitPrice * lamelGenisligiMetre * lamelCount;
+      // Price calculations - her bölme için ayrı hesapla
+      let totalLamelPrice = 0;
+      const lamelSelectedProducts: SelectedProduct[] = [];
+
+      // Her bölme için lamel fiyatı hesapla
+      sectionLamelWidths.forEach((lamelGenisligi, index) => {
+        const lamelCount = sectionLamelCounts[index];
+        const [lamelUnitPrice, lamelSelectedProduct] = findLamelPrice(
+          prices,
+          values.lamelTickness,
+          values.lamelType,
+          values.lamel_color,
+          lamelCount,
+          lamelGenisligi
+        );
+
+        const lamelGenisligiMetre = lamelGenisligi / 1000;
+        const sectionLamelPrice =
+          lamelUnitPrice * lamelGenisligiMetre * lamelCount;
+        totalLamelPrice += sectionLamelPrice;
+
+        if (lamelSelectedProduct) {
+          // Bölme bilgisini ekleyerek ürünü kaydet
+          lamelSelectedProducts.push({
+            ...lamelSelectedProduct,
+            description: `${lamelSelectedProduct.description} (Bölme ${
+              index + 1
+            })`,
+            totalPrice: sectionLamelPrice,
+          });
+        }
+      });
 
       const subPartResults = findSubPartPrice(
         prices,
@@ -154,14 +266,47 @@ export const usePanjurCalculator = (
         .map((r) => r.selectedProduct)
         .filter((p): p is SelectedProduct => !!p);
 
-      const [dikmeUnitPrice, dikmeSelectedProduct] = findDikmePrice(
-        prices,
-        values.dikmeType,
-        values.dikme_color || values.lamel_color,
-        dikmeCount,
-        dikmeHeight
-      );
-      const dikmePrice = dikmeUnitPrice * dikmeCount;
+      // Dikme fiyatı hesaplama - pozisyona göre adet sayısı
+      let totalDikmePrice = 0;
+      const dikmeSelectedProducts: SelectedProduct[] = [];
+      console.log({ dikmeHeights });
+      // Her dikme pozisyonu için fiyat hesapla
+      dikmeHeights.forEach((dikmeHeight: number, index: number) => {
+        // Dikme adet sayısını pozisyona göre belirle
+        const dikmeCountAtPosition =
+          index === 0 || index === dikmeHeights.length - 1
+            ? 1 // Sol ve sağ dikmeler: 1'er adet
+            : 2; // Orta dikmeler: 2'şer adet
+
+        const [dikmeUnitPrice, dikmeSelectedProduct] = findDikmePrice(
+          prices,
+          values.dikmeType,
+          values.dikme_color || values.lamel_color,
+          dikmeCountAtPosition,
+          dikmeHeight
+        );
+
+        const dikmePriceForThisPosition = dikmeUnitPrice * dikmeCountAtPosition;
+        totalDikmePrice += dikmePriceForThisPosition;
+
+        if (dikmeSelectedProduct) {
+          // Dikme pozisyon bilgisini ekleyerek ürünü kaydet
+          const dikmePosition =
+            index === 0
+              ? "Sol"
+              : index === dikmeHeights.length - 1
+              ? "Sağ"
+              : `Orta (${index})`;
+
+          const adetText = dikmeCountAtPosition === 1 ? "1 Adet" : "2 Adet";
+
+          dikmeSelectedProducts.push({
+            ...dikmeSelectedProduct,
+            description: `${dikmeSelectedProduct.description} (${dikmePosition} Dikme - ${adetText})`,
+            totalPrice: dikmePriceForThisPosition,
+          });
+        }
+      });
 
       const { frontPrice, backPrice, selectedFrontBox, selectedBackBox } =
         findBoxPrice(prices, values.boxType, values.box_color, systemWidth);
@@ -198,15 +343,63 @@ export const usePanjurCalculator = (
 
       // Yükseltme Profili fiyatı hesaplama (sadece dikmeAdapter === "var" ise)
       let yukseltmeProfiliPrice = 0;
-      let yukseltmeProfiliSelectedProduct: SelectedProduct | null = null;
+      const yukseltmeProfiliSelectedProducts: SelectedProduct[] = [];
+
       if (values.dikmeAdapter === "var") {
-        [yukseltmeProfiliPrice, yukseltmeProfiliSelectedProduct] =
-          findYukseltmeProfiliPrice(
-            prices,
-            values.dikme_color || values.lamel_color,
-            dikmeCount,
-            systemHeight
-          );
+        // Her dikme pozisyonu için yükseltme profili fiyatı hesapla
+        dikmeHeights.forEach((dikmeHeight: number, index: number) => {
+          // Dikme adet sayısını pozisyona göre belirle
+          const dikmeCountAtPosition =
+            index === 0 || index === dikmeHeights.length - 1
+              ? 1 // Sol ve sağ dikmeler: 1'er adet
+              : 2; // Orta dikmeler: 2'şer adet
+
+          // Yükseltme profili dikme yüksekliğine göre değil, sistem yüksekliğine göre hesaplanıyor
+          // Bu yüzden dikme pozisyonuna karşılık gelen sistem yüksekliğini bulmalıyız
+          let relevantSystemHeight: number;
+          if (index === 0) {
+            // Sol dikme - ilk bölmenin sistem yüksekliği
+            relevantSystemHeight = sectionSystemHeights[0];
+          } else if (index === dikmeHeights.length - 1) {
+            // Sağ dikme - son bölmenin sistem yüksekliği
+            relevantSystemHeight =
+              sectionSystemHeights[sectionSystemHeights.length - 1];
+          } else {
+            // Orta dikme - bitişik iki bölmenin maksimumu
+            relevantSystemHeight = Math.max(
+              sectionSystemHeights[index - 1],
+              sectionSystemHeights[index]
+            );
+          }
+
+          const [sectionYukseltmePrice, sectionYukseltmeSelectedProduct] =
+            findYukseltmeProfiliPrice(
+              prices,
+              values.dikme_color || values.lamel_color,
+              dikmeCountAtPosition,
+              relevantSystemHeight
+            );
+
+          yukseltmeProfiliPrice += sectionYukseltmePrice;
+
+          if (sectionYukseltmeSelectedProduct) {
+            // Dikme pozisyon bilgisini ekleyerek ürünü kaydet
+            const dikmePosition =
+              index === 0
+                ? "Sol"
+                : index === dikmeHeights.length - 1
+                ? "Sağ"
+                : `Orta (${index})`;
+
+            const adetText = dikmeCountAtPosition === 1 ? "1 Adet" : "2 Adet";
+
+            yukseltmeProfiliSelectedProducts.push({
+              ...sectionYukseltmeSelectedProduct,
+              description: `${sectionYukseltmeSelectedProduct.description} (${dikmePosition} Dikme - ${adetText})`,
+              totalPrice: sectionYukseltmePrice,
+            });
+          }
+        });
       }
 
       // Aksesuarların fiyatını hesapla
@@ -215,9 +408,9 @@ export const usePanjurCalculator = (
       }, 0);
 
       const rawTotalPriceEUR =
-        lamelPrice +
+        totalLamelPrice +
         subPartPrice +
-        dikmePrice +
+        totalDikmePrice +
         boxPrice +
         tamburPrice +
         yukseltmeProfiliPrice +
@@ -230,13 +423,13 @@ export const usePanjurCalculator = (
 
       // Aksesuarları SelectedProduct formatına dönüştür ve tüm ürünleri birleştir
       const productItems = [
-        lamelSelectedProduct,
+        ...lamelSelectedProducts,
         ...subPartSelectedProducts,
-        dikmeSelectedProduct,
+        ...dikmeSelectedProducts,
         selectedFrontBox,
         selectedBackBox,
         tamburSelectedProduct,
-        yukseltmeProfiliSelectedProduct,
+        ...yukseltmeProfiliSelectedProducts,
         remoteSelectedProduct,
         smarthomeSelectedProduct,
         receiverSelectedProduct,
@@ -252,7 +445,7 @@ export const usePanjurCalculator = (
 
       setResult((prev) => ({
         ...prev,
-        lamelPrice,
+        lamelPrice: totalLamelPrice,
         totalPrice,
         selectedProducts,
         errors,
@@ -267,6 +460,7 @@ export const usePanjurCalculator = (
     accessories,
     availableTabs,
     middleBarPositions,
+    sectionHeights,
   ]);
 
   return result;

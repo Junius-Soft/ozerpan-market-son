@@ -248,6 +248,38 @@ export default function ProductDetailsPage() {
     dispatch,
   ]);
 
+  // Yeni pozisyon için varsayılan sectionHeights değerlerini ayarla
+  useEffect(() => {
+    if (!selectedPosition && product && typeId && initialLoadDone.current) {
+      // typeId'nin seperation sayısını temsil ettiğini varsayıyoruz
+      const separationCount = Number(typeId) || 1;
+
+      // Eğer sectionHeights boşsa veya yanlış uzunluktaysa varsayılan değerlerle doldur
+      if (sectionHeights.length !== separationCount) {
+        // Form values'dan height değerini al, yoksa 1000mm varsayılan değer kullan
+        const formHeightValue = initialValues.height || 1000;
+        const defaultHeights = Array.from({ length: separationCount }, () =>
+          Number(formHeightValue)
+        );
+
+        console.log("Setting default sectionHeights for new position:", {
+          separationCount,
+          formHeightValue,
+          defaultHeights,
+        });
+
+        dispatch(setSectionHeights(defaultHeights));
+      }
+    }
+  }, [
+    selectedPosition,
+    product,
+    typeId,
+    sectionHeights.length,
+    initialValues.height,
+    dispatch,
+  ]);
+
   const handleComplete = async (values: PanjurSelections) => {
     if (!product) return;
 

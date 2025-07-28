@@ -165,6 +165,30 @@ export function ShutterPreview({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seperation, width, middleBarPositions.length, dispatch]);
 
+  // sectionHeights için varsayılan değer ayarlama
+  const prevHeight = useRef(height);
+
+  useEffect(() => {
+    const shouldInitializeSectionHeights =
+      sectionHeights.length !== seperation || height !== prevHeight.current;
+
+    if (shouldInitializeSectionHeights && seperation > 0) {
+      console.log("Initializing sectionHeights:", {
+        current: sectionHeights,
+        seperation,
+        height,
+        expectedLength: seperation,
+      });
+
+      dispatch(
+        setSectionHeights(Array.from({ length: seperation }, () => height))
+      );
+    }
+
+    prevHeight.current = height;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seperation, height, sectionHeights.length, dispatch]);
+
   const [selectedBar, setSelectedBar] = useState<{
     x: number;
     index: number;

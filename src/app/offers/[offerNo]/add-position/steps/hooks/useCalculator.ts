@@ -23,7 +23,6 @@ export const useCalculator = (
   });
   const [prices, setPrices] = useState<PriceItem[]>([]);
   const { accessories } = useAccessories(values);
-  console.log({ productName });
   // Redux state'lerini çek
   const middleBarPositions = useSelector(
     (state: RootState) => state.shutter.middleBarPositions

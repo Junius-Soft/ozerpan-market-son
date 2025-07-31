@@ -73,11 +73,6 @@ export function ShutterPreview({
     (state: RootState) => state.shutter.sectionMotorPositions
   );
   const dispatch = useDispatch();
-  console.log({
-    middleBarPositions,
-    seperation,
-    expectedLength: seperation - 1,
-  });
 
   // sectionConnections'ı seperation'a göre initialize et
   useEffect(() => {
@@ -138,12 +133,6 @@ export function ShutterPreview({
       (width !== prevWidth.current && !initialLoad.current);
 
     if (shouldInitialize && seperation > 1) {
-      console.log("Initializing middleBarPositions:", {
-        current: middleBarPositions,
-        seperation,
-        expectedLength: seperation - 1,
-      });
-
       dispatch(
         setMiddleBarPositions(
           Array.from({ length: seperation - 1 }, (_, i) =>
@@ -162,7 +151,6 @@ export function ShutterPreview({
     }
     prevWidth.current = width;
     prevSeparation.current = seperation;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seperation, width, middleBarPositions.length, dispatch]);
 
   // sectionHeights için varsayılan değer ayarlama
@@ -173,12 +161,6 @@ export function ShutterPreview({
       sectionHeights.length !== seperation || height !== prevHeight.current;
 
     if (shouldInitializeSectionHeights && seperation > 0) {
-      console.log("Initializing sectionHeights:", {
-        current: sectionHeights,
-        seperation,
-        height,
-        expectedLength: seperation,
-      });
 
       dispatch(
         setSectionHeights(Array.from({ length: seperation }, () => height))
@@ -350,12 +332,6 @@ export function ShutterPreview({
                 Math.round((width / seperation) * (i + 1))
               );
 
-        console.log("Drawing dikme positions:", {
-          middleBarPositions,
-          positions,
-          seperation,
-          usingFallback: middleBarPositions.length !== seperation - 1,
-        });
         // Dikme pozisyonları (canvas koordinatları)
         const dikmeXPositions: number[] = [x]; // İlk dikme (sol kenar)
         for (let i = 0; i < positions.length; i++) {
@@ -838,12 +814,7 @@ export function ShutterPreview({
 
       // Bölme genişliklerini panjurun altına bracket ve metinle göster
       if (seperation > 1 && sectionLamels.length === seperation) {
-        console.log(
-          "Drawing brackets for",
-          seperation,
-          "sections with sectionLamels:",
-          sectionLamels.length
-        );
+
         // En uzun section'ın alt kenarını (alt parça dahil) bul
         let maxSectionBottom = 0;
         for (let sectionIdx = 0; sectionIdx < seperation; sectionIdx++) {
@@ -1587,13 +1558,7 @@ export function ShutterPreview({
                 }
                 onClick={() => {
                   // Motor/Makara ekleme işlemi burada yapılacak
-                  console.log(
-                    `Motor/Makara ${
-                      sectionMotors[selectedSection.index]
-                        ? "kaldırılıyor"
-                        : "ekleniyor"
-                    } - Bölme: ${selectedSection.index + 1}`
-                  );
+              
                   // Motor durumunu toggle et
                   dispatch(toggleSectionMotor(selectedSection.index));
                   // Popup'ı kapat

@@ -51,7 +51,6 @@ export async function handleFiyatAnaliziPDF({
     status: "Taslak",
     positions: [fakePosition],
   };
-  console.log({ fakeOffer });
 
   generateFiyatAnaliziPDFPozListesi(fakeOffer, [fakePosition]);
 }

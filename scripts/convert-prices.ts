@@ -16,8 +16,6 @@ try {
 
   // Dosyayı yaz
   fs.writeFileSync(filePath, fileContent);
-
-  console.log("Fiyat formatları başarıyla dönüştürüldü!");
 } catch (error) {
   console.error("Bir hata oluştu:", error);
 }

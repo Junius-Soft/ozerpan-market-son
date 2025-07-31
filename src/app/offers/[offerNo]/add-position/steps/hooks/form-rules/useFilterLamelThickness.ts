@@ -7,7 +7,14 @@ import { PanjurSelections } from "@/types/panjur";
 import { lamelProperties } from "@/constants/panjur";
 import { ProductTabField } from "@/documents/products";
 import { toast } from "react-toastify";
-import { ShutterState } from "@/store";
+import { findLargestEffectiveSection } from "@/utils/shutter-calculations";
+
+interface ShutterState {
+  middleBarPositions: number[];
+  sectionHeights: number[];
+  sectionConnections: string[]; // Her bölmenin bağlantı durumu ("left", "right", "none")
+  sectionMotorPositions: string[]; // Her bölmenin motor pozisyonu ("left", "right")
+}
 
 export type FormValues = Record<string, string | number | boolean>;
 
@@ -15,21 +22,23 @@ function filterLamelThickness(
   formik: FormikProps<
     PanjurSelections & Record<string, string | number | boolean>
   >,
-  middleBarPositions: number[]
+  middleBarPositions: number[],
+  sectionHeights: number[],
+  sectionConnections: string[]
 ): ProductTabField["options"] | null {
   const values = formik.values;
-  let width = Number(values.width);
-  const height = Number(values.height);
+  const totalWidth = Number(values.width);
+  const totalHeight = Number(values.height);
 
-  // Eğer çoklu panjur varsa, en geniş bölmeyi bul
-  if (Array.isArray(middleBarPositions) && middleBarPositions.length > 0) {
-    // Bölme ayrım noktalarını ve toplam genişliği kullanarak her bölmenin genişliğini bul
-    const positions = [0, ...middleBarPositions, width];
-    const sectionWidths = positions
-      .slice(0, -1)
-      .map((pos, i) => positions[i + 1] - pos);
-    width = Math.max(...sectionWidths);
-  }
+  // En geniş etkili bölmeyi bul
+  const { width, height } = findLargestEffectiveSection(
+    totalWidth,
+    totalHeight,
+    middleBarPositions,
+    sectionHeights,
+    sectionConnections
+  );
+
   // En uygun lamel tipini bul
   const validOptions: { id: string; label: string; name: string }[] = [];
 
@@ -58,14 +67,11 @@ function filterLamelThickness(
   // lamelType'ı uygun şekilde güncelle
   if (formik.values.lamelType !== selectedType) {
     formik.setFieldValue("lamelType", selectedType);
-    // toast.warn("Lamel tipi uygun şekilde güncellendi.");
   }
   // lamelTickness'ı güncelle
   if (formik.values.lamelTickness !== selectedLamel) {
     formik.setFieldValue("lamelTickness", selectedLamel);
-    // toast.warn("Lamel kalınlığı uygun şekilde güncellendi.");
   }
-  console.log("validLamelThickness", validOptions);
 
   return validOptions.length > 0 ? validOptions : null;
 }
@@ -82,15 +88,38 @@ export function useFilterLamelThickness(
   const [validLamelThickness, setValidLamelThickness] = useState<
     ProductTabField["options"] | null
   >(null);
+
+  // Redux state'lerini al
   const middleBarPositions = useSelector(
     (state: { shutter: ShutterState }) => state.shutter.middleBarPositions
+  );
+  const sectionHeights = useSelector(
+    (state: { shutter: ShutterState }) => state.shutter.sectionHeights
+  );
+  const sectionConnections = useSelector(
+    (state: { shutter: ShutterState }) => state.shutter.sectionConnections
   );
 
   useEffect(() => {
     if (productId === "panjur") {
-      setValidLamelThickness(filterLamelThickness(formik, middleBarPositions));
+      setValidLamelThickness(
+        filterLamelThickness(
+          formik,
+          middleBarPositions,
+          sectionHeights,
+          sectionConnections
+        )
+      );
     }
-  }, [width, height, productId, middleBarPositions]);
+  }, [
+    width,
+    height,
+    productId,
+    middleBarPositions,
+    sectionHeights,
+    sectionConnections,
+    formik,
+  ]);
 
   return { validLamelThickness };
 }

@@ -44,7 +44,6 @@ export async function handleDepoCikisFisiPDF({
     status: "Taslak",
     positions: [fakePosition],
   };
-  console.log({ fakeOffer });
 
   openDepoCikisFisiPDFMulti(fakeOffer, [fakePosition]);
 }

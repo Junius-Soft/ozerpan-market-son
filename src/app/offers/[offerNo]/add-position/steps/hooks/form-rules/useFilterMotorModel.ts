@@ -109,7 +109,6 @@ export function filterMotorOptions(
     ?.options?.filter((option) =>
       validMotors.includes(option.id as MotorModel)
     );
-  console.log({ motorModelOptions });
 
   // Eğer motorlu seçiliyse ve uygun motor seçeneği yoksa manuel'e çevir
   if (movementType === "motorlu" && !motorModelOptions?.length) {

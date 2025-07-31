@@ -344,13 +344,6 @@ export const calculateLamelCount = (
   const dikmeYuksekligiKertmeHaric = systemHeight - kutuYuksekligi;
   const lamelSayisi = Math.ceil(dikmeYuksekligiKertmeHaric / lamelHeight);
 
-  console.log({
-    kutuYuksekligi,
-    dikmeYuksekligiKertmeHaric,
-    lamelHeight,
-    lamelSayisi,
-  });
-
   return lamelSayisi + 1;
 };
 
@@ -430,7 +423,6 @@ export const findRemotePrice = (
   });
 
   if (!matchingRemote) {
-    // console.log("Remote not found:", normalizedSearchName);
     return [0, null];
   }
 
@@ -507,7 +499,6 @@ export const findYukseltmeProfiliPrice = (
   let matchingProfili = yukseltmeProfiliPrices.find((p) =>
     p.description.toLowerCase().includes(normalizedColor.toLowerCase())
   );
-  console.log({ yukseltmeProfiliPrices, matchingProfili });
   // Eğer bulunamazsa, Beyaz ile tekrar dene
   if (!matchingProfili && normalizedColor !== "Beyaz") {
     normalizedColor = "Beyaz";

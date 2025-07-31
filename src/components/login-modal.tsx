@@ -37,7 +37,6 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
         username: email,
         password: password,
       });
-      console.log({ data });
       if (data.message === "Logged In") {
         toast.success("Giriş başarılı!", {
           position: "top-center",

@@ -44,11 +44,6 @@ function filterLamelThickness(
     }
   }
 
-  // Eğer mevcut lamelTickness validOptions içinde varsa, otomatik güncelleme yapma
-  // const currentLamelTickness = formik.values.lamelTickness;
-  // const isCurrentValid = validOptions.some(
-  //   (option) => option.id === currentLamelTickness
-  // );
   if (validOptions.length === 0) {
     toast.warn("Seçilen ölçülere uygun lamel bulunamadı.");
     return null;

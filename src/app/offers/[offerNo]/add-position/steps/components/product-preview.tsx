@@ -21,11 +21,9 @@ import {
   calculateLamelCount,
   calculateSystemHeight,
   calculateSystemWidth,
-  calculateMaxSectionWidth,
   getBoxHeight,
 } from "@/utils/panjur";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
+
 import { useCalculator } from "../hooks/useCalculator";
 
 interface ProductField {
@@ -108,11 +106,6 @@ export function ProductPreview({
 }: ProductPreviewProps) {
   const { loading, eurRate } = useExchangeRate();
   const { values, handleChange } = useFormikContext<PanjurSelections>();
-
-  // Redux state'lerini çek
-  const middleBarPositions = useSelector(
-    (state: RootState) => state.shutter.middleBarPositions
-  );
 
   const calculationResult = useCalculator(
     values,
@@ -361,12 +354,12 @@ export function ProductPreview({
                     );
                   }
                   if (field.id === "width") {
-                    // En geniş bölmenin genişliğini hesapla
-                    const maxSectionWidth = calculateMaxSectionWidth(
-                      values.width,
-                      middleBarPositions
-                    );
-                    fieldValue = maxSectionWidth + 10;
+                    fieldValue =
+                      calculateSystemWidth(
+                        values.width,
+                        values.dikmeOlcuAlmaSekli,
+                        values.dikmeType
+                      ) + 10;
                   }
                   return [
                     ...acc,

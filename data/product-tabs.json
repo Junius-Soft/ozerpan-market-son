@@ -747,43 +747,19 @@
             "type": "select",
             "options": [
               { "id": "mini_dikme", "name": "Mini Dikme" },
-              { "id": "mini_orta_dikme", "name": "Mini Orta Dikme" },
               { "id": "midi_dikme", "name": "Midi Dikme" },
-              { "id": "midi_orta_dikme", "name": "Midi Orta Dikme" },
               { "id": "mini_pvc_dikme", "name": "Mini PVC Dikme" },
-              { "id": "mini_pvc_orta_dikme", "name": "Mini PVC Orta Dikme" },
-              { "id": "midi_pvc_dikme", "name": "Midi PVC Dikme" },
-              { "id": "midi_pvc_orta_dikme", "name": "Midi PVC Orta Dikme" }
+              { "id": "midi_pvc_dikme", "name": "Midi PVC Dikme" }
             ],
             "default": "mini_dikme",
             "filterBy": [
               {
                 "field": "lamelTickness",
                 "valueMap": {
-                  "39_sl": [
-                    "mini_dikme",
-                    "mini_orta_dikme",
-                    "mini_pvc_dikme",
-                    "mini_pvc_orta_dikme"
-                  ],
-                  "55_sl": [
-                    "midi_dikme",
-                    "midi_orta_dikme",
-                    "midi_pvc_dikme",
-                    "midi_pvc_orta_dikme"
-                  ],
-                  "45_se": [
-                    "mini_dikme",
-                    "mini_orta_dikme",
-                    "mini_pvc_dikme",
-                    "mini_pvc_orta_dikme"
-                  ],
-                  "55_se": [
-                    "midi_dikme",
-                    "midi_orta_dikme",
-                    "midi_pvc_dikme",
-                    "midi_pvc_orta_dikme"
-                  ]
+                  "39_sl": ["mini_dikme", "mini_pvc_dikme"],
+                  "55_sl": ["midi_dikme", "midi_pvc_dikme"],
+                  "45_se": ["mini_dikme", "mini_pvc_dikme"],
+                  "55_se": ["midi_dikme", "midi_pvc_dikme"]
                 }
               }
             ]
@@ -813,16 +789,9 @@
                 "field": "dikmeType",
                 "valueMap": {
                   "mini_dikme": ["mini_alt_parca", "kilitli_alt_parca"],
-                  "mini_orta_dikme": ["mini_alt_parca", "kilitli_alt_parca"],
                   "mini_pvc_dikme": ["mini_alt_parca", "kilitli_alt_parca"],
-                  "mini_pvc_orta_dikme": [
-                    "mini_alt_parca",
-                    "kilitli_alt_parca"
-                  ],
                   "midi_dikme": ["midi_alt_parca", "kilitli_alt_parca"],
-                  "midi_orta_dikme": ["midi_alt_parca", "kilitli_alt_parca"],
-                  "midi_pvc_dikme": ["midi_alt_parca", "kilitli_alt_parca"],
-                  "midi_pvc_orta_dikme": ["midi_alt_parca", "kilitli_alt_parca"]
+                  "midi_pvc_dikme": ["midi_alt_parca", "kilitli_alt_parca"]
                 }
               }
             ]

@@ -343,12 +343,14 @@ export const calculateLamelCount = (
   const lamelHeight = Number(lamelTickness.split("_")[0]);
   const dikmeYuksekligiKertmeHaric = systemHeight - kutuYuksekligi;
   const lamelSayisi = Math.ceil(dikmeYuksekligiKertmeHaric / lamelHeight);
+
   console.log({
     kutuYuksekligi,
     dikmeYuksekligiKertmeHaric,
     lamelHeight,
     lamelSayisi,
   });
+
   return lamelSayisi + 1;
 };
 
@@ -365,8 +367,6 @@ export const calculateDikmeHeight = (
   boxType: string,
   dikmeType: string
 ): number => {
-  if (dikmeType.includes("orta")) return 0;
-
   const kutuYuksekligi = getBoxHeight(boxType);
   const kertmePayi = getKertmePayi(dikmeType);
   return systemHeight - kutuYuksekligi + kertmePayi;

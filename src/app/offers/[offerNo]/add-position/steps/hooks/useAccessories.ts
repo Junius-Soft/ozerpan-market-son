@@ -5,8 +5,8 @@ import {
   calculateLamelCount,
   calculateLamelGenisligi,
   calculateDikmeHeight,
-  calculateMaxSectionWidth,
 } from "@/utils/panjur";
+import { calculateSectionWidths } from "@/utils/shutter-calculations";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
@@ -43,9 +43,9 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
   const middleBarPositions = useSelector(
     (state: RootState) => state.shutter.middleBarPositions
   );
-  // const sectionHeights = useSelector(
-  //   (state: RootState) => state.shutter.sectionHeights
-  // );
+  const sectionHeights = useSelector(
+    (state: RootState) => state.shutter.sectionHeights
+  );
   const sectionMotors = useSelector(
     (state: RootState) => state.shutter.sectionMotors
   );
@@ -76,13 +76,8 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
         const neededAccessories: PriceItem[] = [];
 
         if (allAccessories && productId === "panjur") {
-          // En geniş bölmenin genişliğini hesapla
-          const maxSectionWidth = calculateMaxSectionWidth(
-            values?.width || 0,
-            middleBarPositions
-          );
           const width = calculateSystemWidth(
-            maxSectionWidth,
+            values.width,
             values.dikmeOlcuAlmaSekli,
             values.dikmeType
           );
@@ -91,7 +86,6 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
             values.kutuOlcuAlmaSekli,
             values.boxType
           );
-          const lamelWidth = calculateLamelGenisligi(width, values.dikmeType);
 
           // Yan Kapak - bölme sayısı kadar
           const yanKapak = findYanKapakAccessoryPrice(
@@ -232,35 +226,72 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
               neededAccessories.push({ ...zimbaTeli, quantity: tapaQuantity });
           }
 
-          // Çelik Askı
+          // Çelik Askı - her bölme için ayrı hesapla
           const celikAski = findCelikAskiAccessoryPrice(
             allAccessories,
             values.dikmeType
           );
           if (celikAski) {
-            let askiQuantity = 2;
-            if (lamelWidth > 1000 && lamelWidth <= 1500) {
-              askiQuantity = 4;
-            } else if (lamelWidth > 1500 && lamelWidth <= 2250) {
-              askiQuantity = 6;
-            } else if (lamelWidth > 2250 && lamelWidth <= 3500) {
-              askiQuantity = 8;
-            } else if (lamelWidth > 3500) {
-              askiQuantity = 10;
-            }
-            neededAccessories.push({ ...celikAski, quantity: askiQuantity });
+            const sectionWidths = calculateSectionWidths(
+              width,
+              middleBarPositions
+            );
+            let totalAskiQuantity = 0;
+
+            sectionWidths.forEach((sectionWidth) => {
+              const lamelWidthForSection = calculateLamelGenisligi(
+                sectionWidth,
+                values.dikmeType
+              );
+              let askiQuantity = 2;
+              if (lamelWidthForSection > 1000 && lamelWidthForSection <= 1500) {
+                askiQuantity = 4;
+              } else if (
+                lamelWidthForSection > 1500 &&
+                lamelWidthForSection <= 2250
+              ) {
+                askiQuantity = 6;
+              } else if (
+                lamelWidthForSection > 2250 &&
+                lamelWidthForSection <= 3500
+              ) {
+                askiQuantity = 8;
+              } else if (lamelWidthForSection > 3500) {
+                askiQuantity = 10;
+              }
+              totalAskiQuantity += askiQuantity;
+            });
+
+            neededAccessories.push({
+              ...celikAski,
+              quantity: totalAskiQuantity,
+            });
           }
 
-          // Alt Parça Lastiği
+          // Alt Parça Lastiği - her bölme için ayrı hesapla
           const altParcaLastigi = findAltParcaLastigiAccessoryPrice(
             allAccessories,
             values.dikmeType
           );
           if (altParcaLastigi) {
-            const widthInMeters = lamelWidth / 1000;
+            const sectionWidths = calculateSectionWidths(
+              width,
+              middleBarPositions
+            );
+            let totalLastikLength = 0;
+
+            sectionWidths.forEach((sectionWidth) => {
+              const lamelWidthForSection = calculateLamelGenisligi(
+                sectionWidth,
+                values.dikmeType
+              );
+              const widthInMeters = lamelWidthForSection / 1000;
+              totalLastikLength += widthInMeters;
+            });
+
             neededAccessories.push({
               ...altParcaLastigi,
-              quantity: widthInMeters,
+              quantity: totalLastikLength, // toplam uzunluk (metre)
               unit: altParcaLastigi.unit,
             });
           }
@@ -337,20 +368,33 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
             });
           }
 
-          // Kıl Fitili ekle
+          // Kıl Fitili ekle - her dikme için ayrı hesapla
           const kilFitiliName = "067x550 Standart Kıl Fitil";
           const kilFitili = allAccessories.find(
             (acc) => acc.description === kilFitiliName
           );
           if (kilFitili) {
-            const dikmeHeightMeter =
-              calculateDikmeHeight(height, values.boxType, values.dikmeType) /
-              1000;
-            const kilFitiliOlcu = dikmeHeightMeter * 2;
+            let totalKilFitiliLength = 0;
+            const sectionCount = middleBarPositions.length + 1;
+
+            // Her bölme için dikme yüksekliğini hesapla
+            for (let i = 0; i < sectionCount; i++) {
+              // Her bölmenin kendi yüksekliğini kullan, yoksa genel yüksekliği kullan
+              const sectionHeight = sectionHeights[i];
+              const dikmeHeightForSection =
+                calculateDikmeHeight(
+                  sectionHeight,
+                  values.boxType,
+                  values.dikmeType
+                ) / 1000; // metre cinsine çevir
+
+              // Bu bölme için 2 dikme var (sol ve sağ)
+              totalKilFitiliLength += dikmeHeightForSection * 2;
+            }
 
             neededAccessories.push({
               ...kilFitili,
-              quantity: kilFitiliOlcu, // metre cinsinden
+              quantity: totalKilFitiliLength, // toplam metre cinsinden
               unit: "Metre",
             });
           }
@@ -368,6 +412,7 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
     dikmeCount,
     productId,
     middleBarPositions,
+    sectionHeights,
     sectionMotors,
     sectionConnections,
     sectionMotorPositions,

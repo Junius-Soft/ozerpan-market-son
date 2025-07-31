@@ -81,3 +81,12 @@ export function findLargestEffectiveSection(
     height: largestSection.height,
   };
 }
+
+// Bölme genişliklerini hesaplama fonksiyonu
+export function calculateSectionWidths(
+  totalWidth: number,
+  middleBarPositions: number[]
+): number[] {
+  const positions = [0, ...middleBarPositions, totalWidth];
+  return positions.slice(0, -1).map((pos, i) => positions[i + 1] - pos);
+}

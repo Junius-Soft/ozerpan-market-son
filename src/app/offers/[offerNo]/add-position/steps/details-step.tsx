@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import type { Product } from "@/documents/products";
 import { getProductPreview } from "@/lib/product-preview";
 import { DynamicForm } from "./components/dynamic-form";
-import { getColorHexFromProductTabs } from "@/utils/get-color-hex";
 
 import { FormikProps } from "formik";
 import { ProductPreview } from "./components/product-preview";
@@ -15,12 +14,6 @@ import { useFilterLamelThickness } from "./hooks/form-rules/useFilterLamelThickn
 import { useFilterMotorModel } from "./hooks/form-rules/useFilterMotorModel";
 import { useFilterBoxSize } from "./hooks/form-rules/useFilterBoxSize";
 import { useAutoDependencyAndFilterBy } from "./hooks/useAutoDependencyDefaults";
-import {
-  calculateLamelCount,
-  calculateSystemHeight,
-  calculateSystemWidth,
-  getBoxHeight,
-} from "@/utils/panjur";
 import { AlertTriangle } from "lucide-react";
 import { useCalculator } from "./hooks/useCalculator";
 
@@ -70,15 +63,6 @@ export function DetailsStep({
   ) => {
     const activeTab = availableTabs.find((tab) => tab.id === currentTab);
 
-    // --- Renk kodlarını bulmak için yardımcı fonksiyon ---
-    function getColorHex(fieldId: string): string | undefined {
-      return getColorHexFromProductTabs(
-        selectedProduct?.tabs ?? [],
-        formik.values as Record<string, unknown>,
-        fieldId
-      );
-    }
-    // ---
     if (activeTab?.content?.fields && activeTab.content.fields.length > 0) {
       const values = formik.values;
       return (
@@ -92,7 +76,7 @@ export function DetailsStep({
             <div className="mt-6">
               <h4 className="text-md font-medium mb-3">Ürün Önizleme</h4>
               {/* Uyarı: seperation > 1 ise göster */}
-              {typeId > 1 && (
+              {selectedProduct?.id === "panjur" && typeId > 1 && (
                 <div className="flex w-full max-w-xl mx-auto gap-4 my-4">
                   <div className="flex items-start gap-2 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-md border border-yellow-200 dark:border-yellow-700/50">
                     <div className="flex items-start gap-2 p-3">
@@ -117,38 +101,10 @@ export function DetailsStep({
               <div className="p-2 w-full max-w-xl mx-auto border rounded-lg overflow-hidden shadow-sm">
                 {getProductPreview({
                   product: selectedProduct,
+                  formik: formik,
                   width: values.width,
                   height: values.height,
-                  productId: selectedProduct?.id || "",
-                  lamelColor: getColorHex("lamel_color"),
-                  boxColor: getColorHex("box_color"),
-                  subPartColor: getColorHex("subPart_color"),
-                  dikmeColor: getColorHex("dikme_color"),
-                  boxHeight: getBoxHeight(values.boxType),
-                  hareketBaglanti: values.hareketBaglanti,
-                  movementType: values.movementType,
                   seperation: typeId,
-                  lamelCount: calculateLamelCount(
-                    calculateSystemHeight(
-                      values.height,
-                      values.kutuOlcuAlmaSekli,
-                      values.boxType
-                    ),
-                    values.boxType,
-                    values.lamelTickness
-                  ),
-                  systemHeight: calculateSystemHeight(
-                    values.height,
-                    values.kutuOlcuAlmaSekli,
-                    values.boxType
-                  ),
-                  systemWidth:
-                    calculateSystemWidth(
-                      values.width,
-                      values.dikmeOlcuAlmaSekli,
-                      values.dikmeType
-                    ) + 10,
-                  changeMiddlebarPostion: true,
                 })}
               </div>
             </div>

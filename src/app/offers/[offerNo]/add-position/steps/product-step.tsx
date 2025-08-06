@@ -23,6 +23,7 @@ export function ProductStep({
   onTypeSelect,
   onOptionSelect,
 }: ProductStepProps) {
+  const product = products.find((p) => p.id === selectedProduct?.id);
   return (
     <div>
       {/* Ürünler */}
@@ -57,7 +58,7 @@ export function ProductStep({
 
             <div className="space-y-3">
               <h3 className="text-lg font-semibold">{product.name}</h3>
-              {product.id === "panjur" && product.options && (
+              {product.options && (
                 <div className="flex flex-wrap gap-2">
                   {product.options.map((option) => (
                     <button
@@ -94,12 +95,11 @@ export function ProductStep({
       </div>
 
       {/* Ürün Tipleri */}
-      <div className="lg:col-span-4 border-t pt-8 mt-8">
-        <h3 className="text-lg font-semibold mb-4">Ürün Tipleri</h3>
-        <div className="flex gap-6 overflow-x-auto sm:grid sm:grid-cols-3 lg:grid-cols-5 sm:overflow-visible pb-2 -mx-4 px-4">
-          {products
-            .find((p) => p.id === "panjur")
-            ?.types?.map((type) => (
+      {product?.types && (
+        <div className="lg:col-span-4 border-t pt-8 mt-8">
+          <h3 className="text-lg font-semibold mb-4">Ürün Tipleri</h3>
+          <div className="flex gap-6 overflow-x-auto sm:grid sm:grid-cols-3 lg:grid-cols-5 sm:overflow-visible pb-2 -mx-4 px-4">
+            {product?.types?.map((type) => (
               <Card
                 key={type.id}
                 className={`
@@ -136,8 +136,9 @@ export function ProductStep({
                 )}
               </Card>
             ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

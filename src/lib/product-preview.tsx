@@ -1,46 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { type Product } from "@/documents/products";
 import { DynamicPreview } from "@/app/offers/[offerNo]/add-position/steps/components/dynamic-preview";
+import { FormikProps } from "formik";
 
 interface ProductPreviewProps {
   product: Product | null;
+  formik: FormikProps<any>;
   width?: number;
   height?: number;
   className?: string;
-  productId: string;
-  lamelColor?: string;
-  boxColor?: string;
-  subPartColor?: string;
-  dikmeColor?: string;
-  boxHeight?: number; // kutu yüksekliği (mm)
-  hareketBaglanti: "sol" | "sag";
-  movementType: "manuel" | "motorlu";
   seperation: number; // Ayrım sayısı (örneğin, panjur için)
-  lamelCount: number; // Lamel sayısı
-  systemHeight: number; // Sistem yüksekliği (mm)
-  systemWidth: number; // Sistem genişliği (mm)
-  changeMiddlebarPostion?: boolean;
 }
 
 export function getProductPreview({
   product,
+  formik,
   width = 0,
   height = 0,
   className = "",
-  productId,
-  lamelColor,
-  boxColor,
-  subPartColor,
-  dikmeColor,
-  boxHeight = 0, // kutu yüksekliği (mm)
-  hareketBaglanti,
-  movementType,
   seperation,
-  lamelCount,
-  changeMiddlebarPostion = false,
-  systemHeight,
-  systemWidth,
 }: ProductPreviewProps) {
   if (!product) return null;
 
@@ -48,22 +28,13 @@ export function getProductPreview({
 
   return (
     <DynamicPreview
-      productId={productId}
+      product={product}
+      productId={product.id}
+      formik={formik}
       width={width}
       height={height}
       className={className}
-      lamelColor={lamelColor}
-      boxColor={boxColor}
-      subPartColor={subPartColor}
-      dikmeColor={dikmeColor}
-      boxHeight={boxHeight}
-      hareketBaglanti={hareketBaglanti}
-      movementType={movementType}
       seperation={seperation}
-      lamelCount={lamelCount}
-      changeMiddlebarPostion={changeMiddlebarPostion}
-      systemHeight={systemHeight}
-      systemWidth={systemWidth}
     />
   );
 }

@@ -16,13 +16,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useFormikContext } from "formik";
 import { PanjurSelections, PriceItem, SelectedProduct } from "@/types/panjur";
-import { getColorHexFromProductTabs } from "@/utils/get-color-hex";
-import {
-  calculateLamelCount,
-  calculateSystemHeight,
-  calculateSystemWidth,
-  getBoxHeight,
-} from "@/utils/panjur";
+import { calculateSystemHeight, calculateSystemWidth } from "@/utils/panjur";
 
 import { useCalculator } from "../hooks/useCalculator";
 
@@ -105,23 +99,13 @@ export function ProductPreview({
   seperation,
 }: ProductPreviewProps) {
   const { loading, eurRate } = useExchangeRate();
-  const { values, handleChange } = useFormikContext<PanjurSelections>();
-
+  const formik = useFormikContext<PanjurSelections>();
+  const { values, handleChange } = formik;
   const calculationResult = useCalculator(
     values,
     selectedProduct?.id ?? "",
     selectedProduct?.tabs ?? []
   );
-
-  // --- Renk kodlarını bulmak için yardımcı fonksiyon ---
-  function getColorHex(fieldId: string): string | undefined {
-    return getColorHexFromProductTabs(
-      selectedProduct?.tabs ?? [],
-      values as unknown as Record<string, unknown>,
-      fieldId
-    );
-  }
-  // ---
 
   // Toplam tutar değişimini parent'a bildir
   React.useEffect(() => {
@@ -139,38 +123,11 @@ export function ProductPreview({
           <div className="w-full h-full flex items-center justify-center">
             {getProductPreview({
               product: selectedProduct,
+              formik: formik,
               width: parseFloat(values.width?.toString() ?? "0"),
               height: parseFloat(values.height?.toString() ?? "0"),
               className: "w-full h-full object-contain pt-2", // preview tam ortalı ve kapsayıcı
-              productId: selectedProduct.id,
-              lamelColor: getColorHex("lamel_color"),
-              boxColor: getColorHex("box_color"),
-              subPartColor: getColorHex("subPart_color"),
-              dikmeColor: getColorHex("dikme_color"),
-              boxHeight: getBoxHeight(values.boxType),
-              hareketBaglanti: values.hareketBaglanti,
-              movementType: values.movementType,
               seperation: seperation,
-              lamelCount: calculateLamelCount(
-                calculateSystemHeight(
-                  values.height,
-                  values.kutuOlcuAlmaSekli,
-                  values.boxType
-                ),
-                values.boxType,
-                values.lamelTickness
-              ),
-              systemHeight: calculateSystemHeight(
-                values.height,
-                values.kutuOlcuAlmaSekli,
-                values.boxType
-              ),
-              systemWidth:
-                calculateSystemWidth(
-                  values.width,
-                  values.dikmeOlcuAlmaSekli,
-                  values.dikmeType
-                ) + 10,
             })}
           </div>
         </div>

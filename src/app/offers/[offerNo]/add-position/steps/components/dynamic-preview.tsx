@@ -4,76 +4,154 @@ import { ShutterPreview } from "./shutter-preview";
 import { WindowPreview } from "./window-preview";
 import { DoorPreview } from "./door-preview";
 import { InsectScreenPreview } from "./insect-screen-preview";
+import { Product } from "@/documents/products";
+import { FormikProps } from "formik";
+import { getColorHexFromProductTabs } from "@/utils/get-color-hex";
+import {
+  calculateLamelCount,
+  calculateSystemHeight,
+  calculateSystemWidth,
+  getBoxHeight,
+} from "@/utils/panjur";
 
 interface DynamicPreviewProps {
+  product: Product | null;
   width: number;
   height: number;
   className?: string;
   productId: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formik: FormikProps<any>;
+  seperation: number; // Ayrım sayısı (örneğin, panjur için)
+}
+interface ShutterProps {
   lamelColor?: string;
   boxColor?: string;
   subPartColor?: string;
   dikmeColor?: string;
-  boxHeight?: number; // kutu yüksekliği (mm)
+  boxHeight: number;
   hareketBaglanti: "sol" | "sag";
   movementType: "manuel" | "motorlu";
-  seperation: number; // Ayrım sayısı (örneğin, panjur için)
-  lamelCount: number; // Lamel sayısı
-  changeMiddlebarPostion: boolean; // Orta bar pozisyonu değişikliği için opsiyonel
-  systemHeight: number; // Sistem yüksekliği (mm)
-  systemWidth: number; // Sistem genişliği (mm)
+  lamelCount: number;
+  systemHeight: number;
+  systemWidth: number;
+  changeMiddlebarPostion: boolean;
 }
-
 export function DynamicPreview({
+  product,
   width,
   height,
   className = "",
   productId,
-  lamelColor,
-  boxColor,
-  subPartColor,
-  dikmeColor,
-  boxHeight = 0, // kutu yüksekliği (mm)
-  hareketBaglanti,
-  movementType,
+  formik,
   seperation,
-  lamelCount,
-  changeMiddlebarPostion,
-  systemHeight,
-  systemWidth,
 }: DynamicPreviewProps) {
-  // Select the appropriate preview component based on the component name
+  // Her ürün için kendi parametrelerini ayarlayalım
+  const getProductSpecificProps = () => {
+    const values = formik.values;
+    console.log({ values });
+
+    switch (productId) {
+      case "panjur":
+        // Panjur için renk kodlarını bul
+        const getColorHex = (fieldId: string): string | undefined => {
+          return getColorHexFromProductTabs(
+            product?.tabs ?? [],
+            values,
+            fieldId
+          );
+        };
+
+        return {
+          lamelColor: getColorHex("lamel_color"),
+          boxColor: getColorHex("box_color"),
+          subPartColor: getColorHex("subPart_color"),
+          dikmeColor: getColorHex("dikme_color"),
+          boxHeight: getBoxHeight(values.boxType),
+          hareketBaglanti: values.hareketBaglanti,
+          movementType: values.movementType,
+          lamelCount: calculateLamelCount(
+            calculateSystemHeight(
+              values.height,
+              values.kutuOlcuAlmaSekli,
+              values.boxType
+            ),
+            values.boxType,
+            values.lamelTickness
+          ),
+          systemHeight: calculateSystemHeight(
+            values.height,
+            values.kutuOlcuAlmaSekli,
+            values.boxType
+          ),
+          systemWidth:
+            calculateSystemWidth(
+              values.width,
+              values.dikmeOlcuAlmaSekli,
+              values.dikmeType
+            ) + 10,
+          changeMiddlebarPostion: true,
+        };
+
+      case "window":
+        return {
+          frameColor: values.frameColor,
+          glassType: values.glassType,
+          handleType: values.handleType,
+        };
+
+      case "door":
+        return {
+          doorColor: values.doorColor,
+          handleType: values.handleType,
+          lockType: values.lockType,
+        };
+
+      case "insect_screen":
+        return {
+          frameColor: values.frameColor,
+          meshType: values.meshType,
+        };
+
+      default:
+        return {};
+    }
+  };
+
+  const productProps = getProductSpecificProps();
   const renderPreview = () => {
     switch (productId) {
       case "panjur":
+        const panjurProps = productProps as ShutterProps;
+
         return (
           <ShutterPreview
             width={width}
             height={height}
             className={className}
-            lamelColor={lamelColor}
-            boxColor={boxColor}
-            subPartColor={subPartColor}
-            dikmeColor={dikmeColor}
-            boxHeight={boxHeight} // kutu yüksekliği (mm)
-            hareketBaglanti={hareketBaglanti}
-            movementType={movementType}
+            lamelColor={panjurProps.lamelColor}
+            boxColor={panjurProps.boxColor}
+            subPartColor={panjurProps.subPartColor}
+            dikmeColor={panjurProps.dikmeColor}
+            boxHeight={panjurProps.boxHeight}
+            hareketBaglanti={panjurProps.hareketBaglanti}
+            movementType={panjurProps.movementType}
             seperation={seperation}
-            lamelCount={lamelCount}
-            changeMiddlebarPostion={changeMiddlebarPostion}
-            systemHeight={systemHeight}
-            systemWidth={systemWidth} // Assuming system width is the same as preview width
+            lamelCount={panjurProps.lamelCount}
+            changeMiddlebarPostion={panjurProps.changeMiddlebarPostion}
+            systemHeight={panjurProps.systemHeight}
+            systemWidth={panjurProps.systemWidth} // Assuming system width is the same as preview width
           />
         );
-      case "WindowPreview":
+      case "window":
         return (
           <WindowPreview width={width} height={height} className={className} />
         );
-      case "DoorPreview":
+      case "door":
         return (
           <DoorPreview width={width} height={height} className={className} />
         );
-      case "InsectScreenPreview":
+      case "insect_screen":
         return (
           <InsectScreenPreview
             width={width}

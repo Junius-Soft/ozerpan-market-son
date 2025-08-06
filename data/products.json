@@ -77,8 +77,20 @@
     {
       "id": "sineklik",
       "name": "Sineklik",
-      "isActive": false,
-      "image": "/images/products/sineklik.png"
+      "isActive": true,
+      "image": "/images/products/sineklik.png",
+      "options": [
+        {
+          "id": "distansineklik",
+          "name": "Dıştan Takmalı Sineklik",
+          "disabled": false
+        },
+        {
+          "id": "monobloksineklik",
+          "name": "Monoblok Sineklik",
+          "disabled": true
+        }
+      ]
     },
     {
       "id": "kapi",

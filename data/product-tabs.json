@@ -997,7 +997,7 @@
   "sineklik": [
     {
       "id": "dimensions",
-      "name": "Sineklik Ölçüleri",
+      "name": "Ürün Ölçüleri",
       "content": {
         "fields": [
           {
@@ -1024,40 +1024,133 @@
       }
     },
     {
-      "id": "type",
-      "name": "Sineklik Tipi",
+      "id": "specifications",
+      "name": "Sineklik Özellikleri",
       "content": {
         "fields": [
           {
             "id": "sineklikType",
             "name": "Sineklik Tipi",
-            "type": "radio",
-            "options": [
-              { "id": "sabit", "name": "Sabit" },
-              { "id": "surgu", "name": "Sürgü" },
-              { "id": "plise", "name": "Plise" },
-              { "id": "menteşe", "name": "Menteşe" }
-            ],
-            "default": "sabit"
-          }
-        ]
-      }
-    },
-    {
-      "id": "mesh",
-      "name": "File Seçimi",
-      "content": {
-        "fields": [
-          {
-            "id": "meshType",
-            "name": "File Tipi",
             "type": "select",
             "options": [
-              { "id": "standart", "name": "Standart File" },
-              { "id": "fiber", "name": "Fiber File" },
-              { "id": "pet", "name": "Pet Dostu File" }
+              { "id": "plise", "name": "Plise" },
+              { "id": "menteseli", "name": "Menteşeli" },
+              { "id": "surme", "name": "Sürme" },
+              { "id": "sabit", "name": "Sabit" }
             ],
-            "default": "standart"
+            "default": "plise"
+          },
+          {
+            "id": "pliseOpeningType",
+            "name": "Açılım Tipi",
+            "type": "select",
+            "options": [
+              {
+                "id": "yatay",
+                "name": "Yatay Plise"
+              },
+              {
+                "id": "dikey",
+                "name": "Dikey Plise"
+              },
+              {
+                "id": "double",
+                "name": "Double Plise"
+              },
+              {
+                "id": "centralPack",
+                "name": "Central Pack"
+              }
+            ],
+            "default": "yatay",
+            "dependsOn": {
+              "field": "sineklikType",
+              "value": "plise"
+            }
+          },
+          {
+            "id": "menteseliOpeningType",
+            "name": "Açılım Tipi",
+            "type": "select",
+            "options": [
+              {
+                "id": "iceAcilim",
+                "name": "İçe Açılım"
+              },
+              {
+                "id": "disaAcilim",
+                "name": "Dışa Açılım"
+              }
+            ],
+            "default": "iceAcilim",
+            "dependsOn": {
+              "field": "sineklikType",
+              "value": "menteseli"
+            }
+          },
+          {
+            "id": "measureType",
+            "name": "Ölçü Şekli̇",
+            "type": "select",
+            "options": [
+              {
+                "id": "outsideToOutside",
+                "name": "Dıştan Dışa (Net Ölçü)"
+              },
+              {
+                "id": "wing",
+                "name": "Kanat Ölçüsü"
+              }
+            ],
+            "default": "outsideToOutside",
+            "dependsOn": {
+              "field": "sineklikType",
+              "value": ["plise", "sabit"]
+            }
+          },
+          {
+            "id": "menteseliMeasureType",
+            "name": "Ölçü Şekli̇",
+            "type": "select",
+            "options": [
+              {
+                "id": "outsideToOutside",
+                "name": "Dıştan Dışa (Net Ölçü)"
+              },
+              {
+                "id": "wing",
+                "name": "Kanat Ölçüsü"
+              },
+              {
+                "id": "gasket",
+                "name": "Contadan Contaya"
+              }
+            ],
+            "default": "outsideToOutside",
+            "dependsOn": {
+              "field": "sineklikType",
+              "value": "menteseli"
+            }
+          },
+          {
+            "id": "menteseliOpeningDirection",
+            "name": "Açılım Yönü",
+            "type": "select",
+            "options": [
+              {
+                "id": "left",
+                "name": "Sol"
+              },
+              {
+                "id": "right",
+                "name": "Sağ"
+              }
+            ],
+            "default": "left",
+            "dependsOn": {
+              "field": "sineklikType",
+              "value": "menteseli"
+            }
           }
         ]
       }
@@ -1072,9 +1165,26 @@
             "name": "Renk",
             "type": "select",
             "options": [
-              { "id": "beyaz", "name": "Beyaz" },
+              {
+                "id": "antrasit_gri",
+                "name": "Antrasit Gri",
+                "color": "#4B4B4B"
+              },
+              {
+                "id": "metalik_gri",
+                "name": "Metalik Gri",
+                "color": "#7D7D7D"
+              },
+              { "id": "beyaz", "name": "Beyaz", "color": "#FFFFFF" },
               { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
-              { "id": "siyah", "name": "Siyah" }
+              { "id": "krem", "name": "Krem", "color": "#E6D8C9" },
+              { "id": "vizon", "name": "Vizon", "color": "#A89F91" },
+              { "id": "altın_meşe", "name": "Altın Meşe", "color": "#D1B48C" },
+              { "id": "fındık", "name": "Fındık", "color": "#8B5B29" },
+              { "id": "açık_bej", "name": "Açık Bej", "color": "#F5F5DC" },
+              { "id": "koyu_bej", "name": "Koyu Bej", "color": "#D2B48C" },
+              { "id": "açık_bronz", "name": "Açık Bronz", "color": "#CD853F" },
+              { "id": "kül_siyahı", "name": "Kül Siyahı", "color": "#696969" }
             ],
             "default": "beyaz"
           }

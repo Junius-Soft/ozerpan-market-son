@@ -2,28 +2,15 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
-  setMiddleBarPositions,
-  setSectionHeights,
-  setSectionMotors,
-  setSectionConnections,
-  setSectionMotorPositions,
-} from "@/store/shutterSlice";
-
-interface ShutterState {
-  middleBarPositions: number[];
-  sectionHeights: number[];
-  sectionMotors: boolean[]; // Her bölmenin motor durumu (true = motor var, false = yok)
-  sectionConnections: string[]; // Her bölmenin bağlantı durumu ("left", "right", "none")
-  sectionMotorPositions: string[]; // Her bölmenin motor pozisyonu ("left", "right")
-}
+  getProductSpecificType,
+  useProductState,
+} from "../hooks/useProductState";
 
 import { type Product, getProductTabs } from "@/documents/products";
 import { DetailsStep } from "../steps/details-step";
 import { getOffer, type Position } from "@/documents/offers";
 import { getOffers } from "@/documents/offers";
-import { PanjurSelections } from "@/types/panjur";
 import { Formik, Form } from "formik";
 import { handleImalatListesiPDF } from "@/utils/handle-imalat-listesi";
 import { ProductDetailsHeader } from "./ProductDetailsHeader";
@@ -44,28 +31,17 @@ export default function ProductDetailsPage() {
   const [previewTotal, setPreviewTotal] = useState(0);
 
   const initialLoadDone = useRef(false);
-  const middleBarPositions = useSelector(
-    (state: { shutter: ShutterState }) => state.shutter.middleBarPositions
-  );
-  const sectionHeights = useSelector(
-    (state: { shutter: ShutterState }) => state.shutter.sectionHeights
-  );
-  const sectionMotors = useSelector(
-    (state: { shutter: ShutterState }) => state.shutter.sectionMotors
-  );
-  const sectionConnections = useSelector(
-    (state: { shutter: ShutterState }) => state.shutter.sectionConnections
-  );
-  const sectionMotorPositions = useSelector(
-    (state: { shutter: ShutterState }) => state.shutter.sectionMotorPositions
-  );
-  const dispatch = useDispatch();
+
   const productId = searchParams.get("productId");
   const productName = searchParams.get("productName");
   const typeId = searchParams.get("typeId");
   const optionId = searchParams.get("optionId");
   const selectedPosition = searchParams.get("selectedPosition");
   const offerNo = window.location.pathname.split("/")[2];
+
+  // Product-specific state hook kullanımı
+  const { state: productState, actions: productActions } =
+    useProductState(productId);
 
   const getSelectedPosition = useMemo(async () => {
     const currentOffer = await getOffer(offerNo);
@@ -77,8 +53,7 @@ export default function ProductDetailsPage() {
 
   // Transform tabs into initialValues with default field values and dependencies
   const getInitialValues = useCallback(() => {
-    const initialValues = {} as PanjurSelections &
-      Record<string, string | number | boolean>;
+    const initialValues = getProductSpecificType(productId);
 
     product?.tabs?.forEach((tab) => {
       if (tab.content?.fields) {
@@ -112,7 +87,7 @@ export default function ProductDetailsPage() {
     initialValues.quantity = quantity; // Default quantity
     initialValues.unitPrice = 0; // Default unit price
     return initialValues;
-  }, [product, quantity]);
+  }, [product?.tabs, productId, quantity]);
 
   const initialValues = useMemo(() => {
     const values = getInitialValues();
@@ -146,21 +121,17 @@ export default function ProductDetailsPage() {
           const position = await getSelectedPosition;
 
           if (position && Array.isArray(product.tabs)) {
-            const productDetails =
-              position.productDetails as PanjurSelections & {
-                middleBarPositions?: number[];
-                sectionHeights?: number[];
-                sectionMotors?: boolean[];
-                sectionConnections?: string[];
-                sectionMotorPositions?: string[];
-              };
+            // Dinamik tip belirleme - productId'ye göre uygun tip kullan
+            const productDetails = position.productDetails as ReturnType<
+              typeof getInitialValues
+            >;
 
             // Update each tab's fields with values from position.productDetails
             product.tabs = product.tabs.map((tab) => {
               if (tab.content?.fields) {
                 const updatedFields = tab.content.fields.map((field) => {
                   const fieldValue =
-                    productDetails[field.id as keyof PanjurSelections];
+                    productDetails[field.id as keyof typeof productDetails];
                   if (fieldValue !== undefined) {
                     return {
                       ...field,
@@ -180,46 +151,54 @@ export default function ProductDetailsPage() {
               }
               return tab;
             });
-            // Pozdan middleBarPositions varsa global state'e setle
-            if (
-              productDetails.middleBarPositions &&
-              Array.isArray(productDetails.middleBarPositions)
-            ) {
-              dispatch(
-                setMiddleBarPositions(productDetails.middleBarPositions)
-              );
-            }
-            // Set section heights from position if available
-            if (
-              productDetails.sectionHeights &&
-              Array.isArray(productDetails.sectionHeights)
-            ) {
-              dispatch(setSectionHeights(productDetails.sectionHeights));
-            }
-            // Set section motors from position if available
-            if (
-              productDetails.sectionMotors &&
-              Array.isArray(productDetails.sectionMotors)
-            ) {
-              dispatch(setSectionMotors(productDetails.sectionMotors));
-            }
-            // Set section connections from position if available
-            if (
-              productDetails.sectionConnections &&
-              Array.isArray(productDetails.sectionConnections)
-            ) {
-              dispatch(
-                setSectionConnections(productDetails.sectionConnections)
-              );
-            }
-            // Set section motor positions from position if available
-            if (
-              productDetails.sectionMotorPositions &&
-              Array.isArray(productDetails.sectionMotorPositions)
-            ) {
-              dispatch(
-                setSectionMotorPositions(productDetails.sectionMotorPositions)
-              );
+
+            // Pozdan state değerleri varsa product-specific hook ile setle (sadece panjur için)
+            if (productId === "panjur") {
+              if (
+                productDetails.middleBarPositions &&
+                Array.isArray(productDetails.middleBarPositions) &&
+                productActions.setMiddleBarPositions
+              ) {
+                productActions.setMiddleBarPositions(
+                  productDetails.middleBarPositions
+                );
+              }
+              // Set section heights from position if available
+              if (
+                productDetails.sectionHeights &&
+                Array.isArray(productDetails.sectionHeights) &&
+                productActions.setSectionHeights
+              ) {
+                productActions.setSectionHeights(productDetails.sectionHeights);
+              }
+              // Set section motors from position if available
+              if (
+                productDetails.sectionMotors &&
+                Array.isArray(productDetails.sectionMotors) &&
+                productActions.setSectionMotors
+              ) {
+                productActions.setSectionMotors(productDetails.sectionMotors);
+              }
+              // Set section connections from position if available
+              if (
+                productDetails.sectionConnections &&
+                Array.isArray(productDetails.sectionConnections) &&
+                productActions.setSectionConnections
+              ) {
+                productActions.setSectionConnections(
+                  productDetails.sectionConnections
+                );
+              }
+              // Set section motor positions from position if available
+              if (
+                productDetails.sectionMotorPositions &&
+                Array.isArray(productDetails.sectionMotorPositions) &&
+                productActions.setSectionMotorPositions
+              ) {
+                productActions.setSectionMotorPositions(
+                  productDetails.sectionMotorPositions
+                );
+              }
             }
           }
           // Set quantity from position if available
@@ -245,17 +224,24 @@ export default function ProductDetailsPage() {
     selectedPosition,
     getSelectedPosition,
     product,
-    dispatch,
+    productActions,
   ]);
 
-  // Yeni pozisyon için varsayılan sectionHeights değerlerini ayarla
+  // Yeni pozisyon için varsayılan sectionHeights değerlerini ayarla (sadece panjur için)
   useEffect(() => {
-    if (!selectedPosition && product && typeId && initialLoadDone.current) {
+    if (
+      !selectedPosition &&
+      product &&
+      typeId &&
+      initialLoadDone.current &&
+      productId === "panjur"
+    ) {
       // typeId'nin seperation sayısını temsil ettiğini varsayıyoruz
       const separationCount = Number(typeId) || 1;
 
       // Eğer sectionHeights boşsa veya yanlış uzunluktaysa varsayılan değerlerle doldur
-      if (sectionHeights.length !== separationCount) {
+      const currentSectionHeights = productState.sectionHeights || [];
+      if (currentSectionHeights.length !== separationCount) {
         // Form values'dan height değerini al, yoksa 1000mm varsayılan değer kullan
         const formHeightValue = initialValues.height || 1000;
         const defaultHeights = Array.from({ length: separationCount }, () =>
@@ -268,19 +254,24 @@ export default function ProductDetailsPage() {
           defaultHeights,
         });
 
-        dispatch(setSectionHeights(defaultHeights));
+        if (productActions.setSectionHeights) {
+          productActions.setSectionHeights(defaultHeights);
+        }
       }
     }
   }, [
     selectedPosition,
     product,
     typeId,
-    sectionHeights.length,
+    productState.sectionHeights,
     initialValues.height,
-    dispatch,
+    productId,
+    productActions,
   ]);
 
-  const handleComplete = async (values: PanjurSelections) => {
+  const handleComplete = async (
+    values: ReturnType<typeof getInitialValues>
+  ) => {
     if (!product) return;
 
     const offerNo = window.location.pathname.split("/")[2];
@@ -322,11 +313,27 @@ export default function ProductDetailsPage() {
         optionId,
         productDetails: {
           ...values,
-          middleBarPositions: middleBarPositions,
-          sectionHeights: sectionHeights,
-          sectionMotors: sectionMotors,
-          sectionConnections: sectionConnections,
-          sectionMotorPositions: sectionMotorPositions,
+          // Product-specific state'i sadece panjur için ekle
+          ...(productId === "panjur" &&
+            productState.middleBarPositions && {
+              middleBarPositions: productState.middleBarPositions,
+            }),
+          ...(productId === "panjur" &&
+            productState.sectionHeights && {
+              sectionHeights: productState.sectionHeights,
+            }),
+          ...(productId === "panjur" &&
+            productState.sectionMotors && {
+              sectionMotors: productState.sectionMotors,
+            }),
+          ...(productId === "panjur" &&
+            productState.sectionConnections && {
+              sectionConnections: productState.sectionConnections,
+            }),
+          ...(productId === "panjur" &&
+            productState.sectionMotorPositions && {
+              sectionMotorPositions: productState.sectionMotorPositions,
+            }),
         },
         total: (values.unitPrice || 0) * (values.quantity || 1), // Calculate total
       };
@@ -458,7 +465,9 @@ export default function ProductDetailsPage() {
 
                     await handleFiyatAnaliziPDF({
                       product: product,
-                      formikValues: formik.values,
+                      formikValues: formik.values as ReturnType<
+                        typeof getInitialValues
+                      >,
                       productId: productId ?? null,
                       typeId: typeId ?? null,
                       productName: productName ?? null,

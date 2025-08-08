@@ -1,3 +1,5 @@
+import { BaseSelections } from "./products";
+
 // Define types for price items
 export interface PriceItem {
   description: string;
@@ -27,17 +29,15 @@ export interface CalculationResult {
   errors: string[];
 }
 
-export interface PanjurSelections {
+export interface PanjurSelections extends BaseSelections {
   middleBarPositions?: number[];
   sectionHeights?: number[];
   sectionMotors?: boolean[];
   sectionConnections?: string[];
   sectionMotorPositions?: string[];
-  productId: string;
   panjurType: "distan" | "monoblok" | "yalitimli";
   width: number;
   height: number;
-  quantity: number;
   kutuOlcuAlmaSekli: "kutu_dahil" | "kutu_haric";
   dikmeOlcuAlmaSekli: "dikme_dahil" | "dikme_haric" | "tek_dikme";
   hareketBaglanti: "sol" | "sag";

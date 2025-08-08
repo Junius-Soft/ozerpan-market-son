@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  PriceItem,
-  CalculationResult,
-  PanjurSelections,
-} from "@/types/panjur";
+import { PriceItem, CalculationResult, PanjurSelections } from "@/types/panjur";
 import { useAccessories } from "./useAccessories";
 import { ProductTab } from "@/documents/products";
 import { useSelector } from "react-redux";
@@ -34,7 +30,9 @@ export const useCalculator = (
   useEffect(() => {
     const fetchPrices = async () => {
       try {
-        const response = await fetch(`/api/product-prices?productId=panjur`);
+        const response = await fetch(
+          `/api/product-prices?productId=${productName}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch prices");
         }
@@ -46,7 +44,7 @@ export const useCalculator = (
     };
 
     fetchPrices();
-  }, []);
+  }, [productName]);
 
   useEffect(() => {
     if (!prices.length || !values) return;
@@ -67,7 +65,9 @@ export const useCalculator = (
       setResult({
         totalPrice: 0,
         selectedProducts: { products: [], accessories: [] },
-        errors: [`${productName} ürünü için hesaplama henüz implement edilmedi`],
+        errors: [
+          `${productName} ürünü için hesaplama henüz implement edilmedi`,
+        ],
       });
     }
   }, [

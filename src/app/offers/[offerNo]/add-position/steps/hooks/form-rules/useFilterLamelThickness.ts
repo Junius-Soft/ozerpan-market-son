@@ -41,6 +41,7 @@ function filterLamelThickness(
   selectedLamel: string | null;
   selectedType: string | null;
   shouldBeMotorlu: boolean;
+  shouldSelectFirst: boolean; // Yeni eklenen field
 } {
   const totalWidth = Number(values.width);
   const totalHeight = Number(values.height);
@@ -75,21 +76,14 @@ function filterLamelThickness(
       selectedLamel: null,
       selectedType: null,
       shouldBeMotorlu: false,
+      shouldSelectFirst: false,
     };
   }
 
   const selectedLamel = validOptionsArray[0]?.id;
 
-  // Kullanıcının mevcut seçimini kontrol et
-  const currentLamelSelection = values.lamelTickness as string;
-  const isCurrentSelectionValid = validOptionsArray.some(
-    (option) => option.id === currentLamelSelection
-  );
-
-  // Eğer mevcut seçim valid ise onu kullan, değilse ilk valid seçeneği kullan
-  const finalSelectedLamel = isCurrentSelectionValid
-    ? currentLamelSelection
-    : selectedLamel;
+  // Her zaman ilk seçeneği (en uygun) seç
+  const finalSelectedLamel = selectedLamel;
 
   const selectedType = finalSelectedLamel?.includes("_se")
     ? "aluminyum_ekstruzyon"
@@ -105,6 +99,7 @@ function filterLamelThickness(
     selectedLamel: finalSelectedLamel,
     selectedType,
     shouldBeMotorlu,
+    shouldSelectFirst: true, // Her zaman ilk seçeneği seç
   };
 }
 
@@ -132,6 +127,10 @@ export function useFilterLamelThickness(
     (state: { shutter: ShutterState }) => state.shutter.sectionConnections
   );
 
+  // Dependency tracking için
+  const sectionHeightsStr = JSON.stringify(sectionHeights);
+  const sectionConnectionsStr = JSON.stringify(sectionConnections);
+
   // Lamel seçeneklerini hesapla ve form field'larını güncelle
   useEffect(() => {
     if (productId !== "panjur") return;
@@ -142,10 +141,13 @@ export function useFilterLamelThickness(
       sectionHeights,
       sectionConnections
     );
-    console.log(result.validOptions);
+    console.log("Valid options:", result.validOptions);
+    console.log("Should select first:", result.shouldSelectFirst);
+    console.log("Current selection:", formik.values.lamelTickness);
+
     setValidLamelThickness(result.validOptions);
 
-    // Form field'larını güncelle - sadece farklı değerler için
+    // Form field'larını güncelle
     if (
       result.selectedType &&
       formik.values.lamelType !== result.selectedType
@@ -153,28 +155,39 @@ export function useFilterLamelThickness(
       formik.setFieldValue("lamelType", result.selectedType);
     }
 
-    // Mevcut seçimin valid olup olmadığını kontrol et ve gerekirse güncelle
+    // Lamel seçimini güncelle - her zaman en uygun seçeneği seç
     if (
       result.selectedLamel &&
       formik.values.lamelTickness !== result.selectedLamel
     ) {
+      const oldSelection = formik.values.lamelTickness as string;
+
+      console.log(
+        `Changing lamel from ${oldSelection} to ${result.selectedLamel}`
+      );
       formik.setFieldValue("lamelTickness", result.selectedLamel);
 
-      // Eğer seçim değişmişse kullanıcıyı bilgilendir
-      const isCurrentSelectionInvalid =
-        result.validOptions &&
-        !result.validOptions.some(
-          (option) => option.id === formik.values.lamelTickness
-        );
+      // Kullanıcıyı bilgilendir
+      if (oldSelection) {
+        const isCurrentSelectionInvalid =
+          result.validOptions &&
+          !result.validOptions.some((option) => option.id === oldSelection);
 
-      if (isCurrentSelectionInvalid) {
-        toast.info(
-          `Seçilen lamel kalınlığı (${formatLamelName(
-            formik.values.lamelTickness as string
-          )}) bu ölçüler için uygun değil. ${formatLamelName(
-            result.selectedLamel
-          )} olarak değiştirildi.`
-        );
+        if (isCurrentSelectionInvalid) {
+          toast.info(
+            `Seçilen lamel kalınlığı (${formatLamelName(
+              oldSelection
+            )}) bu ölçüler için uygun değil. ${formatLamelName(
+              result.selectedLamel
+            )} olarak değiştirildi.`
+          );
+        } else {
+          toast.info(
+            `Ölçü değişikliği nedeniyle en uygun lamel (${formatLamelName(
+              result.selectedLamel
+            )}) otomatik seçildi.`
+          );
+        }
       }
     }
 
@@ -191,7 +204,10 @@ export function useFilterLamelThickness(
     middleBarPositions,
     sectionHeights,
     sectionConnections,
-    formik.values.lamelTickness, // Kullanıcının mevcut seçimini de takip et
+    // Redux state değişikliklerini de takip et (bölme sayısı değiştiğinde)
+    middleBarPositions.length,
+    sectionHeightsStr,
+    sectionConnectionsStr,
   ]);
 
   return { validLamelThickness };

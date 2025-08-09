@@ -157,20 +157,32 @@ export const calculatePanjurAccessories = (
     }
   }
 
-  // PVC Tapa ve Zımba Teli
+  // PVC Tapa ve Zımba Teli - her bölme için ayrı hesapla
   const pvcTapa = findPvcTapaAccessoryPrice(allAccessories, values.dikmeType);
   if (pvcTapa) {
-    const finalLamelCount = calculateLamelCount(
-      height,
-      values.boxType,
-      values.lamelTickness
-    );
-    const tapaQuantity =
-      finalLamelCount % 2 === 0 ? finalLamelCount : finalLamelCount + 1;
-    neededAccessories.push({ ...pvcTapa, quantity: tapaQuantity });
+    let totalTapaQuantity = 0;
+    const sectionCount = middleBarPositions.length + 1;
+
+    // Her bölme için lamel sayısını hesapla ve topla
+    for (let i = 0; i < sectionCount; i++) {
+      // Her bölmenin kendi yüksekliğini kullan, yoksa genel yüksekliği kullan
+      const sectionHeight = sectionHeights[i] || height;
+      const finalLamelCount = calculateLamelCount(
+        sectionHeight,
+        values.boxType,
+        values.lamelTickness
+      );
+      const tapaQuantity =
+        finalLamelCount % 2 === 0 ? finalLamelCount : finalLamelCount + 1;
+      totalTapaQuantity += tapaQuantity;
+    }
+
+    console.log({ totalTapaQuantity, sectionHeights });
+    neededAccessories.push({ ...pvcTapa, quantity: totalTapaQuantity });
+
     const zimbaTeli = findZimbaTeliAccessoryPrice(allAccessories);
     if (zimbaTeli)
-      neededAccessories.push({ ...zimbaTeli, quantity: tapaQuantity });
+      neededAccessories.push({ ...zimbaTeli, quantity: totalTapaQuantity });
   }
 
   // Çelik Askı - her bölme için ayrı hesapla

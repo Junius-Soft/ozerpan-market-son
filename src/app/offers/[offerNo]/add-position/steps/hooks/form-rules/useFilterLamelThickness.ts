@@ -18,15 +18,30 @@ interface ShutterState {
 
 export type FormValues = Record<string, string | number | boolean>;
 
+// Lamel kodunu okunabilir formata çevir (örn: "55_sl" -> "SL 55")
+function formatLamelName(lamelCode: string): string {
+  if (!lamelCode) return lamelCode;
+
+  const parts = lamelCode.split("_");
+  if (parts.length !== 2) return lamelCode;
+
+  const [thickness, type] = parts;
+  const typeFormatted = type.toUpperCase();
+
+  return `${typeFormatted} ${thickness}`;
+}
+
 function filterLamelThickness(
-  formik: FormikProps<
-    PanjurSelections & Record<string, string | number | boolean>
-  >,
+  values: PanjurSelections & Record<string, string | number | boolean>,
   middleBarPositions: number[],
   sectionHeights: number[],
   sectionConnections: string[]
-): ProductTabField["options"] | null {
-  const values = formik.values;
+): {
+  validOptions: ProductTabField["options"] | null;
+  selectedLamel: string | null;
+  selectedType: string | null;
+  shouldBeMotorlu: boolean;
+} {
   const totalWidth = Number(values.width);
   const totalHeight = Number(values.height);
 
@@ -40,7 +55,7 @@ function filterLamelThickness(
   );
 
   // En uygun lamel tipini bul
-  const validOptions: { id: string; label: string; name: string }[] = [];
+  const validOptionsArray: { id: string; label: string; name: string }[] = [];
 
   for (const [key, props] of Object.entries(lamelProperties)) {
     const area = (width * height) / 1_000_000; // mm^2'den m^2'ye çevir
@@ -49,31 +64,48 @@ function filterLamelThickness(
       (width <= props.maxWidth && height <= props.maxHeight) ||
       area <= props.maxArea;
     if (isValid) {
-      validOptions.push({ id: key, label: key, name: key });
+      validOptionsArray.push({ id: key, label: key, name: key });
     }
   }
 
-  if (validOptions.length === 0) {
+  if (validOptionsArray.length === 0) {
     toast.warn("Seçilen ölçülere uygun lamel bulunamadı.");
-    return null;
+    return {
+      validOptions: null,
+      selectedLamel: null,
+      selectedType: null,
+      shouldBeMotorlu: false,
+    };
   }
-  const selectedLamel = validOptions[0]?.id;
-  const selectedType = selectedLamel.includes("_se")
+
+  const selectedLamel = validOptionsArray[0]?.id;
+
+  // Kullanıcının mevcut seçimini kontrol et
+  const currentLamelSelection = values.lamelTickness as string;
+  const isCurrentSelectionValid = validOptionsArray.some(
+    (option) => option.id === currentLamelSelection
+  );
+
+  // Eğer mevcut seçim valid ise onu kullan, değilse ilk valid seçeneği kullan
+  const finalSelectedLamel = isCurrentSelectionValid
+    ? currentLamelSelection
+    : selectedLamel;
+
+  const selectedType = finalSelectedLamel?.includes("_se")
     ? "aluminyum_ekstruzyon"
-    : selectedLamel.includes("_sl")
+    : finalSelectedLamel?.includes("_sl")
     ? "aluminyum_poliuretanli"
     : null;
 
-  // lamelType'ı uygun şekilde güncelle
-  if (formik.values.lamelType !== selectedType) {
-    formik.setFieldValue("lamelType", selectedType);
-  }
-  // lamelTickness'ı güncelle
-  if (formik.values.lamelTickness !== selectedLamel) {
-    formik.setFieldValue("lamelTickness", selectedLamel);
-  }
+  // 55lik lamel seçildiğinde motorlu olmalı mı?
+  const shouldBeMotorlu = finalSelectedLamel?.includes("55_") || false;
 
-  return validOptions.length > 0 ? validOptions : null;
+  return {
+    validOptions: validOptionsArray,
+    selectedLamel: finalSelectedLamel,
+    selectedType,
+    shouldBeMotorlu,
+  };
 }
 
 // Main hook that manages all form rules
@@ -100,17 +132,58 @@ export function useFilterLamelThickness(
     (state: { shutter: ShutterState }) => state.shutter.sectionConnections
   );
 
+  // Lamel seçeneklerini hesapla ve form field'larını güncelle
   useEffect(() => {
-    if (productId === "panjur") {
-      setValidLamelThickness(
-        filterLamelThickness(
-          formik,
-          middleBarPositions,
-          sectionHeights,
-          sectionConnections
-        )
-      );
+    if (productId !== "panjur") return;
+
+    const result = filterLamelThickness(
+      formik.values,
+      middleBarPositions,
+      sectionHeights,
+      sectionConnections
+    );
+    console.log(result.validOptions);
+    setValidLamelThickness(result.validOptions);
+
+    // Form field'larını güncelle - sadece farklı değerler için
+    if (
+      result.selectedType &&
+      formik.values.lamelType !== result.selectedType
+    ) {
+      formik.setFieldValue("lamelType", result.selectedType);
     }
+
+    // Mevcut seçimin valid olup olmadığını kontrol et ve gerekirse güncelle
+    if (
+      result.selectedLamel &&
+      formik.values.lamelTickness !== result.selectedLamel
+    ) {
+      formik.setFieldValue("lamelTickness", result.selectedLamel);
+
+      // Eğer seçim değişmişse kullanıcıyı bilgilendir
+      const isCurrentSelectionInvalid =
+        result.validOptions &&
+        !result.validOptions.some(
+          (option) => option.id === formik.values.lamelTickness
+        );
+
+      if (isCurrentSelectionInvalid) {
+        toast.info(
+          `Seçilen lamel kalınlığı (${formatLamelName(
+            formik.values.lamelTickness as string
+          )}) bu ölçüler için uygun değil. ${formatLamelName(
+            result.selectedLamel
+          )} olarak değiştirildi.`
+        );
+      }
+    }
+
+    // 55lik lamel seçildiğinde movementType motorlu olmalı
+    if (result.shouldBeMotorlu && formik.values.movementType !== "motorlu") {
+      formik.setFieldValue("movementType", "motorlu");
+      toast.info("55mm lamel için hareket tipi motorlu olarak ayarlandı.");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     width,
     height,
@@ -118,7 +191,7 @@ export function useFilterLamelThickness(
     middleBarPositions,
     sectionHeights,
     sectionConnections,
-    formik,
+    formik.values.lamelTickness, // Kullanıcının mevcut seçimini de takip et
   ]);
 
   return { validLamelThickness };

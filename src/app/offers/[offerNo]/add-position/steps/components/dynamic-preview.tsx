@@ -49,7 +49,6 @@ export function DynamicPreview({
   // Her ürün için kendi parametrelerini ayarlayalım
   const getProductSpecificProps = () => {
     const values = formik.values;
-    console.log({ values });
 
     switch (productId) {
       case "panjur":

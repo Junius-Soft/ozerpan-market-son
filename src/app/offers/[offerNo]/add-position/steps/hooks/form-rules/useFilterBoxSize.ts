@@ -50,7 +50,6 @@ export function filterBoxSize(
       validOptions.push({ id: box.id, name: box.name });
     }
   }
-  console.log("validBoxOptions", validOptions);
 
   const isCurrentValid = validOptions.some(
     (opt) => opt.id === formik.values.boxType

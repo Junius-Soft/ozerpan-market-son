@@ -177,7 +177,6 @@ export const calculatePanjurAccessories = (
       totalTapaQuantity += tapaQuantity;
     }
 
-    console.log({ totalTapaQuantity, sectionHeights });
     neededAccessories.push({ ...pvcTapa, quantity: totalTapaQuantity });
 
     const zimbaTeli = findZimbaTeliAccessoryPrice(allAccessories);

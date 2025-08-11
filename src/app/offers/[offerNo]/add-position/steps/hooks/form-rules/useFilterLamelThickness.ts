@@ -59,11 +59,7 @@ function filterLamelThickness(
   const validOptionsArray: { id: string; label: string; name: string }[] = [];
 
   for (const [key, props] of Object.entries(lamelProperties)) {
-    const area = (width * height) / 1_000_000; // mm^2'den m^2'ye çevir
-
-    const isValid =
-      (width <= props.maxWidth && height <= props.maxHeight) ||
-      area <= props.maxArea;
+    const isValid = width <= props.maxWidth && height <= props.maxHeight;
     if (isValid) {
       validOptionsArray.push({ id: key, label: key, name: key });
     }

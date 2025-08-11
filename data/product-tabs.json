@@ -765,7 +765,8 @@
             "type": "select",
             "options": [
               { "id": "yok", "name": "Yok" },
-              { "id": "var", "name": "Var" }
+              { "id": "double_sided", "name": "Çift Taraflı" },
+              { "id": "triple_sided", "name": "Üç Taraflı" }
             ],
             "default": "yok"
           },

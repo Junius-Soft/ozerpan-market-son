@@ -286,12 +286,15 @@ export const calculatePanjur = (
 
   const tamburPrice = totalTamburPrice;
 
-  // Yükseltme Profili fiyatı hesaplama (sadece dikmeAdapter === "var" ise)
+  // Yükseltme Profili fiyatı hesaplama (dikmeAdapter === "double_sided" veya "triple_sided" ise)
   let yukseltmeProfiliPrice = 0;
   const yukseltmeProfiliSelectedProducts: SelectedProduct[] = [];
 
-  if (values.dikmeAdapter === "var") {
-    // Her dikme pozisyonu için yükseltme profili fiyatı hesapla
+  if (
+    values.dikmeAdapter === "double_sided" ||
+    values.dikmeAdapter === "triple_sided"
+  ) {
+    // Dikey yükseltme profilleri - her dikme pozisyonu için
     dikmeHeights.forEach((dikmeHeight: number, index: number) => {
       // Dikme adet sayısını pozisyona göre belirle
       const dikmeCountAtPosition =
@@ -345,6 +348,27 @@ export const calculatePanjur = (
         });
       }
     });
+
+    // Triple sided için ek yatay yükseltme profili (üst tarafa)
+    if (values.dikmeAdapter === "triple_sided") {
+      const [yatayYukseltmePrice, yatayYukseltmeSelectedProduct] =
+        findYukseltmeProfiliPrice(
+          prices,
+          values.dikme_color || values.lamel_color,
+          1, // 1 adet
+          values.width // Yatay profil için sistem genişliği kullanılıyor
+        );
+
+      yukseltmeProfiliPrice += yatayYukseltmePrice;
+
+      if (yatayYukseltmeSelectedProduct) {
+        yukseltmeProfiliSelectedProducts.push({
+          ...yatayYukseltmeSelectedProduct,
+          description: `${yatayYukseltmeSelectedProduct.description} (Üst Yatay Profil - 1 Adet)`,
+          totalPrice: yatayYukseltmePrice,
+        });
+      }
+    }
   }
 
   // Aksesuarların fiyatını hesapla

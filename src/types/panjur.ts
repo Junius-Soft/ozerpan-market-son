@@ -70,7 +70,7 @@ export interface PanjurSelections extends BaseSelections {
     | "mini_pvc_orta_dikme"
     | "midi_pvc_dikme"
     | "midi_pvc_orta_dikme";
-  dikmeAdapter: "yok" | "var";
+  dikmeAdapter: "yok" | "double_sided" | "triple_sided";
   subPart: "mini_alt_parca" | "kilitli_alt_parca" | "midi_alt_parca";
   lamel_color: string;
   box_color: string;

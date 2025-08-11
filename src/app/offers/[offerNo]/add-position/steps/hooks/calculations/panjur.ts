@@ -52,7 +52,6 @@ export const calculatePanjur = (
       values.dikmeType
     )
   );
-
   // Her bölme için sistem yüksekliklerini hesapla
   const sectionSystemHeights = sectionHeights.map((sectionHeight) =>
     calculateSystemHeight(
@@ -120,7 +119,7 @@ export const calculatePanjur = (
 
   // Her bölme için lamel genişlikleri
   const sectionLamelWidths = sectionSystemWidths.map((sectionSystemWidth) =>
-    calculateLamelGenisligi(sectionSystemWidth - 10, values.dikmeType)
+    calculateLamelGenisligi(sectionSystemWidth, values.dikmeType)
   );
 
   // Her bölme için lamel sayıları

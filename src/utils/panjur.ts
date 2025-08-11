@@ -352,7 +352,7 @@ export const calculateLamelGenisligi = (
   dikmeType: string
 ): number => {
   const lamelDusmeValue = getLamelDusmeValue(dikmeType);
-  return systemWidth - lamelDusmeValue;
+  return systemWidth + 10 - lamelDusmeValue;
 };
 
 export const calculateDikmeHeight = (

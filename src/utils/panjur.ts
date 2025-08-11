@@ -143,6 +143,21 @@ export const findSubPartPrice = (
   selectedProduct: SelectedProduct | null;
   width: number;
 }> => {
+  // Bölme genişliklerini hesapla
+  const sectionWidths = findSectionWidths(middleBarPositions, width);
+  return findSubPartPriceWithWidths(prices, subPart, color, sectionWidths);
+};
+
+export const findSubPartPriceWithWidths = (
+  prices: PriceItem[],
+  subPart: string,
+  color: string,
+  sectionWidths: number[]
+): Array<{
+  price: number;
+  selectedProduct: SelectedProduct | null;
+  width: number;
+}> => {
   const subPartPrices = prices.filter(
     (p) => p.type === "panjur_alt_parça_profilleri"
   );
@@ -165,17 +180,13 @@ export const findSubPartPrice = (
   }
   if (!matchingSubPart) {
     // Hiçbir bölme için alt parça bulunamazsa, hepsi null döner
-    const sectionCount = middleBarPositions.length + 1;
-    return Array(sectionCount)
+    return Array(sectionWidths.length)
       .fill(0)
       .map(() => ({ price: 0, selectedProduct: null, width: 0 }));
   }
 
-  // Bölme genişliklerini hesapla
-  const sectionWidths = findSectionWidths(middleBarPositions, width);
-
   // Her bölme için alt parça fiyatı ve ürününü oluştur
-  return sectionWidths.map((sectionWidth) => {
+  return sectionWidths.map((sectionWidth, index) => {
     // Fiyatı: metre fiyatı * bölme genişliği (metre)
     const metreFiyati = parseFloat(matchingSubPart.price);
     const genislikMetre = sectionWidth / 1000;
@@ -185,6 +196,15 @@ export const findSubPartPrice = (
       1,
       sectionWidth + " mm"
     );
+
+    // Bölme bilgisini ekle
+    if (selectedProduct) {
+      selectedProduct.description = `${selectedProduct.description} (Bölme ${
+        index + 1
+      })`;
+      selectedProduct.totalPrice = price;
+    }
+
     return {
       price,
       selectedProduct,

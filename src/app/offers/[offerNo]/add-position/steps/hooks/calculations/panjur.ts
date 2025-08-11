@@ -6,7 +6,7 @@ import {
 } from "@/types/panjur";
 import {
   findLamelPrice,
-  findSubPartPrice,
+  findSubPartPriceWithWidths,
   findDikmePrice,
   findBoxPrice,
   findSmartHomePrice,
@@ -161,12 +161,12 @@ export const calculatePanjur = (
     }
   });
 
-  const subPartResults = findSubPartPrice(
+  // Alt parça fiyatı hesaplama - sectionLamelWidths kullanarak optimize edilmiş
+  const subPartResults = findSubPartPriceWithWidths(
     prices,
     values.subPart,
     values.subPart_color || values.lamel_color,
-    middleBarPositions,
-    values.width
+    sectionLamelWidths
   );
 
   // Toplam alt parça fiyatı ve ürünleri

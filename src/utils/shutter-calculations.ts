@@ -1,21 +1,35 @@
-// En geniş bölmeyi bulma fonksiyonu
-export function findLargestEffectiveSection(
+// Bölme genişliklerini hesaplama fonksiyonu
+export function calculateSectionWidths(
+  totalWidth: number,
+  middleBarPositions: number[]
+): number[] {
+  const positions = [0, ...middleBarPositions, totalWidth];
+  return positions.slice(0, -1).map((pos, i) => positions[i + 1] - pos);
+}
+
+// Birleştirilmiş bölme gruplarını hesaplama fonksiyonu
+export function findEffectiveSections(
   totalWidth: number,
   totalHeight: number,
   middleBarPositions: number[],
   sectionHeights: number[],
-  sectionConnections: string[]
-): { width: number; height: number } {
+  sectionConnections: string[],
+  returnLargestOnly: boolean = false
+):
+  | { width: number; height: number } // returnLargestOnly = true
+  | Array<{ sectionIndices: number[]; width: number; height: number }> {
+  // returnLargestOnly = false
   // Bölme genişliklerini hesapla
-  const positions = [0, ...middleBarPositions, totalWidth];
-  const sectionWidths = positions
-    .slice(0, -1)
-    .map((pos, i) => positions[i + 1] - pos);
+  const sectionWidths = calculateSectionWidths(totalWidth, middleBarPositions);
 
   // Birleştirilmiş bölmeleri takip et
   const processedSections = new Set<number>();
-  const effectiveSections: { width: number; height: number; area: number }[] =
-    [];
+  const effectiveGroups: Array<{
+    sectionIndices: number[];
+    width: number;
+    height: number;
+    area: number;
+  }> = [];
 
   for (let index = 0; index < sectionWidths.length; index++) {
     // Bu bölme zaten işlendiyse atla
@@ -64,29 +78,67 @@ export function findLargestEffectiveSection(
     // Bu bölme(ler)i işlenmiş olarak işaretle
     connectedSections.forEach((idx) => processedSections.add(idx));
 
-    effectiveSections.push({
+    // Bölme indekslerini sırala
+    connectedSections.sort((a, b) => a - b);
+
+    effectiveGroups.push({
+      sectionIndices: connectedSections,
       width: effectiveWidth,
       height: effectiveHeight,
       area: effectiveWidth * effectiveHeight,
     });
   }
 
-  // En büyük alanı olan bölmeyi bul
-  const largestSection = effectiveSections.reduce((largest, current) => {
-    return current.area > largest.area ? current : largest;
-  });
+  if (returnLargestOnly) {
+    // En büyük alanı olan bölmeyi bul
+    const largestSection = effectiveGroups.reduce((largest, current) => {
+      return current.area > largest.area ? current : largest;
+    });
 
-  return {
-    width: largestSection.width,
-    height: largestSection.height,
-  };
+    return {
+      width: largestSection.width,
+      height: largestSection.height,
+    };
+  } else {
+    // Tüm grupları döndür (area özelliği olmadan)
+    return effectiveGroups.map((group) => ({
+      sectionIndices: group.sectionIndices,
+      width: group.width,
+      height: group.height,
+    }));
+  }
 }
 
-// Bölme genişliklerini hesaplama fonksiyonu
-export function calculateSectionWidths(
+// Backward compatibility için eski fonksiyonları koruyalım
+export function findLargestEffectiveSection(
   totalWidth: number,
-  middleBarPositions: number[]
-): number[] {
-  const positions = [0, ...middleBarPositions, totalWidth];
-  return positions.slice(0, -1).map((pos, i) => positions[i + 1] - pos);
+  totalHeight: number,
+  middleBarPositions: number[],
+  sectionHeights: number[],
+  sectionConnections: string[]
+): { width: number; height: number } {
+  return findEffectiveSections(
+    totalWidth,
+    totalHeight,
+    middleBarPositions,
+    sectionHeights,
+    sectionConnections,
+    true
+  ) as { width: number; height: number };
+}
+
+export function findMotorResponsibleSections(
+  totalWidth: number,
+  middleBarPositions: number[],
+  sectionHeights: number[],
+  sectionConnections: string[]
+): Array<{ sectionIndices: number[]; width: number; height: number }> {
+  return findEffectiveSections(
+    totalWidth,
+    totalWidth, // totalHeight yerine totalWidth kullanıyoruz (eski davranışı korumak için)
+    middleBarPositions,
+    sectionHeights,
+    sectionConnections,
+    false
+  ) as Array<{ sectionIndices: number[]; width: number; height: number }>;
 }

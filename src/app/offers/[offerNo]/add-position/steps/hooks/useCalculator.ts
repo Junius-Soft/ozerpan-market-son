@@ -26,6 +26,9 @@ export const useCalculator = (
   const sectionHeights = useSelector(
     (state: RootState) => state.shutter.sectionHeights
   );
+  const sectionConnections = useSelector(
+    (state: RootState) => state.shutter.sectionConnections
+  );
 
   useEffect(() => {
     const fetchPrices = async () => {
@@ -57,6 +60,7 @@ export const useCalculator = (
         accessories || [],
         middleBarPositions,
         sectionHeights,
+        sectionConnections,
         availableTabs
       );
       setResult(result);
@@ -78,6 +82,7 @@ export const useCalculator = (
     availableTabs,
     middleBarPositions,
     sectionHeights,
+    sectionConnections,
   ]);
 
   return result;

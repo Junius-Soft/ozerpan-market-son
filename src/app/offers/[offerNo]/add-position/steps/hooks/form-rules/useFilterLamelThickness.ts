@@ -7,7 +7,7 @@ import { PanjurSelections } from "@/types/panjur";
 import { lamelProperties } from "@/constants/panjur";
 import { ProductTabField } from "@/documents/products";
 import { toast } from "react-toastify";
-import { findLargestEffectiveSection } from "@/utils/shutter-calculations";
+import { findEffectiveSections } from "@/utils/shutter-calculations";
 
 interface ShutterState {
   middleBarPositions: number[];
@@ -47,13 +47,14 @@ function filterLamelThickness(
   const totalHeight = Number(values.height);
 
   // En geniş etkili bölmeyi bul
-  const { width, height } = findLargestEffectiveSection(
+  const { width, height } = findEffectiveSections(
     totalWidth,
     totalHeight,
     middleBarPositions,
     sectionHeights,
-    sectionConnections
-  );
+    sectionConnections,
+    true // En büyük bölmeyi döndür
+  ) as { width: number; height: number };
 
   // En uygun lamel tipini bul
   const validOptionsArray: { id: string; label: string; name: string }[] = [];

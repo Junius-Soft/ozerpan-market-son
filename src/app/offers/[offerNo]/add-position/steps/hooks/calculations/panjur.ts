@@ -21,6 +21,7 @@ import {
   calculateDikmeHeight,
   findSectionWidths,
 } from "@/utils/panjur";
+import { findEffectiveSections } from "@/utils/shutter-calculations";
 import { ProductTab } from "@/documents/products";
 
 export const calculatePanjur = (
@@ -29,6 +30,7 @@ export const calculatePanjur = (
   accessories: PriceItem[],
   middleBarPositions: number[],
   sectionHeights: number[],
+  sectionConnections: string[],
   availableTabs?: ProductTab[]
 ): CalculationResult => {
   const errors: string[] = [];
@@ -118,7 +120,7 @@ export const calculatePanjur = (
 
   // Her bölme için lamel genişlikleri
   const sectionLamelWidths = sectionSystemWidths.map((sectionSystemWidth) =>
-    calculateLamelGenisligi(sectionSystemWidth, values.dikmeType)
+    calculateLamelGenisligi(sectionSystemWidth - 10, values.dikmeType)
   );
 
   // Her bölme için lamel sayıları
@@ -244,11 +246,46 @@ export const calculatePanjur = (
   );
 
   // Tambur Profili fiyatı hesaplama
-  const [tamburPrice, tamburSelectedProduct] = findTamburProfiliAccessoryPrice(
-    prices,
-    values.movementType,
-    values.width
-  );
+  // Motor sorumluluklarını sectionConnections'a göre hesapla
+  const motorResponsibleGroups = findEffectiveSections(
+    values.width,
+    values.width, // totalHeight yerine totalWidth kullanıyoruz (eski davranışı korumak için)
+    middleBarPositions,
+    sectionHeights,
+    sectionConnections,
+    false // Tüm grupları döndür
+  ) as Array<{ sectionIndices: number[]; width: number; height: number }>;
+
+  // Her motor/makara grubu için tambur profili fiyatı hesapla
+  let totalTamburPrice = 0;
+  const tamburSelectedProducts: SelectedProduct[] = [];
+
+  // Manuel ve motorlu durumda her grup için ayrı tambur
+  motorResponsibleGroups.forEach((group, groupIndex) => {
+    const [unitTamburPrice, tamburSelectedProduct] =
+      findTamburProfiliAccessoryPrice(prices, values.movementType, group.width);
+
+    if (tamburSelectedProduct) {
+      const sectionInfo = group.sectionIndices
+        .map((s) => `Bölme ${s + 1}`)
+        .join(", ");
+
+      const groupName =
+        values.movementType === "manuel"
+          ? `Makara ${groupIndex + 1}`
+          : `Motor ${groupIndex + 1}`;
+
+      tamburSelectedProducts.push({
+        ...tamburSelectedProduct,
+        description: `${tamburSelectedProduct.description} (${groupName} - ${sectionInfo})`,
+        totalPrice: unitTamburPrice,
+      });
+    }
+
+    totalTamburPrice += unitTamburPrice;
+  });
+
+  const tamburPrice = totalTamburPrice;
 
   // Yükseltme Profili fiyatı hesaplama (sadece dikmeAdapter === "var" ise)
   let yukseltmeProfiliPrice = 0;
@@ -337,7 +374,7 @@ export const calculatePanjur = (
     ...dikmeSelectedProducts,
     selectedFrontBox,
     selectedBackBox,
-    tamburSelectedProduct,
+    ...tamburSelectedProducts,
     ...yukseltmeProfiliSelectedProducts,
     remoteSelectedProduct,
     smarthomeSelectedProduct,

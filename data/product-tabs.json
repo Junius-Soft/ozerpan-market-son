@@ -622,12 +622,7 @@
             "default": "yok",
             "dependsOn": {
               "field": "motorSekli",
-              "value": [
-                "alicili_motorlu",
-                "alicili_motorlu_reduktorlu",
-                "alicili_motorlu_geri_bildirimli",
-                "alicili_motorlu_geri_bildirimli_engel"
-              ]
+              "value": ["duz_motorlu"]
             },
             "filterBy": [
               {

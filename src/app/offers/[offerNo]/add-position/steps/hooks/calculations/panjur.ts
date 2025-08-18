@@ -31,6 +31,7 @@ export const calculatePanjur = (
   middleBarPositions: number[],
   sectionHeights: number[],
   sectionConnections: string[],
+  optionId: string,
   availableTabs?: ProductTab[]
 ): CalculationResult => {
   const errors: string[] = [];
@@ -188,12 +189,24 @@ export const calculatePanjur = (
         ? 1 // Sol ve sağ dikmeler: 1'er adet
         : 2; // Orta dikmeler: 2'şer adet
 
+    const dikmePosition =
+      index === 0
+        ? "Sol"
+        : index === dikmeHeights.length - 1
+        ? "Sağ"
+        : `Orta (${index})`;
+
+    const currentDikme =
+      index === 0 || index === dikmeHeights.length - 1 ? "Yan" : "Orta";
+
     const [dikmeUnitPrice, dikmeSelectedProduct] = findDikmePrice(
       prices,
       values.dikmeType,
       values.dikme_color || values.lamel_color,
       dikmeCountAtPosition,
-      dikmeHeight
+      dikmeHeight,
+      optionId,
+      currentDikme
     );
 
     const dikmePriceForThisPosition = dikmeUnitPrice * dikmeCountAtPosition;
@@ -201,12 +214,6 @@ export const calculatePanjur = (
 
     if (dikmeSelectedProduct) {
       // Dikme pozisyon bilgisini ekleyerek ürünü kaydet
-      const dikmePosition =
-        index === 0
-          ? "Sol"
-          : index === dikmeHeights.length - 1
-          ? "Sağ"
-          : `Orta (${index})`;
 
       const adetText = dikmeCountAtPosition === 1 ? "1 Adet" : "2 Adet";
 

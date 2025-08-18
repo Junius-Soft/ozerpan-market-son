@@ -218,24 +218,50 @@ export const findDikmePrice = (
   dikmeType: string,
   color: string,
   quantity: number,
-  dikmeHeight: number
+  dikmeHeight: number,
+  optionId: string,
+  currentDikme: "Yan" | "Orta"
 ): [number, SelectedProduct | null] => {
-  const dikmePrices = prices.filter(
-    (p) => p.type === "panjur_dikme_profilleri"
-  );
+  let dikmePrices: PriceItem[];
   let normalizedColor = normalizeColor(color);
+  let searchPattern: string;
+  let dikmeWidth: string;
 
-  const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
-  const dikmeWidth = dikmeType.startsWith("mini_") ? "53" : "60";
+  if (optionId === "monoblok") {
+    // Monoblok için PVC dikme profilleri
+    const pvcType =
+      currentDikme === "Yan"
+        ? "pvc_panjur_yan_dikme_profilleri"
+        : "pvc_panjur_orta_dikme_profilleri";
 
-  let searchPattern = `${typePrefix} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+    dikmePrices = prices.filter((p) => p.type === pvcType);
+
+    // Monoblok için dikme genişlikleri: mini 39mm, midi 55mm
+    dikmeWidth = dikmeType.startsWith("mini_") ? "39" : "55";
+
+    const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
+    searchPattern = `${typePrefix} Pvc Ötelemeli ${currentDikme} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+  } else {
+    // Distan (mevcut hesaplama)
+    dikmePrices = prices.filter((p) => p.type === "panjur_dikme_profilleri");
+
+    const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
+    dikmeWidth = dikmeType.startsWith("mini_") ? "53" : "60";
+    searchPattern = `${typePrefix} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+  }
 
   let matchingDikme = dikmePrices.find((p) => p.description === searchPattern);
 
   // Eğer bulunamazsa, Beyaz ile tekrar dene
   if (!matchingDikme && normalizedColor !== "Beyaz") {
     normalizedColor = "Beyaz";
-    searchPattern = `${typePrefix} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+    if (optionId === "monoblok") {
+      const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
+      searchPattern = `${typePrefix} Pvc ${currentDikme} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+    } else {
+      const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
+      searchPattern = `${typePrefix} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+    }
     matchingDikme = dikmePrices.find((p) => p.description === searchPattern);
   }
 

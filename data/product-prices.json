@@ -1037,6 +1037,42 @@
         "price": "4.35"
       },
       {
+        "description": "Mini Pvc Yan Dikme 39 mm Beyaz",
+        "stock_code": "352131201010",
+        "uretici_kodu": "GC.307.RA.NDU",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "4.35"
+      },
+      {
+        "description": "Midi Pvc Yan Dikme 55 mm Beyaz",
+        "stock_code": "352131201010",
+        "uretici_kodu": "GC.307.RA.NDU",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "4.35"
+      },
+      {
+        "description": "Mini Pvc Orta Dikme 39 mm Beyaz",
+        "stock_code": "352131201010",
+        "uretici_kodu": "GC.307.RA.NDU",
+        "type": "pvc_panjur_orta_dikme_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "4.35"
+      },
+      {
+        "description": "Midi Pvc Orta Dikme 55 mm Beyaz",
+        "stock_code": "352131201010",
+        "uretici_kodu": "GC.307.RA.NDU",
+        "type": "pvc_panjur_orta_dikme_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "4.35"
+      },
+      {
         "description": "Plise Kasa Profili Pres",
         "stock_code": "378111600200",
         "uretici_kodu": "378111600200",

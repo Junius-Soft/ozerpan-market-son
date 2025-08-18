@@ -5,6 +5,7 @@ import { ProductTab } from "@/documents/products";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { calculatePanjur } from "./calculations/panjur";
+import { useSearchParams } from "next/navigation";
 
 // Generic calculator hook
 export const useCalculator = (
@@ -12,6 +13,10 @@ export const useCalculator = (
   productName: string,
   availableTabs?: ProductTab[]
 ) => {
+  const searchParams = useSearchParams();
+
+  const optionId = searchParams.get("optionId") ?? "";
+
   const [result, setResult] = useState<CalculationResult>({
     totalPrice: 0,
     selectedProducts: { products: [], accessories: [] },
@@ -61,6 +66,7 @@ export const useCalculator = (
         middleBarPositions,
         sectionHeights,
         sectionConnections,
+        optionId,
         availableTabs
       );
       setResult(result);
@@ -83,6 +89,7 @@ export const useCalculator = (
     middleBarPositions,
     sectionHeights,
     sectionConnections,
+    optionId,
   ]);
 
   return result;

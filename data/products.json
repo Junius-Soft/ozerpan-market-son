@@ -27,7 +27,7 @@
         {
           "id": "monoblok",
           "name": "Monoblok Panjur",
-          "disabled": true
+          "disabled": false
         },
         {
           "id": "yalitimli",

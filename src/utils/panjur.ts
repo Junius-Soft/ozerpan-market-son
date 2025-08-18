@@ -43,7 +43,17 @@ export const getBoxHeight = (boxType: string): number => {
   return parseInt(boxType.replace("mm", ""));
 };
 
-export const getKertmePayi = (dikmeType: string): number => {
+export const getKertmePayi = (
+  dikmeType: string,
+  optionId: string,
+  currentDikme: "Yan" | "Orta"
+): number => {
+  if (optionId === "monoblok") {
+    // Monoblok için kertme payları
+    return currentDikme === "Yan" ? 43 : 40; // Yan: 43, Orta: 40
+  }
+
+  // Distan için (mevcut hesaplama)
   return dikmeType.startsWith("mini_") ? 20 : 25;
 };
 
@@ -404,10 +414,12 @@ export const calculateLamelGenisligi = (
 export const calculateDikmeHeight = (
   systemHeight: number,
   boxType: string,
-  dikmeType: string
+  dikmeType: string,
+  optionId: string,
+  currentDikme: "Yan" | "Orta"
 ): number => {
   const kutuYuksekligi = getBoxHeight(boxType);
-  const kertmePayi = getKertmePayi(dikmeType);
+  const kertmePayi = getKertmePayi(dikmeType, optionId, currentDikme);
   return systemHeight - kutuYuksekligi + kertmePayi;
 };
 

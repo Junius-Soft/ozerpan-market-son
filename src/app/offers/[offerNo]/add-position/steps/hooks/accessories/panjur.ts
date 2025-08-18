@@ -33,7 +33,8 @@ export const calculatePanjurAccessories = (
   middleBarPositions: number[],
   sectionHeights: number[],
   sectionMotors: boolean[],
-  sectionCount: string | null
+  sectionCount: string | null,
+  optionId: string
 ): PriceItem[] => {
   const neededAccessories: PriceItem[] = [];
   const dikmeCount = Number(sectionCount) * 2;
@@ -334,12 +335,15 @@ export const calculatePanjurAccessories = (
         const rightSectionHeight = sectionHeights[i] || height;
         relevantSectionHeight = Math.max(leftSectionHeight, rightSectionHeight);
       }
-
+      const currentDikme =
+        i === 0 || i === totalDikmeCount - 1 ? "Yan" : "Orta";
       const dikmeHeightForSection =
         calculateDikmeHeight(
           relevantSectionHeight,
           values.boxType,
-          values.dikmeType
+          values.dikmeType,
+          optionId,
+          currentDikme
         ) / 1000; // metre cinsine çevir
 
       // Her dikme için sağında ve solunda olmak üzere 2 tane kıl fitili

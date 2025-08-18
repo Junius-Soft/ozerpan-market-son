@@ -33,6 +33,7 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
 
   const sectionCount = searchParams.get("typeId");
   const productId = searchParams.get("productId");
+  const optionId = searchParams.get("optionId") ?? "";
 
   useEffect(() => {
     const fetchAndCalculateAccessories = async () => {
@@ -52,7 +53,8 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
             middleBarPositions,
             sectionHeights,
             sectionMotors,
-            sectionCount
+            sectionCount,
+            optionId
           );
           setAccessories(result);
         } else if (productId === "pergole") {
@@ -84,6 +86,7 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
     sectionConnections,
     sectionMotorPositions,
     sectionCount,
+    optionId,
   ]);
 
   return { accessories };

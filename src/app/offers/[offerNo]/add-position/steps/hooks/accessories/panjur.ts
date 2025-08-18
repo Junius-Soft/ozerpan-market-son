@@ -308,24 +308,41 @@ export const calculatePanjurAccessories = (
     });
   }
 
-  // Kıl Fitili ekle - her dikme için ayrı hesapla
+  // Kıl Fitili ekle - her dikme için ayrı hesapla (her dikmenin sağında ve solunda)
   const kilFitiliName = "067x550 Standart Kıl Fitil";
   const kilFitili = allAccessories.find(
     (acc) => acc.description === kilFitiliName
   );
   if (kilFitili) {
     let totalKilFitiliLength = 0;
-    const sectionCount = middleBarPositions.length + 1;
+    const totalDikmeCount = middleBarPositions.length + 2; // sol dikme + orta dikmeler + sağ dikme
 
-    // Her bölme için dikme yüksekliğini hesapla
-    for (let i = 0; i < sectionCount; i++) {
-      // Her bölmenin kendi yüksekliğini kullan, yoksa genel yüksekliği kullan
-      const sectionHeight = sectionHeights[i] || height;
+    // Her dikme için yüksekliğini hesapla
+    for (let i = 0; i < totalDikmeCount; i++) {
+      let relevantSectionHeight: number;
+
+      if (i === 0) {
+        // Sol dikme - ilk bölmenin yüksekliği
+        relevantSectionHeight = sectionHeights[0] || height;
+      } else if (i === totalDikmeCount - 1) {
+        // Sağ dikme - son bölmenin yüksekliği
+        const lastSectionIndex = middleBarPositions.length + 1 - 1;
+        relevantSectionHeight = sectionHeights[lastSectionIndex] || height;
+      } else {
+        // Orta dikme - bitişik iki bölmenin maksimumu
+        const leftSectionHeight = sectionHeights[i - 1] || height;
+        const rightSectionHeight = sectionHeights[i] || height;
+        relevantSectionHeight = Math.max(leftSectionHeight, rightSectionHeight);
+      }
+
       const dikmeHeightForSection =
-        calculateDikmeHeight(sectionHeight, values.boxType, values.dikmeType) /
-        1000; // metre cinsine çevir
+        calculateDikmeHeight(
+          relevantSectionHeight,
+          values.boxType,
+          values.dikmeType
+        ) / 1000; // metre cinsine çevir
 
-      // Bu bölme için 2 dikme var (sol ve sağ)
+      // Her dikme için sağında ve solunda olmak üzere 2 tane kıl fitili
       totalKilFitiliLength += dikmeHeightForSection * 2;
     }
 

@@ -304,10 +304,7 @@ export const calculatePanjur = (
   let yukseltmeProfiliPrice = 0;
   const yukseltmeProfiliSelectedProducts: SelectedProduct[] = [];
 
-  if (
-    values.dikmeAdapter === "double_sided" ||
-    values.dikmeAdapter === "triple_sided"
-  ) {
+  if (["double_sided", "triple_sided"].includes(values.dikmeAdapter)) {
     // Dikey yükseltme profilleri - her dikme pozisyonu için
     dikmeHeights.forEach((dikmeHeight: number, index: number) => {
       // Dikme adet sayısını pozisyona göre belirle

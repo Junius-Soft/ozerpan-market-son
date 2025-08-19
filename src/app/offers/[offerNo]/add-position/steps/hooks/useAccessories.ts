@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { calculatePanjurAccessories } from "./accessories/panjur";
+import { calculateSineklikAccessories } from "./accessories/sineklik";
+import { SineklikSelections } from "@/types/sineklik";
 
 interface AccessoryResult {
   accessories: PriceItem[];
@@ -55,6 +57,12 @@ export function useAccessories(values: PanjurSelections): AccessoryResult {
             sectionMotors,
             sectionCount,
             optionId
+          );
+          setAccessories(result);
+        } else if (productId === "sineklik") {
+          const result = calculateSineklikAccessories(
+            values as SineklikSelections,
+            allAccessories
           );
           setAccessories(result);
         } else if (productId === "pergole") {

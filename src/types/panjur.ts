@@ -9,6 +9,7 @@ export interface PriceItem {
   color: string;
   unit: string;
   price: string;
+  measurement?: number;
   quantity?: number; // Optional quantity field for tracking how many of each item is needed
 }
 

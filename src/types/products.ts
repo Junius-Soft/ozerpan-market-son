@@ -9,15 +9,6 @@ export interface BaseSelections {
   productId?: string;
   // Her product bu base'i extend edecek ve kendi spesifik field'larını ekleyecek
 }
-
-// Gelecekte eklenecek ürün tipleri için placeholder type'lar
-export interface SineklikSelections extends BaseSelections {
-  // Sineklik için özel field'lar buraya eklenecek
-  width?: number;
-  height?: number;
-  color?: string;
-}
-
 export interface PergoleSelections extends BaseSelections {
   // Pergole için özel field'lar buraya eklenecek
   width?: number;

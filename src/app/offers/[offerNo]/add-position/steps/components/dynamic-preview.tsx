@@ -106,7 +106,7 @@ export function DynamicPreview({
           lockType: values.lockType,
         };
 
-      case "insect_screen":
+      case "sineklik":
         return {
           frameColor: values.frameColor,
           meshType: values.meshType,
@@ -150,7 +150,7 @@ export function DynamicPreview({
         return (
           <DoorPreview width={width} height={height} className={className} />
         );
-      case "insect_screen":
+      case "sineklik":
         return (
           <InsectScreenPreview
             width={width}

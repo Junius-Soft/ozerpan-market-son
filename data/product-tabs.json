@@ -992,34 +992,6 @@
   ],
   "sineklik": [
     {
-      "id": "dimensions",
-      "name": "Ürün Ölçüleri",
-      "content": {
-        "fields": [
-          {
-            "id": "width",
-            "name": "Genişlik (cm)",
-            "type": "number",
-            "min": 200,
-            "max": 2500,
-            "default": 400
-          },
-          {
-            "id": "height",
-            "name": "Yükseklik (cm)",
-            "type": "number",
-            "min": 200,
-            "max": 2000,
-            "default": 400
-          }
-        ],
-        "preview": {
-          "type": "insectScreen",
-          "component": "InsectScreenPreview"
-        }
-      }
-    },
-    {
       "id": "specifications",
       "name": "Sineklik Özellikleri",
       "content": {
@@ -1085,6 +1057,26 @@
             }
           },
           {
+            "id": "kasaType",
+            "name": "Kasa Tipi",
+            "type": "select",
+            "options": [
+              {
+                "id": "esikli",
+                "name": "Eşikli"
+              },
+              {
+                "id": "esiksiz",
+                "name": "Eşiksiz"
+              }
+            ],
+            "default": "esikli",
+            "dependsOn": {
+              "field": "pliseOpeningType",
+              "value": ["yatay", "double"]
+            }
+          },
+          {
             "id": "measureType",
             "name": "Ölçü Şekli̇",
             "type": "select",
@@ -1147,8 +1139,52 @@
               "field": "sineklikType",
               "value": "menteseli"
             }
+          },
+          {
+            "id": "tulType",
+            "name": "Tül Tipi",
+            "type": "select",
+            "options": [
+              {
+                "id": "normal",
+                "name": "Normal"
+              },
+              {
+                "id": "kedi",
+                "name": "Kedi Tülü"
+              }
+            ],
+            "default": "normal"
           }
         ]
+      }
+    },
+    {
+      "id": "dimensions",
+      "name": "Ürün Ölçüleri",
+      "content": {
+        "fields": [
+          {
+            "id": "width",
+            "name": "Genişlik (cm)",
+            "type": "number",
+            "min": 200,
+            "max": 2500,
+            "default": 400
+          },
+          {
+            "id": "height",
+            "name": "Yükseklik (cm)",
+            "type": "number",
+            "min": 200,
+            "max": 2000,
+            "default": 400
+          }
+        ],
+        "preview": {
+          "type": "insectScreen",
+          "component": "InsectScreenPreview"
+        }
       }
     },
     {
@@ -1173,17 +1209,14 @@
               },
               { "id": "beyaz", "name": "Beyaz", "color": "#FFFFFF" },
               { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
-              { "id": "krem", "name": "Krem", "color": "#E6D8C9" },
               { "id": "vizon", "name": "Vizon", "color": "#A89F91" },
               { "id": "altın_meşe", "name": "Altın Meşe", "color": "#D1B48C" },
               { "id": "fındık", "name": "Fındık", "color": "#8B5B29" },
-              { "id": "açık_bej", "name": "Açık Bej", "color": "#F5F5DC" },
-              { "id": "koyu_bej", "name": "Koyu Bej", "color": "#D2B48C" },
-              { "id": "açık_bronz", "name": "Açık Bronz", "color": "#CD853F" },
-              { "id": "kül_siyahı", "name": "Kül Siyahı", "color": "#696969" }
+              { "id": "ral", "name": "RAL", "color": "#E6D8C9" }
             ],
             "default": "beyaz"
-          }
+          },
+          { "id": "description", "name": "Açıklama", "type": "text" }
         ]
       }
     }

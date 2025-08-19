@@ -1368,6 +1368,728 @@
         "unit": "Adet",
         "price": "188.00"
       }
+    ],
+    "sineklik": [
+      {
+        "description": "Plise Kasa Profili Pres",
+        "stock_code": "378111600200",
+        "uretici_kodu": "S358111600200",
+        "type": "profil",
+        "color": "pres",
+        "unit": "Metre",
+        "price": "127.925",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kasa Profili RAL",
+        "stock_code": "378111601000",
+        "uretici_kodu": "S358111601000",
+        "type": "profil",
+        "color": "ral",
+        "unit": "Metre",
+        "price": "154.2625",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kasa Profili Beyaz",
+        "stock_code": "378111601100",
+        "uretici_kodu": "S358111601100",
+        "type": "profil",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "131.6875",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kasa Profili Kahve",
+        "stock_code": "378111602000",
+        "uretici_kodu": "S358111602000",
+        "type": "profil",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "135.45",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kasa Profili Metalik Gri",
+        "stock_code": "378111603000",
+        "uretici_kodu": "S358111603000",
+        "type": "profil",
+        "color": "metalik_gri",
+        "unit": "Metre",
+        "price": "135.45",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kasa Profili Antrasit Gri",
+        "stock_code": "378111603400",
+        "uretici_kodu": "S358111603400",
+        "type": "profil",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "135.45",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kasa Profili Vizon",
+        "stock_code": "378111603500",
+        "uretici_kodu": "S358111603500",
+        "type": "profil",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "135.45",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kasa Profili Altın Meşe",
+        "stock_code": "378111605100",
+        "uretici_kodu": "S358111605100",
+        "type": "profil",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "135.45",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kasa Profili Fındık",
+        "stock_code": "378111605200",
+        "uretici_kodu": "S358111605200",
+        "type": "profil",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "158.025",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kanat Profili Pres",
+        "stock_code": "378112600200",
+        "uretici_kodu": "S358112600200",
+        "type": "profil",
+        "color": "pres",
+        "unit": "Metre",
+        "price": "158.025",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kanat Profili RAL",
+        "stock_code": "378112601000",
+        "uretici_kodu": "S358112601000",
+        "type": "profil",
+        "color": "ral",
+        "unit": "Metre",
+        "price": "165.28125",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kanat Profili Beyaz",
+        "stock_code": "378112601100",
+        "uretici_kodu": "S358112601100",
+        "type": "profil",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "141.09375",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kanat Profili Kahve",
+        "stock_code": "378112602000",
+        "uretici_kodu": "S358112602000",
+        "type": "profil",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "145.125",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kanat Profili Metalik Gri",
+        "stock_code": "378112603000",
+        "uretici_kodu": "S358112603000",
+        "type": "profil",
+        "color": "metalik_gri",
+        "unit": "Metre",
+        "price": "145.125",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kanat Profili Antrasit Gri",
+        "stock_code": "378112603400",
+        "uretici_kodu": "S358112603400",
+        "type": "profil",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "145.125",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kanat Profili Vizon",
+        "stock_code": "378112603500",
+        "uretici_kodu": "S358112603500",
+        "type": "profil",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "145.125",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kanat Profili Altın Meşe",
+        "stock_code": "378112605100",
+        "uretici_kodu": "S358112605100",
+        "type": "profil",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "169.3125",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kanat Profili Fındık",
+        "stock_code": "378112605200",
+        "uretici_kodu": "S358112605200",
+        "type": "profil",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "169.3125",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Düşük Eşik Profili Pres",
+        "stock_code": "378113600200",
+        "uretici_kodu": "",
+        "type": "profil",
+        "color": "pres",
+        "unit": "Metre",
+        "price": "127.925",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Düşük Eşik Profili RAL",
+        "stock_code": "378113601000",
+        "uretici_kodu": "",
+        "type": "profil",
+        "color": "ral",
+        "unit": "Metre",
+        "price": "154.2625",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Düşük Eşik Profili Beyaz",
+        "stock_code": "378113601100",
+        "uretici_kodu": "",
+        "type": "profil",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "131.6875",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Düşük Eşik Profili Kahverengi",
+        "stock_code": "378113602000",
+        "uretici_kodu": "",
+        "type": "profil",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "135.45",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Düşük Eşik Profili Antrasit Gri",
+        "stock_code": "378113603400",
+        "uretici_kodu": "",
+        "type": "profil",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "135.45",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Düşük Eşik Profili Vizon",
+        "stock_code": "378113603500",
+        "uretici_kodu": "",
+        "type": "profil",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "135.45",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kasa Pres",
+        "stock_code": "378121600200",
+        "uretici_kodu": "",
+        "type": "profil",
+        "color": "pres",
+        "unit": "Metre",
+        "price": "146.2",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kasa Profili RAL",
+        "stock_code": "378121601000",
+        "uretici_kodu": "S358121601000",
+        "type": "profil",
+        "color": "ral",
+        "unit": "Metre",
+        "price": "163.4",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kasa Profili Beyaz",
+        "stock_code": "378121601100",
+        "uretici_kodu": "S358121601100",
+        "type": "profil",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "150.5",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kasa Profili Kahverengi",
+        "stock_code": "378121602000",
+        "uretici_kodu": "S358121602000",
+        "type": "profil",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "154.8",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kasa Profili Metalik Gri",
+        "stock_code": "378121603000",
+        "uretici_kodu": "S358121603000",
+        "type": "profil",
+        "color": "metalik_gri",
+        "unit": "Metre",
+        "price": "154.8",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kasa Profili Krem",
+        "stock_code": "378121603100",
+        "uretici_kodu": "S358121603100",
+        "type": "profil",
+        "color": "krem",
+        "unit": "Metre",
+        "price": "154.8",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kasa Profili Antrasit Gri",
+        "stock_code": "378121603400",
+        "uretici_kodu": "S358121603400",
+        "type": "profil",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "154.8",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kasa Profili Vizon",
+        "stock_code": "378121603500",
+        "uretici_kodu": "S358121603500",
+        "type": "profil",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "154.8",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kasa Profili Altın Meşe",
+        "stock_code": "378121605100",
+        "uretici_kodu": "S358121605100",
+        "type": "profil",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "180.6",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kasa Profili Fındık",
+        "stock_code": "378121605200",
+        "uretici_kodu": "S358121605200",
+        "type": "profil",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "180.6",
+        "currency": "TRY"
+      },
+      {
+        "description": "içe açılım sineklik kanat ham profil",
+        "stock_code": "378122600200",
+        "uretici_kodu": "",
+        "type": "profil",
+        "color": "",
+        "unit": "Metre",
+        "price": "137.0625",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kanat Profili RAL",
+        "stock_code": "378122601000",
+        "uretici_kodu": "S358122601000",
+        "type": "profil",
+        "color": "ral",
+        "unit": "Metre",
+        "price": "153.1875",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kanat Profili Beyaz",
+        "stock_code": "378122601100",
+        "uretici_kodu": "S358122601100",
+        "type": "profil",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "141.09375",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kanat Profili Kahverengi",
+        "stock_code": "378122602000",
+        "uretici_kodu": "S358122602000",
+        "type": "profil",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "145.125",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kanat Profili Metalik Gri",
+        "stock_code": "378122603000",
+        "uretici_kodu": "S358122603000",
+        "type": "profil",
+        "color": "metalik_gri",
+        "unit": "Metre",
+        "price": "145.125",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kanat Profili Krem",
+        "stock_code": "378122603100",
+        "uretici_kodu": "S358122603100",
+        "type": "profil",
+        "color": "krem",
+        "unit": "Metre",
+        "price": "145.125",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kanat Profili Antrasit Gri",
+        "stock_code": "378122603400",
+        "uretici_kodu": "S358122603400",
+        "type": "profil",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "145.125",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kanat Profili Vizon",
+        "stock_code": "378122603500",
+        "uretici_kodu": "S358122603500",
+        "type": "profil",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "145.125",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kanat Profili Altın Meşe",
+        "stock_code": "378122605100",
+        "uretici_kodu": "S358122605100",
+        "type": "profil",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "169.3125",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kanat Profili Fındık",
+        "stock_code": "378122605200",
+        "uretici_kodu": "S358122605200",
+        "type": "profil",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "169.3125",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x25 Sineklik Profili RAL",
+        "stock_code": "378131601000",
+        "uretici_kodu": "S358131601000",
+        "type": "profil",
+        "color": "ral",
+        "unit": "Metre",
+        "price": "102.125",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x25 Sineklik Profili Beyaz",
+        "stock_code": "378131601100",
+        "uretici_kodu": "S358131601100",
+        "type": "profil",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "94.0625",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x25 Sineklik Profili Kahve",
+        "stock_code": "378131602000",
+        "uretici_kodu": "S358131602000",
+        "type": "profil",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "96.75",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x25 Sineklik Profili Antrasit Gri",
+        "stock_code": "378131603400",
+        "uretici_kodu": "S358131603400",
+        "type": "profil",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "96.75",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x25 Sineklik Profili Altın Meşe",
+        "stock_code": "378131605100",
+        "uretici_kodu": "S358131605100",
+        "type": "profil",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "112.875",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x25 Sineklik Profili Fındık",
+        "stock_code": "378131605200",
+        "uretici_kodu": "S358131605200",
+        "type": "profil",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "112.875",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x42 Sineklik Profili Beyaz",
+        "stock_code": "378132601100",
+        "uretici_kodu": "S358132601100",
+        "type": "profil",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "141.09375",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x42 Sineklik Profili Altın Meşe",
+        "stock_code": "378132605100",
+        "uretici_kodu": "S358132605100",
+        "type": "profil",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "169.3125",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x42 Sineklik Profili Fındık",
+        "stock_code": "378132605200",
+        "uretici_kodu": "S358132605200",
+        "type": "profil",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "169.3125",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x42 Sineklik Profili Antrasit Gri",
+        "stock_code": "378132603400",
+        "uretici_kodu": "S358132603400",
+        "type": "profil",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "145.125",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x42 Sineklik Profili Vizon",
+        "stock_code": "378132603500",
+        "uretici_kodu": "S358132603500",
+        "type": "profil",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "145.125",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x42 Sineklik Profili Kahverengi",
+        "stock_code": "378132602000",
+        "uretici_kodu": "S358132602000",
+        "type": "profil",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "145.125",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x42 Sineklik Profili RAL",
+        "stock_code": "378132601000",
+        "uretici_kodu": "S358132601000",
+        "type": "profil",
+        "color": "ral",
+        "unit": "Metre",
+        "price": "153.1875",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Ray Profili Antrasit Gri",
+        "stock_code": "378143203400",
+        "uretici_kodu": "378143213500",
+        "type": "profil",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "168.75",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Ray Profili Vizon",
+        "stock_code": "378143203500",
+        "uretici_kodu": "378143203500",
+        "type": "profil",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "168.75",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Ray Profili Beyaz",
+        "stock_code": "378143201100",
+        "uretici_kodu": "378143201100",
+        "type": "profil",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "164.0625",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Ray Profili RAL",
+        "stock_code": "378143201000",
+        "uretici_kodu": "378143201000",
+        "type": "profil",
+        "color": "ral",
+        "unit": "Metre",
+        "price": "192.1875",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Ray Profili Kahverengi",
+        "stock_code": "378143202000",
+        "uretici_kodu": "378143203000",
+        "type": "profil",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "168.75",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Çift  Ray Profili Antrasit Gri",
+        "stock_code": "378143223400",
+        "uretici_kodu": "378143223400",
+        "type": "profil",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "180.0",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Çift  Ray Profili Vizon",
+        "stock_code": "378143223500",
+        "uretici_kodu": "378143223500",
+        "type": "profil",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "180.0",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Çift  Ray Profili RAL",
+        "stock_code": "378143221000",
+        "uretici_kodu": "378143221100",
+        "type": "profil",
+        "color": "ral",
+        "unit": "Metre",
+        "price": "205.0",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Çift  Ray Profili Beyaz",
+        "stock_code": "378143221100",
+        "uretici_kodu": "378143222000",
+        "type": "profil",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "175.0",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Çift  Ray Profili Kahverengi",
+        "stock_code": "378143222000",
+        "uretici_kodu": "378143223000",
+        "type": "profil",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "180.0",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Kanat Profili Antrasit Gri",
+        "stock_code": "378143213400",
+        "uretici_kodu": "378143213400",
+        "type": "profil",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "202.5",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Kanat Profili Vizon",
+        "stock_code": "378143213500",
+        "uretici_kodu": "378143213500",
+        "type": "profil",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "202.5",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Kanat Profili Beyaz",
+        "stock_code": "378143211000",
+        "uretici_kodu": "378143211100",
+        "type": "profil",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "196.875",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Kanat Profili RAL",
+        "stock_code": "378143211100",
+        "uretici_kodu": "378143211000",
+        "type": "profil",
+        "color": "ral",
+        "unit": "Metre",
+        "price": "230.625",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Kanat Profili Kahverengi",
+        "stock_code": "378143212000",
+        "uretici_kodu": "378143213000",
+        "type": "profil",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "202.5",
+        "currency": "TRY"
+      }
     ]
   }
 }

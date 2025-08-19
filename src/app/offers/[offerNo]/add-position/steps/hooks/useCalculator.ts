@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { calculatePanjur } from "./calculations/panjur";
 import { useSearchParams } from "next/navigation";
+import { calculateSineklik } from "./calculations/sineklik";
+import { SineklikSelections } from "@/types/sineklik";
 
 // Generic calculator hook
 export const useCalculator = (
@@ -39,7 +41,7 @@ export const useCalculator = (
     const fetchPrices = async () => {
       try {
         const response = await fetch(
-          `/api/product-prices?productId=${productName}`
+          `/api/product-prices?productId=${productName.toLowerCase()}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch prices");
@@ -68,6 +70,13 @@ export const useCalculator = (
         sectionConnections,
         optionId,
         availableTabs
+      );
+      setResult(result);
+    } else if (productName === "sineklik") {
+      const result = calculateSineklik(
+        values as SineklikSelections,
+        prices,
+        accessories || []
       );
       setResult(result);
     } else {

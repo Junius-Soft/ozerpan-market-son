@@ -43,17 +43,7 @@ export const getBoxHeight = (boxType: string): number => {
   return parseInt(boxType.replace("mm", ""));
 };
 
-export const getKertmePayi = (
-  dikmeType: string,
-  optionId: string,
-  currentDikme: "Yan" | "Orta"
-): number => {
-  if (optionId === "monoblok") {
-    // Monoblok için kertme payları
-    return currentDikme === "Yan" ? 43 : 40; // Yan: 43, Orta: 40
-  }
-
-  // Distan için (mevcut hesaplama)
+export const getKertmePayi = (dikmeType: string): number => {
   return dikmeType.startsWith("mini_") ? 20 : 25;
 };
 
@@ -71,10 +61,42 @@ export const getDikmeGenisligi = (dikmeType: string): number => {
   return dikmeType.startsWith("mini_") ? 53 : 62;
 };
 
-export const getLamelDusmeValue = (dikmeType: string): number => {
+export const getLamelDusmeValue = (
+  dikmeType: string,
+  optionId: string,
+  sectionIndex: number,
+  totalSections: number
+): number => {
+  if (optionId === "monoblok") {
+    // Monoblok için dikme tiplerini bölme pozisyonuna göre belirle
+    let leftDikmeValue: number;
+    let rightDikmeValue: number;
+
+    // Sol dikme tipi
+    if (sectionIndex === 0) {
+      // İlk bölme: sol dikme yan (tam değer)
+      leftDikmeValue = 43; // Yan dikme - tam değer
+    } else {
+      // Diğer bölmeler: sol dikme orta (yarı değer - paylaşımlı)
+      leftDikmeValue = 40 / 2; // Orta dikme - yarı değer (20)
+    }
+
+    // Sağ dikme tipi
+    if (sectionIndex === totalSections - 1) {
+      // Son bölme: sağ dikme yan (tam değer)
+      rightDikmeValue = 43; // Yan dikme - tam değer
+    } else {
+      // Diğer bölmeler: sağ dikme orta (yarı değer - paylaşımlı)
+      rightDikmeValue = 40 / 2; // Orta dikme - yarı değer (20)
+    }
+
+    // İki dikmenin toplamı
+    return leftDikmeValue + rightDikmeValue;
+  }
+
+  // Distan için mevcut hesaplama (dikme tipi dikkate alınarak)
   return dikmeType.startsWith("mini_") ? 74 : 90;
 };
-
 export const normalizeColor = (color: string): string => {
   return color
     .split("_")
@@ -277,9 +299,16 @@ export const findDikmePrice = (
 
   if (!matchingDikme) return [0, null];
 
+  // Monoblok için adet düzeltmesi
+  let finalQuantity = quantity;
+  if (optionId === "monoblok" && currentDikme === "Orta") {
+    // Monoblok orta dikmeler 1 adet
+    finalQuantity = 1;
+  }
+
   const selectedProduct = createSelectedProduct(
     matchingDikme,
-    quantity,
+    finalQuantity,
     dikmeHeight + " mm"
   );
   return [parseFloat(matchingDikme.price), selectedProduct];
@@ -405,21 +434,28 @@ export const calculateLamelCount = (
 
 export const calculateLamelGenisligi = (
   systemWidth: number,
-  dikmeType: string
+  dikmeType: string,
+  optionId: string,
+  sectionIndex: number,
+  totalSections: number
 ): number => {
-  const lamelDusmeValue = getLamelDusmeValue(dikmeType);
+  const lamelDusmeValue = getLamelDusmeValue(
+    dikmeType,
+    optionId,
+    sectionIndex,
+    totalSections
+  );
+  console.log({ lamelDusmeValue });
   return systemWidth + 10 - lamelDusmeValue;
 };
 
 export const calculateDikmeHeight = (
   systemHeight: number,
   boxType: string,
-  dikmeType: string,
-  optionId: string,
-  currentDikme: "Yan" | "Orta"
+  dikmeType: string
 ): number => {
   const kutuYuksekligi = getBoxHeight(boxType);
-  const kertmePayi = getKertmePayi(dikmeType, optionId, currentDikme);
+  const kertmePayi = getKertmePayi(dikmeType);
   return systemHeight - kutuYuksekligi + kertmePayi;
 };
 

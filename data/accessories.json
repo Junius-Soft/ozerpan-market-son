@@ -781,6 +781,286 @@
         "type": "sineklik_profilleri",
         "unit": "Metre",
         "price": "4.03"
+      },
+      {
+        "description": "Yan Kapak  185 mm (İzolasyonsuz) Sağ",
+        "stock_code": "352442111100",
+        "uretici_kodu": "352442111100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Yan Kapak  185 mm (İzolasyonsuz) Sol",
+        "stock_code": "352442121100",
+        "uretici_kodu": "352442121100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Yan Kapak  185 * 220 mm (İzolasyonlu) Sağ",
+        "stock_code": "352442211100",
+        "uretici_kodu": "352442211100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Yan Kapak  185 * 220 mm (İzolasyonlu) Sol",
+        "stock_code": "352442221100",
+        "uretici_kodu": "352442221100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Yan Kapak 200 mm (İzolasyonsuz) Beyaz Sol",
+        "stock_code": "352442311100",
+        "uretici_kodu": "352442311100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Yan Kapak 200 mm (İzolasyonsuz) Beyaz Sağ",
+        "stock_code": "352442321100",
+        "uretici_kodu": "352442321100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Yan Kapak 200 mm (İzolasyonlu) Beyaz Sol",
+        "stock_code": "352442411100",
+        "uretici_kodu": "352442411100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Yan Kapak 200 mm (İzolasyonlu) Beyaz Sağ",
+        "stock_code": "352442421100",
+        "uretici_kodu": "352442421100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Dış Kapak 185mm",
+        "stock_code": "352442133000",
+        "uretici_kodu": "352442133000",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "İç Kapak 185mm",
+        "stock_code": "352442143000",
+        "uretici_kodu": "352442143000",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "İç Kapak 185*220",
+        "stock_code": "352442243000",
+        "uretici_kodu": "352442243000",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Dış Kapak 200mm",
+        "stock_code": "352442331100",
+        "uretici_kodu": "352442331100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "İç Kapak 220mm",
+        "stock_code": "352442343000",
+        "uretici_kodu": "352442343000",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "İç Kapak 200*235",
+        "stock_code": "352442441100",
+        "uretici_kodu": "352442441100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Yan Kapak Sürgüsü 185 mm",
+        "stock_code": "352442016900",
+        "uretici_kodu": "352442016900",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Yan Kapak Sürgüsü 220 mm",
+        "stock_code": "352442016900",
+        "uretici_kodu": "352442016900",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Orta Kapak İç Soketi Beyaz",
+        "stock_code": "352442071100",
+        "uretici_kodu": "352442071100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Orta Kapak 165mm Beyaz",
+        "stock_code": "352442161100",
+        "uretici_kodu": "352442161100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Geçiş Soketi 165mm / 40 Beyaz",
+        "stock_code": "352442171100",
+        "uretici_kodu": "352442171100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Geçiş Soketi 165mm / 60 Beyaz",
+        "stock_code": "352442181100",
+        "uretici_kodu": "352442181100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Orta Kapak 200mm Beyaz",
+        "stock_code": "352442361100",
+        "uretici_kodu": "352442361100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Geçiş Soketi 200mm / 40 Beyaz",
+        "stock_code": "352442371100",
+        "uretici_kodu": "352442371100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "Geçiş Soketi 200mm / 60 Beyaz",
+        "stock_code": "352442381100",
+        "uretici_kodu": "352442381100",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "40 Boru Başı Pimli 12 mm Siyah",
+        "stock_code": "352451111200",
+        "uretici_kodu": "352451111200",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "60 Boru Başı Pimli 12 mm Siyah",
+        "stock_code": "352451211200",
+        "uretici_kodu": "352451211200",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "40x140 Kasnak Pimli 12 mm Siyah",
+        "stock_code": "352452151200",
+        "uretici_kodu": "352452151200",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Adet",
+        "price": "4.03"
+      },
+      {
+        "description": "165 Kutu Kapak",
+        "stock_code": "35214232XXXX",
+        "uretici_kodu": "35214232XXXX",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Metre",
+        "price": "4.03"
+      },
+      {
+        "description": "200 Kutu Kapak",
+        "stock_code": "35214212XXXX",
+        "uretici_kodu": "35214212XXXX",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Metre",
+        "price": "4.03"
+      },
+      {
+        "description": "235 Kutu Kapak Yalıtımlı",
+        "stock_code": "35214242XXXX",
+        "uretici_kodu": "35214242XXXX",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Metre",
+        "price": "4.03"
+      },
+      {
+        "description": "235 Kutu Alt Kapak Yalıtımlı",
+        "stock_code": "35214243XXXX",
+        "uretici_kodu": "35214243XXXX",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Metre",
+        "price": "4.03"
+      },
+      {
+        "description": "200 mm Yalıtım Beyaz",
+        "stock_code": "352142441110",
+        "uretici_kodu": "352142441110",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Metre",
+        "price": "4.03"
+      },
+      {
+        "description": "200 Kutu Alt Kapak",
+        "stock_code": "35214213XXXX",
+        "uretici_kodu": "35214213XXXX",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Metre",
+        "price": "4.03"
+      },
+      {
+        "description": "165 Kutu Alt Kapak",
+        "stock_code": "35214213XXXX",
+        "uretici_kodu": "35214213XXXX",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Metre",
+        "price": "4.03"
+      },
+      {
+        "description": "Kutu Tampon Çıtası",
+        "stock_code": "35214205XXXX",
+        "uretici_kodu": "35214205XXXX",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Metre",
+        "price": "4.03"
+      },
+      {
+        "description": "165 mm Yalıtım Beyaz",
+        "stock_code": "352142241110",
+        "uretici_kodu": "352142241110",
+        "type": "monoblok_panjur_kutu_aksesuarları",
+        "unit": "Metre",
+        "price": "4.03"
       }
     ],
     "sineklik": []

@@ -194,10 +194,14 @@ export const calculatePanjurAccessories = (
     const sectionWidths = calculateSectionWidths(width, middleBarPositions);
     let totalAskiQuantity = 0;
 
-    sectionWidths.forEach((sectionWidth) => {
+    sectionWidths.forEach((sectionWidth, sectionIndex) => {
+      // Bölme indeksi ve toplam bölme sayısına göre dikme tiplerini belirle
       const lamelWidthForSection = calculateLamelGenisligi(
         sectionWidth,
-        values.dikmeType
+        values.dikmeType,
+        optionId,
+        sectionIndex,
+        sectionWidths.length
       );
       let askiQuantity = 2;
       if (lamelWidthForSection > 1000 && lamelWidthForSection <= 1500) {
@@ -227,10 +231,14 @@ export const calculatePanjurAccessories = (
     const sectionWidths = calculateSectionWidths(width, middleBarPositions);
     let totalLastikLength = 0;
 
-    sectionWidths.forEach((sectionWidth) => {
+    sectionWidths.forEach((sectionWidth, sectionIndex) => {
+      // Bölme indeksi ve toplam bölme sayısına göre dikme tiplerini belirle
       const lamelWidthForSection = calculateLamelGenisligi(
         sectionWidth,
-        values.dikmeType
+        values.dikmeType,
+        optionId,
+        sectionIndex,
+        sectionWidths.length
       );
       const widthInMeters = lamelWidthForSection / 1000;
       totalLastikLength += widthInMeters;
@@ -335,15 +343,12 @@ export const calculatePanjurAccessories = (
         const rightSectionHeight = sectionHeights[i] || height;
         relevantSectionHeight = Math.max(leftSectionHeight, rightSectionHeight);
       }
-      const currentDikme =
-        i === 0 || i === totalDikmeCount - 1 ? "Yan" : "Orta";
+
       const dikmeHeightForSection =
         calculateDikmeHeight(
           relevantSectionHeight,
           values.boxType,
-          values.dikmeType,
-          optionId,
-          currentDikme
+          values.dikmeType
         ) / 1000; // metre cinsine çevir
 
       // Her dikme için sağında ve solunda olmak üzere 2 tane kıl fitili

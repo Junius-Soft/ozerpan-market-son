@@ -72,16 +72,12 @@ export const calculatePanjur = (
         calculateDikmeHeight(
           sectionSystemHeights[0],
           values.boxType,
-          values.dikmeType,
-          optionId,
-          "Yan"
+          values.dikmeType
         ),
         calculateDikmeHeight(
           sectionSystemHeights[0],
           values.boxType,
-          values.dikmeType,
-          optionId,
-          "Yan"
+          values.dikmeType
         ),
       ];
     }
@@ -93,9 +89,7 @@ export const calculatePanjur = (
       calculateDikmeHeight(
         sectionSystemHeights[0],
         values.boxType,
-        values.dikmeType,
-        optionId,
-        "Yan"
+        values.dikmeType
       )
     );
 
@@ -106,13 +100,7 @@ export const calculatePanjur = (
         sectionSystemHeights[i + 1]
       );
       dikmeHeights.push(
-        calculateDikmeHeight(
-          maxHeight,
-          values.boxType,
-          values.dikmeType,
-          optionId,
-          "Orta"
-        )
+        calculateDikmeHeight(maxHeight, values.boxType, values.dikmeType)
       );
     }
 
@@ -121,9 +109,7 @@ export const calculatePanjur = (
       calculateDikmeHeight(
         sectionSystemHeights[sectionSystemHeights.length - 1],
         values.boxType,
-        values.dikmeType,
-        optionId,
-        "Yan"
+        values.dikmeType
       )
     );
 
@@ -133,8 +119,15 @@ export const calculatePanjur = (
   const dikmeHeights = calculateDikmeHeightsForSections(sectionSystemHeights);
 
   // Her bölme için lamel genişlikleri
-  const sectionLamelWidths = sectionSystemWidths.map((sectionSystemWidth) =>
-    calculateLamelGenisligi(sectionSystemWidth, values.dikmeType)
+  const sectionLamelWidths = sectionSystemWidths.map(
+    (sectionSystemWidth, index) =>
+      calculateLamelGenisligi(
+        sectionSystemWidth,
+        values.dikmeType,
+        optionId,
+        index,
+        sectionSystemWidths.length
+      )
   );
 
   // Her bölme için lamel sayıları
@@ -229,7 +222,7 @@ export const calculatePanjur = (
     if (dikmeSelectedProduct) {
       // Dikme pozisyon bilgisini ekleyerek ürünü kaydet
 
-      const adetText = dikmeCountAtPosition === 1 ? "1 Adet" : "2 Adet";
+      const adetText = dikmeSelectedProduct.quantity + " Adet";
 
       dikmeSelectedProducts.push({
         ...dikmeSelectedProduct,

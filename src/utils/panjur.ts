@@ -272,7 +272,7 @@ export const findDikmePrice = (
     dikmeWidth = dikmeType.startsWith("mini_") ? "39" : "55";
 
     const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
-    searchPattern = `${typePrefix} Pvc Ötelemeli ${currentDikme} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+    searchPattern = `${typePrefix} Pvc ${currentDikme} Dikme ${dikmeWidth} mm ${normalizedColor}`;
   } else {
     // Distan (mevcut hesaplama)
     dikmePrices = prices.filter((p) => p.type === "panjur_dikme_profilleri");
@@ -445,7 +445,6 @@ export const calculateLamelGenisligi = (
     sectionIndex,
     totalSections
   );
-  console.log({ lamelDusmeValue });
   return systemWidth + 10 - lamelDusmeValue;
 };
 

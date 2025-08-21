@@ -24,6 +24,27 @@ import {
 import { findEffectiveSections } from "@/utils/shutter-calculations";
 import { ProductTab } from "@/documents/products";
 
+/**
+ * Dikme adet sayısını pozisyona ve montaj tipine göre hesaplar
+ * @param index Dikme pozisyon indeksi
+ * @param totalDikmeCount Toplam dikme sayısı
+ * @param optionId Montaj tipi ("monoblok" veya "distan")
+ * @returns Dikme adet sayısı
+ */
+const calculateDikmeCountAtPosition = (
+  index: number,
+  totalDikmeCount: number,
+  optionId: string
+): number => {
+  if (index === 0 || index === totalDikmeCount - 1) {
+    // Sol ve sağ dikmeler: her zaman 1'er adet
+    return 1;
+  } else {
+    // Orta dikmeler: monoblok için 1 adet, distan için 2 adet
+    return optionId === "monoblok" ? 1 : 2;
+  }
+};
+
 export const calculatePanjur = (
   values: PanjurSelections,
   prices: PriceItem[],
@@ -190,11 +211,12 @@ export const calculatePanjur = (
 
   // Her dikme pozisyonu için fiyat hesapla
   dikmeHeights.forEach((dikmeHeight: number, index: number) => {
-    // Dikme adet sayısını pozisyona göre belirle
-    const dikmeCountAtPosition =
-      index === 0 || index === dikmeHeights.length - 1
-        ? 1 // Sol ve sağ dikmeler: 1'er adet
-        : 2; // Orta dikmeler: 2'şer adet
+    // Dikme adet sayısını pozisyona ve montaj tipine göre belirle
+    const dikmeCountAtPosition = calculateDikmeCountAtPosition(
+      index,
+      dikmeHeights.length,
+      optionId
+    );
 
     const dikmePosition =
       index === 0
@@ -307,11 +329,12 @@ export const calculatePanjur = (
   if (["double_sided", "triple_sided"].includes(values.dikmeAdapter)) {
     // Dikey yükseltme profilleri - her dikme pozisyonu için
     dikmeHeights.forEach((dikmeHeight: number, index: number) => {
-      // Dikme adet sayısını pozisyona göre belirle
-      const dikmeCountAtPosition =
-        index === 0 || index === dikmeHeights.length - 1
-          ? 1 // Sol ve sağ dikmeler: 1'er adet
-          : 2; // Orta dikmeler: 2'şer adet
+      // Dikme adet sayısını pozisyona ve montaj tipine göre belirle
+      const dikmeCountAtPosition = calculateDikmeCountAtPosition(
+        index,
+        dikmeHeights.length,
+        optionId
+      );
 
       // Yükseltme profili dikme yüksekliğine göre değil, sistem yüksekliğine göre hesaplanıyor
       // Bu yüzden dikme pozisyonuna karşılık gelen sistem yüksekliğini bulmalıyız

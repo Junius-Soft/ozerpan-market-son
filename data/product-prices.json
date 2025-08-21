@@ -731,6 +731,384 @@
         "price": "16.49"
       },
       {
+        "description": "Kutu Tampon Çıtası RAL Boyalı",
+        "stock_code": "352142051010",
+        "uretici_kodu": "352142051010",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "ral_boyalı",
+        "unit": "Metre",
+        "price": "2.82"
+      },
+      {
+        "description": "Kutu Tampon Çıtası Beyaz",
+        "stock_code": "352142051110",
+        "uretici_kodu": "352142051110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "2.34"
+      },
+      {
+        "description": "Kutu Tampon Çıtası Kahverengi",
+        "stock_code": "352142052010",
+        "uretici_kodu": "352142052010",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "2.34"
+      },
+      {
+        "description": "Kutu Tampon Çıtası Antrasit Gri",
+        "stock_code": "352142053410",
+        "uretici_kodu": "352142053410",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "2.34"
+      },
+      {
+        "description": "165 Kutu Kapak Beyaz",
+        "stock_code": "352142121110",
+        "uretici_kodu": "352142121110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "3.49"
+      },
+      {
+        "description": "165 Kutu Kapak Folyo Kaplama",
+        "stock_code": "352142127010",
+        "uretici_kodu": "352142127010",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "folyo_kaplama",
+        "unit": "Metre",
+        "price": "9.88"
+      },
+      {
+        "description": "165 Kutu Kapak Altın Meşe",
+        "stock_code": "352142127110",
+        "uretici_kodu": "352142127110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "8.28"
+      },
+      {
+        "description": "165 Kutu Kapak Fındık",
+        "stock_code": "352142127210",
+        "uretici_kodu": "352142127210",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "8.28"
+      },
+      {
+        "description": "165 Kutu Kapak Antrasit Gri",
+        "stock_code": "352142128110",
+        "uretici_kodu": "352142128110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "8.28"
+      },
+      {
+        "description": "165 Kutu Kapak Vizon",
+        "stock_code": "352142128710",
+        "uretici_kodu": "352142128710",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "8.28"
+      },
+      {
+        "description": "165 Kutu Alt Kapak Beyaz",
+        "stock_code": "352142131110",
+        "uretici_kodu": "352142131110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "2.90"
+      },
+      {
+        "description": "165 Kutu Alt Kapak Folyo Kaplama",
+        "stock_code": "352142137010",
+        "uretici_kodu": "352142137010",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "folyo_kaplama",
+        "unit": "Metre",
+        "price": "8.12"
+      },
+      {
+        "description": "165 Kutu Alt Kapak Altın Meşe",
+        "stock_code": "352142137110",
+        "uretici_kodu": "352142137110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "6.82"
+      },
+      {
+        "description": "165 Kutu Alt Kapak Fındık",
+        "stock_code": "352142137210",
+        "uretici_kodu": "352142137210",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "6.82"
+      },
+      {
+        "description": "165 Kutu Alt Kapak Antrasit Gri",
+        "stock_code": "352142138110",
+        "uretici_kodu": "352142138110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "6.82"
+      },
+      {
+        "description": "165 Kutu Alt Kapak Vizon",
+        "stock_code": "352142138710",
+        "uretici_kodu": "352142138710",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "6.82"
+      },
+      {
+        "description": "165 mm Yalıtım Beyaz",
+        "stock_code": "352142241110",
+        "uretici_kodu": "352142241110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "2.15"
+      },
+      {
+        "description": "200 Kutu Kapak Beyaz",
+        "stock_code": "352142321110",
+        "uretici_kodu": "352142321110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "4.07"
+      },
+      {
+        "description": "200 Kutu Kapak Folyo Kaplama",
+        "stock_code": "352142327010",
+        "uretici_kodu": "352142327010",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "folyo_kaplama",
+        "unit": "Metre",
+        "price": "11.43"
+      },
+      {
+        "description": "200 Kutu Kapak Altın Meşe",
+        "stock_code": "352142327110",
+        "uretici_kodu": "352142327110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "9.59"
+      },
+      {
+        "description": "200 Kutu Kapak Fındık",
+        "stock_code": "352142327210",
+        "uretici_kodu": "352142327210",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "9.59"
+      },
+      {
+        "description": "200 Kutu Kapak Antrasit Gri",
+        "stock_code": "352142328110",
+        "uretici_kodu": "352142328110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "9.59"
+      },
+      {
+        "description": "200 Kutu Kapak Vizon",
+        "stock_code": "352142328710",
+        "uretici_kodu": "352142328710",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "9.59"
+      },
+      {
+        "description": "200 Kutu Alt Kapak Beyaz",
+        "stock_code": "352142331110",
+        "uretici_kodu": "352142331110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "4.93"
+      },
+      {
+        "description": "200 Kutu Alt Kapak Folyo Kaplama",
+        "stock_code": "352142337010",
+        "uretici_kodu": "352142337010",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "folyo_kaplama",
+        "unit": "Metre",
+        "price": "11.15"
+      },
+      {
+        "description": "200 Kutu Alt Kapak Altın Meşe",
+        "stock_code": "352142337110",
+        "uretici_kodu": "352142337110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "9.60"
+      },
+      {
+        "description": "200 Kutu Alt Kapak Fındık",
+        "stock_code": "352142337210",
+        "uretici_kodu": "352142337210",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "9.60"
+      },
+      {
+        "description": "200 Kutu Alt Kapak Antrasit Gri",
+        "stock_code": "352142338110",
+        "uretici_kodu": "352142338110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "9.60"
+      },
+      {
+        "description": "200 Kutu Alt Kapak Vizon",
+        "stock_code": "352142338710",
+        "uretici_kodu": "352142338710",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "9.60"
+      },
+      {
+        "description": "235 Kutu Kapak Yalıtımlı Beyaz",
+        "stock_code": "352142421110",
+        "uretici_kodu": "352142421110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "4.89"
+      },
+      {
+        "description": "235 Kutu Kapak Yalıtımlı Folyo Kaplama",
+        "stock_code": "352142427010",
+        "uretici_kodu": "352142427010",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "folyo_kaplama",
+        "unit": "Metre",
+        "price": "13.35"
+      },
+      {
+        "description": "235 Kutu Kapak Yalıtımlı Altın Meşe",
+        "stock_code": "352142427110",
+        "uretici_kodu": "352142427110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "11.24"
+      },
+      {
+        "description": "235 Kutu Kapak Yalıtımlı Fındık",
+        "stock_code": "352142427210",
+        "uretici_kodu": "352142427210",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "11.24"
+      },
+      {
+        "description": "235 Kutu Kapak Yalıtımlı Antrasit Gri",
+        "stock_code": "352142428110",
+        "uretici_kodu": "352142428110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "11.24"
+      },
+      {
+        "description": "235 Kutu Kapak Yalıtımlı Vizon",
+        "stock_code": "352142428710",
+        "uretici_kodu": "352142428710",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "11.24"
+      },
+      {
+        "description": "235 Kutu Alt Kapak Yalıtımlı Beyaz",
+        "stock_code": "352142431110",
+        "uretici_kodu": "352142431110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "5.62"
+      },
+      {
+        "description": "235 Kutu Alt Kapak Yalıtımlı Folyo Kaplama",
+        "stock_code": "352142437010",
+        "uretici_kodu": "352142437010",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "folyo_kaplama",
+        "unit": "Metre",
+        "price": "13.04"
+      },
+      {
+        "description": "235 Kutu Alt Kapak Yalıtımlı Altın Meşe",
+        "stock_code": "352142437110",
+        "uretici_kodu": "352142437110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "11.18"
+      },
+      {
+        "description": "235 Kutu Alt Kapak Yalıtımlı Fındık",
+        "stock_code": "352142437210",
+        "uretici_kodu": "352142437210",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "11.18"
+      },
+      {
+        "description": "235 Kutu Alt Kapak Yalıtımlı Antrasit Gri",
+        "stock_code": "352142438110",
+        "uretici_kodu": "352142438110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "11.18"
+      },
+      {
+        "description": "235 Kutu Alt Kapak Yalıtımlı Vizon",
+        "stock_code": "352142438710",
+        "uretici_kodu": "352142438710",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "11.18"
+      },
+      {
+        "description": "200 mm Yalıtım Beyaz",
+        "stock_code": "352142441110",
+        "uretici_kodu": "352142441110",
+        "type": "monoblok_panjur_kutu_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "2.46"
+      },
+      {
         "description": "Mini Alt Parça Pres",
         "stock_code": "352123900200",
         "uretici_kodu": "ES.427.00.DAP",
@@ -1038,39 +1416,219 @@
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Beyaz",
-        "stock_code": "352131201010",
-        "uretici_kodu": "GC.307.RA.NDU",
+        "stock_code": "352132101110",
+        "uretici_kodu": "352132101110",
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "4.35"
+        "price": "4.24"
+      },
+      {
+        "description": "Mini Pvc Yan Dikme 39 mm Folyo Kap.",
+        "stock_code": "352132107010",
+        "uretici_kodu": "352132107010",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "folyo_kap",
+        "unit": "Metre",
+        "price": "10.67"
+      },
+      {
+        "description": "Mini Pvc Yan Dikme 39 mm Altın Meşe",
+        "stock_code": "352132107110",
+        "uretici_kodu": "352132107110",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "9.06"
+      },
+      {
+        "description": "Mini Pvc Yan Dikme 39 mm Fındık",
+        "stock_code": "352132107210",
+        "uretici_kodu": "352132107210",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "9.06"
+      },
+      {
+        "description": "Mini Pvc Yan Dikme 39 mm Antrasit Gri",
+        "stock_code": "352132108110",
+        "uretici_kodu": "352132108110",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "9.06"
+      },
+      {
+        "description": "Mini Pvc Yan Dikme 39 mm Vizon",
+        "stock_code": "352132108710",
+        "uretici_kodu": "352132108710",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "9.06"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Beyaz",
-        "stock_code": "352131201010",
-        "uretici_kodu": "GC.307.RA.NDU",
+        "stock_code": "352132201110",
+        "uretici_kodu": "352132201110",
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "4.35"
+        "price": "4.20"
+      },
+      {
+        "description": "Midi Pvc Yan Dikme 55 mm Folyo Kap.",
+        "stock_code": "352132207010",
+        "uretici_kodu": "352132207010",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "folyo_kap",
+        "unit": "Metre",
+        "price": "10.48"
+      },
+      {
+        "description": "Midi Pvc Yan Dikme 55 mm Altın Meşe",
+        "stock_code": "352132207110",
+        "uretici_kodu": "352132207110",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "8.91"
+      },
+      {
+        "description": "Midi Pvc Yan Dikme 55 mm Fındık",
+        "stock_code": "352132207210",
+        "uretici_kodu": "352132207210",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "8.91"
+      },
+      {
+        "description": "Midi Pvc Yan Dikme 55 mm Antrasit Gri",
+        "stock_code": "352132208110",
+        "uretici_kodu": "352132208110",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "8.91"
+      },
+      {
+        "description": "Midi Pvc Yan Dikme 55 mm Vizon",
+        "stock_code": "352132208710",
+        "uretici_kodu": "352132208710",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "8.91"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Beyaz",
-        "stock_code": "352131201010",
-        "uretici_kodu": "GC.307.RA.NDU",
+        "stock_code": "352132301110",
+        "uretici_kodu": "352132301110",
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "4.35"
+        "price": "6.05"
+      },
+      {
+        "description": "Mini Pvc Orta Dikme 39 mm Folyo Kap.",
+        "stock_code": "352132307010",
+        "uretici_kodu": "352132307010",
+        "type": "pvc_panjur_orta_dikme_profilleri",
+        "color": "folyo_kap",
+        "unit": "Metre",
+        "price": "12.27"
+      },
+      {
+        "description": "Mini Pvc Orta Dikme 39 mm Altın Meşe",
+        "stock_code": "352132307110",
+        "uretici_kodu": "352132307110",
+        "type": "pvc_panjur_orta_dikme_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "10.70"
+      },
+      {
+        "description": "Mini Pvc Orta Dikme 39 mm Fındık",
+        "stock_code": "352132307210",
+        "uretici_kodu": "352132307210",
+        "type": "pvc_panjur_orta_dikme_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "10.70"
+      },
+      {
+        "description": "Mini Pvc Orta Dikme 39 mm Antrasit Gri",
+        "stock_code": "352132308110",
+        "uretici_kodu": "352132308110",
+        "type": "pvc_panjur_orta_dikme_profilleri",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "10.70"
+      },
+      {
+        "description": "Mini Pvc Orta Dikme 39 mm Vizon",
+        "stock_code": "352132308710",
+        "uretici_kodu": "352132308710",
+        "type": "pvc_panjur_orta_dikme_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "10.70"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Beyaz",
-        "stock_code": "352131201010",
-        "uretici_kodu": "GC.307.RA.NDU",
+        "stock_code": "352132401110",
+        "uretici_kodu": "352132401110",
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "4.35"
+        "price": "6.05"
+      },
+      {
+        "description": "Midi Pvc Orta Dikme 55 mm Folyo Kap.",
+        "stock_code": "352132407010",
+        "uretici_kodu": "352132407010",
+        "type": "pvc_panjur_orta_dikme_profilleri",
+        "color": "folyo_kap",
+        "unit": "Metre",
+        "price": "12.10"
+      },
+      {
+        "description": "Midi Pvc Orta Dikme 55 mm Altın Meşe",
+        "stock_code": "352132407110",
+        "uretici_kodu": "352132407110",
+        "type": "pvc_panjur_orta_dikme_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "10.58"
+      },
+      {
+        "description": "Midi Pvc Orta Dikme 55 mm Fındık",
+        "stock_code": "352132407210",
+        "uretici_kodu": "352132407210",
+        "type": "pvc_panjur_orta_dikme_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "10.58"
+      },
+      {
+        "description": "Midi Pvc Orta Dikme 55 mm Antrasit Gri",
+        "stock_code": "352132408110",
+        "uretici_kodu": "352132408110",
+        "type": "pvc_panjur_orta_dikme_profilleri",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "10.58"
+      },
+      {
+        "description": "Midi Pvc Orta Dikme 55 mm Vizon",
+        "stock_code": "352132408710",
+        "uretici_kodu": "352132408710",
+        "type": "pvc_panjur_orta_dikme_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "10.58"
       },
       {
         "description": "Plise Kasa Profili Pres",
@@ -1134,6 +1692,60 @@
         "color": "ral_boyalı",
         "unit": "Metre",
         "price": "4.03"
+      },
+      {
+        "description": "Yan Dikme Adaptörü 31x42 Beyaz",
+        "stock_code": "352132931110",
+        "uretici_kodu": "352132931110",
+        "type": "monoblok_panjur_yan_dikme_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "1.78"
+      },
+      {
+        "description": "Yan Dikme Adaptörü 31x42 Folyo Kaplama",
+        "stock_code": "352132937010",
+        "uretici_kodu": "352132937010",
+        "type": "monoblok_panjur_yan_dikme_profilleri",
+        "color": "folyo_kaplama",
+        "unit": "Metre",
+        "price": "4.82"
+      },
+      {
+        "description": "Yan Dikme Adaptörü 31x42 Altın Meşe",
+        "stock_code": "352132937110",
+        "uretici_kodu": "352132937110",
+        "type": "monoblok_panjur_yan_dikme_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "4.06"
+      },
+      {
+        "description": "Yan Dikme Adaptörü 31x42 Fındık",
+        "stock_code": "352132937210",
+        "uretici_kodu": "352132937210",
+        "type": "monoblok_panjur_yan_dikme_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "4.06"
+      },
+      {
+        "description": "Yan Dikme Adaptörü 31x42 Antrasit Gri",
+        "stock_code": "352132938110",
+        "uretici_kodu": "352132938110",
+        "type": "monoblok_panjur_yan_dikme_profilleri",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "4.06"
+      },
+      {
+        "description": "Yan Dikme Adaptörü 31x42 Vizon",
+        "stock_code": "352132938710",
+        "uretici_kodu": "352132938710",
+        "type": "monoblok_panjur_yan_dikme_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "4.06"
       },
       {
         "description": "Mosel DD 7002 B",

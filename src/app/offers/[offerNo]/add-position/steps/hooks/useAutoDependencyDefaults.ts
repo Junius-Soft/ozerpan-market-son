@@ -86,7 +86,8 @@ export function useAutoDependencyAndFilterBy(
   formik: FormikProps<
     PanjurSelections & Record<string, string | number | boolean>
   >,
-  productType: keyof typeof productTabs
+  productType: keyof typeof productTabs,
+  optionId: string | null
 ) {
   const allFields: ProductTabField[] = (
     productTabs[productType] as ProductTab[]
@@ -140,7 +141,20 @@ export function useAutoDependencyAndFilterBy(
           !filter.valueMap
         )
           return;
-        const filterValue = newValues[filter.field];
+
+        let filterValue: string | number | undefined;
+
+        // OptionId filter'ı için URL'den değeri al
+        if (filter.field === "optionId") {
+          filterValue = optionId || undefined;
+        } else {
+          const fieldValue = newValues[filter.field];
+          filterValue =
+            typeof fieldValue === "string" || typeof fieldValue === "number"
+              ? fieldValue
+              : undefined;
+        }
+
         if (
           typeof filterValue === "string" ||
           typeof filterValue === "number"
@@ -196,5 +210,5 @@ export function useAutoDependencyAndFilterBy(
     }
 
     prevValues.current = { ...formik.values };
-  }, [formik.values, allFields, formik]);
+  }, [formik.values, allFields, formik, optionId]);
 }

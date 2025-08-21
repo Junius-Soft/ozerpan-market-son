@@ -12,7 +12,8 @@ export type FormValues = Record<string, string | number | boolean>;
 export function filterBoxSize(
   formik: FormikProps<
     PanjurSelections & Record<string, string | number | boolean>
-  >
+  >,
+  optionId?: string | null
 ): ProductTabField["options"] | null {
   const values = formik.values;
   const height = Number(values.height);
@@ -20,13 +21,25 @@ export function filterBoxSize(
   const kutuOlcuAlmaSekli = values.kutuOlcuAlmaSekli as string;
   const selectedMovementType = values.movementType as "manuel" | "motorlu";
 
-  // Kutu ölçüleri ve label'ları
-  const boxOptions = [
-    { id: "137mm", name: "137MM" },
-    { id: "165mm", name: "165MM" },
-    { id: "205mm", name: "205MM" },
-    { id: "250mm", name: "250MM" },
-  ];
+  // optionId'ye göre kutu seçeneklerini belirle
+  let boxOptions: { id: string; name: string }[];
+
+  if (optionId === "monoblok") {
+    boxOptions = [
+      { id: "185mm", name: "185MM" },
+      { id: "185x220mm", name: "185MM Yalıtımlı" },
+      { id: "220mm", name: "220MM" },
+      { id: "220x255mm", name: "220MM Yalıtımlı" },
+    ];
+  } else {
+    // distan için varsayılan seçenekler
+    boxOptions = [
+      { id: "137mm", name: "137MM" },
+      { id: "165mm", name: "165MM" },
+      { id: "205mm", name: "205MM" },
+      { id: "250mm", name: "250MM" },
+    ];
+  }
 
   const validOptions: { id: string; name: string }[] = [];
 
@@ -41,7 +54,9 @@ export function filterBoxSize(
     }
     // Sadece seçili movementType'a göre kontrol et
     const maxValue =
-      maxLamelHeights[boxSize]?.[selectedLamelTickness]?.[selectedMovementType];
+      maxLamelHeights[optionId || "distan"]?.[boxSize]?.[
+        selectedLamelTickness
+      ]?.[selectedMovementType];
     let isValid = false;
     if (maxValue && lamelYuksekligi <= maxValue) {
       isValid = true;
@@ -50,15 +65,18 @@ export function filterBoxSize(
       validOptions.push({ id: box.id, name: box.name });
     }
   }
+  console.log({ validOptions });
 
   const isCurrentValid = validOptions.some(
     (opt) => opt.id === formik.values.boxType
   );
+
   if (validOptions.length > 0) {
     // En küçük kutuyu seçmek için validOptions'u kutu boyutuna göre sırala
     const sortedOptions = [...validOptions].sort(
       (a, b) => parseInt(a.id) - parseInt(b.id)
     );
+
     const smallestValidBoxId = sortedOptions[0].id;
     if (!isCurrentValid || formik.values.boxType !== smallestValidBoxId) {
       formik.setFieldValue("boxType", smallestValidBoxId);
@@ -75,6 +93,7 @@ export function useFilterBoxSize(
 ) {
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
+  const optionId = searchParams.get("optionId");
   const {
     width,
     height,
@@ -89,7 +108,8 @@ export function useFilterBoxSize(
 
   useEffect(() => {
     if (productId === "panjur") {
-      const result = filterBoxSize(formik);
+      const result = filterBoxSize(formik, optionId);
+      console.log({ result });
       setValidBoxOptions(result);
     } else {
       setValidBoxOptions(null);
@@ -103,6 +123,7 @@ export function useFilterBoxSize(
     lamelTickness,
     productId,
     movementType,
+    optionId,
   ]);
 
   return { validBoxOptions };

@@ -138,9 +138,9 @@ export function useFilterLamelThickness(
       sectionHeights,
       sectionConnections
     );
-    console.log("Valid options:", result.validOptions);
-    console.log("Should select first:", result.shouldSelectFirst);
-    console.log("Current selection:", formik.values.lamelTickness);
+    // console.log("Valid options:", result.validOptions);
+    // console.log("Should select first:", result.shouldSelectFirst);
+    // console.log("Current selection:", formik.values.lamelTickness);
 
     setValidLamelThickness(result.validOptions);
 

@@ -732,8 +732,19 @@
               { "id": "137mm", "name": "137MM" },
               { "id": "165mm", "name": "165MM" },
               { "id": "205mm", "name": "205MM" },
-              { "id": "250mm", "name": "250MM" }
+              { "id": "250mm", "name": "250MM" },
+              { "id": "185mm", "name": "185MM" },
+              { "id": "185x220mm", "name": "185MM Yalıtımlı" },
+              { "id": "220mm", "name": "220MM" },
+              { "id": "220x255mm", "name": "220MM Yalıtımlı" }
             ],
+            "filterBy": {
+              "field": "optionId",
+              "valueMap": {
+                "distan": ["137mm", "165mm", "205mm", "250mm"],
+                "monoblok": ["185mm", "185x220mm", "220mm", "220x255mm"]
+              }
+            },
             "default": "137mm"
           },
           {

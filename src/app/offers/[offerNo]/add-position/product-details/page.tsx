@@ -483,6 +483,7 @@ export default function ProductDetailsPage() {
                   onTotalChange={setPreviewTotal}
                   summaryRef={summaryRef}
                   typeId={Number(typeId)}
+                  optionId={optionId}
                 />
                 {/* Floating toplam buton sadece mobilde */}
                 <FloatingTotalButton

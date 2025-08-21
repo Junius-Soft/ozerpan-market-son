@@ -96,7 +96,10 @@ export interface MaxLamelHeight {
 }
 
 export interface LamelHeightTable {
-  [boxSize: string]: {
-    [lamelType: string]: MaxLamelHeight;
+  [optionType: string]: {
+    // "distan" | "monoblok"
+    [boxSize: string]: {
+      [lamelType: string]: MaxLamelHeight;
+    };
   };
 }

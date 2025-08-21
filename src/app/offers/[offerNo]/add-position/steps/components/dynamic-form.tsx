@@ -14,6 +14,7 @@ import { PanjurSelections } from "@/types/panjur";
 import Image from "next/image";
 import { CustomDialog } from "@/components/ui/custom-dialog";
 import { useFilterBoxSize } from "../hooks/form-rules/useFilterBoxSize";
+import { useSearchParams } from "next/navigation";
 
 interface DynamicFormProps {
   formik: FormikProps<
@@ -82,8 +83,9 @@ const SelectInput: React.FC<
     formik: FormikProps<
       PanjurSelections & Record<string, string | number | boolean>
     >;
+    optionId?: string | null;
   }
-> = ({ field, form, fieldDef, allFields, formik }) => {
+> = ({ field, form, fieldDef, allFields, formik, optionId }) => {
   const { values } = form;
   const [open, setOpen] = useState(false);
   const { validBoxOptions } = useFilterBoxSize(formik);
@@ -99,7 +101,15 @@ const SelectInput: React.FC<
 
       options = filters.reduce((filteredOpts, filter) => {
         // ValueMap filtresi
-        const filterValue = values[filter.field]?.toString();
+        let filterValue: string | undefined;
+
+        // Eğer filter.field === "optionId" ise, URL'den al
+        if (filter.field === "optionId") {
+          filterValue = optionId || undefined;
+        } else {
+          filterValue = values[filter.field]?.toString();
+        }
+
         if (filterValue && filter.valueMap && filter.valueMap[filterValue]) {
           return filteredOpts.filter((option) => {
             const optionId = option.id || option.name;
@@ -112,7 +122,7 @@ const SelectInput: React.FC<
     }
 
     return options;
-  }, [fieldDef.options, fieldDef.filterBy, values]);
+  }, [fieldDef.options, fieldDef.filterBy, values, optionId]);
 
   const currentValue = field.value?.toString() ?? "";
   const selectedOption = filteredOptions.find(
@@ -373,6 +383,7 @@ const FormikInputs = (
     formik: FormikProps<
       PanjurSelections & Record<string, string | number | boolean>
     >;
+    optionId?: string | null;
   }
 ) => {
   switch (props.fieldDef.type) {
@@ -386,6 +397,7 @@ const FormikInputs = (
           {...props}
           allFields={props.allFields}
           formik={props.formik}
+          optionId={props.optionId}
         />
       );
     case "radio":
@@ -398,6 +410,8 @@ const FormikInputs = (
 };
 
 export function DynamicForm({ formik, fields, values }: DynamicFormProps) {
+  const searchParams = useSearchParams();
+  const optionId = searchParams.get("optionId");
   return (
     <div className="space-y-6">
       {fields.map((field) => {
@@ -420,6 +434,7 @@ export function DynamicForm({ formik, fields, values }: DynamicFormProps) {
               fieldDef={field}
               allFields={fields}
               formik={formik}
+              optionId={optionId}
             />
           </div>
         );

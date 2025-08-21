@@ -50,11 +50,14 @@ export const getKertmePayi = (dikmeType: string): number => {
 export const getMaxLamelHeight = (
   boxType: string,
   lamelTickness: string,
-  movementType: "manuel" | "motorlu"
+  movementType: "manuel" | "motorlu",
+  optionId: string = "distan"
 ): number | null => {
   const boxSize = boxType.replace("mm", "");
   const lamelType = lamelTickness.split("_")[0];
-  return maxLamelHeights[boxSize]?.[lamelType]?.[movementType] ?? null;
+  return (
+    maxLamelHeights[optionId]?.[boxSize]?.[lamelType]?.[movementType] ?? null
+  );
 };
 
 export const getDikmeGenisligi = (dikmeType: string): number => {

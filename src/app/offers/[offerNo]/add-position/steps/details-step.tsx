@@ -25,6 +25,7 @@ interface DetailsStepProps {
   onTotalChange?: (total: number) => void;
   summaryRef: React.RefObject<HTMLDivElement>;
   typeId: number;
+  optionId: string | null;
 }
 
 export function DetailsStep({
@@ -33,8 +34,9 @@ export function DetailsStep({
   onTotalChange,
   summaryRef,
   typeId,
+  optionId,
 }: DetailsStepProps) {
-  useAutoDependencyAndFilterBy(formik, "panjur");
+  useAutoDependencyAndFilterBy(formik, "panjur", optionId);
   useFilterLamelThickness(formik);
   useFilterMotorModel(formik, selectedProduct);
   useFilterBoxSize(formik);

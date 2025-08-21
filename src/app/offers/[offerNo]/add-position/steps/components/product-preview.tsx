@@ -238,12 +238,17 @@ export function ProductPreview({
                   ) : (
                     <TooltipProvider>
                       <Tooltip delayDuration={0}>
-                        <TooltipTrigger className="text-base">
-                          €{" "}
-                          {(
-                            calculationResult.totalPrice *
-                            Number(values.quantity || 1)
-                          ).toFixed(2)}
+                        <TooltipTrigger asChild>
+                          <button
+                            type="button"
+                            className="text-base hover:text-primary transition-colors"
+                          >
+                            €{" "}
+                            {(
+                              calculationResult.totalPrice *
+                              Number(values.quantity || 1)
+                            ).toFixed(2)}
+                          </button>
                         </TooltipTrigger>
                         <TooltipContent
                           side="top"

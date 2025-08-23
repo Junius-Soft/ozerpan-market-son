@@ -281,3 +281,231 @@ export const findMotorPrice = (
 
   return motorItem ?? null;
 };
+
+// Monoblok Yan Kapak fiyatı bulucu
+export function findMonoblokYanKapakAccessoryPrice(
+  accessories: PriceItem[],
+  boxType: string
+): PriceItem[] {
+  const results: PriceItem[] = [];
+  const boxSize = boxType.replace("mm", "");
+
+  // Yan kapak konfigürasyonları
+  const configs: Record<string, Array<{ name: string; quantity: number }>> = {
+    "185": [
+      { name: "Yan Kapak 165 mm (izolasyonsuz) Sağ", quantity: 1 },
+      { name: "Yan Kapak 165 mm (izolasyonsuz) Sol", quantity: 1 },
+    ],
+    "185x220": [
+      { name: "Yan Kapak 185 * 220 mm (izolasyonlu) Sağ", quantity: 1 },
+      { name: "Yan Kapak 185 * 220 mm (izolasyonlu) Sol", quantity: 1 },
+    ],
+    "220": [
+      { name: "Yan kapak 200 mm (izolasyonsuz) Beyaz Sağ", quantity: 1 },
+      { name: "Yan kapak 200 mm (izolasyonsuz) Beyaz Sol", quantity: 1 },
+    ],
+    "220x255": [
+      { name: "Yan kapak 200 mm (izolasyonlu) Beyaz Sağ", quantity: 1 },
+      { name: "Yan kapak 200 mm (izolasyonlu) Beyaz Sol", quantity: 1 },
+    ],
+  };
+
+  const config = configs[boxSize];
+  if (config) {
+    config.forEach(({ name, quantity }) => {
+      const accessory = accessories.find((acc) =>
+        acc.description.includes(name)
+      );
+      if (accessory) {
+        results.push({ ...accessory, quantity });
+      }
+    });
+  }
+
+  return results;
+}
+
+// Monoblok aksesuar parçası bulucu yardımcı fonksiyon
+const findMonoblokAccessoryComponent = (
+  accessories: PriceItem[],
+  componentName: string,
+  normalizedColor: string,
+  quantity: number,
+  needsColor: boolean = false
+): PriceItem | null => {
+  // Quantity 0 ise ekleme
+  if (quantity === 0) {
+    return null;
+  }
+
+  let searchPattern: string;
+
+  if (needsColor) {
+    // Renk kontrolü gereken aksesuarlar
+    searchPattern = `${componentName} ${normalizedColor}`;
+    let accessory = accessories.find((acc) =>
+      acc.description.includes(searchPattern)
+    );
+
+    // Bulamazsa Beyaz ile dene
+    if (!accessory && normalizedColor !== "Beyaz") {
+      searchPattern = `${componentName} Beyaz`;
+      accessory = accessories.find((acc) =>
+        acc.description.includes(searchPattern)
+      );
+    }
+
+    if (accessory) {
+      return { ...accessory, quantity };
+    }
+  } else {
+    // Renksiz aksesuarlar
+    const accessory = accessories.find((acc) =>
+      acc.description.includes(componentName)
+    );
+    if (accessory) {
+      return { ...accessory, quantity };
+    }
+  }
+
+  return null;
+};
+
+// Monoblok Ek Aksesuarları bulucu
+export function findMonoblokEkAksesuarlar(
+  accessories: PriceItem[],
+  boxType: string,
+  boxColor: string,
+  dikmeCount: number
+): PriceItem[] {
+  const results: PriceItem[] = [];
+  const normalizedColor = normalizeColor(boxColor);
+  const boxSize = boxType.replace("mm", "");
+  const middleDikmeCount = dikmeCount - 2;
+  console.log({ middleDikmeCount });
+  // Aksesuar konfigürasyonları
+  const configs: Record<
+    string,
+    Array<{ name: string; quantity: number; needsColor: boolean }>
+  > = {
+    "185": [
+      { name: "Dış Kapak 165mm", quantity: 2, needsColor: true },
+      { name: "İç Kapak 165mm", quantity: 2, needsColor: true },
+      { name: "Yan Kapak Sürgüsü 165 mm", quantity: 2, needsColor: false },
+      {
+        name: "Orta Kapak İç Soketi Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+      {
+        name: "Orta Kapak 165mm Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+      {
+        name: "Geçiş Soketi 165mm / 40 Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+      {
+        name: "Geçiş Soketi 165mm / 60 Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+    ],
+    "185x220": [
+      { name: "Dış Kapak 185mm", quantity: 2, needsColor: true },
+      { name: "İç Kapak 185*220", quantity: 2, needsColor: true },
+      { name: "Yan Kapak Sürgüsü 185 mm", quantity: 2, needsColor: false },
+      {
+        name: "Orta Kapak İç Soketi Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+      {
+        name: "Orta Kapak 165mm Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+      {
+        name: "Geçiş Soketi 165mm / 40 Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+      {
+        name: "Geçiş Soketi 165mm / 60 Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+    ],
+    "220": [
+      { name: "Dış Kapak 200mm", quantity: 2, needsColor: true },
+      { name: "İç Kapak 220mm", quantity: 2, needsColor: true },
+      { name: "Yan Kapak Sürgüsü 220 mm", quantity: 2, needsColor: false },
+      {
+        name: "Orta Kapak İç Soketi Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+      {
+        name: "Orta Kapak 200mm Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+      {
+        name: "Geçiş Soketi 200mm / 40 Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+      {
+        name: "Geçiş Soketi 200mm / 60 Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+    ],
+    "220x255": [
+      { name: "Dış Kapak 200mm", quantity: 2, needsColor: true },
+      { name: "İç Kapak 200*235", quantity: 2, needsColor: true },
+      { name: "Yan Kapak Sürgüsü 220 mm", quantity: 2, needsColor: false },
+      {
+        name: "Orta Kapak İç Soketi Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+      {
+        name: "Orta Kapak 200mm Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+      {
+        name: "Geçiş Soketi 200mm / 40 Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+      {
+        name: "Geçiş Soketi 200mm / 60 Beyaz",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+    ],
+  };
+
+  const config = configs[boxSize];
+  if (config) {
+    config.forEach(({ name, quantity, needsColor }) => {
+      const accessoryItem = findMonoblokAccessoryComponent(
+        accessories,
+        name,
+        normalizedColor,
+        quantity,
+        needsColor
+      );
+
+      if (accessoryItem) {
+        results.push(accessoryItem);
+      }
+    });
+  }
+
+  return results;
+}

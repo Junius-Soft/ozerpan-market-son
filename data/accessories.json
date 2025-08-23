@@ -783,7 +783,7 @@
         "price": "4.03"
       },
       {
-        "description": "Yan Kapak Sürgüsü 185",
+        "description": "Yan Kapak Sürgüsü 185mm",
         "stock_code": "352442016900",
         "uretici_kodu": "352442016900",
         "type": "monoblok_panjur_kutu_aksesuarları",
@@ -792,7 +792,7 @@
         "price": "0.53"
       },
       {
-        "description": "Yan Kapak Sürgüsü 220",
+        "description": "Yan Kapak Sürgüsü 220mm",
         "stock_code": "352442026900",
         "uretici_kodu": "352442026900",
         "type": "monoblok_panjur_kutu_aksesuarları",
@@ -810,7 +810,7 @@
         "price": "1.43"
       },
       {
-        "description": "Yan Kapak  165 mm (izolasyonsuz) Sağ",
+        "description": "Yan Kapak 165mm (izolasyonsuz) Sağ",
         "stock_code": "352442111100",
         "uretici_kodu": "352442111100",
         "type": "monoblok_panjur_kutu_aksesuarları",
@@ -819,7 +819,7 @@
         "price": "3.02"
       },
       {
-        "description": "Yan Kapak  165 mm (izolasyonsuz) Sol",
+        "description": "Yan Kapak 165mm (izolasyonsuz) Sol",
         "stock_code": "352442121100",
         "uretici_kodu": "352442121100",
         "type": "monoblok_panjur_kutu_aksesuarları",
@@ -909,7 +909,7 @@
         "price": "3.75"
       },
       {
-        "description": "Yan Kapak  165 mm (izolasyonlu) Beyaz",
+        "description": "Yan Kapak 165x220mm (izolasyonlu) Sağ",
         "stock_code": "352442211100",
         "uretici_kodu": "352442211100",
         "type": "monoblok_panjur_kutu_aksesuarları",
@@ -918,7 +918,7 @@
         "price": "4.63"
       },
       {
-        "description": "Yan Kapak  165 mm (izolasyonlu) Beyaz",
+        "description": "Yan Kapak 165x220 mm (izolasyonlu) Sol",
         "stock_code": "352442221100",
         "uretici_kodu": "352442221100",
         "type": "monoblok_panjur_kutu_aksesuarları",

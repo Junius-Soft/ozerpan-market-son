@@ -9,6 +9,8 @@ import {
 import { calculateSectionWidths } from "@/utils/shutter-calculations";
 import {
   findYanKapakAccessoryPrice,
+  findMonoblokYanKapakAccessoryPrice,
+  findMonoblokEkAksesuarlar,
   findBoruBasiAccessoryPrice,
   findRulmanAccessoryPrice,
   findPlaketAccessoryPrice,
@@ -54,17 +56,36 @@ export const calculatePanjurAccessories = (
     values.boxType
   );
 
-  // Yan Kapak - bölme sayısı kadar
-  const yanKapak = findYanKapakAccessoryPrice(
-    allAccessories,
-    values.boxType,
-    values.box_color
-  );
-  if (yanKapak) {
-    neededAccessories.push({
-      ...yanKapak,
-      quantity: middleBarPositions.length + 1,
-    });
+  // Yan Kapak - optionId'ye göre farklı fonksiyon kullan
+  if (optionId === "monoblok") {
+    // Monoblok için yeni fonksiyonlar
+    const monoblokYanKapaklar = findMonoblokYanKapakAccessoryPrice(
+      allAccessories,
+      values.boxType
+    );
+    neededAccessories.push(...monoblokYanKapaklar);
+
+    // Monoblok ek aksesuarları
+    const monoblokEkAksesuarlar = findMonoblokEkAksesuarlar(
+      allAccessories,
+      values.boxType,
+      values.box_color,
+      dikmeCount
+    );
+    neededAccessories.push(...monoblokEkAksesuarlar);
+  } else {
+    // Distan için eski fonksiyon - bölme sayısı kadar
+    const yanKapak = findYanKapakAccessoryPrice(
+      allAccessories,
+      values.boxType,
+      values.box_color
+    );
+    if (yanKapak) {
+      neededAccessories.push({
+        ...yanKapak,
+        quantity: middleBarPositions.length + 1,
+      });
+    }
   }
 
   // Motorlu aksesuarlar

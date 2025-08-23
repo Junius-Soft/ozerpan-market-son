@@ -9,6 +9,7 @@ import {
   findSubPartPriceWithWidths,
   findDikmePrice,
   findBoxPrice,
+  findMonoblokBoxPrice,
   findSmartHomePrice,
   findRemotePrice,
   findReceiverPrice,
@@ -254,9 +255,30 @@ export const calculatePanjur = (
     }
   });
 
-  const { frontPrice, backPrice, selectedFrontBox, selectedBackBox } =
-    findBoxPrice(prices, values.boxType, values.box_color, systemWidth);
-  const boxPrice = frontPrice + backPrice;
+  // Box price hesaplama - optionId'ye göre farklı fonksiyon kullan
+  let boxPrice = 0;
+  const boxSelectedProducts: SelectedProduct[] = [];
+
+  if (optionId === "monoblok") {
+    // Monoblok için yeni fonksiyon kullan
+    const { totalPrice, selectedProducts } = findMonoblokBoxPrice(
+      prices,
+      values.boxType,
+      values.box_color,
+      systemWidth
+    );
+    boxPrice = totalPrice;
+    boxSelectedProducts.push(...selectedProducts);
+  } else {
+    // Distan için eski fonksiyon kullan
+    const { frontPrice, backPrice, selectedFrontBox, selectedBackBox } =
+      findBoxPrice(prices, values.boxType, values.box_color, systemWidth);
+    boxPrice = frontPrice + backPrice;
+
+    // Distan box ürünlerini de boxSelectedProducts'a ekle
+    if (selectedFrontBox) boxSelectedProducts.push(selectedFrontBox);
+    if (selectedBackBox) boxSelectedProducts.push(selectedBackBox);
+  }
 
   // Uzaktan kumanda fiyatı hesaplama
   const [remotePrice, remoteSelectedProduct] = findRemotePrice(
@@ -429,8 +451,7 @@ export const calculatePanjur = (
     ...lamelSelectedProducts,
     ...subPartSelectedProducts,
     ...dikmeSelectedProducts,
-    selectedFrontBox,
-    selectedBackBox,
+    ...boxSelectedProducts, // Hem monoblok hem distan box ürünleri
     ...tamburSelectedProducts,
     ...yukseltmeProfiliSelectedProducts,
     remoteSelectedProduct,

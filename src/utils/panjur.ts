@@ -116,7 +116,7 @@ export const createSelectedProduct = (
     ...priceItem,
     quantity,
     totalPrice: parseFloat(priceItem.price) * quantity,
-    unit: "Adet",
+    unit: priceItem.unit,
     size,
   };
 };
@@ -363,6 +363,110 @@ export const findBoxPrice = (
     selectedBackBox: matchingBackBox
       ? createSelectedProduct(matchingBackBox, 1, systemWidth + " mm")
       : undefined,
+  };
+};
+
+// Monoblok kutu parçası bulucu yardımcı fonksiyon
+const findMonoblokBoxComponent = (
+  prices: PriceItem[],
+  componentName: string,
+  normalizedColor: string,
+  quantity: number,
+  systemWidth: number
+): { product: SelectedProduct | null; price: number } => {
+  let component = prices.find(
+    (p) => p.description === `${componentName} ${normalizedColor}`
+  );
+
+  // Eğer bulunamazsa Beyaz ile dene
+  if (!component && normalizedColor !== "Beyaz") {
+    component = prices.find((p) => p.description === `${componentName} Beyaz`);
+  }
+
+  if (!component) return { product: null, price: 0 };
+
+  const product = createSelectedProduct(
+    component,
+    quantity,
+    systemWidth + " mm"
+  );
+  if (quantity > 1) {
+    product.description = `${product.description} (${quantity} Adet)`;
+    product.totalPrice = parseFloat(component.price) * quantity;
+  }
+
+  return { product, price: product.totalPrice };
+};
+
+export const findMonoblokBoxPrice = (
+  prices: PriceItem[],
+  boxType: string,
+  color: string,
+  systemWidth: number
+): {
+  totalPrice: number;
+  selectedProducts: SelectedProduct[];
+} => {
+  const monoblokBoxPrices = prices.filter(
+    (p) => p.type === "monoblok_panjur_kutu_profilleri"
+  );
+  const normalizedColor = normalizeColor(color);
+  const boxSize = boxType.replace("mm", "");
+
+  const selectedProducts: SelectedProduct[] = [];
+  let totalPrice = 0;
+
+  // Kutu konfigürasyonları
+  const configs: Record<string, Array<{ name: string; quantity: number }>> = {
+    "185x220": [
+      { name: "165 Kutu Kapak", quantity: 2 },
+      { name: "200 Kutu Kapak", quantity: 1 },
+      { name: "200 Kutu Alt Kapak", quantity: 1 },
+      { name: "Kutu Tampon Çıtası", quantity: 1 },
+      { name: "165 mm Yalıtım Beyaz", quantity: 1 },
+    ],
+    "185": [
+      { name: "165 Kutu Kapak", quantity: 3 },
+      { name: "165 Kutu Alt Kapak", quantity: 1 },
+      { name: "Kutu Tampon Çıtası", quantity: 1 },
+    ],
+    "220": [
+      { name: "200 Kutu Kapak", quantity: 3 },
+      { name: "200 Kutu Alt Kapak", quantity: 1 },
+      { name: "Kutu Tampon Çıtası", quantity: 1 },
+    ],
+    "220x255": [
+      { name: "235 Kutu Kapak Yalıtımlı", quantity: 1 },
+      { name: "235 Kutu Alt Kapak Yalıtımlı", quantity: 1 },
+      { name: "200 Kutu Kapak", quantity: 2 },
+      { name: "Kutu Tampon Çıtası", quantity: 1 },
+      { name: "200 mm Yalıtım Beyaz", quantity: 1 },
+    ],
+  };
+
+  const config = configs[boxSize];
+  if (config) {
+    config.forEach(({ name, quantity }) => {
+      // Yalıtım parçaları için renk kontrolü yapma (her zaman Beyaz)
+      const useColor = name.includes("Yalıtım") ? "Beyaz" : normalizedColor;
+      const { product, price } = findMonoblokBoxComponent(
+        monoblokBoxPrices,
+        name,
+        useColor,
+        quantity,
+        systemWidth
+      );
+
+      if (product) {
+        selectedProducts.push(product);
+        totalPrice += price;
+      }
+    });
+  }
+
+  return {
+    totalPrice,
+    selectedProducts,
   };
 };
 

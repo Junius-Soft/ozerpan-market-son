@@ -1,7 +1,5 @@
 import { PriceItem } from "@/types/panjur";
-import {
-  normalizeColor,
-} from "@/utils/panjur";
+import { normalizeColor } from "@/utils/panjur";
 
 // Yan Kapak fiyatı bulucu
 export function findYanKapakAccessoryPrice(
@@ -10,6 +8,7 @@ export function findYanKapakAccessoryPrice(
   boxColor: string
 ): PriceItem | null {
   let desc = "";
+  console.log({ boxType, boxColor });
   switch (boxType) {
     case "137mm":
       desc = `137 Yan Kapak 45 Pimli ${normalizeColor(boxColor)}`;

@@ -33,7 +33,7 @@
         "stock_code": "352441113000",
         "uretici_kodu": "SF.137.04.045",
         "type": "panjur_kutu_aksesuarları",
-        "color": "metalik gri",
+        "color": "metalik_gri",
         "unit": "Takım",
         "price": "6.15"
       },
@@ -51,7 +51,7 @@
         "stock_code": "352441113400",
         "uretici_kodu": "SF.137.24.045",
         "type": "panjur_kutu_aksesuarları",
-        "color": "antrasit gri",
+        "color": "antrasit_gri",
         "unit": "Takım",
         "price": "6.15"
       },
@@ -60,7 +60,7 @@
         "stock_code": "352441111000",
         "uretici_kodu": "SF.137.RA.045",
         "type": "panjur_kutu_aksesuarları",
-        "color": "ral boyalı",
+        "color": "ral_boyalı",
         "unit": "Takım",
         "price": "6.95"
       },
@@ -96,7 +96,7 @@
         "stock_code": "352441213000",
         "uretici_kodu": "SF.165.04.045",
         "type": "panjur_kutu_aksesuarları",
-        "color": "metalik gri",
+        "color": "metalik_gri",
         "unit": "Takım",
         "price": "7.21"
       },
@@ -114,7 +114,7 @@
         "stock_code": "352441215100",
         "uretici_kodu": "SF.165.17.045",
         "type": "panjur_kutu_aksesuarları",
-        "color": "ral boya 8003",
+        "color": "ral_boyalı",
         "unit": "Takım",
         "price": "7.21"
       },
@@ -123,7 +123,7 @@
         "stock_code": "352441213400",
         "uretici_kodu": "SF.165.24.045",
         "type": "panjur_kutu_aksesuarları",
-        "color": "antrasit gri",
+        "color": "antrasit_gri",
         "unit": "Takım",
         "price": "7.21"
       },
@@ -141,7 +141,7 @@
         "stock_code": "352441211000",
         "uretici_kodu": "SF.165.RA.045",
         "type": "panjur_kutu_aksesuarları",
-        "color": "ral boyalı",
+        "color": "ral_boyalı",
         "unit": "Takım",
         "price": "8.16"
       },
@@ -177,7 +177,7 @@
         "stock_code": "352441413000",
         "uretici_kodu": "SF.205.04.045",
         "type": "panjur_kutu_aksesuarları",
-        "color": "metalik gri",
+        "color": "metalik_gri",
         "unit": "Takım",
         "price": "10.19"
       },
@@ -195,7 +195,7 @@
         "stock_code": "352441414000",
         "uretici_kodu": "SF.205.24.045",
         "type": "panjur_kutu_aksesuarları",
-        "color": "antrasit gri",
+        "color": "antrasit_gri",
         "unit": "Takım",
         "price": "10.19"
       },
@@ -213,7 +213,7 @@
         "stock_code": "352441411000",
         "uretici_kodu": "SF.205.RA.045",
         "type": "panjur_kutu_aksesuarları",
-        "color": "ral boyalı",
+        "color": "ral_boyalı",
         "unit": "Takım",
         "price": "11.52"
       },
@@ -249,7 +249,7 @@
         "stock_code": "352441523000",
         "uretici_kodu": "SF.250.04.045",
         "type": "panjur_kutu_aksesuarları",
-        "color": "metalik gri",
+        "color": "metalik_gri",
         "unit": "Takım",
         "price": "23.12"
       },
@@ -267,7 +267,7 @@
         "stock_code": "352441524000",
         "uretici_kodu": "SF.250.24.045",
         "type": "panjur_kutu_aksesuarları",
-        "color": "antrasit gri",
+        "color": "antrasit_gri",
         "unit": "Takım",
         "price": "23.12"
       },
@@ -285,7 +285,7 @@
         "stock_code": "352441521000",
         "uretici_kodu": "SF.250.RA.045",
         "type": "panjur_kutu_aksesuarları",
-        "color": "ral boyalı",
+        "color": "ral_boyalı",
         "unit": "Takım",
         "price": "26.12"
       },
@@ -364,7 +364,7 @@
         "stock_code": "352455113400",
         "uretici_kodu": "SB.150.24.OUT",
         "type": "panjur_tambur_boru_aksesuarları",
-        "color": "antrasit gri",
+        "color": "antrasit_gri",
         "unit": "Adet",
         "price": "3.67"
       },
@@ -499,7 +499,7 @@
         "stock_code": "352322921800",
         "uretici_kodu": "SP.040.24.025",
         "type": "panjur_alt_parça_aksesuarları",
-        "color": "antrasit gri",
+        "color": "antrasit_gri",
         "unit": "Adet",
         "price": "0.15"
       },

@@ -26,7 +26,10 @@ const isValidOffer = (offer: unknown): offer is Offer => {
 // GET /api/offers
 export async function GET() {
   try {
-    const { data: offers, error } = await supabase.from("offers").select("*");
+    const { data: offers, error } = await supabase
+      .from("offers")
+      .select("*")
+      .order("created_at", { ascending: false });
     if (error) {
       throw error;
     }

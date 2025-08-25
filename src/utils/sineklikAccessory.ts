@@ -1,4 +1,5 @@
 import { PriceItem } from "@/types/panjur";
+import { createSelectedProduct } from "@/utils/panjur";
 import { SineklikSelections } from "@/types/sineklik";
 
 export function getMenteseliKasaKoseTakozuItem(
@@ -17,7 +18,7 @@ export function getMenteseliKasaKoseTakozuItem(
   });
   if (!takoz) return undefined;
 
-  return { ...takoz, quantity: 4 };
+  return createSelectedProduct(takoz, 4);
 }
 
 export function getMenteseliKanatTakozuItem(
@@ -31,7 +32,7 @@ export function getMenteseliKanatTakozuItem(
   });
   if (!takoz) return undefined;
 
-  return { ...takoz, quantity: 4 };
+  return createSelectedProduct(takoz, 4);
 }
 
 export function getMenteseliPencereMentesesiItem(
@@ -51,7 +52,7 @@ export function getMenteseliPencereMentesesiItem(
   });
   if (!mentese) return undefined;
 
-  return { ...mentese, quantity: 4 };
+  return createSelectedProduct(mentese, 4);
 }
 
 export function getMenteseliFitilAccessoryItem(
@@ -69,15 +70,8 @@ export function getMenteseliFitilAccessoryItem(
   });
   if (!fitil) return undefined;
 
-  const measurement = ((width + height) * 2) / 1000;
-  const pricePerPiece = measurement * parseFloat(fitil.price);
-
-  return {
-    ...fitil,
-    quantity: 1,
-    measurement: measurement,
-    pricePerPiece: pricePerPiece,
-  };
+  const size = (width + height) * 2;
+  return createSelectedProduct(fitil, 1, size);
 }
 
 export function getMenteseliTulAccessoryItem(
@@ -96,15 +90,8 @@ export function getMenteseliTulAccessoryItem(
   });
   if (!tul) return undefined;
 
-  const measurement: number = (width / 1000) * (height / 1000);
-  const pricePerPiece: number = measurement * parseFloat(tul.price);
-
-  return {
-    ...tul,
-    quantity: 1,
-    measurement: measurement,
-    pricePerPiece: pricePerPiece,
-  };
+  const size = width * height;
+  return createSelectedProduct(tul, 1, size);
 }
 
 export function getSabitTulAccessoryItem(
@@ -123,15 +110,8 @@ export function getSabitTulAccessoryItem(
   });
   if (!tul) return undefined;
 
-  const measurement: number = (width / 1000) * (height / 1000);
-  const pricePerPiece = measurement * parseFloat(tul.price);
-
-  return {
-    ...tul,
-    quantity: 1,
-    measurement: measurement,
-    pricePerPiece: pricePerPiece,
-  };
+  const size = width * height;
+  return createSelectedProduct(tul, 1, size);
 }
 
 export function getSabitFitilAccessoryItem(
@@ -149,15 +129,8 @@ export function getSabitFitilAccessoryItem(
   });
   if (!fitil) return undefined;
 
-  const measurement = ((width + height) * 2) / 1000;
-  const pricePerPiece = measurement * parseFloat(fitil.price);
-
-  return {
-    ...fitil,
-    quantity: 1,
-    measurement: measurement,
-    pricePerPiece: pricePerPiece,
-  };
+  const size = (width + height) * 2;
+  return createSelectedProduct(fitil, 1, size);
 }
 
 export function getSabitKoseTakozuAccessoryItem(
@@ -175,7 +148,7 @@ export function getSabitKoseTakozuAccessoryItem(
   });
   if (!takoz) return undefined;
 
-  return { ...takoz, quantity: 4 };
+  return createSelectedProduct(takoz, 4);
 }
 
 export function getPliseTulAccessoryItems(
@@ -203,40 +176,24 @@ export function getPliseTulAccessoryItems(
       ? Math.ceil(height / 30 + 2)
       : Math.ceil(width / 30 + 2);
 
-  let measurement: number;
-
+  let size: number;
   if (kasaType === "esiksiz") {
-    measurement = height - 31;
+    size = height - 31;
   } else {
     if (pliseOpeningType === "dikey") {
-      measurement = width - 55;
+      size = width - 55;
     } else {
-      measurement = height - 55;
+      size = height - 55;
     }
   }
-
-  const pricePerPiece = parseFloat(tul.price) * 0.03 * (measurement / 1000);
-
   if (["double", "centralPack"].includes(pliseOpeningType)) {
     const quantityPerTul = Math.ceil(quantity / 2);
-
     for (let i = 0; i < 2; i++) {
-      items.push({
-        ...tul,
-        pricePerPiece: pricePerPiece,
-        quantity: quantityPerTul,
-        measurement: measurement,
-      });
+      items.push(createSelectedProduct(tul, quantityPerTul, size));
     }
   } else {
-    items.push({
-      ...tul,
-      pricePerPiece: pricePerPiece,
-      quantity: quantity,
-      measurement: measurement,
-    });
+    items.push(createSelectedProduct(tul, quantity, size));
   }
-
   return items;
 }
 
@@ -266,14 +223,7 @@ export function getPliseSeritItem(
   const quantity: number = ["dikey", "yatay"].includes(pliseOpeningType)
     ? 2
     : 4;
-  const pricePerPiece: number = (measurement / 1000) * parseFloat(serit.price);
-
-  return {
-    ...serit,
-    quantity: quantity,
-    pricePerPiece: pricePerPiece,
-    measurement: measurement,
-  };
+  return createSelectedProduct(serit, quantity, measurement);
 }
 
 export function getPliseMagnetItem(
@@ -291,14 +241,7 @@ export function getPliseMagnetItem(
 
   const quantity = 2;
   const measurement = height - 50;
-  const pricePerPiece = (measurement / 1000) * parseFloat(magnet.price);
-
-  return {
-    ...magnet,
-    quantity: quantity,
-    measurement: measurement,
-    pricePerPiece: pricePerPiece,
-  };
+  return createSelectedProduct(magnet, quantity, measurement);
 }
 
 export function getPliseAccessoryKitItem(
@@ -322,9 +265,7 @@ export function getPliseAccessoryKitItem(
   const kit = allAccessories.find((item) => item.stock_code === kitStockCode);
   if (!kit) return undefined;
 
-  kit.quantity = 1;
-
-  return { ...kit, quantity: 1, pricePerPiece: parseFloat(kit.price) };
+  return createSelectedProduct(kit, 1);
 }
 
 export function getPliseBeadItem(
@@ -340,11 +281,7 @@ export function getPliseBeadItem(
 
   const quantity = !!ropeItem.quantity ? ropeItem.quantity : 1;
 
-  return {
-    ...bead,
-    quantity: quantity,
-    pricePerPiece: parseFloat(bead.price),
-  };
+  return createSelectedProduct(bead, quantity);
 }
 
 export function getPliseRopeItem(
@@ -373,14 +310,7 @@ export function getPliseRopeItem(
     }
   }
 
-  const pricePerPiece = measurement * parseFloat(rope.price);
-
-  return {
-    ...rope,
-    measurement: measurement,
-    quantity: quantity,
-    pricePerPiece: pricePerPiece,
-  };
+  return createSelectedProduct(rope, quantity, measurement);
 }
 
 export function getSurmeTulAccessoryItem(
@@ -401,15 +331,8 @@ export function getSurmeTulAccessoryItem(
 
   if (!tul) return undefined;
 
-  const measurement = (width / 1000) * (height / 1000);
-  const pricePerPiece = measurement * parseFloat(tul.price);
-
-  return {
-    ...tul,
-    quantity: 1,
-    measurement: measurement,
-    pricePerPiece: pricePerPiece,
-  };
+  const size = width * height;
+  return createSelectedProduct(tul, 1, size);
 }
 
 export function getSurmeFitilAccessoryItem(
@@ -427,15 +350,8 @@ export function getSurmeFitilAccessoryItem(
   });
   if (!fitil) return undefined;
 
-  const measurement = ((width + height) * 2) / 1000;
-  const pricePerPiece = measurement * parseFloat(fitil.price);
-
-  return {
-    ...fitil,
-    quantity: 1,
-    measurement: measurement,
-    pricePerPiece: pricePerPiece,
-  };
+  const size = (width + height) * 2;
+  return createSelectedProduct(fitil, 1, size);
 }
 
 export function getSurmeKasaTakozuItem(

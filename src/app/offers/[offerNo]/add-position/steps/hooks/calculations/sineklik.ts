@@ -24,13 +24,7 @@ export const calculateSineklik = (
   }, 0);
 
   const accessoriesTotalPrice: number = (accessories || []).reduce(
-    (total, acc) => {
-      console.log("Item:", acc);
-      return (
-        total +
-        (acc.pricePerPiece || parseFloat(acc.price)) * (acc.quantity || 1)
-      );
-    },
+    (total, acc) => total + acc.totalPrice,
     0
   );
 

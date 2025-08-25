@@ -112,11 +112,13 @@ export const createSelectedProduct = (
   quantity: number,
   size?: number
 ): SelectedProduct => {
+  const sizeMetre = size ? size / 1000 : undefined;
+
   return {
     ...priceItem,
     quantity,
-    totalPrice: size
-      ? size * parseFloat(priceItem.price) * quantity
+    totalPrice: sizeMetre
+      ? sizeMetre * parseFloat(priceItem.price) * quantity
       : parseFloat(priceItem.price) * quantity,
     size,
   };
@@ -150,7 +152,7 @@ export const findLamelPrice = (
   }
 
   if (!matchingLamel) return [0, null];
-
+  console.log({ matchingLamel });
   const selectedProduct = createSelectedProduct(
     matchingLamel,
     quantity,

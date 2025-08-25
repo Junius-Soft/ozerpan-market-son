@@ -1,4 +1,5 @@
 import { PriceItem, SelectedProduct } from "@/types/panjur";
+import { createSelectedProduct } from "@/utils/panjur";
 import { SineklikSelections } from "@/types/sineklik";
 
 export function getMenteseliKasaProfiles(
@@ -20,31 +21,10 @@ export function getMenteseliKasaProfiles(
   if (!profile) return [];
 
   const quantity = 2;
-  const horizontalMeasurement: number = width - 110;
-  const horizontalPricePerPiece: number =
-    (horizontalMeasurement / 1000) * parseFloat(profile.price);
-
-  const verticalMeasurement: number = height - 110;
-  const verticalPricePerPiece: number =
-    (verticalMeasurement / 1000) * parseFloat(profile.price);
-
-  mappedProfiles.push({
-    ...profile,
-    quantity: quantity,
-    measurement: horizontalMeasurement,
-    pricePerPiece: horizontalPricePerPiece,
-    totalPrice: quantity * horizontalPricePerPiece,
-    size: horizontalMeasurement,
-  });
-
-  mappedProfiles.push({
-    ...profile,
-    quantity: quantity,
-    measurement: verticalMeasurement,
-    pricePerPiece: verticalPricePerPiece,
-    totalPrice: quantity * verticalPricePerPiece,
-    size: verticalMeasurement,
-  });
+  const horizontalSize = width - 110;
+  const verticalSize = height - 110;
+  mappedProfiles.push(createSelectedProduct(profile, quantity, horizontalSize));
+  mappedProfiles.push(createSelectedProduct(profile, quantity, verticalSize));
 
   return mappedProfiles;
 }
@@ -65,33 +45,12 @@ export function getMenteseliKanatProfiles(
   if (!profile) return [];
 
   const quantity = 2;
-  const horizontalMeasurement: number =
+  const horizontalSize =
     menteseliOpeningType === "disaAcilim" ? width - 50 : width - 84;
-  const horizontalPricePerPiece: number =
-    (horizontalMeasurement / 1000) * parseFloat(profile.price);
-
-  const verticalMeasurement: number =
+  const verticalSize =
     menteseliOpeningType === "disaAcilim" ? height - 50 : height - 84;
-  const verticalPricePerPiece: number =
-    (verticalMeasurement / 1000) * parseFloat(profile.price);
-
-  mappedProfiles.push({
-    ...profile,
-    quantity: quantity,
-    measurement: verticalMeasurement,
-    pricePerPiece: verticalPricePerPiece,
-    totalPrice: quantity * verticalPricePerPiece,
-    size: verticalMeasurement,
-  });
-
-  mappedProfiles.push({
-    ...profile,
-    quantity: quantity,
-    measurement: horizontalMeasurement,
-    pricePerPiece: horizontalPricePerPiece,
-    totalPrice: quantity * horizontalPricePerPiece,
-    size: horizontalMeasurement,
-  });
+  mappedProfiles.push(createSelectedProduct(profile, quantity, verticalSize));
+  mappedProfiles.push(createSelectedProduct(profile, quantity, horizontalSize));
 
   return mappedProfiles;
 }
@@ -113,32 +72,10 @@ export function getSabitKanatProfiles(
   if (!profile) return [];
 
   const quantity = 2;
-
-  const horizontalMeasurement: number = width - 84;
-  const horizontalPricePerPiece: number =
-    (horizontalMeasurement / 1000) * parseFloat(profile.price);
-
-  const verticalMeasurement: number = height - 84;
-  const verticalPricePerPiece: number =
-    (verticalMeasurement / 1000) * parseFloat(profile.price);
-
-  mappedProfiles.push({
-    ...profile,
-    quantity: quantity,
-    measurement: horizontalMeasurement,
-    pricePerPiece: horizontalPricePerPiece,
-    totalPrice: quantity * horizontalPricePerPiece,
-    size: horizontalMeasurement,
-  });
-
-  mappedProfiles.push({
-    ...profile,
-    quantity: quantity,
-    measurement: verticalMeasurement,
-    pricePerPiece: verticalPricePerPiece,
-    totalPrice: quantity * verticalPricePerPiece,
-    size: verticalMeasurement,
-  });
+  const horizontalSize = width - 84;
+  const verticalSize = height - 84;
+  mappedProfiles.push(createSelectedProduct(profile, quantity, horizontalSize));
+  mappedProfiles.push(createSelectedProduct(profile, quantity, verticalSize));
 
   return mappedProfiles;
 }
@@ -158,25 +95,9 @@ export function getPliseKanatProfiles(
   });
   if (!profile) return [];
 
-  let measurement: number;
-
-  if (pliseOpeningType == "dikey") {
-    measurement = width - 94;
-  } else {
-    measurement = height - 94;
-  }
-
+  const size = pliseOpeningType == "dikey" ? width - 94 : height - 94;
   const quantity = 1;
-  const pricePerPiece = (parseFloat(profile.price) * measurement) / 1000;
-
-  mappedProfiles.push({
-    ...profile,
-    quantity: quantity,
-    measurement: measurement,
-    pricePerPiece: pricePerPiece,
-    totalPrice: pricePerPiece * quantity,
-    size: measurement,
-  });
+  mappedProfiles.push(createSelectedProduct(profile, quantity, size));
 
   return mappedProfiles;
 }
@@ -217,46 +138,18 @@ export function getPliseKasaProfiles(
   });
   if (!profile) return [];
 
-  const horizontalPricePerPiece =
-    (horizontalMeasurement * parseFloat(profile.price)) / 1000;
-  const verticalPricePerPiece =
-    (verticalMeasurement * parseFloat(profile.price)) / 1000;
-
-  const horizontalProfile: SelectedProduct = {
-    ...profile,
-    quantity: horizontalQuantity,
-    measurement: horizontalMeasurement,
-    pricePerPiece: horizontalPricePerPiece,
-    totalPrice: horizontalQuantity * horizontalPricePerPiece,
-    size: horizontalMeasurement,
-  };
-  const verticalProfile: SelectedProduct = {
-    ...profile,
-    quantity: verticalQuantity,
-    measurement: verticalMeasurement,
-    pricePerPiece: verticalPricePerPiece,
-    totalPrice: verticalQuantity * verticalPricePerPiece,
-    size: verticalMeasurement,
-  };
-
-  mappedProfiles.push(horizontalProfile);
-  mappedProfiles.push(verticalProfile);
+  mappedProfiles.push(
+    createSelectedProduct(profile, horizontalQuantity, horizontalMeasurement)
+  );
+  console.log({ mappedProfiles });
+  mappedProfiles.push(
+    createSelectedProduct(profile, verticalQuantity, verticalMeasurement)
+  );
   if (dusukEsik) {
-    const dusukEsikPricePerPiece =
-      (dusukEsikMeasurement * parseFloat(dusukEsik.price)) / 1000;
-    const dusukEsikQuantity = 1;
-
-    const dusukEsikProfile: SelectedProduct = {
-      ...dusukEsik,
-      quantity: dusukEsikQuantity,
-      measurement: dusukEsikMeasurement,
-      pricePerPiece: dusukEsikPricePerPiece,
-      totalPrice: dusukEsikPricePerPiece * dusukEsikQuantity,
-      size: dusukEsikMeasurement,
-    };
-    mappedProfiles.push(dusukEsikProfile);
+    mappedProfiles.push(
+      createSelectedProduct(dusukEsik, 1, dusukEsikMeasurement)
+    );
   }
-
   return mappedProfiles;
 }
 
@@ -279,33 +172,15 @@ export function getSurmeKasaProfiles(
   const quantity = 2;
 
   const horizontalMeasurement = width - 84;
-  const horizontalPricePerPiece =
-    (horizontalMeasurement * parseFloat(profile.price)) / 1000;
 
   const verticalMeasurement = height - 84;
-  const verticalPricePerPiece =
-    (verticalMeasurement * parseFloat(profile.price)) / 1000;
 
-  const horizontalProfile: SelectedProduct = {
-    ...profile,
-    quantity: quantity,
-    measurement: horizontalMeasurement,
-    pricePerPiece: horizontalPricePerPiece,
-    totalPrice: horizontalPricePerPiece * quantity,
-    size: horizontalMeasurement,
-  };
-
-  const verticalProfile: SelectedProduct = {
-    ...profile,
-    quantity: quantity,
-    measurement: verticalMeasurement,
-    pricePerPiece: verticalPricePerPiece,
-    totalPrice: verticalPricePerPiece * quantity,
-    size: verticalMeasurement,
-  };
-
-  mappedProfiles.push(horizontalProfile);
-  mappedProfiles.push(verticalProfile);
+  mappedProfiles.push(
+    createSelectedProduct(profile, quantity, horizontalMeasurement)
+  );
+  mappedProfiles.push(
+    createSelectedProduct(profile, quantity, verticalMeasurement)
+  );
   return mappedProfiles;
 }
 
@@ -328,33 +203,14 @@ export function getSurmeKanatProfiles(
   const quantity = 2;
 
   const horizontalMeasurement = width;
-  const horizontalPricePerPiece =
-    (horizontalMeasurement / 1000) * parseFloat(profile.price);
 
   const verticalMeasurement = height;
-  const verticalPricePerPiece =
-    (verticalMeasurement / 1000) * parseFloat(profile.price);
 
-  const horizontalProfile: SelectedProduct = {
-    ...profile,
-    quantity: quantity,
-    measurement: horizontalMeasurement,
-    pricePerPiece: horizontalPricePerPiece,
-    totalPrice: horizontalPricePerPiece * quantity,
-    size: horizontalMeasurement,
-  };
-
-  const verticalProfile: SelectedProduct = {
-    ...profile,
-    quantity: quantity,
-    measurement: verticalMeasurement,
-    pricePerPiece: verticalPricePerPiece,
-    totalPrice: verticalPricePerPiece * quantity,
-    size: verticalMeasurement,
-  };
-
-  mappedProfiles.push(horizontalProfile);
-  mappedProfiles.push(verticalProfile);
-
+  mappedProfiles.push(
+    createSelectedProduct(profile, quantity, horizontalMeasurement)
+  );
+  mappedProfiles.push(
+    createSelectedProduct(profile, quantity, verticalMeasurement)
+  );
   return mappedProfiles;
 }

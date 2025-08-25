@@ -115,6 +115,7 @@ export function ProductPreview({
   }, [onTotalChange, calculationResult]);
 
   if (!selectedProduct) return null;
+  console.log(calculationResult.selectedProducts.accessories);
   return (
     <Card className="p-6" ref={summaryRef}>
       <div className="space-y-6">
@@ -186,7 +187,7 @@ export function ProductPreview({
                                         </span>
                                         {product.size && (
                                           <span>
-                                            Boyut: <b>{product.size}</b>
+                                            Boyut: <b>{product.size}mm</b>
                                           </span>
                                         )}
                                         <span>
@@ -234,7 +235,7 @@ export function ProductPreview({
                                         </span>
                                         {acc.size && (
                                           <span>
-                                            Boyut: <b>{acc.size}</b>
+                                            Boyut: <b>{acc.size}mm</b>
                                           </span>
                                         )}
                                         <span>

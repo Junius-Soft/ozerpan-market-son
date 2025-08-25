@@ -36,10 +36,16 @@ export default function OffersPage() {
 
   const calculateOfferTotal = useMemo(() => {
     return (offer: Offer) => {
-      const subtotal = offer.positions.reduce(
-        (sum, position) => sum + position.unitPrice * position.quantity,
-        0
-      );
+      console.log({ offer });
+      // Her pozisyonu EUR'a çevirerek topla
+      const subtotal = offer.positions.reduce((sum, position) => {
+        let priceEUR = position.unitPrice * position.quantity;
+        if (offer.eurRate && position.currency?.code === "TRY") {
+          priceEUR = priceEUR / offer.eurRate; // TRY -> EUR
+        }
+        // EUR ise aynen ekle
+        return sum + priceEUR;
+      }, 0);
       const vat = subtotal * 0.2; // %20 KDV
       return "€ " + (subtotal + vat).toFixed(2); // İki ondalık basamakla göster
     };
@@ -174,7 +180,7 @@ export default function OffersPage() {
                       currentDate.getMonth() + 1
                     ).padStart(2, "0")}${randomNumber}`,
                     name: newOfferName,
-                    created_at: currentDate.toLocaleDateString("tr-TR"),
+                    created_at: currentDate.toISOString(),
                     status: "Taslak" as const,
                     positions: [],
                   };
@@ -321,7 +327,11 @@ export default function OffersPage() {
                           {offer.id}
                         </TableCell>
                         <TableCell>{offer.name}</TableCell>
-                        <TableCell>{offer.created_at}</TableCell>
+                        <TableCell>
+                          {new Date(offer.created_at).toLocaleDateString(
+                            "tr-TR"
+                          )}
+                        </TableCell>
                         <TableCell>{calculateOfferTotal(offer)}</TableCell>
                         <TableCell>
                           <div className="flex w-full">

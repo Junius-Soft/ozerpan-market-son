@@ -1180,16 +1180,16 @@
             "name": "Genişlik (cm)",
             "type": "number",
             "min": 200,
-            "max": 2500,
-            "default": 400
+            "max": 3000,
+            "default": 2000
           },
           {
             "id": "height",
             "name": "Yükseklik (cm)",
             "type": "number",
             "min": 200,
-            "max": 2000,
-            "default": 400
+            "max": 3000,
+            "default": 1000
           }
         ],
         "preview": {

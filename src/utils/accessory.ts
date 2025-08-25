@@ -293,20 +293,20 @@ export function findMonoblokYanKapakAccessoryPrice(
   // Yan kapak konfigürasyonları
   const configs: Record<string, Array<{ name: string; quantity: number }>> = {
     "185": [
-      { name: "Yan Kapak 165 mm (izolasyonsuz) Sağ", quantity: 1 },
-      { name: "Yan Kapak 165 mm (izolasyonsuz) Sol", quantity: 1 },
+      { name: "Yan Kapak 185mm (izolasyonsuz) Sağ", quantity: 1 },
+      { name: "Yan Kapak 185mm (izolasyonsuz) Sol", quantity: 1 },
     ],
     "185x220": [
-      { name: "Yan Kapak 185 * 220 mm (izolasyonlu) Sağ", quantity: 1 },
-      { name: "Yan Kapak 185 * 220 mm (izolasyonlu) Sol", quantity: 1 },
+      { name: "Yan Kapak 185x220mm (izolasyonlu) Sağ", quantity: 1 },
+      { name: "Yan Kapak 185x220mm (izolasyonlu) Sol", quantity: 1 },
     ],
     "220": [
-      { name: "Yan kapak 200 mm (izolasyonsuz) Beyaz Sağ", quantity: 1 },
-      { name: "Yan kapak 200 mm (izolasyonsuz) Beyaz Sol", quantity: 1 },
+      { name: "Yan kapak 220mm (izolasyonsuz) Sağ", quantity: 1 },
+      { name: "Yan kapak 220mm (izolasyonsuz) Sol", quantity: 1 },
     ],
     "220x255": [
-      { name: "Yan kapak 200 mm (izolasyonlu) Beyaz Sağ", quantity: 1 },
-      { name: "Yan kapak 200 mm (izolasyonlu) Beyaz Sol", quantity: 1 },
+      { name: "Yan kapak 220x255mm (izolasyonlu) Sağ", quantity: 1 },
+      { name: "Yan kapak 220x255mm (izolasyonlu) Sol", quantity: 1 },
     ],
   };
 
@@ -389,101 +389,101 @@ export function findMonoblokEkAksesuarlar(
     Array<{ name: string; quantity: number; needsColor: boolean }>
   > = {
     "185": [
-      { name: "Dış Kapak 165mm", quantity: 2, needsColor: true },
-      { name: "İç Kapak 165mm", quantity: 2, needsColor: true },
-      { name: "Yan Kapak Sürgüsü 165 mm", quantity: 2, needsColor: false },
+      { name: "Dış Kapak 185mm", quantity: 2, needsColor: true },
+      { name: "İç Kapak 185mm", quantity: 2, needsColor: true },
+      { name: "Yan Kapak Sürgüsü 185mm", quantity: 2, needsColor: false },
       {
         name: "Orta Kapak İç Soketi Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },
       {
-        name: "Orta Kapak 165mm Beyaz",
+        name: "Orta Kapak 185mm Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },
       {
-        name: "Geçiş Soketi 165mm / 40 Beyaz",
+        name: "Geçiş Soketi 185mm / 40 Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },
       {
-        name: "Geçiş Soketi 165mm / 60 Beyaz",
+        name: "Geçiş Soketi 185mm / 60 Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },
     ],
     "185x220": [
       { name: "Dış Kapak 185mm", quantity: 2, needsColor: true },
-      { name: "İç Kapak 185*220", quantity: 2, needsColor: true },
-      { name: "Yan Kapak Sürgüsü 185 mm", quantity: 2, needsColor: false },
+      { name: "İç Kapak 185x220mm", quantity: 2, needsColor: true },
+      { name: "Yan Kapak Sürgüsü 185mm", quantity: 2, needsColor: false },
       {
         name: "Orta Kapak İç Soketi Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },
       {
-        name: "Orta Kapak 165mm Beyaz",
+        name: "Orta Kapak 185mm Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },
       {
-        name: "Geçiş Soketi 165mm / 40 Beyaz",
+        name: "Geçiş Soketi 185mm / 40 Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },
       {
-        name: "Geçiş Soketi 165mm / 60 Beyaz",
+        name: "Geçiş Soketi 185mm / 60 Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },
     ],
     "220": [
-      { name: "Dış Kapak 200mm", quantity: 2, needsColor: true },
+      { name: "Dış Kapak 220mm", quantity: 2, needsColor: true },
       { name: "İç Kapak 220mm", quantity: 2, needsColor: true },
-      { name: "Yan Kapak Sürgüsü 220 mm", quantity: 2, needsColor: false },
+      { name: "Yan Kapak Sürgüsü 220mm", quantity: 2, needsColor: false },
       {
         name: "Orta Kapak İç Soketi Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },
       {
-        name: "Orta Kapak 200mm Beyaz",
+        name: "Orta Kapak 220mm Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },
       {
-        name: "Geçiş Soketi 200mm / 40 Beyaz",
+        name: "Geçiş Soketi 220mm / 40 Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },
       {
-        name: "Geçiş Soketi 200mm / 60 Beyaz",
+        name: "Geçiş Soketi 220mm / 60 Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },
     ],
     "220x255": [
-      { name: "Dış Kapak 200mm", quantity: 2, needsColor: true },
-      { name: "İç Kapak 200*235", quantity: 2, needsColor: true },
-      { name: "Yan Kapak Sürgüsü 220 mm", quantity: 2, needsColor: false },
+      { name: "Dış Kapak 220mm", quantity: 2, needsColor: true },
+      { name: "İç Kapak 220x255mm", quantity: 2, needsColor: true },
+      { name: "Yan Kapak Sürgüsü 220mm", quantity: 2, needsColor: false },
       {
         name: "Orta Kapak İç Soketi Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },
       {
-        name: "Orta Kapak 200mm Beyaz",
+        name: "Orta Kapak 220mm Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },
       {
-        name: "Geçiş Soketi 200mm / 40 Beyaz",
+        name: "Geçiş Soketi 220mm / 40 Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },
       {
-        name: "Geçiş Soketi 200mm / 60 Beyaz",
+        name: "Geçiş Soketi 220mm / 60 Beyaz",
         quantity: middleDikmeCount,
         needsColor: false,
       },

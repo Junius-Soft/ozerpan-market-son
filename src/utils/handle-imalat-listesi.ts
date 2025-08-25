@@ -1,6 +1,7 @@
 import { Position } from "@/documents/offers";
 import { PanjurSelections } from "@/types/panjur";
 import { getOffer } from "@/documents/offers";
+import { Product } from "@/documents/products";
 
 /**
  * Aktif pozisyonu PDF olarak gösteren yardımcı fonksiyon.
@@ -22,7 +23,7 @@ export async function handleImalatListesiPDF({
   selectedTypes,
 }: {
   offerNo: string;
-  product: { id: string; name: string };
+  product: Product;
   values: PanjurSelections;
   selectedPosition?: string | null;
   typeId?: string | null;
@@ -54,6 +55,7 @@ export async function handleImalatListesiPDF({
       typeId: typeId || null,
       productName: product.name,
       optionId: optionId || null,
+      currency: product.currency || "EUR",
       productDetails: values,
       total: (values.unitPrice || 0) * (values.quantity || 1),
     };

@@ -39,6 +39,7 @@ export async function handleFiyatAnaliziPDF({
     typeId: typeId || null,
     productName: productName ?? null,
     optionId: optionId ?? null,
+    currency: product.currency || "EUR",
     productDetails: formikValues,
     total: (formikValues.unitPrice || 0) * (formikValues.quantity || 1),
   };

@@ -34,6 +34,7 @@ export async function handleDepoCikisFisiPDF({
     typeId: typeId || null,
     productName: product.name,
     optionId: null,
+    currency: product.currency || "EUR",
     productDetails: values,
     total: 0,
   };

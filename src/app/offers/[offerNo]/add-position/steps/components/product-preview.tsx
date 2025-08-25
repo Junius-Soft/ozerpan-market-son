@@ -244,10 +244,7 @@ export function ProductPreview({
                                       <span>
                                         Toplam:{" "}
                                         {selectedProduct.currency.symbol}{" "}
-                                        {(
-                                          Number(acc.price) *
-                                          (acc.quantity || 1)
-                                        ).toFixed(2)}
+                                        {acc.totalPrice.toFixed(2)}
                                       </span>
                                     </div>
                                   </div>

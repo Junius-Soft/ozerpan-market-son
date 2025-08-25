@@ -1,6 +1,6 @@
 import { Product } from "@/documents/products";
 import { openDepoCikisFisiPDFMulti } from "@/utils/depo-pdf-generator";
-import { PriceItem, PanjurSelections } from "@/types/panjur";
+import { PanjurSelections, SelectedProduct } from "@/types/panjur";
 import { Offer, Position } from "@/documents/offers";
 
 interface HandleDepoCikisFisiPDFParams {
@@ -17,7 +17,8 @@ export async function handleDepoCikisFisiPDF({
   offerNo,
 }: HandleDepoCikisFisiPDFParams) {
   // Extract accessories from form values
-  const accessories: PriceItem[] = values.selectedProducts?.accessories || [];
+  const accessories: SelectedProduct[] =
+    values.selectedProducts?.accessories || [];
   // Create a minimal Position for the PDF
   const fakePosition: Position = {
     id: "-",

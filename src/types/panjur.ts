@@ -89,7 +89,7 @@ export interface PanjurSelections extends BaseSelections {
   unitPrice: number; // Added `unitPrice` property
   selectedProducts: {
     products: SelectedProduct[];
-    accessories: import("@/types/panjur").PriceItem[];
+    accessories: SelectedProduct[];
   };
 }
 

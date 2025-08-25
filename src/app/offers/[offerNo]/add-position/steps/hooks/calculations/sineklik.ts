@@ -13,7 +13,7 @@ import {
 export const calculateSineklik = (
   values: SineklikSelections,
   prices: PriceItem[],
-  accessories: PriceItem[]
+  accessories: SelectedProduct[]
 ): CalculationResult => {
   const errors: string[] = [];
 

@@ -24,6 +24,7 @@ import { type Offer, getOffers } from "@/documents/offers";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import MobileOffersGrid from "./MobileOffersGrid";
+import { useExchangeRate } from "@/hooks/useExchangeRate";
 
 export default function OffersPage() {
   const router = useRouter();
@@ -33,15 +34,14 @@ export default function OffersPage() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [selectedOffers, setSelectedOffers] = useState<string[]>([]);
   const [allOffers, setAllOffers] = useState<Offer[]>([]);
-
+  const { eurRate, loading: isEurRateLoading } = useExchangeRate();
   const calculateOfferTotal = useMemo(() => {
     return (offer: Offer) => {
-      console.log({ offer });
       // Her pozisyonu EUR'a çevirerek topla
       const subtotal = offer.positions.reduce((sum, position) => {
         let priceEUR = position.unitPrice * position.quantity;
-        if (offer.eurRate && position.currency?.code === "TRY") {
-          priceEUR = priceEUR / offer.eurRate; // TRY -> EUR
+        if (position.currency?.code === "TRY") {
+          priceEUR = priceEUR / (offer.eurRate ?? eurRate); // TRY -> EUR
         }
         // EUR ise aynen ekle
         return sum + priceEUR;
@@ -49,7 +49,7 @@ export default function OffersPage() {
       const vat = subtotal * 0.2; // %20 KDV
       return "€ " + (subtotal + vat).toFixed(2); // İki ondalık basamakla göster
     };
-  }, []);
+  }, [eurRate]);
 
   // Load offers on mount
   useEffect(() => {
@@ -278,7 +278,7 @@ export default function OffersPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {isLoading ? (
+                  {isLoading || isEurRateLoading ? (
                     // Loading skeletons
                     <>
                       {[...Array(5)].map((_, i) => (

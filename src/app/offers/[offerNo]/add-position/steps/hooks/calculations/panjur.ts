@@ -49,7 +49,7 @@ const calculateDikmeCountAtPosition = (
 export const calculatePanjur = (
   values: PanjurSelections,
   prices: PriceItem[],
-  accessories: PriceItem[],
+  accessoryItems: SelectedProduct[],
   middleBarPositions: number[],
   sectionHeights: number[],
   sectionConnections: string[],
@@ -427,11 +427,6 @@ export const calculatePanjur = (
     }
   }
 
-  // Aksesuarların fiyatını hesapla
-  const accessoriesPrice = (accessories || []).reduce((total, acc) => {
-    return total + parseFloat(acc.price) * (acc.quantity || 1);
-  }, 0);
-
   const rawTotalPriceEUR =
     totalLamelPrice +
     subPartPrice +
@@ -442,11 +437,14 @@ export const calculatePanjur = (
     remotePrice +
     smarthomePrice +
     receiverPrice +
-    accessoriesPrice;
+    (accessoryItems || []).reduce(
+      (total: number, acc: SelectedProduct) => total + acc.totalPrice,
+      0
+    );
 
   const totalPrice = rawTotalPriceEUR;
 
-  // Aksesuarları SelectedProduct formatına dönüştür ve tüm ürünleri birleştir
+  // Tüm ürünleri birleştir
   const productItems = [
     ...lamelSelectedProducts,
     ...subPartSelectedProducts,
@@ -454,6 +452,7 @@ export const calculatePanjur = (
     ...boxSelectedProducts, // Hem monoblok hem distan box ürünleri
     ...tamburSelectedProducts,
     ...yukseltmeProfiliSelectedProducts,
+    ...(accessoryItems || []), // Aksesuarlar zaten SelectedProduct formatında geliyor
     remoteSelectedProduct,
     smarthomeSelectedProduct,
     receiverSelectedProduct,
@@ -464,7 +463,7 @@ export const calculatePanjur = (
 
   const selectedProducts = {
     products: productItems,
-    accessories: accessories || [],
+    accessories: [], // Artık boş array, çünkü hepsi products'ta
   };
 
   return {

@@ -1,5 +1,5 @@
-import { PriceItem } from "@/types/panjur";
-import { normalizeColor } from "@/utils/panjur";
+import { PriceItem, SelectedProduct } from "@/types/panjur";
+import { createSelectedProduct, normalizeColor } from "./panjur";
 
 // Yan Kapak fiyatı bulucu
 export function findYanKapakAccessoryPrice(
@@ -234,7 +234,7 @@ export function findMiniDikmeAccessories(
   dikmeCount: number,
   movementType: string,
   makaraliTip: string
-): PriceItem[] {
+): SelectedProduct[] {
   // Sadece movementType manuel ve makaraliTip makasli ise ekle
   if (movementType !== "manuel" || makaraliTip !== "makasli") {
     return [];
@@ -248,9 +248,9 @@ export function findMiniDikmeAccessories(
       const found = accessories.find((acc) =>
         acc.description.toLowerCase().includes(item.name)
       );
-      return found ? { ...found, quantity: item.quantity } : null;
+      return found ? createSelectedProduct(found, item.quantity) : null;
     })
-    .filter(Boolean) as PriceItem[];
+    .filter(Boolean) as SelectedProduct[];
 }
 
 export const findMotorPrice = (
@@ -285,9 +285,10 @@ export const findMotorPrice = (
 // Monoblok Yan Kapak fiyatı bulucu
 export function findMonoblokYanKapakAccessoryPrice(
   accessories: PriceItem[],
+  boxColor: string,
   boxType: string
-): PriceItem[] {
-  const results: PriceItem[] = [];
+): SelectedProduct[] {
+  const results: SelectedProduct[] = [];
   const boxSize = boxType.replace("mm", "");
 
   // Yan kapak konfigürasyonları
@@ -316,8 +317,9 @@ export function findMonoblokYanKapakAccessoryPrice(
       const accessory = accessories.find((acc) =>
         acc.description.includes(name)
       );
-      if (accessory) {
-        results.push({ ...accessory, quantity });
+      if (accessory && quantity > 0) {
+        const selectedProduct = createSelectedProduct(accessory, quantity);
+        results.push(selectedProduct);
       }
     });
   }
@@ -332,7 +334,7 @@ const findMonoblokAccessoryComponent = (
   normalizedColor: string,
   quantity: number,
   needsColor: boolean = false
-): PriceItem | null => {
+): SelectedProduct | null => {
   // Quantity 0 ise ekleme
   if (quantity === 0) {
     return null;
@@ -356,7 +358,7 @@ const findMonoblokAccessoryComponent = (
     }
 
     if (accessory) {
-      return { ...accessory, quantity };
+      return createSelectedProduct(accessory, quantity);
     }
   } else {
     // Renksiz aksesuarlar
@@ -364,7 +366,7 @@ const findMonoblokAccessoryComponent = (
       acc.description.includes(componentName)
     );
     if (accessory) {
-      return { ...accessory, quantity };
+      return createSelectedProduct(accessory, quantity);
     }
   }
 
@@ -377,8 +379,8 @@ export function findMonoblokEkAksesuarlar(
   boxType: string,
   boxColor: string,
   dikmeCount: number
-): PriceItem[] {
-  const results: PriceItem[] = [];
+): SelectedProduct[] {
+  const results: SelectedProduct[] = [];
   const normalizedColor = normalizeColor(boxColor);
   const boxSize = boxType.replace("mm", "");
   const middleDikmeCount = dikmeCount - 2;

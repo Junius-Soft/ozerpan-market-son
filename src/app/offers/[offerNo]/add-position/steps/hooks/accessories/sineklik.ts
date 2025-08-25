@@ -1,5 +1,5 @@
 import { SineklikSelections } from "@/types/sineklik";
-import { PriceItem } from "@/types/panjur";
+import { PriceItem, SelectedProduct } from "@/types/panjur";
 import {
   getPliseTulAccessoryItems,
   getPliseSeritItem,
@@ -25,8 +25,8 @@ import {
 export const calculateSineklikAccessories = (
   values: SineklikSelections,
   allAccessories: PriceItem[]
-): PriceItem[] => {
-  const neededAccessories: PriceItem[] = [];
+): SelectedProduct[] => {
+  const neededAccessories: SelectedProduct[] = [];
 
   const { sineklikType } = values;
 

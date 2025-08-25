@@ -1,10 +1,11 @@
-import { PanjurSelections, PriceItem } from "@/types/panjur";
+import { PanjurSelections, PriceItem, SelectedProduct } from "@/types/panjur";
 import {
   calculateSystemWidth,
   calculateSystemHeight,
   calculateLamelCount,
   calculateLamelGenisligi,
   calculateDikmeHeight,
+  createSelectedProduct,
 } from "@/utils/panjur";
 import { calculateSectionWidths } from "@/utils/shutter-calculations";
 import {
@@ -37,8 +38,8 @@ export const calculatePanjurAccessories = (
   sectionMotors: boolean[],
   sectionCount: string | null,
   optionId: string
-): PriceItem[] => {
-  const neededAccessories: PriceItem[] = [];
+): SelectedProduct[] => {
+  const neededAccessories: SelectedProduct[] = [];
   const dikmeCount = Number(sectionCount) * 2;
 
   const calculateMotorQuantity = () => {
@@ -61,6 +62,7 @@ export const calculatePanjurAccessories = (
     // Monoblok için yeni fonksiyonlar
     const monoblokYanKapaklar = findMonoblokYanKapakAccessoryPrice(
       allAccessories,
+      values.box_color,
       values.boxType
     );
     neededAccessories.push(...monoblokYanKapaklar);
@@ -81,71 +83,94 @@ export const calculatePanjurAccessories = (
       values.box_color
     );
     if (yanKapak) {
-      neededAccessories.push({
-        ...yanKapak,
-        quantity: middleBarPositions.length + 1,
-      });
+      const selectedProduct = createSelectedProduct(
+        yanKapak,
+        middleBarPositions.length + 1
+      );
+      neededAccessories.push(selectedProduct);
     }
   }
 
   // Motorlu aksesuarlar
   if (values.movementType === "motorlu") {
     const boruBasi = findBoruBasiAccessoryPrice(allAccessories, "motorlu");
-    if (boruBasi)
-      neededAccessories.push({
-        ...boruBasi,
-        quantity: calculateMotorQuantity(),
-      });
+    if (boruBasi) {
+      const selectedProduct = createSelectedProduct(
+        boruBasi,
+        calculateMotorQuantity()
+      );
+      neededAccessories.push(selectedProduct);
+    }
+
     const rulman = findRulmanAccessoryPrice(allAccessories);
-    if (rulman)
-      neededAccessories.push({
-        ...rulman,
-        quantity: calculateMotorQuantity(),
-      });
+    if (rulman) {
+      const selectedProduct = createSelectedProduct(
+        rulman,
+        calculateMotorQuantity()
+      );
+      neededAccessories.push(selectedProduct);
+    }
+
     const plaket = findPlaketAccessoryPrice(
       allAccessories,
       values.boxType,
       values.movementType
     );
-    if (plaket)
-      neededAccessories.push({
-        ...plaket,
-        quantity: calculateMotorQuantity(),
-      });
+    if (plaket) {
+      const selectedProduct = createSelectedProduct(
+        plaket,
+        calculateMotorQuantity()
+      );
+      neededAccessories.push(selectedProduct);
+    }
   }
 
   // Manuel makaralı aksesuarlar
   if (values.movementType === "manuel" && values.manuelSekli === "makarali") {
     const boruBasi = findBoruBasiAccessoryPrice(allAccessories, "manuel");
-    if (boruBasi)
-      neededAccessories.push({
-        ...boruBasi,
-        quantity: calculateMotorQuantity(),
-      });
+    if (boruBasi) {
+      const selectedProduct = createSelectedProduct(
+        boruBasi,
+        calculateMotorQuantity()
+      );
+      neededAccessories.push(selectedProduct);
+    }
+
     const kasnak = findKasnakAccessoryPrice(allAccessories, values.boxType);
-    if (kasnak)
-      neededAccessories.push({
-        ...kasnak,
-        quantity: calculateMotorQuantity(),
-      });
+    if (kasnak) {
+      const selectedProduct = createSelectedProduct(
+        kasnak,
+        calculateMotorQuantity()
+      );
+      neededAccessories.push(selectedProduct);
+    }
+
     const rulman = findRulmanAccessoryPrice(allAccessories);
-    if (rulman)
-      neededAccessories.push({
-        ...rulman,
-        quantity: calculateMotorQuantity() * 2,
-      });
+    if (rulman) {
+      const selectedProduct = createSelectedProduct(
+        rulman,
+        calculateMotorQuantity() * 2
+      );
+      neededAccessories.push(selectedProduct);
+    }
+
     const windeMakara = findWindeMakaraAccessoryPrice(allAccessories);
-    if (windeMakara)
-      neededAccessories.push({
-        ...windeMakara,
-        quantity: calculateMotorQuantity(),
-      });
+    if (windeMakara) {
+      const selectedProduct = createSelectedProduct(
+        windeMakara,
+        calculateMotorQuantity()
+      );
+      neededAccessories.push(selectedProduct);
+    }
+
     const kordonMakara = findKordonMakaraAccessoryPrice(allAccessories);
-    if (kordonMakara)
-      neededAccessories.push({
-        ...kordonMakara,
-        quantity: calculateMotorQuantity(),
-      });
+    if (kordonMakara) {
+      const selectedProduct = createSelectedProduct(
+        kordonMakara,
+        calculateMotorQuantity()
+      );
+      neededAccessories.push(selectedProduct);
+    }
   }
 
   // Manuel redüktörlü aksesuarlar
@@ -175,7 +200,10 @@ export const calculatePanjurAccessories = (
     ];
     for (const acc of redAksesuarlar) {
       const found = findAccessoryByName(allAccessories, acc.name);
-      if (found) neededAccessories.push({ ...found, quantity: acc.quantity });
+      if (found) {
+        const selectedProduct = createSelectedProduct(found, acc.quantity);
+        neededAccessories.push(selectedProduct);
+      }
     }
   }
 
@@ -199,11 +227,17 @@ export const calculatePanjurAccessories = (
       totalTapaQuantity += tapaQuantity;
     }
 
-    neededAccessories.push({ ...pvcTapa, quantity: totalTapaQuantity });
+    const selectedProduct = createSelectedProduct(pvcTapa, totalTapaQuantity);
+    neededAccessories.push(selectedProduct);
 
     const zimbaTeli = findZimbaTeliAccessoryPrice(allAccessories);
-    if (zimbaTeli)
-      neededAccessories.push({ ...zimbaTeli, quantity: totalTapaQuantity });
+    if (zimbaTeli) {
+      const selectedProduct = createSelectedProduct(
+        zimbaTeli,
+        totalTapaQuantity
+      );
+      neededAccessories.push(selectedProduct);
+    }
   }
 
   // Çelik Askı - her bölme için ayrı hesapla
@@ -237,10 +271,8 @@ export const calculatePanjurAccessories = (
       totalAskiQuantity += askiQuantity;
     });
 
-    neededAccessories.push({
-      ...celikAski,
-      quantity: totalAskiQuantity,
-    });
+    const selectedProduct = createSelectedProduct(celikAski, totalAskiQuantity);
+    neededAccessories.push(selectedProduct);
   }
 
   // Alt Parça Lastiği - her bölme için ayrı hesapla
@@ -250,7 +282,6 @@ export const calculatePanjurAccessories = (
   );
   if (altParcaLastigi) {
     const sectionWidths = calculateSectionWidths(width, middleBarPositions);
-    let totalLastikLength = 0;
 
     sectionWidths.forEach((sectionWidth, sectionIndex) => {
       // Bölme indeksi ve toplam bölme sayısına göre dikme tiplerini belirle
@@ -262,13 +293,18 @@ export const calculatePanjurAccessories = (
         sectionWidths.length
       );
       const widthInMeters = lamelWidthForSection / 1000;
-      totalLastikLength += widthInMeters;
-    });
 
-    neededAccessories.push({
-      ...altParcaLastigi,
-      quantity: totalLastikLength, // toplam uzunluk (metre)
-      unit: "Metre",
+      // createSelectedProduct kullanarak tutarlı yapı oluştur
+      const selectedProduct = createSelectedProduct(
+        altParcaLastigi,
+        1,
+        widthInMeters
+      );
+      selectedProduct.description = `${altParcaLastigi.description} (Bölme ${
+        sectionIndex + 1
+      })`;
+
+      neededAccessories.push(selectedProduct);
     });
   }
 
@@ -278,32 +314,34 @@ export const calculatePanjurAccessories = (
     values.manuelSekli === "makarali"
   ) {
     const stoperKonik = findStoperKonikAccessoryPrice(allAccessories);
-    if (stoperKonik)
-      neededAccessories.push({
-        ...stoperKonik,
-        quantity: Number(sectionCount) * 2,
-      });
+    if (stoperKonik) {
+      const selectedProduct = createSelectedProduct(
+        stoperKonik,
+        Number(sectionCount) * 2
+      );
+      neededAccessories.push(selectedProduct);
+    }
   }
 
   // Kilitli Alt Parça
   if (values.subPart === "kilitli_alt_parca") {
     const kilitliAccessories = findKilitliAltParcaAccessories(allAccessories);
     for (const acc of kilitliAccessories) {
-      neededAccessories.push({
-        ...acc,
-        quantity: Number(sectionCount),
-      });
+      const selectedProduct = createSelectedProduct(acc, Number(sectionCount));
+      neededAccessories.push(selectedProduct);
     }
   }
 
   // Lamel Denge Makarası
   if (values.dikmeType.startsWith("midi_") && values.boxType === "250mm") {
     const dengeMakarasi = findDengeMakarasiAccessoryPrice(allAccessories);
-    if (dengeMakarasi)
-      neededAccessories.push({
-        ...dengeMakarasi,
-        quantity: Number(sectionCount),
-      });
+    if (dengeMakarasi) {
+      const selectedProduct = createSelectedProduct(
+        dengeMakarasi,
+        Number(sectionCount)
+      );
+      neededAccessories.push(selectedProduct);
+    }
   }
 
   // Mini dikme ve 39mm Alüminyum Poliüretanlı lamel aksesuarları
@@ -318,9 +356,7 @@ export const calculatePanjurAccessories = (
       values.movementType,
       values.makaraliTip ?? ""
     );
-    for (const acc of miniDikmeAccessories) {
-      neededAccessories.push(acc);
-    }
+    neededAccessories.push(...miniDikmeAccessories);
   }
 
   // Motor fiyatı
@@ -332,10 +368,11 @@ export const calculatePanjurAccessories = (
     values.motorSekli
   );
   if (selectedMotor) {
-    neededAccessories.push({
-      ...selectedMotor,
-      quantity: calculateMotorQuantity(),
-    });
+    const selectedProduct = createSelectedProduct(
+      selectedMotor,
+      calculateMotorQuantity()
+    );
+    neededAccessories.push(selectedProduct);
   }
 
   // Kıl Fitili ekle - her dikme için ayrı hesapla (her dikmenin sağında ve solunda)
@@ -376,11 +413,13 @@ export const calculatePanjurAccessories = (
       totalKilFitiliLength += dikmeHeightForSection * 2;
     }
 
-    neededAccessories.push({
-      ...kilFitili,
-      quantity: totalKilFitiliLength, // toplam metre cinsinden
-      unit: "Metre",
-    });
+    const selectedProduct = createSelectedProduct(
+      kilFitili,
+      1,
+      totalKilFitiliLength
+    );
+    selectedProduct.unit = "Metre";
+    neededAccessories.push(selectedProduct);
   }
 
   return neededAccessories;

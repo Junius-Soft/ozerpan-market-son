@@ -110,13 +110,14 @@ export const normalizeColor = (color: string): string => {
 export const createSelectedProduct = (
   priceItem: PriceItem,
   quantity: number,
-  size: string = "-"
+  size?: number
 ): SelectedProduct => {
   return {
     ...priceItem,
     quantity,
-    totalPrice: parseFloat(priceItem.price) * quantity,
-    unit: priceItem.unit,
+    totalPrice: size
+      ? size * parseFloat(priceItem.price) * quantity
+      : parseFloat(priceItem.price) * quantity,
     size,
   };
 };
@@ -153,7 +154,7 @@ export const findLamelPrice = (
   const selectedProduct = createSelectedProduct(
     matchingLamel,
     quantity,
-    lamelGenisligi + " mm"
+    lamelGenisligi
   );
   return [parseFloat(matchingLamel.price), selectedProduct];
 };
@@ -229,7 +230,7 @@ export const findSubPartPriceWithWidths = (
     const selectedProduct = createSelectedProduct(
       matchingSubPart,
       1,
-      sectionWidth + " mm"
+      sectionWidth
     );
 
     // Bölme bilgisini ekle
@@ -312,7 +313,7 @@ export const findDikmePrice = (
   const selectedProduct = createSelectedProduct(
     matchingDikme,
     finalQuantity,
-    dikmeHeight + " mm"
+    dikmeHeight
   );
   return [parseFloat(matchingDikme.price), selectedProduct];
 };
@@ -358,10 +359,10 @@ export const findBoxPrice = (
     frontPrice: matchingFrontBox ? parseFloat(matchingFrontBox.price) : 0,
     backPrice: matchingBackBox ? parseFloat(matchingBackBox.price) : 0,
     selectedFrontBox: matchingFrontBox
-      ? createSelectedProduct(matchingFrontBox, 1, systemWidth + " mm")
+      ? createSelectedProduct(matchingFrontBox, 1, systemWidth)
       : undefined,
     selectedBackBox: matchingBackBox
-      ? createSelectedProduct(matchingBackBox, 1, systemWidth + " mm")
+      ? createSelectedProduct(matchingBackBox, 1, systemWidth)
       : undefined,
   };
 };
@@ -385,11 +386,7 @@ const findMonoblokBoxComponent = (
 
   if (!component) return { product: null, price: 0 };
 
-  const product = createSelectedProduct(
-    component,
-    quantity,
-    systemWidth + " mm"
-  );
+  const product = createSelectedProduct(component, quantity, systemWidth);
   if (quantity > 1) {
     product.description = `${product.description} (${quantity} Adet)`;
     product.totalPrice = parseFloat(component.price) * quantity;
@@ -682,7 +679,7 @@ export function findTamburProfiliAccessoryPrice(
   const tamburWidth = movementType === "motorlu" ? width - 80 : width - 60;
   return [
     parseFloat(tambur.price),
-    createSelectedProduct(tambur, 1, tamburWidth + " mm"),
+    createSelectedProduct(tambur, 1, tamburWidth),
   ];
 }
 
@@ -711,7 +708,7 @@ export const findYukseltmeProfiliPrice = (
   const selectedProduct = createSelectedProduct(
     matchingProfili,
     quantity,
-    systemHeight + " mm"
+    systemHeight
   );
   return [parseFloat(matchingProfili.price), selectedProduct];
 };

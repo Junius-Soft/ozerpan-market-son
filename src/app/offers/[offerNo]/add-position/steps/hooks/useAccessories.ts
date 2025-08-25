@@ -1,4 +1,4 @@
-import { PanjurSelections, PriceItem } from "@/types/panjur";
+import { PanjurSelections, PriceItem, SelectedProduct } from "@/types/panjur";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -8,12 +8,14 @@ import { calculateSineklikAccessories } from "./accessories/sineklik";
 import { SineklikSelections } from "@/types/sineklik";
 
 interface AccessoryResult {
-  accessories: PriceItem[];
+  accessories: SelectedProduct[];
 }
 
 // Generic accessories calculator hook
-export function useAccessories(values: PanjurSelections): AccessoryResult {
-  const [accessories, setAccessories] = useState<PriceItem[]>([]);
+export function useAccessories(
+  values: PanjurSelections | SineklikSelections
+): AccessoryResult {
+  const [accessories, setAccessories] = useState<SelectedProduct[]>([]);
   const searchParams = useSearchParams();
 
   // Redux state'lerini çek

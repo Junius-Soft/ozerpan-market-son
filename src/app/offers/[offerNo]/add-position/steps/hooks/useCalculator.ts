@@ -11,7 +11,7 @@ import { SineklikSelections } from "@/types/sineklik";
 
 // Generic calculator hook
 export const useCalculator = (
-  values: PanjurSelections,
+  values: PanjurSelections | SineklikSelections,
   productName: string,
   availableTabs?: ProductTab[]
 ) => {
@@ -64,13 +64,14 @@ export const useCalculator = (
       const result = calculatePanjur(
         values as PanjurSelections,
         prices,
-        accessories || [],
+        accessories,
         middleBarPositions,
         sectionHeights,
         sectionConnections,
         optionId,
         availableTabs
       );
+      console.log({ result });
       setResult(result);
     } else if (productName === "sineklik") {
       const result = calculateSineklik(

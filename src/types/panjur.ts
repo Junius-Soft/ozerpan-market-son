@@ -18,7 +18,7 @@ export interface PriceItem {
 export interface SelectedProduct extends PriceItem {
   quantity: number; // Required in selected products
   totalPrice: number; // Price * quantity
-  size: string; // Ürün ölçüsü (ör: 120x200), zorunlu
+  size?: number; // Ürün ölçüsü (ör: 120x200), zorunlu
 }
 
 // Interface for calculation results

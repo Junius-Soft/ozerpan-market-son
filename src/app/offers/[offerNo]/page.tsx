@@ -201,8 +201,8 @@ export default function OfferDetailPage() {
         poz_list: offer.positions.map((pos, idx) => ({
           poz_no: idx + 1,
           product_name: pos.productName,
-          product_type: pos.typeId,
-          product_option: pos.optionId,
+          product_type: pos.typeId ?? "",
+          product_option: pos.optionId ?? "",
           quantity: pos.quantity,
           unit_price: Number((pos.unitPrice * eurRate).toFixed(2)),
           production_materials: {

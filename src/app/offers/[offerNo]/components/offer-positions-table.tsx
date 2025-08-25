@@ -170,8 +170,21 @@ export function OfferPositionsTable({
                     return;
                   }
                   dispatch(resetShutterState());
+                  console.log({ position });
                   router.push(
-                    `/offers/${offerId}/add-position/product-details?selectedPosition=${position.id}&productId=${position.productId}&productName=${position.productName}&typeId=${position.typeId}&optionId=${position.optionId}`
+                    `/offers/${offerId}/add-position/product-details?selectedPosition=${
+                      position.id
+                    }${
+                      position.productId
+                        ? `&productId=${position.productId}`
+                        : ""
+                    }${
+                      position.productName
+                        ? `&productName=${position.productName}`
+                        : ""
+                    }${position.typeId ? `&typeId=${position.typeId}` : ""}${
+                      position.optionId ? `&optionId=${position.optionId}` : ""
+                    }`
                   );
                 }}
               >

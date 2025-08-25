@@ -141,7 +141,6 @@ export function getPliseKasaProfiles(
   mappedProfiles.push(
     createSelectedProduct(profile, horizontalQuantity, horizontalMeasurement)
   );
-  console.log({ mappedProfiles });
   mappedProfiles.push(
     createSelectedProduct(profile, verticalQuantity, verticalMeasurement)
   );

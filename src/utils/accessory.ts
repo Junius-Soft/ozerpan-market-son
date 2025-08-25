@@ -383,7 +383,6 @@ export function findMonoblokEkAksesuarlar(
   const normalizedColor = normalizeColor(boxColor);
   const boxSize = boxType.replace("mm", "");
   const middleDikmeCount = dikmeCount - 2;
-  console.log({ middleDikmeCount });
   // Aksesuar konfigürasyonları
   const configs: Record<
     string,

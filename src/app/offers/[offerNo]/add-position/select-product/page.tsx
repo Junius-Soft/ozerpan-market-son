@@ -158,7 +158,6 @@ export default function SelectProductPage() {
               </Button>
               <Button
                 onClick={() => {
-                  console.log({ selectedProduct });
                   if (selectedProduct) {
                     const params = new URLSearchParams();
                     params.set("selectedPosition", selectedPosition);

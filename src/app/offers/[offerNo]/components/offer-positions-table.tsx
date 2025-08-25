@@ -23,7 +23,6 @@ export const convertToEUR = (
 ) => {
   if (currency === "EUR") return amount;
   // TRY'den EUR'a çevir: amount / eurRate
-  console.log({ eurRate });
   return amount / eurRate;
 };
 interface OfferPositionsTableProps {
@@ -64,7 +63,6 @@ export function OfferPositionsTable({
 
   // Currency conversion helper function
 
-  console.log({ positions });
   return (
     <Card className="p-6">
       <div className="flex justify-between items-center mb-4">
@@ -170,7 +168,6 @@ export function OfferPositionsTable({
                     return;
                   }
                   dispatch(resetShutterState());
-                  console.log({ position });
                   router.push(
                     `/offers/${offerId}/add-position/product-details?selectedPosition=${
                       position.id

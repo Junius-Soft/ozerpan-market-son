@@ -19,7 +19,7 @@ interface ImalatPDFData {
 type SelectedProduct = {
   stock_code?: string;
   description?: string;
-  size?: string;
+  size?: number;
   quantity?: number;
   type?: string;
 };
@@ -319,7 +319,7 @@ export class ImalatPDFGenerator {
             (profileData.length + 1).toString(),
             product.stock_code || "",
             product.description || "",
-            product.size || "", // Ürün ölçüsü zorunlu
+            product.size + "mm" || "", // Ürün ölçüsü zorunlu
             "0,0/0,0", // Sol/Sağ Açı default
             product.quantity?.toString() || "1",
             "☐", // Ok sütunu: boş checkbox

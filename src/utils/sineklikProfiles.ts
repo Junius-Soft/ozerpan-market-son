@@ -34,7 +34,7 @@ export function getMenteseliKasaProfiles(
     measurement: horizontalMeasurement,
     pricePerPiece: horizontalPricePerPiece,
     totalPrice: quantity * horizontalPricePerPiece,
-    size: horizontalMeasurement + "mm",
+    size: horizontalMeasurement,
   });
 
   mappedProfiles.push({
@@ -43,7 +43,7 @@ export function getMenteseliKasaProfiles(
     measurement: verticalMeasurement,
     pricePerPiece: verticalPricePerPiece,
     totalPrice: quantity * verticalPricePerPiece,
-    size: verticalMeasurement + "mm",
+    size: verticalMeasurement,
   });
 
   return mappedProfiles;
@@ -81,7 +81,7 @@ export function getMenteseliKanatProfiles(
     measurement: verticalMeasurement,
     pricePerPiece: verticalPricePerPiece,
     totalPrice: quantity * verticalPricePerPiece,
-    size: verticalMeasurement + "mm",
+    size: verticalMeasurement,
   });
 
   mappedProfiles.push({
@@ -90,7 +90,7 @@ export function getMenteseliKanatProfiles(
     measurement: horizontalMeasurement,
     pricePerPiece: horizontalPricePerPiece,
     totalPrice: quantity * horizontalPricePerPiece,
-    size: horizontalMeasurement + "mm",
+    size: horizontalMeasurement,
   });
 
   return mappedProfiles;
@@ -128,7 +128,7 @@ export function getSabitKanatProfiles(
     measurement: horizontalMeasurement,
     pricePerPiece: horizontalPricePerPiece,
     totalPrice: quantity * horizontalPricePerPiece,
-    size: horizontalMeasurement + "mm",
+    size: horizontalMeasurement,
   });
 
   mappedProfiles.push({
@@ -137,7 +137,7 @@ export function getSabitKanatProfiles(
     measurement: verticalMeasurement,
     pricePerPiece: verticalPricePerPiece,
     totalPrice: quantity * verticalPricePerPiece,
-    size: verticalMeasurement + "mm",
+    size: verticalMeasurement,
   });
 
   return mappedProfiles;
@@ -175,7 +175,7 @@ export function getPliseKanatProfiles(
     measurement: measurement,
     pricePerPiece: pricePerPiece,
     totalPrice: pricePerPiece * quantity,
-    size: measurement + "mm",
+    size: measurement,
   });
 
   return mappedProfiles;
@@ -228,7 +228,7 @@ export function getPliseKasaProfiles(
     measurement: horizontalMeasurement,
     pricePerPiece: horizontalPricePerPiece,
     totalPrice: horizontalQuantity * horizontalPricePerPiece,
-    size: horizontalMeasurement + "mm",
+    size: horizontalMeasurement,
   };
   const verticalProfile: SelectedProduct = {
     ...profile,
@@ -236,7 +236,7 @@ export function getPliseKasaProfiles(
     measurement: verticalMeasurement,
     pricePerPiece: verticalPricePerPiece,
     totalPrice: verticalQuantity * verticalPricePerPiece,
-    size: verticalMeasurement + "",
+    size: verticalMeasurement,
   };
 
   mappedProfiles.push(horizontalProfile);
@@ -252,7 +252,7 @@ export function getPliseKasaProfiles(
       measurement: dusukEsikMeasurement,
       pricePerPiece: dusukEsikPricePerPiece,
       totalPrice: dusukEsikPricePerPiece * dusukEsikQuantity,
-      size: dusukEsikMeasurement + "mm",
+      size: dusukEsikMeasurement,
     };
     mappedProfiles.push(dusukEsikProfile);
   }
@@ -292,7 +292,7 @@ export function getSurmeKasaProfiles(
     measurement: horizontalMeasurement,
     pricePerPiece: horizontalPricePerPiece,
     totalPrice: horizontalPricePerPiece * quantity,
-    size: horizontalMeasurement + "",
+    size: horizontalMeasurement,
   };
 
   const verticalProfile: SelectedProduct = {
@@ -301,7 +301,7 @@ export function getSurmeKasaProfiles(
     measurement: verticalMeasurement,
     pricePerPiece: verticalPricePerPiece,
     totalPrice: verticalPricePerPiece * quantity,
-    size: verticalMeasurement + "",
+    size: verticalMeasurement,
   };
 
   mappedProfiles.push(horizontalProfile);
@@ -341,7 +341,7 @@ export function getSurmeKanatProfiles(
     measurement: horizontalMeasurement,
     pricePerPiece: horizontalPricePerPiece,
     totalPrice: horizontalPricePerPiece * quantity,
-    size: horizontalMeasurement + "",
+    size: horizontalMeasurement,
   };
 
   const verticalProfile: SelectedProduct = {
@@ -350,7 +350,7 @@ export function getSurmeKanatProfiles(
     measurement: verticalMeasurement,
     pricePerPiece: verticalPricePerPiece,
     totalPrice: verticalPricePerPiece * quantity,
-    size: verticalMeasurement + "mm",
+    size: verticalMeasurement,
   };
 
   mappedProfiles.push(horizontalProfile);

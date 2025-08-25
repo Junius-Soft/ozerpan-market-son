@@ -115,6 +115,7 @@ export function ProductPreview({
   }, [onTotalChange, calculationResult]);
 
   if (!selectedProduct) return null;
+
   return (
     <Card className="p-6" ref={summaryRef}>
       <div className="space-y-6">
@@ -179,11 +180,22 @@ export function ProductPreview({
                                       </span>
                                     </div>
                                     <div className="flex justify-between text-xs text-muted-foreground">
+                                      <div className="flex gap-2">
+                                        <span>
+                                          Adet: <b>{product.quantity}</b>
+                                        </span>
+                                        {product.size && (
+                                          <span>
+                                            Boyut: <b>{product.size}</b>
+                                          </span>
+                                        )}
+                                        <span>
+                                          Birim: <b>{product.unit}</b>
+                                        </span>
+                                      </div>
                                       <span>
-                                        {product.unit}: {product.quantity}
-                                      </span>
-                                      <span>
-                                        Toplam: € {product.totalPrice}
+                                        Toplam: €{" "}
+                                        {product.totalPrice.toFixed(2)}
                                       </span>
                                     </div>
                                   </div>
@@ -214,9 +226,19 @@ export function ProductPreview({
                                       </span>
                                     </div>
                                     <div className="flex justify-between text-xs text-muted-foreground">
-                                      <span>
-                                        {acc.unit}: {acc.quantity}
-                                      </span>
+                                      <div className="flex gap-2">
+                                        <span>
+                                          Adet: <b>{acc.quantity}</b>
+                                        </span>
+                                        {acc.size && (
+                                          <span>
+                                            Boyut: <b>{acc.size}</b>
+                                          </span>
+                                        )}
+                                        <span>
+                                          Birim: <b>{acc.unit}</b>
+                                        </span>
+                                      </div>
                                       <span>
                                         Toplam: €{" "}
                                         {(

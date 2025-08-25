@@ -29,7 +29,7 @@ import {
 import { FloatingTotalButton } from "./components/FloatingTotalButton";
 import { OfferDetailSkeleton } from "./components/OfferDetailSkeleton";
 import { useFrappePostCall } from "frappe-react-sdk";
-import { PriceItem, SelectedProduct } from "@/types/panjur";
+import { SelectedProduct } from "@/types/panjur";
 import { toast } from "react-toastify";
 
 export default function OfferDetailPage() {
@@ -213,15 +213,19 @@ export default function OfferDetailPage() {
                   description: profile.description,
                   unit_of_measure: profile.unit,
                   quantity: profile.quantity,
+                  size: profile.size,
                 })
               ) || [],
             accessories:
-              pos.selectedProducts?.accessories?.map((acc: PriceItem) => ({
-                stock_code: acc.stock_code,
-                description: acc.description,
-                unit_of_measure: acc.unit,
-                quantity: acc.quantity ?? 0,
-              })) || [],
+              pos.selectedProducts?.accessories?.map(
+                (acc: SelectedProduct) => ({
+                  stock_code: acc.stock_code,
+                  description: acc.description,
+                  unit_of_measure: acc.unit,
+                  quantity: acc.quantity ?? 0,
+                  size: acc.size,
+                })
+              ) || [],
           },
         })),
       },

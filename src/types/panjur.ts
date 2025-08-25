@@ -26,7 +26,7 @@ export interface CalculationResult {
   totalPrice: number;
   selectedProducts: {
     products: SelectedProduct[];
-    accessories: PriceItem[];
+    accessories: SelectedProduct[];
   }; // Artık iki obje içeriyor
   errors: string[];
 }

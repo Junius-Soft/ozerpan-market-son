@@ -444,7 +444,7 @@ export const calculatePanjur = (
 
   const totalPrice = rawTotalPriceEUR;
 
-  // Tüm ürünleri birleştir
+  // Tüm ürünleri birleştir (aksesuarlar hariç)
   const productItems = [
     ...lamelSelectedProducts,
     ...subPartSelectedProducts,
@@ -452,7 +452,6 @@ export const calculatePanjur = (
     ...boxSelectedProducts, // Hem monoblok hem distan box ürünleri
     ...tamburSelectedProducts,
     ...yukseltmeProfiliSelectedProducts,
-    ...(accessoryItems || []), // Aksesuarlar zaten SelectedProduct formatında geliyor
     remoteSelectedProduct,
     smarthomeSelectedProduct,
     receiverSelectedProduct,
@@ -463,7 +462,7 @@ export const calculatePanjur = (
 
   const selectedProducts = {
     products: productItems,
-    accessories: [], // Artık boş array, çünkü hepsi products'ta
+    accessories: accessoryItems || [], // Aksesuarlar ayrı array'de
   };
 
   return {

@@ -23,6 +23,7 @@ export const convertToEUR = (
 ) => {
   if (currency === "EUR") return amount;
   // TRY'den EUR'a çevir: amount / eurRate
+  console.log({ eurRate });
   return amount / eurRate;
 };
 interface OfferPositionsTableProps {

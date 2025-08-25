@@ -1,6 +1,5 @@
 import { Card } from "@/components/ui/card";
 import { AlertTriangle } from "lucide-react";
-import { formatPrice } from "@/utils/price-formatter";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -13,9 +12,9 @@ import { useErcomOrders } from "@/hooks/useErcomOrders";
 import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrency } from "@/store/appSlice";
+import { Position } from "@/documents/offers";
 
 interface OfferSummaryCardProps {
-  subtotal: number;
   offerStatus: string;
   isDirty: boolean;
   positionsLength: number;
@@ -31,21 +30,10 @@ interface OfferSummaryCardProps {
   onVatChange?: (v: number) => void;
   onDiscountChange?: (v: number) => void;
   onAssemblyChange?: (v: number) => void;
-}
-
-// Tutarları seçilen para birimine göre dönüştür
-export function convertCurrency(
-  amount: number,
-  currency: string,
-  eurRate: number
-): number {
-  if (currency === "EUR") return amount;
-  // TRY'ye çevir: amount * eurRate
-  return amount * eurRate;
+  positions: Position[]; // Pozisyonları da alıyoruz currency conversion için
 }
 
 export function OfferSummaryCard({
-  subtotal,
   offerStatus,
   isDirty,
   positionsLength,
@@ -61,6 +49,7 @@ export function OfferSummaryCard({
   onVatChange,
   onDiscountChange,
   onAssemblyChange,
+  positions,
 }: OfferSummaryCardProps) {
   // Sipariş numarası seçimi için state kaldırıldı, parenttan geliyor
   const { orders, isLoading: ordersLoading } = useErcomOrders();
@@ -70,6 +59,28 @@ export function OfferSummaryCard({
 
   // Redux state ve dispatch
   const dispatch = useDispatch();
+
+  // Pozisyonlardan doğru subtotal hesaplama - seçilen currency'ye göre
+  const calculateCorrectedSubtotal = useMemo(() => {
+    return positions.reduce((sum, position) => {
+      // Her pozisyonun kendi currency'sinden seçilen currency'ye çevir
+      if (position.currency.code === currency) {
+        // Aynı currency, çevirim yok
+        return sum + position.total;
+      } else if (position.currency.code === "EUR" && currency === "TRY") {
+        // EUR'dan TRY'ye çevir
+        return sum + position.total * eurRate;
+      } else if (position.currency.code === "TRY" && currency === "EUR") {
+        // TRY'den EUR'a çevir
+        return sum + position.total / eurRate;
+      }
+      // Fallback: direkt ekle
+      return sum + position.total;
+    }, 0);
+  }, [positions, currency, eurRate]);
+
+  // Düzeltilmiş subtotal'ı kullan
+  const correctedSubtotal = calculateCorrectedSubtotal;
 
   // LocalStorage'dan currency değerini yükle ve Redux'a set et
   useEffect(() => {
@@ -114,20 +125,22 @@ export function OfferSummaryCard({
     []
   );
 
-  // KDV satırı için ayrı bir hesaplama
+  // KDV satırı için ayrı bir hesaplama - correctedSubtotal kullan
   const baseForVat = useMemo(() => {
-    const discounted = subtotal - (subtotal * discountRate) / 100;
-    const assembly = (subtotal * assemblyRate) / 100;
+    const discounted =
+      correctedSubtotal - (correctedSubtotal * discountRate) / 100;
+    const assembly = (correctedSubtotal * assemblyRate) / 100;
     return discounted + assembly;
-  }, [subtotal, discountRate, assemblyRate]);
+  }, [correctedSubtotal, discountRate, assemblyRate]);
   const vatAmount = useMemo(
     () => (baseForVat * vatRate) / 100,
     [baseForVat, vatRate]
   );
 
   const total = useMemo(
-    () => calculateTotal(subtotal, vatRate, discountRate, assemblyRate),
-    [subtotal, vatRate, discountRate, assemblyRate, calculateTotal]
+    () =>
+      calculateTotal(correctedSubtotal, vatRate, discountRate, assemblyRate),
+    [correctedSubtotal, vatRate, discountRate, assemblyRate, calculateTotal]
   );
 
   // Toplam değiştiğinde parent'a bildir
@@ -217,14 +230,8 @@ export function OfferSummaryCard({
           <label className="text-sm text-gray-500">Ara Toplam</label>
           <div className="font-medium">
             {currency === "EUR"
-              ? `€ ${Number(
-                  convertCurrency(subtotal, currency, eurRate)
-                ).toFixed(2)}`
-              : `₺ ${convertCurrency(
-                  subtotal,
-                  currency,
-                  eurRate
-                ).toLocaleString("tr-TR", {
+              ? `€ ${correctedSubtotal.toFixed(2)}`
+              : `₺ ${correctedSubtotal.toLocaleString("tr-TR", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })}`}
@@ -245,14 +252,8 @@ export function OfferSummaryCard({
           </label>
           <div className="font-medium">
             {currency === "EUR"
-              ? `€ ${Number(
-                  convertCurrency(vatAmount, currency, eurRate)
-                ).toFixed(2)}`
-              : `₺ ${convertCurrency(
-                  vatAmount,
-                  currency,
-                  eurRate
-                ).toLocaleString("tr-TR", {
+              ? `€ ${vatAmount.toFixed(2)}`
+              : `₺ ${vatAmount.toLocaleString("tr-TR", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })}`}
@@ -274,21 +275,14 @@ export function OfferSummaryCard({
           <div className="font-medium">
             -{" "}
             {currency === "EUR"
-              ? `€ ${Number(
-                  convertCurrency(
-                    (subtotal * discountRate) / 100,
-                    currency,
-                    eurRate
-                  )
-                ).toFixed(2)}`
-              : `₺ ${convertCurrency(
-                  (subtotal * discountRate) / 100,
-                  currency,
-                  eurRate
-                ).toLocaleString("tr-TR", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}`}
+              ? `€ ${((correctedSubtotal * discountRate) / 100).toFixed(2)}`
+              : `₺ ${((correctedSubtotal * discountRate) / 100).toLocaleString(
+                  "tr-TR",
+                  {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }
+                )}`}
           </div>
         </div>
         <div className="flex justify-between items-center">
@@ -306,21 +300,14 @@ export function OfferSummaryCard({
           </label>
           <div className="font-medium">
             {currency === "EUR"
-              ? `€ ${Number(
-                  convertCurrency(
-                    (subtotal * assemblyRate) / 100,
-                    currency,
-                    eurRate
-                  )
-                ).toFixed(2)}`
-              : `₺ ${convertCurrency(
-                  (subtotal * assemblyRate) / 100,
-                  currency,
-                  eurRate
-                ).toLocaleString("tr-TR", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}`}
+              ? `€ ${((correctedSubtotal * assemblyRate) / 100).toFixed(2)}`
+              : `₺ ${((correctedSubtotal * assemblyRate) / 100).toLocaleString(
+                  "tr-TR",
+                  {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }
+                )}`}
           </div>
         </div>
         <div className="h-px bg-gray-200" />
@@ -329,26 +316,25 @@ export function OfferSummaryCard({
           <div className="font-medium text-lg flex flex-col items-end">
             <span>
               {currency === "EUR"
-                ? `€ ${Number(
-                    convertCurrency(total, currency, eurRate)
-                  ).toFixed(2)}`
-                : `₺ ${convertCurrency(total, currency, eurRate).toLocaleString(
-                    "tr-TR",
-                    {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    }
-                  )}`}
+                ? `€ ${total.toFixed(2)}`
+                : `₺ ${total.toLocaleString("tr-TR", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}`}
             </span>
             {currency === "EUR" && (
               <span className="text-xs text-muted-foreground">
-                ₺ {formatPrice(total, eurRate)}
+                ₺{" "}
+                {(total * eurRate).toLocaleString("tr-TR", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               </span>
             )}
             {currency === "TRY" && (
               <span className="text-xs text-muted-foreground">
                 €{" "}
-                {total.toLocaleString("en-US", {
+                {(total / eurRate).toLocaleString("en-US", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })}

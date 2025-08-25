@@ -18,7 +18,6 @@ import { OfferPositionsTable } from "./components/offer-positions-table";
 import { OfferSummaryCard } from "./components/offer-summary-card";
 import MobilePositionsGrid from "./components/MobilePositionsGrid";
 import {
-  calculateTotals,
   togglePositionSelection,
   toggleAllPositions,
   apiCopyPosition,
@@ -173,7 +172,6 @@ export default function OfferDetailPage() {
   if (!offer || isEurRateLoading) {
     return <OfferDetailSkeleton />;
   }
-  const { subtotal } = calculateTotals(offer.positions);
 
   // Profil tipini kullanıcı dostu başlığa çeviren fonksiyon
   function formatProfileType(type: string): string {
@@ -407,12 +405,12 @@ export default function OfferDetailPage() {
           </div>
           <div ref={summaryRef} className="w-full lg:w-[400px] space-y-6">
             <OfferSummaryCard
-              subtotal={subtotal}
               offerStatus={offer.status}
               isDirty={!!offer.is_dirty}
               positionsLength={offer.positions.length}
               currency={currency}
               eurRate={eurRate}
+              positions={offer.positions}
               onSave={async () =>
                 await updateOfferStatus("Kaydedildi", eurRate)
               }

@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { ArrowDown } from "lucide-react";
-import { convertCurrency } from "./offer-summary-card";
+
+// Local convertCurrency function for FloatingTotalButton
+function convertCurrency(
+  amount: number,
+  currency: string,
+  eurRate: number
+): number {
+  if (currency === "EUR") return amount;
+  // TRY'ye çevir: amount * eurRate
+  return amount * eurRate;
+}
 
 interface FloatingTotalButtonProps {
   summaryRef: React.RefObject<HTMLDivElement>;

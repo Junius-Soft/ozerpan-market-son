@@ -1,4 +1,5 @@
 import { PanjurSelections, SelectedProduct } from "@/types/panjur";
+import { Currency } from "./products";
 
 export interface Position {
   id: string;
@@ -14,6 +15,7 @@ export interface Position {
   typeId: string | null;
   productName: string | null;
   optionId: string | null;
+  currency: Currency;
   productDetails: PanjurSelections;
   total: number; // Toplam fiyat
 }

@@ -8,7 +8,6 @@ export function findYanKapakAccessoryPrice(
   boxColor: string
 ): PriceItem | null {
   let desc = "";
-  console.log({ boxType, boxColor });
   switch (boxType) {
     case "137mm":
       desc = `137 Yan Kapak 45 Pimli ${normalizeColor(boxColor)}`;

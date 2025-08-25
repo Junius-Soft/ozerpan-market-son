@@ -71,7 +71,6 @@ export const useCalculator = (
         optionId,
         availableTabs
       );
-      console.log({ result });
       setResult(result);
     } else if (productName === "sineklik") {
       const result = calculateSineklik(

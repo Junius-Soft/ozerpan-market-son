@@ -31,10 +31,13 @@ import { OfferDetailSkeleton } from "./components/OfferDetailSkeleton";
 import { useFrappePostCall } from "frappe-react-sdk";
 import { SelectedProduct } from "@/types/panjur";
 import { toast } from "react-toastify";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
 
 export default function OfferDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const currency = useSelector((state: RootState) => state.app.currency);
   const [offer, setOffer] = useState<Offer | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [offerName, setOfferName] = useState("");
@@ -372,11 +375,15 @@ export default function OfferDetailPage() {
                 onCopy={handleCopyPosition}
                 onAdd={() => router.push(`/offers/${offer.id}/add-position`)}
                 isDeleting={isDeletingPositions}
+                eurRate={eurRate}
               />
               {/* Floating toplam button */}
               <FloatingTotalButton
                 summaryRef={summaryRef}
                 total={summaryTotal}
+                currency={currency}
+                eurRate={eurRate}
+                displayCurrency={currency}
               />
             </div>
             <div className="hidden md:block">
@@ -394,6 +401,7 @@ export default function OfferDetailPage() {
                 sortKey={sortKey}
                 sortDirection={sortDirection}
                 onSort={handleSort}
+                eurRate={eurRate}
               />
             </div>
           </div>
@@ -403,6 +411,7 @@ export default function OfferDetailPage() {
               offerStatus={offer.status}
               isDirty={!!offer.is_dirty}
               positionsLength={offer.positions.length}
+              currency={currency}
               eurRate={eurRate}
               onSave={async () =>
                 await updateOfferStatus("Kaydedildi", eurRate)

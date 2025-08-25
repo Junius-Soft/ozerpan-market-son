@@ -168,7 +168,7 @@ export default function OffersPage() {
                   const currentDate = new Date();
                   const randomNumber = Math.floor(Math.random() * 1000)
                     .toString()
-                    .padStart(3, "0");
+                    .padStart(2, "0");
                   const newOffer: Offer = {
                     id: `${currentDate.getFullYear()}${String(
                       currentDate.getMonth() + 1

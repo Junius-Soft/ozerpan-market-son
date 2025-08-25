@@ -8,6 +8,10 @@
       "name": "Panjur",
       "isActive": true,
       "image": "/images/products/panjur/types/1 li.png",
+      "currency": {
+        "code": "EUR",
+        "symbol": "€"
+      },
       "dimensions": {
         "width": {
           "min": 250,
@@ -79,6 +83,10 @@
       "name": "Sineklik",
       "isActive": true,
       "image": "/images/products/sineklik.png",
+      "currency": {
+        "code": "TRY",
+        "symbol": "₺"
+      },
       "options": [],
       "types": []
     },

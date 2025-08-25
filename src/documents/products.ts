@@ -84,12 +84,16 @@ export interface ProductDimensions {
   width: ProductDimension;
   height: ProductDimension;
 }
-
+export interface Currency {
+  code: string;
+  symbol: string;
+}
 export interface Product {
   id: string;
   name: string;
   isActive: boolean;
   image: string;
+  currency: Currency;
   dimensions?: ProductDimensions;
   options?: ProductOption[];
   types?: ProductType[];
@@ -124,5 +128,19 @@ export const getProducts = async (): Promise<ProductsResponse> => {
       defaultOption: "",
       products: [],
     };
+  }
+};
+
+// Function to get a specific product by ID
+export const getProductById = async (
+  productId: string
+): Promise<Product | null> => {
+  try {
+    const { products } = await getProducts();
+    const product = products.find((p) => p.id === productId);
+    return product || null;
+  } catch (error) {
+    console.error("Failed to get product by ID:", error);
+    return null;
   }
 };

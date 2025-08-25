@@ -11,15 +11,15 @@ import {
 } from "@/components/ui/select";
 import { useErcomOrders } from "@/hooks/useErcomOrders";
 import React, { useCallback, useMemo, useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setCurrency } from "@/store/appSlice";
-import { RootState } from "@/store";
 
 interface OfferSummaryCardProps {
   subtotal: number;
   offerStatus: string;
   isDirty: boolean;
   positionsLength: number;
+  currency: string;
   eurRate: number;
   onSave: () => void;
   onOrder: () => void;
@@ -33,11 +33,23 @@ interface OfferSummaryCardProps {
   onAssemblyChange?: (v: number) => void;
 }
 
+// Tutarları seçilen para birimine göre dönüştür
+export function convertCurrency(
+  amount: number,
+  currency: string,
+  eurRate: number
+): number {
+  if (currency === "EUR") return amount;
+  // TRY'ye çevir: amount * eurRate
+  return amount * eurRate;
+}
+
 export function OfferSummaryCard({
   subtotal,
   offerStatus,
   isDirty,
   positionsLength,
+  currency,
   eurRate,
   onSave,
   onOrder,
@@ -57,7 +69,6 @@ export function OfferSummaryCard({
   const [assemblyRate, setAssemblyRate] = useState<number>(0);
 
   // Redux state ve dispatch
-  const currency = useSelector((state: RootState) => state.app.currency);
   const dispatch = useDispatch();
 
   // LocalStorage'dan currency değerini yükle ve Redux'a set et
@@ -101,16 +112,6 @@ export function OfferSummaryCard({
       return base + vatAmount;
     },
     []
-  );
-
-  // Tutarları seçilen para birimine göre dönüştür
-  const convertCurrency = useCallback(
-    (amount: number) => {
-      if (currency === "EUR") return amount;
-      // TRY'ye çevir: amount * eurRate
-      return amount * eurRate;
-    },
-    [currency, eurRate]
   );
 
   // KDV satırı için ayrı bir hesaplama
@@ -216,8 +217,14 @@ export function OfferSummaryCard({
           <label className="text-sm text-gray-500">Ara Toplam</label>
           <div className="font-medium">
             {currency === "EUR"
-              ? `€ ${Number(convertCurrency(subtotal)).toFixed(2)}`
-              : `₺ ${convertCurrency(subtotal).toLocaleString("tr-TR", {
+              ? `€ ${Number(
+                  convertCurrency(subtotal, currency, eurRate)
+                ).toFixed(2)}`
+              : `₺ ${convertCurrency(
+                  subtotal,
+                  currency,
+                  eurRate
+                ).toLocaleString("tr-TR", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })}`}
@@ -238,8 +245,14 @@ export function OfferSummaryCard({
           </label>
           <div className="font-medium">
             {currency === "EUR"
-              ? `€ ${Number(convertCurrency(vatAmount)).toFixed(2)}`
-              : `₺ ${convertCurrency(vatAmount).toLocaleString("tr-TR", {
+              ? `€ ${Number(
+                  convertCurrency(vatAmount, currency, eurRate)
+                ).toFixed(2)}`
+              : `₺ ${convertCurrency(
+                  vatAmount,
+                  currency,
+                  eurRate
+                ).toLocaleString("tr-TR", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })}`}
@@ -262,10 +275,16 @@ export function OfferSummaryCard({
             -{" "}
             {currency === "EUR"
               ? `€ ${Number(
-                  convertCurrency((subtotal * discountRate) / 100)
+                  convertCurrency(
+                    (subtotal * discountRate) / 100,
+                    currency,
+                    eurRate
+                  )
                 ).toFixed(2)}`
               : `₺ ${convertCurrency(
-                  (subtotal * discountRate) / 100
+                  (subtotal * discountRate) / 100,
+                  currency,
+                  eurRate
                 ).toLocaleString("tr-TR", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
@@ -288,10 +307,16 @@ export function OfferSummaryCard({
           <div className="font-medium">
             {currency === "EUR"
               ? `€ ${Number(
-                  convertCurrency((subtotal * assemblyRate) / 100)
+                  convertCurrency(
+                    (subtotal * assemblyRate) / 100,
+                    currency,
+                    eurRate
+                  )
                 ).toFixed(2)}`
               : `₺ ${convertCurrency(
-                  (subtotal * assemblyRate) / 100
+                  (subtotal * assemblyRate) / 100,
+                  currency,
+                  eurRate
                 ).toLocaleString("tr-TR", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
@@ -304,11 +329,16 @@ export function OfferSummaryCard({
           <div className="font-medium text-lg flex flex-col items-end">
             <span>
               {currency === "EUR"
-                ? `€ ${Number(convertCurrency(total)).toFixed(2)}`
-                : `₺ ${convertCurrency(total).toLocaleString("tr-TR", {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}`}
+                ? `€ ${Number(
+                    convertCurrency(total, currency, eurRate)
+                  ).toFixed(2)}`
+                : `₺ ${convertCurrency(total, currency, eurRate).toLocaleString(
+                    "tr-TR",
+                    {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    }
+                  )}`}
             </span>
             {currency === "EUR" && (
               <span className="text-xs text-muted-foreground">

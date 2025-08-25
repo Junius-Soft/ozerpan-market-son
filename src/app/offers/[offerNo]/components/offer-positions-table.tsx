@@ -16,6 +16,15 @@ import React from "react";
 import { resetShutterState } from "@/store/shutterSlice";
 import { useDispatch } from "react-redux";
 
+export const convertToEUR = (
+  amount: number,
+  currency: string,
+  eurRate: number
+) => {
+  if (currency === "EUR") return amount;
+  // TRY'den EUR'a çevir: amount / eurRate
+  return amount / eurRate;
+};
 interface OfferPositionsTableProps {
   positions: Position[];
   offerId: string;
@@ -30,6 +39,7 @@ interface OfferPositionsTableProps {
   sortKey: string;
   sortDirection: "asc" | "desc";
   onSort: (key: string) => void;
+  eurRate: number; // EUR/TRY exchange rate için eklendi
 }
 
 export function OfferPositionsTable({
@@ -46,10 +56,14 @@ export function OfferPositionsTable({
   sortKey,
   sortDirection,
   onSort,
+  eurRate,
 }: OfferPositionsTableProps) {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  // Currency conversion helper function
+
+  console.log({ positions });
   return (
     <Card className="p-6">
       <div className="flex justify-between items-center mb-4">
@@ -191,8 +205,22 @@ export function OfferPositionsTable({
                 <TableCell>
                   {position.quantity} {position.unit}
                 </TableCell>
-                <TableCell>€ {position.unitPrice.toFixed(2)}</TableCell>
-                <TableCell>€ {position.total.toFixed(2)}</TableCell>
+                <TableCell>
+                  €{" "}
+                  {convertToEUR(
+                    position.unitPrice,
+                    position.currency.code,
+                    eurRate
+                  ).toFixed(2)}
+                </TableCell>
+                <TableCell>
+                  €{" "}
+                  {convertToEUR(
+                    position.total,
+                    position.currency.code,
+                    eurRate
+                  ).toFixed(2)}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

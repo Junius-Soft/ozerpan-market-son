@@ -65,7 +65,6 @@ export function filterBoxSize(
       validOptions.push({ id: box.id, name: box.name });
     }
   }
-  console.log({ validOptions });
 
   const isCurrentValid = validOptions.some(
     (opt) => opt.id === formik.values.boxType
@@ -109,7 +108,6 @@ export function useFilterBoxSize(
   useEffect(() => {
     if (productId === "panjur") {
       const result = filterBoxSize(formik, optionId);
-      console.log({ result });
       setValidBoxOptions(result);
     } else {
       setValidBoxOptions(null);

@@ -1,16 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { ArrowDown } from "lucide-react";
+import { convertCurrency } from "./offer-summary-card";
 
 interface FloatingTotalButtonProps {
   summaryRef: React.RefObject<HTMLDivElement>;
   total: number;
+  currency: string;
+  eurRate: number;
+  displayCurrency: string;
 }
 
 export function FloatingTotalButton({
   summaryRef,
   total,
+  currency,
+  eurRate,
+  displayCurrency,
 }: FloatingTotalButtonProps) {
   const [visible, setVisible] = useState(true);
+
+  // Currency conversion logic
+  const getDisplayAmount = () => {
+    if (currency === displayCurrency) {
+      return total;
+    } else {
+      if (currency === "EUR" && displayCurrency === "TRY") {
+        return convertCurrency(total, currency, eurRate); // This will multiply by eurRate
+      } else if (currency === "TRY" && displayCurrency === "EUR") {
+        return total / eurRate; // Convert TRY to EUR
+      }
+      return total; // Fallback
+    }
+  };
+
+  const displayAmount = getDisplayAmount();
 
   useEffect(() => {
     if (!summaryRef.current) return;
@@ -50,7 +73,13 @@ export function FloatingTotalButton({
       }}
     >
       <ArrowDown className="h-5 w-5 mr-1" />
-      Toplam: € {total.toFixed(2)}
+      Toplam:{" "}
+      {displayCurrency === "EUR"
+        ? `€ ${Number(displayAmount).toFixed(2)}`
+        : `₺ ${displayAmount.toLocaleString("tr-TR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}`}
     </button>
   );
 }

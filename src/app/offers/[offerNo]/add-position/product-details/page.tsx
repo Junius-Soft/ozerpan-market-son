@@ -7,7 +7,11 @@ import {
   useProductState,
 } from "../hooks/useProductState";
 
-import { type Product, getProductTabs } from "@/documents/products";
+import {
+  type Product,
+  getProductTabs,
+  getProductById,
+} from "@/documents/products";
 import { DetailsStep } from "../steps/details-step";
 import { getOffer, type Position } from "@/documents/offers";
 import { getOffers } from "@/documents/offers";
@@ -17,16 +21,19 @@ import { ProductDetailsHeader } from "./ProductDetailsHeader";
 import { FloatingTotalButton } from "../../components/FloatingTotalButton";
 import { handleDepoCikisFisiPDF } from "@/utils/handle-depo-cikis-fisi";
 import { handleFiyatAnaliziPDF } from "@/utils/handle-fiyat-analizi";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const summaryRef = useRef<HTMLDivElement>(null!);
+  const eurRate = useSelector((state: RootState) => state.app.eurRate);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [product, setProduct] = useState<Product | null>(null);
+  const [productObj, setProductObj] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
   const [previewTotal, setPreviewTotal] = useState(0);
 
@@ -55,7 +62,7 @@ export default function ProductDetailsPage() {
   const getInitialValues = useCallback(() => {
     const initialValues = getProductSpecificType(productId);
 
-    product?.tabs?.forEach((tab) => {
+    productObj?.tabs?.forEach((tab) => {
       if (tab.content?.fields) {
         tab.content.fields.forEach((field) => {
           const defaultValue = field.default ?? "";
@@ -87,7 +94,7 @@ export default function ProductDetailsPage() {
     initialValues.quantity = quantity; // Default quantity
     initialValues.unitPrice = 0; // Default unit price
     return initialValues;
-  }, [product?.tabs, productId, quantity]);
+  }, [productObj?.tabs, productId, quantity]);
 
   const initialValues = useMemo(() => {
     const values = getInitialValues();
@@ -98,7 +105,6 @@ export default function ProductDetailsPage() {
   useEffect(() => {
     const loadProductAndTabs = async () => {
       if (initialLoadDone.current) return;
-
       setIsLoading(true);
       try {
         if (!productId) {
@@ -106,20 +112,23 @@ export default function ProductDetailsPage() {
           return;
         }
 
+        // Get the full product object by ID
+        const productFromAPI = await getProductById(productId);
+
         // Get the product tabs with type and option filters
         const tabsResponse = await getProductTabs(productId, typeId, optionId);
 
-        // Create a simple product object with the necessary info
+        // Create product object combining API product data with tabs
         const product = {
           id: productId,
-          name: productName || productId,
+          name: productName || productFromAPI?.name || productId,
+          currency: productFromAPI?.currency,
           tabs: tabsResponse.tabs,
         } as Product;
 
         // If selectedPosition exists, update defaults from existing position
         if (selectedPosition) {
           const position = await getSelectedPosition;
-
           if (position && Array.isArray(product.tabs)) {
             // Dinamik tip belirleme - productId'ye göre uygun tip kullan
             const productDetails = position.productDetails as ReturnType<
@@ -207,7 +216,7 @@ export default function ProductDetailsPage() {
           }
         }
 
-        setProduct(product);
+        setProductObj(product);
         initialLoadDone.current = true;
       } finally {
         setIsLoading(false);
@@ -223,7 +232,7 @@ export default function ProductDetailsPage() {
     typeId,
     selectedPosition,
     getSelectedPosition,
-    product,
+    productObj,
     productActions,
   ]);
 
@@ -231,7 +240,7 @@ export default function ProductDetailsPage() {
   useEffect(() => {
     if (
       !selectedPosition &&
-      product &&
+      productObj &&
       typeId &&
       initialLoadDone.current &&
       productId === "panjur"
@@ -261,7 +270,7 @@ export default function ProductDetailsPage() {
     }
   }, [
     selectedPosition,
-    product,
+    productObj,
     typeId,
     productState.sectionHeights,
     initialValues.height,
@@ -272,7 +281,7 @@ export default function ProductDetailsPage() {
   const handleComplete = async (
     values: ReturnType<typeof getInitialValues>
   ) => {
-    if (!product) return;
+    if (!productObj) return;
 
     const offerNo = window.location.pathname.split("/")[2];
 
@@ -311,6 +320,7 @@ export default function ProductDetailsPage() {
         typeId,
         productName,
         optionId,
+        currency: productObj.currency,
         productDetails: {
           ...values,
           // Product-specific state'i sadece panjur için ekle
@@ -422,7 +432,7 @@ export default function ProductDetailsPage() {
               >
                 {/* Product Details Form */}
                 <ProductDetailsHeader
-                  product={product}
+                  product={productObj}
                   typeId={typeId}
                   router={router}
                   selectedPosition={selectedPosition}
@@ -435,7 +445,7 @@ export default function ProductDetailsPage() {
                     const offerNo = window.location.pathname.split("/")[2];
                     await handleImalatListesiPDF({
                       offerNo,
-                      product: product!,
+                      product: productObj!,
                       values: formik.values,
                       selectedPosition,
                       typeId,
@@ -444,10 +454,10 @@ export default function ProductDetailsPage() {
                     });
                   }}
                   onDepoCikisFisiConfirm={async () => {
-                    if (!product) return;
+                    if (!productObj) return;
                     const offerNo = window.location.pathname.split("/")[2];
                     await handleDepoCikisFisiPDF({
-                      product,
+                      product: productObj,
                       values: formik.values,
                       typeId,
                       offerNo,
@@ -460,11 +470,11 @@ export default function ProductDetailsPage() {
                   }
                   onSubmit={formik.submitForm}
                   onFiyatAnaliz={async () => {
-                    if (!product || !product.tabs) return;
+                    if (!productObj || !productObj.tabs) return;
                     const offerNo = window.location.pathname.split("/")[2];
 
                     await handleFiyatAnaliziPDF({
-                      product: product,
+                      product: productObj,
                       formikValues: formik.values as ReturnType<
                         typeof getInitialValues
                       >,
@@ -479,7 +489,7 @@ export default function ProductDetailsPage() {
 
                 <DetailsStep
                   formik={formik}
-                  selectedProduct={product}
+                  selectedProduct={productObj}
                   onTotalChange={setPreviewTotal}
                   summaryRef={summaryRef}
                   typeId={Number(typeId)}
@@ -489,6 +499,9 @@ export default function ProductDetailsPage() {
                 <FloatingTotalButton
                   summaryRef={summaryRef}
                   total={previewTotal}
+                  currency={productObj?.currency.code ?? "EUR"}
+                  eurRate={eurRate}
+                  displayCurrency={productObj?.currency.code ?? "EUR"}
                 />
               </Form>
             )}

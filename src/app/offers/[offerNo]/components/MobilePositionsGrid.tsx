@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Copy, Plus, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { Position } from "@/documents/offers";
+import { convertToEUR } from "./offer-positions-table";
 
 interface MobilePositionsGridProps {
   positions: Position[];
@@ -13,6 +14,7 @@ interface MobilePositionsGridProps {
   onCopy: (position: Position) => void;
   onAdd: () => void;
   isDeleting: boolean;
+  eurRate: number; // EUR/TRY exchange rate için eklendi
 }
 
 export default function MobilePositionsGrid({
@@ -25,6 +27,7 @@ export default function MobilePositionsGrid({
   onCopy,
   onAdd,
   isDeleting,
+  eurRate,
 }: MobilePositionsGridProps) {
   const router = useRouter();
 
@@ -121,13 +124,23 @@ export default function MobilePositionsGrid({
                   <span className="text-xs text-gray-500 dark:text-gray-400 font-normal mr-1">
                     Birim Fiyat:
                   </span>
-                  € {position.unitPrice.toFixed(2)}
+                  €{" "}
+                  {convertToEUR(
+                    position.unitPrice,
+                    position.currency.code,
+                    eurRate
+                  ).toFixed(2)}
                 </div>
                 <div className="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-2 text-left">
                   <span className="text-xs text-gray-500 dark:text-gray-400 font-normal mr-1">
                     Toplam:
                   </span>
-                  € {position.total.toFixed(2)}
+                  €{" "}
+                  {convertToEUR(
+                    position.total,
+                    position.currency.code,
+                    eurRate
+                  ).toFixed(2)}
                 </div>
                 {offerStatus === "Taslak" && (
                   <div className="flex gap-2 mt-4">

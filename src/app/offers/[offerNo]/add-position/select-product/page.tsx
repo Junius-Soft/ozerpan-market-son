@@ -158,11 +158,13 @@ export default function SelectProductPage() {
               </Button>
               <Button
                 onClick={() => {
+                  console.log({ selectedProduct });
                   if (selectedProduct) {
                     const params = new URLSearchParams();
                     params.set("selectedPosition", selectedPosition);
                     params.set("productId", selectedProduct.id);
                     params.set("productName", selectedProduct.name);
+                    params.set("currencyCode", selectedProduct.currency.code);
                     if (selectedType) params.set("typeId", selectedType);
                     if (selectedOption) params.set("optionId", selectedOption);
                     router.push(`product-details?${params.toString()}`);

@@ -115,7 +115,6 @@ export function ProductPreview({
   }, [onTotalChange, calculationResult]);
 
   if (!selectedProduct) return null;
-
   return (
     <Card className="p-6" ref={summaryRef}>
       <div className="space-y-6">
@@ -176,7 +175,8 @@ export function ProductPreview({
                                     <div className="flex justify-between">
                                       <span>{product.description}</span>
                                       <span className="font-mono">
-                                        € {product.price}
+                                        {selectedProduct.currency.symbol}{" "}
+                                        {product.price}
                                       </span>
                                     </div>
                                     <div className="flex justify-between text-xs text-muted-foreground">
@@ -194,7 +194,8 @@ export function ProductPreview({
                                         </span>
                                       </div>
                                       <span>
-                                        Toplam: €{" "}
+                                        Toplam:{" "}
+                                        {selectedProduct.currency.symbol}{" "}
                                         {product.totalPrice.toFixed(2)}
                                       </span>
                                     </div>
@@ -222,7 +223,8 @@ export function ProductPreview({
                                     <div className="flex justify-between">
                                       <span>{acc.description}</span>
                                       <span className="font-mono">
-                                        € {acc.price}
+                                        {selectedProduct.currency.symbol}{" "}
+                                        {acc.price}
                                       </span>
                                     </div>
                                     <div className="flex justify-between text-xs text-muted-foreground">
@@ -240,7 +242,8 @@ export function ProductPreview({
                                         </span>
                                       </div>
                                       <span>
-                                        Toplam: €{" "}
+                                        Toplam:{" "}
+                                        {selectedProduct.currency.symbol}{" "}
                                         {(
                                           Number(acc.price) *
                                           (acc.quantity || 1)
@@ -265,26 +268,31 @@ export function ProductPreview({
                             type="button"
                             className="text-base hover:text-primary transition-colors"
                           >
-                            €{" "}
+                            {selectedProduct.currency.symbol}{" "}
                             {(
                               calculationResult.totalPrice *
                               Number(values.quantity || 1)
                             ).toFixed(2)}
                           </button>
                         </TooltipTrigger>
-                        <TooltipContent
-                          side="top"
-                          align="end"
-                          className="flex flex-col gap-1"
-                        >
-                          <div>
-                            ₺{" "}
-                            {formatPrice(calculationResult.totalPrice, eurRate)}
-                          </div>
-                          <div className="text-muted-foreground">
-                            1€ = ₺{eurRate.toFixed(2)}
-                          </div>
-                        </TooltipContent>
+                        {selectedProduct.currency.code === "EUR" && (
+                          <TooltipContent
+                            side="top"
+                            align="end"
+                            className="flex flex-col gap-1"
+                          >
+                            <div>
+                              ₺{" "}
+                              {formatPrice(
+                                calculationResult.totalPrice,
+                                eurRate
+                              )}
+                            </div>
+                            <div className="text-muted-foreground">
+                              1€ = ₺{eurRate.toFixed(2)}
+                            </div>
+                          </TooltipContent>
+                        )}
                       </Tooltip>
                     </TooltipProvider>
                   )}

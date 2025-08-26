@@ -22,7 +22,9 @@ interface ProductDetailsHeaderProps {
   onSubmit: () => void;
   onFiyatAnaliz: () => void;
 }
-
+export const capitalizeFirstLetter = (val: string) => {
+  return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+};
 export const ProductDetailsHeader: React.FC<ProductDetailsHeaderProps> = (
   props
 ) => {
@@ -32,7 +34,7 @@ export const ProductDetailsHeader: React.FC<ProductDetailsHeaderProps> = (
       <div className="hidden sm:flex items-center justify-between">
         <div className="flex items-center gap-4">
           <h1 className="text-2xl font-bold">
-            {props.product?.name} Detayları{" "}
+            {capitalizeFirstLetter(props.optionId ?? "")} {props.product?.name}{" "}
             {props.typeId ? `(${props.typeId})` : ""}
           </h1>
           <Button

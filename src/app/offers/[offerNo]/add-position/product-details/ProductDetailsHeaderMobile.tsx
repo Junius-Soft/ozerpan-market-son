@@ -4,6 +4,7 @@ import { OfferActions } from "../../components/offer-actions";
 import React from "react";
 import { type Product } from "@/documents/products";
 import { useRouter } from "next/navigation";
+import { capitalizeFirstLetter } from "./ProductDetailsHeader";
 
 interface ProductDetailsHeaderMobileProps {
   product: Product | null;
@@ -44,7 +45,8 @@ export const ProductDetailsHeaderMobile: React.FC<
     <div className="flex flex-col gap-4 sm:hidden">
       <div className="flex items-center justify-between w-full">
         <h1 className="text-2xl font-bold">
-          {product?.name} Detayları {typeId ? `(${typeId})` : ""}
+          {capitalizeFirstLetter(optionId ?? "")} {product?.name}{" "}
+          {typeId ? `(${typeId})` : ""}
         </h1>
         <Button
           variant="default"

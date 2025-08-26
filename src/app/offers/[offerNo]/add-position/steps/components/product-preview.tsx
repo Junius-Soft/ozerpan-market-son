@@ -115,7 +115,6 @@ export function ProductPreview({
   }, [onTotalChange, calculationResult]);
 
   if (!selectedProduct) return null;
-  console.log(calculationResult.selectedProducts.accessories);
   return (
     <Card className="p-6" ref={summaryRef}>
       <div className="space-y-6">

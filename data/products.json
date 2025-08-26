@@ -1,10 +1,9 @@
 {
-  "defaultProduct": "panjur",
-  "defaultType": "1",
-  "defaultOption": "distan",
   "products": [
     {
       "id": "panjur",
+      "defaultType": "1",
+      "defaultOption": "distan",
       "name": "Panjur",
       "isActive": true,
       "image": "/images/products/panjur/types/1 li.png",

@@ -41,16 +41,24 @@ export default function SelectProductPage() {
 
       setIsLoading(true);
       try {
-        const { products, defaultProduct, defaultType, defaultOption } =
-          await getProducts();
+        const products = await getProducts();
         setProducts(products);
 
         // Get values from URL or use defaults
-        const productId = searchParams.get("productId") || defaultProduct;
-        const typeId = searchParams.get("typeId") || defaultType;
-        const optionId = searchParams.get("optionId") || defaultOption;
+        let productId = searchParams.get("productId");
+        let productObj: Product | undefined;
+        if (!productId) {
+          productObj = products[0];
+          productId = productObj?.id || null;
+        } else {
+          productObj = products.find((p) => p.id === productId);
+        }
 
-        const productObj = products.find((p) => p.id === productId);
+        // Default type/option from product object
+        const typeId =
+          searchParams.get("typeId") || productObj?.defaultType || null;
+        const optionId =
+          searchParams.get("optionId") || productObj?.defaultOption || null;
 
         // Set states
         setSelectedProduct(productObj || null);
@@ -60,7 +68,7 @@ export default function SelectProductPage() {
         // If there are no URL parameters, update URL with default values
         if (!searchParams.has("productId")) {
           updateURL({
-            productId: productId,
+            productId: productObj?.id || "",
             productName: productObj?.name || "",
             typeId: typeId,
             optionId: optionId,
@@ -77,29 +85,55 @@ export default function SelectProductPage() {
 
   const handleProductSelect = (product: Product) => {
     setSelectedProduct(product);
+
+    // Yeni ürünün type ve option'ı varsa ekle, yoksa null
+    const typeId =
+      product.types && product.types.length > 0
+        ? product.defaultType || product.types[0]?.id || null
+        : null;
+    const optionId =
+      product.options && product.options.length > 0
+        ? product.defaultOption || product.options[0]?.id || null
+        : null;
+
+    setSelectedType(typeId);
+    setSelectedOption(optionId);
+
     const updates: Record<string, string | null> = {
       productId: product.id,
       productName: product.name,
+      typeId,
+      optionId,
     };
-
-    if (product.id !== "panjur") {
-      setSelectedType(null);
-      setSelectedOption(null);
-      updates.typeId = null;
-      updates.optionId = null;
-    }
-
+    if (!typeId) updates.typeId = null;
+    if (!optionId) updates.optionId = null;
     updateURL(updates);
   };
 
   const handleTypeSelect = (type: string | null) => {
     setSelectedType(type);
-    updateURL({ typeId: type });
+    updateURL({
+      typeId: type,
+      productId: selectedProduct?.id || "",
+      productName: selectedProduct?.name || "",
+    });
   };
 
-  const handleOptionSelect = (option: string | null) => {
+  const handleOptionSelect = (option: string | null, product?: Product) => {
     setSelectedOption(option);
-    updateURL({ optionId: option });
+    const prod = product || selectedProduct;
+    // typeId'yi product üzerinden bul
+    const typeId =
+      prod?.types && prod.types.length > 0
+        ? prod.defaultType || prod.types[0]?.id || null
+        : null;
+    setSelectedType(typeId);
+    updateURL({
+      optionId: option,
+      productId: prod?.id || "",
+      productName: prod?.name || "",
+      typeId: typeId,
+    });
   };
 
   if (isLoading) {

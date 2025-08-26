@@ -31,7 +31,7 @@ export default function Home() {
     const loadProducts = async () => {
       setIsLoading(true);
       try {
-        const { products } = await getProducts();
+        const products = await getProducts();
         setProducts(products);
       } finally {
         setIsLoading(false);

@@ -89,6 +89,8 @@ export interface Currency {
   symbol: string;
 }
 export interface Product {
+  defaultType?: string;
+  defaultOption?: string;
   id: string;
   name: string;
   isActive: boolean;
@@ -114,20 +116,15 @@ export interface ProductType {
 }
 
 // Function to get products from JSON file
-export const getProducts = async (): Promise<ProductsResponse> => {
+export const getProducts = async (): Promise<Product[]> => {
   try {
     const response = await fetch("/api/products");
     if (!response.ok) throw new Error("Failed to fetch products");
     const data = await response.json();
-    return data;
+    return data.products;
   } catch (error) {
     console.error("Failed to get products:", error);
-    return {
-      defaultProduct: "",
-      defaultType: "",
-      defaultOption: "",
-      products: [],
-    };
+    return [];
   }
 };
 
@@ -136,7 +133,7 @@ export const getProductById = async (
   productId: string
 ): Promise<Product | null> => {
   try {
-    const { products } = await getProducts();
+    const products = await getProducts();
     const product = products.find((p) => p.id === productId);
     return product || null;
   } catch (error) {

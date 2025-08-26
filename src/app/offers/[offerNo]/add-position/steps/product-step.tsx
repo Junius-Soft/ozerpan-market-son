@@ -11,7 +11,7 @@ interface ProductStepProps {
   selectedOption: string | null;
   onProductSelect: (product: Product) => void;
   onTypeSelect: (typeId: string) => void;
-  onOptionSelect: (optionId: string) => void;
+  onOptionSelect: (optionId: string, product?: Product) => void;
 }
 
 export function ProductStep({
@@ -44,7 +44,11 @@ export function ProductStep({
                   : ""
               }
             `}
-            onClick={() => product.isActive && onProductSelect(product)}
+            onClick={() => {
+              if (product.isActive) {
+                onProductSelect(product);
+              }
+            }}
           >
             <div className="aspect-video relative mb-4 rounded-lg overflow-hidden bg-gray-100">
               <Image
@@ -65,8 +69,20 @@ export function ProductStep({
                       key={option.id}
                       onClick={(e) => {
                         e.stopPropagation();
-                        onProductSelect(product); // opsiyon seçilince ürünü de seç
-                        onOptionSelect(option.id);
+                        onProductSelect(product);
+                        if (
+                          !selectedType &&
+                          product.types &&
+                          product.types.length > 0
+                        ) {
+                          const firstActiveType = product.types.find(
+                            (t) => !t.disabled
+                          );
+                          if (firstActiveType) {
+                            onTypeSelect(firstActiveType.id);
+                          }
+                        }
+                        onOptionSelect(option.id, product);
                       }}
                       disabled={option.disabled}
                       className={`

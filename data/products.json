@@ -36,7 +36,7 @@
         {
           "id": "yalitimli",
           "name": "Yalıtımlı Panjur",
-          "disabled": true
+          "disabled": false
         }
       ],
       "types": [

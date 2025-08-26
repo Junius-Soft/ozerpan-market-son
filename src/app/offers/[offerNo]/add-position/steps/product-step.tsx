@@ -65,6 +65,7 @@ export function ProductStep({
                       key={option.id}
                       onClick={(e) => {
                         e.stopPropagation();
+                        onProductSelect(product); // opsiyon seçilince ürünü de seç
                         onOptionSelect(option.id);
                       }}
                       disabled={option.disabled}

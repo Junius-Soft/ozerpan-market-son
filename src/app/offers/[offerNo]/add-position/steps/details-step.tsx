@@ -50,12 +50,16 @@ export function DetailsStep({
     formik.setFieldValue("selectedProducts", selectedProducts);
   }, [totalPrice]);
 
-  const availableTabs = useMemo(
-    () => selectedProduct?.tabs ?? [],
-    [selectedProduct]
-  );
+  const availableTabs = useMemo(() => {
+    if (!selectedProduct?.tabs) return [];
+    // optionId'ye göre filtrele
+    return selectedProduct.tabs.filter((tab) => {
+      if (!tab.showIfOptionId) return true;
+      return tab.showIfOptionId === optionId;
+    });
+  }, [selectedProduct, optionId]);
   const [currentTab, setCurrentTab] = useState<string>(
-    selectedProduct?.tabs?.[0].id ?? ""
+    availableTabs[0].id ?? ""
   );
 
   const renderTabContent = (

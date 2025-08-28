@@ -41,6 +41,7 @@ export interface ProductPreview {
 export interface ProductTab {
   id: string;
   name: string;
+  showIfOptionId?: string;
   content?: {
     fields: ProductTabField[];
     preview?: ProductPreview;

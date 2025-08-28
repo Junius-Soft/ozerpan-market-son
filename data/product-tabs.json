@@ -1,6 +1,41 @@
 {
   "panjur": [
     {
+      "id": "specifications",
+      "name": "Özellikler",
+      "showIfOptionId": "yalitimli",
+      "content": {
+        "fields": [
+          {
+            "id": "yalitimliType",
+            "name": "Ürün Tipi",
+            "type": "select",
+            "options": [
+              { "id": "fullset", "name": "Full Set" },
+              { "id": "boxWithMotor", "name": "Motorlu Kutu" },
+              { "id": "emptyBox", "name": "Boş Kutu" },
+              { "id": "detail", "name": "Detay" }
+            ],
+            "default": "fullset"
+          },
+          {
+            "id": "yalitimliDetailType",
+            "name": "Detay",
+            "type": "select",
+            "options": [
+              { "id": "withoutBox", "name": "Kutu Hariç" },
+              { "id": "onlyMotor", "name": "Motor Ekle" }
+            ],
+            "default": "withoutBox",
+            "dependsOn": {
+              "field": "yalitimliType",
+              "value": "detail"
+            }
+          }
+        ]
+      }
+    },
+    {
       "id": "dimensions",
       "name": "Ürün Ölçüleri",
       "content": {

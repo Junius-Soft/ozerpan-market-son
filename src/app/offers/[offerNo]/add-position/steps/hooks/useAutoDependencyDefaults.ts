@@ -5,79 +5,6 @@ import { FormikProps } from "formik";
 import { useRef, useEffect } from "react";
 import productTabs from "@/../data/product-tabs.json";
 
-export function useAutoDependencyDefaults(
-  formik: FormikProps<
-    PanjurSelections & Record<string, string | number | boolean>
-  >,
-  productType: keyof typeof productTabs
-) {
-  const allFields: ProductTabField[] = (
-    productTabs[productType] as ProductTab[]
-  ).flatMap((tab) => tab.content?.fields || []);
-  const prevValues = useRef(formik.values);
-  const pendingUpdate = useRef(false);
-
-  useEffect(() => {
-    if (pendingUpdate.current) {
-      pendingUpdate.current = false;
-      prevValues.current = { ...formik.values };
-      return;
-    }
-
-    const changedKeys = Object.keys(formik.values).filter(
-      (key) => formik.values[key] !== prevValues.current[key]
-    );
-    if (changedKeys.length === 0) return;
-
-    const newValues = { ...formik.values };
-    let updated = false;
-
-    // Helper: reset all children recursively if dependency is not met
-    function resetDependents(parentKey: string) {
-      allFields.forEach((field) => {
-        if (field.dependsOn && field.dependsOn.field === parentKey) {
-          const isValid = checkDependencyChain(field, newValues, allFields);
-          if (!isValid) {
-            // Reset to default if var, yoksa ""
-            newValues[field.id] =
-              field.default !== undefined ? field.default : "";
-            updated = true;
-            // Zincirli alt alanları da resetle
-            resetDependents(field.id);
-          }
-        }
-      });
-    }
-
-    // Her değişen key için zincirli reset ve default işlemi
-    for (const changedKey of changedKeys) {
-      resetDependents(changedKey);
-    }
-
-    // Son olarak, tüm alanları tekrar kontrol et ve default ataması gerekiyorsa ata
-    for (const field of allFields) {
-      if (field.dependsOn) {
-        const isValid = checkDependencyChain(field, newValues, allFields);
-        if (
-          !isValid &&
-          field.default !== undefined &&
-          newValues[field.id] !== field.default
-        ) {
-          newValues[field.id] = field.default;
-          updated = true;
-        }
-      }
-    }
-
-    if (updated) {
-      pendingUpdate.current = true;
-      formik.setValues(newValues, false);
-    }
-
-    prevValues.current = { ...formik.values };
-  }, [formik.values, allFields, formik]);
-}
-
 /**
  * Hem dependsOn hem de filterBy kurallarını zincirli şekilde uygulayan hook.
  * Alanın options'ı filterBy ile dinamik olarak filtrelenir, seçili değer uygun değilse default veya ilk uygun değere set edilir.
@@ -89,9 +16,10 @@ export function useAutoDependencyAndFilterBy(
   productType: keyof typeof productTabs,
   optionId: string | null
 ) {
-  const allFields: ProductTabField[] = (
-    productTabs[productType] as ProductTab[]
-  ).flatMap((tab) => tab.content?.fields || []);
+  const allTabs: ProductTab[] = productTabs[productType] as ProductTab[];
+  const allFields: ProductTabField[] = allTabs.flatMap(
+    (tab) => tab.content?.fields || []
+  );
   const prevValues = useRef(formik.values);
   const pendingUpdate = useRef(false);
 
@@ -109,6 +37,33 @@ export function useAutoDependencyAndFilterBy(
 
     const newValues = { ...formik.values };
     let updated = false;
+
+    // OptionId'ye göre defaultValues desteği
+    for (const tab of allTabs) {
+      if (tab.content?.fields) {
+        for (const field of tab.content.fields) {
+          if (
+            field.defaultValues &&
+            optionId &&
+            field.defaultValues[optionId]
+          ) {
+            if (newValues[field.id] !== field.defaultValues[optionId]) {
+              newValues[field.id] = field.defaultValues[optionId];
+              updated = true;
+            }
+          }
+        }
+      }
+      // Tab seviyesinde defaultValues desteği
+      if (tab.defaultValues && optionId && tab.defaultValues[optionId]) {
+        Object.entries(tab.defaultValues).forEach(([key, value]) => {
+          if (key === optionId && newValues[tab.id] !== value) {
+            newValues[tab.id] = value;
+            updated = true;
+          }
+        });
+      }
+    }
 
     // Helper: reset all children recursively if dependency is not met
     function resetDependents(parentKey: string) {
@@ -191,10 +146,20 @@ export function useAutoDependencyAndFilterBy(
     for (const field of allFields) {
       if (field.dependsOn) {
         const isValid = checkDependencyChain(field, newValues, allFields);
+        // dependsOn zinciri uygun değilse default ata
         if (
           !isValid &&
           field.default !== undefined &&
           newValues[field.id] !== field.default
+        ) {
+          newValues[field.id] = field.default;
+          updated = true;
+        }
+        // dependsOn zinciri uygunsa ve alan boşsa default ata
+        if (
+          isValid &&
+          field.default !== undefined &&
+          (newValues[field.id] === undefined || newValues[field.id] === "")
         ) {
           newValues[field.id] = field.default;
           updated = true;
@@ -210,5 +175,5 @@ export function useAutoDependencyAndFilterBy(
     }
 
     prevValues.current = { ...formik.values };
-  }, [formik.values, allFields, formik, optionId]);
+  }, [formik.values, allFields, formik, optionId, allTabs]);
 }

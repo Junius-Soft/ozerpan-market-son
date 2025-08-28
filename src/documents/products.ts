@@ -31,6 +31,7 @@ export interface ProductTabField {
     field: string;
     value: string | string[]; // Allow either a single string or an array of strings
   };
+  defaultValues?: Record<string, string | number | boolean>;
 }
 
 export interface ProductPreview {
@@ -46,6 +47,7 @@ export interface ProductTab {
     fields: ProductTabField[];
     preview?: ProductPreview;
   };
+  defaultValues?: Record<string, string | number | boolean>;
 }
 
 export interface ProductsResponse {

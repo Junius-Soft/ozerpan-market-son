@@ -118,7 +118,10 @@
               },
               { "id": "motorlu", "name": "Motorlu" }
             ],
-            "default": "manuel"
+            "default": "manuel",
+            "defaultValues": {
+              "yalitimli": "motorlu"
+            }
           },
           {
             "id": "manuelSekli",
@@ -771,13 +774,23 @@
               { "id": "185mm", "name": "185MM" },
               { "id": "185x220mm", "name": "185MM Yalıtımlı" },
               { "id": "220mm", "name": "220MM" },
-              { "id": "220x255mm", "name": "220MM Yalıtımlı" }
+              { "id": "220x255mm", "name": "220MM Yalıtımlı" },
+              { "id": "250mm_yerli", "name": "250MM Yerli" },
+              { "id": "250mm_ithal", "name": "250MM İthal" },
+              { "id": "300mm_yerli", "name": "300MM Yerli" },
+              { "id": "300mm_ithal", "name": "300MM İthal" }
             ],
             "filterBy": {
               "field": "optionId",
               "valueMap": {
                 "distan": ["137mm", "165mm", "205mm", "250mm"],
-                "monoblok": ["185mm", "185x220mm", "220mm", "220x255mm"]
+                "monoblok": ["185mm", "185x220mm", "220mm", "220x255mm"],
+                "yalitimli": [
+                  "250mm_yerli",
+                  "250mm_ithal",
+                  "300mm_yerli",
+                  "300mm_ithal"
+                ]
               }
             },
             "default": "137mm"

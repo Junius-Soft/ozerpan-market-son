@@ -96,4 +96,30 @@ export const maxLamelHeights: LamelHeightTable = {
       "55_se": { manuel: 3000, motorlu: 2750 },
     },
   },
+  yalitimli: {
+    "250mm_yerli": {
+      "39_sl": { manuel: null, motorlu: 3500 },
+      "45_se": { manuel: null, motorlu: 3250 },
+      "55_sl": { manuel: null, motorlu: 2250 },
+      "55_se": { manuel: null, motorlu: 2250 },
+    },
+    "250mm_ithal": {
+      "39_sl": { manuel: null, motorlu: 3500 },
+      "45_se": { manuel: null, motorlu: 3250 },
+      "55_sl": { manuel: null, motorlu: 2250 },
+      "55_se": { manuel: null, motorlu: 2250 },
+    },
+    "300mm_yerli": {
+      "39_sl": { manuel: null, motorlu: 3500 },
+      "45_se": { manuel: null, motorlu: 3500 },
+      "55_sl": { manuel: null, motorlu: 3350 },
+      "55_se": { manuel: null, motorlu: 3350 },
+    },
+    "300mm_ithal": {
+      "39_sl": { manuel: null, motorlu: 3500 },
+      "45_se": { manuel: null, motorlu: 3500 },
+      "55_sl": { manuel: null, motorlu: 3350 },
+      "55_se": { manuel: null, motorlu: 3350 },
+    },
+  },
 };

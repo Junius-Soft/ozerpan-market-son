@@ -31,19 +31,20 @@ export function filterBoxSize(
       { id: "220mm", name: "220MM" },
       { id: "220x255mm", name: "220MM Yalıtımlı" },
     ];
-  } else if (optionId === "distan") {
-    boxOptions = [
-      { id: "300mm", name: "300MM" },
-      { id: "300x220mm", name: "300MM Yalıtımlı" },
-      { id: "300x255mm", name: "300MM Yalıtımlı" },
-    ];
-  } else {
-    // distan için varsayılan seçenekler
+  } else if (optionId === "yalitimli") {
     boxOptions = [
       { id: "250mm_yerli", name: "250MM Yerli" },
       { id: "250mm_ithal", name: "250MM İthal" },
       { id: "300mm_yerli", name: "300MM Yerli" },
       { id: "300mm_ithal", name: "300MM İthal" },
+    ];
+  } else {
+    // distan için varsayılan seçenekler
+    boxOptions = [
+      { id: "137mm", name: "137MM" },
+      { id: "165mm", name: "165MM" },
+      { id: "205mm", name: "205MM" },
+      { id: "250mm", name: "250MM" },
     ];
   }
 

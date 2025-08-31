@@ -1109,6 +1109,42 @@
         "price": "2.46"
       },
       {
+        "description": "24x25 Strafor Kutu İthal Beyaz",
+        "stock_code": "352144131510",
+        "uretici_kodu": "352144131510",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "14.93"
+      },
+      {
+        "description": "30x30 Strafor Kutu İthal Beyaz",
+        "stock_code": "352144331510",
+        "uretici_kodu": "352144331510",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "15.60"
+      },
+      {
+        "description": "25x25 Eps Panjur Kutusu Yerli Beyaz",
+        "stock_code": "352144431510",
+        "uretici_kodu": "352144431510",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "11.67"
+      },
+      {
+        "description": "30x30 Eps Panjur Kutusu Yerli Beyaz",
+        "stock_code": "352144531510",
+        "uretici_kodu": "352144531510",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "11.89"
+      },
+      {
         "description": "Mini Alt Parça Pres",
         "stock_code": "352123900200",
         "uretici_kodu": "ES.427.00.DAP",

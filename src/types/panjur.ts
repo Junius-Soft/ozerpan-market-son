@@ -68,7 +68,11 @@ export interface PanjurSelections extends BaseSelections {
     | "185mm"
     | "185x220mm"
     | "220mm"
-    | "220x255mm";
+    | "220x255mm"
+    | "250mm_yerli"
+    | "250mm_ithal"
+    | "300mm_yerli"
+    | "300mm_ithal";
   dikmeType:
     | "mini_dikme"
     | "mini_orta_dikme"

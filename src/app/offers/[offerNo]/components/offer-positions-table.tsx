@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { resetShutterState } from "@/store/shutterSlice";
 import { useDispatch } from "react-redux";
+import { capitalizeFirstLetter } from "../add-position/product-details/ProductDetailsHeader";
 
 export const convertToEUR = (
   amount: number,
@@ -206,7 +207,14 @@ export function OfferPositionsTable({
                     </Button>
                   )}
                 </TableCell>
-                <TableCell>{position.productName}</TableCell>
+                <TableCell>
+                  {position.productName}
+                  {position.optionId
+                    ? " (" +
+                      capitalizeFirstLetter(position.optionId ?? "") +
+                      ")"
+                    : ""}
+                </TableCell>
                 <TableCell>
                   {position.productDetails.width &&
                   position.productDetails.height

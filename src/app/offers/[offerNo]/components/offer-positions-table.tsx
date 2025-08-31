@@ -208,12 +208,8 @@ export function OfferPositionsTable({
                   )}
                 </TableCell>
                 <TableCell>
+                  {capitalizeFirstLetter(position.optionId ?? "")}{" "}
                   {position.productName}
-                  {position.optionId
-                    ? " (" +
-                      capitalizeFirstLetter(position.optionId ?? "") +
-                      ")"
-                    : ""}
                 </TableCell>
                 <TableCell>
                   {position.productDetails.width &&

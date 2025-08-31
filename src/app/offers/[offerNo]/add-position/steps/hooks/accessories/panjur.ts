@@ -28,6 +28,7 @@ import {
   findDengeMakarasiAccessoryPrice,
   findMiniDikmeAccessories,
   findMotorPrice,
+  findYalitimliYanKapakAccessoryPrice,
 } from "@/utils/accessory";
 
 export const calculatePanjurAccessories = (
@@ -75,6 +76,15 @@ export const calculatePanjurAccessories = (
       dikmeCount
     );
     neededAccessories.push(...monoblokEkAksesuarlar);
+  } else if (optionId === "yalitimli") {
+    // Yalıtımlı kutu için yeni fonksiyon
+    const yalitimliYanKapaklar = findYalitimliYanKapakAccessoryPrice(
+      allAccessories,
+      values.boxType,
+      values.box_color,
+      dikmeCount
+    );
+    neededAccessories.push(...yalitimliYanKapaklar);
   } else {
     // Distan için eski fonksiyon - bölme sayısı kadar
     const yanKapak = findYanKapakAccessoryPrice(

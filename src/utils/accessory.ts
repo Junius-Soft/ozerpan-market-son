@@ -509,3 +509,72 @@ export function findMonoblokEkAksesuarlar(
 
   return results;
 }
+
+// Yalıtımlı kutu ek aksesuarları bulucu
+export function findYalitimliYanKapakAccessoryPrice(
+  accessories: PriceItem[],
+  boxType: string,
+  boxColor: string,
+  dikmeCount: number
+): SelectedProduct[] {
+  const results: SelectedProduct[] = [];
+  const normalizedColor = normalizeColor(boxColor);
+  const middleDikmeCount = dikmeCount - 2;
+
+  // Aksesuar konfigürasyonları
+  const configs: Record<
+    string,
+    Array<{ name: string; quantity: number; needsColor: boolean }>
+  > = {
+    "250mm_ithal": [
+      { name: "25x25 Yan Kapak Sac (Fullset)", quantity: 1, needsColor: false },
+      {
+        name: "25x25 Orta Kapak Sac Siyah",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+    ],
+    "250mm_yerli": [
+      { name: "25x25 Yan Kapak Sac (Fullset)", quantity: 1, needsColor: false },
+      {
+        name: "25x25 Orta Kapak Sac Siyah",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+    ],
+    "300mm_ithal": [
+      { name: "30x30 Yan Kapak Sac (Fullset)", quantity: 1, needsColor: false },
+      {
+        name: "30x30 Orta Kapak Sac Siyah",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+    ],
+    "300mm_yerli": [
+      { name: "30x30 Yan Kapak Sac (Fullset)", quantity: 1, needsColor: false },
+      {
+        name: "30x30 Orta Kapak Sac Siyah",
+        quantity: middleDikmeCount,
+        needsColor: false,
+      },
+    ],
+  };
+
+  const config = configs[boxType];
+  if (config) {
+    config.forEach(({ name, quantity, needsColor }) => {
+      const accessoryItem = findMonoblokAccessoryComponent(
+        accessories,
+        name,
+        normalizedColor,
+        quantity,
+        needsColor
+      );
+      if (accessoryItem) {
+        results.push(accessoryItem);
+      }
+    });
+  }
+
+  return results;
+}

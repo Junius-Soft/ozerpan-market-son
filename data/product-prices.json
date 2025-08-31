@@ -1109,7 +1109,7 @@
         "price": "2.46"
       },
       {
-        "description": "24x25 Strafor Kutu İthal Beyaz",
+        "description": "25x25 Strafor Kutu İthal Beyaz",
         "stock_code": "352144131510",
         "uretici_kodu": "352144131510",
         "type": "yalitimli_panjur_kutu_profilleri",
@@ -1127,7 +1127,7 @@
         "price": "15.60"
       },
       {
-        "description": "25x25 Eps Panjur Kutusu Yerli Beyaz",
+        "description": "25x25 Panjur Kutusu Yerli Beyaz",
         "stock_code": "352144431510",
         "uretici_kodu": "352144431510",
         "type": "yalitimli_panjur_kutu_profilleri",
@@ -1136,13 +1136,103 @@
         "price": "11.67"
       },
       {
-        "description": "30x30 Eps Panjur Kutusu Yerli Beyaz",
+        "description": "30x30 Panjur Kutusu Yerli Beyaz",
         "stock_code": "352144531510",
         "uretici_kodu": "352144531510",
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
         "price": "11.89"
+      },
+      {
+        "description": "25x25 Strafor Kutu Alt Kapama Beyaz",
+        "stock_code": "352144151110",
+        "uretici_kodu": "352144151110",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "3.54"
+      },
+      {
+        "description": "25x25 Strafor Kutu Alt Kapama Siyah",
+        "stock_code": "352144151210",
+        "uretici_kodu": "352144151210",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "siyah",
+        "unit": "Metre",
+        "price": "3.54"
+      },
+      {
+        "description": "25x25 Strafor Kutu Alt Kapama Metalik Gri",
+        "stock_code": "352144153010",
+        "uretici_kodu": "352144153010",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "metalik gri",
+        "unit": "Metre",
+        "price": "3.54"
+      },
+      {
+        "description": "25x25 Strafor Kutu Alt Kapama Antrasit Gri",
+        "stock_code": "352144153410",
+        "uretici_kodu": "352144153410",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "antrasit gri",
+        "unit": "Metre",
+        "price": "3.54"
+      },
+      {
+        "description": "25x25 Strafor Kutu Alt Kapama Vizon",
+        "stock_code": "352144153510",
+        "uretici_kodu": "352144153510",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "3.54"
+      },
+      {
+        "description": "30x30 Strafor Kutu Alt Kapama Beyaz",
+        "stock_code": "352144351210",
+        "uretici_kodu": "352144351210",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "4.50"
+      },
+      {
+        "description": "30x30 Strafor Kutu Alt Kapama Siyah",
+        "stock_code": "352144351210",
+        "uretici_kodu": "352144351210",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "siyah",
+        "unit": "Metre",
+        "price": "4.50"
+      },
+      {
+        "description": "30x30 Strafor Kutu Alt Kapama Metalik Gri",
+        "stock_code": "352144351210",
+        "uretici_kodu": "352144351210",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "metalik gri",
+        "unit": "Metre",
+        "price": "4.50"
+      },
+      {
+        "description": "30x30 Strafor Kutu Alt Kapama Antrasit Gri",
+        "stock_code": "352144351210",
+        "uretici_kodu": "352144351210",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "antrasit gri",
+        "unit": "Metre",
+        "price": "4.50"
+      },
+      {
+        "description": "30x30 Strafor Kutu Alt Kapama Vizon",
+        "stock_code": "352144351210",
+        "uretici_kodu": "352144351210",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "4.50"
       },
       {
         "description": "Mini Alt Parça Pres",

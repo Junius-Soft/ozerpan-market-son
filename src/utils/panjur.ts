@@ -468,6 +468,77 @@ export const findMonoblokBoxPrice = (
   };
 };
 
+export const findYalitimliBoxPrice = (
+  prices: PriceItem[],
+  boxType: string,
+  boxColor: string,
+  systemWidth: number
+): {
+  totalPrice: number;
+  selectedProducts: SelectedProduct[];
+} => {
+  // Sadece yalıtımlı kutu profilleri
+  const yalitimliBoxPrices = prices.filter(
+    (p) => p.type === "yalitimli_panjur_kutu_profilleri"
+  );
+  const normalizedColor = normalizeColor(boxColor);
+  const selectedProducts: SelectedProduct[] = [];
+  let totalPrice = 0;
+
+  // Kutu konfigürasyonları
+  const configs: Record<
+    string,
+    Array<{ name: string; needsColor: boolean }>
+  > = {
+    "250mm_ithal": [
+      { name: "25x25 Strafor Kutu İthal", needsColor: true },
+      { name: "25x25 Strafor Kutu Alt Kapama", needsColor: true },
+    ],
+    "250mm_yerli": [
+      { name: "25x25 Strafor Kutu Yerli", needsColor: true },
+      { name: "25x25 Strafor Kutu Alt Kapama", needsColor: true },
+    ],
+    "300mm_yerli": [
+      { name: "30x30 Panjur Kutusu Yerli", needsColor: true },
+      { name: "30x30 Strafor Kutu Alt Kapama", needsColor: true },
+    ],
+    "300mm_ithal": [
+      { name: "30x30 Panjur Kutusu İthal", needsColor: true },
+      { name: "30x30 Strafor Kutu Alt Kapama", needsColor: true },
+    ],
+  };
+
+  const config = configs[boxType];
+  if (config) {
+    config.forEach(({ name, needsColor }) => {
+      // needsColor true ise renk ekle
+      const searchName = needsColor ? `${name} ${normalizedColor}` : name;
+      let productItem = yalitimliBoxPrices.find(
+        (p) =>
+          p.description.trim().toLowerCase() === searchName.trim().toLowerCase()
+      );
+      // Eğer bulunamazsa Beyaz ile dene
+      if (!productItem && normalizedColor !== "Beyaz" && needsColor) {
+        productItem = yalitimliBoxPrices.find(
+          (p) =>
+            p.description.trim().toLowerCase() ===
+            `${name} Beyaz`.trim().toLowerCase()
+        );
+      }
+      if (productItem) {
+        const product = createSelectedProduct(productItem, 1, systemWidth);
+        selectedProducts.push(product);
+        totalPrice += product.totalPrice;
+      }
+    });
+  }
+
+  return {
+    totalPrice,
+    selectedProducts,
+  };
+};
+
 export const findSmartHomePrice = (
   prices: PriceItem[],
   smartHomeType: string | undefined

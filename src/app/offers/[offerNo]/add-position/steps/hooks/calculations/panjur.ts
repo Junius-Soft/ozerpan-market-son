@@ -21,6 +21,7 @@ import {
   calculateLamelGenisligi,
   calculateDikmeHeight,
   findSectionWidths,
+  findYalitimliBoxPrice,
 } from "@/utils/panjur";
 import { findEffectiveSections } from "@/utils/shutter-calculations";
 import { ProductTab } from "@/documents/products";
@@ -262,6 +263,16 @@ export const calculatePanjur = (
   if (optionId === "monoblok") {
     // Monoblok için yeni fonksiyon kullan
     const { totalPrice, selectedProducts } = findMonoblokBoxPrice(
+      prices,
+      values.boxType,
+      values.box_color,
+      systemWidth
+    );
+    boxPrice = totalPrice;
+    boxSelectedProducts.push(...selectedProducts);
+  } else if (optionId === "yalitimli") {
+    // Yalıtımlı için yeni fonksiyon
+    const { totalPrice, selectedProducts } = findYalitimliBoxPrice(
       prices,
       values.boxType,
       values.box_color,

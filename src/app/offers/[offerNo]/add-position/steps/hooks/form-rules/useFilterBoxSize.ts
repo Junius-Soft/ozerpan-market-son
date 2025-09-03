@@ -13,7 +13,7 @@ export function filterBoxSize(
   formik: FormikProps<
     PanjurSelections & Record<string, string | number | boolean>
   >,
-  optionId?: string | null
+  optionId: string
 ): ProductTabField["options"] | null {
   const values = formik.values;
   const height = Number(values.height);
@@ -61,9 +61,11 @@ export function filterBoxSize(
     }
     // Sadece seçili movementType'a göre kontrol et
     const maxValue =
-      maxLamelHeights[optionId || "distan"]?.[boxSize]?.[
-        selectedLamelTickness
-      ]?.[selectedMovementType];
+      maxLamelHeights[optionId]?.[boxSize]?.[selectedLamelTickness]?.[
+        selectedMovementType
+      ];
+    console.log({ boxSize });
+    // console.log({ lamelYuksekligi });
     let isValid = false;
     if (maxValue && lamelYuksekligi <= maxValue) {
       isValid = true;
@@ -72,7 +74,7 @@ export function filterBoxSize(
       validOptions.push({ id: box.id, name: box.name });
     }
   }
-
+  console.log({ validOptions });
   const isCurrentValid = validOptions.some(
     (opt) => opt.id === formik.values.boxType
   );
@@ -99,7 +101,7 @@ export function useFilterBoxSize(
 ) {
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
-  const optionId = searchParams.get("optionId");
+  const optionId = searchParams.get("optionId") || "distan";
   const {
     width,
     height,

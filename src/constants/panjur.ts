@@ -71,25 +71,25 @@ export const maxLamelHeights: LamelHeightTable = {
     },
   },
   monoblok: {
-    "185mm": {
+    "185": {
       "39_sl": { manuel: 2400, motorlu: 2250 },
       "45_se": { manuel: 2000, motorlu: 1750 },
       "55_sl": { manuel: 1800, motorlu: 1600 },
       "55_se": { manuel: 1800, motorlu: 1600 },
     },
-    "185x220mm": {
+    "185x220": {
       "39_sl": { manuel: 2400, motorlu: 2250 },
       "45_se": { manuel: 2000, motorlu: 1750 },
       "55_sl": { manuel: 1800, motorlu: 1600 },
       "55_se": { manuel: 1800, motorlu: 1600 },
     },
-    "220mm": {
+    "220": {
       "39_sl": { manuel: 3500, motorlu: 3500 },
       "45_se": { manuel: 3500, motorlu: 3500 },
       "55_sl": { manuel: 3000, motorlu: 2750 },
       "55_se": { manuel: 3000, motorlu: 2750 },
     },
-    "220x255mm": {
+    "220x255": {
       "39_sl": { manuel: 3500, motorlu: 3500 },
       "45_se": { manuel: 3500, motorlu: 3500 },
       "55_sl": { manuel: 3000, motorlu: 2750 },
@@ -97,25 +97,25 @@ export const maxLamelHeights: LamelHeightTable = {
     },
   },
   yalitimli: {
-    "250mm_yerli": {
-      "39_sl": { manuel: null, motorlu: 3500 },
-      "45_se": { manuel: null, motorlu: 3250 },
-      "55_sl": { manuel: null, motorlu: 2250 },
-      "55_se": { manuel: null, motorlu: 2250 },
+    "250_yerli": {
+      "39_sl": { manuel: null, motorlu: 2750 },
+      "45_se": { manuel: null, motorlu: 2250 },
+      "55_sl": { manuel: null, motorlu: 1850 },
+      "55_se": { manuel: null, motorlu: 1850 },
     },
-    "250mm_ithal": {
-      "39_sl": { manuel: null, motorlu: 3500 },
-      "45_se": { manuel: null, motorlu: 3250 },
-      "55_sl": { manuel: null, motorlu: 2250 },
-      "55_se": { manuel: null, motorlu: 2250 },
+    "250_ithal": {
+      "39_sl": { manuel: null, motorlu: 2750 },
+      "45_se": { manuel: null, motorlu: 2250 },
+      "55_sl": { manuel: null, motorlu: 1850 },
+      "55_se": { manuel: null, motorlu: 1850 },
     },
-    "300mm_yerli": {
+    "300_yerli": {
       "39_sl": { manuel: null, motorlu: 3500 },
       "45_se": { manuel: null, motorlu: 3500 },
       "55_sl": { manuel: null, motorlu: 3350 },
       "55_se": { manuel: null, motorlu: 3350 },
     },
-    "300mm_ithal": {
+    "300_ithal": {
       "39_sl": { manuel: null, motorlu: 3500 },
       "45_se": { manuel: null, motorlu: 3500 },
       "55_sl": { manuel: null, motorlu: 3350 },

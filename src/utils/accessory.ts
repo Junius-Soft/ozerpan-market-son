@@ -511,6 +511,38 @@ export function findMonoblokEkAksesuarlar(
 }
 
 // Yalıtımlı kutu ek aksesuarları bulucu
+export function findYalitimliEkAksesuarlar(
+  accessories: PriceItem[]
+): SelectedProduct[] {
+  const results: SelectedProduct[] = [];
+
+  // Yalıtımlı kutu aksesuarları ile filtrele
+  const yalitimliAccessories = accessories.filter(
+    (acc) => acc.type === "yalitimli_panjur_kutu_aksesuarlari"
+  );
+
+  // 2 adet Fullset T Sac
+  const fullsetTSac = yalitimliAccessories.find((acc) =>
+    acc.description.includes("Fullset T Sac")
+  );
+  if (fullsetTSac) {
+    const selectedProduct = createSelectedProduct(fullsetTSac, 2);
+    results.push(selectedProduct);
+  }
+
+  // 1 adet Plaket 100x100 12 mm Pimli Galvaniz
+  const plaket = yalitimliAccessories.find((acc) =>
+    acc.description.includes("Plaket 100x100 12 mm Pimli Galvaniz")
+  );
+  if (plaket) {
+    const selectedProduct = createSelectedProduct(plaket, 1);
+    results.push(selectedProduct);
+  }
+
+  return results;
+}
+
+// Yalıtımlı kutu yan kapak aksesuarları bulucu
 export function findYalitimliYanKapakAccessoryPrice(
   accessories: PriceItem[],
   boxType: string,
@@ -527,7 +559,7 @@ export function findYalitimliYanKapakAccessoryPrice(
     Array<{ name: string; quantity: number; needsColor: boolean }>
   > = {
     "250mm_ithal": [
-      { name: "25x25 Yan Kapak Sac (Fullset)", quantity: 1, needsColor: false },
+      { name: "25x25 Yan Kapak Sac (Fullset)", quantity: 2, needsColor: false },
       {
         name: "25x25 Orta Kapak Sac Siyah",
         quantity: middleDikmeCount,
@@ -535,7 +567,7 @@ export function findYalitimliYanKapakAccessoryPrice(
       },
     ],
     "250mm_yerli": [
-      { name: "25x25 Yan Kapak Sac (Fullset)", quantity: 1, needsColor: false },
+      { name: "25x25 Yan Kapak Sac (Fullset)", quantity: 2, needsColor: false },
       {
         name: "25x25 Orta Kapak Sac Siyah",
         quantity: middleDikmeCount,
@@ -543,7 +575,7 @@ export function findYalitimliYanKapakAccessoryPrice(
       },
     ],
     "300mm_ithal": [
-      { name: "30x30 Yan Kapak Sac (Fullset)", quantity: 1, needsColor: false },
+      { name: "30x30 Yan Kapak Sac (Fullset)", quantity: 2, needsColor: false },
       {
         name: "30x30 Orta Kapak Sac Siyah",
         quantity: middleDikmeCount,
@@ -551,7 +583,7 @@ export function findYalitimliYanKapakAccessoryPrice(
       },
     ],
     "300mm_yerli": [
-      { name: "30x30 Yan Kapak Sac (Fullset)", quantity: 1, needsColor: false },
+      { name: "30x30 Yan Kapak Sac (Fullset)", quantity: 2, needsColor: false },
       {
         name: "30x30 Orta Kapak Sac Siyah",
         quantity: middleDikmeCount,

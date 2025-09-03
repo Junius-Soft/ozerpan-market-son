@@ -12,6 +12,8 @@ import {
   findYanKapakAccessoryPrice,
   findMonoblokYanKapakAccessoryPrice,
   findMonoblokEkAksesuarlar,
+  findYalitimliYanKapakAccessoryPrice,
+  findYalitimliEkAksesuarlar,
   findBoruBasiAccessoryPrice,
   findRulmanAccessoryPrice,
   findPlaketAccessoryPrice,
@@ -28,7 +30,6 @@ import {
   findDengeMakarasiAccessoryPrice,
   findMiniDikmeAccessories,
   findMotorPrice,
-  findYalitimliYanKapakAccessoryPrice,
 } from "@/utils/accessory";
 
 export const calculatePanjurAccessories = (
@@ -85,6 +86,10 @@ export const calculatePanjurAccessories = (
       dikmeCount
     );
     neededAccessories.push(...yalitimliYanKapaklar);
+
+    // Yalıtımlı kutu ek aksesuarları
+    const yalitimliEkAksesuarlar = findYalitimliEkAksesuarlar(allAccessories);
+    neededAccessories.push(...yalitimliEkAksesuarlar);
   } else {
     // Distan için eski fonksiyon - bölme sayısı kadar
     const yanKapak = findYanKapakAccessoryPrice(

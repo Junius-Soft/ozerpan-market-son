@@ -64,8 +64,6 @@ export function filterBoxSize(
       maxLamelHeights[optionId]?.[boxSize]?.[selectedLamelTickness]?.[
         selectedMovementType
       ];
-    console.log({ boxSize });
-    // console.log({ lamelYuksekligi });
     let isValid = false;
     if (maxValue && lamelYuksekligi <= maxValue) {
       isValid = true;
@@ -74,7 +72,6 @@ export function filterBoxSize(
       validOptions.push({ id: box.id, name: box.name });
     }
   }
-  console.log({ validOptions });
   const isCurrentValid = validOptions.some(
     (opt) => opt.id === formik.values.boxType
   );

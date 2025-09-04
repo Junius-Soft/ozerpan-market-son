@@ -42,7 +42,18 @@ export const calculatePanjurAccessories = (
   optionId: string
 ): SelectedProduct[] => {
   const neededAccessories: SelectedProduct[] = [];
-  const dikmeCount = Number(sectionCount) * 2;
+
+  // Dikme sayısı hesaplama - optionId'ye göre farklı
+  const dikmeCount = (() => {
+    const sectionCountNum = Number(sectionCount);
+    if (optionId === "distan") {
+      // Distan için: her bölme için 2 dikme (sol + sağ)
+      return sectionCountNum * 2;
+    } else {
+      // Monoblok ve yalıtımlı için: 2 yan dikme + (bölme sayısı - 1) orta dikme
+      return 2 + (sectionCountNum - 1);
+    }
+  })();
 
   const calculateMotorQuantity = () => {
     return sectionMotors.filter((motor) => motor).length;

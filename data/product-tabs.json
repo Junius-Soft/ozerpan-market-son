@@ -12,11 +12,24 @@
             "type": "select",
             "options": [
               { "id": "fullset", "name": "Full Set" },
-              { "id": "boxWithMotor", "name": "Motorlu Kutu" },
-              { "id": "emptyBox", "name": "Boş Kutu" },
+              { "id": "boxset", "name": "Kutu Set" },
               { "id": "detail", "name": "Detay" }
             ],
             "default": "fullset"
+          },
+          {
+            "id": "boxsetType",
+            "name": "Kutu Set Tipi",
+            "type": "select",
+            "options": [
+              { "id": "boxWithMotor", "name": "Motorlu Kutu" },
+              { "id": "emptyBox", "name": "Boş Kutu" }
+            ],
+            "default": "withoutBox",
+            "dependsOn": {
+              "field": "yalitimliType",
+              "value": "boxset"
+            }
           },
           {
             "id": "yalitimliDetailType",

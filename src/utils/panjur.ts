@@ -491,19 +491,19 @@ export const findYalitimliBoxPrice = (
     Array<{ name: string; needsColor: boolean }>
   > = {
     "250mm_ithal": [
-      { name: "25x25 Strafor Kutu İthal", needsColor: true },
+      { name: "25x25 Strafor Kutu İthal", needsColor: false },
       { name: "25x25 Strafor Kutu Alt Kapama", needsColor: true },
     ],
     "250mm_yerli": [
-      { name: "25x25 Eps Panjur Kutusu Yerli", needsColor: true },
+      { name: "25x25 Eps Panjur Kutusu Yerli", needsColor: false },
       { name: "25x25 Strafor Kutu Alt Kapama", needsColor: true },
     ],
     "300mm_yerli": [
-      { name: "30x30 Eps Panjur Kutusu Yerli", needsColor: true },
+      { name: "30x30 Eps Panjur Kutusu Yerli", needsColor: false },
       { name: "30x30 Strafor Kutu Alt Kapama", needsColor: true },
     ],
     "300mm_ithal": [
-      { name: "30x30 Panjur Kutusu İthal", needsColor: true },
+      { name: "30x30 Strafor Kutu İthal", needsColor: false },
       { name: "30x30 Strafor Kutu Alt Kapama", needsColor: true },
     ],
   };

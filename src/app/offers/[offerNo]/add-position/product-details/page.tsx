@@ -278,7 +278,7 @@ export default function ProductDetailsPage() {
     productActions,
   ]);
 
-  const handleComplete = async (
+  const   handleComplete = async (
     values: ReturnType<typeof getInitialValues>
   ) => {
     if (!productObj) return;

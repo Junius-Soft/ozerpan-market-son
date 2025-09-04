@@ -30,6 +30,9 @@ export interface CalculationResult {
 }
 
 export interface PanjurSelections extends BaseSelections {
+  yalitimliType?: "fullset" | "boxset" | "detail";
+  boxsetType?: "boxWithMotor" | "emptyBox";
+  yalitimliDetailType?: "withoutBox" | "onlyMotor";
   middleBarPositions?: number[];
   sectionHeights?: number[];
   sectionMotors?: boolean[];

@@ -438,42 +438,113 @@ export const calculatePanjur = (
     }
   }
 
-  const rawTotalPriceEUR =
-    totalLamelPrice +
-    subPartPrice +
-    totalDikmePrice +
-    boxPrice +
-    tamburPrice +
-    yukseltmeProfiliPrice +
-    remotePrice +
-    smarthomePrice +
-    receiverPrice +
-    (accessoryItems || []).reduce(
-      (total: number, acc: SelectedProduct) => total + acc.totalPrice,
-      0
+  const rawTotalPriceEUR = (() => {
+    // Yalıtımlı kutu için özel hesaplama
+    if (optionId === "yalitimli") {
+      if (values.boxsetType === "boxWithMotor") {
+        // Sadece tambur ve kutu fiyatı
+        return tamburPrice + boxPrice;
+      } else if (values.boxsetType === "emptyBox") {
+        // Sadece kutu fiyatı
+        return boxPrice;
+      }
+    }
+
+    // Diğer durumlar için normal hesaplama
+    return (
+      totalLamelPrice +
+      subPartPrice +
+      totalDikmePrice +
+      boxPrice +
+      tamburPrice +
+      yukseltmeProfiliPrice +
+      remotePrice +
+      smarthomePrice +
+      receiverPrice +
+      (accessoryItems || []).reduce(
+        (total: number, acc: SelectedProduct) => total + acc.totalPrice,
+        0
+      )
     );
+  })();
 
   const totalPrice = rawTotalPriceEUR;
 
-  // Tüm ürünleri birleştir (aksesuarlar hariç)
-  const productItems = [
-    ...lamelSelectedProducts,
-    ...subPartSelectedProducts,
-    ...dikmeSelectedProducts,
-    ...boxSelectedProducts, // Hem monoblok hem distan box ürünleri
-    ...tamburSelectedProducts,
-    ...yukseltmeProfiliSelectedProducts,
-    remoteSelectedProduct,
-    smarthomeSelectedProduct,
-    receiverSelectedProduct,
-  ].filter(
-    (product): product is SelectedProduct =>
-      product !== null && product !== undefined
-  );
+  // Tüm ürünleri birleştir (aksesuarlar hariç) - yalıtımlı kutu için özel filtreleme
+  const productItems = (() => {
+    if (optionId === "yalitimli") {
+      if (values.boxsetType === "boxWithMotor") {
+        // Sadece tambur ve kutu ürünleri
+        return [...boxSelectedProducts, ...tamburSelectedProducts].filter(
+          (product): product is SelectedProduct =>
+            product !== null && product !== undefined
+        );
+      } else if (values.boxsetType === "emptyBox") {
+        // Sadece kutu ürünleri
+        return boxSelectedProducts.filter(
+          (product): product is SelectedProduct =>
+            product !== null && product !== undefined
+        );
+      }
+    }
+
+    // Diğer durumlar için normal ürün listesi
+    return [
+      ...lamelSelectedProducts,
+      ...subPartSelectedProducts,
+      ...dikmeSelectedProducts,
+      ...boxSelectedProducts, // Hem monoblok hem distan box ürünleri
+      ...tamburSelectedProducts,
+      ...yukseltmeProfiliSelectedProducts,
+      remoteSelectedProduct,
+      smarthomeSelectedProduct,
+      receiverSelectedProduct,
+    ].filter(
+      (product): product is SelectedProduct =>
+        product !== null && product !== undefined
+    );
+  })();
 
   const selectedProducts = {
     products: productItems,
-    accessories: accessoryItems || [], // Aksesuarlar ayrı array'de
+    accessories: (() => {
+      // Yalıtımlı kutu için aksesuarları da filtrele
+      if (optionId === "yalitimli") {
+        if (values.boxsetType === "boxWithMotor") {
+          // Sadece tambur ve kutu ile ilgili aksesuarlar
+          return (accessoryItems || []).filter((acc) => {
+            // Tambur veya kutu ile ilgili aksesuarları filtrele
+            const description = acc.description.toLowerCase();
+
+            return (
+              description.includes("boru") ||
+              description.includes("tambur") ||
+              description.includes("kutu") ||
+              description.includes("motor") ||
+              description.includes("yan kapak") ||
+              description.includes("orta kapak") ||
+              description.includes("fullset t sac") ||
+              description.includes("pimli galvaniz")
+            );
+          });
+        } else if (values.boxsetType === "emptyBox") {
+          // Sadece kutu ile ilgili aksesuarlar
+          const filteredAccessories = (accessoryItems || []).filter((acc) => {
+            const description = acc.description.toLowerCase();
+            return (
+              description.includes("yan kapak") ||
+              description.includes("orta kapak") ||
+              description.includes("fullset t sac") ||
+              description.includes("pimli galvaniz")
+            );
+          });
+          return filteredAccessories;
+        }
+      }
+
+      // Diğer durumlar için tüm aksesuarlar
+      return accessoryItems || [];
+    })(),
   };
 
   return {

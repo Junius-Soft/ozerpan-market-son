@@ -447,6 +447,56 @@ export const calculatePanjur = (
       } else if (values.boxsetType === "emptyBox") {
         // Sadece kutu fiyatı
         return boxPrice;
+      } else if (values.yalitimliType === "detail") {
+        if (values.yalitimliDetailType === "withoutBox") {
+          // Kutu, kutu bileşenleri, tambur ve (motor/makara) hariç - sadece lamel, dikme, alt parça
+          return (
+            totalLamelPrice +
+            subPartPrice +
+            totalDikmePrice +
+            yukseltmeProfiliPrice +
+            remotePrice +
+            smarthomePrice +
+            receiverPrice +
+            (accessoryItems || [])
+              .filter((acc) => {
+                const description = acc.description.toLowerCase();
+                return !(
+                  description.includes("kutu") ||
+                  description.includes("tambur") ||
+                  description.includes("boru") ||
+                  description.includes("motor") ||
+                  description.includes("makara") ||
+                  description.includes("kasnak")
+                );
+              })
+              .reduce(
+                (total: number, acc: SelectedProduct) => total + acc.totalPrice,
+                0
+              )
+          );
+        } else if (values.yalitimliDetailType === "onlyMotor") {
+          // Kutu ve kutu bileşenleri hariç, tambur ve (motor/makara) dahil
+          return (
+            totalLamelPrice +
+            subPartPrice +
+            totalDikmePrice +
+            tamburPrice +
+            yukseltmeProfiliPrice +
+            remotePrice +
+            smarthomePrice +
+            receiverPrice +
+            (accessoryItems || [])
+              .filter((acc) => {
+                const description = acc.description.toLowerCase();
+                return !description.includes("kutu");
+              })
+              .reduce(
+                (total: number, acc: SelectedProduct) => total + acc.totalPrice,
+                0
+              )
+          );
+        }
       }
     }
 
@@ -485,6 +535,37 @@ export const calculatePanjur = (
           (product): product is SelectedProduct =>
             product !== null && product !== undefined
         );
+      } else if (values.yalitimliType === "detail") {
+        if (values.yalitimliDetailType === "withoutBox") {
+          // Kutu, tambur hariç - sadece lamel, dikme, alt parça, yükseltme profili
+          return [
+            ...lamelSelectedProducts,
+            ...subPartSelectedProducts,
+            ...dikmeSelectedProducts,
+            ...yukseltmeProfiliSelectedProducts,
+            remoteSelectedProduct,
+            smarthomeSelectedProduct,
+            receiverSelectedProduct,
+          ].filter(
+            (product): product is SelectedProduct =>
+              product !== null && product !== undefined
+          );
+        } else if (values.yalitimliDetailType === "onlyMotor") {
+          // Kutu hariç, tambur dahil
+          return [
+            ...lamelSelectedProducts,
+            ...subPartSelectedProducts,
+            ...dikmeSelectedProducts,
+            ...tamburSelectedProducts,
+            ...yukseltmeProfiliSelectedProducts,
+            remoteSelectedProduct,
+            smarthomeSelectedProduct,
+            receiverSelectedProduct,
+          ].filter(
+            (product): product is SelectedProduct =>
+              product !== null && product !== undefined
+          );
+        }
       }
     }
 
@@ -513,9 +594,7 @@ export const calculatePanjur = (
         if (values.boxsetType === "boxWithMotor") {
           // Sadece tambur ve kutu ile ilgili aksesuarlar
           return (accessoryItems || []).filter((acc) => {
-            // Tambur veya kutu ile ilgili aksesuarları filtrele
             const description = acc.description.toLowerCase();
-
             return (
               description.includes("boru") ||
               description.includes("tambur") ||
@@ -529,7 +608,7 @@ export const calculatePanjur = (
           });
         } else if (values.boxsetType === "emptyBox") {
           // Sadece kutu ile ilgili aksesuarlar
-          const filteredAccessories = (accessoryItems || []).filter((acc) => {
+          return (accessoryItems || []).filter((acc) => {
             const description = acc.description.toLowerCase();
             return (
               description.includes("yan kapak") ||
@@ -538,7 +617,37 @@ export const calculatePanjur = (
               description.includes("pimli galvaniz")
             );
           });
-          return filteredAccessories;
+        } else if (values.yalitimliType === "detail") {
+          if (values.yalitimliDetailType === "withoutBox") {
+            // Kutu, tambur, motor/makara aksesuarları hariç
+            return (accessoryItems || []).filter((acc) => {
+              const description = acc.description.toLowerCase();
+              return !(
+                description.includes("kutu") ||
+                description.includes("tambur") ||
+                description.includes("boru") ||
+                description.includes("motor") ||
+                description.includes("makara") ||
+                description.includes("kasnak") ||
+                description.includes("yan kapak") ||
+                description.includes("orta kapak") ||
+                description.includes("fullset t sac") ||
+                description.includes("pimli galvaniz")
+              );
+            });
+          } else if (values.yalitimliDetailType === "onlyMotor") {
+            // Kutu aksesuarları hariç, tambur ve motor/makara aksesuarları dahil
+            return (accessoryItems || []).filter((acc) => {
+              const description = acc.description.toLowerCase();
+              return !(
+                description.includes("kutu") ||
+                description.includes("yan kapak") ||
+                description.includes("orta kapak") ||
+                description.includes("fullset t sac") ||
+                description.includes("pimli galvaniz")
+              );
+            });
+          }
         }
       }
 

@@ -2,6 +2,7 @@ import jsPDF from "jspdf";
 import autoTable, { RowInput } from "jspdf-autotable";
 import JsBarcode from "jsbarcode";
 import { Offer, Position } from "@/documents/offers";
+import { getProductSortConfig } from "./yalitimli-config";
 
 // Base64 font data will be imported
 import NotoSansRegular from "./NotoSans-Regular.js";
@@ -119,15 +120,22 @@ export class ImalatPDFGenerator {
       }
     });
 
-    // Tip sıralaması (kutu -> lamel -> alt parça -> dikme -> yükseltme profili)
-    const typeOrder = [
-      "panjur_kutu_profilleri",
-      "panjur_lamel_profilleri",
-      "panjur_alt_parça_profilleri",
-      "panjur_dikme_profilleri",
-      "sineklik_profilleri",
-      "panjur_tambur_boru_profilleri",
+    // Pozisyonlardan unique productId'leri al
+    const uniqueProductIds = [
+      ...new Set(data.positions.map((p) => p.productId).filter(Boolean)),
     ];
+
+    // Tüm ürünlerin sıralama konfigürasyonlarını birleştir
+    const typeOrder: string[] = [];
+    uniqueProductIds.forEach((productId) => {
+      const productSortConfig = getProductSortConfig(productId!);
+      productSortConfig.forEach((type) => {
+        if (!typeOrder.includes(type)) {
+          typeOrder.push(type);
+        }
+      });
+    });
+
     allProducts.sort((a, b) => {
       const aType = a.product.type || "Diğer";
       const bType = b.product.type || "Diğer";

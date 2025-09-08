@@ -2,7 +2,6 @@ export const getImalatListesiOptions = (
   productId?: string | null,
   optionId?: string | null
 ): { label: string; value: string }[] => {
-  console.log({ productId });
   // Panjur için
   if (productId === "panjur") {
     const baseOptions = [

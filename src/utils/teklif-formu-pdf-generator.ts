@@ -9,6 +9,137 @@ import { normalizeColor } from "./panjur";
 import { getLogoDataUrl } from "./fiyat-analizi-pdf-generator";
 import { store } from "@/store";
 
+// Ürüne özgü tablo kolon konfigürasyonu
+type ColumnConfig = {
+  key: string;
+  title: string;
+  getValue: (pos: Position) => string;
+};
+
+type ProductTableConfig = {
+  productId: string;
+  columns: ColumnConfig[];
+};
+
+// Ürüne göre tablo konfigürasyonları
+const productTableConfigs: ProductTableConfig[] = [
+  {
+    productId: "panjur",
+    columns: [
+      {
+        key: "kutu",
+        title: "Kutu",
+        getValue: (pos: Position) => {
+          let boxValue = "-";
+          const boxColor = normalizeColor(pos.productDetails?.box_color);
+          const boxSize = pos.productDetails?.boxType;
+          if (boxColor && boxSize) {
+            boxValue = `${boxColor} (${boxSize})`;
+          } else if (boxColor) {
+            boxValue = boxColor;
+          } else if (boxSize) {
+            boxValue = boxSize;
+          }
+          return boxValue;
+        },
+      },
+      {
+        key: "lamel",
+        title: "Lamel",
+        getValue: (pos: Position) => {
+          let lamelValue = "-";
+          const lamelColor = normalizeColor(pos.productDetails?.lamel_color);
+          let lamelCode = "";
+          const lamelTickness = pos.productDetails?.lamelTickness;
+          if (lamelTickness && lamelTickness.includes("_")) {
+            const [num, code] = lamelTickness.split("_");
+            if (num && code) {
+              lamelCode = `${code.toUpperCase()}-${num}`;
+            }
+          }
+          if (lamelColor && lamelCode) {
+            lamelValue = `${lamelColor} (${lamelCode})`;
+          } else if (lamelColor) {
+            lamelValue = lamelColor;
+          } else if (lamelCode) {
+            lamelValue = lamelCode;
+          }
+          return lamelValue;
+        },
+      },
+      {
+        key: "mekanizma",
+        title: "Mekanizma",
+        getValue: (pos: Position) => {
+          let mekanizmaValue = "-";
+          const movementType = pos.productDetails?.movementType;
+          if (movementType === "manuel") {
+            mekanizmaValue = "Manuel";
+          } else if (movementType === "motorlu") {
+            const marka = pos.productDetails?.motorMarka;
+            const motorSekli = pos.productDetails?.motorSekli;
+            if (marka) {
+              mekanizmaValue = marka.charAt(0).toUpperCase() + marka.slice(1);
+              if (motorSekli && motorSekli.includes("alicili")) {
+                mekanizmaValue += ", Alıcılı";
+              } else {
+                mekanizmaValue += ", Alıcısız";
+              }
+            } else {
+              mekanizmaValue = "Motorlu";
+            }
+          }
+          return mekanizmaValue;
+        },
+      },
+    ],
+  },
+  {
+    productId: "sineklik",
+    columns: [
+      {
+        key: "profil_tipi",
+        title: "Profil Tipi",
+        getValue: (pos: Position) => {
+          // Sineklik için profil tipi - typeId'den al
+          return pos.typeId || "-";
+        },
+      },
+      {
+        key: "olcu_bilgi",
+        title: "Ölçü Bilgisi",
+        getValue: (pos: Position) => {
+          // Sineklik için ölçü bilgisi
+          const width = pos.productDetails?.width;
+          const height = pos.productDetails?.height;
+          if (width && height) {
+            return `${width}x${height}`;
+          }
+          return "-";
+        },
+      },
+      {
+        key: "ozellik",
+        title: "Özellik",
+        getValue: (pos: Position) => {
+          // Sineklik için genel özellik bilgisi
+          return pos.optionId || "-";
+        },
+      },
+    ],
+  },
+];
+
+// Ürüne göre tablo konfigürasyonu al
+const getProductTableConfig = (productId: string): ColumnConfig[] => {
+  const config = productTableConfigs.find((c) => c.productId === productId);
+  if (!config) {
+    // Default boş config
+    return [];
+  }
+  return config.columns;
+};
+
 export async function generateTeklifFormuPDF(
   offer: Offer,
   positions: Position[],
@@ -78,89 +209,72 @@ export async function generateTeklifFormuPDF(
     titleY + 14
   );
 
-  // Tablo başlıkları ve satırları
-  const tableColumns = [
-    "Poz",
-    "Ürün",
-    "Kutu",
-    "Lamel",
-    "Mekanizma",
-    "En",
-    "Boy",
-    "Adet",
-    "Kontrol",
-    "Fiyat",
+  // Pozisyonlardan unique productId'leri al
+  const uniqueProductIds = [
+    ...new Set(positions.map((p) => p.productId).filter(Boolean)),
   ];
-  const tableRows = positions.map((pos) => {
-    // Mekanizma sütunu
-    let mekanizmaValue = "-";
-    const movementType = pos.productDetails?.movementType;
-    if (movementType === "manuel") {
-      mekanizmaValue = "Manuel";
-    } else if (movementType === "motorlu") {
-      const marka = pos.productDetails?.motorMarka;
-      const motorSekli = pos.productDetails?.motorSekli;
-      if (marka) {
-        mekanizmaValue = marka.charAt(0).toUpperCase() + marka.slice(1);
-        if (motorSekli && motorSekli.includes("alicili")) {
-          mekanizmaValue += ", Alıcılı";
-        } else {
-          mekanizmaValue += ", Alıcısız";
+
+  // Tüm ürünlerin kolonlarını birleştir (karışık ürünler için)
+  const allColumns = new Map<string, ColumnConfig>();
+  uniqueProductIds.forEach((productId) => {
+    if (productId) {
+      const productColumns = getProductTableConfig(productId);
+      productColumns.forEach((col) => {
+        if (!allColumns.has(col.key)) {
+          allColumns.set(col.key, col);
         }
-      } else {
-        mekanizmaValue = "Motorlu";
-      }
+      });
     }
+  });
+
+  // Sabit kolonlar
+  const fixedColumns = ["Poz", "Ürün"];
+  // Birleştirilmiş dinamik kolonlar
+  const dynamicColumns = Array.from(allColumns.values()).map(
+    (col) => col.title
+  );
+  // Son kolonlar
+  const endColumns = ["En", "Boy", "Adet", "Kontrol", "Fiyat"];
+
+  // Tüm tablo başlıkları
+  const tableColumns = [...fixedColumns, ...dynamicColumns, ...endColumns];
+
+  // Tablo satırları - her pozisyon kendi ürün tipine göre
+  const tableRows = positions.map((pos) => {
     const euroPrice =
       pos.unitPrice && pos.quantity ? pos.unitPrice * pos.quantity : 0;
+
     // Ürün adı productId'den alınır
     const productName = pos.productDetails?.productId
       ? getProductNameById(pos.productDetails.productId)
       : "-";
-    // Kutu: box_color (boxType)
-    let boxValue = "-";
-    const boxColor = normalizeColor(pos.productDetails?.box_color);
-    const boxSize = pos.productDetails?.boxType;
-    if (boxColor && boxSize) {
-      boxValue = `${boxColor} (${boxSize})`;
-    } else if (boxColor) {
-      boxValue = boxColor;
-    } else if (boxSize) {
-      boxValue = boxSize;
-    }
 
-    // Lamel: lamel_color (lamelTickness)
-    let lamelValue = "-";
-    const lamelColor = normalizeColor(pos.productDetails?.lamel_color);
-    // Lamel kalınlığı kodunu göster: örn. SL-39, SE-45, SL-55, SE-55
-    let lamelCode = "";
-    const lamelTickness = pos.productDetails?.lamelTickness;
-    if (lamelTickness && lamelTickness.includes("_")) {
-      const [num, code] = lamelTickness.split("_");
-      if (num && code) {
-        lamelCode = `${code.toUpperCase()}-${num}`;
+    // Sabit kolonlar
+    const fixedValues = [pos.pozNo, productName];
+
+    // Bu pozisyonun ürün tipine göre dinamik kolonları hesapla
+    const positionProductColumns = getProductTableConfig(
+      pos.productId || "panjur"
+    );
+    const dynamicValues = Array.from(allColumns.keys()).map((key) => {
+      // Bu pozisyonun ürün tipi için bu kolon var mı?
+      const column = positionProductColumns.find((col) => col.key === key);
+      if (column) {
+        return column.getValue(pos);
       }
-    }
-    if (lamelColor && lamelCode) {
-      lamelValue = `${lamelColor} (${lamelCode})`;
-    } else if (lamelColor) {
-      lamelValue = lamelColor;
-    } else if (lamelCode) {
-      lamelValue = lamelCode;
-    }
+      return "-"; // Bu ürün tipi için bu kolon yok
+    });
 
-    return [
-      pos.pozNo,
-      productName,
-      boxValue,
-      lamelValue,
-      mekanizmaValue,
+    // Son kolonlar
+    const endValues = [
       pos.productDetails?.width ?? "-",
       pos.productDetails?.height ?? "-",
       pos.quantity,
       "", // Kontrol sütunu boş
       euroPrice ? formatPrice(euroPrice) : "-",
     ];
+
+    return [...fixedValues, ...dynamicValues, ...endValues];
   });
 
   autoTable(doc, {

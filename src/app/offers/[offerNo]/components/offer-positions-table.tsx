@@ -30,8 +30,8 @@ interface OfferPositionsTableProps {
   positions: Position[];
   offerId: string;
   offerStatus: string;
-  selectedPositions: string[];
-  onSelect: (id: string) => void;
+  selectedPositions: Position[];
+  onSelect: (position: Position) => void;
   onSelectAll: () => void;
   onDelete: () => void;
   onCopy: (position: Position) => void;
@@ -189,8 +189,10 @@ export function OfferPositionsTable({
                 {offerStatus === "Taslak" && (
                   <TableCell>
                     <Checkbox
-                      checked={selectedPositions.includes(position.id)}
-                      onCheckedChange={() => onSelect(position.id)}
+                      checked={selectedPositions.some(
+                        (selected) => selected.id === position.id
+                      )}
+                      onCheckedChange={() => onSelect(position)}
                     />
                   </TableCell>
                 )}

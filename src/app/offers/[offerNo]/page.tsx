@@ -40,7 +40,7 @@ export default function OfferDetailPage() {
   const [offer, setOffer] = useState<Offer | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [offerName, setOfferName] = useState("");
-  const [selectedPositions, setSelectedPositions] = useState<string[]>([]);
+  const [selectedPositions, setSelectedPositions] = useState<Position[]>([]);
   const [isDeletingPositions, setIsDeletingPositions] = useState(false);
   const [orderLoading, setOrderLoading] = useState(false);
   const { eurRate, loading: isEurRateLoading } = useExchangeRate({
@@ -147,8 +147,8 @@ export default function OfferDetailPage() {
   });
 
   // handleTogglePositionSelection fonksiyonu
-  const handleTogglePositionSelection = (positionId: string) => {
-    setSelectedPositions((prev) => togglePositionSelection(prev, positionId));
+  const handleTogglePositionSelection = (position: Position) => {
+    setSelectedPositions((prev) => togglePositionSelection(prev, position));
   };
 
   // handleToggleAllPositions fonksiyonu
@@ -237,13 +237,14 @@ export default function OfferDetailPage() {
     <div className="py-8 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <OfferHeader
+          selectedPositions={selectedPositions}
           offerName={offer.name}
           onEdit={() => setIsEditDialogOpen(true)}
           onBack={() => router.push("/offers")}
           onImalatList={(selectedTypes) => {
             if (!offer || selectedPositions.length === 0) return;
             const positions = offer.positions.filter((p) =>
-              selectedPositions.includes(p.id)
+              selectedPositions.some((selected) => selected.id === p.id)
             );
             if (positions.length > 0) {
               import("@/utils/offer-utils").then((utils) => {
@@ -291,7 +292,7 @@ export default function OfferDetailPage() {
           onFiyatAnaliz={() => {
             if (!offer || selectedPositions.length === 0) return;
             const positions = offer.positions.filter((p) =>
-              selectedPositions.includes(p.id)
+              selectedPositions.some((selected) => selected.id === p.id)
             );
             if (positions.length > 0) {
               import("@/utils/fiyat-analizi-pdf-generator").then((mod) => {
@@ -303,7 +304,7 @@ export default function OfferDetailPage() {
           onDepoCikisFisi={() => {
             if (!offer || selectedPositions.length === 0) return;
             const positions = offer.positions.filter((p) =>
-              selectedPositions.includes(p.id)
+              selectedPositions.some((selected) => selected.id === p.id)
             );
             if (positions.length > 0) {
               import("@/utils/depo-pdf-generator").then((mod) => {
@@ -314,7 +315,7 @@ export default function OfferDetailPage() {
           onTeklifFormu={() => {
             if (!offer || selectedPositions.length === 0) return;
             const positions = offer.positions.filter((p) =>
-              selectedPositions.includes(p.id)
+              selectedPositions.some((selected) => selected.id === p.id)
             );
             if (positions.length > 0) {
               import("@/utils/offer-utils").then((utils) => {

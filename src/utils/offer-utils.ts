@@ -37,22 +37,22 @@ export function sortPositions(
 }
 
 export function togglePositionSelection(
-  selectedPositions: string[],
-  positionId: string
+  selectedPositions: Position[],
+  position: Position
 ) {
-  return selectedPositions.includes(positionId)
-    ? selectedPositions.filter((id) => id !== positionId)
-    : [...selectedPositions, positionId];
+  return selectedPositions.some((pos) => pos.id === position.id)
+    ? selectedPositions.filter((pos) => pos.id !== position.id)
+    : [...selectedPositions, position];
 }
 
 export function toggleAllPositions(
   offerPositions: Position[],
-  selectedPositions: string[]
+  selectedPositions: Position[]
 ) {
   if (!offerPositions.length) return [];
   return selectedPositions.length === offerPositions.length
     ? []
-    : offerPositions.map((pos) => pos.id);
+    : offerPositions;
 }
 
 export async function apiCopyPosition(
@@ -83,8 +83,9 @@ export async function apiCopyPosition(
 
 export async function apiDeletePositions(
   offerId: string,
-  selectedPositions: string[]
+  selectedPositions: Position[]
 ) {
+  const positionIds = selectedPositions.map((pos) => pos.id);
   const response = await fetch(
     `/api/offers/${offerId}/positions?id=${offerId}`,
     {
@@ -92,7 +93,7 @@ export async function apiDeletePositions(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ positionIds: selectedPositions }),
+      body: JSON.stringify({ positionIds }),
     }
   );
   if (!response.ok) throw new Error("Failed to delete positions");

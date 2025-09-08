@@ -5,12 +5,13 @@ import { type Product } from "@/documents/products";
 import { useRouter } from "next/navigation";
 import { ProductDetailsHeaderMobile } from "./ProductDetailsHeaderMobile";
 import { OfferActions } from "../../components/offer-actions";
+import { Position } from "@/documents/offers";
 
 interface ProductDetailsHeaderProps {
   product: Product | null;
   typeId?: string | null;
   router: ReturnType<typeof useRouter>;
-  selectedPosition?: string | null;
+  selectedPosition: Position;
   productId?: string | null;
   productName?: string | null;
   optionId?: string | null;
@@ -44,7 +45,7 @@ export const ProductDetailsHeader: React.FC<ProductDetailsHeaderProps> = (
                 `/offers/${
                   window.location.pathname.split("/")[2]
                 }/add-position/select-product?selectedPosition=${
-                  props.selectedPosition ?? ""
+                  props.selectedPosition.id
                 }&productId=${props.productId}&productName=${
                   props.productName
                 }${props.typeId ? `&typeId=${props.typeId}` : ""}${
@@ -64,6 +65,7 @@ export const ProductDetailsHeader: React.FC<ProductDetailsHeaderProps> = (
             onFiyatAnaliz={props.onFiyatAnaliz}
             hasSelectedPosition={!!props.product && !props.isLoading}
             hideOfferForm
+            selectedPositions={[props.selectedPosition]}
           />
         </div>
         <div className="flex items-center gap-4">

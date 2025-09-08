@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
 } from "@/components/ui/dropdown-menu";
+import { Position } from "@/documents/offers";
 
 interface OfferActionsProps {
   onImalatList: (selectedTypes: string[]) => void;
@@ -16,7 +17,9 @@ interface OfferActionsProps {
   onFiyatAnaliz: () => void;
   hasSelectedPosition: boolean;
   hideOfferForm?: boolean;
+  selectedPositions: Position[];
 }
+
 
 export function OfferActions({
   onImalatList,
@@ -25,7 +28,9 @@ export function OfferActions({
   onTeklifFormu,
   hasSelectedPosition,
   hideOfferForm = false,
+  selectedPositions,
 }: OfferActionsProps) {
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -39,6 +44,7 @@ export function OfferActions({
           <PozImalatListesiButton
             onConfirm={onImalatList}
             disabled={!hasSelectedPosition}
+            selectedPositions={selectedPositions}
           />
           <DepoCikisFisiButton
             onConfirm={onDepoCikisFisi}

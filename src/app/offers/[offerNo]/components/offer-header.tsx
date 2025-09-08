@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Edit2, ArrowLeft } from "lucide-react";
+import { Position } from "@/documents/offers";
 
 import { OfferActions } from "./offer-actions";
 
 interface OfferHeaderProps {
+  selectedPositions: Position[];
   offerName: string;
   onEdit: () => void;
   onBack: () => void;
@@ -16,14 +18,15 @@ interface OfferHeaderProps {
 }
 
 export function OfferHeader({
+  selectedPositions,
   offerName,
   onEdit,
   onBack,
   onImalatList,
   onFiyatAnaliz,
-  hasSelectedPosition,
   onDepoCikisFisi,
   onTeklifFormu,
+  hasSelectedPosition,
 }: OfferHeaderProps) {
   return (
     <div className="flex justify-between items-center">
@@ -40,6 +43,7 @@ export function OfferHeader({
               onTeklifFormu={onTeklifFormu}
               onFiyatAnaliz={onFiyatAnaliz}
               hasSelectedPosition={hasSelectedPosition}
+              selectedPositions={selectedPositions}
             />
           </div>
         </div>
@@ -51,6 +55,7 @@ export function OfferHeader({
               onTeklifFormu={onTeklifFormu}
               onFiyatAnaliz={onFiyatAnaliz}
               hasSelectedPosition={hasSelectedPosition}
+              selectedPositions={selectedPositions}
             />
           </div>
           <Button variant="outline" onClick={onBack}>

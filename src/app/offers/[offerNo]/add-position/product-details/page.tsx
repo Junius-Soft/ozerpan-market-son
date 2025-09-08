@@ -36,6 +36,9 @@ export default function ProductDetailsPage() {
   const [productObj, setProductObj] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
   const [previewTotal, setPreviewTotal] = useState(0);
+  const [selectedPosition, setSelectedPosition] = useState<Position>(
+    {} as Position
+  );
 
   const initialLoadDone = useRef(false);
 
@@ -43,7 +46,7 @@ export default function ProductDetailsPage() {
   const productName = searchParams.get("productName");
   const typeId = searchParams.get("typeId");
   const optionId = searchParams.get("optionId");
-  const selectedPosition = searchParams.get("selectedPosition");
+  const selectedPositionId = searchParams.get("selectedPosition");
   const offerNo = window.location.pathname.split("/")[2];
 
   // Product-specific state hook kullanımı
@@ -52,11 +55,12 @@ export default function ProductDetailsPage() {
 
   const getSelectedPosition = useMemo(async () => {
     const currentOffer = await getOffer(offerNo);
-    const position = currentOffer?.positions.find(
-      (p) => p.id === selectedPosition
-    );
-    return position || null;
-  }, [selectedPosition, offerNo]);
+    const position =
+      currentOffer?.positions.find((p) => p.id === selectedPositionId) ??
+      ({} as Position);
+    setSelectedPosition(position);
+    return position;
+  }, [selectedPositionId, offerNo]);
 
   // Transform tabs into initialValues with default field values and dependencies
   const getInitialValues = useCallback(() => {
@@ -127,7 +131,7 @@ export default function ProductDetailsPage() {
         } as Product;
 
         // If selectedPosition exists, update defaults from existing position
-        if (selectedPosition) {
+        if (selectedPositionId) {
           const position = await getSelectedPosition;
           if (position && Array.isArray(product.tabs)) {
             // Dinamik tip belirleme - productId'ye göre uygun tip kullan
@@ -230,7 +234,7 @@ export default function ProductDetailsPage() {
     productName,
     router,
     typeId,
-    selectedPosition,
+    selectedPositionId,
     getSelectedPosition,
     productObj,
     productActions,
@@ -239,7 +243,7 @@ export default function ProductDetailsPage() {
   // Yeni pozisyon için varsayılan sectionHeights değerlerini ayarla (sadece panjur için)
   useEffect(() => {
     if (
-      !selectedPosition &&
+      !selectedPositionId &&
       productObj &&
       typeId &&
       initialLoadDone.current &&
@@ -269,7 +273,7 @@ export default function ProductDetailsPage() {
       }
     }
   }, [
-    selectedPosition,
+    selectedPositionId,
     productObj,
     typeId,
     productState.sectionHeights,
@@ -278,7 +282,7 @@ export default function ProductDetailsPage() {
     productActions,
   ]);
 
-  const   handleComplete = async (
+  const handleComplete = async (
     values: ReturnType<typeof getInitialValues>
   ) => {
     if (!productObj) return;
@@ -298,9 +302,9 @@ export default function ProductDetailsPage() {
 
       // Create new position with calculated values
       const newPosition: Position = {
-        id: selectedPosition || `POS-${Date.now()}`,
-        pozNo: selectedPosition
-          ? currentOffer.positions.find((p) => p.id === selectedPosition)
+        id: selectedPositionId || `POS-${Date.now()}`,
+        pozNo: selectedPositionId
+          ? currentOffer.positions.find((p) => p.id === selectedPositionId)
               ?.pozNo || "01"
           : currentOffer.positions.length > 0
           ? String(
@@ -350,10 +354,10 @@ export default function ProductDetailsPage() {
 
       // Update or add the position
       let updatedPositions: Position[];
-      if (selectedPosition) {
+      if (selectedPositionId) {
         // Update existing position
         updatedPositions = currentOffer.positions.map((pos) =>
-          pos.id === selectedPosition ? newPosition : pos
+          pos.id === selectedPositionId ? newPosition : pos
         );
       } else {
         // Add new position
@@ -409,7 +413,6 @@ export default function ProductDetailsPage() {
       </div>
     );
   }
-
   return (
     <div className="pb-8 md:py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -447,7 +450,7 @@ export default function ProductDetailsPage() {
                       offerNo,
                       product: productObj!,
                       values: formik.values,
-                      selectedPosition,
+                      selectedPosition: selectedPositionId,
                       typeId,
                       optionId,
                       selectedTypes,

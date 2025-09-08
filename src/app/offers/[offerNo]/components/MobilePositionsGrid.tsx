@@ -8,8 +8,8 @@ interface MobilePositionsGridProps {
   positions: Position[];
   offerId: string;
   offerStatus: string;
-  selectedPositions: string[];
-  onSelect: (id: string) => void;
+  selectedPositions: Position[];
+  onSelect: (position: Position) => void;
   onDelete: () => void;
   onCopy: (position: Position) => void;
   onAdd: () => void;
@@ -66,7 +66,9 @@ export default function MobilePositionsGrid({
       ) : (
         <div className="grid grid-cols-1 xs:grid-cols-2 gap-4 p-2 pb-[calc(40px+2rem)]">
           {positions.map((position) => {
-            const isSelected = selectedPositions.includes(position.id);
+            const isSelected = selectedPositions.some(
+              (selected) => selected.id === position.id
+            );
             return (
               <div
                 key={position.id}
@@ -75,7 +77,7 @@ export default function MobilePositionsGrid({
                     ? "border-green-500 border-[1px] bg-blue-50 dark:bg-blue-900/30"
                     : ""
                 }`}
-                onClick={() => onSelect(position.id)}
+                onClick={() => onSelect(position)}
               >
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex flex-col max-w-[70%]">

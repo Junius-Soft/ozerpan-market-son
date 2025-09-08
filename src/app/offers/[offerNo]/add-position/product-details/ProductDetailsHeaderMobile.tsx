@@ -5,12 +5,13 @@ import React from "react";
 import { type Product } from "@/documents/products";
 import { useRouter } from "next/navigation";
 import { capitalizeFirstLetter } from "./ProductDetailsHeader";
+import { Position } from "@/documents/offers";
 
 interface ProductDetailsHeaderMobileProps {
   product: Product | null;
   typeId?: string | null;
   router: ReturnType<typeof useRouter>;
-  selectedPosition?: string | null;
+  selectedPosition: Position;
   productId?: string | null;
   productName?: string | null;
   optionId?: string | null;
@@ -88,6 +89,7 @@ export const ProductDetailsHeaderMobile: React.FC<
             onFiyatAnaliz={onFiyatAnaliz}
             hasSelectedPosition={!!product && !isLoading}
             hideOfferForm
+            selectedPositions={[selectedPosition]}
           />
         </div>
         <Button variant="outline" type="button" onClick={onBackToOffer}>

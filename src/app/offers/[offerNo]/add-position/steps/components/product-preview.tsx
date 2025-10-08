@@ -17,6 +17,9 @@ import {
 import { useFormikContext } from "formik";
 import { PanjurSelections, PriceItem, SelectedProduct } from "@/types/panjur";
 import { calculateSystemHeight, calculateSystemWidth } from "@/utils/panjur";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/store";
+import { setQuantity } from "@/store/appSlice";
 
 import { useCalculator } from "../hooks/useCalculator";
 
@@ -100,7 +103,9 @@ export function ProductPreview({
 }: ProductPreviewProps) {
   const { loading, eurRate } = useExchangeRate();
   const formik = useFormikContext<PanjurSelections>();
-  const { values, handleChange } = formik;
+  const { values } = formik;
+  const dispatch = useDispatch();
+  const quantity = useSelector((state: RootState) => state.app.quantity);
   const calculationResult = useCalculator(
     values,
     selectedProduct?.id ?? "",
@@ -139,8 +144,11 @@ export function ProductPreview({
               type="number"
               min={1}
               name="quantity"
-              value={Number(values.quantity)}
-              onChange={(e) => handleChange(e)}
+              value={quantity}
+              onChange={(e) => {
+                const newQuantity = parseInt(e.target.value) || 1;
+                dispatch(setQuantity(newQuantity));
+              }}
             />
           </div>
           {calculationResult && (
@@ -268,7 +276,7 @@ export function ProductPreview({
                             {selectedProduct.currency.symbol}{" "}
                             {(
                               calculationResult.totalPrice *
-                              Number(values.quantity || 1)
+                              Number(quantity || 1)
                             ).toFixed(2)}
                           </button>
                         </TooltipTrigger>

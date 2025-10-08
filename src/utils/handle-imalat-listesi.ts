@@ -21,6 +21,7 @@ export async function handleImalatListesiPDF({
   typeId,
   optionId,
   selectedTypes,
+  quantity,
 }: {
   offerNo: string;
   product: Product;
@@ -29,6 +30,7 @@ export async function handleImalatListesiPDF({
   typeId?: string | null;
   optionId?: string | null;
   selectedTypes?: string[];
+  quantity: number;
 }) {
   const currentOffer = await getOffer(offerNo);
   if (currentOffer && product) {
@@ -45,7 +47,7 @@ export async function handleImalatListesiPDF({
       id: selectedPosition || `POS-${Date.now()}`,
       pozNo: "1",
       unit: "adet",
-      quantity: values.quantity || 1,
+      quantity: quantity || 1,
       unitPrice: values.unitPrice || 0,
       selectedProducts: {
         products,
@@ -57,7 +59,7 @@ export async function handleImalatListesiPDF({
       optionId: optionId || null,
       currency: product.currency || "EUR",
       productDetails: values,
-      total: (values.unitPrice || 0) * (values.quantity || 1),
+      total: (values.unitPrice || 0) * (quantity || 1),
     };
     const utils = await import("@/utils/offer-utils");
     utils.openImalatListPDFMulti(currentOffer, [position]);

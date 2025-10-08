@@ -8,6 +8,7 @@ interface HandleDepoCikisFisiPDFParams {
   values: PanjurSelections;
   typeId?: string | null;
   offerNo?: string;
+  quantity: number;
 }
 
 export async function handleDepoCikisFisiPDF({
@@ -15,19 +16,23 @@ export async function handleDepoCikisFisiPDF({
   values,
   typeId,
   offerNo,
+  quantity,
 }: HandleDepoCikisFisiPDFParams) {
   // Extract accessories from form values
   const accessories: SelectedProduct[] =
     values.selectedProducts?.accessories || [];
+
+  const products: SelectedProduct[] = values.selectedProducts?.products || [];
+
   // Create a minimal Position for the PDF
   const fakePosition: Position = {
-    id: "-",
+    id: "1",
     pozNo: typeId || "-",
     unit: "adet",
-    quantity: values.quantity || 1,
+    quantity: quantity || 1,
     unitPrice: 0,
     selectedProducts: {
-      products: [],
+      products: products,
       accessories,
     },
     productId: product.id,

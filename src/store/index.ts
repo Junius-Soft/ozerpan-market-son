@@ -20,6 +20,7 @@ export interface ShutterState {
 export interface AppState {
   currency: "EUR" | "TRY";
   eurRate: number;
+  quantity: number;
 }
 
 export interface RootState {

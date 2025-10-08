@@ -22,7 +22,8 @@ import { FloatingTotalButton } from "../../components/FloatingTotalButton";
 import { handleDepoCikisFisiPDF } from "@/utils/handle-depo-cikis-fisi";
 import { handleFiyatAnaliziPDF } from "@/utils/handle-fiyat-analizi";
 import { RootState } from "@/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setQuantity } from "@/store/appSlice";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
@@ -30,11 +31,12 @@ export default function ProductDetailsPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const summaryRef = useRef<HTMLDivElement>(null!);
   const eurRate = useSelector((state: RootState) => state.app.eurRate);
+  const dispatch = useDispatch();
+  const quantity = useSelector((state: RootState) => state.app.quantity);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [productObj, setProductObj] = useState<Product | null>(null);
-  const [quantity, setQuantity] = useState<number>(1);
   const [previewTotal, setPreviewTotal] = useState(0);
   const [selectedPosition, setSelectedPosition] = useState<Position>(
     {} as Position
@@ -216,7 +218,7 @@ export default function ProductDetailsPage() {
           }
           // Set quantity from position if available
           if (position) {
-            setQuantity(position.quantity || 1);
+            dispatch(setQuantity(position.quantity || 1));
           }
         }
 
@@ -238,6 +240,7 @@ export default function ProductDetailsPage() {
     getSelectedPosition,
     productObj,
     productActions,
+    dispatch,
   ]);
 
   // Yeni pozisyon için varsayılan sectionHeights değerlerini ayarla (sadece panjur için)
@@ -314,7 +317,7 @@ export default function ProductDetailsPage() {
             ).padStart(2, "0")
           : "01",
         unit: "adet",
-        quantity: values.quantity || 1,
+        quantity: quantity || 1,
         unitPrice: values.unitPrice || 0,
         selectedProducts: values.selectedProducts || {
           products: [],
@@ -349,7 +352,7 @@ export default function ProductDetailsPage() {
               sectionMotorPositions: productState.sectionMotorPositions,
             }),
         },
-        total: (values.unitPrice || 0) * (values.quantity || 1), // Calculate total
+        total: values.unitPrice || 0, // Calculate total
       };
 
       // Update or add the position
@@ -454,6 +457,7 @@ export default function ProductDetailsPage() {
                       typeId,
                       optionId,
                       selectedTypes,
+                      quantity,
                     });
                   }}
                   onDepoCikisFisiConfirm={async () => {
@@ -464,6 +468,7 @@ export default function ProductDetailsPage() {
                       values: formik.values,
                       typeId,
                       offerNo,
+                      quantity,
                     });
                   }}
                   onBackToOffer={() =>

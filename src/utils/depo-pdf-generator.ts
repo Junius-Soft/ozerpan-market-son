@@ -14,7 +14,6 @@ export async function generateDepoCikisFisiPDF(
   const doc = new jsPDF("p", "mm", "a4");
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 15;
-
   // Fontlar
   doc.addFileToVFS("NotoSans-Regular.ttf", NotoSansRegular);
   doc.addFont("NotoSans-Regular.ttf", "NotoSans", "normal");
@@ -86,7 +85,10 @@ export async function generateDepoCikisFisiPDF(
             !isNaN(Number(metreValue)) &&
             !isNaN(Number(product.quantity))
           ) {
-            miktar = Number(metreValue) * Number(product.quantity);
+            miktar =
+              Number(metreValue) *
+              Number(product.quantity) *
+              Number(position.quantity || 1);
           }
           const unit = "Mtül";
 
@@ -107,18 +109,56 @@ export async function generateDepoCikisFisiPDF(
       position.selectedProducts?.accessories &&
       Array.isArray(position.selectedProducts.accessories)
     ) {
-      position.selectedProducts.accessories.forEach((accessory: PriceItem) => {
-        let unit = accessory.unit || "Adet";
-        if (unit.toLowerCase() === "metre") {
-          unit = "Mtül";
+      position.selectedProducts.accessories.forEach(
+        (accessory: PriceItem & { size?: string | number }) => {
+          let unit = accessory.unit || "Adet";
+          let miktar = Number(accessory.quantity) || 1;
+
+          if (unit.toLowerCase() === "metre") {
+            unit = "Mtül";
+            // Size'ı metreye çevir ve quantity'lerle çarp
+            let sizeValue = 1;
+            if (accessory.size !== undefined) {
+              if (typeof accessory.size === "number") {
+                sizeValue = accessory.size;
+              } else if (typeof accessory.size === "string") {
+                // Örneğin "3400 mm" gibi ise sadece sayıyı al
+                const match = accessory.size.match(/\d+(?:[\.,]\d+)?/);
+                if (match) {
+                  sizeValue = parseFloat(match[0].replace(",", "."));
+                }
+              }
+            }
+            // mm'yi metreye çevir
+            const metreValue = sizeValue / 1000;
+            if (
+              metreValue !== undefined &&
+              accessory.quantity !== undefined &&
+              !isNaN(Number(metreValue)) &&
+              !isNaN(Number(accessory.quantity))
+            ) {
+              miktar =
+                Number(metreValue) *
+                Number(accessory.quantity) *
+                Number(position.quantity || 1);
+            }
+          } else {
+            // Metre olmayan birimler için sadece accessory quantity ile poz quantity çarp
+            miktar =
+              Number(accessory.quantity || 1) * Number(position.quantity || 1);
+          }
+
+          accessoryRows.push({
+            stock_code: accessory.stock_code || "",
+            description: accessory.description || "",
+            quantity:
+              Number.isFinite(miktar) && miktar > 0
+                ? parseFloat(miktar.toFixed(2))
+                : 1,
+            unit,
+          });
         }
-        accessoryRows.push({
-          stock_code: accessory.stock_code || "",
-          description: accessory.description || "",
-          quantity: Number(accessory.quantity) || 1,
-          unit,
-        });
-      });
+      );
     }
   });
 
@@ -215,5 +255,6 @@ export async function openDepoCikisFisiPDFMulti(
   offer: Offer,
   positions: Position[]
 ): Promise<void> {
+  console.log(positions[0].quantity);
   await generateDepoCikisFisiPDF(offer, positions);
 }

@@ -308,7 +308,6 @@ export const calculatePanjurAccessories = (
   );
   if (altParcaLastigi) {
     const sectionWidths = calculateSectionWidths(width, middleBarPositions);
-
     sectionWidths.forEach((sectionWidth, sectionIndex) => {
       // Bölme indeksi ve toplam bölme sayısına göre dikme tiplerini belirle
       const lamelWidthForSection = calculateLamelGenisligi(
@@ -318,13 +317,11 @@ export const calculatePanjurAccessories = (
         sectionIndex,
         sectionWidths.length
       );
-      const widthInMeters = lamelWidthForSection / 1000;
-
       // createSelectedProduct kullanarak tutarlı yapı oluştur
       const selectedProduct = createSelectedProduct(
         altParcaLastigi,
         1,
-        widthInMeters
+        lamelWidthForSection
       );
       selectedProduct.description = `${altParcaLastigi.description} (Bölme ${
         sectionIndex + 1
@@ -428,13 +425,11 @@ export const calculatePanjurAccessories = (
         relevantSectionHeight = Math.max(leftSectionHeight, rightSectionHeight);
       }
 
-      const dikmeHeightForSection =
-        calculateDikmeHeight(
-          relevantSectionHeight,
-          values.boxType,
-          values.dikmeType
-        ) / 1000; // metre cinsine çevir
-
+      const dikmeHeightForSection = calculateDikmeHeight(
+        relevantSectionHeight,
+        values.boxType,
+        values.dikmeType
+      ); // metre cinsine çevir
       // Her dikme için sağında ve solunda olmak üzere 2 tane kıl fitili
       totalKilFitiliLength += dikmeHeightForSection * 2;
     }

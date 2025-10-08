@@ -588,7 +588,6 @@
                 "field": "motorSekli",
                 "valueMap": {
                   "alicili_motorlu": [
-                    "yok",
                     "dc_104_1_kanalli",
                     "dc_105_5_kanalli",
                     "dc_106_10_kanalli_verici",

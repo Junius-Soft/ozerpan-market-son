@@ -334,6 +334,7 @@ export const calculatePanjurAccessories = (
   // Stoper Konik
   if (
     (values.lamelTickness === "39_sl" || values.lamelTickness === "45_se") &&
+    values.movementType === "manuel" &&
     values.manuelSekli === "makarali"
   ) {
     const stoperKonik = findStoperKonikAccessoryPrice(allAccessories);
@@ -428,7 +429,8 @@ export const calculatePanjurAccessories = (
       const dikmeHeightForSection = calculateDikmeHeight(
         relevantSectionHeight,
         values.boxType,
-        values.dikmeType
+        values.dikmeType,
+        optionId
       ); // metre cinsine çevir
       // Her dikme için sağında ve solunda olmak üzere 2 tane kıl fitili
       totalKilFitiliLength += dikmeHeightForSection * 2;

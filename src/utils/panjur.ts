@@ -627,9 +627,17 @@ export const calculateLamelGenisligi = (
 export const calculateDikmeHeight = (
   systemHeight: number,
   boxType: string,
-  dikmeType: string
+  dikmeType: string,
+  optionId: string
 ): number => {
   const kutuYuksekligi = getBoxHeight(boxType);
+
+  // Monoblok için kertme payı ekleme
+  if (optionId === "monoblok") {
+    return systemHeight - kutuYuksekligi;
+  }
+
+  // Distan ve yalıtımlı için kertme payı ekle
   const kertmePayi = getKertmePayi(dikmeType);
   return systemHeight - kutuYuksekligi + kertmePayi;
 };

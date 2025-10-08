@@ -95,12 +95,14 @@ export const calculatePanjur = (
         calculateDikmeHeight(
           sectionSystemHeights[0],
           values.boxType,
-          values.dikmeType
+          values.dikmeType,
+          optionId
         ),
         calculateDikmeHeight(
           sectionSystemHeights[0],
           values.boxType,
-          values.dikmeType
+          values.dikmeType,
+          optionId
         ),
       ];
     }
@@ -112,7 +114,8 @@ export const calculatePanjur = (
       calculateDikmeHeight(
         sectionSystemHeights[0],
         values.boxType,
-        values.dikmeType
+        values.dikmeType,
+        optionId
       )
     );
 
@@ -123,7 +126,12 @@ export const calculatePanjur = (
         sectionSystemHeights[i + 1]
       );
       dikmeHeights.push(
-        calculateDikmeHeight(maxHeight, values.boxType, values.dikmeType)
+        calculateDikmeHeight(
+          maxHeight,
+          values.boxType,
+          values.dikmeType,
+          optionId
+        )
       );
     }
 
@@ -132,7 +140,8 @@ export const calculatePanjur = (
       calculateDikmeHeight(
         sectionSystemHeights[sectionSystemHeights.length - 1],
         values.boxType,
-        values.dikmeType
+        values.dikmeType,
+        optionId
       )
     );
 

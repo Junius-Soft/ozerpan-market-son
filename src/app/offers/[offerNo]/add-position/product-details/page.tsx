@@ -352,7 +352,7 @@ export default function ProductDetailsPage() {
               sectionMotorPositions: productState.sectionMotorPositions,
             }),
         },
-        total: values.unitPrice || 0, // Calculate total
+        total: values.unitPrice * quantity || 0, // Calculate total
       };
 
       // Update or add the position

@@ -80,7 +80,7 @@ export const ProductDetailsHeader: React.FC<ProductDetailsHeaderProps> = (
           >
             {props.isSaving
               ? "Kaydediliyor..."
-              : props.selectedPosition
+              : props.selectedPosition.id
               ? "Güncelle"
               : "Tamamla"}
           </Button>

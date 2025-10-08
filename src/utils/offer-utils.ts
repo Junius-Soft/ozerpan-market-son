@@ -62,7 +62,7 @@ export async function apiCopyPosition(
 ) {
   // Create new position with incremented pozNo
   const lastPos = positions[positions.length - 1];
-  const nextPozNo = String(parseInt(lastPos.pozNo) + 1).padStart(3, "0");
+  const nextPozNo = String(parseInt(lastPos.pozNo) + 1).padStart(2, "0");
   const newPosition: Position = {
     ...position,
     id: `POS-${Date.now()}`,

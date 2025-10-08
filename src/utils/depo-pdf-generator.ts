@@ -90,7 +90,8 @@ export async function generateDepoCikisFisiPDF(
               Number(product.quantity) *
               Number(position.quantity || 1);
           }
-          const unit = "Mtül";
+          const unit =
+            product.unit.toLowerCase() === "metre" ? "Mtül" : product.unit;
 
           accessoryRows.push({
             stock_code: product.stock_code || "",
@@ -207,6 +208,95 @@ export async function generateDepoCikisFisiPDF(
     },
   });
 
+  // Ürün bazlı toplam metrekare hesaplama
+  const productSummary: Record<string, number> = {};
+  selectedPositions.forEach((position) => {
+    if (position.productDetails && position.productId) {
+      const width = position.productDetails.width || 0;
+      const height = position.productDetails.height || 0;
+      const quantity = position.quantity || 1;
+
+      // Metrekare hesaplama (mm'den m²'ye çevirme)
+      const squareMeters = (width / 1000) * (height / 1000) * quantity;
+
+      const productName = position.productName || position.productId;
+      if (!productSummary[productName]) {
+        productSummary[productName] = 0;
+      }
+      productSummary[productName] += squareMeters;
+    }
+  });
+
+  // Ürün bazlı toplam metrekare - sağ kenarda kompakt format
+  if (Object.keys(productSummary).length > 0) {
+    const finalY =
+      (doc as jsPDF & { lastAutoTable: { finalY: number } }).lastAutoTable
+        ?.finalY || 150;
+
+    // Sayfa yüksekliğini kontrol et
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const remainingSpace = pageHeight - finalY - 20; // Alt margin için yer bırak
+    const neededSpace = Object.keys(productSummary).length * 5 + 15; // Her satır ~5mm + başlık
+
+    let currentY = finalY + 10;
+
+    // Eğer yer yoksa yeni sayfa aç
+    if (remainingSpace < neededSpace) {
+      doc.addPage();
+      currentY = 30; // Yeni sayfada yukarıdan başla
+    }
+
+    // Sağ kenara hizalanmış pozisyon
+    const rightMargin = pageWidth - margin;
+
+    // Başlık
+    doc.setFontSize(10);
+    doc.setFont("NotoSans", "bold");
+    doc.setTextColor(0, 0, 0);
+    const headerText = "ÜRÜN BAZLI TOPLAM METREKARE";
+    const headerWidth = doc.getTextWidth(headerText);
+    doc.text(headerText, rightMargin - headerWidth, currentY);
+    currentY += 8;
+
+    // Her ürün için satır
+    doc.setFontSize(9);
+    doc.setFont("NotoSans", "normal");
+    Object.entries(productSummary).forEach(
+      ([productName, totalSquareMeters]) => {
+        const productText = `${productName}: ${totalSquareMeters.toFixed(1)}m²`;
+        const textWidth = doc.getTextWidth(productText);
+        doc.text(productText, rightMargin - textWidth, currentY);
+        currentY += 5;
+      }
+    );
+
+    // Toplam satırı
+    currentY += 2;
+    const grandTotal = Object.values(productSummary).reduce(
+      (sum, value) => sum + value,
+      0
+    );
+    doc.setFont("NotoSans", "bold");
+    const totalText = `TOPLAM: ${grandTotal.toFixed(1)}m²`;
+    const totalWidth = doc.getTextWidth(totalText);
+
+    // Toplam için hafif arka plan
+    doc.setFillColor(240, 240, 240);
+    doc.rect(
+      rightMargin - totalWidth - 4,
+      currentY - 4,
+      totalWidth + 8,
+      6,
+      "F"
+    );
+
+    doc.text(totalText, rightMargin - totalWidth, currentY);
+
+    // Renkleri sıfırla
+    doc.setTextColor(0, 0, 0);
+    doc.setFillColor(255, 255, 255);
+  }
+
   // Barcode area (sadece ilk sayfa için sağ üst köşe)
   doc.setPage(1); // Her zaman ilk sayfaya dön
   const tableRight = pageWidth - margin;
@@ -255,6 +345,5 @@ export async function openDepoCikisFisiPDFMulti(
   offer: Offer,
   positions: Position[]
 ): Promise<void> {
-  console.log(positions[0].quantity);
   await generateDepoCikisFisiPDF(offer, positions);
 }

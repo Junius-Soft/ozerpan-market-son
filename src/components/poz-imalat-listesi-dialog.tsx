@@ -23,14 +23,7 @@ export function PozImalatListesiDialog({
   selectedTypes,
   onSelectedTypesChange,
   onConfirm,
-  options = [
-    { label: "Lamel", value: "Lamel" },
-    { label: "Alt Parça", value: "Alt Parça" },
-    { label: "Dikme", value: "Dikme" },
-    { label: "Kutu", value: "Kutu" },
-    { label: "Tambur Borusu", value: "Boru" },
-    { label: "Yükseltme Profili", value: "Yükseltme Profili" },
-  ],
+  options,
 }: PozImalatListesiDialogProps) {
   const handleCheckboxChange = (value: string) => {
     if (selectedTypes.includes(value)) {
@@ -51,7 +44,7 @@ export function PozImalatListesiDialog({
           <DialogTitle>İmalat Listesi Filtresi</DialogTitle>
         </DialogHeader>
         <div className="grid grid-cols-2 gap-3 mt-6">
-          {options.map((option) => (
+          {options?.map((option) => (
             <button
               key={option.value}
               type="button"

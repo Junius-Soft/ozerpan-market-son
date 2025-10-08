@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { PozImalatListesiDialog } from "@/components/poz-imalat-listesi-dialog";
 import { getImalatListesiOptions } from "@/utils/imalat-listesi-options";
 import { Position } from "@/documents/offers";
+import { useSearchParams } from "next/navigation";
 
 interface PozImalatListesiButtonProps {
   onConfirm: (selectedTypes: string[]) => void;
@@ -16,14 +17,26 @@ export function PozImalatListesiButton({
   disabled = false,
   selectedPositions,
 }: PozImalatListesiButtonProps) {
+  const searchParams = useSearchParams();
+
+  const productIdParam = searchParams.get("productId");
   // Seçili pozisyonlardan unique productId'leri al
   const uniqueProductIds = [
     ...new Set(selectedPositions.map((p) => p.productId).filter(Boolean)),
   ];
+
+  // Eğer uniqueProductIds boşsa, productIdParam'ı kullan
+  const finalProductIds =
+    uniqueProductIds.length > 0
+      ? uniqueProductIds
+      : productIdParam
+      ? [productIdParam]
+      : [];
+
   // Tüm seçili ürünler için options'ları birleştir
-  const defaultOptions = uniqueProductIds.reduce((acc, productId) => {
+  const defaultOptions = finalProductIds.reduce((acc, productId) => {
     const positionsWithThisProduct = selectedPositions.filter(
-      (p) => p.productId === productId
+      (p) => p.productId === (productId ?? productIdParam)
     );
     const uniqueOptionIds = [
       ...new Set(

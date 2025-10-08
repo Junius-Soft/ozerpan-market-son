@@ -45,7 +45,7 @@ export const ProductDetailsHeader: React.FC<ProductDetailsHeaderProps> = (
                 `/offers/${
                   window.location.pathname.split("/")[2]
                 }/add-position/select-product?selectedPosition=${
-                  props.selectedPosition.id
+                  props.selectedPosition.id ?? ""
                 }&productId=${props.productId}&productName=${
                   props.productName
                 }${props.typeId ? `&typeId=${props.typeId}` : ""}${

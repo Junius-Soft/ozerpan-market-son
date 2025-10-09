@@ -77,13 +77,13 @@ export function filterBoxSize(
   );
 
   if (validOptions.length > 0) {
-    // En küçük kutuyu seçmek için validOptions'u kutu boyutuna göre sırala
-    const sortedOptions = [...validOptions].sort(
-      (a, b) => parseInt(a.id) - parseInt(b.id)
-    );
-
-    const smallestValidBoxId = sortedOptions[0].id;
-    if (!isCurrentValid || formik.values.boxType !== smallestValidBoxId) {
+    // Sadece mevcut değer geçersizse en küçük geçerli seçeneği seç
+    if (!isCurrentValid) {
+      // En küçük kutuyu seçmek için validOptions'u kutu boyutuna göre sırala
+      const sortedOptions = [...validOptions].sort(
+        (a, b) => parseInt(a.id) - parseInt(b.id)
+      );
+      const smallestValidBoxId = sortedOptions[0].id;
       formik.setFieldValue("boxType", smallestValidBoxId);
     }
   }

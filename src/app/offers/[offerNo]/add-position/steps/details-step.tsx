@@ -45,10 +45,15 @@ export function DetailsStep({
     selectedProduct?.id ?? "",
     selectedProduct?.tabs ?? []
   );
+
+  // selectedProducts'ı JSON string olarak serialize ederek değişiklik takibi yapalım
+  const selectedProductsJSON = JSON.stringify(selectedProducts);
+
   useEffect(() => {
     formik.setFieldValue("unitPrice", totalPrice);
     formik.setFieldValue("selectedProducts", selectedProducts);
-  }, [totalPrice]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalPrice, selectedProductsJSON]); // formik intentionally excluded to prevent infinite loop
 
   const availableTabs = useMemo(() => {
     if (!selectedProduct?.tabs) return [];

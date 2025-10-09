@@ -54,6 +54,7 @@ export const calculatePanjur = (
   middleBarPositions: number[],
   sectionHeights: number[],
   sectionConnections: string[],
+  sectionMotors: boolean[],
   optionId: string,
   availableTabs?: ProductTab[]
 ): CalculationResult => {
@@ -324,7 +325,8 @@ export const calculatePanjur = (
 
   // Tambur Profili fiyatı hesaplama
   // Motor sorumluluklarını sectionConnections'a göre hesapla
-  const motorResponsibleGroups = findEffectiveSections(
+  // Ham genişliklerle grupları bul
+  const rawGroups = findEffectiveSections(
     values.width,
     values.width, // totalHeight yerine totalWidth kullanıyoruz (eski davranışı korumak için)
     middleBarPositions,
@@ -332,6 +334,31 @@ export const calculatePanjur = (
     sectionConnections,
     false // Tüm grupları döndür
   ) as Array<{ sectionIndices: number[]; width: number; height: number }>;
+
+  // Sistem genişlikleriyle yeniden hesapla
+  const allEffectiveGroups = rawGroups.map((group) => {
+    // Bu gruptaki bölmelerin sistem genişliklerini topla
+    const totalSystemWidth = group.sectionIndices.reduce(
+      (total, sectionIndex) => {
+        return total + sectionSystemWidths[sectionIndex];
+      },
+      0
+    );
+
+    return {
+      ...group,
+      width: totalSystemWidth, // Ham genişlik yerine sistem genişliği kullan
+    };
+  });
+
+  // Sadece motor/makara bulunan grupları filtrele
+  // Bir grupta en az bir bölmede motor var ise o grup tambur/motor/makara gerektirir
+  const motorResponsibleGroups = allEffectiveGroups.filter((group) => {
+    // Bu grupta en az bir bölmede motor/makara var mı kontrol et
+    return group.sectionIndices.some(
+      (sectionIndex) => sectionMotors[sectionIndex] === true
+    );
+  });
 
   // Her motor/makara grubu için tambur profili fiyatı hesapla
   let totalTamburPrice = 0;
@@ -358,6 +385,7 @@ export const calculatePanjur = (
         totalPrice: unitTamburPrice,
       });
     }
+    console.log({ tamburSelectedProducts });
 
     totalTamburPrice += unitTamburPrice;
   });

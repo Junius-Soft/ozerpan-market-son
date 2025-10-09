@@ -35,54 +35,81 @@ export function findEffectiveSections(
     // Bu bölme zaten işlendiyse atla
     if (processedSections.has(index)) continue;
 
+    // Bağlı olan tüm bölmeleri bul
+    const connectedSections = new Set<number>([index]);
     let effectiveWidth = sectionWidths[index];
     let effectiveHeight = sectionHeights[index] || totalHeight;
-    const connectedSections = [index]; // Bağlı olan bölmeleri takip et
 
-    // Zincir bağlantıları takip et - önce sağa doğru
-    let currentIndex = index;
-    while (
-      currentIndex < sectionWidths.length - 1 &&
-      sectionConnections[currentIndex] &&
-      sectionConnections[currentIndex] === "right"
-    ) {
-      const rightIndex = currentIndex + 1;
-      effectiveWidth += sectionWidths[rightIndex];
-      effectiveHeight = Math.max(
-        effectiveHeight,
-        sectionHeights[rightIndex] || totalHeight
-      );
-      connectedSections.push(rightIndex);
-      processedSections.add(rightIndex);
-      currentIndex = rightIndex;
+    // Tüm bölmeleri kontrol ederek bağlantı zincirini bul
+    let changed = true;
+    while (changed) {
+      changed = false;
+
+      for (let i = 0; i < sectionWidths.length; i++) {
+        if (connectedSections.has(i)) continue;
+
+        // Bu bölme mevcut gruba bağlı mı kontrol et
+        let shouldConnect = false;
+
+        // Sol bağlantı: i bölmesi sola bağlıysa ve i-1 grupta varsa
+        if (
+          i > 0 &&
+          sectionConnections[i] === "left" &&
+          connectedSections.has(i - 1)
+        ) {
+          shouldConnect = true;
+        }
+
+        // Sağ bağlantı: i bölmesi sağa bağlıysa ve i+1 grupta varsa
+        if (
+          i < sectionWidths.length - 1 &&
+          sectionConnections[i] === "right" &&
+          connectedSections.has(i + 1)
+        ) {
+          shouldConnect = true;
+        }
+
+        // Ters yön kontrolleri
+        // i-1 bölmesi sağa bağlıysa ve i grupta varsa
+        if (
+          i > 0 &&
+          sectionConnections[i - 1] === "right" &&
+          connectedSections.has(i - 1)
+        ) {
+          shouldConnect = true;
+        }
+
+        // i+1 bölmesi sola bağlıysa ve i grupta varsa
+        if (
+          i < sectionWidths.length - 1 &&
+          sectionConnections[i + 1] === "left" &&
+          connectedSections.has(i + 1)
+        ) {
+          shouldConnect = true;
+        }
+
+        if (shouldConnect) {
+          connectedSections.add(i);
+          effectiveWidth += sectionWidths[i];
+          effectiveHeight = Math.max(
+            effectiveHeight,
+            sectionHeights[i] || totalHeight
+          );
+          changed = true;
+        }
+      }
     }
 
-    // Sonra sola doğru (eğer başlangıç bölmesinde sol bağlantı varsa)
-    currentIndex = index;
-    while (
-      currentIndex > 0 &&
-      sectionConnections[currentIndex] &&
-      sectionConnections[currentIndex] === "left"
-    ) {
-      const leftIndex = currentIndex - 1;
-      effectiveWidth += sectionWidths[leftIndex];
-      effectiveHeight = Math.max(
-        effectiveHeight,
-        sectionHeights[leftIndex] || totalHeight
-      );
-      connectedSections.push(leftIndex);
-      processedSections.add(leftIndex);
-      currentIndex = leftIndex;
-    }
-
-    // Bu bölme(ler)i işlenmiş olarak işaretle
+    // İşlenmiş bölmeleri işaretle
     connectedSections.forEach((idx) => processedSections.add(idx));
 
-    // Bölme indekslerini sırala
-    connectedSections.sort((a, b) => a - b);
+    // Set'i array'e çevir ve sırala
+    const sortedConnectedSections = Array.from(connectedSections).sort(
+      (a, b) => a - b
+    );
 
     effectiveGroups.push({
-      sectionIndices: connectedSections,
+      sectionIndices: sortedConnectedSections,
       width: effectiveWidth,
       height: effectiveHeight,
       area: effectiveWidth * effectiveHeight,

@@ -78,7 +78,10 @@ export class ImalatPDFGenerator {
     this.doc.text(footerText, x, y);
   }
 
-  public async generateImalatList(data: ImalatPDFData): Promise<void> {
+  public async generateImalatList(
+    data: ImalatPDFData,
+    canvasDataUrl?: string
+  ): Promise<void> {
     // PDF başlığı (metadata)
     this.doc.setProperties({
       title:
@@ -215,6 +218,11 @@ export class ImalatPDFGenerator {
       },
     });
 
+    // Canvas preview'ını ekle (eğer varsa)
+    if (canvasDataUrl) {
+      this.addCanvasPreview(canvasDataUrl);
+    }
+
     // Footer ekle
     this.addFooter(data.offer.id, data.positions[0]?.pozNo || "", 1, 1);
 
@@ -301,6 +309,51 @@ export class ImalatPDFGenerator {
     // Bu fonksiyon artık boş, tarih ve hazırlayan bilgisi kaldırıldı
   }
 
+  private addCanvasPreview(canvasDataUrl: string): void {
+    // Tablonun bittiği yeri bul (autoTable'dan sonraki son y pozisyonu)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const finalY = (this.doc as any).lastAutoTable?.finalY || 150;
+
+    // Canvas preview için başlık
+    const previewY = finalY + 15;
+    this.doc.setFontSize(11);
+    this.doc.setFont("NotoSans", "bold");
+    this.doc.setFillColor(230, 230, 230);
+    this.doc.rect(
+      this.margin,
+      previewY,
+      this.pageWidth - 2 * this.margin,
+      8,
+      "F"
+    );
+    this.doc.text("Ürün Görüntüsü", this.margin + 2, previewY + 5);
+
+    // Canvas görüntüsünü ekle
+    const imageY = previewY + 15;
+    const availableWidth = this.pageWidth - 2 * this.margin;
+    const maxImageWidth = Math.min(availableWidth, 120); // Max genişlik 120mm
+    const maxImageHeight = 80; // Max yükseklik 80mm
+
+    // Görüntüyü ortala
+    const imageX = this.margin + (availableWidth - maxImageWidth) / 2;
+
+    try {
+      this.doc.addImage(
+        canvasDataUrl,
+        "PNG",
+        imageX,
+        imageY,
+        maxImageWidth,
+        maxImageHeight
+      );
+    } catch {
+      // Görüntü eklenemezse hata mesajı yazdır
+      this.doc.setFontSize(10);
+      this.doc.setFont("NotoSans", "normal");
+      this.doc.text("Görüntü yüklenemedi", imageX, imageY + 20);
+    }
+  }
+
   private addProfileList(data: ImalatPDFData): void {
     const startY = 85;
     this.doc.setFontSize(11);
@@ -375,7 +428,8 @@ export class ImalatPDFGenerator {
 
 export async function generateImalatListPDF(
   offer: Offer,
-  selectedPositions: Position[]
+  selectedPositions: Position[],
+  canvasDataUrl?: string
 ): Promise<void> {
   const generator = new ImalatPDFGenerator();
 
@@ -389,13 +443,14 @@ export async function generateImalatListPDF(
       .toString(),
   };
 
-  await generator.generateImalatList(data);
+  await generator.generateImalatList(data, canvasDataUrl);
 }
 
 // Export function for use in offer-utils
 export async function openImalatListPDFMulti(
   offer: Offer,
-  positions: Position[]
+  positions: Position[],
+  canvasDataUrl?: string
 ): Promise<void> {
-  await generateImalatListPDF(offer, positions);
+  await generateImalatListPDF(offer, positions, canvasDataUrl);
 }

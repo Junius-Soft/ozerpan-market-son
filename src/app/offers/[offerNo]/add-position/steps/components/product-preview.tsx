@@ -1,7 +1,10 @@
-import React from "react";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { getProductPreview } from "@/lib/product-preview";
+import {
+  getProductPreview as ProductPreviewComponent,
+  ProductPreviewRef,
+} from "@/lib/product-preview";
 import { type Product } from "@/documents/products";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
 import { checkDependencyChain } from "@/utils/dependencies";
@@ -50,6 +53,10 @@ interface ProductPreviewProps {
   seperation: number; // Ayrım sayısı (örneğin, panjur için)
 }
 
+export interface ProductPreviewComponentRef {
+  exportCanvas: () => string | null;
+}
+
 // Helper function to format field value
 const formatFieldValue = (
   value:
@@ -95,12 +102,11 @@ const formatFieldValue = (
   return String(value);
 };
 
-export function ProductPreview({
-  selectedProduct,
-  onTotalChange,
-  summaryRef,
-  seperation,
-}: ProductPreviewProps) {
+export const ProductPreview = forwardRef<
+  ProductPreviewComponentRef,
+  ProductPreviewProps
+>(({ selectedProduct, onTotalChange, summaryRef, seperation }, ref) => {
+  const productPreviewRef = useRef<ProductPreviewRef>(null);
   const { loading, eurRate } = useExchangeRate();
   const formik = useFormikContext<PanjurSelections>();
   const { values } = formik;
@@ -111,6 +117,16 @@ export function ProductPreview({
     selectedProduct?.id ?? "",
     selectedProduct?.tabs ?? []
   );
+
+  // Export canvas function exposed via ref
+  useImperativeHandle(ref, () => ({
+    exportCanvas: () => {
+      if (productPreviewRef.current) {
+        return productPreviewRef.current.exportCanvas();
+      }
+      return null;
+    },
+  }));
 
   // Toplam tutar değişimini parent'a bildir
   React.useEffect(() => {
@@ -126,14 +142,15 @@ export function ProductPreview({
         <div className="font-medium text-lg mb-4">Ürün Önizleme</div>
         <div className="aspect-[4/4] w-full max-w-2xl mx-auto border rounded-lg overflow-hidden shadow-sm flex items-center justify-center">
           <div className="w-full h-full flex items-center justify-center">
-            {getProductPreview({
-              product: selectedProduct,
-              formik: formik,
-              width: parseFloat(values.width?.toString() ?? "0"),
-              height: parseFloat(values.height?.toString() ?? "0"),
-              className: "w-full h-full object-contain pt-2", // preview tam ortalı ve kapsayıcı
-              seperation: seperation,
-            })}
+            <ProductPreviewComponent
+              ref={productPreviewRef}
+              product={selectedProduct}
+              formik={formik}
+              width={parseFloat(values.width?.toString() ?? "0")}
+              height={parseFloat(values.height?.toString() ?? "0")}
+              className="w-full h-full object-contain pt-2" // preview tam ortalí ve kapsayıcı
+              seperation={seperation}
+            />
           </div>
         </div>
 
@@ -399,4 +416,6 @@ export function ProductPreview({
       </div>
     </Card>
   );
-}
+});
+
+ProductPreview.displayName = "ProductPreview";

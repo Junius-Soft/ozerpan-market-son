@@ -22,6 +22,7 @@ export async function handleImalatListesiPDF({
   optionId,
   selectedTypes,
   quantity,
+  canvasDataUrl,
 }: {
   offerNo: string;
   product: Product;
@@ -31,6 +32,7 @@ export async function handleImalatListesiPDF({
   optionId?: string | null;
   selectedTypes?: string[];
   quantity: number;
+  canvasDataUrl?: string;
 }) {
   const currentOffer = await getOffer(offerNo);
   if (currentOffer && product) {
@@ -62,6 +64,6 @@ export async function handleImalatListesiPDF({
       total: (values.unitPrice || 0) * (quantity || 1),
     };
     const utils = await import("@/utils/offer-utils");
-    utils.openImalatListPDFMulti(currentOffer, [position]);
+    utils.openImalatListPDFMulti(currentOffer, [position], canvasDataUrl);
   }
 }

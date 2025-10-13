@@ -12,7 +12,7 @@ import {
   getProductTabs,
   getProductById,
 } from "@/documents/products";
-import { DetailsStep } from "../steps/details-step";
+import { DetailsStep, DetailsStepRef } from "../steps/details-step";
 import { getOffer, type Position } from "@/documents/offers";
 import { getOffers } from "@/documents/offers";
 import { Formik, Form } from "formik";
@@ -30,6 +30,7 @@ export default function ProductDetailsPage() {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const summaryRef = useRef<HTMLDivElement>(null!);
+  const detailsStepRef = useRef<DetailsStepRef>(null);
   const eurRate = useSelector((state: RootState) => state.app.eurRate);
   const dispatch = useDispatch();
   const quantity = useSelector((state: RootState) => state.app.quantity);
@@ -449,6 +450,9 @@ export default function ProductDetailsPage() {
                   isSaving={isSaving}
                   onImalatListesiConfirm={async (selectedTypes) => {
                     const offerNo = window.location.pathname.split("/")[2];
+                    // Canvas'ı export et
+                    const canvasDataUrl =
+                      detailsStepRef.current?.exportCanvas() || undefined;
                     await handleImalatListesiPDF({
                       offerNo,
                       product: productObj!,
@@ -458,6 +462,7 @@ export default function ProductDetailsPage() {
                       optionId,
                       selectedTypes,
                       quantity,
+                      canvasDataUrl,
                     });
                   }}
                   onDepoCikisFisiConfirm={async () => {
@@ -491,12 +496,13 @@ export default function ProductDetailsPage() {
                       productName: productName ?? null,
                       optionId: optionId ?? null,
                       offerNo,
-                      quantity
+                      quantity,
                     });
                   }}
                 />
 
                 <DetailsStep
+                  ref={detailsStepRef}
                   formik={formik}
                   selectedProduct={productObj}
                   onTotalChange={setPreviewTotal}

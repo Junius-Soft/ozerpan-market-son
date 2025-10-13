@@ -775,6 +775,16 @@
       "content": {
         "fields": [
           {
+            "id": "packagingType",
+            "name": "Paketleme",
+            "type": "select",
+            "options": [
+              { "id": "yok", "name": "Yok" },
+              { "id": "var", "name": "Var" }
+            ],
+            "default": "yok"
+          },
+          {
             "id": "boxType",
             "name": "Kutu Ölçüsü",
             "type": "select",

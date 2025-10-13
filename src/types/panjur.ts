@@ -63,6 +63,7 @@ export interface PanjurSelections extends BaseSelections {
   lamelType: "aluminyum_poliuretanli" | "aluminyum_ekstruzyon";
   lamelTickness: "39_sl" | "45_se" | "55_sl" | "55_se";
   aski_kilit_secimi: "yok" | "aski_kilit";
+  packagingType: "yok" | "var";
   boxType:
     | "137mm"
     | "165mm"

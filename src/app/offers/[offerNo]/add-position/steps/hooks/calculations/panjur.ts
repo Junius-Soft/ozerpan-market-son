@@ -385,7 +385,6 @@ export const calculatePanjur = (
         totalPrice: unitTamburPrice,
       });
     }
-    console.log({ tamburSelectedProducts });
 
     totalTamburPrice += unitTamburPrice;
   });
@@ -475,6 +474,14 @@ export const calculatePanjur = (
     }
   }
 
+  // Paketleme ücreti hesaplama
+  const calculatePackagingCost = (basePrice: number): number => {
+    if (values.packagingType === "var") {
+      return basePrice * 0.05; // %5
+    }
+    return 0;
+  };
+
   const rawTotalPriceEUR = (() => {
     // Yalıtımlı kutu için özel hesaplama
     if (optionId === "yalitimli") {
@@ -555,7 +562,25 @@ export const calculatePanjur = (
     );
   })();
 
-  const totalPrice = rawTotalPriceEUR;
+  // Paketleme ücreti hesaplama ve ekleme
+  const packagingCost = calculatePackagingCost(rawTotalPriceEUR);
+  const totalPrice = rawTotalPriceEUR + packagingCost;
+
+  // Paketleme selectedProduct'ını oluştur
+  const packagingSelectedProduct: SelectedProduct | null =
+    packagingCost > 0
+      ? {
+          stock_code: "PAKET-001",
+          description: "Paketleme Ücreti (%5)",
+          uretici_kodu: "PAKET-001",
+          price: packagingCost.toString(),
+          quantity: 1,
+          totalPrice: packagingCost,
+          type: "packaging",
+          color: "",
+          unit: "adet",
+        }
+      : null;
 
   // Tüm ürünleri birleştir (aksesuarlar hariç) - yalıtımlı kutu için özel filtreleme
   const productItems = (() => {
@@ -630,7 +655,7 @@ export const calculatePanjur = (
       if (optionId === "yalitimli") {
         if (values.boxsetType === "boxWithMotor") {
           // Sadece tambur ve kutu ile ilgili aksesuarlar
-          return (accessoryItems || []).filter((acc) => {
+          const filteredAccessories = (accessoryItems || []).filter((acc) => {
             const description = acc.description.toLowerCase();
             return (
               description.includes("boru") ||
@@ -643,9 +668,13 @@ export const calculatePanjur = (
               description.includes("pimli galvaniz")
             );
           });
+          // Paketleme ücretini ekle
+          return packagingSelectedProduct
+            ? [...filteredAccessories, packagingSelectedProduct]
+            : filteredAccessories;
         } else if (values.boxsetType === "emptyBox") {
           // Sadece kutu ile ilgili aksesuarlar
-          return (accessoryItems || []).filter((acc) => {
+          const filteredAccessories = (accessoryItems || []).filter((acc) => {
             const description = acc.description.toLowerCase();
             return (
               description.includes("yan kapak") ||
@@ -654,10 +683,14 @@ export const calculatePanjur = (
               description.includes("pimli galvaniz")
             );
           });
+          // Paketleme ücretini ekle
+          return packagingSelectedProduct
+            ? [...filteredAccessories, packagingSelectedProduct]
+            : filteredAccessories;
         } else if (values.yalitimliType === "detail") {
           if (values.yalitimliDetailType === "withoutBox") {
             // Kutu, tambur, motor/makara aksesuarları hariç
-            return (accessoryItems || []).filter((acc) => {
+            const filteredAccessories = (accessoryItems || []).filter((acc) => {
               const description = acc.description.toLowerCase();
               return !(
                 description.includes("kutu") ||
@@ -672,9 +705,13 @@ export const calculatePanjur = (
                 description.includes("pimli galvaniz")
               );
             });
+            // Paketleme ücretini ekle
+            return packagingSelectedProduct
+              ? [...filteredAccessories, packagingSelectedProduct]
+              : filteredAccessories;
           } else if (values.yalitimliDetailType === "onlyMotor") {
             // Kutu aksesuarları hariç, tambur ve motor/makara aksesuarları dahil
-            return (accessoryItems || []).filter((acc) => {
+            const filteredAccessories = (accessoryItems || []).filter((acc) => {
               const description = acc.description.toLowerCase();
               return !(
                 description.includes("kutu") ||
@@ -684,12 +721,20 @@ export const calculatePanjur = (
                 description.includes("pimli galvaniz")
               );
             });
+            // Paketleme ücretini ekle
+            return packagingSelectedProduct
+              ? [...filteredAccessories, packagingSelectedProduct]
+              : filteredAccessories;
           }
         }
       }
 
       // Diğer durumlar için tüm aksesuarlar
-      return accessoryItems || [];
+      const baseAccessories = accessoryItems || [];
+      // Paketleme ücretini aksesuarlar listesine ekle
+      return packagingSelectedProduct
+        ? [...baseAccessories, packagingSelectedProduct]
+        : baseAccessories;
     })(),
   };
 

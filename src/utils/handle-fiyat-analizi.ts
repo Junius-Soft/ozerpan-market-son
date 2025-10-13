@@ -24,7 +24,6 @@ export async function handleFiyatAnaliziPDF({
   offerNo,
   quantity,
 }: HandleFiyatAnaliziPDFParams) {
-  console.log({ product });
   // Extract accessories from form values
   const accessories: PriceItem[] =
     formikValues.selectedProducts?.accessories || [];

@@ -132,6 +132,11 @@ export function useFilterLamelThickness(
   useEffect(() => {
     if (productId !== "panjur") return;
 
+    // EmptyBox durumunda lamel thickness hesaplama yapma
+    if (formik.values.boxsetType === "emptyBox") {
+      return;
+    }
+
     const result = filterLamelThickness(
       formik.values,
       middleBarPositions,

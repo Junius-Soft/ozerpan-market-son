@@ -218,13 +218,22 @@ export class ImalatPDFGenerator {
       },
     });
 
-    // Canvas preview'ını ekle (eğer varsa)
+    // Canvas preview'larını ekle (çoklu pozisyonlar için)
     if (canvasDataUrl) {
-      this.addCanvasPreview(canvasDataUrl);
+      this.addCanvasPreviewsForPositions(data.positions, canvasDataUrl);
     }
 
     // Footer ekle
-    this.addFooter(data.offer.id, data.positions[0]?.pozNo || "", 1, 1);
+    const totalPages = this.doc.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+      this.doc.setPage(i);
+      this.addFooter(
+        data.offer.id,
+        data.positions[0]?.pozNo || "",
+        i,
+        totalPages
+      );
+    }
 
     // Open PDF in new tab using Blob URL for better compatibility
     const pdfBlob = this.doc.output("blob");
@@ -307,6 +316,261 @@ export class ImalatPDFGenerator {
 
   private addOrderInfo(): void {
     // Bu fonksiyon artık boş, tarih ve hazırlayan bilgisi kaldırıldı
+  }
+
+  private addCanvasPreviewsForPositions(
+    positions: Position[],
+    canvasDataUrl: string
+  ): void {
+    // Tablonun bittiği yeri bul (autoTable'dan sonraki son y pozisyonu)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let currentY = (this.doc as any).lastAutoTable?.finalY || 150;
+
+    // Pozisyonları 2'li gruplara böl
+    const positionPairs: Position[][] = [];
+    for (let i = 0; i < positions.length; i += 2) {
+      positionPairs.push(positions.slice(i, i + 2));
+    }
+
+    positionPairs.forEach((pair) => {
+      // Eğer yeni satır başlangıcında sayfaya sığmıyorsa yeni sayfa ekle
+      const maxImageHeight = 70; // Her zaman aynı yükseklik kullan
+      const requiredHeight = 8 + 15 + maxImageHeight * 0.8 + 15 + 4 + 10; // Başlık + padding + görüntü + padding + border + margin
+      if (currentY + requiredHeight > this.pageHeight - 20) {
+        this.doc.addPage();
+        currentY = 20; // Yeni sayfada üstten başla
+      }
+
+      // Canvas preview için başlık
+      const previewY = currentY + 15;
+      this.doc.setFontSize(11);
+      this.doc.setFont("NotoSans", "bold");
+      this.doc.setFillColor(230, 230, 230);
+      this.doc.rect(
+        this.margin,
+        previewY,
+        this.pageWidth - 2 * this.margin,
+        8,
+        "F"
+      );
+      this.doc.text("Ürün Görüntüsü", this.margin + 2, previewY + 5);
+
+      // Canvas görüntülerini ekle
+      const imageY = previewY + 15;
+      const availableWidth = this.pageWidth - 2 * this.margin;
+      const spacing = 5; // Görüntüler arası boşluk
+
+      // Her zaman 2'li grid yapısı kullan - tek poz olsa da yarısını kaplasın
+      const imageWidth = Math.min((availableWidth - spacing) / 2, 80);
+      const imageHeight = 70;
+
+      // Sol görüntü (her zaman var) - başlıkla hizalı olsun
+      const leftImageX = this.margin + 2;
+      this.addSinglePositionImage(
+        canvasDataUrl,
+        leftImageX,
+        imageY,
+        imageWidth,
+        imageHeight,
+        pair[0]
+      );
+
+      // Sağ görüntü (varsa)
+      if (pair.length > 1) {
+        const rightImageX = this.margin + 2 + imageWidth + spacing;
+        this.addSinglePositionImage(
+          canvasDataUrl,
+          rightImageX,
+          imageY,
+          imageWidth,
+          imageHeight,
+          pair[1]
+        );
+      }
+
+      // Bir sonraki görüntü grubu için Y pozisyonunu güncelle
+      const actualImageHeight = imageHeight * 0.8 + 15 + 4; // Görüntü yüksekliği * 0.8 + padding + border
+      currentY = imageY + actualImageHeight + 10; // Gerçek çerçeve yüksekliği + alt margin
+    });
+  }
+
+  private addSinglePositionImage(
+    canvasDataUrl: string,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    position: Position
+  ): void {
+    // Siyah çerçeve çiz (görüntünün bittiği yere yakın)
+    const borderPadding = 2;
+    const imageEndY = y + height * 0.55; // Görüntünün bittiği y pozisyonu
+    const previewTopPadding = 10; // Preview başlığı ile görüntü arasındaki padding'i azalt
+    const totalHeight = imageEndY - y + previewTopPadding; // Görüntünün sonuna kadar + padding
+    this.doc.setDrawColor(0, 0, 0); // Siyah renk
+    this.doc.setLineWidth(0.5);
+    this.doc.rect(
+      x - borderPadding,
+      y - borderPadding,
+      width + 2 * borderPadding,
+      totalHeight + 2 * borderPadding
+    );
+
+    try {
+      // Sol tarafta canvas görüntüsü için alan ayır - preview'ı büyüt ama sağa yapışmasın
+      const imageAreaWidth = width * 0.7; // Genişliğin %70'i görüntü için
+      const imageAreaX = x; // Sol kenardan biraz daha içerde başlat
+
+      // Canvas görüntüsünü sol tarafa ekle
+      this.doc.addImage(
+        canvasDataUrl,
+        "PNG",
+        imageAreaX,
+        y,
+        imageAreaWidth,
+        height * 0.8
+      );
+
+      // Siyah çerçevenin içinde poz ve adet bilgileri (dış çerçevenin sağ üst köşesine yapıştır)
+      this.doc.setFontSize(8);
+      this.doc.setFont("NotoSans", "bold");
+
+      // Poz ve adet bilgilerini ayrı ayrı hesapla
+      const pozText = `Poz: ${position.pozNo}`;
+      const quantityText = `Adet: ${position.quantity}`;
+      const pozWidth = this.doc.getTextWidth(pozText);
+      const quantityWidth = this.doc.getTextWidth(quantityText);
+      const dividerWidth = 1; // Dikey çizgi genişliği
+
+      // Beyaz background box çiz (eşit iki bölüm + dikey çizgi) - dış çerçeveye yapıştır
+      const maxTextWidth = Math.max(pozWidth, quantityWidth);
+      const sectionWidth = maxTextWidth + 4; // Her bölüme 4px ekstra alan
+      const totalBoxWidth = sectionWidth * 2 + dividerWidth;
+      const boxX = x + width + borderPadding - totalBoxWidth; // Dış çerçeveye yapıştır
+      const boxY = y - borderPadding; // Dış çerçevenin üst kenarına yapıştır
+      const boxHeight = 8;
+
+      this.doc.setFillColor(255, 255, 255); // Beyaz background
+      this.doc.rect(boxX, boxY, totalBoxWidth, boxHeight, "F");
+
+      // Siyah çerçeve çiz
+      this.doc.setDrawColor(0, 0, 0);
+      this.doc.setLineWidth(0.3);
+      this.doc.rect(boxX, boxY, totalBoxWidth, boxHeight);
+
+      // Sol bölümde poz metnini yaz (ortalanmış)
+      this.doc.setTextColor(0, 0, 0); // Siyah metin
+      const leftSectionWidth = (totalBoxWidth - dividerWidth) / 2;
+      const pozCenterX = boxX + leftSectionWidth / 2 - pozWidth / 2;
+      this.doc.text(pozText, pozCenterX, boxY + 5.5);
+
+      // Dikey ayırıcı çizgi çiz (kutunun ortasında, üst ve alt kenarlara tam temas)
+      const dividerX = boxX + leftSectionWidth;
+      this.doc.setDrawColor(0, 0, 0);
+      this.doc.setLineWidth(0.3);
+      this.doc.line(dividerX, boxY, dividerX, boxY + boxHeight);
+
+      // Sağ bölümde adet metnini yaz (ortalanmış)
+      const rightSectionStart = dividerX + dividerWidth;
+      const rightSectionWidth = leftSectionWidth;
+      const quantityCenterX =
+        rightSectionStart + rightSectionWidth / 2 - quantityWidth / 2;
+      this.doc.text(quantityText, quantityCenterX, boxY + 5.5);
+
+      // Pozun detay bilgileri (sağ tarafın alt kısmında)
+      this.doc.setFont("NotoSans", "normal");
+      this.doc.setFontSize(8);
+
+      let detailY = y + 15; // Poz bilgilerini çizime daha yaklaştır
+      const lineHeight = 6;
+
+      // Poz detaylarını ekle (sağa yaslanmış ama biraz margin bırak)
+      const infoRightEdge = x + width + borderPadding - 3; // Sağ kenardan 3px içerde
+
+      if (position.productName) {
+        // Uzun isimleri kısalt
+        const shortName =
+          position.productName.length > 20
+            ? position.productName.substring(0, 20) + "..."
+            : position.productName;
+        const vizonText = `VIZON: ${shortName}`;
+        const vizonWidth = this.doc.getTextWidth(vizonText);
+        this.doc.text(vizonText, infoRightEdge - vizonWidth, detailY);
+        detailY += lineHeight;
+      }
+
+      // Hareket türü bilgisi
+      if (position.productDetails?.movementType) {
+        const movementText =
+          position.productDetails.movementType === "motorlu"
+            ? "Motorlu"
+            : "Manuel";
+        const hareketText = `Hareket: ${movementText}`;
+        const hareketWidth = this.doc.getTextWidth(hareketText);
+        this.doc.text(hareketText, infoRightEdge - hareketWidth, detailY);
+        detailY += lineHeight;
+      }
+
+      // Motor markası (eğer motorlu ise)
+      if (position.productDetails?.motorMarka) {
+        const motorText = position.productDetails.motorMarka.toUpperCase();
+        const fullMotorText = `Motor: ${motorText}`;
+        const motorWidth = this.doc.getTextWidth(fullMotorText);
+        this.doc.text(fullMotorText, infoRightEdge - motorWidth, detailY);
+        detailY += lineHeight;
+      }
+    } catch {
+      // Görüntü eklenemezse hata mesajı yazdır
+      this.doc.setFontSize(10);
+      this.doc.setFont("NotoSans", "normal");
+      this.doc.text("Görüntü yüklenemedi", x + 5, y + 20);
+
+      // Pozisyon bilgilerini yine de ekle (beyaz kutuda, dikey çizgili)
+      this.doc.setFontSize(8);
+      this.doc.setFont("NotoSans", "bold");
+
+      // Poz ve adet bilgilerini ayrı ayrı hesapla
+      const pozText = `Poz: ${position.pozNo}`;
+      const quantityText = `Adet: ${position.quantity}`;
+      const pozWidth = this.doc.getTextWidth(pozText);
+      const quantityWidth = this.doc.getTextWidth(quantityText);
+      const dividerWidth = 1; // Dikey çizgi genişliği
+
+      // Beyaz background box çiz (eşit iki bölüm + dikey çizgi) - dış çerçeveye yapıştır
+      const maxTextWidth = Math.max(pozWidth, quantityWidth);
+      const sectionWidth = maxTextWidth + 4; // Her bölüme 4px ekstra alan
+      const totalBoxWidth = sectionWidth * 2 + dividerWidth;
+      const boxX = x + width + borderPadding - totalBoxWidth; // Dış çerçeveye yapıştır
+      const boxY = y - borderPadding; // Dış çerçevenin üst kenarına yapıştır
+      const boxHeight = 8;
+
+      this.doc.setFillColor(255, 255, 255); // Beyaz background
+      this.doc.rect(boxX, boxY, totalBoxWidth, boxHeight, "F");
+
+      // Siyah çerçeve çiz
+      this.doc.setDrawColor(0, 0, 0);
+      this.doc.setLineWidth(0.3);
+      this.doc.rect(boxX, boxY, totalBoxWidth, boxHeight);
+
+      // Sol bölümde poz metnini yaz (ortalanmış)
+      this.doc.setTextColor(0, 0, 0); // Siyah metin
+      const leftSectionWidth = (totalBoxWidth - dividerWidth) / 2;
+      const pozCenterX = boxX + leftSectionWidth / 2 - pozWidth / 2;
+      this.doc.text(pozText, pozCenterX, boxY + 5.5);
+
+      // Dikey ayırıcı çizgi çiz (kutunun ortasında, üst ve alt kenarlara tam temas)
+      const dividerX = boxX + leftSectionWidth;
+      this.doc.setDrawColor(0, 0, 0);
+      this.doc.setLineWidth(0.3);
+      this.doc.line(dividerX, boxY, dividerX, boxY + boxHeight);
+
+      // Sağ bölümde adet metnini yaz (ortalanmış)
+      const rightSectionStart = dividerX + dividerWidth;
+      const rightSectionWidth = leftSectionWidth;
+      const quantityCenterX =
+        rightSectionStart + rightSectionWidth / 2 - quantityWidth / 2;
+      this.doc.text(quantityText, quantityCenterX, boxY + 5.5);
+    }
   }
 
   private addCanvasPreview(canvasDataUrl: string): void {

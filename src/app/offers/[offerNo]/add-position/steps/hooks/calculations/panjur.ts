@@ -286,7 +286,8 @@ export const calculatePanjur = (
       prices,
       values.boxType,
       values.box_color,
-      systemWidth
+      systemWidth,
+      values.boxsetType
     );
     boxPrice = totalPrice;
     boxSelectedProducts.push(...selectedProducts);
@@ -673,14 +674,12 @@ export const calculatePanjur = (
             ? [...filteredAccessories, packagingSelectedProduct]
             : filteredAccessories;
         } else if (values.boxsetType === "emptyBox") {
-          // Sadece kutu ile ilgili aksesuarlar
+          // EmptyBox için sadece yan kapak aksesuarları (full T sac ve plaket yok)
           const filteredAccessories = (accessoryItems || []).filter((acc) => {
             const description = acc.description.toLowerCase();
             return (
-              description.includes("yan kapak") ||
-              description.includes("orta kapak") ||
-              description.includes("fullset t sac") ||
-              description.includes("pimli galvaniz")
+              description.includes("yan kapak")
+              // fullset t sac ve pimli galvaniz (plaket) çıkarıldı
             );
           });
           // Paketleme ücretini ekle

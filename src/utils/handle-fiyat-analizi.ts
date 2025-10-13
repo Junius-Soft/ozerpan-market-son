@@ -11,6 +11,7 @@ interface HandleFiyatAnaliziPDFParams {
   productName?: string | null;
   optionId?: string | null;
   offerNo: string;
+  quantity?: number;
 }
 
 export async function handleFiyatAnaliziPDF({
@@ -21,7 +22,9 @@ export async function handleFiyatAnaliziPDF({
   productName,
   optionId,
   offerNo,
+  quantity,
 }: HandleFiyatAnaliziPDFParams) {
+  console.log({ product });
   // Extract accessories from form values
   const accessories: PriceItem[] =
     formikValues.selectedProducts?.accessories || [];
@@ -29,7 +32,7 @@ export async function handleFiyatAnaliziPDF({
     id: "-",
     pozNo: typeId || "-",
     unit: "adet",
-    quantity: formikValues.quantity || 1,
+    quantity: quantity || 1,
     unitPrice: formikValues.unitPrice || 0,
     selectedProducts: formikValues.selectedProducts || {
       products: [],

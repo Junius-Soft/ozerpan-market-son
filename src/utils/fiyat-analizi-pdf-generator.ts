@@ -122,13 +122,15 @@ export async function generateFiyatAnaliziPDFPozListesi(
     // Ürünler
     if (pos.selectedProducts && Array.isArray(pos.selectedProducts.products)) {
       pos.selectedProducts.products.forEach((prod) => {
+        // Pozisyon quantity'si ile çarp
+        const totalQuantity = (prod.quantity ?? 1) * (pos.quantity ?? 1);
         const euroTotal =
-          prod.price && prod.quantity ? Number(prod.price) * prod.quantity : 0;
+          prod.price && prod.quantity ? Number(prod.price) * totalQuantity : 0;
         malzemeListesiData.push([
           rowIndex++,
           prod.stock_code || "-",
           prod.description || "-",
-          prod.quantity ?? 1,
+          totalQuantity,
           prod.unit
             ? prod.unit.charAt(0).toUpperCase() + prod.unit.slice(1)
             : "-",
@@ -143,13 +145,15 @@ export async function generateFiyatAnaliziPDFPozListesi(
       Array.isArray(pos.selectedProducts.accessories)
     ) {
       pos.selectedProducts.accessories.forEach((acc) => {
+        // Pozisyon quantity'si ile çarp
+        const totalQuantity = (acc.quantity ?? 1) * (pos.quantity ?? 1);
         const euroTotal =
-          acc.price && acc.quantity ? Number(acc.price) * acc.quantity : 0;
+          acc.price && acc.quantity ? Number(acc.price) * totalQuantity : 0;
         malzemeListesiData.push([
           rowIndex++,
           acc.stock_code || "-",
           acc.description || "-",
-          acc.quantity ?? 1,
+          totalQuantity,
           acc.unit ? acc.unit.charAt(0).toUpperCase() + acc.unit.slice(1) : "-",
           acc.price ? formatPrice(Number(acc.price)) : "-",
           euroTotal !== undefined ? formatPrice(euroTotal) : "-",

@@ -491,6 +491,7 @@ export default function ProductDetailsPage() {
                       productName: productName ?? null,
                       optionId: optionId ?? null,
                       offerNo,
+                      quantity
                     });
                   }}
                 />

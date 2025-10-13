@@ -63,12 +63,12 @@ export async function handleImalatListesiPDF({
       productDetails: values,
       total: (values.unitPrice || 0) * (quantity || 1),
     };
+    // Position objesine canvas verisini ekle
+    if (canvasDataUrl) {
+      position.canvasDataUrl = canvasDataUrl;
+    }
+
     const utils = await import("@/utils/offer-utils");
-    utils.openImalatListPDFMulti(
-      currentOffer,
-      [position],
-      canvasDataUrl,
-      selectedTypes
-    );
+    utils.openImalatListPDFMulti(currentOffer, [position], selectedTypes);
   }
 }

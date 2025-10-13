@@ -80,7 +80,6 @@ export class ImalatPDFGenerator {
 
   public async generateImalatList(
     data: ImalatPDFData,
-    canvasDataUrl?: string,
     selectedTypes?: string[]
   ): Promise<void> {
     // PDF başlığı (metadata)
@@ -220,8 +219,8 @@ export class ImalatPDFGenerator {
     });
 
     // Canvas preview'larını ekle (sadece "Ürün Önizlemesi" seçiliyse)
-    if (canvasDataUrl && selectedTypes?.includes("preview")) {
-      this.addCanvasPreviewsForPositions(data.positions, canvasDataUrl);
+    if (selectedTypes?.includes("preview")) {
+      this.addCanvasPreviewsForPositions(data.positions);
     }
 
     // Footer ekle
@@ -319,10 +318,7 @@ export class ImalatPDFGenerator {
     // Bu fonksiyon artık boş, tarih ve hazırlayan bilgisi kaldırıldı
   }
 
-  private addCanvasPreviewsForPositions(
-    positions: Position[],
-    canvasDataUrl: string
-  ): void {
+  private addCanvasPreviewsForPositions(positions: Position[]): void {
     // Tablonun bittiği yeri bul (autoTable'dan sonraki son y pozisyonu)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let currentY = (this.doc as any).lastAutoTable?.finalY || 150;
@@ -333,42 +329,53 @@ export class ImalatPDFGenerator {
       positionPairs.push(positions.slice(i, i + 2));
     }
 
-    positionPairs.forEach((pair) => {
+    // Canvas preview için başlık (sadece bir kez)
+    const headerY = currentY + 15;
+    this.doc.setFontSize(11);
+    this.doc.setFont("NotoSans", "bold");
+    this.doc.setFillColor(230, 230, 230);
+    this.doc.rect(
+      this.margin,
+      headerY,
+      this.pageWidth - 2 * this.margin,
+      8,
+      "F"
+    );
+    this.doc.text("Ürün Önizlemesi", this.margin + 2, headerY + 5);
+
+    // Header'dan sonraki pozisyonu ayarla
+    currentY = headerY + 15; // Header yüksekliği + padding
+
+    positionPairs.forEach((pair, index) => {
+      // İlk çift değilse yukarıdan spacing ekle
+      if (index > 0) {
+        currentY += 3; // Pozisyon çiftleri arası boşluk (azaltıldı)
+      }
+
       // Eğer yeni satır başlangıcında sayfaya sığmıyorsa yeni sayfa ekle
       const maxImageHeight = 70; // Her zaman aynı yükseklik kullan
-      const requiredHeight = 8 + 15 + maxImageHeight * 0.8 + 15 + 4 + 10; // Başlık + padding + görüntü + padding + border + margin
+      const requiredHeight = maxImageHeight * 0.8 + 15 + 4; // görüntü + padding + border
       if (currentY + requiredHeight > this.pageHeight - 20) {
         this.doc.addPage();
         currentY = 20; // Yeni sayfada üstten başla
       }
 
-      // Canvas preview için başlık
-      const previewY = currentY + 15;
-      this.doc.setFontSize(11);
-      this.doc.setFont("NotoSans", "bold");
-      this.doc.setFillColor(230, 230, 230);
-      this.doc.rect(
-        this.margin,
-        previewY,
-        this.pageWidth - 2 * this.margin,
-        8,
-        "F"
-      );
-      this.doc.text("Ürün Görüntüsü", this.margin + 2, previewY + 5);
-
       // Canvas görüntülerini ekle
-      const imageY = previewY + 15;
-      const availableWidth = this.pageWidth - 2 * this.margin;
-      const spacing = 5; // Görüntüler arası boşluk
-
-      // Her zaman 2'li grid yapısı kullan - tek poz olsa da yarısını kaplasın
-      const imageWidth = Math.min((availableWidth - spacing) / 2, 80);
+      const imageY = currentY;
+      const headerPadding = 2; // Header içindeki text padding'i
+      const contentWidth = this.pageWidth - 2 * this.margin - 2 * headerPadding; // Header içerik genişliği
+      const spacing = 6; // Görüntüler arası boşluk (artırıldı)
       const imageHeight = 70;
 
-      // Sol görüntü (her zaman var) - başlıkla hizalı olsun
-      const leftImageX = this.margin + 2;
+      // Görüntü genişliğini header içeriği ile tam hizalı olacak şekilde hesapla
+      // Grid yapısını koru - tek pozisyon da sol tarafa hizalı olsun
+      const imageWidth = (contentWidth - spacing) / 2;
+      const leftImageX = this.margin + headerPadding;
+      const rightImageX = leftImageX + imageWidth + spacing;
+
+      // Sol görüntü (her zaman var)
       this.addSinglePositionImage(
-        canvasDataUrl,
+        pair[0].canvasDataUrl || "", // Her pozisyonun kendi canvas verisini kullan
         leftImageX,
         imageY,
         imageWidth,
@@ -378,9 +385,8 @@ export class ImalatPDFGenerator {
 
       // Sağ görüntü (varsa)
       if (pair.length > 1) {
-        const rightImageX = this.margin + 2 + imageWidth + spacing;
         this.addSinglePositionImage(
-          canvasDataUrl,
+          pair[1].canvasDataUrl || "", // Her pozisyonun kendi canvas verisini kullan
           rightImageX,
           imageY,
           imageWidth,
@@ -390,8 +396,8 @@ export class ImalatPDFGenerator {
       }
 
       // Bir sonraki görüntü grubu için Y pozisyonunu güncelle
-      const actualImageHeight = imageHeight * 0.8 + 15 + 4; // Görüntü yüksekliği * 0.8 + padding + border
-      currentY = imageY + actualImageHeight + 10; // Gerçek çerçeve yüksekliği + alt margin
+      const actualImageHeight = imageHeight * 0.7 + 3; // Görüntü yüksekliği * 0.7 + 3
+      currentY = imageY + actualImageHeight; // Alt margin'i kaldır, satır arası boşluk sadece üstteki 6px olsun
     });
   }
 
@@ -591,7 +597,7 @@ export class ImalatPDFGenerator {
       8,
       "F"
     );
-    this.doc.text("Ürün Görüntüsü", this.margin + 2, previewY + 5);
+    this.doc.text("Ürün Önizlemesi", this.margin + 2, previewY + 5);
 
     // Canvas görüntüsünü ekle
     const imageY = previewY + 15;
@@ -694,7 +700,6 @@ export class ImalatPDFGenerator {
 export async function generateImalatListPDF(
   offer: Offer,
   selectedPositions: Position[],
-  canvasDataUrl?: string,
   selectedTypes?: string[]
 ): Promise<void> {
   const generator = new ImalatPDFGenerator();
@@ -709,15 +714,14 @@ export async function generateImalatListPDF(
       .toString(),
   };
 
-  await generator.generateImalatList(data, canvasDataUrl, selectedTypes);
+  await generator.generateImalatList(data, selectedTypes);
 }
 
 // Export function for use in offer-utils
 export async function openImalatListPDFMulti(
   offer: Offer,
   positions: Position[],
-  canvasDataUrl?: string,
   selectedTypes?: string[]
 ): Promise<void> {
-  await generateImalatListPDF(offer, positions, canvasDataUrl, selectedTypes);
+  await generateImalatListPDF(offer, positions, selectedTypes);
 }

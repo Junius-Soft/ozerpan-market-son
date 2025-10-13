@@ -18,6 +18,7 @@ export interface Position {
   currency: Currency;
   productDetails: PanjurSelections;
   total: number; // Toplam fiyat
+  canvasDataUrl?: string; // Canvas görselini Base64 formatında saklamak için
 }
 
 export interface Offer {

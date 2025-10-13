@@ -304,6 +304,9 @@ export default function ProductDetailsPage() {
         throw new Error("Offer not found");
       }
 
+      // Canvas'ı export et
+      const canvasDataUrl = detailsStepRef.current?.exportCanvas() || undefined;
+
       // Create new position with calculated values
       const newPosition: Position = {
         id: selectedPositionId || `POS-${Date.now()}`,
@@ -329,6 +332,7 @@ export default function ProductDetailsPage() {
         productName,
         optionId,
         currency: productObj.currency,
+        canvasDataUrl, // Canvas verisini pozisyon objesine ekle
         productDetails: {
           ...values,
           // Product-specific state'i sadece panjur için ekle

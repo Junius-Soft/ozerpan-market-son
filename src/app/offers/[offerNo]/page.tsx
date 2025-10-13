@@ -288,7 +288,6 @@ export default function OfferDetailPage() {
                 utils.openImalatListPDFMulti(
                   offer,
                   filteredPositions,
-                  undefined,
                   selectedTypes
                 );
               });

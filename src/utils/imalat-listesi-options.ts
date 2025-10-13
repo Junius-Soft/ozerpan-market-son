@@ -11,6 +11,7 @@ export const getImalatListesiOptions = (
       { label: "Kutu", value: "Kutu" },
       { label: "Tambur Borusu", value: "Boru" },
       { label: "Yükseltme Profili", value: "Kasa Profili" },
+      { label: "Ürün Önizlemesi", value: "preview" },
     ];
 
     // Montaj tipine göre ek seçenekler
@@ -29,6 +30,7 @@ export const getImalatListesiOptions = (
   // Sineklik için
   if (productId === "sineklik") {
     return [
+      { label: "Ürün Önizlemesi", value: "preview" },
       { label: "Kasa Profili", value: "Kasa Profili" },
       { label: "Kanat Profili", value: "Kanat Profili" },
     ];

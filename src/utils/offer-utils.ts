@@ -132,9 +132,10 @@ export async function apiUpdateOfferStatus(
 export function openImalatListPDFMulti(
   offer: Offer,
   positions: Position[],
-  canvasDataUrl?: string
+  canvasDataUrl?: string,
+  selectedTypes?: string[]
 ) {
-  generateImalatListPDF(offer, positions, canvasDataUrl);
+  generateImalatListPDF(offer, positions, canvasDataUrl, selectedTypes);
 }
 
 // PDF generation function for Teklif Formu

@@ -64,6 +64,11 @@ export async function handleImalatListesiPDF({
       total: (values.unitPrice || 0) * (quantity || 1),
     };
     const utils = await import("@/utils/offer-utils");
-    utils.openImalatListPDFMulti(currentOffer, [position], canvasDataUrl);
+    utils.openImalatListPDFMulti(
+      currentOffer,
+      [position],
+      canvasDataUrl,
+      selectedTypes
+    );
   }
 }

@@ -80,7 +80,8 @@ export class ImalatPDFGenerator {
 
   public async generateImalatList(
     data: ImalatPDFData,
-    canvasDataUrl?: string
+    canvasDataUrl?: string,
+    selectedTypes?: string[]
   ): Promise<void> {
     // PDF başlığı (metadata)
     this.doc.setProperties({
@@ -218,8 +219,8 @@ export class ImalatPDFGenerator {
       },
     });
 
-    // Canvas preview'larını ekle (çoklu pozisyonlar için)
-    if (canvasDataUrl) {
+    // Canvas preview'larını ekle (sadece "Ürün Önizlemesi" seçiliyse)
+    if (canvasDataUrl && selectedTypes?.includes("preview")) {
       this.addCanvasPreviewsForPositions(data.positions, canvasDataUrl);
     }
 
@@ -693,7 +694,8 @@ export class ImalatPDFGenerator {
 export async function generateImalatListPDF(
   offer: Offer,
   selectedPositions: Position[],
-  canvasDataUrl?: string
+  canvasDataUrl?: string,
+  selectedTypes?: string[]
 ): Promise<void> {
   const generator = new ImalatPDFGenerator();
 
@@ -707,14 +709,15 @@ export async function generateImalatListPDF(
       .toString(),
   };
 
-  await generator.generateImalatList(data, canvasDataUrl);
+  await generator.generateImalatList(data, canvasDataUrl, selectedTypes);
 }
 
 // Export function for use in offer-utils
 export async function openImalatListPDFMulti(
   offer: Offer,
   positions: Position[],
-  canvasDataUrl?: string
+  canvasDataUrl?: string,
+  selectedTypes?: string[]
 ): Promise<void> {
-  await generateImalatListPDF(offer, positions, canvasDataUrl);
+  await generateImalatListPDF(offer, positions, canvasDataUrl, selectedTypes);
 }

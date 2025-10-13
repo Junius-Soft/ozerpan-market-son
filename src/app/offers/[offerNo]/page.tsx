@@ -285,7 +285,12 @@ export default function OfferDetailPage() {
                     },
                   };
                 }) as typeof positions;
-                utils.openImalatListPDFMulti(offer, filteredPositions);
+                utils.openImalatListPDFMulti(
+                  offer,
+                  filteredPositions,
+                  undefined,
+                  selectedTypes
+                );
               });
             }
           }}

@@ -20,6 +20,7 @@ import {
   getMenteseliKasaKoseTakozuItem,
   getMenteseliKanatTakozuItem,
   getMenteseliPencereMentesesiItem,
+  getMenteseliMiknatisItem,
 } from "@/utils/sineklikAccessory";
 
 export const calculateSineklikAccessories = (
@@ -73,6 +74,9 @@ function handleMenteseliAccessories(
     allAccessories
   );
   if (pencereMentesesiItem) neededAccessories.push(pencereMentesesiItem);
+
+  const miknatisItem = getMenteseliMiknatisItem(values, allAccessories);
+  if (miknatisItem) neededAccessories.push(miknatisItem);
 }
 
 function handleSabitAccessories(

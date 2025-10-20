@@ -984,93 +984,6 @@
       }
     }
   ],
-  "pencere": [
-    {
-      "id": "dimensions",
-      "name": "Pencere Ölçüleri",
-      "content": {
-        "fields": [
-          {
-            "id": "width",
-            "name": "Genişlik (cm)",
-            "type": "number",
-            "min": 300,
-            "max": 3000,
-            "default": 500
-          },
-          {
-            "id": "height",
-            "name": "Yükseklik (cm)",
-            "type": "number",
-            "min": 300,
-            "max": 2500,
-            "default": 500
-          }
-        ],
-        "preview": {
-          "type": "window",
-          "component": "WindowPreview"
-        }
-      }
-    },
-    {
-      "id": "frame",
-      "name": "Çerçeve Seçimi",
-      "content": {
-        "fields": [
-          {
-            "id": "frameType",
-            "name": "Çerçeve Tipi",
-            "type": "radio",
-            "options": [
-              { "id": "ahsap", "name": "Ahşap" },
-              { "id": "pvc", "name": "PVC" },
-              { "id": "aluminyum", "name": "Alüminyum" }
-            ],
-            "default": "pvc"
-          }
-        ]
-      }
-    },
-    {
-      "id": "glass",
-      "name": "Cam Seçimi",
-      "content": {
-        "fields": [
-          {
-            "id": "glassType",
-            "name": "Cam Tipi",
-            "type": "select",
-            "options": [
-              { "id": "tekli", "name": "Tek Cam" },
-              { "id": "ciftli", "name": "Çift Cam" },
-              { "id": "uclu", "name": "Üçlü Cam" }
-            ],
-            "default": "ciftli"
-          }
-        ]
-      }
-    },
-    {
-      "id": "color",
-      "name": "Renk Seçimi",
-      "content": {
-        "fields": [
-          {
-            "id": "color",
-            "name": "Renk",
-            "type": "select",
-            "options": [
-              { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
-              { "id": "antrasit", "name": "Antrasit" }
-            ],
-            "default": "beyaz"
-          }
-        ]
-      }
-    }
-  ],
   "sineklik": [
     {
       "id": "specifications",
@@ -1302,120 +1215,993 @@
       }
     }
   ],
-  "kapi": [
+  "cam-balkon": [
     {
-      "id": "dimensions",
-      "name": "Kapı Ölçüleri",
+      "id": "specifications",
+      "name": "Ürün Özellikleri",
       "content": {
         "fields": [
           {
-            "id": "width",
-            "name": "Genişlik (cm)",
-            "type": "number",
-            "min": 600,
-            "max": 1200,
-            "default": 800
+            "id": "camBalkonType",
+            "name": "Cam Balkon Tipi",
+            "type": "select",
+            "options": [
+              {
+                "id": "katlanir-cam-balkon",
+                "name": "Katlanır Cam Balkon"
+              },
+              {
+                "id": "surme-cam-balkon",
+                "name": "Sürme Cam Balkon"
+              },
+              {
+                "id": "giyotin-cam-balkon",
+                "name": "Giyotin Cam Balkon"
+              }
+            ],
+            "default": "katlanir-cam-balkon"
+          },
+          {
+            "id": "productSubType-katlanir",
+            "name": "Ürün Seçimi",
+            "type": "select",
+            "options": [
+              {
+                "id": "vela-24mm",
+                "name": "Vela 24mm",
+                "image": "/images/products/cam-balkon.png"
+              },
+              {
+                "id": "vela-8mm",
+                "name": "Vela 8mm",
+                "image": "/images/products/cam-balkon.png"
+              }
+            ],
+            "default": "vela-24mm",
+            "dependsOn": {
+              "field": "camBalkonType",
+              "value": "katlanir-cam-balkon"
+            }
+          },
+          {
+            "id": "productSubType-surme",
+            "name": "Ürün Seçimi",
+            "type": "select",
+            "options": [
+              {
+                "id": "alenda-surme",
+                "name": "Alenda Sürme",
+                "image": "/images/products/cam-balkon.png"
+              },
+              {
+                "id": "teras-konfor",
+                "name": "Teras Konfor",
+                "image": "/images/products/cam-balkon.png"
+              }
+            ],
+            "default": "alenda-surme",
+            "dependsOn": {
+              "field": "camBalkonType",
+              "value": "surme-cam-balkon"
+            }
+          },
+          {
+            "id": "productSubType-giyotin",
+            "name": "Ürün Seçimi",
+            "type": "select",
+            "options": [
+              {
+                "id": "alenda-giyotin",
+                "name": "Alenda Giyotin",
+                "image": "/images/products/cam-balkon.png"
+              }
+            ],
+            "default": "alenda-giyotin",
+            "dependsOn": {
+              "field": "camBalkonType",
+              "value": "giyotin-cam-balkon"
+            }
+          },
+          {
+            "id": "color",
+            "name": "Renk Seçimi",
+            "type": "select",
+            "options": [
+              {
+                "id": "natural-eloksal",
+                "name": "Natural Eloksal"
+              },
+              {
+                "id": "titan",
+                "name": "Titan"
+              },
+              {
+                "id": "vizon",
+                "name": "Vizon"
+              },
+              {
+                "id": "antrasit-gri",
+                "name": "Antrasit Gri"
+              },
+              {
+                "id": "siyah",
+                "name": "Siyah"
+              },
+              {
+                "id": "altin-mese",
+                "name": "Altın Meşe"
+              }
+            ],
+            "default": "natural-eloksal"
+          },
+          {
+            "id": "altRayProfili",
+            "name": "Alt Ray Profili",
+            "type": "select",
+            "options": [
+              {
+                "id": "ray-profili",
+                "name": "Ray Profili"
+              },
+              {
+                "id": "damlalikli-ray-profili",
+                "name": "Damlalıklı Ray Profili"
+              }
+            ],
+            "default": "ray-profili"
+          },
+          {
+            "id": "camKalinligi",
+            "name": "Cam Kalınlığı",
+            "type": "select",
+            "options": [
+              {
+                "id": "24mm",
+                "name": "24 mm"
+              },
+              {
+                "id": "8mm",
+                "name": "8 mm"
+              }
+            ],
+            "default": "24mm"
+          },
+          {
+            "id": "camRengi",
+            "name": "Cam Rengi",
+            "type": "select",
+            "options": [
+              {
+                "id": "seffaf",
+                "name": "Şeffaf"
+              },
+              {
+                "id": "fume",
+                "name": "Füme"
+              },
+              {
+                "id": "bronz",
+                "name": "Bronz"
+              },
+              {
+                "id": "yesil",
+                "name": "Yeşil"
+              },
+              {
+                "id": "mavi",
+                "name": "Mavi"
+              }
+            ],
+            "default": "seffaf"
+          },
+          {
+            "id": "conta",
+            "name": "Conta Seçimi",
+            "type": "select",
+            "options": [
+              {
+                "id": "firca-conta",
+                "name": "Fırça Conta"
+              },
+              {
+                "id": "duz-conta",
+                "name": "Düz Conta"
+              }
+            ],
+            "default": "firca-conta"
+          },
+          {
+            "id": "kasaUzatma",
+            "name": "Kasa Uzatma Seçeneği",
+            "type": "select",
+            "options": [
+              {
+                "id": "yok",
+                "name": "Yok"
+              },
+              {
+                "id": "kasa-uzatma-pr-63",
+                "name": "Kasa Uzatma PR-63"
+              }
+            ],
+            "default": "yok"
           },
           {
             "id": "height",
-            "name": "Yükseklik (cm)",
+            "name": "Yükseklik (mm)",
             "type": "number",
-            "min": 1900,
-            "max": 2500,
-            "default": 2100
+            "min": 100,
+            "max": 4000,
+            "default": 1500
           }
         ],
         "preview": {
-          "type": "door",
-          "component": "DoorPreview"
+          "type": "cam-balkon",
+          "component": "GlassBalconyPreview"
         }
       }
     },
     {
-      "id": "type",
-      "name": "Kapı Tipi",
+      "id": "add-kol",
+      "name": "Kol Ekleme",
       "content": {
         "fields": [
           {
-            "id": "doorType",
-            "name": "Kapı Tipi",
-            "type": "radio",
-            "options": [
-              { "id": "ic", "name": "İç Kapı" },
-              { "id": "dis", "name": "Dış Kapı" },
-              { "id": "celik", "name": "Çelik Kapı" }
-            ],
-            "default": "ic"
-          }
-        ]
-      }
-    },
-    {
-      "id": "panel",
-      "name": "Panel Seçimi",
-      "content": {
-        "fields": [
-          {
-            "id": "panelType",
-            "name": "Panel Tipi",
+            "id": "kolSayisi",
+            "name": "Kol Sayısı",
             "type": "select",
             "options": [
-              { "id": "duz", "name": "Düz Panel" },
-              { "id": "cizgili", "name": "Çizgili Panel" },
-              { "id": "desenli", "name": "Desenli Panel" }
+              { "id": "1", "name": "1 Kol" },
+              { "id": "2", "name": "2 Kol" },
+              { "id": "3", "name": "3 Kol" },
+              { "id": "4", "name": "4 Kol" },
+              { "id": "5", "name": "5 Kol" }
             ],
-            "default": "duz"
-          }
-        ]
-      }
-    },
-    {
-      "id": "hardware",
-      "name": "Donanım Seçimi",
-      "content": {
-        "fields": [
-          {
-            "id": "handleType",
-            "name": "Kapı Kolu",
-            "type": "select",
-            "options": [
-              { "id": "standart", "name": "Standart Kol" },
-              { "id": "lux", "name": "Lüks Kol" },
-              { "id": "modern", "name": "Modern Kol" }
-            ],
-            "default": "standart"
+            "default": "1"
           },
           {
-            "id": "lockType",
-            "name": "Kilit Sistemi",
-            "type": "select",
-            "options": [
-              { "id": "normal", "name": "Normal Kilit" },
-              { "id": "silindir", "name": "Silindir Kilit" },
-              { "id": "elektronik", "name": "Elektronik Kilit" }
-            ],
-            "default": "normal"
-          }
-        ]
-      }
-    },
-    {
-      "id": "color",
-      "name": "Renk Seçimi",
-      "content": {
-        "fields": [
+            "id": "kol1_genislik",
+            "name": "Genişlik (mm)",
+            "type": "number",
+            "min": 200,
+            "max": 20000,
+            "default": 1000
+          },
           {
-            "id": "color",
-            "name": "Renk",
+            "id": "kol1_kanat",
+            "name": "Kanat",
             "type": "select",
             "options": [
-              { "id": "beyaz", "name": "Beyaz" },
-              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
-              { "id": "siyah", "name": "Siyah" },
-              { "id": "wenge", "name": "Wenge" },
-              { "id": "meşe", "name": "Meşe" }
+              { "id": "1", "name": "1" },
+              { "id": "2", "name": "2" },
+              { "id": "3", "name": "3" },
+              { "id": "4", "name": "4" },
+              { "id": "5", "name": "5" },
+              { "id": "6", "name": "6" },
+              { "id": "7", "name": "7" },
+              { "id": "8", "name": "8" },
+              { "id": "9", "name": "9" },
+              { "id": "10", "name": "10" },
+              { "id": "11", "name": "11" },
+              { "id": "12", "name": "12" },
+              { "id": "13", "name": "13" },
+              { "id": "14", "name": "14" },
+              { "id": "15", "name": "15" },
+              { "id": "16", "name": "16" }
             ],
-            "default": "beyaz"
+            "default": "1"
+          },
+          {
+            "id": "kol1_cikisSayisi",
+            "name": "Çıkış Sayısı",
+            "type": "select",
+            "options": [
+              { "id": "0", "name": "0" },
+              { "id": "1", "name": "1" },
+              { "id": "2", "name": "2" }
+            ],
+            "default": "1"
+          },
+          {
+            "id": "kol1_cikisYonu",
+            "name": "Çıkış Yönü",
+            "type": "select",
+            "options": [
+              { "id": "sag", "name": "Sağ" },
+              { "id": "sol", "name": "Sol" },
+              { "id": "sagsol", "name": "Sağ-Sol" }
+            ],
+            "default": "sol",
+            "filterBy": {
+              "field": "kol1_cikisSayisi",
+              "valueMap": {
+                "1": ["sag", "sol"],
+                "2": ["sagsol"]
+              }
+            }
+          },
+          {
+            "id": "kol1_solaKanat",
+            "name": "Sola Kanat",
+            "type": "select",
+            "options": [
+              { "id": "0", "name": "0" },
+              { "id": "1", "name": "1" },
+              { "id": "2", "name": "2" },
+              { "id": "3", "name": "3" },
+              { "id": "4", "name": "4" },
+              { "id": "5", "name": "5" },
+              { "id": "6", "name": "6" },
+              { "id": "7", "name": "7" },
+              { "id": "8", "name": "8" },
+              { "id": "9", "name": "9" },
+              { "id": "10", "name": "10" },
+              { "id": "11", "name": "11" },
+              { "id": "12", "name": "12" },
+              { "id": "13", "name": "13" },
+              { "id": "14", "name": "14" },
+              { "id": "15", "name": "15" },
+              { "id": "16", "name": "16" }
+            ],
+            "default": "0",
+            "dependsOn": {
+              "field": "kol1_cikisYonu",
+              "value": ["sol", "sagsol"]
+            }
+          },
+          {
+            "id": "kol1_sabitCamAdedi",
+            "name": "Sabit Cam Adedi",
+            "type": "number",
+            "min": 0,
+            "max": 10,
+            "default": 0
+          },
+          {
+            "id": "kol1_sabitCamGenisligi",
+            "name": "Sabit Cam Genişliği (mm)",
+            "type": "number",
+            "min": 0,
+            "max": 5000,
+            "default": 0
+          },
+          {
+            "id": "kol1_sabitCamYonu",
+            "name": "Sabit Cam Yönü",
+            "type": "select",
+            "options": [
+              { "id": "sag", "name": "Sağ" },
+              { "id": "sol", "name": "Sol" }
+            ],
+            "default": "sag"
+          },
+
+          {
+            "id": "kol2_genislik",
+            "name": "2. Kol - Genişlik (mm)",
+            "type": "number",
+            "min": 100,
+            "max": 20000,
+            "default": 1000,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["2", "3", "4", "5"]
+            }
+          },
+          {
+            "id": "kol2_kanat",
+            "name": "2. Kol - Kanat",
+            "type": "select",
+            "options": [
+              { "id": "1", "name": "1" },
+              { "id": "2", "name": "2" },
+              { "id": "3", "name": "3" },
+              { "id": "4", "name": "4" },
+              { "id": "5", "name": "5" },
+              { "id": "6", "name": "6" },
+              { "id": "7", "name": "7" },
+              { "id": "8", "name": "8" },
+              { "id": "9", "name": "9" },
+              { "id": "10", "name": "10" },
+              { "id": "11", "name": "11" },
+              { "id": "12", "name": "12" },
+              { "id": "13", "name": "13" },
+              { "id": "14", "name": "14" },
+              { "id": "15", "name": "15" },
+              { "id": "16", "name": "16" }
+            ],
+            "default": "1",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["2", "3", "4", "5"]
+            }
+          },
+          {
+            "id": "kol2_cikisSayisi",
+            "name": "2. Kol - Çıkış Sayısı",
+            "type": "select",
+            "options": [
+              { "id": "0", "name": "0" },
+              { "id": "1", "name": "1" },
+              { "id": "2", "name": "2" }
+            ],
+            "default": "1",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["2", "3", "4", "5"]
+            }
+          },
+          {
+            "id": "kol2_cikisYonu",
+            "name": "2. Kol - Çıkış Yönü",
+            "type": "select",
+            "options": [
+              { "id": "sag", "name": "Sağ" },
+              { "id": "sol", "name": "Sol" },
+              { "id": "sagsol", "name": "Sağ-Sol" }
+            ],
+            "default": "sag",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["2", "3", "4", "5"]
+            },
+            "filterBy": {
+              "field": "kol2_cikisSayisi",
+              "valueMap": {
+                "1": ["sag", "sol"],
+                "2": ["sagsol"]
+              }
+            }
+          },
+          {
+            "id": "kol2_aci",
+            "name": "2. Kol - Açı (°)",
+            "type": "number",
+            "min": 0,
+            "max": 270,
+            "default": 0,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["2", "3", "4", "5"]
+            }
+          },
+          {
+            "id": "kol2_solaKanat",
+            "name": "2. Kol - Sola Kanat",
+            "type": "select",
+            "options": [
+              { "id": "0", "name": "0" },
+              { "id": "1", "name": "1" },
+              { "id": "2", "name": "2" },
+              { "id": "3", "name": "3" },
+              { "id": "4", "name": "4" },
+              { "id": "5", "name": "5" },
+              { "id": "6", "name": "6" },
+              { "id": "7", "name": "7" },
+              { "id": "8", "name": "8" },
+              { "id": "9", "name": "9" },
+              { "id": "10", "name": "10" },
+              { "id": "11", "name": "11" },
+              { "id": "12", "name": "12" },
+              { "id": "13", "name": "13" },
+              { "id": "14", "name": "14" },
+              { "id": "15", "name": "15" },
+              { "id": "16", "name": "16" }
+            ],
+            "default": "0",
+            "dependsOn": {
+              "field": "kol2_cikisYonu",
+              "value": ["sol", "sagsol"]
+            }
+          },
+          {
+            "id": "kol2_sabitCamAdedi",
+            "name": "2. Kol - Sabit Cam Adedi",
+            "type": "number",
+            "min": 0,
+            "max": 20,
+            "default": 100,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["2", "3", "4", "5"]
+            }
+          },
+          {
+            "id": "kol2_sabitCamGenisligi",
+            "name": "2. Kol - Sabit Cam Genişliği (mm)",
+            "type": "number",
+            "min": 0,
+            "max": 2000,
+            "default": 500,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["2", "3", "4", "5"]
+            }
+          },
+          {
+            "id": "kol2_sabitCamYonu",
+            "name": "2. Kol - Sabit Cam Yönü",
+            "type": "select",
+            "options": [
+              { "id": "sag", "name": "Sağ" },
+              { "id": "sol", "name": "Sol" }
+            ],
+            "default": "sag",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["2", "3", "4", "5"]
+            }
+          },
+
+          {
+            "id": "kol3_genislik",
+            "name": "3. Kol - Genişlik (mm)",
+            "type": "number",
+            "min": 100,
+            "max": 20000,
+            "default": 1000,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["3", "4", "5"]
+            }
+          },
+          {
+            "id": "kol3_kanat",
+            "name": "3. Kol - Kanat",
+            "type": "select",
+            "options": [
+              { "id": "1", "name": "1" },
+              { "id": "2", "name": "2" },
+              { "id": "3", "name": "3" },
+              { "id": "4", "name": "4" },
+              { "id": "5", "name": "5" },
+              { "id": "6", "name": "6" },
+              { "id": "7", "name": "7" },
+              { "id": "8", "name": "8" },
+              { "id": "9", "name": "9" },
+              { "id": "10", "name": "10" },
+              { "id": "11", "name": "11" },
+              { "id": "12", "name": "12" },
+              { "id": "13", "name": "13" },
+              { "id": "14", "name": "14" },
+              { "id": "15", "name": "15" },
+              { "id": "16", "name": "16" }
+            ],
+            "default": "1",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["3", "4", "5"]
+            }
+          },
+          {
+            "id": "kol3_cikisSayisi",
+            "name": "3. Kol - Çıkış Sayısı",
+            "type": "select",
+            "options": [
+              { "id": "0", "name": "0" },
+              { "id": "1", "name": "1" },
+              { "id": "2", "name": "2" }
+            ],
+            "default": "1",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["3", "4", "5"]
+            }
+          },
+          {
+            "id": "kol3_cikisYonu",
+            "name": "3. Kol - Çıkış Yönü",
+            "type": "select",
+            "options": [
+              { "id": "sag", "name": "Sağ" },
+              { "id": "sol", "name": "Sol" },
+              { "id": "sagsol", "name": "Sağ-Sol" }
+            ],
+            "default": "sag",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["3", "4", "5"]
+            },
+            "filterBy": {
+              "field": "kol3_cikisSayisi",
+              "valueMap": {
+                "1": ["sag", "sol"],
+                "2": ["sagsol"]
+              }
+            }
+          },
+          {
+            "id": "kol3_aci",
+            "name": "3. Kol - Açı (°)",
+            "type": "number",
+            "min": 0,
+            "max": 270,
+            "default": 0,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["3", "4", "5"]
+            }
+          },
+          {
+            "id": "kol3_solaKanat",
+            "name": "3. Kol - Sola Kanat",
+            "type": "select",
+            "options": [
+              { "id": "0", "name": "0" },
+              { "id": "1", "name": "1" },
+              { "id": "2", "name": "2" },
+              { "id": "3", "name": "3" },
+              { "id": "4", "name": "4" },
+              { "id": "5", "name": "5" },
+              { "id": "6", "name": "6" },
+              { "id": "7", "name": "7" },
+              { "id": "8", "name": "8" },
+              { "id": "9", "name": "9" },
+              { "id": "10", "name": "10" },
+              { "id": "11", "name": "11" },
+              { "id": "12", "name": "12" },
+              { "id": "13", "name": "13" },
+              { "id": "14", "name": "14" },
+              { "id": "15", "name": "15" },
+              { "id": "16", "name": "16" }
+            ],
+            "default": "0",
+            "dependsOn": {
+              "field": "kol3_cikisYonu",
+              "value": ["sol", "sagsol"]
+            }
+          },
+          {
+            "id": "kol3_sabitCamAdedi",
+            "name": "3. Kol - Sabit Cam Adedi",
+            "type": "number",
+            "min": 0,
+            "max": 20,
+            "default": 100,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["3", "4", "5"]
+            }
+          },
+          {
+            "id": "kol3_sabitCamGenisligi",
+            "name": "3. Kol - Sabit Cam Genişliği (mm)",
+            "type": "number",
+            "min": 0,
+            "max": 2000,
+            "default": 500,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["3", "4", "5"]
+            }
+          },
+          {
+            "id": "kol3_sabitCamYonu",
+            "name": "3. Kol - Sabit Cam Yönü",
+            "type": "select",
+            "options": [
+              { "id": "sag", "name": "Sağ" },
+              { "id": "sol", "name": "Sol" }
+            ],
+            "default": "sag",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["3", "4", "5"]
+            }
+          },
+
+          {
+            "id": "kol4_genislik",
+            "name": "4. Kol - Genişlik (mm)",
+            "type": "number",
+            "min": 100,
+            "max": 20000,
+            "default": 1000,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["4", "5"]
+            }
+          },
+          {
+            "id": "kol4_kanat",
+            "name": "4. Kol - Kanat",
+            "type": "select",
+            "options": [
+              { "id": "1", "name": "1" },
+              { "id": "2", "name": "2" },
+              { "id": "3", "name": "3" },
+              { "id": "4", "name": "4" },
+              { "id": "5", "name": "5" },
+              { "id": "6", "name": "6" },
+              { "id": "7", "name": "7" },
+              { "id": "8", "name": "8" },
+              { "id": "9", "name": "9" },
+              { "id": "10", "name": "10" },
+              { "id": "11", "name": "11" },
+              { "id": "12", "name": "12" },
+              { "id": "13", "name": "13" },
+              { "id": "14", "name": "14" },
+              { "id": "15", "name": "15" },
+              { "id": "16", "name": "16" }
+            ],
+            "default": "1",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["4", "5"]
+            }
+          },
+          {
+            "id": "kol4_cikisSayisi",
+            "name": "4. Kol - Çıkış Sayısı",
+            "type": "select",
+            "options": [
+              { "id": "0", "name": "0" },
+              { "id": "1", "name": "1" },
+              { "id": "2", "name": "2" }
+            ],
+            "default": "1",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["4", "5"]
+            }
+          },
+          {
+            "id": "kol4_cikisYonu",
+            "name": "4. Kol - Çıkış Yönü",
+            "type": "select",
+            "options": [
+              { "id": "sag", "name": "Sağ" },
+              { "id": "sol", "name": "Sol" },
+              { "id": "sagsol", "name": "Sağ-Sol" }
+            ],
+            "default": "sag",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["4", "5"]
+            },
+            "filterBy": {
+              "field": "kol4_cikisSayisi",
+              "valueMap": {
+                "1": ["sag", "sol"],
+                "2": ["sagsol"]
+              }
+            }
+          },
+          {
+            "id": "kol4_aci",
+            "name": "4. Kol - Açı (°)",
+            "type": "number",
+            "min": 0,
+            "max": 270,
+            "default": 0,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["4", "5"]
+            }
+          },
+          {
+            "id": "kol4_solaKanat",
+            "name": "4. Kol - Sola Kanat",
+            "type": "select",
+            "options": [
+              { "id": "0", "name": "0" },
+              { "id": "1", "name": "1" },
+              { "id": "2", "name": "2" },
+              { "id": "3", "name": "3" },
+              { "id": "4", "name": "4" },
+              { "id": "5", "name": "5" },
+              { "id": "6", "name": "6" },
+              { "id": "7", "name": "7" },
+              { "id": "8", "name": "8" },
+              { "id": "9", "name": "9" },
+              { "id": "10", "name": "10" },
+              { "id": "11", "name": "11" },
+              { "id": "12", "name": "12" },
+              { "id": "13", "name": "13" },
+              { "id": "14", "name": "14" },
+              { "id": "15", "name": "15" },
+              { "id": "16", "name": "16" }
+            ],
+            "default": "0",
+            "dependsOn": {
+              "field": "kol4_cikisYonu",
+              "value": ["sol", "sagsol"]
+            }
+          },
+          {
+            "id": "kol4_sabitCamAdedi",
+            "name": "4. Kol - Sabit Cam Adedi",
+            "type": "number",
+            "min": 0,
+            "max": 20,
+            "default": 100,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["4", "5"]
+            }
+          },
+          {
+            "id": "kol4_sabitCamGenisligi",
+            "name": "4. Kol - Sabit Cam Genişliği (mm)",
+            "type": "number",
+            "min": 0,
+            "max": 2000,
+            "default": 500,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["4", "5"]
+            }
+          },
+          {
+            "id": "kol4_sabitCamYonu",
+            "name": "4. Kol - Sabit Cam Yönü",
+            "type": "select",
+            "options": [
+              { "id": "sag", "name": "Sağ" },
+              { "id": "sol", "name": "Sol" }
+            ],
+            "default": "sag",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["4", "5"]
+            }
+          },
+
+          {
+            "id": "kol5_genislik",
+            "name": "5. Kol - Genişlik (mm)",
+            "type": "number",
+            "min": 100,
+            "max": 20000,
+            "default": 1000,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["5"]
+            }
+          },
+          {
+            "id": "kol5_kanat",
+            "name": "5. Kol - Kanat",
+            "type": "select",
+            "options": [
+              { "id": "1", "name": "1" },
+              { "id": "2", "name": "2" },
+              { "id": "3", "name": "3" },
+              { "id": "4", "name": "4" },
+              { "id": "5", "name": "5" },
+              { "id": "6", "name": "6" },
+              { "id": "7", "name": "7" },
+              { "id": "8", "name": "8" },
+              { "id": "9", "name": "9" },
+              { "id": "10", "name": "10" },
+              { "id": "11", "name": "11" },
+              { "id": "12", "name": "12" },
+              { "id": "13", "name": "13" },
+              { "id": "14", "name": "14" },
+              { "id": "15", "name": "15" },
+              { "id": "16", "name": "16" }
+            ],
+            "default": "1",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["5"]
+            }
+          },
+          {
+            "id": "kol5_cikisSayisi",
+            "name": "5. Kol - Çıkış Sayısı",
+            "type": "select",
+            "options": [
+              { "id": "0", "name": "0" },
+              { "id": "1", "name": "1" },
+              { "id": "2", "name": "2" }
+            ],
+            "default": "1",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["5"]
+            }
+          },
+          {
+            "id": "kol5_cikisYonu",
+            "name": "5. Kol - Çıkış Yönü",
+            "type": "select",
+            "options": [
+              { "id": "sag", "name": "Sağ" },
+              { "id": "sol", "name": "Sol" },
+              { "id": "sagsol", "name": "Sağ-Sol" }
+            ],
+            "default": "sag",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["5"]
+            },
+            "filterBy": {
+              "field": "kol5_cikisSayisi",
+              "valueMap": {
+                "1": ["sag", "sol"],
+                "2": ["sagsol"]
+              }
+            }
+          },
+          {
+            "id": "kol5_aci",
+            "name": "5. Kol - Açı (°)",
+            "type": "number",
+            "min": 0,
+            "max": 270,
+            "default": 0,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["5"]
+            }
+          },
+          {
+            "id": "kol5_solaKanat",
+            "name": "5. Kol - Sola Kanat",
+            "type": "select",
+            "options": [
+              { "id": "0", "name": "0" },
+              { "id": "1", "name": "1" },
+              { "id": "2", "name": "2" },
+              { "id": "3", "name": "3" },
+              { "id": "4", "name": "4" },
+              { "id": "5", "name": "5" },
+              { "id": "6", "name": "6" },
+              { "id": "7", "name": "7" },
+              { "id": "8", "name": "8" },
+              { "id": "9", "name": "9" },
+              { "id": "10", "name": "10" },
+              { "id": "11", "name": "11" },
+              { "id": "12", "name": "12" },
+              { "id": "13", "name": "13" },
+              { "id": "14", "name": "14" },
+              { "id": "15", "name": "15" },
+              { "id": "16", "name": "16" }
+            ],
+            "default": "0",
+            "dependsOn": {
+              "field": "kol5_cikisYonu",
+              "value": ["sol", "sagsol"]
+            }
+          },
+          {
+            "id": "kol5_sabitCamAdedi",
+            "name": "5. Kol - Sabit Cam Adedi",
+            "type": "number",
+            "min": 0,
+            "max": 20,
+            "default": 100,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["5"]
+            }
+          },
+          {
+            "id": "kol5_sabitCamGenisligi",
+            "name": "5. Kol - Sabit Cam Genişliği (mm)",
+            "type": "number",
+            "min": 0,
+            "max": 2000,
+            "default": 500,
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["5"]
+            }
+          },
+          {
+            "id": "kol5_sabitCamYonu",
+            "name": "5. Kol - Sabit Cam Yönü",
+            "type": "select",
+            "options": [
+              { "id": "sag", "name": "Sağ" },
+              { "id": "sol", "name": "Sol" }
+            ],
+            "default": "sag",
+            "dependsOn": {
+              "field": "kolSayisi",
+              "value": ["5"]
+            }
           }
         ]
       }

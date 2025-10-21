@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
-const EXCHANGE_RATES_API_KEY = process.env.EXCHANGE_RATES_API_KEY;
-const API_URL = `http://api.exchangeratesapi.io/v1/latest?access_key=${EXCHANGE_RATES_API_KEY}&symbols=TRY`;
+const API_URL =
+  "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json";
 
 // Cache the exchange rate for 1 hour
 let cachedData: { rate: number; timestamp: number } | null = null;
@@ -22,11 +22,11 @@ export async function GET() {
 
     const data = await response.json();
 
-    if (!data.success) {
-      throw new Error("API returned unsuccessful response");
+    if (!data.eur || !data.eur.try) {
+      throw new Error("TRY rate not found in response");
     }
 
-    const rate = data.rates.TRY;
+    const rate = data.eur.try;
 
     // Update cache
     cachedData = {
@@ -41,6 +41,6 @@ export async function GET() {
     if (cachedData) {
       return NextResponse.json({ rate: cachedData.rate, cached: true });
     }
-    return NextResponse.json({ rate: 44.88, fallback: true });
+    return NextResponse.json({ rate: 48.87, fallback: true });
   }
 }

@@ -92,27 +92,7 @@
       "currency": {
         "code": "EUR",
         "symbol": "€"
-      },
-      "_backup_types": [
-        {
-          "id": "katlanir-cam-balkon",
-          "name": "Katlanır Cam Balkon",
-          "image": "/images/products/cam-balkon.png",
-          "disabled": false
-        },
-        {
-          "id": "surme-cam-balkon",
-          "name": "Sürme Cam Balkon",
-          "image": "/images/products/cam-balkon.png",
-          "disabled": false
-        },
-        {
-          "id": "giyotin-cam-balkon",
-          "name": "Giyotin Cam Balkon",
-          "image": "/images/products/cam-balkon.png",
-          "disabled": false
-        }
-      ]
+      }
     }
   ]
 }

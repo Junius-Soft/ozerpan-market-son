@@ -2,23 +2,28 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest, context: any) {
-  return proxyToFrappe(request, context.params.path as string[]);
+  const params = await context.params;
+  return proxyToFrappe(request, params.path as string[]);
 }
 
 export async function POST(request: NextRequest, context: any) {
-  return proxyToFrappe(request, context.params.path as string[]);
+  const params = await context.params;
+  return proxyToFrappe(request, params.path as string[]);
 }
 
 export async function PUT(request: NextRequest, context: any) {
-  return proxyToFrappe(request, context.params.path as string[]);
+  const params = await context.params;
+  return proxyToFrappe(request, params.path as string[]);
 }
 
 export async function DELETE(request: NextRequest, context: any) {
-  return proxyToFrappe(request, context.params.path as string[]);
+  const params = await context.params;
+  return proxyToFrappe(request, params.path as string[]);
 }
 
 export async function PATCH(request: NextRequest, context: any) {
-  return proxyToFrappe(request, context.params.path as string[]);
+  const params = await context.params;
+  return proxyToFrappe(request, params.path as string[]);
 }
 
 export async function OPTIONS() {

@@ -67,14 +67,8 @@ export function useAccessories(
             allAccessories
           );
           setAccessories(result);
-        } else if (productId === "pergole") {
-          // Gelecekte diğer ürünler için
-          // const result = calculatePergoleAccessories(values, allAccessories);
-          // setAccessories(result);
-          setAccessories([]);
-        } else if (productId === "tente") {
-          // const result = calculateTenteAccessories(values, allAccessories);
-          // setAccessories(result);
+        } else if (productId === "cam-balkon") {
+          // Cam balkon için şu an aksesuar yok
           setAccessories([]);
         } else {
           // Bilinmeyen ürün

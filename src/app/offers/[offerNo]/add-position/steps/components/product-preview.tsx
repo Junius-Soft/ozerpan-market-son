@@ -78,6 +78,27 @@ const formatFieldValue = (
   }
 
   if (typeof value === "boolean") return value ? "Evet" : "Hayır";
+  // Açı alanları için derece birimi + dönüş parçası hesaplaması
+  if (fieldId.endsWith("_aci")) {
+    const angle = Number(value);
+    if (!isNaN(angle) && angle >= 0 && angle <= 360) {
+      // Dönüş parçası hesaplama: A = 20 * tan(90 - (Açı/2))
+      // Açı değerini normalize et - 180'den büyükse 360'dan çıkar
+      const anglePositive = angle > 180 ? 360 - angle : angle;
+      const angleInRadians = (anglePositive * Math.PI) / 180;
+      const turnPiece = 20 * Math.tan(Math.PI / 2 - angleInRadians / 2);
+
+      // Negatif değeri pozitif yap - mutlak değer al
+      const result = Math.abs(Math.round(turnPiece * 100) / 100);
+
+      // Toplam hesaplama
+      const total = 16 + result;
+      const totalRounded = Math.round(total * 100) / 100;
+
+      return `${value}° (16 mm + ${result}mm = ${totalRounded}mm)`;
+    }
+    return `${value}°`;
+  }
   if (Array.isArray(value)) {
     if (typeof value[0] === "number") {
       return value.map((v) => `${v} mm`).join(", ");

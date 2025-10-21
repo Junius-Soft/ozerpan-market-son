@@ -15,5 +15,7 @@ export async function GET(request: NextRequest) {
   }
   const data = JSON.parse(await fs.readFile(dataFilePath, "utf8"));
 
-  return NextResponse.json(data.product_prices[productId]);
+  return NextResponse.json(data.product_prices[productId] ?? [], {
+    status: 200,
+  });
 }

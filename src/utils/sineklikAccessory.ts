@@ -55,6 +55,25 @@ export function getMenteseliPencereMentesesiItem(
   return createSelectedProduct(mentese, 4);
 }
 
+export function getMenteseliMiknatisItem(
+  values: SineklikSelections,
+  allAccessories: PriceItem[]
+): PriceItem | undefined {
+  const { width, height, menteseliOpeningType } = values;
+
+  if (menteseliOpeningType !== "iceAcilim") return undefined;
+
+  const miknatisStockCode = "378322001100";
+  const miknatis = allAccessories.find((item) => {
+    return item.stock_code === miknatisStockCode;
+  });
+  if (!miknatis) return undefined;
+
+  const measurement = (width * 4 + height * 2) / 1000;
+
+  return createSelectedProduct(miknatis, 1, measurement);
+}
+
 export function getMenteseliFitilAccessoryItem(
   values: SineklikSelections,
   allAccessories: PriceItem[]
@@ -189,10 +208,18 @@ export function getPliseTulAccessoryItems(
   if (["double", "centralPack"].includes(pliseOpeningType)) {
     const quantityPerTul = Math.ceil(quantity / 2);
     for (let i = 0; i < 2; i++) {
-      items.push(createSelectedProduct(tul, quantityPerTul, size));
+      items.push(
+        createSelectedProduct(
+          tul,
+          quantityPerTul,
+          (size / 1000) * 0.03 * quantityPerTul
+        )
+      );
     }
   } else {
-    items.push(createSelectedProduct(tul, quantity, size));
+    items.push(
+      createSelectedProduct(tul, quantity, (size / 1000) * 0.03 * quantity)
+    );
   }
   return items;
 }

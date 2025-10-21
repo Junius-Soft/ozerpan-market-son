@@ -111,12 +111,13 @@ export function getPliseKasaProfiles(
   const mappedProfiles: SelectedProduct[] = [];
   const dusukEsikMeasurement: number = width - 4;
   const horizontalMeasurement: number = width - 50;
-  const verticalMeasurement: number = height - 50;
+  let verticalMeasurement: number = height - 50;
   let horizontalQuantity: number = 2;
   let verticalQuantity: number = 2;
   let dusukEsik: PriceItem | undefined;
 
   if (kasaType === "esiksiz") {
+    verticalMeasurement = width - 35;
     dusukEsik = allProfiles.find((item) => {
       return (
         item.description.includes("Plise Düşük Eşik Profili") &&

@@ -17,5 +17,5 @@ export async function GET(request: NextRequest) {
   // For now, we're returning all accessories since the JSON structure doesn't have productId mapping
   // You can implement filtering logic based on productId when needed
 
-  return NextResponse.json(data.accessories[productId]);
+  return NextResponse.json(data.accessories[productId] ?? [], { status: 200 });
 }

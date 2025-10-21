@@ -35,6 +35,14 @@ export const getImalatListesiOptions = (
       { label: "Kanat Profili", value: "Kanat Profili" },
     ];
   }
+  // Cam Balkon için
+  if (productId === "cam-balkon") {
+    return [
+      { label: "Ürün Önizlemesi", value: "preview" },
+      { label: "Cam Balkon 1", value: "Cam" },
+      { label: "Cam Balkon2", value: "Balkon" },
+    ];
+  }
 
   // Default options (herhangi bir ürün belirtilmemişse)
   return [];

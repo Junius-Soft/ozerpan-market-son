@@ -83,6 +83,15 @@ export const useCalculator = (
         accessories || []
       );
       setResult(result);
+    } else if (productName === "cam-balkon") {
+      // Cam balkon için basit hesaplama (henüz implement edilmedi)
+      setResult({
+        totalPrice: 0,
+        selectedProducts: { products: [], accessories: [] },
+        errors: [
+          `${productName} ürünü için hesaplama henüz implement edilmedi`,
+        ],
+      });
     } else {
       // Diğer ürünler için henüz implement edilmedi
       setResult({

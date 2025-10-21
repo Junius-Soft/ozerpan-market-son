@@ -1,8 +1,6 @@
 "use client";
 
 import { ShutterPreview, ShutterPreviewRef } from "./shutter-preview";
-import { WindowPreview } from "./window-preview";
-import { DoorPreview } from "./door-preview";
 import { InsectScreenPreview } from "./insect-screen-preview";
 import { Product } from "@/documents/products";
 import { FormikProps } from "formik";
@@ -13,7 +11,8 @@ import {
   calculateSystemWidth,
   getBoxHeight,
 } from "@/utils/panjur";
-import { forwardRef, useRef, useImperativeHandle } from "react";
+import { forwardRef, useRef, useImperativeHandle, useCallback } from "react";
+import { GlassBalconyPreview } from "./glass-balcony-preview";
 
 interface DynamicPreviewProps {
   product: Product | null;
@@ -24,6 +23,9 @@ interface DynamicPreviewProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formik: FormikProps<any>;
   seperation: number; // Ayrım sayısı (örneğin, panjur için)
+  offerName?: string;
+  pozNo?: string;
+  quantity?: number;
 }
 
 export interface DynamicPreviewRef {
@@ -42,12 +44,77 @@ interface ShutterProps {
   systemWidth: number;
   changeMiddlebarPostion: boolean;
 }
+
+interface GlassBalconyProps {
+  color?: string;
+  altRayProfili?: string;
+  camKalinligi?: string;
+  camRengi?: string;
+  conta?: string;
+  kasaUzatma?: string;
+  kolSayisi?: number;
+  kol1_genislik?: number;
+  kol1_kanat?: number;
+  kol1_cikis_sayisi?: number;
+  kol1_cikis_yonu?: string;
+  kol1_sola_kanat?: number;
+  kol1_sabitCamAdedi?: number;
+  kol1_sabitCamGenisligi?: number;
+  kol1_sabitCamYonu?: string;
+  kol2_genislik?: number;
+  kol2_kanat?: number;
+  kol2_cikis_sayisi?: number;
+  kol2_cikis_yonu?: string;
+  kol2_sola_kanat?: number;
+  kol2_sabitCamAdedi?: number;
+  kol2_sabitCamGenisligi?: number;
+  kol2_sabitCamYonu?: string;
+  kol2_aci?: number;
+  kol3_genislik?: number;
+  kol3_kanat?: number;
+  kol3_cikis_sayisi?: number;
+  kol3_cikis_yonu?: string;
+  kol3_sola_kanat?: number;
+  kol3_sabitCamAdedi?: number;
+  kol3_sabitCamGenisligi?: number;
+  kol3_sabitCamYonu?: string;
+  kol3_aci?: number;
+  kol4_genislik?: number;
+  kol4_kanat?: number;
+  kol4_cikis_sayisi?: number;
+  kol4_cikis_yonu?: string;
+  kol4_sola_kanat?: number;
+  kol4_sabitCamAdedi?: number;
+  kol4_sabitCamGenisligi?: number;
+  kol4_sabitCamYonu?: string;
+  kol4_aci?: number;
+  kol5_genislik?: number;
+  kol5_kanat?: number;
+  kol5_cikis_sayisi?: number;
+  kol5_cikis_yonu?: string;
+  kol5_sola_kanat?: number;
+  kol5_sabitCamAdedi?: number;
+  kol5_sabitCamGenisligi?: number;
+  kol5_sabitCamYonu?: string;
+  kol5_aci?: number;
+}
 export const DynamicPreview = forwardRef<
   DynamicPreviewRef,
   DynamicPreviewProps
 >(
   (
-    { product, width, height, className = "", productId, formik, seperation },
+    {
+      product,
+      width,
+      height,
+      className = "",
+      productId,
+      formik,
+      offerName = "Cam Balkon Teklifi",
+      pozNo = "1",
+      quantity = 1,
+      seperation,
+    },
     ref
   ) => {
     const shutterPreviewRef = useRef<ShutterPreviewRef>(null);
@@ -109,24 +176,82 @@ export const DynamicPreview = forwardRef<
             changeMiddlebarPostion: true,
           };
 
-        case "window":
-          return {
-            frameColor: values.frameColor,
-            glassType: values.glassType,
-            handleType: values.handleType,
-          };
-
-        case "door":
-          return {
-            doorColor: values.doorColor,
-            handleType: values.handleType,
-            lockType: values.lockType,
-          };
-
         case "sineklik":
           return {
             frameColor: values.frameColor,
             meshType: values.meshType,
+          };
+
+        case "cam-balkon":
+          // Debug: values objesini kontrol et
+          console.log(`Dynamic Preview - Cam Balkon Values Debug:`);
+          console.log(`- values.kol1_genislik: ${values.kol1_genislik}`);
+          console.log(`- values.kol1_kanat: ${values.kol1_kanat}`);
+          console.log(`- values.kol1_cikisSayisi: ${values.kol1_cikisSayisi}`);
+          console.log(`- values.kol1_cikisYonu: ${values.kol1_cikisYonu}`);
+          console.log(
+            `- values.kol1_sabitCamAdedi: ${values.kol1_sabitCamAdedi}`
+          );
+          console.log(
+            `- values.kol1_sabitCamGenisligi: ${values.kol1_sabitCamGenisligi}`
+          );
+          console.log(
+            `- values.kol1_sabitCamYonu: ${values.kol1_sabitCamYonu}`
+          );
+          console.log(`- values.kol2_aci: ${values.kol2_aci}`);
+
+          return {
+            color: values.color,
+            altRayProfili: values.altRayProfili,
+            camKalinligi: values.camKalinligi,
+            camRengi: values.camRengi,
+            conta: values.conta,
+            kasaUzatma: values.kasaUzatma,
+            kolSayisi: values.kolSayisi,
+            kol1_genislik: values.kol1_genislik,
+            kol1_kanat: values.kol1_kanat,
+            kol1_cikis_sayisi: values.kol1_cikisSayisi,
+            kol1_cikis_yonu: values.kol1_cikisYonu,
+            kol1_sola_kanat: values.kol1_solaKanat,
+            kol1_sabitCamAdedi: values.kol1_sabitCamAdedi,
+            kol1_sabitCamGenisligi: values.kol1_sabitCamGenisligi,
+            kol1_sabitCamYonu: values.kol1_sabitCamYonu,
+            kol2_genislik: values.kol2_genislik,
+            kol2_kanat: values.kol2_kanat,
+            kol2_cikis_sayisi: values.kol2_cikisSayisi,
+            kol2_cikis_yonu: values.kol2_cikisYonu,
+            kol2_sola_kanat: values.kol2_solaKanat,
+            kol2_sabitCamAdedi: values.kol2_sabitCamAdedi,
+            kol2_sabitCamGenisligi: values.kol2_sabitCamGenisligi,
+            kol2_sabitCamYonu: values.kol2_sabitCamYonu,
+            kol2_aci: values.kol2_aci,
+            kol3_genislik: values.kol3_genislik,
+            kol3_kanat: values.kol3_kanat,
+            kol3_cikis_sayisi: values.kol3_cikisSayisi,
+            kol3_cikis_yonu: values.kol3_cikisYonu,
+            kol3_sola_kanat: values.kol3_solaKanat,
+            kol3_sabitCamAdedi: values.kol3_sabitCamAdedi,
+            kol3_sabitCamGenisligi: values.kol3_sabitCamGenisligi,
+            kol3_sabitCamYonu: values.kol3_sabitCamYonu,
+            kol3_aci: values.kol3_aci,
+            kol4_genislik: values.kol4_genislik,
+            kol4_kanat: values.kol4_kanat,
+            kol4_cikis_sayisi: values.kol4_cikisSayisi,
+            kol4_cikis_yonu: values.kol4_cikisYonu,
+            kol4_sola_kanat: values.kol4_solaKanat,
+            kol4_sabitCamAdedi: values.kol4_sabitCamAdedi,
+            kol4_sabitCamGenisligi: values.kol4_sabitCamGenisligi,
+            kol4_sabitCamYonu: values.kol4_sabitCamYonu,
+            kol4_aci: values.kol4_aci,
+            kol5_genislik: values.kol5_genislik,
+            kol5_kanat: values.kol5_kanat,
+            kol5_cikis_sayisi: values.kol5_cikisSayisi,
+            kol5_cikis_yonu: values.kol5_cikisYonu,
+            kol5_sola_kanat: values.kol5_solaKanat,
+            kol5_sabitCamAdedi: values.kol5_sabitCamAdedi,
+            kol5_sabitCamGenisligi: values.kol5_sabitCamGenisligi,
+            kol5_sabitCamYonu: values.kol5_sabitCamYonu,
+            kol5_aci: values.kol5_aci,
           };
 
         default:
@@ -135,6 +260,34 @@ export const DynamicPreview = forwardRef<
     };
 
     const productProps = getProductSpecificProps();
+    // Callback'i useCallback ile sarmalayalım
+    const handleHareketliCamArasiHesapla = useCallback(
+      (total: number) => {
+        try {
+          console.log("📬 onHareketliCamArasiHesapla geldi:", total);
+          // Formik içine yaz (PDF için productDetails'a gidecek)
+          formik.setFieldValue("toplamHareketliCamArasi", total);
+        } catch (e) {
+          console.warn("toplamHareketliCamArasi yazılamadı", e);
+        }
+      },
+      [formik]
+    );
+
+    // Sabit-Hareketli cam arası hesaplama callback'i
+    const handleSabitHareketliCamArasiHesapla = useCallback(
+      (total: number) => {
+        try {
+          console.log("📬 onSabitHareketliCamArasiHesapla geldi:", total);
+          // Formik içine yaz (PDF için productDetails'a gidecek)
+          formik.setFieldValue("toplamSabitHareketliCamArasi", total);
+        } catch (e) {
+          console.warn("toplamSabitHareketliCamArasi yazılamadı", e);
+        }
+      },
+      [formik]
+    );
+
     const renderPreview = () => {
       switch (productId) {
         case "panjur":
@@ -160,24 +313,108 @@ export const DynamicPreview = forwardRef<
               systemWidth={panjurProps.systemWidth} // Assuming system width is the same as preview width
             />
           );
-        case "window":
-          return (
-            <WindowPreview
-              width={width}
-              height={height}
-              className={className}
-            />
-          );
-        case "door":
-          return (
-            <DoorPreview width={width} height={height} className={className} />
-          );
         case "sineklik":
           return (
             <InsectScreenPreview
               width={width}
               height={height}
               className={className}
+            />
+          );
+        case "cam-balkon":
+          const glassBalconyProps = productProps as GlassBalconyProps;
+
+          // Calculate total width from kol genişlik values
+          let totalWidth = 0;
+          const kolSayisi = Number(glassBalconyProps.kolSayisi) || 1;
+          for (let i = 1; i <= kolSayisi; i++) {
+            let kolGenislik = 0;
+            switch (i) {
+              case 1:
+                kolGenislik = Number(glassBalconyProps.kol1_genislik) || 0;
+                break;
+              case 2:
+                kolGenislik = Number(glassBalconyProps.kol2_genislik) || 0;
+                break;
+              case 3:
+                kolGenislik = Number(glassBalconyProps.kol3_genislik) || 0;
+                break;
+              case 4:
+                kolGenislik = Number(glassBalconyProps.kol4_genislik) || 0;
+                break;
+              case 5:
+                kolGenislik = Number(glassBalconyProps.kol5_genislik) || 0;
+                break;
+            }
+            totalWidth += kolGenislik;
+          }
+
+          // Use calculated width or fallback to default
+          const calculatedWidth = totalWidth > 0 ? totalWidth : 1000;
+
+          return (
+            <GlassBalconyPreview
+              width={calculatedWidth}
+              height={height}
+              className={className}
+              color={glassBalconyProps.color}
+              altRayProfili={glassBalconyProps.altRayProfili}
+              camKalinligi={glassBalconyProps.camKalinligi}
+              camRengi={glassBalconyProps.camRengi}
+              conta={glassBalconyProps.conta}
+              kasaUzatma={glassBalconyProps.kasaUzatma}
+              offerName={offerName}
+              pozNo={pozNo}
+              quantity={quantity}
+              onHareketliCamArasiHesapla={handleHareketliCamArasiHesapla}
+              onSabitHareketliCamArasiHesapla={
+                handleSabitHareketliCamArasiHesapla
+              }
+              kolSayisi={glassBalconyProps.kolSayisi}
+              kol1_genislik={glassBalconyProps.kol1_genislik}
+              kol1_kanat={glassBalconyProps.kol1_kanat}
+              kol1_cikis_sayisi={glassBalconyProps.kol1_cikis_sayisi}
+              kol1_cikis_yonu={glassBalconyProps.kol1_cikis_yonu}
+              kol1_sola_kanat={glassBalconyProps.kol1_sola_kanat}
+              kol1_sabitCamAdedi={glassBalconyProps.kol1_sabitCamAdedi}
+              kol1_sabitCamGenisligi={glassBalconyProps.kol1_sabitCamGenisligi}
+              kol1_sabitCamYonu={glassBalconyProps.kol1_sabitCamYonu}
+              kol2_genislik={glassBalconyProps.kol2_genislik}
+              kol2_kanat={glassBalconyProps.kol2_kanat}
+              kol2_cikis_sayisi={glassBalconyProps.kol2_cikis_sayisi}
+              kol2_cikis_yonu={glassBalconyProps.kol2_cikis_yonu}
+              kol2_sola_kanat={glassBalconyProps.kol2_sola_kanat}
+              kol2_sabitCamAdedi={glassBalconyProps.kol2_sabitCamAdedi}
+              kol2_sabitCamGenisligi={glassBalconyProps.kol2_sabitCamGenisligi}
+              kol2_sabitCamYonu={glassBalconyProps.kol2_sabitCamYonu}
+              kol2_aci={glassBalconyProps.kol2_aci}
+              kol3_genislik={glassBalconyProps.kol3_genislik}
+              kol3_kanat={glassBalconyProps.kol3_kanat}
+              kol3_cikis_sayisi={glassBalconyProps.kol3_cikis_sayisi}
+              kol3_cikis_yonu={glassBalconyProps.kol3_cikis_yonu}
+              kol3_sola_kanat={glassBalconyProps.kol3_sola_kanat}
+              kol3_sabitCamAdedi={glassBalconyProps.kol3_sabitCamAdedi}
+              kol3_sabitCamGenisligi={glassBalconyProps.kol3_sabitCamGenisligi}
+              kol3_sabitCamYonu={glassBalconyProps.kol3_sabitCamYonu}
+              kol3_aci={glassBalconyProps.kol3_aci}
+              kol4_genislik={glassBalconyProps.kol4_genislik}
+              kol4_kanat={glassBalconyProps.kol4_kanat}
+              kol4_cikis_sayisi={glassBalconyProps.kol4_cikis_sayisi}
+              kol4_cikis_yonu={glassBalconyProps.kol4_cikis_yonu}
+              kol4_sola_kanat={glassBalconyProps.kol4_sola_kanat}
+              kol4_sabitCamAdedi={glassBalconyProps.kol4_sabitCamAdedi}
+              kol4_sabitCamGenisligi={glassBalconyProps.kol4_sabitCamGenisligi}
+              kol4_sabitCamYonu={glassBalconyProps.kol4_sabitCamYonu}
+              kol4_aci={glassBalconyProps.kol4_aci}
+              kol5_genislik={glassBalconyProps.kol5_genislik}
+              kol5_kanat={glassBalconyProps.kol5_kanat}
+              kol5_cikis_sayisi={glassBalconyProps.kol5_cikis_sayisi}
+              kol5_cikis_yonu={glassBalconyProps.kol5_cikis_yonu}
+              kol5_sola_kanat={glassBalconyProps.kol5_sola_kanat}
+              kol5_sabitCamAdedi={glassBalconyProps.kol5_sabitCamAdedi}
+              kol5_sabitCamGenisligi={glassBalconyProps.kol5_sabitCamGenisligi}
+              kol5_sabitCamYonu={glassBalconyProps.kol5_sabitCamYonu}
+              kol5_aci={glassBalconyProps.kol5_aci}
             />
           );
         default:

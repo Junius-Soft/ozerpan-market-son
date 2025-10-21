@@ -112,7 +112,7 @@ export function ProductStep({
       </div>
 
       {/* Ürün Tipleri */}
-      {product?.types && (
+      {product?.types && product.types.length > 0 && (
         <div className="lg:col-span-4 border-t pt-8 mt-8">
           <h3 className="text-lg font-semibold mb-4">Ürün Tipleri</h3>
           <div className="flex gap-6 overflow-x-auto sm:grid sm:grid-cols-3 lg:grid-cols-5 sm:overflow-visible pb-2 -mx-4 px-4">

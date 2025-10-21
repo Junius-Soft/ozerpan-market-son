@@ -1,11 +1,14 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { Position } from "@/documents/offers";
 
 // GET /api/offers/:offerId - Get a single offer
-export async function GET(request: Request) {
+export async function GET(
+  request: Request,
+  context: { params: Promise<{ offerId: string }> }
+) {
   try {
-    const url = new URL(request.url);
-    const offerId = url.searchParams.get("id");
+    const { offerId } = await context.params;
     const { data: offer, error } = await supabase
       .from("offers")
       .select("*")
@@ -27,14 +30,16 @@ export async function GET(request: Request) {
 }
 
 // PATCH /api/offers/:offerId - Update offer name or status
-export async function PATCH(request: Request) {
+export async function PATCH(
+  request: Request,
+  context: { params: Promise<{ offerId: string }> }
+) {
   try {
-    const url = new URL(request.url);
-    const offerId = url.searchParams.get("id");
+    const { offerId } = await context.params;
     const body = await request.json();
-    if (!body.name && !body.status) {
+    if (!body.name && !body.status && !body.positions) {
       return NextResponse.json(
-        { error: "Name or status is required" },
+        { error: "Name, status, or positions is required" },
         { status: 400 }
       );
     }
@@ -42,7 +47,9 @@ export async function PATCH(request: Request) {
     // If status is provided, validate it
     if (
       body.status &&
-      !["Taslak", "Kaydedildi", "Revize","Sipariş Verildi"].includes(body.status)
+      !["Taslak", "Kaydedildi", "Revize", "Sipariş Verildi"].includes(
+        body.status
+      )
     ) {
       return NextResponse.json({ error: "Invalid status" }, { status: 400 });
     }
@@ -53,8 +60,10 @@ export async function PATCH(request: Request) {
       status?: string;
       is_dirty?: boolean;
       eurRate?: number;
+      positions?: Position[];
     } = {};
     if (body.name) updateData.name = body.name;
+    if (body.positions) updateData.positions = body.positions;
     if (body.status) {
       updateData.status = body.status;
       // When saving a draft, mark it as not dirty

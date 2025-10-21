@@ -83,7 +83,7 @@ export default function OffersPage() {
   const handleDeleteSelected = async () => {
     try {
       for (const offerId of selectedOffers) {
-        const response = await fetch(`/api/offers?id=${offerId}`, {
+        const response = await fetch(`/api/offers`, {
           method: "DELETE",
         });
 

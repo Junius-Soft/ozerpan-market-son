@@ -371,15 +371,17 @@ export default function ProductDetailsPage() {
         // Add new position
         updatedPositions = [...currentOffer.positions, newPosition];
       }
-
+      console.log({ updatedPositions });
       // Update offer positions via PATCH endpoint
-      const updateResponse = await fetch(`/api/offers?id=${offerNo}`, {
+      const updateResponse = await fetch(`/api/offers/${offerNo}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           positions: updatedPositions,
+          name: currentOffer.name,
+          status: currentOffer.status ?? "Taslak",
         }),
       });
 

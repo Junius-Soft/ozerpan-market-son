@@ -68,7 +68,7 @@ export async function apiCopyPosition(
     id: `POS-${Date.now()}`,
     pozNo: nextPozNo,
   };
-  const response = await fetch(`/api/offers?id=${offerId}`, {
+  const response = await fetch(`/api/offers/${offerId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -86,22 +86,19 @@ export async function apiDeletePositions(
   selectedPositions: Position[]
 ) {
   const positionIds = selectedPositions.map((pos) => pos.id);
-  const response = await fetch(
-    `/api/offers/${offerId}/positions?id=${offerId}`,
-    {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ positionIds }),
-    }
-  );
+  const response = await fetch(`/api/offers/${offerId}/positions`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ positionIds }),
+  });
   if (!response.ok) throw new Error("Failed to delete positions");
   return response;
 }
 
 export async function apiSaveOfferName(offerId: string, offerName: string) {
-  const response = await fetch(`/api/offers/${offerId}?id=${offerId}`, {
+  const response = await fetch(`/api/offers/${offerId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -117,7 +114,7 @@ export async function apiUpdateOfferStatus(
   newStatus: string,
   eurRate?: number
 ) {
-  const response = await fetch(`/api/offers/${offerId}?id=${offerId}`, {
+  const response = await fetch(`/api/offers/${offerId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

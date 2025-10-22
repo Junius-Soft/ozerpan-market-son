@@ -75,7 +75,7 @@ export default function Home() {
             {products.map((product) => (
               <Card
                 key={product.id}
-                className={`${!product.isActive ? "opacity-50" : ""}`}
+                className={`flex flex-col ${!product.isActive ? "opacity-50" : ""}`}
               >
                 <div className="aspect-video relative">
                   <Image
@@ -98,7 +98,7 @@ export default function Home() {
                       : "Kaliteli kapı sistemleri"}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex-grow flex flex-col justify-between">
                   <p className="text-sm text-gray-600">
                     {product.id === "panjur"
                       ? "Modern ve dayanıklı panjur sistemleri ile evinizi güzelleştirin."

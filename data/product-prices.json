@@ -8,7 +8,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "1.01"
+        "price": "1.33"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Metalik Gri",
@@ -17,7 +17,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "1.03"
+        "price": "1.35"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Krem",
@@ -26,7 +26,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "1.04"
+        "price": "1.37"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Koyu Bej",
@@ -35,7 +35,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "koyu_bej",
         "unit": "Metre",
-        "price": "1.04"
+        "price": "1.40"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Açık Bej",
@@ -44,7 +44,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "açık_bej",
         "unit": "Metre",
-        "price": "1.04"
+        "price": "1.37"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Kül Siyahı",
@@ -53,7 +53,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "kül_siyahı",
         "unit": "Metre",
-        "price": "1.06"
+        "price": "1.40"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Altın Meşe",
@@ -62,7 +62,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "1.08"
+        "price": "1.42"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Antrasit Gri",
@@ -71,7 +71,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "1.06"
+        "price": "1.36"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Fındık",
@@ -80,7 +80,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "1.08"
+        "price": "1.42"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Vizon",
@@ -89,7 +89,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "1.04"
+        "price": "1.37"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Açık Bronz1",
@@ -98,7 +98,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "açık_bronz1",
         "unit": "Metre",
-        "price": "1.04"
+        "price": "1.39"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Beyaz",
@@ -107,7 +107,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "1.53"
+        "price": "2.08"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Metalik Gri",
@@ -116,7 +116,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "1.56"
+        "price": "2.12"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Metalik Bronz",
@@ -134,7 +134,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "1.58"
+        "price": "2.14"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Koyu Bej",
@@ -143,7 +143,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "koyu_bej",
         "unit": "Metre",
-        "price": "1.61"
+        "price": "2.18"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Açık Bej",
@@ -152,7 +152,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "açık_bej",
         "unit": "Metre",
-        "price": "1.58"
+        "price": "2.14"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Kül Siyahı",
@@ -161,7 +161,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "kül_siyahı",
         "unit": "Metre",
-        "price": "1.61"
+        "price": "2.12"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Altın Meşe",
@@ -170,7 +170,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "1.64"
+        "price": "2.23"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Antrasit Gri",
@@ -179,7 +179,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "1.61"
+        "price": "2.12"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Fındık",
@@ -188,7 +188,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "1.64"
+        "price": "2.23"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Vizon",
@@ -197,7 +197,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "1.61"
+        "price": "2.18"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Açık Bronz",
@@ -206,7 +206,7 @@
         "type": "panjur_lamel_profilleri",
         "color": "acik_bronz",
         "unit": "Metre",
-        "price": "1.58"
+        "price": "2.17"
       },
       {
         "description": "45 mm Alüminyum Ekstrüzyon Lamel Beyaz",
@@ -305,7 +305,7 @@
         "type": "panjur_tambur_boru_profilleri",
         "color": "",
         "unit": "Metre",
-        "price": "1.24"
+        "price": "1.71"
       },
       {
         "description": "60mm Sekizgen Boru 0,60",
@@ -314,7 +314,7 @@
         "type": "panjur_tambur_boru_profilleri",
         "color": "",
         "unit": "Metre",
-        "price": "2.35"
+        "price": "3.55"
       },
       {
         "description": "137 - ÖN 45 Alüminyum Kutu Beyaz",
@@ -323,7 +323,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "4.56"
+        "price": "5.91"
       },
       {
         "description": "137 - ARKA 90 Alüminyum Kutu Beyaz",
@@ -332,7 +332,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "6.94"
+        "price": "9.00"
       },
       {
         "description": "137 - ÖN 45 Alüminyum Kutu Kahverengi",
@@ -341,7 +341,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "4.78"
+        "price": "6.21"
       },
       {
         "description": "137 - ARKA 90 Alüminyum Kutu Kahverengi",
@@ -350,7 +350,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "7.29"
+        "price": "9.45"
       },
       {
         "description": "137 - ÖN 45 Alüminyum Kutu Metalik Gri",
@@ -359,7 +359,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "4.78"
+        "price": "6.21"
       },
       {
         "description": "137 - ARKA 90 Alüminyum Kutu Metalik Gri",
@@ -368,7 +368,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "7.29"
+        "price": "9.45"
       },
       {
         "description": "137 - ÖN 45 Alüminyum Kutu Krem",
@@ -377,7 +377,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "4.78"
+        "price": "6.21"
       },
       {
         "description": "137 - ARKA 90 Alüminyum Kutu Krem",
@@ -386,7 +386,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "7.29"
+        "price": "9.45"
       },
       {
         "description": "137 - ÖN 45 Alüminyum Kutu Antrasit Gri",
@@ -395,7 +395,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "4.78"
+        "price": "6.21"
       },
       {
         "description": "137 - ARKA 90 Alüminyum Kutu Antrasit Gri",
@@ -404,7 +404,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "7.29"
+        "price": "9.45"
       },
       {
         "description": "165 - ÖN 45 Alüminyum Kutu Beyaz",
@@ -413,7 +413,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "5.58"
+        "price": "7.24"
       },
       {
         "description": "165 - ARKA 90 Alüminyum Kutu Beyaz",
@@ -422,7 +422,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "8.16"
+        "price": "10.58"
       },
       {
         "description": "165 - ÖN 45 Alüminyum Kutu Kahverengi",
@@ -431,7 +431,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "5.86"
+        "price": "7.60"
       },
       {
         "description": "165 - ARKA 90 Alüminyum Kutu Kahverengi",
@@ -440,7 +440,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "8.56"
+        "price": "11.11"
       },
       {
         "description": "165 - ÖN 45 Alüminyum Kutu Metalik Gri",
@@ -449,7 +449,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "5.86"
+        "price": "7.60"
       },
       {
         "description": "165 - ARKA 90 Alüminyum Kutu Metalik Gri",
@@ -458,7 +458,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "8.56"
+        "price": "11.11"
       },
       {
         "description": "165 - ÖN 45 Alüminyum Kutu Krem",
@@ -467,7 +467,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "5.86"
+        "price": "7.60"
       },
       {
         "description": "165 - ARKA 90 Alüminyum Kutu Krem",
@@ -476,7 +476,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "8.56"
+        "price": "11.11"
       },
       {
         "description": "165 - ÖN 45 Alüminyum Kutu Altın Meşe",
@@ -485,7 +485,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "5.97"
+        "price": "7.75"
       },
       {
         "description": "165 - ARKA 90 Alüminyum Kutu Altın Meşe",
@@ -494,7 +494,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "8.73"
+        "price": "11.32"
       },
       {
         "description": "165 - ÖN 45 Alüminyum Kutu Antrasit Gri",
@@ -503,7 +503,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "5.86"
+        "price": "7.60"
       },
       {
         "description": "165 - ARKA 90 Alüminyum Kutu Antrasit Gri",
@@ -512,7 +512,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "8.56"
+        "price": "11.11"
       },
       {
         "description": "165 - ÖN 45 Alüminyum Kutu Vizon",
@@ -539,7 +539,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "7.35"
+        "price": "9.53"
       },
       {
         "description": "205 - ARKA 90 Alüminyum Kutu Beyaz",
@@ -548,7 +548,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "9.94"
+        "price": "12.89"
       },
       {
         "description": "205 - ÖN 45 Alüminyum Kutu Kahverengi",
@@ -557,7 +557,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "7.72"
+        "price": "10.01"
       },
       {
         "description": "205 - ARKA 90 Alüminyum Kutu Kahverengi",
@@ -566,7 +566,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "10.44"
+        "price": "13.54"
       },
       {
         "description": "205 - ÖN 45 Alüminyum Kutu Metalik Gri",
@@ -575,7 +575,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "7.72"
+        "price": "10.01"
       },
       {
         "description": "205 - ARKA 90 Alüminyum Kutu Metalik Gri",
@@ -584,7 +584,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "10.44"
+        "price": "13.54"
       },
       {
         "description": "205 - ÖN 45 Alüminyum Kutu krem",
@@ -593,7 +593,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "7.72"
+        "price": "10.01"
       },
       {
         "description": "205 - ARKA 90 Alüminyum Kutu Krem",
@@ -602,7 +602,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "10.44"
+        "price": "13.54"
       },
       {
         "description": "205 - ÖN 45 Alüminyum Kutu Altın Meşe",
@@ -611,7 +611,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "7.86"
+        "price": "10.20"
       },
       {
         "description": "205 - ARKA 90 Alüminyum Kutu Altın Meşe",
@@ -620,7 +620,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "10.63"
+        "price": "13.79"
       },
       {
         "description": "205 - ÖN 45 Alüminyum Kutu Antrasit Gri",
@@ -629,7 +629,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "7.72"
+        "price": "10.01"
       },
       {
         "description": "205 - ARKA 90 Alüminyum Kutu Antrasit Gri",
@@ -638,7 +638,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "10.44"
+        "price": "13.54"
       },
       {
         "description": "205 - ÖN 45 Alüminyum Kutu Vizon",
@@ -665,7 +665,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "11.55"
+        "price": "14.75"
       },
       {
         "description": "250 - ARKA 90 Alüminyum Kutu Beyaz",
@@ -674,7 +674,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "15.70"
+        "price": "20.06"
       },
       {
         "description": "250 - ÖN 45 Alüminyum Kutu Kahverengi",
@@ -683,7 +683,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "12.12"
+        "price": "15.50"
       },
       {
         "description": "250 - ARKA 90 Alüminyum Kutu Kahverengi",
@@ -692,7 +692,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "16.49"
+        "price": "21.06"
       },
       {
         "description": "250 - ÖN 45 Alüminyum Kutu Metalik Gri",
@@ -701,7 +701,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "12.12"
+        "price": "15.50"
       },
       {
         "description": "250 - ARKA 90 Alüminyum Kutu Metalik Gri",
@@ -710,7 +710,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "16.49"
+        "price": "21.06"
       },
       {
         "description": "250 - ÖN 45 Alüminyum Kutu Antrasit Gri",
@@ -719,7 +719,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "12.12"
+        "price": "15.50"
       },
       {
         "description": "250 - ARKA 90 Alüminyum Kutu Antrasit Gri",
@@ -728,7 +728,7 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "16.49"
+        "price": "21.06"
       },
       {
         "description": "Kutu Tampon Çıtası RAL Boyalı",
@@ -764,7 +764,7 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "2.34"
+        "price": "2.11"
       },
       {
         "description": "185 Kutu Kapak Beyaz",
@@ -1133,7 +1133,7 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "11.67"
+        "price": "25.30"
       },
       {
         "description": "30x30 Eps Panjur Kutusu Yerli",
@@ -1142,7 +1142,7 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "11.89"
+        "price": "26.30"
       },
       {
         "description": "25x25 Strafor Kutu Alt Kapama Beyaz",
@@ -1763,7 +1763,7 @@
         "type": "sineklik_profilleri",
         "color": "pres",
         "unit": "Metre",
-        "price": "2.92"
+        "price": "3.05"
       },
       {
         "description": "Plise Kasa Profili Beyaz",
@@ -1772,7 +1772,7 @@
         "type": "sineklik_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "3.19"
+        "price": "3.27"
       },
       {
         "description": "Plise Kasa Profili Kahverengi",
@@ -1790,7 +1790,7 @@
         "type": "sineklik_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "3.21"
+        "price": "3.35"
       },
       {
         "description": "Plise Kasa Profili Krem",
@@ -1808,7 +1808,7 @@
         "type": "sineklik_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "3.21"
+        "price": "3.35"
       },
       {
         "description": "Plise Kasa Profili Ral Boyalı",
@@ -1889,7 +1889,6 @@
         "unit": "Adet",
         "price": "287.00"
       },
-
       {
         "description": "DC 315 1 Kanallı Vera Buton Tipi Verici",
         "stock_code": "352531210315",
@@ -1920,7 +1919,7 @@
         "uretici_kodu": "RC.OTM.DC.168",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "30.73"
+        "price": "33.80"
       },
       {
         "description": "DC 169 16 Kanallı Zaman Ayarlı Verici",
@@ -1928,7 +1927,7 @@
         "uretici_kodu": "RC.OTM.DC.169",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "32.79"
+        "price": "36.07"
       },
       {
         "description": "DC 104 1 Kanallı Verici",
@@ -2056,7 +2055,7 @@
         "uretici_kodu": "352540211100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "2.56"
+        "price": "2.82"
       },
       {
         "description": "Sıva Üstü Buton Kasası",
@@ -2064,7 +2063,7 @@
         "uretici_kodu": "352540911100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.93"
+        "price": "1.02"
       },
       {
         "description": "Mosel DC-74 Kutu İçi Panjur Alıcısı",
@@ -2115,7 +2114,7 @@
         "type": "profil",
         "color": "pres",
         "unit": "Metre",
-        "price": "127.925",
+        "price": "3.05",
         "currency": "TRY"
       },
       {
@@ -2135,7 +2134,7 @@
         "type": "profil",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "131.6875",
+        "price": "3.27",
         "currency": "TRY"
       },
       {
@@ -2145,7 +2144,7 @@
         "type": "profil",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "135.45",
+        "price": "3.35",
         "currency": "TRY"
       },
       {
@@ -2155,7 +2154,7 @@
         "type": "profil",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "135.45",
+        "price": "3.35",
         "currency": "TRY"
       },
       {
@@ -2165,7 +2164,7 @@
         "type": "profil",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "135.45",
+        "price": "3.35",
         "currency": "TRY"
       },
       {
@@ -2185,7 +2184,7 @@
         "type": "profil",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "135.45",
+        "price": "4.25",
         "currency": "TRY"
       },
       {
@@ -2195,7 +2194,7 @@
         "type": "profil",
         "color": "fındık",
         "unit": "Metre",
-        "price": "158.025",
+        "price": "4.25",
         "currency": "TRY"
       },
       {

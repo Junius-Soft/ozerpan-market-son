@@ -15,6 +15,7 @@ import Image from "next/image";
 import { CustomDialog } from "@/components/ui/custom-dialog";
 import { useFilterBoxSize } from "../hooks/form-rules/useFilterBoxSize";
 import { useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 interface DynamicFormProps {
   formik: FormikProps<
@@ -48,34 +49,98 @@ const TextInput: React.FC<FormikInputProps> = ({ field, fieldDef }) => (
   />
 );
 
-const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => (
-  <Input
-    id={fieldDef.id}
-    type="number"
-    value={(field.value as number) || 0}
-    onChange={(e) => {
-      const numValue = parseFloat(e.target.value);
-      if (!isNaN(numValue)) {
-        form.setFieldValue(field.name, numValue);
-      }
-    }}
-    onBlur={(e) => {
-      const value = parseFloat(e.target.value);
-      if (!isNaN(value)) {
-        if (fieldDef.min !== undefined && value < fieldDef.min) {
-          form.setFieldValue(field.name, fieldDef.min);
-        } else if (fieldDef.max !== undefined && value > fieldDef.max) {
-          form.setFieldValue(field.name, fieldDef.max);
+const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
+  const { values } = form;
+  
+  // Gözlü lamel için dinamik min/max değerleri
+  let minValue = fieldDef.min;
+  let maxValue = fieldDef.max;
+  
+  if (field.name === "gozluLamelBaslangic") {
+    // Başlangıç: 0'dan küçük olamaz
+    minValue = 0;
+  } else if (field.name === "gozluLamelBitis") {
+    // Bitiş: seçilen yükseklikten büyük olamaz
+    const height = Number(values.height) || 0;
+    maxValue = height > 0 ? height : undefined;
+  }
+  
+  return (
+    <Input
+      id={fieldDef.id}
+      type="number"
+      value={(field.value as number) || 0}
+      onChange={(e) => {
+        const numValue = parseFloat(e.target.value);
+        if (!isNaN(numValue)) {
+          // Min/max kontrolü onChange sırasında
+          let finalValue = numValue;
+          let showWarning = false;
+          let warningMessage = "";
+          
+          if (minValue !== undefined && finalValue < minValue) {
+            finalValue = minValue;
+            if (field.name === "gozluLamelBaslangic") {
+              showWarning = true;
+              warningMessage = "Başlangıç değeri 0'dan küçük olamaz.";
+            }
+          }
+          if (maxValue !== undefined && finalValue > maxValue) {
+            finalValue = maxValue;
+            if (field.name === "gozluLamelBitis") {
+              showWarning = true;
+              const height = Number(values.height) || 0;
+              warningMessage = `Bitiş değeri yükseklikten (${height}mm) büyük olamaz.`;
+            }
+          }
+          
+          form.setFieldValue(field.name, finalValue);
+          
+          if (showWarning && warningMessage) {
+            toast.warn(warningMessage);
+          }
         }
-      }
-      field.onBlur(e);
-    }}
-    min={fieldDef.min}
-    max={fieldDef.max}
-    name={field.name}
-    disabled={fieldDef.disabled}
-  />
-);
+      }}
+      onBlur={(e) => {
+        const value = parseFloat(e.target.value);
+        if (!isNaN(value)) {
+          let finalValue = value;
+          let showWarning = false;
+          let warningMessage = "";
+          
+          if (minValue !== undefined && finalValue < minValue) {
+            finalValue = minValue;
+            if (field.name === "gozluLamelBaslangic") {
+              showWarning = true;
+              warningMessage = "Başlangıç değeri 0'dan küçük olamaz.";
+            }
+            form.setFieldValue(field.name, finalValue);
+          } else if (maxValue !== undefined && finalValue > maxValue) {
+            finalValue = maxValue;
+            if (field.name === "gozluLamelBitis") {
+              showWarning = true;
+              const height = Number(values.height) || 0;
+              warningMessage = `Bitiş değeri yükseklikten (${height}mm) büyük olamaz.`;
+            }
+            form.setFieldValue(field.name, finalValue);
+          }
+          
+          if (showWarning && warningMessage) {
+            toast.warn(warningMessage);
+          }
+        }
+        field.onBlur(e);
+      }}
+      min={minValue}
+      max={maxValue}
+      name={field.name}
+      disabled={fieldDef.disabled}
+      className={field.name === "gozluLamelBaslangic" || field.name === "gozluLamelBitis" 
+        ? "w-full" 
+        : ""}
+    />
+  );
+};
 
 const SelectInput: React.FC<
   FormikInputProps & {
@@ -190,8 +255,8 @@ const SelectInput: React.FC<
     form,
   ]);
 
-  // Eğer sadece 1 seçenek varsa, butonu disabled yap ve modal açılmasın
-  const isSingleOption = filteredOptions.length === 1;
+  // Tek seçenek olsa bile dropdown açılabilir olmalı
+  const isSingleOption = false; // Artık tek seçenek olsa bile dropdown açılabilir
 
   // Yardımcı fonksiyon: Arka plan rengine göre uygun text rengi seç (siyah/beyaz)
   function getContrastTextColor(bgColor: string): string {

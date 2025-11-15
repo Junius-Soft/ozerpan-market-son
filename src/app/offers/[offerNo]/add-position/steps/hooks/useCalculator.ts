@@ -8,10 +8,12 @@ import { calculatePanjur } from "./calculations/panjur";
 import { useSearchParams } from "next/navigation";
 import { calculateSineklik } from "./calculations/sineklik";
 import { SineklikSelections } from "@/types/sineklik";
+import { calculateKepenk } from "./calculations/kepenk";
+import { KepenkSelections } from "@/types/kepenk";
 
 // Generic calculator hook
 export const useCalculator = (
-  values: PanjurSelections | SineklikSelections,
+  values: PanjurSelections | SineklikSelections | KepenkSelections,
   productName: string,
   availableTabs?: ProductTab[]
 ) => {
@@ -79,6 +81,14 @@ export const useCalculator = (
     } else if (productName === "sineklik") {
       const result = calculateSineklik(
         values as SineklikSelections,
+        prices,
+        accessories || []
+      );
+      setResult(result);
+    } else if (productName === "kepenk") {
+      // Kepenk için hesaplama
+      const result = calculateKepenk(
+        values as KepenkSelections,
         prices,
         accessories || []
       );

@@ -121,6 +121,15 @@ export class ImalatPDFGenerator {
           allProducts.push({ pozNo: position.pozNo, product });
         });
       }
+      // Aksesuarları da ekle
+      if (
+        position.selectedProducts?.accessories &&
+        Array.isArray(position.selectedProducts.accessories)
+      ) {
+        position.selectedProducts.accessories.forEach((accessory) => {
+          allProducts.push({ pozNo: position.pozNo, product: accessory });
+        });
+      }
     });
 
     // Pozisyonlardan unique productId'leri al
@@ -508,10 +517,7 @@ export class ImalatPDFGenerator {
 
       // Hareket türü bilgisi
       if (position.productDetails?.movementType) {
-        const movementText =
-          position.productDetails.movementType === "motorlu"
-            ? "Motorlu"
-            : "Manuel";
+        const movementText = "Motorlu (Redüktörlü)";
         const hareketText = `Hareket: ${movementText}`;
         const hareketWidth = this.doc.getTextWidth(hareketText);
         this.doc.text(hareketText, infoRightEdge - hareketWidth, detailY);
@@ -651,9 +657,29 @@ export class ImalatPDFGenerator {
             (profileData.length + 1).toString(),
             product.stock_code || "",
             product.description || "",
-            product.size + "mm" || "", // Ürün ölçüsü zorunlu
+            product.size ? `${product.size}mm` : "", // Ürün ölçüsü varsa göster
             "0,0/0,0", // Sol/Sağ Açı default
             product.quantity?.toString() || "1",
+            "☐", // Ok sütunu: boş checkbox
+          ]);
+        });
+      }
+      // Aksesuarları da ekle
+      if (
+        position.selectedProducts?.accessories &&
+        Array.isArray(position.selectedProducts.accessories)
+      ) {
+        const pozQuantity = Number(position.quantity ?? 1);
+        position.selectedProducts.accessories.forEach((accessory) => {
+          const accessoryQuantity = Number(accessory.quantity ?? 1);
+          const totalQuantity = (accessoryQuantity * pozQuantity).toString();
+          profileData.push([
+            (profileData.length + 1).toString(),
+            accessory.stock_code || "",
+            accessory.description || "",
+            accessory.size ? `${accessory.size}mm` : "", // Aksesuar ölçüsü varsa göster
+            "0,0/0,0", // Sol/Sağ Açı default
+            totalQuantity,
             "☐", // Ok sütunu: boş checkbox
           ]);
         });

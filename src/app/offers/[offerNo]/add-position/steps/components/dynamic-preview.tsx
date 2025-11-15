@@ -2,6 +2,7 @@
 
 import { ShutterPreview, ShutterPreviewRef } from "./shutter-preview";
 import { InsectScreenPreview } from "./insect-screen-preview";
+import { KepenkPreview, KepenkPreviewRef } from "./kepenk-preview";
 import { Product } from "@/documents/products";
 import { FormikProps } from "formik";
 import { getColorHexFromProductTabs } from "@/utils/get-color-hex";
@@ -13,6 +14,7 @@ import {
 } from "@/utils/panjur";
 import { forwardRef, useRef, useImperativeHandle, useCallback } from "react";
 import { GlassBalconyPreview } from "./glass-balcony-preview";
+import { getBoxHeight as getKepenkBoxHeight } from "@/utils/kepenk";
 
 interface DynamicPreviewProps {
   product: Product | null;
@@ -118,13 +120,16 @@ export const DynamicPreview = forwardRef<
     ref
   ) => {
     const shutterPreviewRef = useRef<ShutterPreviewRef>(null);
+    const kepenkPreviewRef = useRef<KepenkPreviewRef>(null);
 
     // Export canvas function exposed via ref
     useImperativeHandle(ref, () => ({
       exportCanvas: () => {
-        // Only support canvas export for panjur (ShutterPreview) for now
         if (productId === "panjur" && shutterPreviewRef.current) {
           return shutterPreviewRef.current.exportCanvas();
+        }
+        if (productId === "kepenk" && kepenkPreviewRef.current) {
+          return kepenkPreviewRef.current.exportCanvas();
         }
         return null;
       },
@@ -180,6 +185,20 @@ export const DynamicPreview = forwardRef<
           return {
             frameColor: values.frameColor,
             meshType: values.meshType,
+          };
+
+        case "kepenk":
+          // Kepenk için box height hesapla
+          const is100mm = values.lamelType?.includes("100");
+          const kepenkBoxType = is100mm ? "350mm" : "300mm";
+          const kepenkBoxHeight = getKepenkBoxHeight(kepenkBoxType);
+
+          return {
+            boxHeight: kepenkBoxHeight,
+            lamelType: values.lamelType,
+            gozluLamelVar: values.gozluLamelVar,
+            gozluLamelBaslangic: values.gozluLamelBaslangic,
+            gozluLamelBitis: values.gozluLamelBitis,
           };
 
         case "cam-balkon":
@@ -319,6 +338,28 @@ export const DynamicPreview = forwardRef<
               width={width}
               height={height}
               className={className}
+            />
+          );
+        case "kepenk":
+          const kepenkProps = productProps as {
+            boxHeight: number;
+            lamelType?: string;
+            gozluLamelVar?: boolean;
+            gozluLamelBaslangic?: number;
+            gozluLamelBitis?: number;
+          };
+
+          return (
+            <KepenkPreview
+              ref={kepenkPreviewRef}
+              width={width}
+              height={height}
+              className={className}
+              boxHeight={kepenkProps.boxHeight}
+              lamelType={kepenkProps.lamelType}
+              gozluLamelVar={kepenkProps.gozluLamelVar}
+              gozluLamelBaslangic={kepenkProps.gozluLamelBaslangic}
+              gozluLamelBitis={kepenkProps.gozluLamelBitis}
             />
           );
         case "cam-balkon":

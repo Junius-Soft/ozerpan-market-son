@@ -110,11 +110,10 @@ export function filterMotorOptions(
       validMotors.includes(option.id as MotorModel)
     );
 
-  // Eğer motorlu seçiliyse ve uygun motor seçeneği yoksa manuel'e çevir
+  // Eğer motorlu seçiliyse ve uygun motor seçeneği yoksa uyarı ver
   if (movementType === "motorlu" && !motorModelOptions?.length) {
-    formik.setFieldValue("movementType", "manuel");
     toast.warn(
-      "Seçilen ölçüler için uygun motor bulunamadı. Hareket tipi manuel olarak ayarlandı."
+      "Seçilen ölçüler için uygun motor bulunamadı. Lütfen ölçüleri kontrol edin."
     );
     return null;
   }

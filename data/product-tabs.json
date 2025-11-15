@@ -125,13 +125,9 @@
             "name": "Hareket Tipi",
             "type": "select",
             "options": [
-              {
-                "id": "manuel",
-                "name": "Manuel"
-              },
-              { "id": "motorlu", "name": "Motorlu" }
+              { "id": "motorlu", "name": "Motorlu (Redüktörlü)" }
             ],
-            "default": "manuel",
+            "default": "motorlu",
             "defaultValues": {
               "yalitimli": "motorlu"
             }
@@ -2202,6 +2198,97 @@
               "field": "kolSayisi",
               "value": ["5"]
             }
+          }
+        ]
+      }
+    }
+  ],
+  "kepenk": [
+    {
+      "id": "dimensions",
+      "name": "Ölçüler",
+      "content": {
+        "fields": [
+          {
+            "id": "width",
+            "name": "Genişlik (mm)",
+            "type": "number",
+            "default": "1000"
+          },
+          {
+            "id": "height",
+            "name": "Yükseklik (mm)",
+            "type": "number",
+            "default": "1000"
+          }
+        ],
+        "preview": {
+          "type": "kepenk",
+          "component": "KepenkPreview"
+        }
+      }
+    },
+    {
+      "id": "lamel",
+      "name": "Lamel",
+      "content": {
+        "fields": [
+          {
+            "id": "lamelType",
+            "name": "Lamel Tipi",
+            "type": "select",
+            "options": [
+              { "id": "sl_77", "name": "SL-77 (77mm Alüminyum)" },
+              { "id": "st_77", "name": "ST-77 (77mm Çelik)" },
+              { "id": "se_77", "name": "SE-77 (77mm Ekstrüzyon)" },
+              { "id": "se_78", "name": "SE-78 (78mm Gözlü)" },
+              { "id": "sl_100", "name": "SL-100 (100mm Alüminyum)" },
+              { "id": "st_100", "name": "ST-100 (100mm Çelik)" }
+            ],
+            "default": "sl_77"
+          },
+          {
+            "id": "gozluLamelVar",
+            "name": "Gözlü Lamel",
+            "type": "checkbox",
+            "default": false
+          },
+          {
+            "id": "gozluLamelBaslangic",
+            "name": "Gözlü Lamel Başlangıç (mm)",
+            "type": "number",
+            "default": 0,
+            "dependsOn": {
+              "field": "gozluLamelVar",
+              "value": true
+            }
+          },
+          {
+            "id": "gozluLamelBitis",
+            "name": "Gözlü Lamel Bitiş (mm)",
+            "type": "number",
+            "default": 0,
+            "dependsOn": {
+              "field": "gozluLamelVar",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "movement",
+      "name": "Hareket",
+      "content": {
+        "fields": [
+          {
+            "id": "movementType",
+            "name": "Hareket Tipi",
+            "type": "select",
+            "options": [
+              { "id": "motorlu", "name": "Motorlu (Redüktörlü)" }
+            ],
+            "default": "motorlu"
           }
         ]
       }

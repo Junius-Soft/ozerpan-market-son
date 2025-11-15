@@ -6,6 +6,8 @@ import { RootState } from "@/store";
 import { calculatePanjurAccessories } from "./accessories/panjur";
 import { calculateSineklikAccessories } from "./accessories/sineklik";
 import { SineklikSelections } from "@/types/sineklik";
+import { KepenkSelections } from "@/types/kepenk";
+import { calculateKepenkAccessories } from "./accessories/kepenk";
 
 interface AccessoryResult {
   accessories: SelectedProduct[];
@@ -13,7 +15,7 @@ interface AccessoryResult {
 
 // Generic accessories calculator hook
 export function useAccessories(
-  values: PanjurSelections | SineklikSelections
+  values: PanjurSelections | SineklikSelections | KepenkSelections
 ): AccessoryResult {
   const [accessories, setAccessories] = useState<SelectedProduct[]>([]);
   const searchParams = useSearchParams();
@@ -64,6 +66,13 @@ export function useAccessories(
         } else if (productId === "sineklik") {
           const result = calculateSineklikAccessories(
             values as SineklikSelections,
+            allAccessories
+          );
+          setAccessories(result);
+        } else if (productId === "kepenk") {
+          // Kepenk için aksesuar hesaplama
+          const result = calculateKepenkAccessories(
+            values as KepenkSelections,
             allAccessories
           );
           setAccessories(result);

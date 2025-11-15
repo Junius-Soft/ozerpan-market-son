@@ -91,6 +91,8 @@ export default function Home() {
                   <CardDescription>
                     {product.id === "panjur"
                       ? "Yüksek kaliteli panjur sistemleri"
+                      : product.id === "kepenk"
+                      ? "Güvenli ve dayanıklı kepenk sistemleri"
                       : product.id === "pencere"
                       ? "Modern pencere çözümleri"
                       : product.id === "sineklik"
@@ -102,6 +104,8 @@ export default function Home() {
                   <p className="text-sm text-gray-600">
                     {product.id === "panjur"
                       ? "Modern ve dayanıklı panjur sistemleri ile evinizi güzelleştirin."
+                      : product.id === "kepenk"
+                      ? "Güvenlik ve estetiği bir arada sunan kepenk çözümleri."
                       : product.id === "pencere"
                       ? "Enerji tasarruflu ve estetik pencere sistemleri."
                       : product.id === "sineklik"

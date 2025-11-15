@@ -72,6 +72,28 @@
       ]
     },
     {
+      "id": "kepenk",
+      "name": "Kepenk",
+      "isActive": true,
+      "image": "/kepenk.png",
+      "currency": {
+        "code": "EUR",
+        "symbol": "€"
+      },
+      "dimensions": {
+        "width": {
+          "min": 250,
+          "max": 8000
+        },
+        "height": {
+          "min": 250,
+          "max": 6000
+        }
+      },
+      "options": [],
+      "types": []
+    },
+    {
       "id": "sineklik",
       "name": "Sineklik",
       "isActive": true,

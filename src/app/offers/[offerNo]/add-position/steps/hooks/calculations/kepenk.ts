@@ -138,13 +138,14 @@ export const calculateKepenk = (
     dikmeHeight
   );
 
-  // Kutu fiyatı hesapla
-  const [boxPrice, boxSelectedProduct] = findBoxPrice(
-    prices,
-    boxType,
-    "alüminyum",
-    systemWidth
-  );
+  // Kutu fiyatı hesapla - Hem ön hem arka kutu bileşenleri
+  const {
+    frontPrice,
+    backPrice,
+    selectedFrontBox,
+    selectedBackBox,
+  } = findBoxPrice(prices, boxType, "alüminyum", systemWidth);
+  const boxPrice = frontPrice + backPrice;
 
   // Motor fiyatı hesapla (sadece motorlu ise)
   // Motor seçimi tambur tipini değiştirebilir, bu yüzden önce motor seçilmeli
@@ -228,10 +229,11 @@ export const calculateKepenk = (
     gozluLamelSelectedProduct,
     ...subPartSelectedProducts,
     dikmeSelectedProduct,
-    boxSelectedProduct,
+    selectedBackBox, // Arka kutu
+    selectedFrontBox, // Ön kutu
     tamburSelectedProduct,
     motorSelectedProduct,
-  ].filter((p) => p !== null) as SelectedProduct[];
+  ].filter((p) => p !== null && p !== undefined) as SelectedProduct[];
 
   return {
     totalPrice,

@@ -186,28 +186,41 @@ export const findDikmePrice = (
   return [selectedProduct.totalPrice, selectedProduct];
 };
 
-// Kutu fiyatı bulma
+// Kutu fiyatı bulma - Hem ön hem arka kutu bileşenlerini bulur
 export const findBoxPrice = (
   prices: PriceItem[],
   boxType: string,
   color: string,
   systemWidth: number
-): [number, SelectedProduct | null] => {
+): {
+  frontPrice: number;
+  backPrice: number;
+  selectedFrontBox?: SelectedProduct;
+  selectedBackBox?: SelectedProduct;
+} => {
   const boxPrices = prices.filter(
     (p) => p.type === "kepenk_kutu_profilleri" && p.kutu_type?.includes(boxType)
   );
 
-  // Kit tipini tercih et
-  let matchingBox = boxPrices.find((p) => p.kutu_type?.includes("kit"));
+  // Ön ve arka kutu bileşenlerini bul
+  const boxSize = boxType.replace("mm", "");
+  const frontBox = boxPrices.find(
+    (p) => p.kutu_type?.includes(`${boxSize}_on45`) || p.description?.includes("ÖN 45")
+  );
+  const backBox = boxPrices.find(
+    (p) => p.kutu_type?.includes(`${boxSize}_arka90`) || p.description?.includes("ARKA 90")
+  );
 
-  if (!matchingBox && boxPrices.length > 0) {
-    matchingBox = boxPrices[0];
-  }
-
-  if (!matchingBox) return [0, null];
-
-  const selectedProduct = createSelectedProduct(matchingBox, 1, systemWidth);
-  return [selectedProduct.totalPrice, selectedProduct];
+  return {
+    frontPrice: frontBox ? parseFloat(frontBox.price) : 0,
+    backPrice: backBox ? parseFloat(backBox.price) : 0,
+    selectedFrontBox: frontBox
+      ? createSelectedProduct(frontBox, 1, systemWidth)
+      : undefined,
+    selectedBackBox: backBox
+      ? createSelectedProduct(backBox, 1, systemWidth)
+      : undefined,
+  };
 };
 
 // Tambur fiyatı bulma

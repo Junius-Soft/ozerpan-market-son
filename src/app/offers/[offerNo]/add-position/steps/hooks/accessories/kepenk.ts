@@ -74,20 +74,27 @@ export const calculateKepenkAccessories = (
     }
   }
 
-  // Dikme Pleksi - Excel'e göre "77 lik Dikme miktarı kadar"
-  const dikmePleksi = allAccessories.find(
+  // Dikme Pleksi - Her dikme için 1 adet, toplam 2 adet (sol + sağ dikme)
+  const dikmePleksiCandidates = allAccessories.filter(
     (acc) =>
       acc.type === "kepenk_dikme_aksesuarlari" &&
       acc.description.toLowerCase().includes("dikme pleksi")
+  );
+  console.log("[Kepenk Accessories] Dikme pleksi adayları:", dikmePleksiCandidates);
+  console.log("[Kepenk Accessories] Aranan dikme_type:", dikmeType);
+  
+  const dikmePleksi = dikmePleksiCandidates.find(
+    (acc) =>
+      (acc.dikme_type === dikmeType || acc.dikme_type === "all")
   );
 
   console.log("[Kepenk Accessories] Dikme pleksi bulundu:", dikmePleksi);
 
   if (dikmePleksi) {
-    // Dikme yüksekliği kadar (metre cinsinden)
+    // Her dikme için 1 adet pleksi, toplam 2 adet (sol + sağ dikme)
     const selectedProduct = createSelectedProduct(
       dikmePleksi,
-      1,
+      2, // İki dikme için 2 adet
       dikmeHeight
     );
     neededAccessories.push(selectedProduct);
@@ -116,9 +123,9 @@ export const calculateKepenkAccessories = (
   console.log("[Kepenk Accessories] Kıl fitil bulundu:", kilFitil);
 
   if (kilFitil) {
-    // Toplam uzunluk = 2 dikme * dikme yüksekliği
-    // Excel'e göre "Dikme miktarı kadar" = toplam uzunluk
-    const totalKilFitilLength = 2 * dikmeHeight; // 2 dikme için toplam uzunluk
+    // Excel'e göre "Dikme miktarı kadar" = dikme * 4
+    // Her dikme için 2 kat (üst ve alt) kıl fitil gerekir
+    const totalKilFitilLength = 4 * dikmeHeight; // Dikme * 4
     const selectedProduct = createSelectedProduct(
       kilFitil,
       1, // Miktar 1, uzunluk toplam uzunluk
@@ -129,8 +136,7 @@ export const calculateKepenkAccessories = (
   }
 
   // Zımba Çivisi 8 mm - Excel'e göre:
-  // Lamel Adedi Tek ise = (Lamel Adedi / 2) + 1
-  // Lamel Adedi Çift ise = (Lamel Adedi / 2)
+  // Lamel Adedi Tek ise = (Lamel Adedi x 2)
   const zimbaCivisi = allAccessories.find(
     (acc) =>
       acc.type === "kepenk_lamel_aksesuarlari" &&
@@ -143,15 +149,9 @@ export const calculateKepenkAccessories = (
     // Toplam lamel sayısını hesapla (gözlü lamel varsa dahil)
     const totalLamelCount = calculateLamelCount(values.height, values.lamelType, boxHeight);
     
-    // Tek/çift kontrolü
-    let zimbaCivisiQuantity: number;
-    if (totalLamelCount % 2 === 0) {
-      // Çift: (Lamel Adedi / 2)
-      zimbaCivisiQuantity = Math.floor(totalLamelCount / 2);
-    } else {
-      // Tek: (Lamel Adedi / 2) + 1
-      zimbaCivisiQuantity = Math.floor(totalLamelCount / 2) + 1;
-    }
+    // Excel'e göre: Lamel Adedi Tek ise = (Lamel Adedi x 2)
+    // Çift için de aynı formülü kullanıyoruz
+    const zimbaCivisiQuantity = totalLamelCount * 2;
 
     console.log("[Kepenk Accessories] Toplam lamel sayısı:", totalLamelCount);
     console.log("[Kepenk Accessories] Zımba çivisi miktarı:", zimbaCivisiQuantity);
@@ -159,6 +159,30 @@ export const calculateKepenkAccessories = (
     const selectedProduct = createSelectedProduct(zimbaCivisi, zimbaCivisiQuantity);
     neededAccessories.push(selectedProduct);
     console.log("[Kepenk Accessories] Zımba çivisi eklendi:", selectedProduct);
+  }
+
+  // Tambur Aksesuarları - Motorlu sistemlerde tambur tipine göre
+  if (values.movementType === "motorlu") {
+    // Tambur tipini belirle (başlangıçta lamel tipine göre)
+    // Not: calculateKepenk içinde motor seçimine göre değişebilir ama burada başlangıç tipini kullanıyoruz
+    const tamburType = is100mm ? "102mm" : "70mm";
+    
+    const tamburAksesuarlari = allAccessories.filter(
+      (acc) =>
+        acc.type === "kepenk_tambur_aksesuarlari" &&
+        (acc.tambur_type === tamburType || acc.tambur_type === "all") &&
+        acc.hareket_tip === "motorlu"
+    );
+    
+    console.log("[Kepenk Accessories] Tambur aksesuarları:", tamburAksesuarlari);
+    console.log("[Kepenk Accessories] Tambur tipi:", tamburType);
+    
+    // Her tambur aksesuarı için 1 adet ekle
+    tamburAksesuarlari.forEach((aksesuar) => {
+      const selectedProduct = createSelectedProduct(aksesuar, 1);
+      neededAccessories.push(selectedProduct);
+      console.log("[Kepenk Accessories] Tambur aksesuarı eklendi:", selectedProduct);
+    });
   }
 
   console.log("[Kepenk Accessories] Toplam aksesuar sayısı:", neededAccessories.length);

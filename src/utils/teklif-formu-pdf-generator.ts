@@ -73,9 +73,7 @@ const productTableConfigs: ProductTableConfig[] = [
         getValue: (pos: Position) => {
           let mekanizmaValue = "-";
           const movementType = pos.productDetails?.movementType;
-          if (movementType === "manuel") {
-            mekanizmaValue = "Manuel";
-          } else if (movementType === "motorlu") {
+          if (movementType === "motorlu") {
             const marka = pos.productDetails?.motorMarka;
             const motorSekli = pos.productDetails?.motorSekli;
             if (marka) {
@@ -86,7 +84,7 @@ const productTableConfigs: ProductTableConfig[] = [
                 mekanizmaValue += ", Alıcısız";
               }
             } else {
-              mekanizmaValue = "Motorlu";
+              mekanizmaValue = "Motorlu (Redüktörlü)";
             }
           }
           return mekanizmaValue;

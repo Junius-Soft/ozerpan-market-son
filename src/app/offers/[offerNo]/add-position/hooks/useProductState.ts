@@ -7,6 +7,7 @@ import {
   setSectionMotorPositions,
 } from "@/store/shutterSlice";
 import { PanjurSelections } from "@/types/panjur";
+import { KepenkSelections } from "@/types/kepenk";
 
 interface ShutterState {
   middleBarPositions: number[];
@@ -45,6 +46,8 @@ export function getProductSpecificType(productId: string | null) {
   switch (productId) {
     case "panjur":
       return {} as PanjurSelections & Record<string, string | number | boolean>;
+    case "kepenk":
+      return {} as KepenkSelections & Record<string, string | number | boolean>;
     case "sineklik":
       // Gelecekte: return {} as SineklikSelections & ProductSpecificState;
       return {} as PanjurSelections & Record<string, string | number | boolean>;
@@ -85,6 +88,13 @@ export function useProductState(productId: string | null): {
           setSectionMotorPositions: (positions: string[]) =>
             dispatch(setSectionMotorPositions(positions)),
         },
+      };
+
+    case "kepenk":
+      // Kepenk için basit state (şimdilik panjur gibi)
+      return {
+        state: {},
+        actions: {},
       };
 
     case "sineklik":

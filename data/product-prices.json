@@ -3415,12 +3415,24 @@
         "stock_code": "353330701700",
         "uretici_kodu": "-",
         "type": "kepenk_dikme_aksesuarlari",
-        "dikme_type": "all",
+        "dikme_type": "77_lik",
         "color": "alüminyum",
         "unit": "Metre",
         "price": "0.0",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
         "panjur_tip": "maxi"
+      },
+      {
+        "description": "Dikme Pleksi",
+        "stock_code": "353330701700",
+        "uretici_kodu": "-",
+        "type": "kepenk_dikme_aksesuarlari",
+        "dikme_type": "100_luk",
+        "color": "alüminyum",
+        "unit": "Metre",
+        "price": "0.0",
+        "lamel_type": "ST-100, SL-100",
+        "panjur_tip": "mega"
       },
       {
         "description": "06'x1200 Standart Kıl Fitil",

@@ -10,6 +10,9 @@ export interface PriceItem {
   unit: string;
   price: string;
   quantity?: number; // Optional quantity field for tracking how many of each item is needed
+  // Kepenk ve bazı özel ürünler için ek alanlar
+  lamel_type?: string;
+  lamelTickness?: string;
 }
 
 // New interface for tracking selected items

@@ -28,9 +28,9 @@ import { AlertTriangle } from "lucide-react";
 import { useCalculator } from "./hooks/useCalculator";
 
 interface DetailsStepProps {
-  formik: FormikProps<
-    PanjurSelections & Record<string, string | number | boolean>
-  >;
+  // Formik değerleri ürün tipine göre değiştiği için burada geniş tip kullanıyoruz
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formik: FormikProps<any>;
   selectedProduct: Product | null;
   onTotalChange?: (total: number) => void;
   summaryRef: React.RefObject<HTMLDivElement>;

@@ -24,6 +24,7 @@ import { handleFiyatAnaliziPDF } from "@/utils/handle-fiyat-analizi";
 import { RootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setQuantity } from "@/store/appSlice";
+import type { PanjurSelections } from "@/types/panjur";
 
 export default function ProductDetailsPage() {
   const searchParams = useSearchParams();
@@ -61,9 +62,15 @@ export default function ProductDetailsPage() {
     const position =
       currentOffer?.positions.find((p) => p.id === selectedPositionId) ??
       ({} as Position);
-    setSelectedPosition(position);
     return position;
   }, [selectedPositionId, offerNo]);
+  
+  // State güncellemeyi useEffect içinde yap
+  useEffect(() => {
+    getSelectedPosition.then((position) => {
+      setSelectedPosition(position);
+    });
+  }, [getSelectedPosition]);
 
   // Transform tabs into initialValues with default field values and dependencies
   const getInitialValues = useCallback(() => {
@@ -333,7 +340,7 @@ export default function ProductDetailsPage() {
         optionId,
         currency: productObj.currency,
         canvasDataUrl, // Canvas verisini pozisyon objesine ekle
-        productDetails: {
+        productDetails: ({
           ...values,
           // Product-specific state'i sadece panjur için ekle
           ...(productId === "panjur" &&
@@ -356,7 +363,7 @@ export default function ProductDetailsPage() {
             productState.sectionMotorPositions && {
               sectionMotorPositions: productState.sectionMotorPositions,
             }),
-        },
+        } as unknown as PanjurSelections),
         total: values.unitPrice * quantity || 0, // Calculate total
       };
 
@@ -476,7 +483,7 @@ export default function ProductDetailsPage() {
                     const offerNo = window.location.pathname.split("/")[2];
                     await handleDepoCikisFisiPDF({
                       product: productObj,
-                      values: formik.values,
+                      values: formik.values as unknown as PanjurSelections,
                       typeId,
                       offerNo,
                       quantity,
@@ -494,9 +501,9 @@ export default function ProductDetailsPage() {
 
                     await handleFiyatAnaliziPDF({
                       product: productObj,
-                      formikValues: formik.values as ReturnType<
-                        typeof getInitialValues
-                      >,
+                      formikValues:
+                        formik.values as unknown as PanjurSelections &
+                          Record<string, string | number | boolean>,
                       productId: productId ?? null,
                       typeId: typeId ?? null,
                       productName: productName ?? null,

@@ -1,6 +1,7 @@
 import { Position } from "@/documents/offers";
 import { PanjurSelections } from "@/types/panjur";
 import { KepenkSelections } from "@/types/kepenk";
+import { SineklikSelections } from "@/types/sineklik";
 import { getOffer } from "@/documents/offers";
 import { Product } from "@/documents/products";
 
@@ -27,7 +28,7 @@ export async function handleImalatListesiPDF({
 }: {
   offerNo: string;
   product: Product;
-  values: PanjurSelections | KepenkSelections;
+  values: PanjurSelections | KepenkSelections | SineklikSelections;
   selectedPosition?: string | null;
   typeId?: string | null;
   optionId?: string | null;

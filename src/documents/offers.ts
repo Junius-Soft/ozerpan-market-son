@@ -1,4 +1,6 @@
 import { PanjurSelections, SelectedProduct } from "@/types/panjur";
+import { KepenkSelections } from "@/types/kepenk";
+import { SineklikSelections } from "@/types/sineklik";
 import { Currency } from "./products";
 
 export interface Position {
@@ -16,7 +18,7 @@ export interface Position {
   productName: string | null;
   optionId: string | null;
   currency: Currency;
-  productDetails: PanjurSelections;
+  productDetails: PanjurSelections | KepenkSelections | SineklikSelections;
   total: number; // Toplam fiyat
   canvasDataUrl?: string; // Canvas görselini Base64 formatında saklamak için
 }

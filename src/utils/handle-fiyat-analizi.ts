@@ -1,11 +1,13 @@
 import { generateFiyatAnaliziPDFPozListesi } from "@/utils/fiyat-analizi-pdf-generator";
 import { Offer } from "@/documents/offers";
 import { PanjurSelections, PriceItem } from "@/types/panjur";
+import { KepenkSelections } from "@/types/kepenk";
+import { SineklikSelections } from "@/types/sineklik";
 import { Product } from "@/documents/products";
 
 interface HandleFiyatAnaliziPDFParams {
   product: Product;
-  formikValues: PanjurSelections & Record<string, string | number | boolean>;
+  formikValues: (PanjurSelections | KepenkSelections | SineklikSelections) & Record<string, string | number | boolean>;
   productId?: string | null;
   typeId?: string | null;
   productName?: string | null;

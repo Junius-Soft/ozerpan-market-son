@@ -103,7 +103,11 @@ export const KepenkPreview = forwardRef<
         const isDark = theme === "dark";
         const bgColor = isDark ? "#1a1a1a" : "#ffffff";
         const borderColor = isDark ? "#666" : "#333";
-        const lamelColor = isDark ? "#888" : "#ddd";
+        // lamelType'a göre renk seçimi (50mm veya 100mm)
+        const is100mm = lamelType?.includes("100");
+        const lamelColor = isDark 
+          ? (is100mm ? "#999" : "#888") 
+          : (is100mm ? "#eee" : "#ddd");
         const gozluLamelColor = isDark ? "#4a90e2" : "#87ceeb"; // Açık mavi gözlü lamel için
         const boxColor = isDark ? "#555" : "#aaa";
         const textColor = isDark ? "#fff" : "#000";
@@ -171,11 +175,13 @@ export const KepenkPreview = forwardRef<
               x + dikmeWidth,
               adjustedLamelY + lamelRealHeight
             );
+            // Gözlü lamel için ana renk
             const baseColor = gozluLamelColor;
+            // Gradient renkleri - baseColor'dan türetiyoruz
             const lightColor = isDark ? "#a0a0a0" : "#e0e0e0";
             const darkColor = isDark ? "#606060" : "#b0b0b0";
             lamelGradient.addColorStop(0, darkColor);
-            lamelGradient.addColorStop(0.2, lightColor);
+            lamelGradient.addColorStop(0.2, baseColor); // baseColor kullanıyoruz
             lamelGradient.addColorStop(0.8, lightColor);
             lamelGradient.addColorStop(1, darkColor);
             
@@ -266,7 +272,7 @@ export const KepenkPreview = forwardRef<
               const lamelSpacing = normalLamelHeight * 0.1;
               const adjustedLamelY = lamelY + lamelSpacing / 2;
               
-              // Lamel gövdesi (gradient ile 3D görünüm)
+              // Lamel gövdesi (gradient ile 3D görünüm) - lamelColor kullanarak
               const lamelGradient = ctx.createLinearGradient(
                 x + dikmeWidth,
                 adjustedLamelY,
@@ -276,7 +282,7 @@ export const KepenkPreview = forwardRef<
               const lightColorNormal = isDark ? "#c0c0c0" : "#f0f0f0";
               const darkColorNormal = isDark ? "#808080" : "#c0c0c0";
               lamelGradient.addColorStop(0, darkColorNormal);
-              lamelGradient.addColorStop(0.2, lightColorNormal);
+              lamelGradient.addColorStop(0.2, lamelColor); // lamelColor kullanıyoruz
               lamelGradient.addColorStop(0.8, lightColorNormal);
               lamelGradient.addColorStop(1, darkColorNormal);
               
@@ -305,7 +311,7 @@ export const KepenkPreview = forwardRef<
               const lamelSpacing = normalLamelHeight * 0.1;
               const adjustedLamelY = lamelY + lamelSpacing / 2;
               
-              // Lamel gövdesi (gradient ile 3D görünüm)
+              // Lamel gövdesi (gradient ile 3D görünüm) - lamelColor kullanarak
               const lamelGradient = ctx.createLinearGradient(
                 x + dikmeWidth,
                 adjustedLamelY,
@@ -315,7 +321,7 @@ export const KepenkPreview = forwardRef<
               const lightColorNormal = isDark ? "#c0c0c0" : "#f0f0f0";
               const darkColorNormal = isDark ? "#808080" : "#c0c0c0";
               lamelGradient.addColorStop(0, darkColorNormal);
-              lamelGradient.addColorStop(0.2, lightColorNormal);
+              lamelGradient.addColorStop(0.2, lamelColor); // lamelColor kullanıyoruz
               lamelGradient.addColorStop(0.8, lightColorNormal);
               lamelGradient.addColorStop(1, darkColorNormal);
               
@@ -339,7 +345,7 @@ export const KepenkPreview = forwardRef<
             const lamelSpacing = normalLamelHeight * 0.1;
             const adjustedLamelY = lamelY + lamelSpacing / 2;
             
-            // Lamel gövdesi (gradient ile 3D görünüm)
+            // Lamel gövdesi (gradient ile 3D görünüm) - lamelColor kullanarak
             const lamelGradient = ctx.createLinearGradient(
               x + dikmeWidth,
               adjustedLamelY,
@@ -349,7 +355,7 @@ export const KepenkPreview = forwardRef<
             const lightColorNormal = isDark ? "#c0c0c0" : "#f0f0f0";
             const darkColorNormal = isDark ? "#808080" : "#c0c0c0";
             lamelGradient.addColorStop(0, darkColorNormal);
-            lamelGradient.addColorStop(0.2, lightColorNormal);
+            lamelGradient.addColorStop(0.2, lamelColor); // lamelColor kullanıyoruz
             lamelGradient.addColorStop(0.8, lightColorNormal);
             lamelGradient.addColorStop(1, darkColorNormal);
             
@@ -386,7 +392,7 @@ export const KepenkPreview = forwardRef<
         ctx.fillText(`${height}mm`, 0, 0);
         ctx.restore();
       },
-      [boxHeight, theme, gozluLamelVar, gozluLamelBaslangic, gozluLamelBitis]
+      [boxHeight, theme, gozluLamelVar, gozluLamelBaslangic, gozluLamelBitis, lamelType]
     );
 
     // Canvas çizim fonksiyonu

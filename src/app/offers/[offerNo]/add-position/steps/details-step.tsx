@@ -20,6 +20,8 @@ import {
   ProductPreviewComponentRef,
 } from "./components/product-preview";
 import { PanjurSelections } from "@/types/panjur";
+import { KepenkSelections } from "@/types/kepenk";
+import { SineklikSelections } from "@/types/sineklik";
 import { useFilterLamelThickness } from "./hooks/form-rules/useFilterLamelThickness";
 import { useFilterMotorModel } from "./hooks/form-rules/useFilterMotorModel";
 import { useFilterBoxSize } from "./hooks/form-rules/useFilterBoxSize";
@@ -29,7 +31,7 @@ import { useCalculator } from "./hooks/useCalculator";
 
 interface DetailsStepProps {
   formik: FormikProps<
-    PanjurSelections & Record<string, string | number | boolean>
+    (PanjurSelections | KepenkSelections | SineklikSelections) & Record<string, string | number | boolean>
   >;
   selectedProduct: Product | null;
   onTotalChange?: (total: number) => void;
@@ -59,10 +61,14 @@ export const DetailsStep = forwardRef<DetailsStepRef, DetailsStepProps>(
       },
     }));
 
-    useAutoDependencyAndFilterBy(formik, "panjur", optionId);
-    useFilterLamelThickness(formik);
-    useFilterMotorModel(formik, selectedProduct);
-    useFilterBoxSize(formik);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    useAutoDependencyAndFilterBy(formik as any, "panjur", optionId);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    useFilterLamelThickness(formik as any);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    useFilterMotorModel(formik as any, selectedProduct);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    useFilterBoxSize(formik as any);
     const { totalPrice, selectedProducts } = useCalculator(
       formik.values,
       selectedProduct?.id ?? "",
@@ -92,7 +98,7 @@ export const DetailsStep = forwardRef<DetailsStepRef, DetailsStepProps>(
 
     const renderTabContent = (
       formik: FormikProps<
-        PanjurSelections & Record<string, string | number | boolean>
+        (PanjurSelections | KepenkSelections | SineklikSelections) & Record<string, string | number | boolean>
       >
     ) => {
       const activeTab = availableTabs.find((tab) => tab.id === currentTab);
@@ -101,10 +107,13 @@ export const DetailsStep = forwardRef<DetailsStepRef, DetailsStepProps>(
         const values = formik.values;
         return (
           <>
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             <DynamicForm
-              formik={formik}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              formik={formik as any}
               fields={activeTab.content.fields}
-              values={values}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              values={values as any}
             />
             {activeTab.content.preview && (
               <div className="mt-6">

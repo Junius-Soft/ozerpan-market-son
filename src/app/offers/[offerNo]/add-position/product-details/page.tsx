@@ -15,7 +15,10 @@ import {
 import { DetailsStep, DetailsStepRef } from "../steps/details-step";
 import { getOffer, type Position } from "@/documents/offers";
 import { getOffers } from "@/documents/offers";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikProps } from "formik";
+import { PanjurSelections } from "@/types/panjur";
+import { KepenkSelections } from "@/types/kepenk";
+import { SineklikSelections } from "@/types/sineklik";
 import { handleImalatListesiPDF } from "@/utils/handle-imalat-listesi";
 import { ProductDetailsHeader } from "./ProductDetailsHeader";
 import { FloatingTotalButton } from "../../components/FloatingTotalButton";
@@ -509,7 +512,7 @@ export default function ProductDetailsPage() {
 
                 <DetailsStep
                   ref={detailsStepRef}
-                  formik={formik}
+                  formik={formik as unknown as FormikProps<(PanjurSelections | KepenkSelections | SineklikSelections) & Record<string, string | number | boolean>>}
                   selectedProduct={productObj}
                   onTotalChange={setPreviewTotal}
                   summaryRef={summaryRef}

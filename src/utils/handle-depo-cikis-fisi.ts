@@ -1,11 +1,13 @@
 import { Product } from "@/documents/products";
 import { openDepoCikisFisiPDFMulti } from "@/utils/depo-pdf-generator";
 import { PanjurSelections, SelectedProduct } from "@/types/panjur";
+import { KepenkSelections } from "@/types/kepenk";
+import { SineklikSelections } from "@/types/sineklik";
 import { Offer, Position } from "@/documents/offers";
 
 interface HandleDepoCikisFisiPDFParams {
   product: Product;
-  values: PanjurSelections;
+  values: PanjurSelections | KepenkSelections | SineklikSelections;
   typeId?: string | null;
   offerNo?: string;
   quantity: number;

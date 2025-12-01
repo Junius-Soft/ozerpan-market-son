@@ -37,7 +37,7 @@ export async function OPTIONS() {
     },
   });
 }
-
+// again chekc with new url
 async function proxyToFrappe(request: NextRequest, pathSegments: string[]) {
   const frappeBaseUrl =
     process.env.FRAPPE_SERVER_URL || "http://erp.ozerpan.com.tr:8002";

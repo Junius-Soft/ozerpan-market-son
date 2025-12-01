@@ -356,7 +356,7 @@ export default function ProductDetailsPage() {
             productState.sectionMotorPositions && {
               sectionMotorPositions: productState.sectionMotorPositions,
             }),
-        },
+        } as Position["productDetails"],
         total: values.unitPrice * quantity || 0, // Calculate total
       };
 
@@ -476,7 +476,8 @@ export default function ProductDetailsPage() {
                     const offerNo = window.location.pathname.split("/")[2];
                     await handleDepoCikisFisiPDF({
                       product: productObj,
-                      values: formik.values,
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      values: formik.values as any,
                       typeId,
                       offerNo,
                       quantity,
@@ -494,9 +495,8 @@ export default function ProductDetailsPage() {
 
                     await handleFiyatAnaliziPDF({
                       product: productObj,
-                      formikValues: formik.values as ReturnType<
-                        typeof getInitialValues
-                      >,
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      formikValues: formik.values as any,
                       productId: productId ?? null,
                       typeId: typeId ?? null,
                       productName: productName ?? null,
@@ -509,7 +509,8 @@ export default function ProductDetailsPage() {
 
                 <DetailsStep
                   ref={detailsStepRef}
-                  formik={formik}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  formik={formik as any}
                   selectedProduct={productObj}
                   onTotalChange={setPreviewTotal}
                   summaryRef={summaryRef}

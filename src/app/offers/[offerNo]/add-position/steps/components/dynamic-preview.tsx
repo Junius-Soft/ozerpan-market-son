@@ -22,8 +22,7 @@ interface DynamicPreviewProps {
   height: number;
   className?: string;
   productId: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  formik: FormikProps<any>;
+  formik: FormikProps<Record<string, unknown>>;
   seperation: number; // Ayrım sayısı (örneğin, panjur için)
   offerName?: string;
   pozNo?: string;
@@ -130,6 +129,13 @@ export const DynamicPreview = forwardRef<
         }
         if (productId === "kepenk" && kepenkPreviewRef.current) {
           return kepenkPreviewRef.current.exportCanvas();
+        }
+        if (productId === "cam-balkon") {
+          // Cam balkon için global değişkenden al
+          const globalWindow = window as unknown as {
+            __camBalkonCizimDataUrl?: string;
+          };
+          return globalWindow.__camBalkonCizimDataUrl || null;
         }
         return null;
       },

@@ -182,13 +182,32 @@ export class ImalatPDFGenerator {
       const poz = data.positions.find((p) => p.pozNo === item.pozNo);
       const pozQuantity = Number(poz?.quantity ?? 1);
       const productQuantity = Number(item.product.quantity ?? 1);
-      const totalQuantity = (productQuantity * pozQuantity).toString();
+      const rawTotalQuantity = productQuantity * pozQuantity;
+
+      // Varsayılan gösterim (ondalıklı olabilir)
+      let displayQuantity = rawTotalQuantity.toString();
+
+      // Cam balkon profilleri için imalatta adet tam sayı olmalı
+      // Örn: İç içe profil, kanat profili vb. → 3.144 m yerine 4 adet
+      const productType = (item.product.type || "").toLowerCase();
+      type ProductWithOptionalUnit = { unit?: string };
+      const unit = (item.product as ProductWithOptionalUnit).unit || "";
+      const isCamBalkonProfile =
+        productType.includes("cam_balkon_profiller") ||
+        productType.includes("cam_balkon") && !productType.includes("aksesuar");
+
+      if (isCamBalkonProfile && unit === "metre" && rawTotalQuantity > 0) {
+        // Kesim listesinde profil adedi yukarı yuvarlanır
+        // Örn: 3.144 → 4 adet (her biri 'size' uzunluğunda)
+        displayQuantity = Math.ceil(rawTotalQuantity).toString();
+      }
+
       return [
         (i + 1).toString(),
         item.product.stock_code || "",
         item.product.description || "",
         item.product.size || "",
-        totalQuantity,
+        displayQuantity,
         item.pozNo || "",
         "☐",
       ];
@@ -503,34 +522,116 @@ export class ImalatPDFGenerator {
       // Poz detaylarını ekle (sağa yaslanmış ama biraz margin bırak)
       const infoRightEdge = x + width + borderPadding - 3; // Sağ kenardan 3px içerde
 
-      if (position.productName) {
-        // Uzun isimleri kısalt
-        const shortName =
-          position.productName.length > 20
-            ? position.productName.substring(0, 20) + "..."
-            : position.productName;
-        const vizonText = `VIZON: ${shortName}`;
-        const vizonWidth = this.doc.getTextWidth(vizonText);
-        this.doc.text(vizonText, infoRightEdge - vizonWidth, detailY);
-        detailY += lineHeight;
-      }
+      // CAM BALKON için özel bilgi bloğu
+      if (position.productId === "cam-balkon" && position.productDetails) {
+        const pd = position.productDetails as Record<string, unknown> & {
+          color?: string;
+          renk?: string;
+          kolSayisi?: number | string;
+          height?: number | string;
+        };
 
-      // Hareket türü bilgisi
-      if (position.productDetails?.movementType) {
-        const movementText = "Motorlu (Redüktörlü)";
-        const hareketText = `Hareket: ${movementText}`;
-        const hareketWidth = this.doc.getTextWidth(hareketText);
-        this.doc.text(hareketText, infoRightEdge - hareketWidth, detailY);
-        detailY += lineHeight;
-      }
+        // Renk (profil rengi)
+        const renk = pd.color || pd.renk;
+        if (renk) {
+          const renkText = `Renk: ${renk}`;
+          const renkWidth = this.doc.getTextWidth(renkText);
+          this.doc.text(renkText, infoRightEdge - renkWidth, detailY);
+          detailY += lineHeight;
+        }
 
-      // Motor markası (eğer motorlu ise)
-      if (position.productDetails?.motorMarka) {
-        const motorText = position.productDetails.motorMarka.toUpperCase();
-        const fullMotorText = `Motor: ${motorText}`;
-        const motorWidth = this.doc.getTextWidth(fullMotorText);
-        this.doc.text(fullMotorText, infoRightEdge - motorWidth, detailY);
-        detailY += lineHeight;
+        // Seri (ürün alt tipi)
+        const seri =
+          pd["productSubType-katlanir"] ||
+          pd["productSubType-surme"] ||
+          pd["productSubType-giyotin"] ||
+          pd.camBalkonType ||
+          position.productName;
+        if (seri) {
+          const seriText = `Seri: ${seri}`;
+          const seriWidth = this.doc.getTextWidth(seriText);
+          this.doc.text(seriText, infoRightEdge - seriWidth, detailY);
+          detailY += lineHeight;
+        }
+
+        // En (toplam kol genişliği, mm)
+        const kolSayisi = Number(pd.kolSayisi || 1);
+        let toplamGenislik = 0;
+        for (let i = 1; i <= kolSayisi; i++) {
+          const g = Number(pd[`kol${i}_genislik`] || 0);
+          if (!Number.isNaN(g)) toplamGenislik += g;
+        }
+        if (toplamGenislik > 0) {
+          const enText = `En: ${toplamGenislik} mm`;
+          const enWidth = this.doc.getTextWidth(enText);
+          this.doc.text(enText, infoRightEdge - enWidth, detailY);
+          detailY += lineHeight;
+        }
+
+        // Boy (yükseklik, mm)
+        const boy = Number(pd.height || 0);
+        if (!Number.isNaN(boy) && boy > 0) {
+          const boyText = `Boy: ${boy} mm`;
+          const boyWidth = this.doc.getTextWidth(boyText);
+          this.doc.text(boyText, infoRightEdge - boyWidth, detailY);
+          detailY += lineHeight;
+        }
+
+        // Dönüş açıları (kol sayısı 1'den fazlaysa)
+        const acilar: number[] = [];
+        if (kolSayisi > 1) {
+          for (let i = 2; i <= kolSayisi; i++) {
+            const aci = Number(pd[`kol${i}_aci`] || 0);
+            if (!Number.isNaN(aci) && aci !== 0) {
+              acilar.push(aci);
+            }
+          }
+        }
+
+        if (acilar.length === 1) {
+          const aciText = `Dönüş Açısı: ${acilar[0]}°`;
+          const aciWidth = this.doc.getTextWidth(aciText);
+          this.doc.text(aciText, infoRightEdge - aciWidth, detailY);
+          detailY += lineHeight;
+        } else if (acilar.length > 1) {
+          acilar.forEach((aci, index) => {
+            const aciText = `${index + 1}. Açı: ${aci}°`;
+            const aciWidth = this.doc.getTextWidth(aciText);
+            this.doc.text(aciText, infoRightEdge - aciWidth, detailY);
+            detailY += lineHeight;
+          });
+        }
+      } else {
+        // DİĞER ÜRÜNLER İÇİN VAR OLAN METİN BLOĞU
+        if (position.productName) {
+          // Uzun isimleri kısalt
+          const shortName =
+            position.productName.length > 20
+              ? position.productName.substring(0, 20) + "..."
+              : position.productName;
+          const vizonText = `VIZON: ${shortName}`;
+          const vizonWidth = this.doc.getTextWidth(vizonText);
+          this.doc.text(vizonText, infoRightEdge - vizonWidth, detailY);
+          detailY += lineHeight;
+        }
+
+        // Hareket türü bilgisi
+        if (position.productDetails?.movementType) {
+          const movementText = "Motorlu (Redüktörlü)";
+          const hareketText = `Hareket: ${movementText}`;
+          const hareketWidth = this.doc.getTextWidth(hareketText);
+          this.doc.text(hareketText, infoRightEdge - hareketWidth, detailY);
+          detailY += lineHeight;
+        }
+
+        // Motor markası (eğer motorlu ise)
+        if (position.productDetails?.motorMarka) {
+          const motorText = position.productDetails.motorMarka.toUpperCase();
+          const fullMotorText = `Motor: ${motorText}`;
+          const motorWidth = this.doc.getTextWidth(fullMotorText);
+          this.doc.text(fullMotorText, infoRightEdge - motorWidth, detailY);
+          detailY += lineHeight;
+        }
       }
     } catch {
       // Görüntü eklenemezse hata mesajı yazdır
@@ -583,6 +684,88 @@ export class ImalatPDFGenerator {
       const quantityCenterX =
         rightSectionStart + rightSectionWidth / 2 - quantityWidth / 2;
       this.doc.text(quantityText, quantityCenterX, boxY + 5.5);
+
+      // CAM BALKON için yan bilgi bloğu (görüntü yokken de göster)
+      this.doc.setFont("NotoSans", "normal");
+      this.doc.setFontSize(8);
+
+      let detailY = y + 25;
+      const lineHeight = 6;
+      const infoRightEdge = x + width + borderPadding - 3;
+
+      if (position.productId === "cam-balkon" && position.productDetails) {
+        const pd = position.productDetails as Record<string, unknown> & {
+          color?: string;
+          renk?: string;
+          kolSayisi?: number | string;
+          height?: number | string;
+        };
+
+        const renk = pd.color || pd.renk;
+        if (renk) {
+          const renkText = `Renk: ${renk}`;
+          const renkWidth = this.doc.getTextWidth(renkText);
+          this.doc.text(renkText, infoRightEdge - renkWidth, detailY);
+          detailY += lineHeight;
+        }
+
+        const seri =
+          pd["productSubType-katlanir"] ||
+          pd["productSubType-surme"] ||
+          pd["productSubType-giyotin"] ||
+          pd.camBalkonType ||
+          position.productName;
+        if (seri) {
+          const seriText = `Seri: ${seri}`;
+          const seriWidth = this.doc.getTextWidth(seriText);
+          this.doc.text(seriText, infoRightEdge - seriWidth, detailY);
+          detailY += lineHeight;
+        }
+
+        const kolSayisi = Number(pd.kolSayisi || 1);
+        let toplamGenislik = 0;
+        for (let i = 1; i <= kolSayisi; i++) {
+          const g = Number(pd[`kol${i}_genislik`] || 0);
+          if (!Number.isNaN(g)) toplamGenislik += g;
+        }
+        if (toplamGenislik > 0) {
+          const enText = `En: ${toplamGenislik} mm`;
+          const enWidth = this.doc.getTextWidth(enText);
+          this.doc.text(enText, infoRightEdge - enWidth, detailY);
+          detailY += lineHeight;
+        }
+
+        const boy = Number(pd.height || 0);
+        if (!Number.isNaN(boy) && boy > 0) {
+          const boyText = `Boy: ${boy} mm`;
+          const boyWidth = this.doc.getTextWidth(boyText);
+          this.doc.text(boyText, infoRightEdge - boyWidth, detailY);
+          detailY += lineHeight;
+        }
+
+        const acilar: number[] = [];
+        if (kolSayisi > 1) {
+          for (let i = 2; i <= kolSayisi; i++) {
+            const aci = Number(pd[`kol${i}_aci`] || 0);
+            if (!Number.isNaN(aci) && aci !== 0) {
+              acilar.push(aci);
+            }
+          }
+        }
+
+        if (acilar.length === 1) {
+          const aciText = `Dönüş Açısı: ${acilar[0]}°`;
+          const aciWidth = this.doc.getTextWidth(aciText);
+          this.doc.text(aciText, infoRightEdge - aciWidth, detailY);
+        } else if (acilar.length > 1) {
+          acilar.forEach((aci, index) => {
+            const aciText = `${index + 1}. Açı: ${aci}°`;
+            const aciWidth = this.doc.getTextWidth(aciText);
+            this.doc.text(aciText, infoRightEdge - aciWidth, detailY);
+            detailY += lineHeight;
+          });
+        }
+      }
     }
   }
 

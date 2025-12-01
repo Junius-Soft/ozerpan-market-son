@@ -43,6 +43,9 @@ export const KepenkPreview = forwardRef<
   ) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const { theme } = useTheme();
+    
+    // Kullanılmayan props'ları ESLint için işaretle
+    void lamelType;
 
     // Export canvas function exposed via ref
     useImperativeHandle(ref, () => ({
@@ -107,6 +110,9 @@ export const KepenkPreview = forwardRef<
         const gozluLamelColor = isDark ? "#4a90e2" : "#87ceeb"; // Açık mavi gözlü lamel için
         const boxColor = isDark ? "#555" : "#aaa";
         const textColor = isDark ? "#fff" : "#000";
+        
+        // ESLint için kullanılmayan değişkenleri işaretle
+        void lamelColor;
 
         // Arka plan
         ctx.fillStyle = bgColor;
@@ -172,6 +178,7 @@ export const KepenkPreview = forwardRef<
               adjustedLamelY + lamelRealHeight
             );
             const baseColor = gozluLamelColor;
+            void baseColor; // ESLint için
             const lightColor = isDark ? "#a0a0a0" : "#e0e0e0";
             const darkColor = isDark ? "#606060" : "#b0b0b0";
             lamelGradient.addColorStop(0, darkColor);

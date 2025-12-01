@@ -13,7 +13,6 @@ import {
   findBoxPrice,
   findTamburPrice,
   findMotorPrice,
-  getDikmeGenisligi,
   getBoxHeight,
 } from "@/utils/kepenk";
 import { selectKepenkMotor } from "@/utils/kepenk-motor-selection";

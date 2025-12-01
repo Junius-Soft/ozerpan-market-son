@@ -40,7 +40,7 @@ export async function OPTIONS() {
 
 async function proxyToFrappe(request: NextRequest, pathSegments: string[]) {
   const frappeBaseUrl =
-    process.env.FRAPPE_SERVER_URL || "http://erp.ozerpan.com.tr:8001";
+    process.env.FRAPPE_SERVER_URL || "http://erp.ozerpan.com.tr:8002";
   const path = pathSegments.join("/");
   const { searchParams } = new URL(request.url);
   const queryString = searchParams.toString();

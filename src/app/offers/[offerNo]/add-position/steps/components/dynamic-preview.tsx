@@ -144,8 +144,7 @@ export const DynamicPreview = forwardRef<
     // Her ürün için kendi parametrelerini ayarlayalım
     const getProductSpecificProps = () => {
       // Formik values, ürün tipine göre farklı alanlar içeriyor
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const values = formik.values as any;
+      const values = formik.values as Record<string, unknown>;
 
       switch (productId) {
         case "panjur":

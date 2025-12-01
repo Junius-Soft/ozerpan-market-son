@@ -20,15 +20,24 @@ function extractKolBilgileri(values: CamBalkonFormValues): KolBilgisi[] {
   const kolBilgileri: KolBilgisi[] = [];
 
   for (let i = 1; i <= kolSayisi; i++) {
+    const cikisYonuRaw = values[`kol${i}_cikis_yonu`];
+    const sabitCamYonuRaw = values[`kol${i}_sabitCamYonu`];
+
     kolBilgileri.push({
       genislik: Number(values[`kol${i}_genislik`]) || 0,
       kanat: Number(values[`kol${i}_kanat`]) || 1,
       cikis_sayisi: Number(values[`kol${i}_cikis_sayisi`]) || 0,
-      cikis_yonu: values[`kol${i}_cikis_yonu`] || "sag",
+      cikis_yonu:
+        typeof cikisYonuRaw === "string" && cikisYonuRaw.length > 0
+          ? cikisYonuRaw
+          : "sag",
       sola_kanat: Number(values[`kol${i}_sola_kanat`]) || 0,
       sabitCamAdedi: Number(values[`kol${i}_sabitCamAdedi`]) || 0,
       sabitCamGenisligi: Number(values[`kol${i}_sabitCamGenisligi`]) || 0,
-      sabitCamYonu: values[`kol${i}_sabitCamYonu`] || "sag",
+      sabitCamYonu:
+        typeof sabitCamYonuRaw === "string" && sabitCamYonuRaw.length > 0
+          ? sabitCamYonuRaw
+          : "sag",
       aci: Number(values[`kol${i}_aci`]) || 0,
     });
   }
@@ -53,7 +62,10 @@ export const calculateCamBalkon = (
   optionId?: string
 ): CalculationResult => {
   const errors: string[] = [];
-  const selectedProducts: SelectedProduct = {
+  const selectedProducts: {
+    products: SelectedProduct[];
+    accessories: SelectedProduct[];
+  } = {
     products: [],
     accessories: [],
   };
@@ -84,7 +96,7 @@ export const calculateCamBalkon = (
     kolBilgileri,
     Number(values.height) || 0,
     values.camKalinligi || "24mm",
-    values.camRengi,
+    values.camRengi || "seffaf",
     colorKey,
     optionId || "1",
     values.toplamHareketliCamArasi,

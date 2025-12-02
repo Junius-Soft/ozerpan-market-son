@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
       
       // Sadece aksesuar tiplerini filtrele
       const accessories = kepenkProducts.filter(
-        (item: any) =>
+        (item: { type?: string }) =>
           item.type === "kepenk_alt_parca_aksesuarlari" ||
           item.type === "kepenk_dikme_aksesuarlari" ||
           item.type === "kepenk_lamel_aksesuarlari" ||

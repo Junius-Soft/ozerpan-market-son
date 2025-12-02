@@ -61,7 +61,8 @@ export async function handleImalatListesiPDF({
       productName: product.name,
       optionId: optionId || null,
       currency: product.currency || "EUR",
-      productDetails: values,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      productDetails: values as any,
       total: (values.unitPrice || 0) * (quantity || 1),
     };
     // Position objesine canvas verisini ekle

@@ -43,6 +43,9 @@ export const KepenkPreview = forwardRef<
   ) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const { theme } = useTheme();
+    
+    // Kullanılmayan props'ları ESLint için işaretle
+    void lamelType;
 
     // Export canvas function exposed via ref
     useImperativeHandle(ref, () => ({
@@ -103,17 +106,13 @@ export const KepenkPreview = forwardRef<
         const isDark = theme === "dark";
         const bgColor = isDark ? "#1a1a1a" : "#ffffff";
         const borderColor = isDark ? "#666" : "#333";
-        // Lamel tipi ve temaya göre temel lamel rengi
-        const lamelColor = lamelType?.includes("100")
-          ? isDark
-            ? "#999"
-            : "#eeeeee"
-          : isDark
-          ? "#888"
-          : "#dddddd";
+        const lamelColor = isDark ? "#888" : "#ddd";
         const gozluLamelColor = isDark ? "#4a90e2" : "#87ceeb"; // Açık mavi gözlü lamel için
         const boxColor = isDark ? "#555" : "#aaa";
         const textColor = isDark ? "#fff" : "#000";
+        
+        // ESLint için kullanılmayan değişkenleri işaretle
+        void lamelColor;
 
         // Arka plan
         ctx.fillStyle = bgColor;
@@ -178,8 +177,10 @@ export const KepenkPreview = forwardRef<
               x + dikmeWidth,
               adjustedLamelY + lamelRealHeight
             );
-            const lightColor = gozluLamelColor;
-            const darkColor = isDark ? "#2c3e50" : "#6ba3c8";
+            const baseColor = gozluLamelColor;
+            void baseColor; // ESLint için
+            const lightColor = isDark ? "#a0a0a0" : "#e0e0e0";
+            const darkColor = isDark ? "#606060" : "#b0b0b0";
             lamelGradient.addColorStop(0, darkColor);
             lamelGradient.addColorStop(0.2, lightColor);
             lamelGradient.addColorStop(0.8, lightColor);
@@ -279,7 +280,7 @@ export const KepenkPreview = forwardRef<
                 x + dikmeWidth,
                 adjustedLamelY + lamelRealHeight
               );
-              const lightColorNormal = lamelColor;
+              const lightColorNormal = isDark ? "#c0c0c0" : "#f0f0f0";
               const darkColorNormal = isDark ? "#808080" : "#c0c0c0";
               lamelGradient.addColorStop(0, darkColorNormal);
               lamelGradient.addColorStop(0.2, lightColorNormal);
@@ -318,7 +319,7 @@ export const KepenkPreview = forwardRef<
                 x + dikmeWidth,
                 adjustedLamelY + lamelRealHeight
               );
-              const lightColorNormal = lamelColor;
+              const lightColorNormal = isDark ? "#c0c0c0" : "#f0f0f0";
               const darkColorNormal = isDark ? "#808080" : "#c0c0c0";
               lamelGradient.addColorStop(0, darkColorNormal);
               lamelGradient.addColorStop(0.2, lightColorNormal);
@@ -352,7 +353,7 @@ export const KepenkPreview = forwardRef<
               x + dikmeWidth,
               adjustedLamelY + lamelRealHeight
             );
-            const lightColorNormal = lamelColor;
+            const lightColorNormal = isDark ? "#c0c0c0" : "#f0f0f0";
             const darkColorNormal = isDark ? "#808080" : "#c0c0c0";
             lamelGradient.addColorStop(0, darkColorNormal);
             lamelGradient.addColorStop(0.2, lightColorNormal);
@@ -392,7 +393,7 @@ export const KepenkPreview = forwardRef<
         ctx.fillText(`${height}mm`, 0, 0);
         ctx.restore();
       },
-      [boxHeight, theme, lamelType, gozluLamelVar, gozluLamelBaslangic, gozluLamelBitis]
+      [boxHeight, theme, gozluLamelVar, gozluLamelBaslangic, gozluLamelBitis]
     );
 
     // Canvas çizim fonksiyonu

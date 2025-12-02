@@ -1429,6 +1429,16 @@
             "min": 100,
             "max": 4000,
             "default": 1500
+          },
+          {
+            "id": "packagingType",
+            "name": "Paketleme",
+            "type": "select",
+            "options": [
+              { "id": "yok", "name": "Yok" },
+              { "id": "var", "name": "Var" }
+            ],
+            "default": "yok"
           }
         ],
         "preview": {

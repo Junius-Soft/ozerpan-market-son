@@ -616,7 +616,8 @@ export class ImalatPDFGenerator {
         }
 
         // Hareket türü bilgisi
-        if (position.productDetails?.movementType) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if ((position.productDetails as any)?.movementType) {
           const movementText = "Motorlu (Redüktörlü)";
           const hareketText = `Hareket: ${movementText}`;
           const hareketWidth = this.doc.getTextWidth(hareketText);
@@ -625,8 +626,10 @@ export class ImalatPDFGenerator {
         }
 
         // Motor markası (eğer motorlu ise)
-        if (position.productDetails?.motorMarka) {
-          const motorText = position.productDetails.motorMarka.toUpperCase();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if ((position.productDetails as any)?.motorMarka) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const motorText = ((position.productDetails as any).motorMarka as string).toUpperCase();
           const fullMotorText = `Motor: ${motorText}`;
           const motorWidth = this.doc.getTextWidth(fullMotorText);
           this.doc.text(fullMotorText, infoRightEdge - motorWidth, detailY);

@@ -39,8 +39,8 @@ export const getImalatListesiOptions = (
   if (productId === "cam-balkon") {
     return [
       { label: "Ürün Önizlemesi", value: "preview" },
-      { label: "Cam Balkon 1", value: "Cam" },
-      { label: "Cam Balkon2", value: "Balkon" },
+      { label: "Profiller", value: "cam_balkon_profiller" },
+      { label: "Aksesuarlar", value: "cam_balkon_aksesuar" },
     ];
   }
 

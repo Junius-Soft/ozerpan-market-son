@@ -11,9 +11,11 @@ import { SineklikSelections } from "@/types/sineklik";
 import { calculateKepenk } from "./calculations/kepenk";
 import { KepenkSelections } from "@/types/kepenk";
 
+import { calculateCamBalkon, CamBalkonSelections } from "./calculations/cam-balkon";
+
 // Generic calculator hook
 export const useCalculator = (
-  values: PanjurSelections | SineklikSelections | KepenkSelections,
+  values: PanjurSelections | SineklikSelections | KepenkSelections | CamBalkonSelections,
   productName: string,
   availableTabs?: ProductTab[]
 ) => {
@@ -45,8 +47,11 @@ export const useCalculator = (
   useEffect(() => {
     const fetchPrices = async () => {
       try {
+        // cam-balkon için api key cam_balkon olmalı
+        const apiProductId = productName.toLowerCase() === "cam-balkon" ? "cam_balkon" : productName.toLowerCase();
+        
         const response = await fetch(
-          `/api/product-prices?productId=${productName.toLowerCase()}`
+          `/api/product-prices?productId=${apiProductId}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch prices");
@@ -94,14 +99,12 @@ export const useCalculator = (
       );
       setResult(result);
     } else if (productName === "cam-balkon") {
-      // Cam balkon için basit hesaplama (henüz implement edilmedi)
-      setResult({
-        totalPrice: 0,
-        selectedProducts: { products: [], accessories: [] },
-        errors: [
-          `${productName} ürünü için hesaplama henüz implement edilmedi`,
-        ],
-      });
+      const result = calculateCamBalkon(
+        values as CamBalkonSelections,
+        prices,
+        optionId
+      );
+      setResult(result);
     } else {
       // Diğer ürünler için henüz implement edilmedi
       setResult({

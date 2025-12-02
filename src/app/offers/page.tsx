@@ -37,7 +37,31 @@ export default function OffersPage() {
   const { eurRate, loading: isEurRateLoading } = useExchangeRate();
   const calculateOfferTotal = useMemo(() => {
     return (offer: Offer) => {
-      // Her pozisyonu EUR'a çevirerek topla
+      // Teklifte cam balkon pozisyonu var mı kontrol et
+      const hasCamBalkon = offer.positions.some(
+        (position) => position.productId === "cam-balkon"
+      );
+      
+      // Eğer cam balkon varsa, TL olarak hesapla
+      if (hasCamBalkon) {
+        const subtotal = offer.positions.reduce((sum, position) => {
+          let priceTRY = position.unitPrice * position.quantity;
+          // Eğer pozisyon EUR ise TRY'ye çevir
+          if (position.currency?.code === "EUR") {
+            priceTRY = priceTRY * (offer.eurRate ?? eurRate);
+          }
+          // TRY ise aynen ekle
+          return sum + priceTRY;
+        }, 0);
+        const vat = subtotal * 0.2; // %20 KDV
+        const total = subtotal + vat;
+        return "₺ " + total.toLocaleString("tr-TR", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+      }
+      
+      // Diğer ürünler için EUR olarak hesapla
       const subtotal = offer.positions.reduce((sum, position) => {
         let priceEUR = position.unitPrice * position.quantity;
         if (position.currency?.code === "TRY") {

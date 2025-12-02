@@ -31,8 +31,10 @@ const productTableConfigs: ProductTableConfig[] = [
         title: "Kutu",
         getValue: (pos: Position) => {
           let boxValue = "-";
-          const boxColor = normalizeColor(pos.productDetails?.box_color);
-          const boxSize = pos.productDetails?.boxType;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const pd = pos.productDetails as any;
+          const boxColor = normalizeColor(pd?.box_color);
+          const boxSize = pd?.boxType;
           if (boxColor && boxSize) {
             boxValue = `${boxColor} (${boxSize})`;
           } else if (boxColor) {
@@ -48,9 +50,11 @@ const productTableConfigs: ProductTableConfig[] = [
         title: "Lamel",
         getValue: (pos: Position) => {
           let lamelValue = "-";
-          const lamelColor = normalizeColor(pos.productDetails?.lamel_color);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const pd = pos.productDetails as any;
+          const lamelColor = normalizeColor(pd?.lamel_color);
           let lamelCode = "";
-          const lamelTickness = pos.productDetails?.lamelTickness;
+          const lamelTickness = pd?.lamelTickness;
           if (lamelTickness && lamelTickness.includes("_")) {
             const [num, code] = lamelTickness.split("_");
             if (num && code) {
@@ -72,10 +76,12 @@ const productTableConfigs: ProductTableConfig[] = [
         title: "Mekanizma",
         getValue: (pos: Position) => {
           let mekanizmaValue = "-";
-          const movementType = pos.productDetails?.movementType;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const pd = pos.productDetails as any;
+          const movementType = pd?.movementType;
           if (movementType === "motorlu") {
-            const marka = pos.productDetails?.motorMarka;
-            const motorSekli = pos.productDetails?.motorSekli;
+            const marka = pd?.motorMarka;
+            const motorSekli = pd?.motorSekli;
             if (marka) {
               mekanizmaValue = marka.charAt(0).toUpperCase() + marka.slice(1);
               if (motorSekli && motorSekli.includes("alicili")) {

@@ -15,30 +15,36 @@ type CamBalkonFormValues = Record<string, unknown> & {
 };
 
 // Kol bilgilerini düz yapıdan (kol1_genislik vb.) diziye dönüştüren fonksiyon
-function extractKolBilgileri(values: CamBalkonFormValues): KolBilgisi[] {
-  const kolSayisi = Number(values.kolSayisi) || 1;
+function extractKolBilgileri(
+  values: CamBalkonFormValues | CamBalkonSelections
+): KolBilgisi[] {
+  // Index ile erişim yaptığımız için burada geniş tip kullanıyoruz
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const v = values as any;
+
+  const kolSayisi = Number(v.kolSayisi) || 1;
   const kolBilgileri: KolBilgisi[] = [];
 
   for (let i = 1; i <= kolSayisi; i++) {
-    const cikisYonuRaw = values[`kol${i}_cikis_yonu`];
-    const sabitCamYonuRaw = values[`kol${i}_sabitCamYonu`];
+    const cikisYonuRaw = v[`kol${i}_cikis_yonu`];
+    const sabitCamYonuRaw = v[`kol${i}_sabitCamYonu`];
 
     kolBilgileri.push({
-      genislik: Number(values[`kol${i}_genislik`]) || 0,
-      kanat: Number(values[`kol${i}_kanat`]) || 1,
-      cikis_sayisi: Number(values[`kol${i}_cikis_sayisi`]) || 0,
+      genislik: Number(v[`kol${i}_genislik`]) || 0,
+      kanat: Number(v[`kol${i}_kanat`]) || 1,
+      cikis_sayisi: Number(v[`kol${i}_cikis_sayisi`]) || 0,
       cikis_yonu:
         typeof cikisYonuRaw === "string" && cikisYonuRaw.length > 0
           ? cikisYonuRaw
           : "sag",
-      sola_kanat: Number(values[`kol${i}_sola_kanat`]) || 0,
-      sabitCamAdedi: Number(values[`kol${i}_sabitCamAdedi`]) || 0,
-      sabitCamGenisligi: Number(values[`kol${i}_sabitCamGenisligi`]) || 0,
+      sola_kanat: Number(v[`kol${i}_sola_kanat`]) || 0,
+      sabitCamAdedi: Number(v[`kol${i}_sabitCamAdedi`]) || 0,
+      sabitCamGenisligi: Number(v[`kol${i}_sabitCamGenisligi`]) || 0,
       sabitCamYonu:
         typeof sabitCamYonuRaw === "string" && sabitCamYonuRaw.length > 0
           ? sabitCamYonuRaw
           : "sag",
-      aci: Number(values[`kol${i}_aci`]) || 0,
+      aci: Number(v[`kol${i}_aci`]) || 0,
     });
   }
   return kolBilgileri;
@@ -57,7 +63,7 @@ export interface CamBalkonSelections {
 }
 
 export const calculateCamBalkon = (
-  values: CamBalkonFormValues,
+  values: CamBalkonFormValues | CamBalkonSelections,
   prices: PriceItem[],
   optionId?: string
 ): CalculationResult => {
@@ -82,21 +88,24 @@ export const calculateCamBalkon = (
   else if (colorKey.includes("ral")) colorKey = "ral";
   else colorKey = "eloksal"; // Varsayılan
 
-  console.log('🔄 Cam Balkon Hesaplama başlıyor:', { 
-    width: values.width, 
-    height: values.height, 
-    colorKey, 
+  // Debug log – değerler farklı form yapılarına göre değişebileceği için geniş tip kullanıyoruz
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const debugValues = values as any;
+  console.log("🔄 Cam Balkon Hesaplama başlıyor:", {
+    width: debugValues.width,
+    height: debugValues.height,
+    colorKey,
     pricesCount: prices.length,
     kolBilgileriSayisi: kolBilgileri.length,
-    kol1_genislik: values.kol1_genislik
+    kol1_genislik: debugValues.kol1_genislik,
   });
 
   // Malzeme listesini hesapla
   const malzemeler = calculateCamBalkonMalzemeListesi(
     kolBilgileri,
     Number(values.height) || 0,
-    values.camKalinligi || "24mm",
-    values.camRengi || "seffaf",
+    debugValues.camKalinligi || "24mm",
+    debugValues.camRengi || "seffaf",
     colorKey,
     optionId || "1",
     values.toplamHareketliCamArasi,

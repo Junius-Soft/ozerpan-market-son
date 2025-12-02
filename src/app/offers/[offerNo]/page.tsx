@@ -31,11 +31,13 @@ import { useFrappePostCall } from "frappe-react-sdk";
 import { SelectedProduct } from "@/types/panjur";
 import { toast } from "react-toastify";
 import { RootState } from "@/store";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrency } from "@/store/appSlice";
 
 export default function OfferDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const dispatch = useDispatch();
   const currency = useSelector((state: RootState) => state.app.currency);
   const [offer, setOffer] = useState<Offer | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -68,6 +70,23 @@ export default function OfferDetailPage() {
     };
     loadOffer();
   }, [params.offerNo]);
+
+  // Cam balkon teklifleri için varsayılan para birimini TRY yap
+  useEffect(() => {
+    if (!offer || !offer.positions || offer.positions.length === 0) return;
+
+    const isCamBalkonOnly = offer.positions.every(
+      (pos) => pos.productId === "cam-balkon"
+    );
+
+    if (isCamBalkonOnly) {
+      // Varsayılan para birimini TRY yap, kullanıcı isterse özet karttan EUR'a çevirebilir
+      dispatch(setCurrency("TRY"));
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("currency", "TRY");
+      }
+    }
+  }, [offer, dispatch]);
 
   const handleDeletePositions = async () => {
     if (!offer || selectedPositions.length === 0) return;

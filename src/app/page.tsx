@@ -75,7 +75,7 @@ export default function Home() {
             {products.map((product) => (
               <Card
                 key={product.id}
-                className={`${!product.isActive ? "opacity-50" : ""}`}
+                className={`${!product.isActive ? "opacity-50" : ""} h-full flex flex-col`}
               >
                 <div className="aspect-video relative">
                   <Image
@@ -100,27 +100,29 @@ export default function Home() {
                       : "Kaliteli kapı sistemleri"}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-gray-600">
-                    {product.id === "panjur"
-                      ? "Modern ve dayanıklı panjur sistemleri ile evinizi güzelleştirin."
-                      : product.id === "kepenk"
-                      ? "Güvenlik ve estetiği bir arada sunan kepenk çözümleri."
-                      : product.id === "pencere"
-                      ? "Enerji tasarruflu ve estetik pencere sistemleri."
-                      : product.id === "sineklik"
-                      ? "Zararlıları dışarıda tutarken temiz hava alın."
-                      : "Güvenli ve şık kapı sistemleri."}
-                  </p>
-                  {!product.isActive && (
-                    <div className="mt-4">
-                      <span className="bg-gray-100 px-3 py-1 rounded-full text-sm font-medium text-gray-800">
-                        Yakında
-                      </span>
-                    </div>
-                  )}
+                <CardContent className="flex-1 flex flex-col">
+                  <div>
+                    <p className="text-sm text-gray-600">
+                      {product.id === "panjur"
+                        ? "Modern ve dayanıklı panjur sistemleri ile evinizi güzelleştirin."
+                        : product.id === "kepenk"
+                        ? "Güvenlik ve estetiği bir arada sunan kepenk çözümleri."
+                        : product.id === "pencere"
+                        ? "Enerji tasarruflu ve estetik pencere sistemleri."
+                        : product.id === "sineklik"
+                        ? "Zararlıları dışarıda tutarken temiz hava alın."
+                        : "Güvenli ve şık kapı sistemleri."}
+                    </p>
+                    {!product.isActive && (
+                      <div className="mt-4">
+                        <span className="bg-gray-100 px-3 py-1 rounded-full text-sm font-medium text-gray-800">
+                          Yakında
+                        </span>
+                      </div>
+                    )}
+                  </div>
                   {product.isActive && (
-                    <div className="mt-4">
+                    <div className="mt-auto pt-4">
                       <Link
                         href="/offers"
                         className="w-full block"

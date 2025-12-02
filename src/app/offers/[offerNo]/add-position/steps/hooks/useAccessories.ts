@@ -15,7 +15,7 @@ interface AccessoryResult {
 
 // Generic accessories calculator hook
 export function useAccessories(
-  values: PanjurSelections | SineklikSelections | KepenkSelections
+  values: PanjurSelections | SineklikSelections | KepenkSelections | unknown
 ): AccessoryResult {
   const [accessories, setAccessories] = useState<SelectedProduct[]>([]);
   const searchParams = useSearchParams();

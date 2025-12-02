@@ -41,9 +41,13 @@ export async function handleImalatListesiPDF({
     if (selectedTypes && selectedTypes.length > 0) {
       const normalizedTypes = selectedTypes.map((t) => t.toLowerCase().trim());
       products = products.filter((prod) => {
-        //prod'un descriptionu seçilen tiplerden birini içeriyor mu?
+        // prod'un descriptionu veya type'ı seçilen tiplerden birini içeriyor mu?
         const prodDesc = prod.description.toLowerCase().trim();
-        return normalizedTypes.some((type) => prodDesc.includes(type));
+        const prodType = (prod.type || "").toLowerCase().trim();
+        
+        return normalizedTypes.some((type) => 
+          prodDesc.includes(type) || prodType.includes(type)
+        );
       });
     }
     const position: Position = {

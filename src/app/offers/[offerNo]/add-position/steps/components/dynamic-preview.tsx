@@ -22,8 +22,7 @@ interface DynamicPreviewProps {
   height: number;
   className?: string;
   productId: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  formik: FormikProps<any>;
+  formik: FormikProps<Record<string, unknown>>;
   seperation: number; // Ayrım sayısı (örneğin, panjur için)
   offerName?: string;
   pozNo?: string;
@@ -131,13 +130,21 @@ export const DynamicPreview = forwardRef<
         if (productId === "kepenk" && kepenkPreviewRef.current) {
           return kepenkPreviewRef.current.exportCanvas();
         }
+        if (productId === "cam-balkon") {
+          // Cam balkon için global değişkenden al
+          const globalWindow = window as unknown as {
+            __camBalkonCizimDataUrl?: string;
+          };
+          return globalWindow.__camBalkonCizimDataUrl || null;
+        }
         return null;
       },
     }));
 
     // Her ürün için kendi parametrelerini ayarlayalım
     const getProductSpecificProps = () => {
-      const values = formik.values;
+      // Formik values, ürün tipine göre farklı alanlar içeriyor
+      const values = formik.values as Record<string, unknown>;
 
       switch (productId) {
         case "panjur":
@@ -155,50 +162,50 @@ export const DynamicPreview = forwardRef<
             boxColor: getColorHex("box_color"),
             subPartColor: getColorHex("subPart_color"),
             dikmeColor: getColorHex("dikme_color"),
-            boxHeight: getBoxHeight(values.boxType),
-            hareketBaglanti: values.hareketBaglanti,
-            movementType: values.movementType,
+            boxHeight: getBoxHeight(values.boxType as string),
+            hareketBaglanti: values.hareketBaglanti as "sol" | "sag",
+            movementType: values.movementType as "manuel" | "motorlu",
             lamelCount: calculateLamelCount(
               calculateSystemHeight(
-                values.height,
-                values.kutuOlcuAlmaSekli,
-                values.boxType
+                values.height as number,
+                values.kutuOlcuAlmaSekli as string,
+                values.boxType as string
               ),
-              values.boxType,
-              values.lamelTickness
+              values.boxType as string,
+              values.lamelTickness as string
             ),
             systemHeight: calculateSystemHeight(
-              values.height,
-              values.kutuOlcuAlmaSekli,
-              values.boxType
+              values.height as number,
+              values.kutuOlcuAlmaSekli as string,
+              values.boxType as string
             ),
             systemWidth:
               calculateSystemWidth(
-                values.width,
-                values.dikmeOlcuAlmaSekli,
-                values.dikmeType
+                values.width as number,
+                values.dikmeOlcuAlmaSekli as string,
+                values.dikmeType as string
               ) + 10,
             changeMiddlebarPostion: true,
           };
 
         case "sineklik":
           return {
-            frameColor: values.frameColor,
-            meshType: values.meshType,
+            frameColor: values.frameColor as string,
+            meshType: values.meshType as string,
           };
 
         case "kepenk":
           // Kepenk için box height hesapla
-          const is100mm = values.lamelType?.includes("100");
+          const is100mm = (values.lamelType as string)?.includes("100");
           const kepenkBoxType = is100mm ? "350mm" : "300mm";
           const kepenkBoxHeight = getKepenkBoxHeight(kepenkBoxType);
 
           return {
             boxHeight: kepenkBoxHeight,
-            lamelType: values.lamelType,
-            gozluLamelVar: values.gozluLamelVar,
-            gozluLamelBaslangic: values.gozluLamelBaslangic,
-            gozluLamelBitis: values.gozluLamelBitis,
+            lamelType: values.lamelType as string,
+            gozluLamelVar: values.gozluLamelVar as boolean,
+            gozluLamelBaslangic: values.gozluLamelBaslangic as number,
+            gozluLamelBitis: values.gozluLamelBitis as number,
           };
 
         case "cam-balkon":

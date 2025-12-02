@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Field, FormikProps } from "formik";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -65,43 +65,58 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
     maxValue = height > 0 ? height : undefined;
   }
   
+  // Input değerini string olarak tut (kullanıcı yazarken sorun olmasın)
+  const [localValue, setLocalValue] = useState<string>(
+    field.value != null ? String(field.value) : ""
+  );
+  
+  // Form değeri dışarıdan değiştiğinde localValue'yu güncelle (sadece external değişiklikler için)
+  const isUserTypingRef = useRef(false);
+  
+  useEffect(() => {
+    // Kullanıcı yazıyorsa güncelleme yapma
+    if (isUserTypingRef.current) {
+      return;
+    }
+    
+    if (field.value != null && String(field.value) !== localValue) {
+      setLocalValue(String(field.value));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [field.value]);
+  
   return (
     <Input
       id={fieldDef.id}
-      type="number"
-      value={(field.value as number) || 0}
+      type="text"
+      inputMode="numeric"
+      value={localValue}
+      onFocus={(e) => {
+        // Focus olduğunda tüm içeriği seç
+        e.target.select();
+      }}
       onChange={(e) => {
-        const numValue = parseFloat(e.target.value);
+        isUserTypingRef.current = true;
+        const inputValue = e.target.value;
+        
+        // Sadece sayısal karakterlere izin ver
+        const cleanValue = inputValue.replace(/[^\d.-]/g, "");
+        setLocalValue(cleanValue);
+        
+        // Boş değere izin ver (kullanıcı siliyorsa)
+        if (cleanValue === "" || cleanValue === "-") {
+          form.setFieldValue(field.name, "");
+          return;
+        }
+        
+        // Parse et ve form'a set et (min/max kontrolü yapma, sadece yazıyor)
+        const numValue = parseFloat(cleanValue);
         if (!isNaN(numValue)) {
-          // Min/max kontrolü onChange sırasında
-          let finalValue = numValue;
-          let showWarning = false;
-          let warningMessage = "";
-          
-          if (minValue !== undefined && finalValue < minValue) {
-            finalValue = minValue;
-            if (field.name === "gozluLamelBaslangic") {
-              showWarning = true;
-              warningMessage = "Başlangıç değeri 0'dan küçük olamaz.";
-            }
-          }
-          if (maxValue !== undefined && finalValue > maxValue) {
-            finalValue = maxValue;
-            if (field.name === "gozluLamelBitis") {
-              showWarning = true;
-              const height = Number(values.height) || 0;
-              warningMessage = `Bitiş değeri yükseklikten (${height}mm) büyük olamaz.`;
-            }
-          }
-          
-          form.setFieldValue(field.name, finalValue);
-          
-          if (showWarning && warningMessage) {
-            toast.warn(warningMessage);
-          }
+          form.setFieldValue(field.name, numValue);
         }
       }}
       onBlur={(e) => {
+        isUserTypingRef.current = false;
         const value = parseFloat(e.target.value);
         if (!isNaN(value)) {
           let finalValue = value;
@@ -115,6 +130,7 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
               warningMessage = "Başlangıç değeri 0'dan küçük olamaz.";
             }
             form.setFieldValue(field.name, finalValue);
+            setLocalValue(String(finalValue));
           } else if (maxValue !== undefined && finalValue > maxValue) {
             finalValue = maxValue;
             if (field.name === "gozluLamelBitis") {
@@ -123,11 +139,20 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
               warningMessage = `Bitiş değeri yükseklikten (${height}mm) büyük olamaz.`;
             }
             form.setFieldValue(field.name, finalValue);
+            setLocalValue(String(finalValue));
+          } else {
+            // Geçerli değeri kaydet
+            setLocalValue(String(finalValue));
           }
           
           if (showWarning && warningMessage) {
             toast.warn(warningMessage);
           }
+        } else if (e.target.value === "" || e.target.value === "-") {
+          // Boş değer için varsayılan değeri kullan
+          const defaultValue = fieldDef.default !== undefined ? fieldDef.default : minValue || 0;
+          form.setFieldValue(field.name, defaultValue);
+          setLocalValue(String(defaultValue));
         }
         field.onBlur(e);
       }}

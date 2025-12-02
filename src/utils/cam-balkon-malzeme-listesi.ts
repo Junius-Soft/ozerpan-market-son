@@ -81,16 +81,19 @@ export function calculateRayProfili(
       }
     }
     
-    console.log(`  - Final uzunluk: ${rayProfilUzunlugu.toFixed(1)}mm × 2 adet`);
+    // Her kol için 2 adet (alt + üst), toplam metreye çevir
+    const rayProfilMetresi = (rayProfilUzunlugu * 2) / 1000;
+    
+    console.log(`  - Final uzunluk: ${rayProfilUzunlugu.toFixed(1)}mm × 2 = ${rayProfilMetresi.toFixed(3)}m`);
     
     // Her kol için ayrı satır olarak ekle
     malzemeler.push({
       kategori: 'Aluminyum Malzemeler',
       stokKodu: "357014_4447_0",
       aciklama: "RAY PROFILI-CONTALI",
-      olcu: rayProfilUzunlugu.toFixed(1),
-      miktar: 2, // Her kol için alt ve üst olmak üzere 2 adet
-      birim: 'adet'
+      olcu: rayProfilUzunlugu.toFixed(1), // Ölçüyü mm olarak göster
+      miktar: rayProfilMetresi, // Miktar metre olarak
+      birim: 'metre'
     });
   });
   
@@ -266,7 +269,7 @@ export function calculateKoseDonusMalzemeleri(
     
     // 2. KÖSE DÖNÜS AKTIF PRO
     malzemeler.push({
-      urunKodu: "356649_4440",
+      urunKodu: "356649_4447_0",
       urunAdi: "KÖSE DÖNÜS AKTIF PRO",
       adet: aciSayisi,
       olcu: olcu
@@ -382,25 +385,28 @@ export function calculateKanatProfili(
       console.log(`  Panel ${idx + 1}: ${p.type} - ${p.width.toFixed(1)}mm (spacing: ${p.spacing}mm)`);
     });
     
-    // Her panel (cam) için 2 adet kanat profili ekle (üst ve alt)
+    // Her panel (cam) için kanat profili ekle (üst ve alt toplamı metre olarak)
     // DİKKAT: Her cam için AYRI satır - gruplanmaz
     panels.forEach((panel, panelIndex) => {
       const kanatProfilGenisligi = panel.width - 18;
+      // Her cam için 2 adet profil (üst + alt), toplam metreye çevir
+      const kanatProfilMetresi = (kanatProfilGenisligi * 2) / 1000;
       
       console.log(`🔍 Kol ${kolIndex} - Panel ${panelIndex + 1} kanat profili:`, {
         type: panel.type,
         camGenisligi: panel.width.toFixed(1),
         kanatProfilGenisligi: kanatProfilGenisligi.toFixed(1),
-        hesaplama: `${panel.width.toFixed(1)} - 18 = ${kanatProfilGenisligi.toFixed(1)}`
+        kanatProfilMetresi: kanatProfilMetresi.toFixed(3),
+        hesaplama: `(${panel.width.toFixed(1)} - 18) × 2 ÷ 1000 = ${kanatProfilMetresi.toFixed(3)}m`
       });
       
       malzemeler.push({
         kategori: 'Aluminyum Malzemeler',
         stokKodu: "357001_4447_0",
         aciklama: "KANAT PROFILI-24",
-        olcu: kanatProfilGenisligi.toFixed(1),
-        miktar: 2, // Her cam için üst ve alt olmak üzere 2 adet
-        birim: 'adet'
+        olcu: kanatProfilGenisligi.toFixed(1), // Ölçüyü mm olarak göster
+        miktar: kanatProfilMetresi, // Miktar metre olarak
+        birim: 'metre'
       });
     });
   });
@@ -628,14 +634,15 @@ export function calculateAksesuarMalzemeleri(
     });
   }
   
-  // 2. TEKERLEK SETİ - hareketli cam adedi * 2
+  // 2. TEKERLEK SETİ - hareketli cam adedi * 4
+  // Müşteri isteğine göre: Her hareketli cam için 4 adet tekerlek seti
   if (toplamHareketliCam > 0) {
     malzemeler.push({
       kategori: 'Aksesuar',
       stokKodu: "356855_0_0",
       aciklama: "TEKERLEK SETİ",
       olcu: '',
-      miktar: toplamHareketliCam * 2,
+      miktar: toplamHareketliCam * 4,
       birim: 'adet'
     });
   }
@@ -753,14 +760,19 @@ export function calculateCamBalkonMalzemeListesi(
   const groupedAluminyum = groupAluminyumMalzemeler(tumAluminyumMalzemeler);
   
   // Aluminyum malzemelerini CamBalkonMalzeme formatına çevir
+  // DİKKAT: Düşey profiller metre bazında satılır
+  // Miktar = (ölçü × adet) ÷ 1000 (mm'den metreye)
   groupedAluminyum.forEach(malzeme => {
+    const olcuMM = parseFloat(malzeme.olcu) || 0;
+    const toplamMetreye = (olcuMM * malzeme.adet) / 1000;
+    
     allMaterials.push({
       kategori: 'Aluminyum Malzemeler',
       stokKodu: malzeme.urunKodu,
       aciklama: malzeme.urunAdi,
-      olcu: malzeme.olcu,
-      miktar: malzeme.adet,
-      birim: 'adet',
+      olcu: malzeme.olcu, // Ölçüyü mm olarak göster
+      miktar: toplamMetreye, // Miktar metre olarak
+      birim: 'metre',
       pozNo
     });
   });

@@ -3292,7 +3292,7 @@
         "tambur_type": "114mm",
         "color": "kokusuz",
         "unit": "Metre",
-        "price": "0.00",
+        "price": "32.79",
         "capi_mm": "114",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
         "hareket_tip": "motorlu"
@@ -3318,7 +3318,7 @@
         "kutu_type": "300mm",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "22.74",
         "en_mm": "300",
         "boy_mm": "300",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
@@ -3332,7 +3332,7 @@
         "kutu_type": "350mm",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "24.31",
         "en_mm": "350",
         "boy_mm": "350",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
@@ -3372,7 +3372,7 @@
         "tambur_type": "70mm",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "3.32",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
         "hareket_tip": "motorlu"
       },
@@ -3384,7 +3384,7 @@
         "tambur_type": "70mm",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "9.53",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
         "hareket_tip": "motorlu"
       },
@@ -3396,7 +3396,7 @@
         "tambur_type": "102mm",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "17.39",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, LT-100, SL-100",
         "hareket_tip": "motorlu"
       },
@@ -3508,7 +3508,7 @@
         "dikme_type": "77_lik",
         "color": "alüminyum",
         "unit": "Takım",
-        "price": "0.00",
+        "price": "2.44",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
         "panjur_tip": "maxi"
       },
@@ -3712,7 +3712,7 @@
         "brand": "mosel",
         "model": "oval_power_2ch",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "43.59",
         "motor_tip": "butonlu_reduktorlu_zincirli",
         "hareket_tip": "motorlu"
       },
@@ -3724,7 +3724,7 @@
         "brand": "mosel",
         "model": "iwy_2ch",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "45.12",
         "motor_tip": "reduktorlu_zincirli",
         "hareket_tip": "motorlu"
       },
@@ -3736,7 +3736,7 @@
         "brand": "mosel",
         "model": "oval_power_ii_4ch",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "146.87",
         "motor_tip": "butonlu_reduktorlu_zincirli",
         "hareket_tip": "motorlu"
       },
@@ -3748,7 +3748,7 @@
         "brand": "mosel",
         "model": "pc_1157",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "148.74",
         "motor_tip": "butonlu_reduktorlu_zincirli",
         "hareket_tip": "motorlu"
       },
@@ -3760,7 +3760,7 @@
         "brand": "mosel",
         "model": "dc_1157_1ch",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "6.65",
         "alici_type": "oval_alici",
         "hareket_tip": "motorlu"
       },
@@ -3772,7 +3772,7 @@
         "brand": "mosel",
         "model": "dc_1153_4ch",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "11.18",
         "alici_type": "oval_alici",
         "hareket_tip": "motorlu"
       }

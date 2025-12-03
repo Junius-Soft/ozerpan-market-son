@@ -2122,6 +2122,42 @@
         "type": "otomasyon_alıcılar",
         "unit": "Adet",
         "price": "0.00"
+      },
+      {
+        "description": "Pvc Tapa SL-39",
+        "stock_code": "352212201200",
+        "uretici_kodu": "352212201200",
+        "type": "panjur_aksesuar",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0.04"
+      },
+      {
+        "description": "Pvc Tapa SL-41",
+        "stock_code": "352212301200",
+        "uretici_kodu": "352212301200",
+        "type": "panjur_aksesuar",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0.07"
+      },
+      {
+        "description": "Pvc Tapa SL-45",
+        "stock_code": "352212401200",
+        "uretici_kodu": "352212401200",
+        "type": "panjur_aksesuar",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0.04"
+      },
+      {
+        "description": "Pvc Tapa SL-55",
+        "stock_code": "352212501200",
+        "uretici_kodu": "352212501200",
+        "type": "panjur_aksesuar",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0.06"
       }
     ],
     "sineklik": [
@@ -2981,7 +3017,7 @@
         "lamel_type": "sl_st_77",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "0.08"
       },
       {
         "description": "PVC TAPA ST-100",
@@ -2991,17 +3027,17 @@
         "lamel_type": "st_100_sl_100",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "0.21"
       },
       {
-        "description": "PVC TAPA SL-77 EXT",
+        "description": "PVC TAPA SE-77 EXT",
         "stock_code": "353221701200",
         "uretici_kodu": "SL-77 ST-77",
         "type": "kepenk_lamel_aksesuarlari",
         "lamel_type": "sl_77",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "0.11"
       },
       {
         "description": "PVC TAPA SE-78/SL-78",
@@ -3011,7 +3047,7 @@
         "lamel_type": "se_78",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "0.10"
       },
       {
         "description": "Çelik Askı 190 mm ( ST 77 )",
@@ -3021,7 +3057,7 @@
         "lamel_type": "st_77",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "0.65"
       },
       {
         "description": "Çelik Askı 150 mm ( ST 100 )",
@@ -3031,7 +3067,7 @@
         "lamel_type": "st_100_sl_100",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "1.04"
       },
       {
         "description": "POLİKARBONAT GERİT CAM SE-78/SE-101 İÇİN Şeffaf",

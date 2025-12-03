@@ -122,10 +122,17 @@ export async function generateFiyatAnaliziPDFPozListesi(
     // Ürünler
     if (pos.selectedProducts && Array.isArray(pos.selectedProducts.products)) {
       pos.selectedProducts.products.forEach((prod) => {
+        // Metre bazında satılan ürünler için size değerini metre'ye çevir
+        const isMetre = prod.unit?.toLowerCase() === "metre";
+        const prodSize = (prod as { size?: number }).size;
+        const baseQuantity = isMetre && prodSize 
+          ? Number((prodSize / 1000).toFixed(2)) 
+          : (prod.quantity ?? 1);
         // Pozisyon quantity'si ile çarp
-        const totalQuantity = (prod.quantity ?? 1) * (pos.quantity ?? 1);
-        const euroTotal =
-          prod.price && prod.quantity ? Number(prod.price) * totalQuantity : 0;
+        const totalQuantity = baseQuantity * (pos.quantity ?? 1);
+        const euroTotal = prod.totalPrice 
+          ? Number(prod.totalPrice) * (pos.quantity ?? 1)
+          : 0;
         malzemeListesiData.push([
           rowIndex++,
           prod.stock_code || "-",
@@ -145,10 +152,17 @@ export async function generateFiyatAnaliziPDFPozListesi(
       Array.isArray(pos.selectedProducts.accessories)
     ) {
       pos.selectedProducts.accessories.forEach((acc) => {
+        // Metre bazında satılan aksesuarlar için size değerini metre'ye çevir
+        const isMetre = acc.unit?.toLowerCase() === "metre";
+        const accSize = (acc as { size?: number }).size;
+        const baseQuantity = isMetre && accSize 
+          ? Number((accSize / 1000).toFixed(2)) 
+          : (acc.quantity ?? 1);
         // Pozisyon quantity'si ile çarp
-        const totalQuantity = (acc.quantity ?? 1) * (pos.quantity ?? 1);
-        const euroTotal =
-          acc.price && acc.quantity ? Number(acc.price) * totalQuantity : 0;
+        const totalQuantity = baseQuantity * (pos.quantity ?? 1);
+        const euroTotal = acc.totalPrice 
+          ? Number(acc.totalPrice) * (pos.quantity ?? 1)
+          : 0;
         malzemeListesiData.push([
           rowIndex++,
           acc.stock_code || "-",

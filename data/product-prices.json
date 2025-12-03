@@ -1913,7 +1913,7 @@
         "uretici_kodu": "RC.OTM.DC.315",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "25.03"
       },
       {
         "description": "DC 316 5 Kanallı Vera Buton Tipi Verici",
@@ -1937,7 +1937,7 @@
         "uretici_kodu": "RC.OTM.DC.168",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "35.49"
       },
       {
         "description": "DC 169 16 Kanallı Zaman Ayarlı Verici",
@@ -1945,7 +1945,7 @@
         "uretici_kodu": "RC.OTM.DC.169",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "37.87"
       },
       {
         "description": "DC 104 1 Kanallı Verici",
@@ -1953,7 +1953,7 @@
         "uretici_kodu": "RC.OTM.DC.104",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "15.91"
       },
       {
         "description": "DC 105 5 Kanallı Verici",
@@ -1961,7 +1961,7 @@
         "uretici_kodu": "RC.OTM.DC.105",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "21.27"
       },
       {
         "description": "DC 106 10 Kanallı Verici",
@@ -1969,7 +1969,7 @@
         "uretici_kodu": "RC.OTM.DC.106",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "25.99"
       },
       {
         "description": "DC 107 16 Kanallı Verici",
@@ -1977,7 +1977,55 @@
         "uretici_kodu": "RC.OTM.DC.107",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "30.75"
+      },
+      {
+        "description": "DC 305 1 Kanallı Verici (SILVER)",
+        "stock_code": "352531110305",
+        "uretici_kodu": "RC.OTM.DC.305",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "25.03"
+      },
+      {
+        "description": "DC 306 5 Kanallı Verici (SILVER)",
+        "stock_code": "352531150306",
+        "uretici_kodu": "RC.OTM.DC.306",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "30.75"
+      },
+      {
+        "description": "DC 307 10 Kanallı Verici (SILVER)",
+        "stock_code": "352531160307",
+        "uretici_kodu": "RC.OTM.DC.307",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "32.81"
+      },
+      {
+        "description": "DC 313 16 Kanallı Verici (SILVER)",
+        "stock_code": "352531170313",
+        "uretici_kodu": "RC.OTM.DC.313",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "33.58"
+      },
+      {
+        "description": "DC 316 2 Kanallı Buton Tipi Verici",
+        "stock_code": "352531220316",
+        "uretici_kodu": "RC.OTM.DC.316.2",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "28.30"
+      },
+      {
+        "description": "DC 317 16 Kanallı Buton Tipi Verici",
+        "stock_code": "352531270317",
+        "uretici_kodu": "RC.OTM.DC.317.16",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "40.15"
       },
       {
         "description": "MOSEL DD 3000H Bi-Direction tek kanallı verici",
@@ -2009,7 +2057,7 @@
         "uretici_kodu": "352532111100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "68.41"
       },
       {
         "description": "Situo 5 IO Pure II SEA MEA",
@@ -2017,7 +2065,7 @@
         "uretici_kodu": "352532151100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "116.17"
       },
       {
         "description": "Situo 1 RTS Pure II",
@@ -2041,7 +2089,7 @@
         "uretici_kodu": "352532171100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "321.23"
       },
       {
         "description": "Smoove Origin RTS Buton Kumanda",
@@ -2049,7 +2097,7 @@
         "uretici_kodu": "352532211100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "50.48"
       },
       {
         "description": "Smoove Origin IO Buton Kumanda",
@@ -2057,7 +2105,7 @@
         "uretici_kodu": "352532211100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "56.48"
       },
       {
         "description": "Telis 6 Chronis RTS Zaman Ayarlı Kumanda",
@@ -2073,7 +2121,7 @@
         "uretici_kodu": "352540211100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "4.95"
       },
       {
         "description": "Sıva Üstü Buton Kasası",
@@ -2081,7 +2129,7 @@
         "uretici_kodu": "352540911100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "2.01"
       },
       {
         "description": "Mosel DC-74 Kutu İçi Panjur Alıcısı",
@@ -2089,7 +2137,7 @@
         "uretici_kodu": "RC.ALC.DC.73",
         "type": "otomasyon_alıcılar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "18.39"
       },
       {
         "description": "DC 319 İki Kanallı Vera Ankastre Alıcı",
@@ -2113,7 +2161,7 @@
         "uretici_kodu": "1810314",
         "type": "otomasyon_alıcılar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "75.09"
       },
       {
         "description": "Centralis Uno RTS Buton Alıcı",
@@ -2121,7 +2169,7 @@
         "uretici_kodu": "1810217",
         "type": "otomasyon_alıcılar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "89.39"
       },
       {
         "description": "Pvc Tapa SL-39",
@@ -2168,8 +2216,8 @@
         "type": "profil",
         "color": "pres",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "3.99",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili RAL",
@@ -2178,8 +2226,8 @@
         "type": "profil",
         "color": "ral",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "4.22",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Beyaz",
@@ -2188,8 +2236,8 @@
         "type": "profil",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "3.99",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Kahve",
@@ -2198,8 +2246,8 @@
         "type": "profil",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "5.52",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Metalik Gri",
@@ -2208,8 +2256,8 @@
         "type": "profil",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "5.52",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Antrasit Gri",
@@ -2218,8 +2266,8 @@
         "type": "profil",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "5.52",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Vizon",
@@ -2238,8 +2286,8 @@
         "type": "profil",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "5.52",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Fındık",
@@ -2248,8 +2296,8 @@
         "type": "profil",
         "color": "fındık",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "5.52",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kanat Profili Pres",

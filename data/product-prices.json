@@ -305,7 +305,7 @@
         "type": "panjur_tambur_boru_profilleri",
         "color": "",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "1.76"
       },
       {
         "description": "60mm Sekizgen Boru 0,60",
@@ -1115,7 +1115,7 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "34.5"
       },
       {
         "description": "30x30 Strafor Kutu İthal",
@@ -1124,7 +1124,7 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "36.50"
       },
       {
         "description": "25x25 Eps Panjur Kutusu Yerli",
@@ -1133,7 +1133,7 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "25.3"
       },
       {
         "description": "30x30 Eps Panjur Kutusu Yerli",
@@ -1142,7 +1142,7 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "26.3"
       },
       {
         "description": "25x25 Strafor Kutu Alt Kapama Beyaz",
@@ -1547,7 +1547,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "3.10"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Folyo Kap.",
@@ -1556,7 +1556,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "folyo_kap",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "7.38"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Altın Meşe",
@@ -1565,7 +1565,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.34"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Fındık",
@@ -1574,7 +1574,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.34"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Antrasit Gri",
@@ -1583,7 +1583,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.34"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Vizon",
@@ -1592,7 +1592,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.34"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Beyaz",
@@ -1601,7 +1601,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "3.04"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Folyo Kap.",
@@ -1610,7 +1610,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "folyo_kap",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "7.20"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Altın Meşe",
@@ -1619,7 +1619,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.16"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Fındık",
@@ -1628,7 +1628,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.16"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Antrasit Gri",
@@ -1637,7 +1637,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.16"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Vizon",
@@ -1646,7 +1646,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.16"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Beyaz",
@@ -1655,7 +1655,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.38"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Folyo Kap.",
@@ -1664,7 +1664,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "folyo_kap",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "12.94"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Altın Meşe",
@@ -1673,7 +1673,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.29"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Fındık",
@@ -1682,7 +1682,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.29"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Antrasit Gri",
@@ -1691,7 +1691,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.29"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Vizon",
@@ -1700,7 +1700,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.29"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Beyaz",
@@ -1709,7 +1709,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.38"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Folyo Kap.",
@@ -1718,7 +1718,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "folyo_kap",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "12.77"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Altın Meşe",
@@ -1727,7 +1727,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.16"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Fındık",
@@ -1736,7 +1736,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.16"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Antrasit Gri",
@@ -1745,7 +1745,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.16"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Vizon",
@@ -1754,7 +1754,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.16"
       },
       {
         "description": "Plise Kasa Profili Pres",
@@ -1763,7 +1763,7 @@
         "type": "sineklik_profilleri",
         "color": "pres",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "3.26"
       },
       {
         "description": "Plise Kasa Profili Beyaz",
@@ -1772,7 +1772,7 @@
         "type": "sineklik_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "3.50"
       },
       {
         "description": "Plise Kasa Profili Kahverengi",
@@ -1781,7 +1781,7 @@
         "type": "sineklik_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "3.58"
       },
       {
         "description": "Plise Kasa Profili Antrasit Gri",
@@ -1790,7 +1790,7 @@
         "type": "sineklik_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "3.52"
       },
       {
         "description": "Plise Kasa Profili Krem",
@@ -1808,7 +1808,7 @@
         "type": "sineklik_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "3.58"
       },
       {
         "description": "Plise Kasa Profili Ral Boyalı",
@@ -1817,7 +1817,25 @@
         "type": "sineklik_profilleri",
         "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "4.22"
+      },
+      {
+        "description": "Plise Kasa Profili Altın Meşe",
+        "stock_code": "378111605100",
+        "uretici_kodu": "378111605100",
+        "type": "sineklik_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "4.55"
+      },
+      {
+        "description": "Plise Kasa Profili Fındık",
+        "stock_code": "378111605200",
+        "uretici_kodu": "378111605200",
+        "type": "sineklik_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "4.55"
       },
       {
         "description": "Yan Dikme Adaptörü 31x42 Beyaz",
@@ -1895,7 +1913,7 @@
         "uretici_kodu": "RC.OTM.DC.315",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "25.03"
       },
       {
         "description": "DC 316 5 Kanallı Vera Buton Tipi Verici",
@@ -1919,7 +1937,7 @@
         "uretici_kodu": "RC.OTM.DC.168",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "35.49"
       },
       {
         "description": "DC 169 16 Kanallı Zaman Ayarlı Verici",
@@ -1927,7 +1945,7 @@
         "uretici_kodu": "RC.OTM.DC.169",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "37.87"
       },
       {
         "description": "DC 104 1 Kanallı Verici",
@@ -1935,7 +1953,7 @@
         "uretici_kodu": "RC.OTM.DC.104",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "15.91"
       },
       {
         "description": "DC 105 5 Kanallı Verici",
@@ -1943,7 +1961,7 @@
         "uretici_kodu": "RC.OTM.DC.105",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "21.27"
       },
       {
         "description": "DC 106 10 Kanallı Verici",
@@ -1951,7 +1969,7 @@
         "uretici_kodu": "RC.OTM.DC.106",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "25.99"
       },
       {
         "description": "DC 107 16 Kanallı Verici",
@@ -1959,7 +1977,55 @@
         "uretici_kodu": "RC.OTM.DC.107",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "30.75"
+      },
+      {
+        "description": "DC 305 1 Kanallı Verici (SILVER)",
+        "stock_code": "352531110305",
+        "uretici_kodu": "RC.OTM.DC.305",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "25.03"
+      },
+      {
+        "description": "DC 306 5 Kanallı Verici (SILVER)",
+        "stock_code": "352531150306",
+        "uretici_kodu": "RC.OTM.DC.306",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "30.75"
+      },
+      {
+        "description": "DC 307 10 Kanallı Verici (SILVER)",
+        "stock_code": "352531160307",
+        "uretici_kodu": "RC.OTM.DC.307",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "32.81"
+      },
+      {
+        "description": "DC 313 16 Kanallı Verici (SILVER)",
+        "stock_code": "352531170313",
+        "uretici_kodu": "RC.OTM.DC.313",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "33.58"
+      },
+      {
+        "description": "DC 316 2 Kanallı Buton Tipi Verici",
+        "stock_code": "352531220316",
+        "uretici_kodu": "RC.OTM.DC.316.2",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "28.30"
+      },
+      {
+        "description": "DC 317 16 Kanallı Buton Tipi Verici",
+        "stock_code": "352531270317",
+        "uretici_kodu": "RC.OTM.DC.317.16",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "40.15"
       },
       {
         "description": "MOSEL DD 3000H Bi-Direction tek kanallı verici",
@@ -1991,7 +2057,7 @@
         "uretici_kodu": "352532111100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "68.41"
       },
       {
         "description": "Situo 5 IO Pure II SEA MEA",
@@ -1999,7 +2065,7 @@
         "uretici_kodu": "352532151100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "116.17"
       },
       {
         "description": "Situo 1 RTS Pure II",
@@ -2023,7 +2089,7 @@
         "uretici_kodu": "352532171100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "321.23"
       },
       {
         "description": "Smoove Origin RTS Buton Kumanda",
@@ -2031,7 +2097,7 @@
         "uretici_kodu": "352532211100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "50.48"
       },
       {
         "description": "Smoove Origin IO Buton Kumanda",
@@ -2039,7 +2105,7 @@
         "uretici_kodu": "352532211100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "56.48"
       },
       {
         "description": "Telis 6 Chronis RTS Zaman Ayarlı Kumanda",
@@ -2055,7 +2121,7 @@
         "uretici_kodu": "352540211100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "4.95"
       },
       {
         "description": "Sıva Üstü Buton Kasası",
@@ -2063,7 +2129,7 @@
         "uretici_kodu": "352540911100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "2.01"
       },
       {
         "description": "Mosel DC-74 Kutu İçi Panjur Alıcısı",
@@ -2071,7 +2137,7 @@
         "uretici_kodu": "RC.ALC.DC.73",
         "type": "otomasyon_alıcılar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "18.39"
       },
       {
         "description": "DC 319 İki Kanallı Vera Ankastre Alıcı",
@@ -2095,7 +2161,7 @@
         "uretici_kodu": "1810314",
         "type": "otomasyon_alıcılar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "75.09"
       },
       {
         "description": "Centralis Uno RTS Buton Alıcı",
@@ -2103,7 +2169,43 @@
         "uretici_kodu": "1810217",
         "type": "otomasyon_alıcılar",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "89.39"
+      },
+      {
+        "description": "Pvc Tapa SL-39",
+        "stock_code": "352212201200",
+        "uretici_kodu": "352212201200",
+        "type": "panjur_aksesuar",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0.04"
+      },
+      {
+        "description": "Pvc Tapa SL-41",
+        "stock_code": "352212301200",
+        "uretici_kodu": "352212301200",
+        "type": "panjur_aksesuar",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0.07"
+      },
+      {
+        "description": "Pvc Tapa SL-45",
+        "stock_code": "352212401200",
+        "uretici_kodu": "352212401200",
+        "type": "panjur_aksesuar",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0.04"
+      },
+      {
+        "description": "Pvc Tapa SL-55",
+        "stock_code": "352212501200",
+        "uretici_kodu": "352212501200",
+        "type": "panjur_aksesuar",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0.06"
       }
     ],
     "sineklik": [
@@ -2114,8 +2216,8 @@
         "type": "profil",
         "color": "pres",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "3.99",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili RAL",
@@ -2124,8 +2226,8 @@
         "type": "profil",
         "color": "ral",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "4.22",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Beyaz",
@@ -2134,8 +2236,8 @@
         "type": "profil",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "3.99",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Kahve",
@@ -2144,8 +2246,8 @@
         "type": "profil",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "5.52",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Metalik Gri",
@@ -2154,8 +2256,8 @@
         "type": "profil",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "5.52",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Antrasit Gri",
@@ -2164,8 +2266,8 @@
         "type": "profil",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "5.52",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Vizon",
@@ -2184,8 +2286,8 @@
         "type": "profil",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "5.52",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Fındık",
@@ -2194,8 +2296,8 @@
         "type": "profil",
         "color": "fındık",
         "unit": "Metre",
-        "price": "0.00",
-        "currency": "TRY"
+        "price": "5.52",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kanat Profili Pres",
@@ -2963,7 +3065,7 @@
         "lamel_type": "sl_st_77",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "0.08"
       },
       {
         "description": "PVC TAPA ST-100",
@@ -2973,17 +3075,17 @@
         "lamel_type": "st_100_sl_100",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "0.21"
       },
       {
-        "description": "PVC TAPA SL-77 EXT",
+        "description": "PVC TAPA SE-77 EXT",
         "stock_code": "353221701200",
         "uretici_kodu": "SL-77 ST-77",
         "type": "kepenk_lamel_aksesuarlari",
         "lamel_type": "sl_77",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "0.11"
       },
       {
         "description": "PVC TAPA SE-78/SL-78",
@@ -2993,7 +3095,7 @@
         "lamel_type": "se_78",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "0.10"
       },
       {
         "description": "Çelik Askı 190 mm ( ST 77 )",
@@ -3003,7 +3105,7 @@
         "lamel_type": "st_77",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "0.65"
       },
       {
         "description": "Çelik Askı 150 mm ( ST 100 )",
@@ -3013,7 +3115,7 @@
         "lamel_type": "st_100_sl_100",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "1.04"
       },
       {
         "description": "POLİKARBONAT GERİT CAM SE-78/SE-101 İÇİN Şeffaf",
@@ -3190,7 +3292,7 @@
         "tambur_type": "114mm",
         "color": "kokusuz",
         "unit": "Metre",
-        "price": "0.00",
+        "price": "32.79",
         "capi_mm": "114",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
         "hareket_tip": "motorlu"
@@ -3216,7 +3318,7 @@
         "kutu_type": "300mm",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "22.74",
         "en_mm": "300",
         "boy_mm": "300",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
@@ -3230,7 +3332,7 @@
         "kutu_type": "350mm",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "24.31",
         "en_mm": "350",
         "boy_mm": "350",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
@@ -3270,7 +3372,7 @@
         "tambur_type": "70mm",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "3.32",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
         "hareket_tip": "motorlu"
       },
@@ -3282,7 +3384,7 @@
         "tambur_type": "70mm",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "9.53",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
         "hareket_tip": "motorlu"
       },
@@ -3294,7 +3396,7 @@
         "tambur_type": "102mm",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "17.39",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, LT-100, SL-100",
         "hareket_tip": "motorlu"
       },
@@ -3406,7 +3508,7 @@
         "dikme_type": "77_lik",
         "color": "alüminyum",
         "unit": "Takım",
-        "price": "0.00",
+        "price": "2.44",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
         "panjur_tip": "maxi"
       },
@@ -3610,7 +3712,7 @@
         "brand": "mosel",
         "model": "oval_power_2ch",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "43.59",
         "motor_tip": "butonlu_reduktorlu_zincirli",
         "hareket_tip": "motorlu"
       },
@@ -3622,7 +3724,7 @@
         "brand": "mosel",
         "model": "iwy_2ch",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "45.12",
         "motor_tip": "reduktorlu_zincirli",
         "hareket_tip": "motorlu"
       },
@@ -3634,7 +3736,7 @@
         "brand": "mosel",
         "model": "oval_power_ii_4ch",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "146.87",
         "motor_tip": "butonlu_reduktorlu_zincirli",
         "hareket_tip": "motorlu"
       },
@@ -3646,7 +3748,7 @@
         "brand": "mosel",
         "model": "pc_1157",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "148.74",
         "motor_tip": "butonlu_reduktorlu_zincirli",
         "hareket_tip": "motorlu"
       },
@@ -3658,7 +3760,7 @@
         "brand": "mosel",
         "model": "dc_1157_1ch",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "6.65",
         "alici_type": "oval_alici",
         "hareket_tip": "motorlu"
       },
@@ -3670,7 +3772,7 @@
         "brand": "mosel",
         "model": "dc_1153_4ch",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "11.18",
         "alici_type": "oval_alici",
         "hareket_tip": "motorlu"
       }

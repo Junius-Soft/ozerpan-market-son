@@ -125,7 +125,8 @@
             "name": "Hareket Tipi",
             "type": "select",
             "options": [
-              { "id": "motorlu", "name": "Motorlu (Redüktörlü)" }
+              { "id": "motorlu", "name": "Motorlu (Redüktörlü)" },
+              { "id": "manuel", "name": "Manuel" }
             ],
             "default": "motorlu",
             "defaultValues": {

@@ -1763,7 +1763,7 @@
         "type": "sineklik_profilleri",
         "color": "pres",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "3.26"
       },
       {
         "description": "Plise Kasa Profili Beyaz",
@@ -1772,7 +1772,7 @@
         "type": "sineklik_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "3.50"
       },
       {
         "description": "Plise Kasa Profili Kahverengi",
@@ -1781,7 +1781,7 @@
         "type": "sineklik_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "3.58"
       },
       {
         "description": "Plise Kasa Profili Antrasit Gri",
@@ -1790,7 +1790,7 @@
         "type": "sineklik_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "3.52"
       },
       {
         "description": "Plise Kasa Profili Krem",
@@ -1808,7 +1808,7 @@
         "type": "sineklik_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "3.58"
       },
       {
         "description": "Plise Kasa Profili Ral Boyalı",
@@ -1817,7 +1817,25 @@
         "type": "sineklik_profilleri",
         "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "4.22"
+      },
+      {
+        "description": "Plise Kasa Profili Altın Meşe",
+        "stock_code": "378111605100",
+        "uretici_kodu": "378111605100",
+        "type": "sineklik_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "4.55"
+      },
+      {
+        "description": "Plise Kasa Profili Fındık",
+        "stock_code": "378111605200",
+        "uretici_kodu": "378111605200",
+        "type": "sineklik_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "4.55"
       },
       {
         "description": "Yan Dikme Adaptörü 31x42 Beyaz",

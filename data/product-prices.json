@@ -305,7 +305,7 @@
         "type": "panjur_tambur_boru_profilleri",
         "color": "",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "1.76"
       },
       {
         "description": "60mm Sekizgen Boru 0,60",
@@ -1115,7 +1115,7 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "34.5"
       },
       {
         "description": "30x30 Strafor Kutu İthal",
@@ -1124,7 +1124,7 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "36.50"
       },
       {
         "description": "25x25 Eps Panjur Kutusu Yerli",
@@ -1133,7 +1133,7 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "25.3"
       },
       {
         "description": "30x30 Eps Panjur Kutusu Yerli",
@@ -1142,7 +1142,7 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "26.3"
       },
       {
         "description": "25x25 Strafor Kutu Alt Kapama Beyaz",
@@ -1547,7 +1547,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "3.10"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Folyo Kap.",
@@ -1556,7 +1556,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "folyo_kap",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "7.38"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Altın Meşe",
@@ -1565,7 +1565,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.34"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Fındık",
@@ -1574,7 +1574,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.34"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Antrasit Gri",
@@ -1583,7 +1583,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.34"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Vizon",
@@ -1592,7 +1592,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.34"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Beyaz",
@@ -1601,7 +1601,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "3.04"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Folyo Kap.",
@@ -1610,7 +1610,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "folyo_kap",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "7.20"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Altın Meşe",
@@ -1619,7 +1619,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.16"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Fındık",
@@ -1628,7 +1628,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.16"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Antrasit Gri",
@@ -1637,7 +1637,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.16"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Vizon",
@@ -1646,7 +1646,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.16"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Beyaz",
@@ -1655,7 +1655,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.38"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Folyo Kap.",
@@ -1664,7 +1664,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "folyo_kap",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "12.94"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Altın Meşe",
@@ -1673,7 +1673,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.29"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Fındık",
@@ -1682,7 +1682,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.29"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Antrasit Gri",
@@ -1691,7 +1691,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.29"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Vizon",
@@ -1700,7 +1700,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.29"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Beyaz",
@@ -1709,7 +1709,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "6.38"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Folyo Kap.",
@@ -1718,7 +1718,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "folyo_kap",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "12.77"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Altın Meşe",
@@ -1727,7 +1727,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.16"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Fındık",
@@ -1736,7 +1736,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.16"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Antrasit Gri",
@@ -1745,7 +1745,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.16"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Vizon",
@@ -1754,7 +1754,7 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "11.16"
       },
       {
         "description": "Plise Kasa Profili Pres",

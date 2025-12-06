@@ -15,7 +15,7 @@ import {
   findMotorPrice,
   getBoxHeight,
 } from "@/utils/kepenk";
-import { selectKepenkMotor } from "@/utils/kepenk-motor-selection";
+import { selectKepenkMotor, resolveMotorSelection } from "@/utils/kepenk-motor-selection";
 
 export const calculateKepenk = (
   values: KepenkSelections,
@@ -154,16 +154,17 @@ export const calculateKepenk = (
     // Sistem alanını hesapla (m²)
     const systemAreaM2 = (systemWidth * systemHeight) / 1000000;
     
-    // Excel tablosuna göre uygun motoru seç
-    // Önce mevcut tambur tipine göre kontrol et
-    let selectedMotorModel = selectKepenkMotor(
+    // Manuel veya otomatik motor seçimi
+    // values.motorModel "auto" veya undefined ise otomatik seçim yapılır
+    let selectedMotorModel = resolveMotorSelection(
+      values.motorModel,
       values.lamelType,
       systemAreaM2,
       tamburType
     );
 
-    // Eğer uygun motor bulunamazsa ve 77'lik lamel ise, 102mm tambur motorlarını da kontrol et
-    if (!selectedMotorModel && !is100mm) {
+    // Eğer otomatik seçimde uygun motor bulunamazsa ve 77'lik lamel ise, 102mm tambur motorlarını da kontrol et
+    if (!selectedMotorModel && !is100mm && (!values.motorModel || values.motorModel === "auto")) {
       const alternativeTamburType = "102mm";
       selectedMotorModel = selectKepenkMotor(
         values.lamelType,

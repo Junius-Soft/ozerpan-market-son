@@ -2314,6 +2314,25 @@
               { "id": "motorlu", "name": "Motorlu (Redüktörlü)" }
             ],
             "default": "motorlu"
+          },
+          {
+            "id": "motorModel",
+            "name": "Motor Modeli",
+            "type": "select",
+            "options": [
+              { "id": "auto", "name": "Otomatik Seçim (m²'ye göre)" },
+              { "id": "sel_70_80", "name": "MOSEL SEL-70 80 Nm" },
+              { "id": "sel_70_100", "name": "MOSEL SEL-70 100 Nm" },
+              { "id": "sel_70_120", "name": "MOSEL SEL-70 120 Nm" },
+              { "id": "sel_70_140", "name": "MOSEL SEL-70 140 Nm" },
+              { "id": "sel_102_230", "name": "MOSEL SEL-102 230 Nm" },
+              { "id": "sel_102_330", "name": "MOSEL SEL-102 330 Nm" },
+              { "id": "sel_600", "name": "SEL-600 Nm (Santral)" },
+              { "id": "sel_800", "name": "SEL-800 Nm (Santral)" },
+              { "id": "sel_1000", "name": "SEL-1000 Nm (Santral)" }
+            ],
+            "default": "auto",
+            "description": "Otomatik seçimde lamel tipi ve m²'ye göre en uygun motor seçilir"
           }
         ]
       }

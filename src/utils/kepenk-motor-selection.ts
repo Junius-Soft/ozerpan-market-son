@@ -68,11 +68,31 @@ export const KEPENK_MOTOR_CAPACITY_MAP: Record<string, Record<string, number>> =
 export const MOTOR_MODEL_TO_NEWTON: Record<string, string> = {
   // 70mm tambur motorları
   sel_70: "70-80", // MOSEL SEL 70 80 Redüktörlü Motor
+  sel_70_80: "70-80", // MOSEL SEL 70 80 Nm
+  sel_70_100: "70-100", // MOSEL SEL 70 100 Nm
   sel_70_120: "70-120", // MOSEL SEL 70-120 Redüktörlü Motor
+  sel_70_140: "70-140", // MOSEL SEL 70 140 Nm
   // 102mm tambur motorları
   sel_102_120: "102-230", // MOSEL SEL-102-120 Redüktörlü Motor (yaklaşık)
+  sel_102_230: "102-230", // MOSEL SEL-102 230 Nm
+  sel_102_330: "102-330", // MOSEL SEL-102 330 Nm
+  sel_600: "SEL-600", // SEL-600 Nm Santral
+  sel_800: "SEL-800", // SEL-800 Nm Santral
   sel_900: "SEL-800", // SEL -900 Redüktörlü Zincirli Motor (yaklaşık)
   sel_1000: "SEL-1000", // SEL-1000 Endüstriyel Zincirli Motor
+};
+
+// Manuel motor seçimi ID'lerinden product-prices.json'daki motor ID'lerine
+export const MANUAL_MOTOR_TO_PRODUCT_ID: Record<string, string> = {
+  sel_70_80: "sel_70",
+  sel_70_100: "sel_70_100",
+  sel_70_120: "sel_70_120",
+  sel_70_140: "sel_70_140",
+  sel_102_230: "sel_102_120",
+  sel_102_330: "sel_102_330",
+  sel_600: "sel_600",
+  sel_800: "sel_900",
+  sel_1000: "sel_1000",
 };
 
 /**
@@ -158,5 +178,28 @@ export function selectKepenkMotor(
 
   // Newton aralığını motor model ID'sine çevir
   return getMotorModelByNewtonRange(selectedNewtonRange, tamburType);
+}
+
+/**
+ * Manuel veya otomatik motor seçimi
+ * @param manualMotorModel - Kullanıcının seçtiği motor modeli ("auto" ise otomatik seçim)
+ * @param lamelType - Lamel tipi
+ * @param systemAreaM2 - Sistem alanı (m²)
+ * @param tamburType - Tambur tipi
+ * @returns Motor model ID
+ */
+export function resolveMotorSelection(
+  manualMotorModel: string | undefined,
+  lamelType: string,
+  systemAreaM2: number,
+  tamburType: string
+): string | null {
+  // Manuel seçim varsa ve "auto" değilse, manuel seçimi kullan
+  if (manualMotorModel && manualMotorModel !== "auto") {
+    return MANUAL_MOTOR_TO_PRODUCT_ID[manualMotorModel] || manualMotorModel;
+  }
+
+  // Otomatik seçim
+  return selectKepenkMotor(lamelType, systemAreaM2, tamburType);
 }
 

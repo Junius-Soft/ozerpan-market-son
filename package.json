@@ -11,7 +11,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "import-offers": "tsx scripts/import-offers.ts"
+    "import-offers": "tsx scripts/import-offers.ts",
+    "deploy": "vercel --prod"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.3.2",

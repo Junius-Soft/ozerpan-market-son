@@ -546,7 +546,25 @@
         "type": "panjur_lamel_aksesuarları",
         "color": "standart",
         "unit": "Adet",
-        "price": "0.01"
+        "price": "0.05"
+      },
+      {
+        "description": "39'luk Alt Parça Lastiği Gri",
+        "stock_code": "352321211900",
+        "uretici_kodu": "RB.039.GR.APL",
+        "type": "panjur_lamel_aksesuarları",
+        "color": "gri",
+        "unit": "Metre",
+        "price": "0.35"
+      },
+      {
+        "description": "55'lik Alt Parça Lastiği Gri",
+        "stock_code": "352321511900",
+        "uretici_kodu": "RB.055.GR.APL",
+        "type": "panjur_lamel_aksesuarları",
+        "color": "gri",
+        "unit": "Metre",
+        "price": "0.57"
       },
       {
         "description": "Panjur Dikme Makası Beyaz",

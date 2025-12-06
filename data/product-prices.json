@@ -3321,7 +3321,7 @@
         "lamel_type": "st_100",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "12.50",
+        "price": "5.85",
         "weight_per_m2": "10.417",
         "profile_count": "10.417",
         "kapama_yuzeyi_mm": "96",
@@ -3432,7 +3432,7 @@
         "lamel_type": "all",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "0.01"
       },
       {
         "description": "77'lik Alt Parça Lastik Gri",
@@ -3442,7 +3442,7 @@
         "lamel_type": "77_li",
         "color": "alüminyum",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "1.27"
       },
       {
         "description": "100'lük Alt Parça Lastik Gri",
@@ -3452,7 +3452,7 @@
         "lamel_type": "100_lu",
         "color": "alüminyum",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "3.12"
       },
       {
         "description": "300 Alüminyum Kutu Kit",
@@ -3746,26 +3746,74 @@
         "hareket_tip": "motorlu"
       },
       {
-        "description": "KANCALI REDÜKTÖR KOLU U=2000MM Beyaz",
-        "stock_code": "353456051100",
+        "description": "Kancalı Ara Kol Sekizgen 8MM,90 Derece Parlak Elok",
+        "stock_code": "353456526200",
+        "uretici_kodu": "HI.AES.00.J90",
+        "type": "kepenk_tambur_aksesuarlari",
+        "tambur_type": "all",
+        "color": "alüminyum",
+        "unit": "Adet",
+        "price": "7.46",
+        "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "Kancalı Redüktör Kolu 150 cm Beyaz",
+        "stock_code": "353456641100",
+        "uretici_kodu": "HI.150.00.UCH",
+        "type": "kepenk_tambur_aksesuarlari",
+        "tambur_type": "all",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "8.13",
+        "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "Kancalı Redüktör Kolu 200 cm Beyaz",
+        "stock_code": "353456651100",
         "uretici_kodu": "HI.200.00.UCH",
         "type": "kepenk_tambur_aksesuarlari",
         "tambur_type": "all",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "10.82",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
         "hareket_tip": "motorlu"
       },
       {
-        "description": "Bilezik 70~101 Beyaz",
+        "description": "Bilezik 70>101 Beyaz",
         "stock_code": "353457311100",
         "uretici_kodu": "CP.070.00.101",
         "type": "kepenk_tambur_aksesuarlari",
         "tambur_type": "70mm",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "0.67",
+        "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "Bilezik 70>120 Beyaz",
+        "stock_code": "353457311200",
+        "uretici_kodu": "CP.070.00.120",
+        "type": "kepenk_tambur_aksesuarlari",
+        "tambur_type": "70mm",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "0.84",
+        "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "Bilezik 70>101 - Özel Kanallı Siyah",
+        "stock_code": "353457311300",
+        "uretici_kodu": "CP.070.00.101.OK",
+        "type": "kepenk_tambur_aksesuarlari",
+        "tambur_type": "70mm",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "1.23",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
         "hareket_tip": "motorlu"
       },

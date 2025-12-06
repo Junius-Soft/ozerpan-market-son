@@ -15,7 +15,7 @@ import {
   findMotorPrice,
   getBoxHeight,
 } from "@/utils/kepenk";
-import { selectKepenkMotor } from "@/utils/kepenk-motor-selection";
+import { selectKepenkMotor, resolveMotorSelection } from "@/utils/kepenk-motor-selection";
 
 export const calculateKepenk = (
   values: KepenkSelections,
@@ -154,26 +154,46 @@ export const calculateKepenk = (
     // Sistem alanını hesapla (m²)
     const systemAreaM2 = (systemWidth * systemHeight) / 1000000;
     
-    // Excel tablosuna göre uygun motoru seç
-    // Önce mevcut tambur tipine göre kontrol et
-    let selectedMotorModel = selectKepenkMotor(
-      values.lamelType,
-      systemAreaM2,
-      tamburType
-    );
-
-    // Eğer uygun motor bulunamazsa ve 77'lik lamel ise, 102mm tambur motorlarını da kontrol et
-    if (!selectedMotorModel && !is100mm) {
-      const alternativeTamburType = "102mm";
+    // Manuel motor seçimi aktif mi?
+    const isManuelMotorSecimi = values.manuelMotorSecimi === true;
+    
+    let selectedMotorModel: string | null = null;
+    
+    if (isManuelMotorSecimi && values.motorModel) {
+      // Manuel seçim - kullanıcının seçtiği motoru kullan
+      selectedMotorModel = resolveMotorSelection(
+        values.motorModel,
+        values.lamelType,
+        systemAreaM2,
+        tamburType
+      );
+      
+      // Manuel seçimde tambur tipini motora göre ayarla
+      if (values.motorModel.includes("102") || values.motorModel.includes("sel_6") || 
+          values.motorModel.includes("sel_8") || values.motorModel.includes("sel_10")) {
+        tamburType = "102mm";
+      }
+    } else {
+      // Otomatik motor seçimi - m² tablosuna göre
       selectedMotorModel = selectKepenkMotor(
         values.lamelType,
         systemAreaM2,
-        alternativeTamburType
+        tamburType
       );
-      
-      // Eğer 102mm tambur motorları uygunsa, tambur tipini güncelle
-      if (selectedMotorModel) {
-        tamburType = alternativeTamburType;
+
+      // Eğer otomatik seçimde uygun motor bulunamazsa ve 77'lik lamel ise, 102mm tambur motorlarını da kontrol et
+      if (!selectedMotorModel && !is100mm) {
+        const alternativeTamburType = "102mm";
+        selectedMotorModel = selectKepenkMotor(
+          values.lamelType,
+          systemAreaM2,
+          alternativeTamburType
+        );
+        
+        // Eğer 102mm tambur motorları uygunsa, tambur tipini güncelle
+        if (selectedMotorModel) {
+          tamburType = alternativeTamburType;
+        }
       }
     }
 
@@ -184,11 +204,10 @@ export const calculateKepenk = (
         "reduktorlu"
       );
     } else {
-      // Uygun motor bulunamazsa hata ver ve motor seçme
+      // Uygun motor bulunamazsa hata ver
       errors.push(
-        `Uygun motor bulunamadı. Sistem alanı (${systemAreaM2.toFixed(2)} m²) mevcut motor kapasitelerini aşıyor. Lütfen sistem ölçülerini küçültün veya farklı bir lamel tipi seçin.`
+        `⚠️ UYARI: Bu ölçüler için uygun motor bulunamadı! Sistem alanı: ${systemAreaM2.toFixed(2)} m². Lamel tipi ${values.lamelType} için maksimum motor kapasitesini aşıyor. Manuel motor seçimi yapabilir veya farklı bir lamel tipi seçebilirsiniz.`
       );
-      // Motor seçilmedi, motorPrice ve motorSelectedProduct zaten 0 ve null
     }
   }
 

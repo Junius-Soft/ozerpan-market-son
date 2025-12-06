@@ -1,6 +1,6 @@
 import { PanjurSelections, PriceItem, SelectedProduct } from "@/types/panjur";
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { calculatePanjurAccessories } from "./accessories/panjur";
@@ -18,7 +18,10 @@ export function useAccessories(
   values: PanjurSelections | SineklikSelections | KepenkSelections | unknown
 ): AccessoryResult {
   const [accessories, setAccessories] = useState<SelectedProduct[]>([]);
+  const [cachedAccessories, setCachedAccessories] = useState<PriceItem[]>([]);
   const searchParams = useSearchParams();
+  const fetchedProductRef = useRef<string | null>(null);
+  const lastValuesRef = useRef<string>("");
 
   // Redux state'lerini çek
   const middleBarPositions = useSelector(
@@ -41,56 +44,70 @@ export function useAccessories(
   const productId = searchParams.get("productId");
   const optionId = searchParams.get("optionId") ?? "";
 
-  useEffect(() => {
-    const fetchAndCalculateAccessories = async () => {
-      try {
-        const response = await fetch(`/api/accessories?productId=${productId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch accessories");
-        }
-        const data = await response.json();
-        const allAccessories: PriceItem[] = data;
-
-        if (allAccessories && productId === "panjur") {
-          // Panjur için aksesuar hesaplama
-          const result = calculatePanjurAccessories(
-            values as PanjurSelections,
-            allAccessories,
-            middleBarPositions,
-            sectionHeights,
-            sectionMotors,
-            sectionCount,
-            optionId
-          );
-          setAccessories(result);
-        } else if (productId === "sineklik") {
-          const result = calculateSineklikAccessories(
-            values as SineklikSelections,
-            allAccessories
-          );
-          setAccessories(result);
-        } else if (productId === "kepenk") {
-          // Kepenk için aksesuar hesaplama
-          const result = calculateKepenkAccessories(
-            values as KepenkSelections,
-            allAccessories
-          );
-          setAccessories(result);
-        } else if (productId === "cam-balkon") {
-          // Cam balkon için şu an aksesuar yok
-          setAccessories([]);
-        } else {
-          // Bilinmeyen ürün
-          setAccessories([]);
-        }
-      } catch (error) {
-        console.error("Error calculating accessories:", error);
-        setAccessories([]);
+  // Aksesuar fetch fonksiyonu
+  const fetchAccessories = useCallback(async (pid: string) => {
+    if (fetchedProductRef.current === pid) return;
+    
+    try {
+      const response = await fetch(`/api/accessories?productId=${pid}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch accessories");
       }
-    };
+      const data = await response.json();
+      fetchedProductRef.current = pid;
+      setCachedAccessories(data);
+    } catch (error) {
+      console.error("Error fetching accessories:", error);
+      setCachedAccessories([]);
+    }
+  }, []);
 
-    fetchAndCalculateAccessories();
+  // İlk fetch - sadece productId değiştiğinde çalışır
+  useEffect(() => {
+    if (productId && fetchedProductRef.current !== productId) {
+      fetchAccessories(productId);
+    }
+  }, [productId, fetchAccessories]);
+
+  // Hesaplama - cachedAccessories veya values değiştiğinde çalışır
+  useEffect(() => {
+    if (!cachedAccessories.length || !values) return;
+
+    // Sonsuz döngüyü engelle - aynı values için tekrar hesaplama yapma
+    const currentValuesStr = JSON.stringify(values);
+    if (lastValuesRef.current === currentValuesStr) return;
+    lastValuesRef.current = currentValuesStr;
+
+    if (productId === "panjur") {
+      const result = calculatePanjurAccessories(
+        values as PanjurSelections,
+        cachedAccessories,
+        middleBarPositions,
+        sectionHeights,
+        sectionMotors,
+        sectionCount,
+        optionId
+      );
+      setAccessories(result);
+    } else if (productId === "sineklik") {
+      const result = calculateSineklikAccessories(
+        values as SineklikSelections,
+        cachedAccessories
+      );
+      setAccessories(result);
+    } else if (productId === "kepenk") {
+      const result = calculateKepenkAccessories(
+        values as KepenkSelections,
+        cachedAccessories
+      );
+      setAccessories(result);
+    } else if (productId === "cam-balkon") {
+      setAccessories([]);
+    } else {
+      setAccessories([]);
+    }
   }, [
+    cachedAccessories,
     values,
     productId,
     middleBarPositions,

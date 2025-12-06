@@ -3,12 +3,12 @@
     "panjur": [
       {
         "description": "137 Yan Kapak 45 Pimli Pres",
-        "stock_code": "352441111000",
+        "stock_code": "352441111010",
         "uretici_kodu": "SF.137.00.045",
         "type": "panjur_kutu_aksesuarları",
         "color": "pres",
         "unit": "Takım",
-        "price": "6.68"
+        "price": "7.01"
       },
       {
         "description": "137 Yan Kapak 45 Pimli Beyaz",
@@ -17,7 +17,7 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Takım",
-        "price": "8.68"
+        "price": "9.11"
       },
       {
         "description": "137 Yan Kapak 45 Pimli Kahverengi",
@@ -26,7 +26,7 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "kahverengi",
         "unit": "Takım",
-        "price": "8.68"
+        "price": "9.11"
       },
       {
         "description": "137 Yan Kapak 45 Pimli Metalik Gri",
@@ -35,7 +35,7 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "metalik_gri",
         "unit": "Takım",
-        "price": "8.68"
+        "price": "9.11"
       },
       {
         "description": "137 Yan Kapak 45 Pimli Krem",
@@ -44,7 +44,7 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "krem",
         "unit": "Takım",
-        "price": "8.68"
+        "price": "9.11"
       },
       {
         "description": "137 Yan Kapak 45 Pimli Antrasit Gri",
@@ -53,7 +53,16 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "antrasit_gri",
         "unit": "Takım",
-        "price": "8.68"
+        "price": "9.11"
+      },
+      {
+        "description": "137 Yan Kapak 45 Pimli Vizon",
+        "stock_code": "352441113500",
+        "uretici_kodu": "SF.137.32.045",
+        "type": "panjur_kutu_aksesuarları",
+        "color": "vizon",
+        "unit": "Takım",
+        "price": "9.11"
       },
       {
         "description": "137 Yan Kapak 45 Pimli Ral Boyalı",
@@ -62,16 +71,16 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "ral_boyalı",
         "unit": "Takım",
-        "price": "9.79"
+        "price": "10.27"
       },
       {
         "description": "165 Yan Kapak 45 Pimli Pres",
-        "stock_code": "352441210000",
+        "stock_code": "352441211010",
         "uretici_kodu": "SF.165.00.045",
         "type": "panjur_kutu_aksesuarları",
         "color": "pres",
         "unit": "Takım",
-        "price": "7.17"
+        "price": "7.53"
       },
       {
         "description": "165 Yan Kapak 45 Pimli Beyaz",
@@ -80,7 +89,7 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Takım",
-        "price": "10.18"
+        "price": "10.69"
       },
       {
         "description": "165 Yan Kapak 45 Pimli Kahverengi",
@@ -89,7 +98,7 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "kahverengi",
         "unit": "Takım",
-        "price": "10.18"
+        "price": "10.69"
       },
       {
         "description": "165 Yan Kapak 45 Pimli Metalik Gri",
@@ -98,7 +107,7 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "metalik_gri",
         "unit": "Takım",
-        "price": "10.18"
+        "price": "10.69"
       },
       {
         "description": "165 Yan Kapak 45 Pimli Krem",
@@ -107,34 +116,7 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "krem",
         "unit": "Takım",
-        "price": "10.18"
-      },
-      {
-        "description": "165 Yan Kapak 45 Pimli Ral Boyalı",
-        "stock_code": "352441215100",
-        "uretici_kodu": "SF.165.17.045",
-        "type": "panjur_kutu_aksesuarları",
-        "color": "ral_boyalı",
-        "unit": "Takım",
-        "price": "11.51"
-      },
-      {
-        "description": "165 Yan Kapak 45 Pimli Antrasit Gri",
-        "stock_code": "352441213400",
-        "uretici_kodu": "SF.165.24.045",
-        "type": "panjur_kutu_aksesuarları",
-        "color": "antrasit_gri",
-        "unit": "Takım",
-        "price": "9.25"
-      },
-      {
-        "description": "165 Yan Kapak 45 Pimli Vizon",
-        "stock_code": "352441213500",
-        "uretici_kodu": "SF.165.32.045",
-        "type": "panjur_kutu_aksesuarları",
-        "color": "vizon",
-        "unit": "Takım",
-        "price": "7.21"
+        "price": "10.69"
       },
       {
         "description": "165 Yan Kapak 45 Pimli Ral Boyalı",
@@ -143,16 +125,25 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "ral_boyalı",
         "unit": "Takım",
-        "price": "8.16"
+        "price": "12.09"
+      },
+      {
+        "description": "165 Yan Kapak 45 Pimli Antrasit Gri",
+        "stock_code": "352441213400",
+        "uretici_kodu": "SF.165.24.045",
+        "type": "panjur_kutu_aksesuarları",
+        "color": "antrasit_gri",
+        "unit": "Takım",
+        "price": "9.71"
       },
       {
         "description": "205 Yan Kapak 45 Pimli Pres",
-        "stock_code": "352441410010",
+        "stock_code": "352441411010",
         "uretici_kodu": "SF.205.00.045",
         "type": "panjur_kutu_aksesuarları",
         "color": "pres",
         "unit": "Takım",
-        "price": "10.49"
+        "price": "11.01"
       },
       {
         "description": "205 Yan Kapak 45 Pimli Beyaz",
@@ -161,7 +152,7 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Takım",
-        "price": "14.37"
+        "price": "15.09"
       },
       {
         "description": "205 Yan Kapak 45 Pimli Kahverengi",
@@ -170,7 +161,7 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "kahverengi",
         "unit": "Takım",
-        "price": "14.37"
+        "price": "15.09"
       },
       {
         "description": "205 Yan Kapak 45 Pimli Metalik Gri",
@@ -179,7 +170,7 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "metalik_gri",
         "unit": "Takım",
-        "price": "14.37"
+        "price": "15.09"
       },
       {
         "description": "205 Yan Kapak 45 Pimli Krem",
@@ -188,25 +179,16 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "krem",
         "unit": "Takım",
-        "price": "14.37"
+        "price": "15.09"
       },
       {
         "description": "205 Yan Kapak 45 Pimli Antrasit Gri",
-        "stock_code": "352441414000",
+        "stock_code": "352441413400",
         "uretici_kodu": "SF.205.24.045",
         "type": "panjur_kutu_aksesuarları",
         "color": "antrasit_gri",
         "unit": "Takım",
-        "price": "14.37"
-      },
-      {
-        "description": "205 Yan Kapak 45 Pimli Vizon",
-        "stock_code": "352441413500",
-        "uretici_kodu": "SF.205.32.045",
-        "type": "panjur_kutu_aksesuarları",
-        "color": "vizon",
-        "unit": "Takım",
-        "price": "10.19"
+        "price": "15.09"
       },
       {
         "description": "205 Yan Kapak 45 Pimli Ral Boya",
@@ -215,16 +197,16 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "ral_boyalı",
         "unit": "Takım",
-        "price": "16.15"
+        "price": "16.95"
       },
       {
         "description": "250 Yan Kapak 45 Motor Pres",
-        "stock_code": "352441520010",
+        "stock_code": "352441521010",
         "uretici_kodu": "SF.250.00.045",
         "type": "panjur_kutu_aksesuarları",
         "color": "pres",
         "unit": "Takım",
-        "price": "21.26"
+        "price": "22.33"
       },
       {
         "description": "250 Yan Kapak 45 Motor Beyaz",
@@ -233,7 +215,7 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Takım",
-        "price": "26.58"
+        "price": "27.91"
       },
       {
         "description": "250 Yan Kapak 45 Motor Kahverengi",
@@ -242,7 +224,7 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "kahverengi",
         "unit": "Takım",
-        "price": "26.58"
+        "price": "27.91"
       },
       {
         "description": "250 Yan Kapak 45 Motor Metalik Gri",
@@ -251,34 +233,25 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "metalik_gri",
         "unit": "Takım",
-        "price": "26.58"
+        "price": "27.91"
       },
       {
         "description": "250 Yan Kapak 45 Motor Krem",
         "stock_code": "352441523100",
-        "uretici_kodu": "SF.255.08.045",
+        "uretici_kodu": "SF.250.08.045",
         "type": "panjur_kutu_aksesuarları",
         "color": "krem",
         "unit": "Takım",
-        "price": "26.58"
+        "price": "27.91"
       },
       {
         "description": "250 Yan Kapak 45 Motor Antrasit Gri",
-        "stock_code": "352441524000",
+        "stock_code": "352441523400",
         "uretici_kodu": "SF.250.24.045",
         "type": "panjur_kutu_aksesuarları",
         "color": "antrasit_gri",
         "unit": "Takım",
-        "price": "26.58"
-      },
-      {
-        "description": "250 Yan Kapak 45 Motor Vizon",
-        "stock_code": "352441523500",
-        "uretici_kodu": "SF.250.32.045",
-        "type": "panjur_kutu_aksesuarları",
-        "color": "vizon",
-        "unit": "Takım",
-        "price": "23.12"
+        "price": "27.90"
       },
       {
         "description": "250 Yan Kapak 45 Motor Ral Boyalı",
@@ -287,7 +260,7 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "ral_boyalı",
         "unit": "Takım",
-        "price": "30.04"
+        "price": "31.54"
       },
       {
         "description": "40mm Sekizgen Boru 0,40",
@@ -546,7 +519,7 @@
         "type": "panjur_lamel_aksesuarları",
         "color": "standart",
         "unit": "Adet",
-        "price": "0.02"
+        "price": "0.04"
       },
       {
         "description": "PVC TAPA SL-55",
@@ -555,7 +528,7 @@
         "type": "panjur_lamel_aksesuarları",
         "color": "standart",
         "unit": "Adet",
-        "price": "0.03"
+        "price": "0.04"
       },
       {
         "description": "Askı Kilit ( SL 39 )",
@@ -573,7 +546,25 @@
         "type": "panjur_lamel_aksesuarları",
         "color": "standart",
         "unit": "Adet",
-        "price": "0.00"
+        "price": "0.05"
+      },
+      {
+        "description": "39'luk Alt Parça Lastiği Gri",
+        "stock_code": "352321211900",
+        "uretici_kodu": "RB.039.GR.APL",
+        "type": "panjur_lamel_aksesuarları",
+        "color": "gri",
+        "unit": "Metre",
+        "price": "0.35"
+      },
+      {
+        "description": "55'lik Alt Parça Lastiği Gri",
+        "stock_code": "352321511900",
+        "uretici_kodu": "RB.055.GR.APL",
+        "type": "panjur_lamel_aksesuarları",
+        "color": "gri",
+        "unit": "Metre",
+        "price": "0.57"
       },
       {
         "description": "Panjur Dikme Makası Beyaz",

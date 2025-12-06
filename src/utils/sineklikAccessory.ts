@@ -190,37 +190,49 @@ export function getPliseTulAccessoryItems(
 
   if (!tul) return [];
 
-  const quantity =
-    pliseOpeningType === "dikey"
-      ? Math.ceil(height / 30 + 2)
-      : Math.ceil(width / 30 + 2);
-
-  let size: number;
+  // m² hesaplama - tül katı yerine alan bazlı
+  let areaM2: number;
+  
   if (kasaType === "esiksiz") {
-    size = height - 31;
+    // Eşiksiz kasa için alan hesaplama
+    const effectiveWidth = width;
+    const effectiveHeight = height - 31;
+    areaM2 = (effectiveWidth * effectiveHeight) / 1_000_000;
   } else {
+    // Normal kasa için alan hesaplama
+    let effectiveWidth: number;
+    let effectiveHeight: number;
+    
     if (pliseOpeningType === "dikey") {
-      size = width - 55;
+      effectiveWidth = width - 55;
+      effectiveHeight = height;
     } else {
-      size = height - 55;
+      effectiveWidth = width;
+      effectiveHeight = height - 55;
     }
+    areaM2 = (effectiveWidth * effectiveHeight) / 1_000_000;
   }
+
+  // Double ve centralPack için alanı ikiye böl
   if (["double", "centralPack"].includes(pliseOpeningType)) {
-    const quantityPerTul = Math.ceil(quantity / 2);
+    const areaPerTul = areaM2 / 2;
     for (let i = 0; i < 2; i++) {
-      items.push(
-        createSelectedProduct(
-          tul,
-          quantityPerTul,
-          (size / 1000) * 0.03 * quantityPerTul
-        )
-      );
+      // m² bazlı fiyatlandırma - size kullanmıyoruz, direkt m² ile çarpıyoruz
+      const product = createSelectedProduct(tul, 1);
+      // totalPrice'ı m² bazlı hesapla (price zaten m² fiyatı olmalı)
+      product.totalPrice = areaPerTul * parseFloat(tul.price);
+      product.size = areaPerTul; // m² değerini size olarak sakla (gösterim için)
+      items.push(product);
     }
   } else {
-    items.push(
-      createSelectedProduct(tul, quantity, (size / 1000) * 0.03 * quantity)
-    );
+    // m² bazlı fiyatlandırma
+    const product = createSelectedProduct(tul, 1);
+    // totalPrice'ı m² bazlı hesapla (price zaten m² fiyatı olmalı)
+    product.totalPrice = areaM2 * parseFloat(tul.price);
+    product.size = areaM2; // m² değerini size olarak sakla (gösterim için)
+    items.push(product);
   }
+  
   return items;
 }
 

@@ -316,7 +316,8 @@ export const findDikmePrice = (
     finalQuantity,
     dikmeHeight
   );
-  return [parseFloat(matchingDikme.price), selectedProduct];
+  // Fiyat ölçüye göre hesaplanıyor (metre cinsinden yükseklik * adet)
+  return [selectedProduct.totalPrice, selectedProduct];
 };
 
 export const findBoxPrice = (
@@ -686,8 +687,10 @@ export const findRemotePrice = (
 ): [number, SelectedProduct | null] => {
   if (!remote) return [0, null];
 
-  // Otomasyon kumandalarını filtrele
-  const remotePrices = prices.filter((p) => p.type === "otomasyon_kumandalar");
+  // Hem panjur (otomasyon_kumandalar) hem de kepenk (kepenk_kumandalar) kumandalarını filtrele
+  const remotePrices = prices.filter(
+    (p) => p.type === "otomasyon_kumandalar" || p.type === "kepenk_kumandalar"
+  );
 
   const normalizedSearchName = normalizeRemoteName(remote);
 
@@ -732,8 +735,10 @@ export const findReceiverPrice = (
   );
   if (!receiverOption?.name) return [0, null];
 
-  // Find matching receiver price in the price list
-  const receiverPrices = prices.filter((p) => p.type === "otomasyon_alıcılar");
+  // Hem panjur (otomasyon_alıcılar) hem de kepenk (kepenk_alicilar) alıcılarını filtrele
+  const receiverPrices = prices.filter(
+    (p) => p.type === "otomasyon_alıcılar" || p.type === "kepenk_alicilar"
+  );
   const receiverItem = receiverPrices.find(
     (price) => price.description === receiverOption.name
   );
@@ -762,10 +767,10 @@ export function findTamburProfiliAccessoryPrice(
   if (!tambur) return [0, null];
   // Tambur ölçüsü: motorlu ise width-80mm, manuel ise width-60mm
   const tamburWidth = movementType === "motorlu" ? width - 80 : width - 60;
-  return [
-    parseFloat(tambur.price),
-    createSelectedProduct(tambur, 1, tamburWidth),
-  ];
+  const selectedProduct = createSelectedProduct(tambur, 1, tamburWidth);
+  // Fiyat ölçüye göre hesaplanıyor (metre cinsinden)
+  const calculatedPrice = selectedProduct.totalPrice;
+  return [calculatedPrice, selectedProduct];
 }
 
 export const findYukseltmeProfiliPrice = (
@@ -795,7 +800,8 @@ export const findYukseltmeProfiliPrice = (
     quantity,
     systemHeight
   );
-  return [parseFloat(matchingProfili.price), selectedProduct];
+  // Fiyat ölçüye göre hesaplanıyor (metre cinsinden yükseklik * adet)
+  return [selectedProduct.totalPrice, selectedProduct];
 };
 
 // En geniş bölmenin genişliğini hesaplayan fonksiyon

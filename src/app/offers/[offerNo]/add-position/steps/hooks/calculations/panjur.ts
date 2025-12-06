@@ -240,7 +240,7 @@ export const calculatePanjur = (
     const currentDikme =
       index === 0 || index === dikmeHeights.length - 1 ? "Yan" : "Orta";
 
-    const [dikmeUnitPrice, dikmeSelectedProduct] = findDikmePrice(
+    const [dikmeTotalPrice, dikmeSelectedProduct] = findDikmePrice(
       prices,
       values.dikmeType,
       values.dikme_color || values.lamel_color,
@@ -250,7 +250,8 @@ export const calculatePanjur = (
       currentDikme
     );
 
-    const dikmePriceForThisPosition = dikmeUnitPrice * dikmeCountAtPosition;
+    // dikmeTotalPrice zaten ölçü ve adet dahil hesaplanmış fiyat
+    const dikmePriceForThisPosition = dikmeTotalPrice;
     totalDikmePrice += dikmePriceForThisPosition;
 
     if (dikmeSelectedProduct) {

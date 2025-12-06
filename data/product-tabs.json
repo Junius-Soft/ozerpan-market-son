@@ -2283,6 +2283,20 @@
               "field": "gozluLamelVar",
               "value": true
             }
+          },
+          {
+            "id": "lamelColor",
+            "name": "Lamel Rengi",
+            "type": "select",
+            "options": [
+              { "id": "aluminyum", "name": "Alüminyum (Doğal)" },
+              { "id": "beyaz", "name": "Beyaz" },
+              { "id": "ral_7016", "name": "RAL 7016 (Antrasit)" },
+              { "id": "ral_9005", "name": "RAL 9005 (Siyah)" },
+              { "id": "ral_8017", "name": "RAL 8017 (Kahverengi)" },
+              { "id": "ral_boyali", "name": "RAL Boyalı (Özel)" }
+            ],
+            "default": "aluminyum"
           }
         ]
       }

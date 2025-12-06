@@ -2314,6 +2314,33 @@
               { "id": "motorlu", "name": "Motorlu (Redüktörlü)" }
             ],
             "default": "motorlu"
+          },
+          {
+            "id": "manuelMotorSecimi",
+            "name": "Manuel Motor Seçimi",
+            "type": "checkbox",
+            "default": false
+          },
+          {
+            "id": "motorModel",
+            "name": "Motor Modeli",
+            "type": "select",
+            "options": [
+              { "id": "sel_70_80", "name": "MOSEL SEL-70 80 Nm (70mm Tambur)" },
+              { "id": "sel_70_100", "name": "MOSEL SEL-70 100 Nm (70mm Tambur)" },
+              { "id": "sel_70_120", "name": "MOSEL SEL-70 120 Nm (70mm Tambur)" },
+              { "id": "sel_70_140", "name": "MOSEL SEL-70 140 Nm (70mm Tambur)" },
+              { "id": "sel_102_230", "name": "MOSEL SEL-102 230 Nm (102mm Tambur)" },
+              { "id": "sel_102_330", "name": "MOSEL SEL-102 330 Nm (102mm Tambur)" },
+              { "id": "sel_600", "name": "SEL-600 Nm Santral Motor" },
+              { "id": "sel_800", "name": "SEL-800 Nm Santral Motor" },
+              { "id": "sel_1000", "name": "SEL-1000 Nm Santral Motor" }
+            ],
+            "default": "sel_70_80",
+            "dependsOn": {
+              "field": "manuelMotorSecimi",
+              "value": true
+            }
           }
         ]
       }

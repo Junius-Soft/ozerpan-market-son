@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { PriceItem, CalculationResult, PanjurSelections } from "@/types/panjur";
 import { useAccessories } from "./useAccessories";
 import { ProductTab } from "@/documents/products";
@@ -30,6 +30,8 @@ export const useCalculator = (
   });
   const [prices, setPrices] = useState<PriceItem[]>([]);
   const { accessories } = useAccessories(values);
+  const fetchingRef = useRef(false);
+  
   // Redux state'lerini çek
   const middleBarPositions = useSelector(
     (state: RootState) => state.shutter.middleBarPositions
@@ -44,8 +46,17 @@ export const useCalculator = (
     (state: RootState) => state.shutter.sectionMotors
   );
 
+  // values'u stabil bir stringe çevir
+  const valuesKey = useMemo(() => {
+    if (!values) return "";
+    return JSON.stringify(values);
+  }, [values]);
+
   useEffect(() => {
+    if (fetchingRef.current) return;
+    
     const fetchPrices = async () => {
+      fetchingRef.current = true;
       try {
         // cam-balkon için api key cam_balkon olmalı
         const apiProductId = productName.toLowerCase() === "cam-balkon" ? "cam_balkon" : productName.toLowerCase();
@@ -60,6 +71,8 @@ export const useCalculator = (
         setPrices(data);
       } catch (error) {
         console.error("Error fetching prices:", error);
+      } finally {
+        fetchingRef.current = false;
       }
     };
 
@@ -71,7 +84,7 @@ export const useCalculator = (
 
     if (productName === "panjur") {
       // Panjur için hesaplama
-      const result = calculatePanjur(
+      const calcResult = calculatePanjur(
         values as PanjurSelections,
         prices,
         accessories,
@@ -82,29 +95,29 @@ export const useCalculator = (
         optionId,
         availableTabs
       );
-      setResult(result);
+      setResult(calcResult);
     } else if (productName === "sineklik") {
-      const result = calculateSineklik(
+      const calcResult = calculateSineklik(
         values as SineklikSelections,
         prices,
         accessories || []
       );
-      setResult(result);
+      setResult(calcResult);
     } else if (productName === "kepenk") {
       // Kepenk için hesaplama
-      const result = calculateKepenk(
+      const calcResult = calculateKepenk(
         values as KepenkSelections,
         prices,
         accessories || []
       );
-      setResult(result);
+      setResult(calcResult);
     } else if (productName === "cam-balkon") {
-      const result = calculateCamBalkon(
+      const calcResult = calculateCamBalkon(
         values as CamBalkonSelections,
         prices,
         optionId
       );
-      setResult(result);
+      setResult(calcResult);
     } else {
       // Diğer ürünler için henüz implement edilmedi
       setResult({
@@ -117,7 +130,7 @@ export const useCalculator = (
     }
   }, [
     prices,
-    values,
+    valuesKey,
     productName,
     accessories,
     availableTabs,

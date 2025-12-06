@@ -762,10 +762,10 @@ export function findTamburProfiliAccessoryPrice(
   if (!tambur) return [0, null];
   // Tambur ölçüsü: motorlu ise width-80mm, manuel ise width-60mm
   const tamburWidth = movementType === "motorlu" ? width - 80 : width - 60;
-  return [
-    parseFloat(tambur.price),
-    createSelectedProduct(tambur, 1, tamburWidth),
-  ];
+  const selectedProduct = createSelectedProduct(tambur, 1, tamburWidth);
+  // Fiyat ölçüye göre hesaplanıyor (metre cinsinden)
+  const calculatedPrice = selectedProduct.totalPrice;
+  return [calculatedPrice, selectedProduct];
 }
 
 export const findYukseltmeProfiliPrice = (

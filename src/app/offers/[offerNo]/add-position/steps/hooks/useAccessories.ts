@@ -1,6 +1,6 @@
 import { PanjurSelections, PriceItem, SelectedProduct } from "@/types/panjur";
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { calculatePanjurAccessories } from "./accessories/panjur";
@@ -20,7 +20,8 @@ export function useAccessories(
   const [accessories, setAccessories] = useState<SelectedProduct[]>([]);
   const [cachedAccessories, setCachedAccessories] = useState<PriceItem[]>([]);
   const searchParams = useSearchParams();
-  const fetchingRef = useRef(false);
+  const fetchedProductRef = useRef<string | null>(null);
+  const lastValuesRef = useRef<string>("");
 
   // Redux state'lerini çek
   const middleBarPositions = useSelector(
@@ -43,52 +44,41 @@ export function useAccessories(
   const productId = searchParams.get("productId");
   const optionId = searchParams.get("optionId") ?? "";
 
-  // values'u stabil bir stringe çevir - sadece önemli alanları al
-  const valuesKey = useMemo(() => {
-    if (!values) return "";
-    const v = values as Record<string, unknown>;
-    // Sadece hesaplama için önemli alanları al
-    return JSON.stringify({
-      width: v.width,
-      height: v.height,
-      lamelType: v.lamelType,
-      movementType: v.movementType,
-      gozluLamelVar: v.gozluLamelVar,
-      gozluLamelBaslangic: v.gozluLamelBaslangic,
-      gozluLamelBitis: v.gozluLamelBitis,
-    });
-  }, [values]);
+  // Aksesuar fetch fonksiyonu
+  const fetchAccessories = useCallback(async (pid: string) => {
+    if (fetchedProductRef.current === pid) return;
+    
+    try {
+      const response = await fetch(`/api/accessories?productId=${pid}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch accessories");
+      }
+      const data = await response.json();
+      fetchedProductRef.current = pid;
+      setCachedAccessories(data);
+    } catch (error) {
+      console.error("Error fetching accessories:", error);
+      setCachedAccessories([]);
+    }
+  }, []);
 
   // İlk fetch - sadece productId değiştiğinde çalışır
   useEffect(() => {
-    if (!productId || fetchingRef.current) return;
-    
-    const fetchAccessories = async () => {
-      fetchingRef.current = true;
-      try {
-        const response = await fetch(`/api/accessories?productId=${productId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch accessories");
-        }
-        const data = await response.json();
-        setCachedAccessories(data);
-      } catch (error) {
-        console.error("Error fetching accessories:", error);
-        setCachedAccessories([]);
-      } finally {
-        fetchingRef.current = false;
-      }
-    };
-
-    fetchAccessories();
-  }, [productId]);
+    if (productId && fetchedProductRef.current !== productId) {
+      fetchAccessories(productId);
+    }
+  }, [productId, fetchAccessories]);
 
   // Hesaplama - cachedAccessories veya values değiştiğinde çalışır
   useEffect(() => {
     if (!cachedAccessories.length || !values) return;
 
+    // Sonsuz döngüyü engelle - aynı values için tekrar hesaplama yapma
+    const currentValuesStr = JSON.stringify(values);
+    if (lastValuesRef.current === currentValuesStr) return;
+    lastValuesRef.current = currentValuesStr;
+
     if (productId === "panjur") {
-      // Panjur için aksesuar hesaplama
       const result = calculatePanjurAccessories(
         values as PanjurSelections,
         cachedAccessories,
@@ -106,22 +96,19 @@ export function useAccessories(
       );
       setAccessories(result);
     } else if (productId === "kepenk") {
-      // Kepenk için aksesuar hesaplama
       const result = calculateKepenkAccessories(
         values as KepenkSelections,
         cachedAccessories
       );
       setAccessories(result);
     } else if (productId === "cam-balkon") {
-      // Cam balkon için şu an aksesuar yok
       setAccessories([]);
     } else {
-      // Bilinmeyen ürün
       setAccessories([]);
     }
   }, [
     cachedAccessories,
-    valuesKey,
+    values,
     productId,
     middleBarPositions,
     sectionHeights,

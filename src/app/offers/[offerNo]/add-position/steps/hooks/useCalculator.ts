@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { PriceItem, CalculationResult, PanjurSelections } from "@/types/panjur";
 import { useAccessories } from "./useAccessories";
 import { ProductTab } from "@/documents/products";
@@ -30,7 +30,8 @@ export const useCalculator = (
   });
   const [prices, setPrices] = useState<PriceItem[]>([]);
   const { accessories } = useAccessories(values);
-  const fetchingRef = useRef(false);
+  const fetchedProductRef = useRef<string | null>(null);
+  const lastCalcKeyRef = useRef<string>("");
   
   // Redux state'lerini çek
   const middleBarPositions = useSelector(
@@ -46,44 +47,42 @@ export const useCalculator = (
     (state: RootState) => state.shutter.sectionMotors
   );
 
-  // values'u stabil bir stringe çevir
-  const valuesKey = useMemo(() => {
-    if (!values) return "";
-    return JSON.stringify(values);
-  }, [values]);
+  // Fiyat fetch fonksiyonu
+  const fetchPrices = useCallback(async (pName: string) => {
+    if (fetchedProductRef.current === pName) return;
+    
+    try {
+      const apiProductId = pName.toLowerCase() === "cam-balkon" ? "cam_balkon" : pName.toLowerCase();
+      
+      const response = await fetch(
+        `/api/product-prices?productId=${apiProductId}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch prices");
+      }
+      const data = await response.json();
+      fetchedProductRef.current = pName;
+      setPrices(data);
+    } catch (error) {
+      console.error("Error fetching prices:", error);
+    }
+  }, []);
 
   useEffect(() => {
-    if (fetchingRef.current) return;
-    
-    const fetchPrices = async () => {
-      fetchingRef.current = true;
-      try {
-        // cam-balkon için api key cam_balkon olmalı
-        const apiProductId = productName.toLowerCase() === "cam-balkon" ? "cam_balkon" : productName.toLowerCase();
-        
-        const response = await fetch(
-          `/api/product-prices?productId=${apiProductId}`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch prices");
-        }
-        const data = await response.json();
-        setPrices(data);
-      } catch (error) {
-        console.error("Error fetching prices:", error);
-      } finally {
-        fetchingRef.current = false;
-      }
-    };
-
-    fetchPrices();
-  }, [productName]);
+    if (productName && fetchedProductRef.current !== productName) {
+      fetchPrices(productName);
+    }
+  }, [productName, fetchPrices]);
 
   useEffect(() => {
     if (!prices.length || !values) return;
 
+    // Hesaplama için key oluştur - aynı key için tekrar hesaplama yapma
+    const calcKey = JSON.stringify({ values, accessories: accessories?.length || 0 });
+    if (lastCalcKeyRef.current === calcKey) return;
+    lastCalcKeyRef.current = calcKey;
+
     if (productName === "panjur") {
-      // Panjur için hesaplama
       const calcResult = calculatePanjur(
         values as PanjurSelections,
         prices,
@@ -104,7 +103,6 @@ export const useCalculator = (
       );
       setResult(calcResult);
     } else if (productName === "kepenk") {
-      // Kepenk için hesaplama
       const calcResult = calculateKepenk(
         values as KepenkSelections,
         prices,
@@ -119,7 +117,6 @@ export const useCalculator = (
       );
       setResult(calcResult);
     } else {
-      // Diğer ürünler için henüz implement edilmedi
       setResult({
         totalPrice: 0,
         selectedProducts: { products: [], accessories: [] },
@@ -130,7 +127,7 @@ export const useCalculator = (
     }
   }, [
     prices,
-    valuesKey,
+    values,
     productName,
     accessories,
     availableTabs,

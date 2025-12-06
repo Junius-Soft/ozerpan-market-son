@@ -796,7 +796,8 @@ export const findYukseltmeProfiliPrice = (
     quantity,
     systemHeight
   );
-  return [parseFloat(matchingProfili.price), selectedProduct];
+  // Fiyat ölçüye göre hesaplanıyor (metre cinsinden yükseklik * adet)
+  return [selectedProduct.totalPrice, selectedProduct];
 };
 
 // En geniş bölmenin genişliğini hesaplayan fonksiyon

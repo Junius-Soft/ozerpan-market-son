@@ -316,7 +316,8 @@ export const findDikmePrice = (
     finalQuantity,
     dikmeHeight
   );
-  return [parseFloat(matchingDikme.price), selectedProduct];
+  // Fiyat ölçüye göre hesaplanıyor (metre cinsinden yükseklik * adet)
+  return [selectedProduct.totalPrice, selectedProduct];
 };
 
 export const findBoxPrice = (

@@ -3415,14 +3415,14 @@
         "price": "1.04"
       },
       {
-        "description": "POLİKARBONAT GERİT CAM SE-78/SE-101 İÇİN Şeffaf",
+        "description": "POLİKARBONAT ŞERİT CAM SE-78/SE-101 İÇİN Şeffaf",
         "stock_code": "353311710100",
         "uretici_kodu": "SE-78",
         "type": "kepenk_lamel_aksesuarlari",
         "lamel_type": "se_78",
         "color": "alüminyum",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "2.61"
       },
       {
         "description": "Zımba Çivisi 8 mm",
@@ -3469,24 +3469,119 @@
         "hareket_tip": "motorlu"
       },
       {
-        "description": "300 - ARKA 90 Alüminyum Kutu",
-        "stock_code": "353141112XXX",
-        "uretici_kodu": "SK.300.XX.T90",
+        "description": "300 - ARKA 90 Alüminyum Kutu RAL Boyalı",
+        "stock_code": "353141121000",
+        "uretici_kodu": "SK.300.XX.T90.RAL",
         "type": "kepenk_kutu_profilleri",
         "kutu_type": "300mm_arka90",
-        "color": "alüminyum",
+        "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "27.13",
+        "en_mm": "300",
+        "boy_mm": "300",
+        "hareket_tip": "motorlu"
       },
       {
-        "description": "300 - ÖN 45 Alüminyum Kutu",
-        "stock_code": "353141113XXX",
-        "uretici_kodu": "SK.300.XX.C45",
+        "description": "300 - ARKA 90 Alüminyum Kutu Beyaz",
+        "stock_code": "353141121100",
+        "uretici_kodu": "SK.300.XX.T90.BEY",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "300mm_arka90",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "23.89",
+        "en_mm": "300",
+        "boy_mm": "300",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "300 - ARKA 90 Alüminyum Kutu Kahverengi",
+        "stock_code": "353141122000",
+        "uretici_kodu": "SK.300.XX.T90.KAH",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "300mm_arka90",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "25.05",
+        "en_mm": "300",
+        "boy_mm": "300",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "300 - ARKA 90 Alüminyum Kutu Metalik Gri",
+        "stock_code": "353141123000",
+        "uretici_kodu": "SK.300.XX.T90.MET",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "300mm_arka90",
+        "color": "metalik_gri",
+        "unit": "Metre",
+        "price": "25.05",
+        "en_mm": "300",
+        "boy_mm": "300",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "300 - ARKA 90 Alüminyum Kutu Antrasit Gri",
+        "stock_code": "353141123400",
+        "uretici_kodu": "SK.300.XX.T90.ANT",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "300mm_arka90",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "24.84",
+        "en_mm": "300",
+        "boy_mm": "300",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "300 - ÖN 45 Alüminyum Kutu RAL Boyalı",
+        "stock_code": "353141131000",
+        "uretici_kodu": "SK.300.XX.C45.RAL",
         "type": "kepenk_kutu_profilleri",
         "kutu_type": "300mm_on45",
-        "color": "alüminyum",
+        "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "18.76"
+      },
+      {
+        "description": "300 - ÖN 45 Alüminyum Kutu Beyaz",
+        "stock_code": "353141131100",
+        "uretici_kodu": "SK.300.XX.C45.BEY",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "300mm_on45",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "16.51"
+      },
+      {
+        "description": "300 - ÖN 45 Alüminyum Kutu Kahverengi",
+        "stock_code": "353141132000",
+        "uretici_kodu": "SK.300.XX.C45.KAH",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "300mm_on45",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "17.34"
+      },
+      {
+        "description": "300 - ÖN 45 Alüminyum Kutu Metalik Gri",
+        "stock_code": "353141133000",
+        "uretici_kodu": "SK.300.XX.C45.MET",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "300mm_on45",
+        "color": "metalik_gri",
+        "unit": "Metre",
+        "price": "17.34"
+      },
+      {
+        "description": "300 - ÖN 45 Alüminyum Kutu Antrasit Gri",
+        "stock_code": "353141133400",
+        "uretici_kodu": "SK.300.XX.C45.ANT",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "300mm_on45",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "17.20"
       },
       {
         "description": "350 - ARKA 90 Alüminyum Kutu RAL Boyalı",
@@ -3510,6 +3605,19 @@
         "color": "beyaz",
         "unit": "Metre",
         "price": "27.59",
+        "en_mm": "350",
+        "boy_mm": "350",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "350 - ARKA 90 Alüminyum Kutu Kahverengi",
+        "stock_code": "353141322000",
+        "uretici_kodu": "SK.350.XX.T90.KAH",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "350mm_arka90",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "29.00",
         "en_mm": "350",
         "boy_mm": "350",
         "hareket_tip": "motorlu"
@@ -3558,7 +3666,17 @@
         "kutu_type": "350mm_on45",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "22.50"
+        "price": "22.18"
+      },
+      {
+        "description": "350 - ÖN 45 Alüminyum Kutu Kahverengi",
+        "stock_code": "353141332000",
+        "uretici_kodu": "SK.350.XX.C45.KAH",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "350mm_on45",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "23.30"
       },
       {
         "description": "350 - ÖN 45 Alüminyum Kutu Metalik Gri",
@@ -3568,7 +3686,7 @@
         "kutu_type": "350mm_on45",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "23.50"
+        "price": "23.30"
       },
       {
         "description": "350 - ÖN 45 Alüminyum Kutu Antrasit Gri",
@@ -3578,7 +3696,7 @@
         "kutu_type": "350mm_on45",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "23.30"
+        "price": "23.10"
       },
       {
         "description": "400 Alüminyum Kutu Kit",
@@ -3595,24 +3713,169 @@
         "hareket_tip": "motorlu"
       },
       {
-        "description": "400 - ARKA 90 Alüminyum Kutu",
-        "stock_code": "353141412XXX",
-        "uretici_kodu": "SK.350.XX.T90",
+        "description": "400 - ÜST 90 Alüminyum Kutu RAL Boyalı",
+        "stock_code": "353141401000",
+        "uretici_kodu": "SK.400.XX.U90.RAL",
         "type": "kepenk_kutu_profilleri",
-        "kutu_type": "400mm_arka90",
-        "color": "alüminyum",
+        "kutu_type": "400mm_ust90",
+        "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "10.47"
       },
       {
-        "description": "400 - ÖN 45 Alüminyum Kutu",
-        "stock_code": "353141413XXX",
-        "uretici_kodu": "SK.350.XX.C45",
+        "description": "400 - ÜST 90 Alüminyum Kutu Beyaz",
+        "stock_code": "353141401100",
+        "uretici_kodu": "SK.400.XX.U90.BEY",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "400mm_ust90",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "9.22"
+      },
+      {
+        "description": "400 - ÜST 90 Alüminyum Kutu Kahverengi",
+        "stock_code": "353141402000",
+        "uretici_kodu": "SK.400.XX.U90.KAH",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "400mm_ust90",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "9.68"
+      },
+      {
+        "description": "400 - ÜST 90 Alüminyum Kutu Metalik Gri",
+        "stock_code": "353141403000",
+        "uretici_kodu": "SK.400.XX.U90.MET",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "400mm_ust90",
+        "color": "metalik_gri",
+        "unit": "Metre",
+        "price": "9.68"
+      },
+      {
+        "description": "400 - ÜST 90 Alüminyum Kutu Antrasit Gri",
+        "stock_code": "353141403400",
+        "uretici_kodu": "SK.400.XX.U90.ANT",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "400mm_ust90",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "9.60"
+      },
+      {
+        "description": "400 - ARKA 90 Alüminyum Kutu RAL Boyalı",
+        "stock_code": "353141412000",
+        "uretici_kodu": "SK.400.XX.T90.RAL",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "400mm_arka90",
+        "color": "ral_boyalı",
+        "unit": "Metre",
+        "price": "27.13",
+        "en_mm": "400",
+        "boy_mm": "400",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "400 - ARKA 90 Alüminyum Kutu Beyaz",
+        "stock_code": "353141412100",
+        "uretici_kodu": "SK.400.XX.T90.BEY",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "400mm_arka90",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "23.89",
+        "en_mm": "400",
+        "boy_mm": "400",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "400 - ARKA 90 Alüminyum Kutu Kahverengi",
+        "stock_code": "353141412200",
+        "uretici_kodu": "SK.400.XX.T90.KAH",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "400mm_arka90",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "25.05",
+        "en_mm": "400",
+        "boy_mm": "400",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "400 - ARKA 90 Alüminyum Kutu Metalik Gri",
+        "stock_code": "353141413000",
+        "uretici_kodu": "SK.400.XX.T90.MET",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "400mm_arka90",
+        "color": "metalik_gri",
+        "unit": "Metre",
+        "price": "25.05",
+        "en_mm": "400",
+        "boy_mm": "400",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "400 - ARKA 90 Alüminyum Kutu Antrasit Gri",
+        "stock_code": "353141413400",
+        "uretici_kodu": "SK.400.XX.T90.ANT",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "400mm_arka90",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "24.84",
+        "en_mm": "400",
+        "boy_mm": "400",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "400 - ÖN 45 Alüminyum Kutu RAL Boyalı",
+        "stock_code": "353141413100",
+        "uretici_kodu": "SK.400.XX.C45.RAL",
         "type": "kepenk_kutu_profilleri",
         "kutu_type": "400mm_on45",
-        "color": "alüminyum",
+        "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "18.76"
+      },
+      {
+        "description": "400 - ÖN 45 Alüminyum Kutu Beyaz",
+        "stock_code": "353141413110",
+        "uretici_kodu": "SK.400.XX.C45.BEY",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "400mm_on45",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "16.51"
+      },
+      {
+        "description": "400 - ÖN 45 Alüminyum Kutu Kahverengi",
+        "stock_code": "353141413200",
+        "uretici_kodu": "SK.400.XX.C45.KAH",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "400mm_on45",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "17.34"
+      },
+      {
+        "description": "400 - ÖN 45 Alüminyum Kutu Metalik Gri",
+        "stock_code": "353141413300",
+        "uretici_kodu": "SK.400.XX.C45.MET",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "400mm_on45",
+        "color": "metalik_gri",
+        "unit": "Metre",
+        "price": "17.34"
+      },
+      {
+        "description": "400 - ÖN 45 Alüminyum Kutu Antrasit Gri",
+        "stock_code": "353141413340",
+        "uretici_kodu": "SK.400.XX.C45.ANT",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "400mm_on45",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "17.20"
       },
       {
         "description": "400 - LİST 40 Alüminyum Kutu",
@@ -3779,19 +4042,19 @@
         "hareket_tip": "motorlu"
       },
       {
-        "description": "114 mm Çelik Boru Baş Galvaniz",
+        "description": "114 mm Çelik Boru Başı Galvaniz",
         "stock_code": "353451614900",
         "uretici_kodu": "CP.098.35.SGA",
         "type": "kepenk_tambur_aksesuarlari",
         "tambur_type": "114mm",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "21.00",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
         "hareket_tip": "motorlu"
       },
       {
-        "description": "159 mm Çelik Boru Baş Galvaniz",
+        "description": "159 mm Çelik Boru Başı Galvaniz",
         "stock_code": "353451714900",
         "uretici_kodu": "CP.098.35.SGA",
         "type": "kepenk_tambur_aksesuarlari",
@@ -3803,14 +4066,14 @@
         "hareket_tip": "motorlu"
       },
       {
-        "description": "Kancalı Ara Köl Sekizgen 8MMx30 DERİCE Parsak Etiksali",
+        "description": "Kancalı Ara Kol Sekizgen 8MMx30 DERECE Parlak Etiksali",
         "stock_code": "353456262000",
         "uretici_kodu": "HI.AES.0O.90",
         "type": "kepenk_tambur_aksesuarlari",
         "tambur_type": "all",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "7.46",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
         "hareket_tip": "motorlu"
       },

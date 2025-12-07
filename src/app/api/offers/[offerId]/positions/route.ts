@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { Position } from "@/documents/offers";
 
+// Force dynamic rendering - don't pre-render at build time
+export const dynamic = 'force-dynamic';
+
 // DELETE /api/offers/:offerId/positions - Delete multiple positions
 export async function DELETE(
   request: Request,

@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import type { Offer } from "@/documents/offers";
 import { supabase } from "@/lib/supabase";
 
+// Force dynamic rendering - don't pre-render at build time
+export const dynamic = 'force-dynamic';
+
 interface UnknownObject {
   [key: string]: unknown;
 }

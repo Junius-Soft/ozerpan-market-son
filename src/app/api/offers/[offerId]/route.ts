@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { Position } from "@/documents/offers";
 
+// Force dynamic rendering - don't pre-render at build time
+export const dynamic = 'force-dynamic';
+
 // GET /api/offers/:offerId - Get a single offer
 export async function GET(
   request: Request,

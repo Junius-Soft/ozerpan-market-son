@@ -34,15 +34,45 @@ export async function generateFiyatAnaliziPDFPozListesi(
   const currency = state.app.currency;
   const eurRate = state.app.eurRate;
 
-  // Para birimi dönüştürme fonksiyonu
-  const convertCurrency = (amount: number) => {
-    if (currency === "EUR") return amount;
-    return amount * eurRate;
+  // Para birimi dönüştürme fonksiyonu - pozisyonun kendi currency'sine göre
+  const convertCurrency = (amount: number, positionCurrency: string) => {
+    // Eğer pozisyon currency'si ile gösterim currency'si aynıysa, çevirim yok
+    if (positionCurrency === currency) {
+      return amount;
+    }
+    
+    // Pozisyon TRY, gösterim EUR ise: TRY -> EUR (böl)
+    if (positionCurrency === "TRY" && currency === "EUR") {
+      return amount / eurRate;
+    }
+    
+    // Pozisyon EUR, gösterim TRY ise: EUR -> TRY (çarp)
+    if (positionCurrency === "EUR" && currency === "TRY") {
+      return amount * eurRate;
+    }
+    
+    // Varsayılan: aynen döndür
+    return amount;
   };
 
-  // Fiyat formatı fonksiyonu
-  const formatPrice = (amount: number) => {
-    const convertedAmount = convertCurrency(amount);
+  // Fiyat formatı fonksiyonu - pozisyonun kendi currency'sine göre
+  // Cam balkon için her zaman TRY göster
+  const formatPrice = (amount: number, positionCurrency: string, isCamBalkon: boolean = false) => {
+    // Cam balkon ise her zaman TRY olarak göster
+    if (isCamBalkon) {
+      // Eğer pozisyon currency'si TRY değilse, TRY'ye çevir
+      let tryAmount = amount;
+      if (positionCurrency === "EUR") {
+        tryAmount = amount * eurRate;
+      }
+      return `₺ ${tryAmount.toLocaleString("tr-TR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}`;
+    }
+    
+    // Diğer ürünler için normal çevirim
+    const convertedAmount = convertCurrency(amount, positionCurrency);
     if (currency === "EUR") {
       return `€ ${convertedAmount.toLocaleString("tr-TR", {
         maximumFractionDigits: 2,
@@ -53,6 +83,26 @@ export async function generateFiyatAnaliziPDFPozListesi(
         maximumFractionDigits: 2,
       })}`;
     }
+  };
+
+  // Cam balkon için genişlik hesaplama fonksiyonu
+  const calculateCamBalkonWidth = (pos: Position): string => {
+    if (pos.productId !== "cam-balkon" || !pos.productDetails) {
+      return "-";
+    }
+    
+    const pd = pos.productDetails as Record<string, unknown>;
+    const kolSayisi = Number(pd.kolSayisi || 1);
+    let toplamGenislik = 0;
+    
+    for (let i = 1; i <= kolSayisi; i++) {
+      const g = Number(pd[`kol${i}_genislik`] || 0);
+      if (!Number.isNaN(g) && g > 0) {
+        toplamGenislik += g;
+      }
+    }
+    
+    return toplamGenislik > 0 ? `${toplamGenislik} mm` : "-";
   };
 
   const doc = new jsPDF("p", "mm", "a4");
@@ -101,17 +151,26 @@ export async function generateFiyatAnaliziPDFPozListesi(
 
   // Poz Listesi Tablosu
   const pozTableData: RowInput[] = positions.map((pos) => {
-    const unitPriceEUR = pos.unitPrice || 0;
-    const totalEUR = unitPriceEUR * pos.quantity;
+    const unitPrice = pos.unitPrice || 0;
+    const total = unitPrice * pos.quantity;
+    const posCurrency = pos.currency?.code || "EUR";
+    const isCamBalkon = pos.productId === "cam-balkon";
+    
+    // Cam balkon için genişlik hesapla
+    let genislik: number | string = pos.productDetails?.width ?? "-";
+    if (isCamBalkon) {
+      genislik = calculateCamBalkonWidth(pos);
+    }
+
     return [
       pos.pozNo,
       pos.productName || "-",
-      pos.productDetails?.width ?? "-",
+      genislik,
       pos.productDetails?.height ?? "-",
       pos.quantity,
       pos.unit ? pos.unit.charAt(0).toUpperCase() + pos.unit.slice(1) : "-",
-      unitPriceEUR !== undefined ? formatPrice(unitPriceEUR) : "-",
-      totalEUR !== undefined ? formatPrice(totalEUR) : "-",
+      unitPrice !== undefined ? formatPrice(unitPrice, posCurrency, isCamBalkon) : "-",
+      total !== undefined ? formatPrice(total, posCurrency, isCamBalkon) : "-",
     ];
   });
 
@@ -119,6 +178,9 @@ export async function generateFiyatAnaliziPDFPozListesi(
   const malzemeListesiData: RowInput[] = [];
   let rowIndex = 1;
   positions.forEach((pos) => {
+    const posCurrency = pos.currency?.code || "EUR";
+    const isCamBalkon = pos.productId === "cam-balkon";
+    
     // Ürünler
     if (pos.selectedProducts && Array.isArray(pos.selectedProducts.products)) {
       pos.selectedProducts.products.forEach((prod) => {
@@ -130,7 +192,7 @@ export async function generateFiyatAnaliziPDFPozListesi(
           : (prod.quantity ?? 1);
         // Pozisyon quantity'si ile çarp
         const totalQuantity = baseQuantity * (pos.quantity ?? 1);
-        const euroTotal = prod.totalPrice 
+        const totalPrice = prod.totalPrice 
           ? Number(prod.totalPrice) * (pos.quantity ?? 1)
           : 0;
         malzemeListesiData.push([
@@ -141,8 +203,8 @@ export async function generateFiyatAnaliziPDFPozListesi(
           prod.unit
             ? prod.unit.charAt(0).toUpperCase() + prod.unit.slice(1)
             : "-",
-          prod.price ? formatPrice(Number(prod.price)) : "-",
-          euroTotal !== undefined ? formatPrice(euroTotal) : "-",
+          prod.price ? formatPrice(Number(prod.price), posCurrency, isCamBalkon) : "-",
+          totalPrice !== undefined ? formatPrice(totalPrice, posCurrency, isCamBalkon) : "-",
         ]);
       });
     }
@@ -160,7 +222,7 @@ export async function generateFiyatAnaliziPDFPozListesi(
           : (acc.quantity ?? 1);
         // Pozisyon quantity'si ile çarp
         const totalQuantity = baseQuantity * (pos.quantity ?? 1);
-        const euroTotal = acc.totalPrice 
+        const totalPrice = acc.totalPrice 
           ? Number(acc.totalPrice) * (pos.quantity ?? 1)
           : 0;
         malzemeListesiData.push([
@@ -169,8 +231,8 @@ export async function generateFiyatAnaliziPDFPozListesi(
           acc.description || "-",
           totalQuantity,
           acc.unit ? acc.unit.charAt(0).toUpperCase() + acc.unit.slice(1) : "-",
-          acc.price ? formatPrice(Number(acc.price)) : "-",
-          euroTotal !== undefined ? formatPrice(euroTotal) : "-",
+          acc.price ? formatPrice(Number(acc.price), posCurrency, isCamBalkon) : "-",
+          totalPrice !== undefined ? formatPrice(totalPrice, posCurrency, isCamBalkon) : "-",
         ]);
       });
     }
@@ -219,6 +281,10 @@ export async function generateFiyatAnaliziPDFPozListesi(
   doc.text("Malzeme Listesi", margin, malzemeListesiBaslikY);
   doc.setFont("NotoSans", "normal");
 
+  // Cam balkon var mı kontrol et - varsa TRY kullan
+  const hasCamBalkon = positions.some((pos) => pos.productId === "cam-balkon");
+  const currencySymbol = hasCamBalkon ? "₺" : (currency === "EUR" ? "€" : "₺");
+
   // Malzeme Listesi Tablosu çizimi
   autoTable(doc, {
     startY: malzemeListesiBaslikY + 5,
@@ -230,7 +296,7 @@ export async function generateFiyatAnaliziPDFPozListesi(
         "Miktar",
         "Birim",
         "Birim Fiyat",
-        `Tutar (${currency === "EUR" ? "€" : "₺"})`,
+        `Tutar (${currencySymbol})`,
       ],
     ],
     body: malzemeListesiData,

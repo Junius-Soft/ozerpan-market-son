@@ -3489,27 +3489,96 @@
         "price": "0.00"
       },
       {
-        "description": "350 - ARKA 90 Alüminyum Kutu",
-        "stock_code": "353141212XXX",
-        "uretici_kodu": "SK.350.XX.T90",
+        "description": "350 - ARKA 90 Alüminyum Kutu RAL Boyalı",
+        "stock_code": "353141321000",
+        "uretici_kodu": "SK.350.XX.T90.RAL",
         "type": "kepenk_kutu_profilleri",
         "kutu_type": "350mm_arka90",
-        "color": "alüminyum",
+        "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "0.00",
+        "price": "31.32",
         "en_mm": "350",
         "boy_mm": "350",
         "hareket_tip": "motorlu"
       },
       {
-        "description": "350 - ÖN 45 Alüminyum Kutu",
-        "stock_code": "353141213XXX",
-        "uretici_kodu": "SK.350.XX.C45",
+        "description": "350 - ARKA 90 Alüminyum Kutu Beyaz",
+        "stock_code": "353141321100",
+        "uretici_kodu": "SK.350.XX.T90.BEY",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "350mm_arka90",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "27.59",
+        "en_mm": "350",
+        "boy_mm": "350",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "350 - ARKA 90 Alüminyum Kutu Metalik Gri",
+        "stock_code": "353141323000",
+        "uretici_kodu": "SK.350.XX.T90.MET",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "350mm_arka90",
+        "color": "metalik_gri",
+        "unit": "Metre",
+        "price": "28.98",
+        "en_mm": "350",
+        "boy_mm": "350",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "350 - ARKA 90 Alüminyum Kutu Antrasit Gri",
+        "stock_code": "353141323400",
+        "uretici_kodu": "SK.350.XX.T90.ANT",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "350mm_arka90",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "28.71",
+        "en_mm": "350",
+        "boy_mm": "350",
+        "hareket_tip": "motorlu"
+      },
+      {
+        "description": "350 - ÖN 45 Alüminyum Kutu RAL Boyalı",
+        "stock_code": "353141331000",
+        "uretici_kodu": "SK.350.XX.C45.RAL",
         "type": "kepenk_kutu_profilleri",
         "kutu_type": "350mm_on45",
-        "color": "alüminyum",
+        "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "0.00"
+        "price": "25.22"
+      },
+      {
+        "description": "350 - ÖN 45 Alüminyum Kutu Beyaz",
+        "stock_code": "353141331100",
+        "uretici_kodu": "SK.350.XX.C45.BEY",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "350mm_on45",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "22.50"
+      },
+      {
+        "description": "350 - ÖN 45 Alüminyum Kutu Metalik Gri",
+        "stock_code": "353141333000",
+        "uretici_kodu": "SK.350.XX.C45.MET",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "350mm_on45",
+        "color": "metalik_gri",
+        "unit": "Metre",
+        "price": "23.50"
+      },
+      {
+        "description": "350 - ÖN 45 Alüminyum Kutu Antrasit Gri",
+        "stock_code": "353141333400",
+        "uretici_kodu": "SK.350.XX.C45.ANT",
+        "type": "kepenk_kutu_profilleri",
+        "kutu_type": "350mm_on45",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "23.30"
       },
       {
         "description": "400 Alüminyum Kutu Kit",
@@ -3657,7 +3726,7 @@
         "tambur_type": "all",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "1.08",
         "lamel_type": "SL-38,SE-45,SL-55, ST-55,SL-62,SL 250 İmpermeable Kutu Kit",
         "hareket_tip": "motorlu"
       },
@@ -3705,7 +3774,7 @@
         "tambur_type": "102mm",
         "color": "alüminyum",
         "unit": "Adet",
-        "price": "0.00",
+        "price": "21.00",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, LT-100, SL-100",
         "hareket_tip": "motorlu"
       },
@@ -3865,7 +3934,7 @@
         "dikme_type": "77_lik",
         "color": "alüminyum",
         "unit": "Metre",
-        "price": "0.00",
+        "price": "1.72",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
         "panjur_tip": "maxi"
       },
@@ -3877,7 +3946,7 @@
         "dikme_type": "100_luk",
         "color": "alüminyum",
         "unit": "Metre",
-        "price": "0.00",
+        "price": "1.72",
         "lamel_type": "ST-100, SL-100",
         "panjur_tip": "mega"
       },

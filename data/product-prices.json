@@ -1235,6 +1235,26 @@
         "price": "4.50"
       },
       {
+        "description": "25x25 Strafor Kutu Kompozit Kapama",
+        "stock_code": "352144151010",
+        "uretici_kodu": "352144151010",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "ral",
+        "unit": "Metre",
+        "price": "7.91",
+        "currency": "EUR"
+      },
+      {
+        "description": "30x30 Strafor Kutu Kompozit Kapama",
+        "stock_code": "352144351010",
+        "uretici_kodu": "352144351010",
+        "type": "yalitimli_panjur_kutu_profilleri",
+        "color": "ral",
+        "unit": "Metre",
+        "price": "10.06",
+        "currency": "EUR"
+      },
+      {
         "description": "Mini Alt Parça Pres",
         "stock_code": "352123900200",
         "uretici_kodu": "ES.427.00.DAP",

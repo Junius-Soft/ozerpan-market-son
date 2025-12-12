@@ -520,23 +520,31 @@ export const findYalitimliBoxPrice = (
   > = {
     "250mm_ithal": [
       { name: "25x25 Strafor Kutu İthal", needsColor: false },
-      // emptyBox ise alt kapama ekleme
-      ...(boxsetType === "emptyBox" ? [] : [{ name: "25x25 Strafor Kutu Alt Kapama", needsColor: true }]),
+      // emptyBox ise kompozit kapama ekle, değilse alt kapama ekle
+      ...(boxsetType === "emptyBox" 
+        ? [{ name: "25x25 Strafor Kutu Kompozit Kapama", needsColor: false }]
+        : [{ name: "25x25 Strafor Kutu Alt Kapama", needsColor: true }]),
     ],
     "250mm_yerli": [
       { name: "25x25 Eps Panjur Kutusu Yerli", needsColor: false },
-      // emptyBox ise alt kapama ekleme
-      ...(boxsetType === "emptyBox" ? [] : [{ name: "25x25 Strafor Kutu Alt Kapama", needsColor: true }]),
+      // emptyBox ise kompozit kapama ekle, değilse alt kapama ekle
+      ...(boxsetType === "emptyBox" 
+        ? [{ name: "25x25 Strafor Kutu Kompozit Kapama", needsColor: false }]
+        : [{ name: "25x25 Strafor Kutu Alt Kapama", needsColor: true }]),
     ],
     "300mm_yerli": [
       { name: "30x30 Eps Panjur Kutusu Yerli", needsColor: false },
-      // emptyBox ise alt kapama ekleme
-      ...(boxsetType === "emptyBox" ? [] : [{ name: "30x30 Strafor Kutu Alt Kapama", needsColor: true }]),
+      // emptyBox ise kompozit kapama ekle, değilse alt kapama ekle
+      ...(boxsetType === "emptyBox" 
+        ? [{ name: "30x30 Strafor Kutu Kompozit Kapama", needsColor: false }]
+        : [{ name: "30x30 Strafor Kutu Alt Kapama", needsColor: true }]),
     ],
     "300mm_ithal": [
       { name: "30x30 Strafor Kutu İthal", needsColor: false },
-      // emptyBox ise alt kapama ekleme
-      ...(boxsetType === "emptyBox" ? [] : [{ name: "30x30 Strafor Kutu Alt Kapama", needsColor: true }]),
+      // emptyBox ise kompozit kapama ekle, değilse alt kapama ekle
+      ...(boxsetType === "emptyBox" 
+        ? [{ name: "30x30 Strafor Kutu Kompozit Kapama", needsColor: false }]
+        : [{ name: "30x30 Strafor Kutu Alt Kapama", needsColor: true }]),
     ],
   };
 

@@ -1649,6 +1649,126 @@
         "price": "6.16"
       },
       {
+        "description": "Pvc Ötelemeli Yan Dikme 39 mm Beyaz",
+        "stock_code": "352132501110",
+        "uretici_kodu": "352132501110",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "6.32296875",
+        "currency": "EUR"
+      },
+      {
+        "description": "Pvc Ötelemeli Yan Dikme 39 mm Folyo Kap.",
+        "stock_code": "352132507010",
+        "uretici_kodu": "352132507010",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "folyo_kap",
+        "unit": "Metre",
+        "price": "12.88404244",
+        "currency": "EUR"
+      },
+      {
+        "description": "Pvc Ötelemeli Yan Dikme 39 mm Altın Meşe",
+        "stock_code": "352132507110",
+        "uretici_kodu": "352132507110",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "11.17900875",
+        "currency": "EUR"
+      },
+      {
+        "description": "Pvc Ötelemeli Yan Dikme 39 mm Fındık",
+        "stock_code": "352132507210",
+        "uretici_kodu": "352132507210",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "11.17900875",
+        "currency": "EUR"
+      },
+      {
+        "description": "Pvc Ötelemeli Yan Dikme 39 mm Vizon",
+        "stock_code": "352132508710",
+        "uretici_kodu": "352132508710",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "11.17900875",
+        "currency": "EUR"
+      },
+      {
+        "description": "Pvc Ötelemeli Yan Dikme 39 mm Antrasit Gri",
+        "stock_code": "352132508810",
+        "uretici_kodu": "352132508810",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "11.17900875",
+        "currency": "EUR"
+      },
+      {
+        "description": "Pvc Ötelemeli Yan Dikme 55 mm Beyaz",
+        "stock_code": "352132601110",
+        "uretici_kodu": "352132601110",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "6.32296875",
+        "currency": "EUR"
+      },
+      {
+        "description": "Pvc Ötelemeli Yan Dikme 55 mm Folyo Kap.",
+        "stock_code": "352132607010",
+        "uretici_kodu": "352132607010",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "folyo_kap",
+        "unit": "Metre",
+        "price": "12.6459375",
+        "currency": "EUR"
+      },
+      {
+        "description": "Pvc Ötelemeli Yan Dikme 55 mm Altın Meşe",
+        "stock_code": "352132607110",
+        "uretici_kodu": "352132607110",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "11.05254938",
+        "currency": "EUR"
+      },
+      {
+        "description": "Pvc Ötelemeli Yan Dikme 55 mm Fındık",
+        "stock_code": "352132607210",
+        "uretici_kodu": "352132607210",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "11.05254938",
+        "currency": "EUR"
+      },
+      {
+        "description": "Pvc Ötelemeli Yan Dikme 55 mm Vizon",
+        "stock_code": "352132608710",
+        "uretici_kodu": "352132608710",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "11.05254938",
+        "currency": "EUR"
+      },
+      {
+        "description": "Pvc Ötelemeli Yan Dikme 55 mm Antrasit Gri",
+        "stock_code": "352132608810",
+        "uretici_kodu": "352132608810",
+        "type": "pvc_panjur_yan_dikme_profilleri",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "11.05254938",
+        "currency": "EUR"
+      },
+      {
         "description": "Mini Pvc Orta Dikme 39 mm Beyaz",
         "stock_code": "352132301110",
         "uretici_kodu": "352132301110",

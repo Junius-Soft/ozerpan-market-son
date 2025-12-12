@@ -268,18 +268,32 @@ export const findDikmePrice = (
 
   if (optionId === "monoblok") {
     // Monoblok için PVC dikme profilleri
-    const pvcType =
-      currentDikme === "Yan"
-        ? "pvc_panjur_yan_dikme_profilleri"
-        : "pvc_panjur_orta_dikme_profilleri";
-
-    dikmePrices = prices.filter((p) => p.type === pvcType);
-
-    // Monoblok için dikme genişlikleri: mini 39mm, midi 55mm
-    dikmeWidth = dikmeType.startsWith("mini_") ? "39" : "55";
-
-    const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
-    searchPattern = `${typePrefix} Pvc ${currentDikme} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+    if (currentDikme === "Yan") {
+      // Monoblok yan dikme için ötelemeli yan dikme kullan
+      const pvcType = "pvc_panjur_yan_dikme_profilleri";
+      dikmePrices = prices.filter((p) => p.type === pvcType);
+      
+      // Monoblok için dikme genişlikleri: mini 39mm, midi 55mm
+      dikmeWidth = dikmeType.startsWith("mini_") ? "39" : "55";
+      
+      // Ötelemeli yan dikme için arama pattern'i
+      // Folyo Kap için özel kontrol
+      if (normalizedColor === "Folyo Kap") {
+        searchPattern = `Pvc Ötelemeli Yan Dikme ${dikmeWidth} mm Folyo Kap.`;
+      } else {
+        searchPattern = `Pvc Ötelemeli Yan Dikme ${dikmeWidth} mm ${normalizedColor}`;
+      }
+    } else {
+      // Orta dikme için normal mantık
+      const pvcType = "pvc_panjur_orta_dikme_profilleri";
+      dikmePrices = prices.filter((p) => p.type === pvcType);
+      
+      // Monoblok için dikme genişlikleri: mini 39mm, midi 55mm
+      dikmeWidth = dikmeType.startsWith("mini_") ? "39" : "55";
+      
+      const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
+      searchPattern = `${typePrefix} Pvc ${currentDikme} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+    }
   } else {
     // Distan (mevcut hesaplama)
     dikmePrices = prices.filter((p) => p.type === "panjur_dikme_profilleri");
@@ -295,8 +309,18 @@ export const findDikmePrice = (
   if (!matchingDikme && normalizedColor !== "Beyaz") {
     normalizedColor = "Beyaz";
     if (optionId === "monoblok") {
-      const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
-      searchPattern = `${typePrefix} Pvc ${currentDikme} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+      if (currentDikme === "Yan") {
+        // Ötelemeli yan dikme için arama pattern'i
+        // Folyo Kap için özel kontrol
+        if (normalizedColor === "Folyo Kap") {
+          searchPattern = `Pvc Ötelemeli Yan Dikme ${dikmeWidth} mm Folyo Kap.`;
+        } else {
+          searchPattern = `Pvc Ötelemeli Yan Dikme ${dikmeWidth} mm ${normalizedColor}`;
+        }
+      } else {
+        const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
+        searchPattern = `${typePrefix} Pvc ${currentDikme} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+      }
     } else {
       const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
       searchPattern = `${typePrefix} Dikme ${dikmeWidth} mm ${normalizedColor}`;

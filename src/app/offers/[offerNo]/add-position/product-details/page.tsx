@@ -56,13 +56,24 @@ export default function ProductDetailsPage() {
   const { state: productState, actions: productActions } =
     useProductState(productId);
 
-  const getSelectedPosition = useMemo(async () => {
-    const currentOffer = await getOffer(offerNo);
-    const position =
-      currentOffer?.positions.find((p) => p.id === selectedPositionId) ??
-      ({} as Position);
-    setSelectedPosition(position);
-    return position;
+  // Load selected position in useEffect instead of useMemo
+  useEffect(() => {
+    if (!selectedPositionId || !offerNo) return;
+
+    const loadSelectedPosition = async () => {
+      try {
+        const currentOffer = await getOffer(offerNo);
+        const position =
+          currentOffer?.positions.find((p) => p.id === selectedPositionId) ??
+          ({} as Position);
+        setSelectedPosition(position);
+      } catch (error) {
+        console.error("Error loading selected position:", error);
+        setSelectedPosition({} as Position);
+      }
+    };
+
+    loadSelectedPosition();
   }, [selectedPositionId, offerNo]);
 
   // Transform tabs into initialValues with default field values and dependencies
@@ -135,8 +146,16 @@ export default function ProductDetailsPage() {
 
         // If selectedPosition exists, update defaults from existing position
         if (selectedPositionId) {
-          const position = await getSelectedPosition;
-          if (position && Array.isArray(product.tabs)) {
+          // Load position directly here to avoid race condition
+          const currentOffer = await getOffer(offerNo);
+          const position =
+            currentOffer?.positions.find((p) => p.id === selectedPositionId) ??
+            ({} as Position);
+          
+          // Update selectedPosition state
+          setSelectedPosition(position);
+          
+          if (position?.id && Array.isArray(product.tabs)) {
             // Dinamik tip belirleme - productId'ye göre uygun tip kullan
             const productDetails = position.productDetails as ReturnType<
               typeof getInitialValues
@@ -238,7 +257,7 @@ export default function ProductDetailsPage() {
     router,
     typeId,
     selectedPositionId,
-    getSelectedPosition,
+    selectedPosition,
     productObj,
     productActions,
     dispatch,

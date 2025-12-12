@@ -97,7 +97,7 @@ export default function Home() {
                       ? "Modern pencere çözümleri"
                       : product.id === "sineklik"
                       ? "Etkili sineklik sistemleri"
-                      : "Kaliteli kapı sistemleri"}
+                      : "Kaliteli cam balkon sistemleri"}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col">
@@ -111,7 +111,7 @@ export default function Home() {
                         ? "Enerji tasarruflu ve estetik pencere sistemleri."
                         : product.id === "sineklik"
                         ? "Zararlıları dışarıda tutarken temiz hava alın."
-                        : "Güvenli ve şık kapı sistemleri."}
+                        : "Güvenli ve şık cam balkon sistemleri."}
                     </p>
                     {!product.isActive && (
                       <div className="mt-4">

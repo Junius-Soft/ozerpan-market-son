@@ -232,7 +232,11 @@ export const ProductPreview = forwardRef<
                                         </span>
                                         {product.size && (
                                           <span>
-                                            Boyut: <b>{product.size}mm</b>
+                                            Boyut: <b>
+                                              {product.unit === "M2"
+                                                ? `${typeof product.size === "number" ? product.size.toFixed(2) : product.size} m²`
+                                                : `${product.size}mm`}
+                                            </b>
                                           </span>
                                         )}
                                         <span>
@@ -280,7 +284,11 @@ export const ProductPreview = forwardRef<
                                         </span>
                                         {acc.size && (
                                           <span>
-                                            Boyut: <b>{acc.size}mm</b>
+                                            Boyut: <b>
+                                              {acc.unit === "M2" 
+                                                ? `${typeof acc.size === "number" ? acc.size.toFixed(2) : acc.size} m²`
+                                                : `${acc.size}mm`}
+                                            </b>
                                           </span>
                                         )}
                                         <span>

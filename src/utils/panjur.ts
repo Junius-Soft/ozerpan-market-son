@@ -113,13 +113,15 @@ export const createSelectedProduct = (
   size?: number
 ): SelectedProduct => {
   const sizeMetre = size ? size / 1000 : undefined;
+  const price = parseFloat(priceItem.price || "0");
+  const calculatedPrice = isNaN(price) ? 0 : price;
 
   return {
     ...priceItem,
     quantity,
     totalPrice: sizeMetre
-      ? sizeMetre * parseFloat(priceItem.price) * quantity
-      : parseFloat(priceItem.price) * quantity,
+      ? sizeMetre * calculatedPrice * quantity
+      : calculatedPrice * quantity,
     size,
   };
 };

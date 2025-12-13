@@ -71,14 +71,15 @@ export async function generateFiyatAnaliziPDFPozListesi(
       })}`;
     }
     
-    // Diğer ürünler için normal çevirim
-    const convertedAmount = convertCurrency(amount, positionCurrency);
-    if (currency === "EUR") {
-      return `€ ${convertedAmount.toLocaleString("tr-TR", {
+    // Diğer ürünler için pozisyonun kendi currency'sine göre formatla
+    // Pozisyon currency'si EUR ise EUR, TRY ise TRY göster
+    if (positionCurrency === "EUR") {
+      return `€ ${amount.toLocaleString("tr-TR", {
+        minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       })}`;
     } else {
-      return `₺ ${convertedAmount.toLocaleString("tr-TR", {
+      return `₺ ${amount.toLocaleString("tr-TR", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       })}`;

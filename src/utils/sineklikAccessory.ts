@@ -109,8 +109,15 @@ export function getMenteseliTulAccessoryItem(
   });
   if (!tul) return undefined;
 
-  const size = width * height;
-  return createSelectedProduct(tul, 1, size);
+  // m² hesaplama - alan bazlı
+  const areaM2 = (width * height) / 1_000_000;
+  
+  // m² bazlı fiyatlandırma
+  const product = createSelectedProduct(tul, 1);
+  // totalPrice'ı m² bazlı hesapla (price zaten m² fiyatı)
+  product.totalPrice = areaM2 * parseFloat(tul.price || "0");
+  product.size = areaM2 * 1_000_000; // mm² cinsinden gösterim için
+  return product;
 }
 
 export function getSabitTulAccessoryItem(
@@ -129,8 +136,15 @@ export function getSabitTulAccessoryItem(
   });
   if (!tul) return undefined;
 
-  const size = width * height;
-  return createSelectedProduct(tul, 1, size);
+  // m² hesaplama - alan bazlı
+  const areaM2 = (width * height) / 1_000_000;
+  
+  // m² bazlı fiyatlandırma
+  const product = createSelectedProduct(tul, 1);
+  // totalPrice'ı m² bazlı hesapla (price zaten m² fiyatı)
+  product.totalPrice = areaM2 * parseFloat(tul.price || "0");
+  product.size = areaM2 * 1_000_000; // mm² cinsinden gösterim için
+  return product;
 }
 
 export function getSabitFitilAccessoryItem(
@@ -220,7 +234,7 @@ export function getPliseTulAccessoryItems(
       // m² bazlı fiyatlandırma - size kullanmıyoruz, direkt m² ile çarpıyoruz
       const product = createSelectedProduct(tul, 1);
       // totalPrice'ı m² bazlı hesapla (price zaten m² fiyatı olmalı)
-      product.totalPrice = areaPerTul * parseFloat(tul.price);
+      product.totalPrice = areaPerTul * parseFloat(tul.price || "0");
       product.size = areaPerTul; // m² değerini size olarak sakla (gösterim için)
       items.push(product);
     }
@@ -228,7 +242,7 @@ export function getPliseTulAccessoryItems(
     // m² bazlı fiyatlandırma
     const product = createSelectedProduct(tul, 1);
     // totalPrice'ı m² bazlı hesapla (price zaten m² fiyatı olmalı)
-    product.totalPrice = areaM2 * parseFloat(tul.price);
+    product.totalPrice = areaM2 * parseFloat(tul.price || "0");
     product.size = areaM2; // m² değerini size olarak sakla (gösterim için)
     items.push(product);
   }
@@ -370,8 +384,15 @@ export function getSurmeTulAccessoryItem(
 
   if (!tul) return undefined;
 
-  const size = width * height;
-  return createSelectedProduct(tul, 1, size);
+  // m² hesaplama - alan bazlı
+  const areaM2 = (width * height) / 1_000_000;
+  
+  // m² bazlı fiyatlandırma
+  const product = createSelectedProduct(tul, 1);
+  // totalPrice'ı m² bazlı hesapla (price zaten m² fiyatı)
+  product.totalPrice = areaM2 * parseFloat(tul.price || "0");
+  product.size = areaM2; // m² cinsinden sakla (gösterim için)
+  return product;
 }
 
 export function getSurmeFitilAccessoryItem(

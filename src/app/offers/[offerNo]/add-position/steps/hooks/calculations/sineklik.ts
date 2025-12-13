@@ -20,16 +20,22 @@ export const calculateSineklik = (
   const profiles: SelectedProduct[] = getProfileItems(values, prices);
 
   const profilesTotalPrice: number = (profiles || []).reduce((total, acc) => {
-    return total + acc.totalPrice;
+    const price = acc.totalPrice ?? 0;
+    return total + (isNaN(price) ? 0 : price);
   }, 0);
 
   const accessoriesTotalPrice: number = (accessories || []).reduce(
-    (total, acc) => total + acc.totalPrice,
+    (total, acc) => {
+      const price = acc.totalPrice ?? 0;
+      return total + (isNaN(price) ? 0 : price);
+    },
     0
   );
 
+  const totalPrice = profilesTotalPrice + accessoriesTotalPrice;
+
   return {
-    totalPrice: profilesTotalPrice + accessoriesTotalPrice,
+    totalPrice: isNaN(totalPrice) ? 0 : totalPrice,
     selectedProducts: { products: profiles, accessories: accessories },
     errors: errors,
   };

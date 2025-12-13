@@ -113,13 +113,15 @@ export const createSelectedProduct = (
   size?: number
 ): SelectedProduct => {
   const sizeMetre = size ? size / 1000 : undefined;
+  const price = parseFloat(priceItem.price || "0");
+  const calculatedPrice = isNaN(price) ? 0 : price;
 
   return {
     ...priceItem,
     quantity,
     totalPrice: sizeMetre
-      ? sizeMetre * parseFloat(priceItem.price) * quantity
-      : parseFloat(priceItem.price) * quantity,
+      ? sizeMetre * calculatedPrice * quantity
+      : calculatedPrice * quantity,
     size,
   };
 };
@@ -266,18 +268,32 @@ export const findDikmePrice = (
 
   if (optionId === "monoblok") {
     // Monoblok için PVC dikme profilleri
-    const pvcType =
-      currentDikme === "Yan"
-        ? "pvc_panjur_yan_dikme_profilleri"
-        : "pvc_panjur_orta_dikme_profilleri";
-
-    dikmePrices = prices.filter((p) => p.type === pvcType);
-
-    // Monoblok için dikme genişlikleri: mini 39mm, midi 55mm
-    dikmeWidth = dikmeType.startsWith("mini_") ? "39" : "55";
-
-    const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
-    searchPattern = `${typePrefix} Pvc ${currentDikme} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+    if (currentDikme === "Yan") {
+      // Monoblok yan dikme için ötelemeli yan dikme kullan
+      const pvcType = "pvc_panjur_yan_dikme_profilleri";
+      dikmePrices = prices.filter((p) => p.type === pvcType);
+      
+      // Monoblok için dikme genişlikleri: mini 39mm, midi 55mm
+      dikmeWidth = dikmeType.startsWith("mini_") ? "39" : "55";
+      
+      // Ötelemeli yan dikme için arama pattern'i
+      // Folyo Kap için özel kontrol
+      if (normalizedColor === "Folyo Kap") {
+        searchPattern = `Pvc Ötelemeli Yan Dikme ${dikmeWidth} mm Folyo Kap.`;
+      } else {
+        searchPattern = `Pvc Ötelemeli Yan Dikme ${dikmeWidth} mm ${normalizedColor}`;
+      }
+    } else {
+      // Orta dikme için normal mantık
+      const pvcType = "pvc_panjur_orta_dikme_profilleri";
+      dikmePrices = prices.filter((p) => p.type === pvcType);
+      
+      // Monoblok için dikme genişlikleri: mini 39mm, midi 55mm
+      dikmeWidth = dikmeType.startsWith("mini_") ? "39" : "55";
+      
+      const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
+      searchPattern = `${typePrefix} Pvc ${currentDikme} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+    }
   } else {
     // Distan (mevcut hesaplama)
     dikmePrices = prices.filter((p) => p.type === "panjur_dikme_profilleri");
@@ -293,8 +309,18 @@ export const findDikmePrice = (
   if (!matchingDikme && normalizedColor !== "Beyaz") {
     normalizedColor = "Beyaz";
     if (optionId === "monoblok") {
-      const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
-      searchPattern = `${typePrefix} Pvc ${currentDikme} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+      if (currentDikme === "Yan") {
+        // Ötelemeli yan dikme için arama pattern'i
+        // Folyo Kap için özel kontrol
+        if (normalizedColor === "Folyo Kap") {
+          searchPattern = `Pvc Ötelemeli Yan Dikme ${dikmeWidth} mm Folyo Kap.`;
+        } else {
+          searchPattern = `Pvc Ötelemeli Yan Dikme ${dikmeWidth} mm ${normalizedColor}`;
+        }
+      } else {
+        const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
+        searchPattern = `${typePrefix} Pvc ${currentDikme} Dikme ${dikmeWidth} mm ${normalizedColor}`;
+      }
     } else {
       const typePrefix = dikmeType.startsWith("mini_") ? "Mini" : "Midi";
       searchPattern = `${typePrefix} Dikme ${dikmeWidth} mm ${normalizedColor}`;
@@ -494,23 +520,31 @@ export const findYalitimliBoxPrice = (
   > = {
     "250mm_ithal": [
       { name: "25x25 Strafor Kutu İthal", needsColor: false },
-      // emptyBox ise alt kapama ekleme
-      ...(boxsetType === "emptyBox" ? [] : [{ name: "25x25 Strafor Kutu Alt Kapama", needsColor: true }]),
+      // emptyBox ise kompozit kapama ekle, değilse alt kapama ekle
+      ...(boxsetType === "emptyBox" 
+        ? [{ name: "25x25 Strafor Kutu Kompozit Kapama", needsColor: false }]
+        : [{ name: "25x25 Strafor Kutu Alt Kapama", needsColor: true }]),
     ],
     "250mm_yerli": [
       { name: "25x25 Eps Panjur Kutusu Yerli", needsColor: false },
-      // emptyBox ise alt kapama ekleme
-      ...(boxsetType === "emptyBox" ? [] : [{ name: "25x25 Strafor Kutu Alt Kapama", needsColor: true }]),
+      // emptyBox ise kompozit kapama ekle, değilse alt kapama ekle
+      ...(boxsetType === "emptyBox" 
+        ? [{ name: "25x25 Strafor Kutu Kompozit Kapama", needsColor: false }]
+        : [{ name: "25x25 Strafor Kutu Alt Kapama", needsColor: true }]),
     ],
     "300mm_yerli": [
       { name: "30x30 Eps Panjur Kutusu Yerli", needsColor: false },
-      // emptyBox ise alt kapama ekleme
-      ...(boxsetType === "emptyBox" ? [] : [{ name: "30x30 Strafor Kutu Alt Kapama", needsColor: true }]),
+      // emptyBox ise kompozit kapama ekle, değilse alt kapama ekle
+      ...(boxsetType === "emptyBox" 
+        ? [{ name: "30x30 Strafor Kutu Kompozit Kapama", needsColor: false }]
+        : [{ name: "30x30 Strafor Kutu Alt Kapama", needsColor: true }]),
     ],
     "300mm_ithal": [
       { name: "30x30 Strafor Kutu İthal", needsColor: false },
-      // emptyBox ise alt kapama ekleme
-      ...(boxsetType === "emptyBox" ? [] : [{ name: "30x30 Strafor Kutu Alt Kapama", needsColor: true }]),
+      // emptyBox ise kompozit kapama ekle, değilse alt kapama ekle
+      ...(boxsetType === "emptyBox" 
+        ? [{ name: "30x30 Strafor Kutu Kompozit Kapama", needsColor: false }]
+        : [{ name: "30x30 Strafor Kutu Alt Kapama", needsColor: true }]),
     ],
   };
 

@@ -232,7 +232,11 @@ export const ProductPreview = forwardRef<
                                         </span>
                                         {product.size && (
                                           <span>
-                                            Boyut: <b>{product.size}mm</b>
+                                            Boyut: <b>
+                                              {product.unit === "M2"
+                                                ? `${typeof product.size === "number" ? product.size.toFixed(2) : product.size} m²`
+                                                : `${product.size}mm`}
+                                            </b>
                                           </span>
                                         )}
                                         <span>
@@ -242,7 +246,7 @@ export const ProductPreview = forwardRef<
                                       <span>
                                         Toplam:{" "}
                                         {selectedProduct.currency.symbol}{" "}
-                                        {product.totalPrice.toFixed(2)}
+                                        {(product.totalPrice ?? 0).toFixed(2)}
                                       </span>
                                     </div>
                                   </div>
@@ -280,7 +284,11 @@ export const ProductPreview = forwardRef<
                                         </span>
                                         {acc.size && (
                                           <span>
-                                            Boyut: <b>{acc.size}mm</b>
+                                            Boyut: <b>
+                                              {acc.unit === "M2" 
+                                                ? `${typeof acc.size === "number" ? acc.size.toFixed(2) : acc.size} m²`
+                                                : `${acc.size}mm`}
+                                            </b>
                                           </span>
                                         )}
                                         <span>
@@ -290,7 +298,7 @@ export const ProductPreview = forwardRef<
                                       <span>
                                         Toplam:{" "}
                                         {selectedProduct.currency.symbol}{" "}
-                                        {acc.totalPrice.toFixed(2)}
+                                        {(acc.totalPrice ?? 0).toFixed(2)}
                                       </span>
                                     </div>
                                   </div>
@@ -313,7 +321,7 @@ export const ProductPreview = forwardRef<
                           >
                             {selectedProduct.currency.symbol}{" "}
                             {(
-                              calculationResult.totalPrice *
+                              (calculationResult.totalPrice ?? 0) *
                               Number(quantity || 1)
                             ).toFixed(2)}
                           </button>

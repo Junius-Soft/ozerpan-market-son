@@ -34,27 +34,6 @@ export async function generateFiyatAnaliziPDFPozListesi(
   const currency = state.app.currency;
   const eurRate = state.app.eurRate;
 
-  // Para birimi dönüştürme fonksiyonu - pozisyonun kendi currency'sine göre
-  const convertCurrency = (amount: number, positionCurrency: string) => {
-    // Eğer pozisyon currency'si ile gösterim currency'si aynıysa, çevirim yok
-    if (positionCurrency === currency) {
-      return amount;
-    }
-    
-    // Pozisyon TRY, gösterim EUR ise: TRY -> EUR (böl)
-    if (positionCurrency === "TRY" && currency === "EUR") {
-      return amount / eurRate;
-    }
-    
-    // Pozisyon EUR, gösterim TRY ise: EUR -> TRY (çarp)
-    if (positionCurrency === "EUR" && currency === "TRY") {
-      return amount * eurRate;
-    }
-    
-    // Varsayılan: aynen döndür
-    return amount;
-  };
-
   // Fiyat formatı fonksiyonu - pozisyonun kendi currency'sine göre
   // Cam balkon için her zaman TRY göster
   const formatPrice = (amount: number, positionCurrency: string, isCamBalkon: boolean = false) => {

@@ -261,6 +261,7 @@ export default function ProductDetailsPage() {
     productObj,
     productActions,
     dispatch,
+    offerNo,
   ]);
 
   // Yeni pozisyon için varsayılan sectionHeights değerlerini ayarla (sadece panjur için)

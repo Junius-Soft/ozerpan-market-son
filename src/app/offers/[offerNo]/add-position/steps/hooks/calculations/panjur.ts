@@ -179,7 +179,7 @@ export const calculatePanjur = (
   // Her bölme için lamel fiyatı hesapla
   sectionLamelWidths.forEach((lamelGenisligi, index) => {
     const lamelCount = sectionLamelCounts[index];
-    const [lamelUnitPrice, lamelSelectedProduct] = findLamelPrice(
+    const [, lamelSelectedProduct] = findLamelPrice(
       prices,
       values.lamelTickness,
       values.lamelType,

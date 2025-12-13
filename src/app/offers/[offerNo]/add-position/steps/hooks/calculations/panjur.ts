@@ -179,7 +179,7 @@ export const calculatePanjur = (
   // Her bölme için lamel fiyatı hesapla
   sectionLamelWidths.forEach((lamelGenisligi, index) => {
     const lamelCount = sectionLamelCounts[index];
-    const [lamelUnitPrice, lamelSelectedProduct] = findLamelPrice(
+    const [, lamelSelectedProduct] = findLamelPrice(
       prices,
       values.lamelTickness,
       values.lamelType,
@@ -188,8 +188,8 @@ export const calculatePanjur = (
       lamelGenisligi
     );
 
-    const lamelGenisligiMetre = lamelGenisligi / 1000;
-    const sectionLamelPrice = lamelUnitPrice * lamelGenisligiMetre * lamelCount;
+    // createSelectedProduct zaten totalPrice'ı doğru hesaplıyor, onu kullan
+    const sectionLamelPrice = lamelSelectedProduct?.totalPrice ?? 0;
     totalLamelPrice += sectionLamelPrice;
 
     if (lamelSelectedProduct) {
@@ -197,7 +197,7 @@ export const calculatePanjur = (
       lamelSelectedProducts.push({
         ...lamelSelectedProduct,
         description: `${lamelSelectedProduct.description} (Bölme ${index + 1})`,
-        totalPrice: sectionLamelPrice,
+        // totalPrice zaten doğru hesaplanmış, override etme
       });
     }
   });

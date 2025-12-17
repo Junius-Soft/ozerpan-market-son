@@ -241,14 +241,14 @@ export function createPanels(
   });
 
   // Debug
-  console.log(`🔍 GERÇEK HESAPLAMA (Kol ${kolIndex}):`);
-  console.log(`- leftSideProfile: ${leftSideProfile}mm`);
-  console.log(`- rightSideProfile: ${rightSideProfile}mm`);
-  console.log(`- startExtraSpacing: ${startExtraSpacing}mm`);
-  console.log(`- endExtraSpacing: ${endExtraSpacing}mm`);
-  console.log(`- totalSpacing: ${totalSpacing}mm`);
-  console.log(`- slidingLikeCount: ${slidingLikeCount}`);
-  console.log(`- slidingWidth: ${slidingWidth}mm`);
+  // console.log(`🔍 GERÇEK HESAPLAMA (Kol ${kolIndex}):`);
+  // console.log(`- leftSideProfile: ${leftSideProfile}mm`);
+  // console.log(`- rightSideProfile: ${rightSideProfile}mm`);
+  // console.log(`- startExtraSpacing: ${startExtraSpacing}mm`);
+  // console.log(`- endExtraSpacing: ${endExtraSpacing}mm`);
+  // console.log(`- totalSpacing: ${totalSpacing}mm`);
+  // console.log(`- slidingLikeCount: ${slidingLikeCount}`);
+  // console.log(`- slidingWidth: ${slidingWidth}mm`);
 
   return panels;
 }
@@ -262,8 +262,8 @@ export function calculateHareketliCamArasi(panels: Panel[]): number {
   // Örnek: 4 hareketli cam → 3 arası
   const hareketliCamArasi = Math.max(0, slidingPanels.length - 1);
   
-  console.log(`🔍 Panel dizisi:`, panels.map(p => p.type));
-  console.log(`🔍 Sliding paneller: ${slidingPanels.length}, Hareketli cam arası: ${hareketliCamArasi}`);
+  // console.log(`🔍 Panel dizisi:`, panels.map(p => p.type));
+  // console.log(`🔍 Sliding paneller: ${slidingPanels.length}, Hareketli cam arası: ${hareketliCamArasi}`);
   
   return hareketliCamArasi;
 }
@@ -274,8 +274,8 @@ export function calculateHareketliCamArasi(panels: Panel[]): number {
 export function calculateSabitHareketliCamArasi(panels: Panel[]): number {
   let count = 0;
   
-  console.log(`🔍 calculateSabitHareketliCamArasi başladı, panel sayısı: ${panels.length}`);
-  console.log(`🔍 Panel tipleri:`, panels.map((p, i) => `${i}: ${p.type}`));
+  // console.log(`🔍 calculateSabitHareketliCamArasi başladı, panel sayısı: ${panels.length}`);
+  // console.log(`🔍 Panel tipleri:`, panels.map((p, i) => `${i}: ${p.type}`));
   
   for (let i = 0; i < panels.length - 1; i++) {
     const current = panels[i].type;
@@ -285,17 +285,17 @@ export function calculateSabitHareketliCamArasi(panels: Panel[]): number {
     const isCurrentFixed = (current === 'fixed_left' || current === 'fixed_right');
     const isNextFixed = (next === 'fixed_left' || next === 'fixed_right');
     
-    console.log(`🔍 Panel ${i} → ${i+1}: ${current} → ${next}, isCurrentFixed: ${isCurrentFixed}, isNextFixed: ${isNextFixed}`);
+    // console.log(`🔍 Panel ${i} → ${i+1}: ${current} → ${next}, isCurrentFixed: ${isCurrentFixed}, isNextFixed: ${isNextFixed}`);
     
     // SADECE: Sabit ↔ Sliding (her iki yön)
     // Çıkış camları (exit) sayılmaz!
     if ((isCurrentFixed && next === 'sliding') || (current === 'sliding' && isNextFixed)) {
       count++;
-      console.log(`✅ SAYILDI! Sabit-Hareketli arası bulundu: Panel ${i} (${current}) ↔ Panel ${i+1} (${next})`);
+      // console.log(`✅ SAYILDI! Sabit-Hareketli arası bulundu: Panel ${i} (${current}) ↔ Panel ${i+1} (${next})`);
     }
   }
   
-  console.log(`🔍 Toplam Sabit-Hareketli cam arası: ${count}`);
+  // console.log(`🔍 Toplam Sabit-Hareketli cam arası: ${count}`);
   
   return count;
 }

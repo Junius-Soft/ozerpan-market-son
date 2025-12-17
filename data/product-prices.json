@@ -5348,6 +5348,106 @@
         "unit": "Adet",
         "price": "50.00",
         "currency": "TRY"
+      },
+      {
+        "stock_code": "CAM_24MM_SEFFAF",
+        "description": "Cam 24mm Şeffaf",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "0",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "CAM_24MM_FUME",
+        "description": "Cam 24mm Fume",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "fume",
+        "unit": "m²",
+        "price": "0",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "CAM_24MM_MAVI",
+        "description": "Cam 24mm Mavi",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "mavi",
+        "unit": "m²",
+        "price": "0",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "CAM_24MM_YESIL",
+        "description": "Cam 24mm Yeşil",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "yesil",
+        "unit": "m²",
+        "price": "0",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "CAM_24MM_BRONZ",
+        "description": "Cam 24mm Bronz",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "bronz",
+        "unit": "m²",
+        "price": "0",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "365110000108",
+        "description": "8 mm Düz Cam Temperli",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "8mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "1730.92",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "365120001208",
+        "description": "8 mm Füme Temperli",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "8mm",
+        "camRengi": "fume",
+        "unit": "m²",
+        "price": "1746.76",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "365120001508",
+        "description": "8 mm Mavi Temperli",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "8mm",
+        "camRengi": "mavi",
+        "unit": "m²",
+        "price": "2269.74",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "365120001808",
+        "description": "8 mm Yeşil Temperli",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "8mm",
+        "camRengi": "yesil",
+        "unit": "m²",
+        "price": "2269.74",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "365120006308",
+        "description": "8 mm Bronz Temperli",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "8mm",
+        "camRengi": "bronz",
+        "unit": "m²",
+        "price": "2269.74",
+        "currency": "TRY"
       }
     ]
   }

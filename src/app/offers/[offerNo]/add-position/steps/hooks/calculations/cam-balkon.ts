@@ -1,5 +1,5 @@
 import { CalculationResult, SelectedProduct } from "@/types/panjur";
-import { calculateCamBalkonMalzemeListesi, KolBilgisi } from "@/utils/cam-balkon-malzeme-listesi";
+import { calculateCamBalkonMalzemeListesi, calculateCamListesi, KolBilgisi } from "@/utils/cam-balkon-malzeme-listesi";
 import { PriceItem } from "@/types/panjur";
 
 // Formik cam balkon değerleri için minimal tip
@@ -100,16 +100,28 @@ export const calculateCamBalkon = (
     kol1_genislik: debugValues.kol1_genislik,
   });
 
+  // Cam kalınlığı ve cam rengi (formdaki alternatif alanları da destekle)
+  const camKalinligi = debugValues.camKalinligi || debugValues.glassThickness || "24mm";
+  const camRengi = debugValues.camRengi || debugValues.glassColor || "seffaf";
+
   // Malzeme listesini hesapla
   const malzemeler = calculateCamBalkonMalzemeListesi(
     kolBilgileri,
     Number(values.height) || 0,
-    debugValues.camKalinligi || "24mm",
-    debugValues.camRengi || "seffaf",
+    camKalinligi,
+    camRengi,
     colorKey,
     optionId || "1",
     values.toplamHareketliCamArasi,
     values.toplamSabitHareketliCamArasi
+  );
+
+  // Cam listesini hesapla (m² bazlı)
+  const camListesi = calculateCamListesi(
+    kolBilgileri,
+    Number(values.height) || 0,
+    camKalinligi,
+    camRengi
   );
 
   // Fiyatları hesapla
@@ -209,6 +221,67 @@ export const calculateCamBalkon = (
       });
     }
   });
+
+  // Cam fiyatlarını hesapla ve toplam fiyata ekle
+  if (camListesi.camlar.length > 0) {
+    const normalizedCamKalinligi = camKalinligi.toLowerCase().replace(/\s/g, "");
+    const normalizeCamRengiInput = (val: string) => {
+      const v = (val || "").toString().toLowerCase().trim();
+      if (v.includes("düz") || v.includes("duz")) return "seffaf";
+      if (v.includes("şeffaf") || v.includes("seffaf")) return "seffaf";
+      if (v.includes("füme") || v.includes("fume")) return "fume";
+      if (v.includes("mavi")) return "mavi";
+      if (v.includes("yeşil") || v.includes("yesil")) return "yesil";
+      if (v.includes("bronz")) return "bronz";
+      return v;
+    };
+    const normalizedCamRengi = normalizeCamRengiInput(camRengi);
+
+    // Cam fiyatını bul
+    const getCamField = (p: PriceItem, key: "camKalinligi" | "camRengi") => {
+      const raw = (p as Record<string, unknown>)[key];
+      return typeof raw === "string" ? raw : "";
+    };
+
+    let camPriceItem = prices.find(
+      (p) =>
+        p.type === "cam_balkon_cam" &&
+        getCamField(p, "camKalinligi").toLowerCase().replace(/\s/g, "") === normalizedCamKalinligi &&
+        getCamField(p, "camRengi").toLowerCase().trim() === normalizedCamRengi
+    );
+
+    // Renk bulunamazsa sadece kalınlığa göre seffaf varsayımı
+    if (!camPriceItem) {
+      camPriceItem = prices.find(
+        (p) =>
+          p.type === "cam_balkon_cam" &&
+          getCamField(p, "camKalinligi").toLowerCase().replace(/\s/g, "") === normalizedCamKalinligi
+      );
+    }
+
+    const camUnitPrice = camPriceItem ? parseFloat(camPriceItem.price) : 0;
+    const camTotalM2 = camListesi.toplamCamM2;
+    const camTotalPrice = camUnitPrice * camTotalM2;
+    totalPrice += camTotalPrice;
+
+    if (!camPriceItem) {
+      errors.push(`Cam fiyatı bulunamadı: ${camKalinligi} ${camRengi} (${camTotalM2.toFixed(2)} m²)`);
+      console.warn(`Cam fiyatı bulunamadı: ${camKalinligi} ${camRengi}`);
+    }
+
+    selectedProducts.products.push({
+      stock_code: camPriceItem?.stock_code || `CAM_${normalizedCamKalinligi}_${normalizedCamRengi}`,
+      description: camPriceItem?.description || `Cam ${camKalinligi} ${camRengi}`,
+      uretici_kodu: camPriceItem?.uretici_kodu || "",
+      color: normalizedCamRengi,
+      price: (camPriceItem?.price || "0").toString(),
+      quantity: camTotalM2,
+      totalPrice: camTotalPrice,
+      unit: "m²",
+      type: "cam_balkon_cam",
+      size: 0,
+    });
+  }
 
   // Paketleme ücreti hesaplama
   const calculatePackagingCost = (basePrice: number): number => {

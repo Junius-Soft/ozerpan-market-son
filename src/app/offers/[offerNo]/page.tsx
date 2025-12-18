@@ -56,7 +56,7 @@ export default function OfferDetailPage() {
   const [assemblyRate, setAssemblyRate] = useState<number>(0);
   const [summaryTotal, setSummaryTotal] = useState<number>(0);
   const { call } = useFrappePostCall(
-    "ozerpan_ercom_sync.market.api.sales_order"
+    "ozerpan_ercom_sync.market.api.create_sales_order"
   );
   const [selectedOrder, setSelectedOrder] = useState<string>("");
 
@@ -209,7 +209,8 @@ export default function OfferDetailPage() {
   function buildOrderData(offer: Offer) {
     return {
       data: {
-        order_no: selectedOrder || offer.id,
+        // Sales order seçiliyse onu gönder, yoksa boş kalsın
+        order_no: selectedOrder || "",
         order_type: "Panjur",
         tax: vatRate,
         discount: discountRate,

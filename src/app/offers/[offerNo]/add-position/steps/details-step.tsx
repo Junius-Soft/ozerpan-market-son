@@ -59,7 +59,11 @@ export const DetailsStep = forwardRef<DetailsStepRef, DetailsStepProps>(
       },
     }));
 
-    useAutoDependencyAndFilterBy(formik, "panjur", optionId);
+    // Use correct productType based on selectedProduct
+    const productType = (selectedProduct?.id || "panjur") as "panjur" | "kepenk" | "sineklik" | "cam-balkon";
+    useAutoDependencyAndFilterBy(formik, productType, optionId);
+    
+    // Panjur-specific hooks (they already check productId internally)
     useFilterLamelThickness(formik);
     useFilterMotorModel(formik, selectedProduct);
     useFilterBoxSize(formik);

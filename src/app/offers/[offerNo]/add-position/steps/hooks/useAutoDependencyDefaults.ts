@@ -2,7 +2,7 @@ import { ProductTabField, ProductTab } from "@/documents/products";
 import { PanjurSelections } from "@/types/panjur";
 import { checkDependencyChain } from "@/utils/dependencies";
 import { FormikProps } from "formik";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import productTabs from "@/../data/product-tabs.json";
 
 /**
@@ -16,14 +16,21 @@ export function useAutoDependencyAndFilterBy(
   productType: keyof typeof productTabs,
   optionId: string | null
 ) {
-  const allTabs: ProductTab[] = productTabs[productType] as ProductTab[];
-  const allFields: ProductTabField[] = allTabs.flatMap(
-    (tab) => tab.content?.fields || []
+  const allTabs: ProductTab[] = useMemo(
+    () => (productTabs[productType] as ProductTab[]) || [],
+    [productType]
+  );
+  const allFields: ProductTabField[] = useMemo(
+    () => allTabs.flatMap((tab) => tab.content?.fields || []),
+    [allTabs]
   );
   const prevValues = useRef(formik.values);
   const pendingUpdate = useRef(false);
 
   useEffect(() => {
+    // If no tabs found for this product type, return early
+    if (!allTabs || allTabs.length === 0) return;
+    
     if (pendingUpdate.current) {
       pendingUpdate.current = false;
       prevValues.current = { ...formik.values };

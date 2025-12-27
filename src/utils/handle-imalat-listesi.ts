@@ -38,15 +38,23 @@ export async function handleImalatListesiPDF({
   const currentOffer = await getOffer(offerNo);
   if (currentOffer && product) {
     let products = values.selectedProducts?.products || [];
+    let accessories = values.selectedProducts?.accessories || [];
+    
     if (selectedTypes && selectedTypes.length > 0) {
-      const normalizedTypes = selectedTypes.map((t) => t.toLowerCase().trim());
+      const { matchesSelectedTypes } = await import("@/utils/imalat-type-mapping");
       products = products.filter((prod) => {
-        // prod'un descriptionu veya type'ı seçilen tiplerden birini içeriyor mu?
-        const prodDesc = prod.description.toLowerCase().trim();
-        const prodType = (prod.type || "").toLowerCase().trim();
-        
-        return normalizedTypes.some((type) => 
-          prodDesc.includes(type) || prodType.includes(type)
+        return matchesSelectedTypes(
+          prod.type,
+          prod.description,
+          selectedTypes
+        );
+      });
+      
+      accessories = accessories.filter((acc) => {
+        return matchesSelectedTypes(
+          acc.type,
+          acc.description,
+          selectedTypes
         );
       });
     }
@@ -58,7 +66,7 @@ export async function handleImalatListesiPDF({
       unitPrice: values.unitPrice || 0,
       selectedProducts: {
         products,
-        accessories: values.selectedProducts?.accessories || [],
+        accessories,
       },
       productId: product.id,
       typeId: typeId || null,

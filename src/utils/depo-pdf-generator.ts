@@ -163,12 +163,22 @@ export async function generateDepoCikisFisiPDF(
     }
   });
 
-  // Aynı ürünleri grupla (pozNo bağımsız)
+  // Aynı ürünleri grupla (stok kodu ve birim bazında)
+  // Açıklamadaki pozisyon bilgilerini (Sol Dikme, Sağ Dikme, Orta Dikme vb.) temizle
+  const cleanDescription = (desc: string): string => {
+    // Parantez içindeki pozisyon bilgilerini kaldır: (Sol Dikme - X Adet), (Sağ Dikme - X Adet), (Orta (X) Dikme - X Adet) vb.
+    return desc.replace(/\s*\([^)]*Dikme[^)]*\)\s*/g, "").trim();
+  };
+
   const groupedRows: Record<string, AccessoryRow> = {};
   accessoryRows.forEach((row) => {
-    const key = `${row.stock_code}|${row.description}|${row.unit}`;
+    // Grup key'i sadece stok kodu ve birim bazında
+    const key = `${row.stock_code}|${row.unit}`;
     if (!groupedRows[key]) {
-      groupedRows[key] = { ...row };
+      groupedRows[key] = {
+        ...row,
+        description: cleanDescription(row.description),
+      };
     } else {
       groupedRows[key].quantity += row.quantity;
     }

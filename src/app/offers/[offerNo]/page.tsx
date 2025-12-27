@@ -268,48 +268,44 @@ export default function OfferDetailPage() {
             );
             if (positions.length > 0) {
               import("@/utils/offer-utils").then((utils) => {
-                // Normalize tipler ve debug
-                const normalizedTypes = selectedTypes.map((t) =>
-                  t.toLowerCase().trim()
-                );
-                const filteredPositions = positions.map((pos) => {
-                  const filteredProducts = (
-                    pos.selectedProducts?.products || []
-                  ).filter((prod) => {
-                    //prod'un descriptionu seçilen tiplerden birini içeriyor mu?
-                    const prodDesc = prod.description.toLowerCase().trim();
-                    return normalizedTypes.some((type) =>
-                      prodDesc.includes(type)
-                    );
-                  });
-                  // Debug için log
-                  if (filteredProducts.length === 0) {
-                    console.warn(
-                      "Pozisyon",
-                      pos.pozNo,
-                      "için eşleşen ürün yok",
-                      {
-                        mevcut: (pos.selectedProducts?.products || []).map(
-                          (p) => p.type
-                        ),
-                        aranan: normalizedTypes,
-                      }
-                    );
-                  }
-                  return {
-                    ...pos,
-                    selectedProducts: {
-                      ...pos.selectedProducts,
-                      products: filteredProducts,
-                      accessories: pos.selectedProducts?.accessories || [],
-                    },
-                  };
-                }) as typeof positions;
-                utils.openImalatListPDFMulti(
-                  offer,
-                  filteredPositions,
-                  selectedTypes
-                );
+                import("@/utils/imalat-type-mapping").then((mappingUtils) => {
+                  const filteredPositions = positions.map((pos) => {
+                    const filteredProducts = (
+                      pos.selectedProducts?.products || []
+                    ).filter((prod) => {
+                      return mappingUtils.matchesSelectedTypes(
+                        prod.type,
+                        prod.description,
+                        selectedTypes
+                      );
+                    });
+                    
+                    // Aksesuarları da filtrele
+                    const filteredAccessories = (
+                      pos.selectedProducts?.accessories || []
+                    ).filter((acc) => {
+                      return mappingUtils.matchesSelectedTypes(
+                        acc.type,
+                        acc.description,
+                        selectedTypes
+                      );
+                    });
+                    
+                    return {
+                      ...pos,
+                      selectedProducts: {
+                        ...pos.selectedProducts,
+                        products: filteredProducts,
+                        accessories: filteredAccessories,
+                      },
+                    };
+                  }) as typeof positions;
+                  utils.openImalatListPDFMulti(
+                    offer,
+                    filteredPositions,
+                    selectedTypes
+                  );
+                });
               });
             }
           }}

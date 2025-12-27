@@ -148,7 +148,57 @@ export class ImalatPDFGenerator {
       });
     });
 
-    allProducts.sort((a, b) => {
+    // Aynı stok koduna sahip ürünleri grupla
+    type GroupedProduct = {
+      pozNo: string;
+      product: SelectedProduct;
+      totalQuantity: number;
+      pozNumbers: string[]; // Bu ürünün bulunduğu pozisyon numaraları
+    };
+
+    // Açıklamadaki pozisyon bilgilerini temizle (Sol Dikme, Sağ Dikme vb.)
+    const cleanDescription = (desc: string): string => {
+      return desc.replace(/\s*\([^)]*Dikme[^)]*\)\s*/g, "").trim();
+    };
+
+    // Grupla: stok kodu + temiz açıklama + ölçü (size) bazında
+    const groupedProductsMap = new Map<string, GroupedProduct>();
+    
+    allProducts.forEach((item) => {
+      const stockCode = item.product.stock_code || "";
+      const cleanDesc = cleanDescription(item.product.description || "");
+      const size = item.product.size || "";
+      const key = `${stockCode}|${cleanDesc}|${size}`;
+      
+      const poz = data.positions.find((p) => p.pozNo === item.pozNo);
+      const pozQuantity = Number(poz?.quantity ?? 1);
+      const productQuantity = Number(item.product.quantity ?? 1);
+      const itemTotalQuantity = productQuantity * pozQuantity;
+
+      if (groupedProductsMap.has(key)) {
+        const existing = groupedProductsMap.get(key)!;
+        existing.totalQuantity += itemTotalQuantity;
+        if (!existing.pozNumbers.includes(item.pozNo)) {
+          existing.pozNumbers.push(item.pozNo);
+        }
+      } else {
+        groupedProductsMap.set(key, {
+          pozNo: item.pozNo,
+          product: {
+            ...item.product,
+            description: cleanDesc,
+            quantity: itemTotalQuantity,
+          },
+          totalQuantity: itemTotalQuantity,
+          pozNumbers: [item.pozNo],
+        });
+      }
+    });
+
+    // Gruplanmış ürünleri array'e çevir ve sırala
+    const groupedProducts = Array.from(groupedProductsMap.values());
+    
+    groupedProducts.sort((a, b) => {
       const aType = a.product.type || "Diğer";
       const bType = b.product.type || "Diğer";
       const aIdx = typeOrder.indexOf(aType);
@@ -177,12 +227,9 @@ export class ImalatPDFGenerator {
     );
     this.doc.text("Profil Listesi", this.margin + 2, startY + 5);
     // Tablo verisi hazırla
-    const profileData: RowInput[] = allProducts.map((item, i): RowInput => {
-      // Pozun adedini bul
-      const poz = data.positions.find((p) => p.pozNo === item.pozNo);
-      const pozQuantity = Number(poz?.quantity ?? 1);
-      const productQuantity = Number(item.product.quantity ?? 1);
-      const rawTotalQuantity = productQuantity * pozQuantity;
+    const profileData: RowInput[] = groupedProducts.map((item, i): RowInput => {
+      // Gruplanmış ürünün toplam miktarını kullan
+      const rawTotalQuantity = item.totalQuantity;
 
       // Varsayılan gösterim (ondalıklı olabilir)
       let displayQuantity = rawTotalQuantity.toString();
@@ -202,13 +249,16 @@ export class ImalatPDFGenerator {
         displayQuantity = Math.ceil(rawTotalQuantity).toString();
       }
 
+      // Pozisyon numaralarını birleştir (birden fazla pozisyonda varsa)
+      const pozNoDisplay = item.pozNumbers.join(", ");
+
       return [
         (i + 1).toString(),
         item.product.stock_code || "",
         item.product.description || "",
         item.product.size || "",
         displayQuantity,
-        item.pozNo || "",
+        pozNoDisplay,
         "☐",
       ];
     });

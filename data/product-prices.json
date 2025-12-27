@@ -1115,7 +1115,7 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "34.5"
+        "price": "34.50"
       },
       {
         "description": "30x30 Strafor Kutu İthal",
@@ -1133,7 +1133,7 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "25.3"
+        "price": "25.30"
       },
       {
         "description": "30x30 Eps Panjur Kutusu Yerli",
@@ -1142,7 +1142,7 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "26.3"
+        "price": "26.30"
       },
       {
         "description": "25x25 Strafor Kutu Alt Kapama Beyaz",
@@ -1675,7 +1675,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "6.32296875",
+        "price": "6.32",
         "currency": "EUR"
       },
       {
@@ -1685,7 +1685,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "folyo_kap",
         "unit": "Metre",
-        "price": "12.88404244",
+        "price": "12.88",
         "currency": "EUR"
       },
       {
@@ -1735,7 +1735,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "6.32296875",
+        "price": "6.32",
         "currency": "EUR"
       },
       {
@@ -1745,7 +1745,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "folyo_kap",
         "unit": "Metre",
-        "price": "12.6459375",
+        "price": "12.65",
         "currency": "EUR"
       },
       {
@@ -1755,7 +1755,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "11.05254938",
+        "price": "11.05",
         "currency": "EUR"
       },
       {
@@ -1765,7 +1765,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "11.05254938",
+        "price": "11.05",
         "currency": "EUR"
       },
       {
@@ -1775,7 +1775,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "11.05254938",
+        "price": "11.05",
         "currency": "EUR"
       },
       {
@@ -1785,7 +1785,7 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "11.05254938",
+        "price": "11.05",
         "currency": "EUR"
       },
       {
@@ -5356,7 +5356,7 @@
         "camKalinligi": "24mm",
         "camRengi": "seffaf",
         "unit": "m²",
-        "price": "0",
+        "price": "0.00",
         "currency": "TRY"
       },
       {
@@ -5366,7 +5366,7 @@
         "camKalinligi": "24mm",
         "camRengi": "fume",
         "unit": "m²",
-        "price": "0",
+        "price": "0.00",
         "currency": "TRY"
       },
       {
@@ -5376,7 +5376,7 @@
         "camKalinligi": "24mm",
         "camRengi": "mavi",
         "unit": "m²",
-        "price": "0",
+        "price": "0.00",
         "currency": "TRY"
       },
       {
@@ -5386,7 +5386,7 @@
         "camKalinligi": "24mm",
         "camRengi": "yesil",
         "unit": "m²",
-        "price": "0",
+        "price": "0.00",
         "currency": "TRY"
       },
       {
@@ -5396,7 +5396,7 @@
         "camKalinligi": "24mm",
         "camRengi": "bronz",
         "unit": "m²",
-        "price": "0",
+        "price": "0.00",
         "currency": "TRY"
       },
       {

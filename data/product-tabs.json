@@ -2344,6 +2344,78 @@
           }
         ]
       }
+    },
+    {
+      "id": "frame",
+      "name": "Çerçeve Seçimi",
+      "content": {
+        "fields": [
+          {
+            "id": "dikmeType",
+            "name": "Dikme Seçimi",
+            "type": "select",
+            "options": [
+              { "id": "77_lik", "name": "77'lik Dikme" },
+              { "id": "100_luk", "name": "100'lük Dikme" }
+            ],
+            "default": "77_lik",
+            "filterBy": [
+              {
+                "field": "lamelType",
+                "valueMap": {
+                  "sl_77": ["77_lik"],
+                  "st_77": ["77_lik"],
+                  "se_77": ["77_lik"],
+                  "se_78": ["77_lik"],
+                  "sl_100": ["100_luk"],
+                  "st_100": ["100_luk"]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "color",
+      "name": "Renk Seçimi",
+      "content": {
+        "fields": [
+          {
+            "id": "color",
+            "name": "Renk",
+            "type": "select",
+            "options": [
+              {
+                "id": "antrasit_gri",
+                "name": "Antrasit Gri",
+                "color": "#4B4B4B"
+              },
+              {
+                "id": "beyaz",
+                "name": "Beyaz",
+                "color": "#FFFFFF"
+              },
+              {
+                "id": "metalik_gri",
+                "name": "Metalik Gri",
+                "color": "#7D7D7D"
+              },
+              {
+                "id": "altın_meşe",
+                "name": "Altın Meşe",
+                "color": "#D1B48C"
+              },
+              {
+                "id": "ral_boyalı",
+                "name": "Ral Boyalı",
+                "color": "#FFFFFF"
+              }
+            ],
+            "default": "antrasit_gri"
+          }
+        ]
+      }
     }
   ]
 }

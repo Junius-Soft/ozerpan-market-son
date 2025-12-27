@@ -7,9 +7,9 @@ export const calculateKepenkAccessories = (
 ): SelectedProduct[] => {
   const neededAccessories: SelectedProduct[] = [];
 
-  // Lamel tipine göre dikme tipi
+  // Lamel tipine göre dikme tipi (kullanıcı seçimi yoksa)
   const is100mm = values.lamelType.includes("100");
-  const dikmeType = is100mm ? "100_luk" : "77_lik";
+  const dikmeType = values.dikmeType || (is100mm ? "100_luk" : "77_lik");
   const boxType = is100mm ? "350mm" : "300mm";
   
   // Lamel genişliği hesapla (alt parça ölçüsü için gerekli)

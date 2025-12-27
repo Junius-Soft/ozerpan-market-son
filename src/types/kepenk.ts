@@ -46,6 +46,8 @@ export interface KepenkSelections extends BaseSelections {
   gozluLamelVar?: boolean;
   gozluLamelBaslangic?: number;
   gozluLamelBitis?: number;
+  dikmeType?: "77_lik" | "100_luk";
+  color?: "antrasit_gri" | "beyaz" | "metalik_gri" | "altın_meşe" | "ral_boyalı";
   unitPrice: number;
   selectedProducts: {
     products: SelectedProduct[];

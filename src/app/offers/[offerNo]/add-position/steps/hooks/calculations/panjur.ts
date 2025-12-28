@@ -288,7 +288,8 @@ export const calculatePanjur = (
       values.boxType,
       values.box_color,
       systemWidth,
-      values.boxsetType
+      values.boxsetType,
+      values.yalitimliType
     );
     boxPrice = totalPrice;
     boxSelectedProducts.push(...selectedProducts);
@@ -303,10 +304,14 @@ export const calculatePanjur = (
     if (selectedBackBox) boxSelectedProducts.push(selectedBackBox);
   }
 
+  // Get the movement tab
+  const movementTab = availableTabs?.find((tab) => tab.id === "movement");
+
   // Uzaktan kumanda fiyatı hesaplama
   const [remotePrice, remoteSelectedProduct] = findRemotePrice(
     prices,
-    values.remote
+    values.remote,
+    movementTab
   );
 
   // Akıllı ev sistemi fiyatlandırması
@@ -314,9 +319,6 @@ export const calculatePanjur = (
     prices,
     values.smarthome
   );
-
-  // Get the movement tab
-  const movementTab = availableTabs?.find((tab) => tab.id === "movement");
 
   // Calculate receiver price
   const [receiverPrice, receiverSelectedProduct] = findReceiverPrice(
@@ -491,8 +493,33 @@ export const calculatePanjur = (
         // Sadece tambur ve kutu fiyatı
         return tamburPrice + boxPrice;
       } else if (values.boxsetType === "emptyBox") {
-        // Sadece kutu fiyatı
-        return boxPrice;
+        // Boş kutu: lamel, dikme, alt parça, kutu dahil, tambur ve motor hariç
+        return (
+          totalLamelPrice +
+          subPartPrice +
+          totalDikmePrice +
+          boxPrice +
+          yukseltmeProfiliPrice +
+          remotePrice +
+          smarthomePrice +
+          receiverPrice +
+          (accessoryItems || [])
+            .filter((acc) => {
+              const description = acc.description.toLowerCase();
+              // Sadece yan kapak aksesuarları, kutu ile ilgili diğer aksesuarlar hariç
+              return (
+                description.includes("yan kapak") &&
+                !description.includes("fullset t sac") &&
+                !description.includes("pimli galvaniz") &&
+                !description.includes("kompozit") &&
+                !description.includes("orta kapak")
+              );
+            })
+            .reduce(
+              (total: number, acc: SelectedProduct) => total + acc.totalPrice,
+              0
+            )
+        );
       } else if (values.yalitimliType === "detail") {
         if (values.yalitimliDetailType === "withoutBox") {
           // Kutu, kutu bileşenleri, tambur ve (motor/makara) hariç - sadece lamel, dikme, alt parça
@@ -594,8 +621,17 @@ export const calculatePanjur = (
             product !== null && product !== undefined
         );
       } else if (values.boxsetType === "emptyBox") {
-        // Sadece kutu ürünleri
-        return boxSelectedProducts.filter(
+        // Boş kutu: lamel, dikme, alt parça, kutu dahil, tambur ve motor hariç
+        return [
+          ...lamelSelectedProducts,
+          ...subPartSelectedProducts,
+          ...dikmeSelectedProducts,
+          ...boxSelectedProducts,
+          ...yukseltmeProfiliSelectedProducts,
+          remoteSelectedProduct,
+          smarthomeSelectedProduct,
+          receiverSelectedProduct,
+        ].filter(
           (product): product is SelectedProduct =>
             product !== null && product !== undefined
         );

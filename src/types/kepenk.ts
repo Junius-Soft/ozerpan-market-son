@@ -43,11 +43,14 @@ export interface KepenkSelections extends BaseSelections {
   movementType: "manuel" | "motorlu";
   manuelMotorSecimi?: boolean;
   motorModel?: "sel_70_80" | "sel_70_100" | "sel_70_120" | "sel_70_140" | "sel_102_230" | "sel_102_330" | "sel_600" | "sel_800" | "sel_1000";
+  receiver?: string;
+  remote?: string;
   gozluLamelVar?: boolean;
   gozluLamelBaslangic?: number;
   gozluLamelBitis?: number;
   dikmeType?: "77_lik" | "100_luk";
   color?: "antrasit_gri" | "beyaz" | "metalik_gri" | "altın_meşe" | "ral_boyalı";
+  subPart_color?: "antrasit_gri" | "beyaz" | "metalik_gri" | "kahverengi" | "krem" | "altın_meşe" | "fındık" | "ral_boyalı";
   unitPrice: number;
   selectedProducts: {
     products: SelectedProduct[];

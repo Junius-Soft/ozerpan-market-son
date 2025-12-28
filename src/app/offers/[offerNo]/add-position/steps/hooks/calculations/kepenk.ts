@@ -16,11 +16,14 @@ import {
   getBoxHeight,
 } from "@/utils/kepenk";
 import { selectKepenkMotor, resolveMotorSelection } from "@/utils/kepenk-motor-selection";
+import { findReceiverPrice, findRemotePrice } from "@/utils/panjur";
+import { ProductTab } from "@/documents/products";
 
 export const calculateKepenk = (
   values: KepenkSelections,
   prices: PriceItem[],
-  accessoryItems: SelectedProduct[]
+  accessoryItems: SelectedProduct[],
+  availableTabs?: ProductTab[]
 ): CalculationResult => {
   const errors: string[] = [];
 
@@ -67,10 +70,12 @@ export const calculateKepenk = (
   let lamelSelectedProduct: SelectedProduct | null = null;
   
   if (normalLamelHeight > 0) {
+    // Lamel rengini kullan, yoksa varsayılan olarak "beyaz" kullan
+    const lamelColor = values.lamelColor || "beyaz";
     const [normalPrice, normalProduct] = findLamelPrice(
       prices,
       values.lamelType,
-      "beyaz",
+      lamelColor,
       normalLamelCount,
       lamelGenisligi
     );
@@ -111,10 +116,12 @@ export const calculateKepenk = (
   // Excel'e göre: "Lamel Genişliği ile Aynı Sistem Adedi Kadar"
   // Alt parça ölçüsü lamel genişliği kadar olmalı, sistem genişliği değil!
   const sectionWidths = [lamelGenisligi]; // Sistem genişliği yerine lamel genişliği kullan
+  // Alt parça rengini kullan, yoksa varsayılan olarak "alüminyum" kullan
+  const subPartColor = values.subPart_color || values.color || "alüminyum";
   const subPartResults = findSubPartPrice(
     prices,
     values.lamelType,
-    "alüminyum",
+    subPartColor,
     sectionWidths
   );
 
@@ -224,6 +231,29 @@ export const calculateKepenk = (
     tamburOlcusu
   );
 
+  // Receiver ve Remote fiyatları hesapla (motorlu sistemlerde)
+  let receiverPrice = 0;
+  let receiverSelectedProduct: SelectedProduct | null = null;
+  let remotePrice = 0;
+  let remoteSelectedProduct: SelectedProduct | null = null;
+
+  if (values.movementType === "motorlu") {
+    // Get the movement tab for receiver price calculation
+    const movementTab = availableTabs?.find((tab) => tab.id === "movement");
+    
+    [receiverPrice, receiverSelectedProduct] = findReceiverPrice(
+      prices,
+      values.receiver,
+      movementTab
+    );
+
+    [remotePrice, remoteSelectedProduct] = findRemotePrice(
+      prices,
+      values.remote,
+      movementTab
+    );
+  }
+
   // Aksesuar fiyatlarını hesapla
   const accessoryTotalPrice = accessoryItems.reduce(
     (sum, acc) => sum + (acc.totalPrice || 0),
@@ -239,6 +269,8 @@ export const calculateKepenk = (
     boxPrice +
     tamburPrice +
     motorPrice +
+    receiverPrice +
+    remotePrice +
     accessoryTotalPrice;
 
   // Seçili ürünleri topla
@@ -251,6 +283,8 @@ export const calculateKepenk = (
     selectedFrontBox, // Ön kutu
     tamburSelectedProduct,
     motorSelectedProduct,
+    receiverSelectedProduct,
+    remoteSelectedProduct,
   ].filter((p) => p !== null && p !== undefined) as SelectedProduct[];
 
   return {

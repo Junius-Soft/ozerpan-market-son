@@ -502,7 +502,8 @@ export const findYalitimliBoxPrice = (
   systemWidth: number,
   boxsetType?: string,
   yalitimliType?: string,
-  lamelColor?: string
+  lamelColor?: string,
+  quantity: number = 1
 ): {
   totalPrice: number;
   selectedProducts: SelectedProduct[];
@@ -590,7 +591,9 @@ export const findYalitimliBoxPrice = (
         );
       }
       if (productItem) {
-        const product = createSelectedProduct(productItem, 1, systemWidth);
+        // Kompozit kapama için quantity kullan, diğerleri için 1
+        const productQuantity = useLamelColor ? quantity : 1;
+        const product = createSelectedProduct(productItem, productQuantity, systemWidth);
         selectedProducts.push(product);
         totalPrice += product.totalPrice;
       }

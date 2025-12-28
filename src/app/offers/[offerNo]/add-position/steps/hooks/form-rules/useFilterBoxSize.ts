@@ -6,6 +6,7 @@ import { PanjurSelections } from "@/types/panjur";
 import { maxLamelHeights } from "@/constants/panjur";
 import { ProductTabField } from "@/documents/products";
 import { getBoxHeight } from "@/utils/panjur";
+import { calculateSarimCapi, getBoxSizeBySarimCapi } from "@/utils/sarim-cap-tablosu";
 
 export type FormValues = Record<string, string | number | boolean>;
 
@@ -59,6 +60,7 @@ export function filterBoxSize(
     } else {
       lamelYuksekligi = height;
     }
+    
     // Sadece seçili movementType'a göre kontrol et
     const maxValue =
       maxLamelHeights[optionId]?.[boxSize]?.[selectedLamelTickness]?.[
@@ -68,6 +70,22 @@ export function filterBoxSize(
     if (maxValue && lamelYuksekligi <= maxValue) {
       isValid = true;
     }
+    
+    // Sarım çapına göre kontrol (sadece distan için)
+    if (isValid && optionId === "distan") {
+      const sarimCapi = calculateSarimCapi(
+        lamelYuksekligi,
+        selectedLamelTickness,
+        selectedMovementType
+      );
+      const sarimCapiBasedBox = getBoxSizeBySarimCapi(sarimCapi, optionId);
+      
+      // Sarım çapına göre belirlenen kutu ile eşleşmeli
+      if (sarimCapiBasedBox && box.id !== sarimCapiBasedBox) {
+        isValid = false;
+      }
+    }
+    
     if (isValid) {
       validOptions.push({ id: box.id, name: box.name });
     }

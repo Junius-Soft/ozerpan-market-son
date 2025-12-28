@@ -263,9 +263,12 @@ export const calculatePanjurAccessories = (
 
     const zimbaTeli = findZimbaTeliAccessoryPrice(allAccessories);
     if (zimbaTeli) {
+      // 55'lik lamellerde çift zımba atıldığı için miktarı 2 ile çarp
+      const is55Lamel = values.lamelTickness === "55_sl" || values.lamelTickness === "55_se";
+      const zimbaTeliQuantity = is55Lamel ? totalTapaQuantity * 2 : totalTapaQuantity;
       const selectedProduct = createSelectedProduct(
         zimbaTeli,
-        totalTapaQuantity
+        zimbaTeliQuantity
       );
       neededAccessories.push(selectedProduct);
     }

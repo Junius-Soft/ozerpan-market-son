@@ -243,12 +243,46 @@ export const calculateCamBalkon = (
       return typeof raw === "string" ? raw : "";
     };
 
+    // ÖNCE: 36720024 ile başlayan camları ara (bugün eklenen camlar - 4+16+4 = 24mm)
     let camPriceItem = prices.find(
       (p) =>
         p.type === "cam_balkon_cam" &&
+        p.stock_code.startsWith("36720024") &&
         getCamField(p, "camKalinligi").toLowerCase().replace(/\s/g, "") === normalizedCamKalinligi &&
-        getCamField(p, "camRengi").toLowerCase().trim() === normalizedCamRengi
+        getCamField(p, "camRengi").toLowerCase().trim() === normalizedCamRengi &&
+        !p.description.toLowerCase().includes("küçük") // Küçük olmayanları tercih et
     );
+
+    // Eğer küçük olmayan bulunamazsa, küçük olanları da dene
+    if (!camPriceItem) {
+      camPriceItem = prices.find(
+        (p) =>
+          p.type === "cam_balkon_cam" &&
+          p.stock_code.startsWith("36720024") &&
+          getCamField(p, "camKalinligi").toLowerCase().replace(/\s/g, "") === normalizedCamKalinligi &&
+          getCamField(p, "camRengi").toLowerCase().trim() === normalizedCamRengi
+      );
+    }
+
+    // Eğer hala bulunamazsa, sadece 36720024 ile başlayan ve kalınlığa uygun olanları ara
+    if (!camPriceItem) {
+      camPriceItem = prices.find(
+        (p) =>
+          p.type === "cam_balkon_cam" &&
+          p.stock_code.startsWith("36720024") &&
+          getCamField(p, "camKalinligi").toLowerCase().replace(/\s/g, "") === normalizedCamKalinligi
+      );
+    }
+
+    // Eğer hala bulunamazsa, eski mantığa geri dön (CAM_24MM_SEFFAF gibi)
+    if (!camPriceItem) {
+      camPriceItem = prices.find(
+        (p) =>
+          p.type === "cam_balkon_cam" &&
+          getCamField(p, "camKalinligi").toLowerCase().replace(/\s/g, "") === normalizedCamKalinligi &&
+          getCamField(p, "camRengi").toLowerCase().trim() === normalizedCamRengi
+      );
+    }
 
     // Renk bulunamazsa sadece kalınlığa göre seffaf varsayımı
     if (!camPriceItem) {

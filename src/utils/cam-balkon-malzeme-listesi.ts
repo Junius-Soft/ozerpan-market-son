@@ -603,12 +603,15 @@ export function calculateAksesuarMalzemeleri(
 ): CamBalkonMalzeme[] {
   const malzemeler: CamBalkonMalzeme[] = [];
   
-  // Toplam çıkış camı sayısını hesapla
+  // Toplam çıkış camı sayısını hesapla (açılır kanatlar)
   const toplamCikisSayisi = kolBilgileri.reduce((sum, kol) => sum + kol.cikis_sayisi, 0);
   
   // Hareketli cam sayısını hesapla (toplam kanat - sabit cam - çıkış camı)
+  // NOT: Açılır kanatlar (çıkış camı) tekerlek gerektirmez, bu yüzden çıkarılıyor
   const toplamHareketliCam = kolBilgileri.reduce((sum, kol) => {
-    return sum + (kol.kanat - kol.sabitCamAdedi - kol.cikis_sayisi);
+    // Sadece gerçek sürme (sliding) camları say - açılır kanatlar (cikis_sayisi) hariç
+    const hareketliCamSayisi = Math.max(0, kol.kanat - kol.sabitCamAdedi - kol.cikis_sayisi);
+    return sum + hareketliCamSayisi;
   }, 0);
   
   // 0'dan büyük açı sayısını hesapla
@@ -634,8 +637,9 @@ export function calculateAksesuarMalzemeleri(
     });
   }
   
-  // 2. TEKERLEK SETİ - hareketli cam adedi * 4
-  // Müşteri isteğine göre: Her hareketli cam için 4 adet tekerlek seti
+  // 2. TEKERLEK SETİ - sadece sürme (sliding) hareketli cam adedi * 4
+  // NOT: Açılır kanatlar (çıkış camı) tekerlek gerektirmez, sadece sürme camlar için tekerlek gerekir
+  // Müşteri isteğine göre: Her sürme hareketli cam için 4 adet tekerlek seti
   if (toplamHareketliCam > 0) {
     malzemeler.push({
       kategori: 'Aksesuar',

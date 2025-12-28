@@ -106,7 +106,8 @@ export const useCalculator = (
       const calcResult = calculateKepenk(
         values as KepenkSelections,
         prices,
-        accessories || []
+        accessories || [],
+        availableTabs
       );
       setResult(calcResult);
     } else if (productName === "cam-balkon") {

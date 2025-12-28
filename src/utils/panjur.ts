@@ -717,29 +717,55 @@ const normalizeRemoteName = (remoteName: string): string => {
 
 export const findRemotePrice = (
   prices: PriceItem[],
-  remote: string | undefined
+  remote: string | undefined,
+  movementTab?: ProductTab
 ): [number, SelectedProduct | null] => {
-  if (!remote) return [0, null];
+  if (!remote || remote === "yok") return [0, null];
 
   // Hem panjur (otomasyon_kumandalar) hem de kepenk (kepenk_kumandalar) kumandalarını filtrele
   const remotePrices = prices.filter(
     (p) => p.type === "otomasyon_kumandalar" || p.type === "kepenk_kumandalar"
   );
 
-  const normalizedSearchName = normalizeRemoteName(remote);
+  let matchingRemote: PriceItem | undefined;
 
-  // Kumandayı bul
-  const matchingRemote = remotePrices.find((p) => {
-    // Hem orijinal stringi hem de ascii versiyonunu kontrol et
-    const description = p.description || "";
-    const normalizedDesc = turkishToAscii(description);
-    const normalizedSearch = turkishToAscii(normalizedSearchName);
-
-    return (
-      normalizedDesc.includes(normalizedSearch) ||
-      description.includes(normalizedSearchName)
+  // Eğer movementTab varsa, remote name'i oradan al (daha güvenilir)
+  if (movementTab) {
+    const remoteField = movementTab.content?.fields?.find(
+      (field) => field.id === "remote"
     );
-  });
+
+    if (remoteField?.options) {
+      const remoteOption = remoteField.options.find(
+        (option) => option.id === remote
+      );
+      
+      if (remoteOption?.name) {
+        // Remote name'i kullanarak direkt eşleştir
+        matchingRemote = remotePrices.find(
+          (price) => price.description === remoteOption.name
+        );
+      }
+    }
+  }
+
+  // Eğer movementTab ile bulunamadıysa, eski yöntemi kullan (geriye dönük uyumluluk)
+  if (!matchingRemote) {
+    const normalizedSearchName = normalizeRemoteName(remote);
+
+    // Kumandayı bul
+    matchingRemote = remotePrices.find((p) => {
+      // Hem orijinal stringi hem de ascii versiyonunu kontrol et
+      const description = p.description || "";
+      const normalizedDesc = turkishToAscii(description);
+      const normalizedSearch = turkishToAscii(normalizedSearchName);
+
+      return (
+        normalizedDesc.includes(normalizedSearch) ||
+        description.includes(normalizedSearchName)
+      );
+    });
+  }
 
   if (!matchingRemote) {
     return [0, null];

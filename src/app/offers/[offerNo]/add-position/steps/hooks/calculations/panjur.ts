@@ -303,10 +303,14 @@ export const calculatePanjur = (
     if (selectedBackBox) boxSelectedProducts.push(selectedBackBox);
   }
 
+  // Get the movement tab
+  const movementTab = availableTabs?.find((tab) => tab.id === "movement");
+
   // Uzaktan kumanda fiyatı hesaplama
   const [remotePrice, remoteSelectedProduct] = findRemotePrice(
     prices,
-    values.remote
+    values.remote,
+    movementTab
   );
 
   // Akıllı ev sistemi fiyatlandırması
@@ -314,9 +318,6 @@ export const calculatePanjur = (
     prices,
     values.smarthome
   );
-
-  // Get the movement tab
-  const movementTab = availableTabs?.find((tab) => tab.id === "movement");
 
   // Calculate receiver price
   const [receiverPrice, receiverSelectedProduct] = findReceiverPrice(

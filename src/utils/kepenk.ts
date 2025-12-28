@@ -143,16 +143,26 @@ export const findSubPartPrice = (
 
   // Lamel tipine göre alt parça seç
   const altParcaType = lamelType.includes("100") ? "100_lu" : "77_li";
-  const matchingSubPart = subPartPrices.find(
-    (p) => p.lamel_type === altParcaType
+  
+  // Renk filtresi ekle (eğer renk eşleşmezse, varsayılan olarak ilk uygun olanı kullan)
+  let matchingSubPart = subPartPrices.find(
+    (p) => p.lamel_type === altParcaType && 
+           p.color?.toLowerCase() === color.toLowerCase()
   );
+
+  // Eğer renk eşleşmezse, lamel tipine göre ilk uygun olanı kullan
+  if (!matchingSubPart) {
+    matchingSubPart = subPartPrices.find(
+      (p) => p.lamel_type === altParcaType
+    );
+  }
 
   if (!matchingSubPart) {
     return sectionWidths.map((width) => ({ price: 0, selectedProduct: null, width }));
   }
 
   return sectionWidths.map((width) => {
-    const selectedProduct = createSelectedProduct(matchingSubPart, 1, width);
+    const selectedProduct = createSelectedProduct(matchingSubPart!, 1, width);
     return {
       price: selectedProduct.totalPrice,
       selectedProduct,

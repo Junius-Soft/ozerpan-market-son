@@ -2337,6 +2337,56 @@
               "field": "manuelMotorSecimi",
               "value": true
             }
+          },
+          {
+            "id": "receiver",
+            "name": "Alıcı",
+            "type": "select",
+            "options": [
+              { "id": "yok", "name": "Yok" },
+              {
+                "id": "mosel_oval_power_2ch",
+                "name": "Mosel Oval Power Alıcı x 2 Yericli"
+              },
+              {
+                "id": "mosel_iwy_2ch",
+                "name": "Mosel iwy Alıcı x 2 Vericli"
+              },
+              {
+                "id": "mosel_oval_power_ii_4ch",
+                "name": "Mosel Oval Power II Alıcı 2 + 4 Kanallı Vericil"
+              },
+              {
+                "id": "mosel_pc_1157",
+                "name": "Mosel PC-1157 Fotoselli Kepenk Alıcısı"
+              }
+            ],
+            "default": "yok",
+            "dependsOn": {
+              "field": "movementType",
+              "value": "motorlu"
+            }
+          },
+          {
+            "id": "remote",
+            "name": "Kumanda",
+            "type": "select",
+            "options": [
+              { "id": "yok", "name": "Yok" },
+              {
+                "id": "dc_1157_1ch",
+                "name": "DC-1157 X 1 Kanallı Vericil (Oval Alıcı)"
+              },
+              {
+                "id": "dc_1153_4ch",
+                "name": "DC-1153 X 4 Kanallı Vericil (Oval Alıcı)"
+              }
+            ],
+            "default": "yok",
+            "dependsOn": {
+              "field": "movementType",
+              "value": "motorlu"
+            }
           }
         ]
       }
@@ -2379,7 +2429,7 @@
         "fields": [
           {
             "id": "color",
-            "name": "Renk",
+            "name": "Dikme Rengi",
             "type": "select",
             "options": [
               {
@@ -2407,6 +2457,30 @@
                 "name": "Ral Boyalı",
                 "color": "#FFFFFF"
               }
+            ],
+            "default": "antrasit_gri"
+          },
+          {
+            "id": "subPart_color",
+            "name": "Alt Parça Rengi",
+            "type": "select",
+            "options": [
+              {
+                "id": "antrasit_gri",
+                "name": "Antrasit Gri",
+                "color": "#4B4B4B"
+              },
+              {
+                "id": "metalik_gri",
+                "name": "Metalik Gri",
+                "color": "#7D7D7D"
+              },
+              { "id": "beyaz", "name": "Beyaz", "color": "#FFFFFF" },
+              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
+              { "id": "krem", "name": "Krem", "color": "#E6D8C9" },
+              { "id": "altın_meşe", "name": "Altın Meşe", "color": "#D1B48C" },
+              { "id": "fındık", "name": "Fındık", "color": "#8B5B29" },
+              { "id": "ral_boyalı", "name": "Ral Boyalı", "color": "#FFFFFF" }
             ],
             "default": "antrasit_gri"
           }

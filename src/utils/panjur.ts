@@ -501,7 +501,8 @@ export const findYalitimliBoxPrice = (
   boxColor: string,
   systemWidth: number,
   boxsetType?: string,
-  yalitimliType?: string
+  yalitimliType?: string,
+  lamelColor?: string
 ): {
   totalPrice: number;
   selectedProducts: SelectedProduct[];
@@ -510,20 +511,21 @@ export const findYalitimliBoxPrice = (
   const yalitimliBoxPrices = prices.filter(
     (p) => p.type === "yalitimli_panjur_kutu_profilleri"
   );
-  const normalizedColor = normalizeColor(boxColor);
+  const normalizedBoxColor = normalizeColor(boxColor);
+  const normalizedLamelColor = lamelColor ? normalizeColor(lamelColor) : normalizedBoxColor;
   const selectedProducts: SelectedProduct[] = [];
   let totalPrice = 0;
 
   // Kapama tipini belirle:
   // - emptyBox: hiçbir kapama ekleme (sadece kutu)
-  // - fullset veya detail: kompozit kapama ekle
-  // - boxWithMotor veya diğer: alt kapama ekle
+  // - fullset veya detail: kompozit kapama ekle (lamel rengi ile)
+  // - boxWithMotor veya diğer: alt kapama ekle (box rengi ile)
   const getKapamaConfig = (currentBoxType: string) => {
     if (boxsetType === "emptyBox") {
       // Boş kutu: sadece kutu, kapama yok
       return [];
     } else if (yalitimliType === "fullset" || yalitimliType === "detail") {
-      // Fullset veya detail: kompozit kapama
+      // Fullset veya detail: kompozit kapama (lamel rengi ile)
       const kompozitNames: Record<string, string> = {
         "250mm_ithal": "25x25 Strafor Kutu Kompozit Kapama",
         "250mm_yerli": "25x25 Strafor Kutu Kompozit Kapama",
@@ -531,9 +533,9 @@ export const findYalitimliBoxPrice = (
         "300mm_ithal": "30x30 Strafor Kutu Kompozit Kapama",
       };
       const kompozitName = kompozitNames[currentBoxType];
-      return kompozitName ? [{ name: kompozitName, needsColor: false }] : [];
+      return kompozitName ? [{ name: kompozitName, needsColor: true, useLamelColor: true }] : [];
     } else {
-      // boxWithMotor veya diğer: alt kapama
+      // boxWithMotor veya diğer: alt kapama (box rengi ile)
       const altKapamaNames: Record<string, string> = {
         "250mm_ithal": "25x25 Strafor Kutu Alt Kapama",
         "250mm_yerli": "25x25 Strafor Kutu Alt Kapama",
@@ -541,14 +543,14 @@ export const findYalitimliBoxPrice = (
         "300mm_ithal": "30x30 Strafor Kutu Alt Kapama",
       };
       const altKapamaName = altKapamaNames[currentBoxType];
-      return altKapamaName ? [{ name: altKapamaName, needsColor: true }] : [];
+      return altKapamaName ? [{ name: altKapamaName, needsColor: true, useLamelColor: false }] : [];
     }
   };
 
   // Kutu konfigürasyonları
   const configs: Record<
     string,
-    Array<{ name: string; needsColor: boolean }>
+    Array<{ name: string; needsColor: boolean; useLamelColor?: boolean }>
   > = {
     "250mm_ithal": [
       { name: "25x25 Strafor Kutu İthal", needsColor: false },
@@ -570,15 +572,17 @@ export const findYalitimliBoxPrice = (
 
   const config = configs[boxType];
   if (config) {
-    config.forEach(({ name, needsColor }) => {
+    config.forEach(({ name, needsColor, useLamelColor = false }) => {
       // needsColor true ise renk ekle
-      const searchName = needsColor ? `${name} ${normalizedColor}` : name;
+      // useLamelColor true ise lamel rengini kullan, değilse box rengini kullan
+      const colorToUse = useLamelColor ? normalizedLamelColor : normalizedBoxColor;
+      const searchName = needsColor ? `${name} ${colorToUse}` : name;
       let productItem = yalitimliBoxPrices.find(
         (p) =>
           p.description.trim().toLowerCase() === searchName.trim().toLowerCase()
       );
       // Eğer bulunamazsa Beyaz ile dene
-      if (!productItem && normalizedColor !== "Beyaz" && needsColor) {
+      if (!productItem && colorToUse !== "Beyaz" && needsColor) {
         productItem = yalitimliBoxPrices.find(
           (p) =>
             p.description.trim().toLowerCase() ===

@@ -289,7 +289,8 @@ export const calculatePanjur = (
       values.box_color,
       systemWidth,
       values.boxsetType,
-      values.yalitimliType
+      values.yalitimliType,
+      values.lamel_color // Kompozit kapama için lamel rengi kullanılacak
     );
     boxPrice = totalPrice;
     boxSelectedProducts.push(...selectedProducts);

@@ -2237,7 +2237,7 @@
         "uretici_kodu": "352532211100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "50.48"
+        "price": "59.93"
       },
       {
         "description": "Smoove Origin IO Buton Kumanda",
@@ -2261,7 +2261,7 @@
         "uretici_kodu": "352540211100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "4.95"
+        "price": "2.82"
       },
       {
         "description": "Sıva Üstü Buton Kasası",
@@ -2269,7 +2269,7 @@
         "uretici_kodu": "352540911100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "2.01"
+        "price": "1.02"
       },
       {
         "description": "Mosel DC-74 Kutu İçi Panjur Alıcısı",
@@ -2277,7 +2277,7 @@
         "uretici_kodu": "RC.ALC.DC.73",
         "type": "otomasyon_alıcılar",
         "unit": "Adet",
-        "price": "18.39"
+        "price": "30.59"
       },
       {
         "description": "DC 319 İki Kanallı Vera Ankastre Alıcı",
@@ -2301,7 +2301,7 @@
         "uretici_kodu": "1810314",
         "type": "otomasyon_alıcılar",
         "unit": "Adet",
-        "price": "75.09"
+        "price": "218.72"
       },
       {
         "description": "Centralis Uno RTS Buton Alıcı",
@@ -2309,7 +2309,7 @@
         "uretici_kodu": "1810217",
         "type": "otomasyon_alıcılar",
         "unit": "Adet",
-        "price": "89.39"
+        "price": "221.88"
       },
       {
         "description": "MOSEL SEL-60 10 Kısa Motor (33cm)",
@@ -2653,7 +2653,7 @@
         "type": "profil",
         "color": "pres",
         "unit": "Metre",
-        "price": "3.99",
+        "price": "3.26",
         "currency": "EUR"
       },
       {
@@ -2673,7 +2673,7 @@
         "type": "profil",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "3.99",
+        "price": "3.50",
         "currency": "EUR"
       },
       {
@@ -2683,7 +2683,7 @@
         "type": "profil",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "5.52",
+        "price": "3.58",
         "currency": "EUR"
       },
       {
@@ -2693,7 +2693,7 @@
         "type": "profil",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "5.52",
+        "price": "3.58",
         "currency": "EUR"
       },
       {
@@ -2703,7 +2703,7 @@
         "type": "profil",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "5.52",
+        "price": "3.52",
         "currency": "EUR"
       },
       {
@@ -2723,7 +2723,7 @@
         "type": "profil",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "5.52",
+        "price": "4.55",
         "currency": "EUR"
       },
       {
@@ -2733,7 +2733,7 @@
         "type": "profil",
         "color": "fındık",
         "unit": "Metre",
-        "price": "5.52",
+        "price": "4.55",
         "currency": "EUR"
       },
       {
@@ -3365,6 +3365,416 @@
         "unit": "Metre",
         "price": "202.50",
         "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Kasa Takozu Beyaz",
+        "stock_code": "378143260000",
+        "uretici_kodu": "",
+        "type": "aksesuar",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "33.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Kanat Takozu Siyah",
+        "stock_code": "378143270000",
+        "uretici_kodu": "",
+        "type": "aksesuar",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "33.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "Alm. Sürme Sineklik Tekerlek",
+        "stock_code": "378143280000",
+        "uretici_kodu": "",
+        "type": "aksesuar",
+        "color": "",
+        "unit": "Adet",
+        "price": "33.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Tül 20 mm Gri",
+        "stock_code": "378151200200",
+        "uretici_kodu": "S358210001900",
+        "type": "aksesuar",
+        "color": "gri",
+        "unit": "M2",
+        "price": "96.60",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Tül 20 mm Gri 2000 mm",
+        "stock_code": "378151300200",
+        "uretici_kodu": "",
+        "type": "aksesuar",
+        "color": "gri",
+        "unit": "M2",
+        "price": "96.60",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Tül 20 mm Gri 2200 mm",
+        "stock_code": "378151400200",
+        "uretici_kodu": "",
+        "type": "aksesuar",
+        "color": "gri",
+        "unit": "M2",
+        "price": "96.60",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Tül 20 mm Gri 2400 mm",
+        "stock_code": "378210001200",
+        "uretici_kodu": "",
+        "type": "aksesuar",
+        "color": "gri",
+        "unit": "M2",
+        "price": "96.60",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Tül 20 mm Gri 2700 mm",
+        "stock_code": "378210001900",
+        "uretici_kodu": "",
+        "type": "aksesuar",
+        "color": "gri",
+        "unit": "M2",
+        "price": "96.60",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Tül 20 mm Gri 3000 mm",
+        "stock_code": "378212001900",
+        "uretici_kodu": "",
+        "type": "aksesuar",
+        "color": "gri",
+        "unit": "M2",
+        "price": "96.60",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Kedi Tülü 20 mm Gri",
+        "stock_code": "378212201900",
+        "uretici_kodu": "",
+        "type": "aksesuar",
+        "color": "gri",
+        "unit": "M2",
+        "price": "289.80",
+        "currency": "TRY"
+      },
+      {
+        "description": "Sineklik Tülü Gri",
+        "stock_code": "378212401900",
+        "uretici_kodu": "S358230001900",
+        "type": "aksesuar",
+        "color": "gri",
+        "unit": "M2",
+        "price": "79.80",
+        "currency": "TRY"
+      },
+      {
+        "description": "Sineklik Tülü Gri (Nano) 2200 mm",
+        "stock_code": "378212701900",
+        "uretici_kodu": "",
+        "type": "aksesuar",
+        "color": "gri",
+        "unit": "M2",
+        "price": "247.80",
+        "currency": "TRY"
+      },
+      {
+        "description": "Sineklik Tülü Gri (İthal Pet) 1800 mm",
+        "stock_code": "378230001900",
+        "uretici_kodu": "",
+        "type": "aksesuar",
+        "color": "gri",
+        "unit": "M2",
+        "price": "247.80",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Aksesuar Beyaz",
+        "stock_code": "378242201900",
+        "uretici_kodu": "S358311001100",
+        "type": "aksesuar",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "38.50",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Aksesuar Siyah",
+        "stock_code": "378250141200",
+        "uretici_kodu": "S358311001200",
+        "type": "aksesuar",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "27.50",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Aksesuar Beyaz Eşiksiz",
+        "stock_code": "378250161200",
+        "uretici_kodu": "SİN.354",
+        "type": "aksesuar",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "38.50",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Aksesuar Siyah Eşiksiz",
+        "stock_code": "378261801900",
+        "uretici_kodu": "SİN.355",
+        "type": "aksesuar",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "27.50",
+        "currency": "TRY"
+      },
+      {
+        "description": "Prenses Takoz Kapağı (Sağ+Sol) Siyah",
+        "stock_code": "378312121200",
+        "uretici_kodu": "AKS1516",
+        "type": "aksesuar",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "11.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "Şerit Beyaz",
+        "stock_code": "378313041200",
+        "uretici_kodu": "S358315001100",
+        "type": "aksesuar",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "16.50",
+        "currency": "TRY"
+      },
+      {
+        "description": "Kord Megafil İp",
+        "stock_code": "378314001200",
+        "uretici_kodu": "",
+        "type": "aksesuar",
+        "color": "",
+        "unit": "Metre",
+        "price": "8.80",
+        "currency": "TRY"
+      },
+      {
+        "description": "Boncuk Siyah",
+        "stock_code": "378317021200",
+        "uretici_kodu": "S358317061200",
+        "type": "aksesuar",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0.55",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kasa Köşe Takozu Beyaz",
+        "stock_code": "378317031200",
+        "uretici_kodu": "S358322001100",
+        "type": "aksesuar",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "22.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kasa Köşe Takozu Siyah",
+        "stock_code": "378317041200",
+        "uretici_kodu": "S358322001200",
+        "type": "aksesuar",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "22.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Kanat Köşe Takozu Beyaz",
+        "stock_code": "378317051200",
+        "uretici_kodu": "S358323001100",
+        "type": "aksesuar",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "22.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x42 Sineklik Köşe Takozu 45",
+        "stock_code": "378332231100",
+        "uretici_kodu": "S358332271100",
+        "type": "aksesuar",
+        "color": "",
+        "unit": "Adet",
+        "price": "22.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "İçe Açılım Sineklik Boy Mıknatıs Siyah",
+        "stock_code": "378322001100",
+        "uretici_kodu": "S358325001200",
+        "type": "aksesuar",
+        "color": "siyah",
+        "unit": "Metre",
+        "price": "44.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "Plise Sineklik Mıknatıs Siyah-TY 162",
+        "stock_code": "378322001200",
+        "uretici_kodu": "S358325011200",
+        "type": "aksesuar",
+        "color": "siyah",
+        "unit": "Metre",
+        "price": "44.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x25 Sineklik Köşe Takozu 90 Beyaz",
+        "stock_code": "378332101100",
+        "uretici_kodu": "S358332221100",
+        "type": "aksesuar",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "22.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x25 Sineklik Köşe Takozu 90 Kahverengi",
+        "stock_code": "378332102000",
+        "uretici_kodu": "S358332222000",
+        "type": "aksesuar",
+        "color": "kahverengi",
+        "unit": "Adet",
+        "price": "22.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "17x42 Sineklik Köşe Takozu 90 Beyaz",
+        "stock_code": "378332211100",
+        "uretici_kodu": "S358332231100",
+        "type": "aksesuar",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "22.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "Sineklik Pencere Menteşesi Beyaz",
+        "stock_code": "378332232000",
+        "uretici_kodu": "S358333101100",
+        "type": "aksesuar",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "22.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "Sineklik Pencere Menteşesi Kahverengi",
+        "stock_code": "378332251100",
+        "uretici_kodu": "S358333102000",
+        "type": "aksesuar",
+        "color": "kahverengi",
+        "unit": "Adet",
+        "price": "22.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "Sineklik Pencere Kulpu Beyaz",
+        "stock_code": "378333102000",
+        "uretici_kodu": "S358334101100",
+        "type": "aksesuar",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "22.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "Sineklik Pencere Kulpu Kahverengi",
+        "stock_code": "378333201100",
+        "uretici_kodu": "S358334102000",
+        "type": "aksesuar",
+        "color": "kahverengi",
+        "unit": "Adet",
+        "price": "22.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "Sineklik Kapı Kulpu Beyaz",
+        "stock_code": "378333202000",
+        "uretici_kodu": "S358334201100",
+        "type": "aksesuar",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "22.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "Sineklik Kapı Kulpu Kahverengi",
+        "stock_code": "378333301100",
+        "uretici_kodu": "S358334202000",
+        "type": "aksesuar",
+        "color": "kahverengi",
+        "unit": "Adet",
+        "price": "22.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "Sineklik Plastik Çıtçıt Beyaz",
+        "stock_code": "378334101100",
+        "uretici_kodu": "S358335101100",
+        "type": "aksesuar",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "22.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "Sineklik Plastik Çıtçıt Kahverengi",
+        "stock_code": "378334102000",
+        "uretici_kodu": "S358335102000",
+        "type": "aksesuar",
+        "color": "kahverengi",
+        "unit": "Adet",
+        "price": "22.00",
+        "currency": "TRY"
+      },
+      {
+        "description": "Sineklik Fitili 6 mm Beyaz",
+        "stock_code": "378335101100",
+        "uretici_kodu": "S358336601100",
+        "type": "aksesuar",
+        "color": "beyaz",
+        "unit": "Adet",
+        "price": "16.50",
+        "currency": "TRY"
+      },
+      {
+        "description": "Sineklik Fitili 6 mm Kahverengi",
+        "stock_code": "378335102000",
+        "uretici_kodu": "S358336602000",
+        "type": "aksesuar",
+        "color": "kahverengi",
+        "unit": "Adet",
+        "price": "16.50",
+        "currency": "TRY"
+      },
+      {
+        "description": "Sineklik Fitili 6 mm Siyah",
+        "stock_code": "378335201100",
+        "uretici_kodu": "",
+        "type": "aksesuar",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "16.50",
+        "currency": "TRY"
       }
     ],
     "kepenk": [
@@ -3629,7 +4039,7 @@
         "kutu_type": "300mm_arka90",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "23.89",
+        "price": "23.92",
         "en_mm": "300",
         "boy_mm": "300",
         "hareket_tip": "motorlu"
@@ -3642,7 +4052,7 @@
         "kutu_type": "300mm_arka90",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "25.05",
+        "price": "25.11",
         "en_mm": "300",
         "boy_mm": "300",
         "hareket_tip": "motorlu"
@@ -3655,7 +4065,7 @@
         "kutu_type": "300mm_arka90",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "25.05",
+        "price": "25.11",
         "en_mm": "300",
         "boy_mm": "300",
         "hareket_tip": "motorlu"
@@ -3668,7 +4078,7 @@
         "kutu_type": "300mm_arka90",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "24.84",
+        "price": "24.89",
         "en_mm": "300",
         "boy_mm": "300",
         "hareket_tip": "motorlu"
@@ -3681,7 +4091,7 @@
         "kutu_type": "300mm_on45",
         "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "18.76"
+        "price": "21.24"
       },
       {
         "description": "300 - ÖN 45 Alüminyum Kutu Beyaz",
@@ -3691,7 +4101,7 @@
         "kutu_type": "300mm_on45",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "16.51"
+        "price": "18.03"
       },
       {
         "description": "300 - ÖN 45 Alüminyum Kutu Kahverengi",
@@ -3701,7 +4111,7 @@
         "kutu_type": "300mm_on45",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "17.34"
+        "price": "18.93"
       },
       {
         "description": "300 - ÖN 45 Alüminyum Kutu Metalik Gri",
@@ -3711,7 +4121,7 @@
         "kutu_type": "300mm_on45",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "17.34"
+        "price": "18.93"
       },
       {
         "description": "300 - ÖN 45 Alüminyum Kutu Antrasit Gri",
@@ -3721,7 +4131,7 @@
         "kutu_type": "300mm_on45",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "17.20"
+        "price": "18.76"
       },
       {
         "description": "350 - ARKA 90 Alüminyum Kutu RAL Boyalı",
@@ -3806,7 +4216,7 @@
         "kutu_type": "350mm_on45",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "22.18"
+        "price": "21.49"
       },
       {
         "description": "350 - ÖN 45 Alüminyum Kutu Kahverengi",
@@ -3826,7 +4236,7 @@
         "kutu_type": "350mm_on45",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "23.30"
+        "price": "22.57"
       },
       {
         "description": "350 - ÖN 45 Alüminyum Kutu Antrasit Gri",
@@ -3836,7 +4246,7 @@
         "kutu_type": "350mm_on45",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "23.10"
+        "price": "22.37"
       },
       {
         "description": "400 Alüminyum Kutu Kit",
@@ -4386,7 +4796,7 @@
         "motor_model": "sel_70",
         "motor_type": "reduktorlu",
         "unit": "Adet",
-        "price": "99.99",
+        "price": "99999.00",
         "hareket_tip": "motorlu",
         "tambur_tipi_mm": "70"
       },
@@ -4578,7 +4988,7 @@
         "brand": "mosel",
         "model": "oval_power_ii_4ch",
         "unit": "Adet",
-        "price": "146.87",
+        "price": "45.12",
         "motor_tip": "butonlu_reduktorlu_zincirli",
         "hareket_tip": "motorlu"
       },

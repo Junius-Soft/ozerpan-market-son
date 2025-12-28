@@ -5448,6 +5448,306 @@
         "unit": "m²",
         "price": "2269.74",
         "currency": "TRY"
+      },
+      {
+        "stock_code": "367200241640",
+        "description": "Klasik Temp.Isıcam 4+16+4",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "2161.90",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367200241642",
+        "description": "Klasik Temp.Isıcam 4+16+4 Küçük",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "2702.40",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367200541640",
+        "description": "Klasik Temp.Argon Isıcam 4+16+4",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "2464.80",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367200541642",
+        "description": "Klasik Temp.Argon Isıcam 4+16+4 Küçük",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "3081.00",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367210541640",
+        "description": "Sinerji Temp.Argon Isıcam 4+16+4",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "2623.24",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367210541642",
+        "description": "Sinerji Temp.Argon Isıcam 4+16+4 Küçük",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "3279.10",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367200641640",
+        "description": "Klasik Jaluzili Temp. Isıcam 4+16+4",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "6992.60",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367200641642",
+        "description": "Klasik Jaluzili Temp. Isıcam 4+16+4 Küçük",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "12237.10",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367200541641",
+        "description": "Sinerji Temp.Argon Isıcam 4+16+4 Jaluzili",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "3081.00",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367200841640",
+        "description": "Klasik Jaluzili Temp. Argon Isıcam 4+16+4",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "7303.10",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367200841642",
+        "description": "Klasik Jaluzili Temp. Argon Isıcam 4+16+4 Küçük",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "12780.40",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367220241640",
+        "description": "Konfor Temp.Isıcam 4+16+4",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "2566.02",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367220241642",
+        "description": "Konfor Temp.Isıcam 4+16+4 Küçük",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "3207.53",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367220541640",
+        "description": "Konfor Temp.Argon Isıcam 4+16+4",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "2868.90",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367220541642",
+        "description": "Konfor Temp.Argon Isıcam 4+16+4 Küçük",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "3586.11",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367230241640",
+        "description": "Reflekte Temp.Isıcam 4+16+4",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "3052.02",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367230241642",
+        "description": "Reflekte Temp.Isıcam 4+16+4 Küçük",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "3815.03",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367230541640",
+        "description": "Reflekte Temp.Argon Isıcam 4+16+4",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "3354.89",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367230541642",
+        "description": "Reflekte Temp.Argon Isıcam 4+16+4 Küçük",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "4193.61",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367201041640",
+        "description": "Reflekte Temp.Isıcam 4+16+4",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "3052.02",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367201041642",
+        "description": "Reflekte Temp.Isıcam 4+16+4 Küçük",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "3815.03",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367201041643",
+        "description": "Reflekte Temp.Isıcam 4+16+4 Argon",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "4193.61",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367240241640",
+        "description": "Renkli Temp.Isıcam 4+16+4",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "2283.34",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367240241642",
+        "description": "Renkli Temp.Isıcam 4+16+4 Küçük",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "2854.18",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367240541640",
+        "description": "Renkli Temp.Argon Isıcam 4+16+4",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "2586.20",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367240541642",
+        "description": "Renkli Temp.Argon Isıcam 4+16+4 Küçük",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "3232.78",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367250241640",
+        "description": "Buzlu Temp.Isıcam 4+16+4",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "1964.33",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367250241642",
+        "description": "Buzlu Temp.Isıcam 4+16+4 Küçük",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "2455.42",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367250541640",
+        "description": "Buzlu Temp.Argon Isıcam 4+16+4",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "2267.20",
+        "currency": "TRY"
+      },
+      {
+        "stock_code": "367250541642",
+        "description": "Buzlu Temp.Argon Isıcam 4+16+4 Küçük",
+        "type": "cam_balkon_cam",
+        "camKalinligi": "24mm",
+        "camRengi": "seffaf",
+        "unit": "m²",
+        "price": "2834.00",
+        "currency": "TRY"
       }
     ]
   }

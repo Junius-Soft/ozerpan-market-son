@@ -44,6 +44,17 @@ export const getImalatListesiOptions = (
     ];
   }
 
+  // Kepenk için
+  if (productId === "kepenk") {
+    return [
+      { label: "Lamel", value: "Kepenk Lamel" },
+      { label: "Alt Parça", value: "Kepenk Alt Parça" },
+      { label: "Dikme", value: "Kepenk Dikme" },
+      { label: "Kutu", value: "Kepenk Kutu" },
+      { label: "Ürün Önizlemesi", value: "preview" },
+    ];
+  }
+
   // Default options (herhangi bir ürün belirtilmemişse)
   return [];
 };

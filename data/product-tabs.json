@@ -1247,12 +1247,8 @@
                 "id": "vela-24mm",
                 "name": "Vela 24mm",
                 "image": "/images/products/cam-balkon.png"
-              },
-              {
-                "id": "vela-8mm",
-                "name": "Vela 8mm",
-                "image": "/images/products/cam-balkon.png"
               }
+             
             ],
             "default": "vela-24mm",
             "dependsOn": {

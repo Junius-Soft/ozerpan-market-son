@@ -76,6 +76,14 @@ export default function ProductDetailsPage() {
     loadSelectedPosition();
   }, [selectedPositionId, offerNo]);
 
+  // Reset quantity to 1 for new positions (not when editing/copying)
+  useEffect(() => {
+    if (!selectedPositionId) {
+      // Yeni poz çiziminde quantity'yi 1'e resetle
+      dispatch(setQuantity(1));
+    }
+  }, [selectedPositionId, dispatch]);
+
   // Transform tabs into initialValues with default field values and dependencies
   const getInitialValues = useCallback(() => {
     const initialValues = getProductSpecificType(productId);
@@ -236,8 +244,8 @@ export default function ProductDetailsPage() {
               }
             }
           }
-          // Set quantity from position if available
-          if (position) {
+          // Set quantity from position if available (only when editing/copying)
+          if (position && selectedPositionId) {
             dispatch(setQuantity(position.quantity || 1));
           }
         }

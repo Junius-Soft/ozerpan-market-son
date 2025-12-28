@@ -154,9 +154,21 @@ export async function generateFiyatAnaliziPDFPozListesi(
     ];
   });
 
-  // Malzeme Listesi Tablosu (ürünler + aksesuarlar)
-  const malzemeListesiData: RowInput[] = [];
-  let rowIndex = 1;
+  // Malzeme Listesi Tablosu (ürünler + aksesuarlar) - TOPLU GÖSTERİM
+  // Önce tüm malzemeleri topla ve grupla
+  interface MalzemeItem {
+    stock_code: string;
+    description: string;
+    unit: string;
+    price: number;
+    currency: string;
+    isCamBalkon: boolean;
+    totalQuantity: number;
+    totalPrice: number;
+  }
+
+  const malzemeMap = new Map<string, MalzemeItem>();
+
   positions.forEach((pos) => {
     const posCurrency = pos.currency?.code || "EUR";
     const isCamBalkon = pos.productId === "cam-balkon";
@@ -172,20 +184,32 @@ export async function generateFiyatAnaliziPDFPozListesi(
           : (prod.quantity ?? 1);
         // Pozisyon quantity'si ile çarp
         const totalQuantity = baseQuantity * (pos.quantity ?? 1);
+        const prodPrice = prod.price ? Number(prod.price) : 0;
         const totalPrice = prod.totalPrice 
           ? Number(prod.totalPrice) * (pos.quantity ?? 1)
-          : 0;
-        malzemeListesiData.push([
-          rowIndex++,
-          prod.stock_code || "-",
-          prod.description || "-",
-          totalQuantity,
-          prod.unit
-            ? prod.unit.charAt(0).toUpperCase() + prod.unit.slice(1)
-            : "-",
-          prod.price ? formatPrice(Number(prod.price), posCurrency, isCamBalkon) : "-",
-          totalPrice !== undefined ? formatPrice(totalPrice, posCurrency, isCamBalkon) : "-",
-        ]);
+          : prodPrice * totalQuantity;
+
+        // Unique key: stock_code + description + unit + price + currency
+        const key = `${prod.stock_code || "-"}|${prod.description || "-"}|${prod.unit || "-"}|${prodPrice}|${posCurrency}`;
+        
+        if (malzemeMap.has(key)) {
+          // Mevcut malzemeyi güncelle
+          const existing = malzemeMap.get(key)!;
+          existing.totalQuantity += totalQuantity;
+          existing.totalPrice += totalPrice;
+        } else {
+          // Yeni malzeme ekle
+          malzemeMap.set(key, {
+            stock_code: prod.stock_code || "-",
+            description: prod.description || "-",
+            unit: prod.unit ? prod.unit.charAt(0).toUpperCase() + prod.unit.slice(1) : "-",
+            price: prodPrice,
+            currency: posCurrency,
+            isCamBalkon,
+            totalQuantity,
+            totalPrice,
+          });
+        }
       });
     }
     // Aksesuarlar
@@ -202,21 +226,47 @@ export async function generateFiyatAnaliziPDFPozListesi(
           : (acc.quantity ?? 1);
         // Pozisyon quantity'si ile çarp
         const totalQuantity = baseQuantity * (pos.quantity ?? 1);
+        const accPrice = acc.price ? Number(acc.price) : 0;
         const totalPrice = acc.totalPrice 
           ? Number(acc.totalPrice) * (pos.quantity ?? 1)
-          : 0;
-        malzemeListesiData.push([
-          rowIndex++,
-          acc.stock_code || "-",
-          acc.description || "-",
-          totalQuantity,
-          acc.unit ? acc.unit.charAt(0).toUpperCase() + acc.unit.slice(1) : "-",
-          acc.price ? formatPrice(Number(acc.price), posCurrency, isCamBalkon) : "-",
-          totalPrice !== undefined ? formatPrice(totalPrice, posCurrency, isCamBalkon) : "-",
-        ]);
+          : accPrice * totalQuantity;
+
+        // Unique key: stock_code + description + unit + price + currency
+        const key = `${acc.stock_code || "-"}|${acc.description || "-"}|${acc.unit || "-"}|${accPrice}|${posCurrency}`;
+        
+        if (malzemeMap.has(key)) {
+          // Mevcut malzemeyi güncelle
+          const existing = malzemeMap.get(key)!;
+          existing.totalQuantity += totalQuantity;
+          existing.totalPrice += totalPrice;
+        } else {
+          // Yeni malzeme ekle
+          malzemeMap.set(key, {
+            stock_code: acc.stock_code || "-",
+            description: acc.description || "-",
+            unit: acc.unit ? acc.unit.charAt(0).toUpperCase() + acc.unit.slice(1) : "-",
+            price: accPrice,
+            currency: posCurrency,
+            isCamBalkon,
+            totalQuantity,
+            totalPrice,
+          });
+        }
       });
     }
   });
+
+  // Map'ten array'e çevir ve sırala
+  const malzemeListesiData: RowInput[] = Array.from(malzemeMap.values())
+    .map((item, index) => [
+      index + 1,
+      item.stock_code,
+      item.description,
+      item.totalQuantity,
+      item.unit,
+      item.price ? formatPrice(item.price, item.currency, item.isCamBalkon) : "-",
+      item.totalPrice !== undefined ? formatPrice(item.totalPrice, item.currency, item.isCamBalkon) : "-",
+    ]);
 
   // Poz Listesi Tablosu çizimi
   autoTable(doc, {

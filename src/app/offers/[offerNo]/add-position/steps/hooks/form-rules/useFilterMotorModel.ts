@@ -5,6 +5,7 @@ import { FormikProps } from "formik";
 import { PanjurSelections } from "@/types/panjur";
 import { Product } from "@/documents/products";
 import { toast } from "react-toastify";
+import { calculateSystemWidth, calculateSystemHeight } from "@/utils/panjur";
 
 export type FormValues = Record<string, string | number | boolean>;
 
@@ -60,21 +61,41 @@ export function filterMotorOptions(
   const values = formik.values;
   const width = values?.width ? parseFloat(String(values.width)) : 0;
   const height = values?.height ? parseFloat(String(values.height)) : 0;
-  const squareMeters = (width * height) / 1000000; // Convert from mm² to m²
   const lamelType = values?.lamelType;
   const movementType = values.movementType;
+  
+  // Sistem genişliği ve yüksekliğini doğru hesapla (dikme ve kutu paylarını dikkate alarak)
+  const systemWidth = calculateSystemWidth(
+    width,
+    values.dikmeOlcuAlmaSekli || "dikme_dahil",
+    values.dikmeType || "mini_dikme"
+  );
+  const systemHeight = calculateSystemHeight(
+    height,
+    values.kutuOlcuAlmaSekli || "kutu_dahil",
+    values.boxType || "137mm"
+  );
+  
+  // Sistem alanını m² cinsinden hesapla
+  const squareMeters = (systemWidth * systemHeight) / 1000000;
 
   // Eğer motorlu değilse veya gerekli veriler eksikse işlem yapamayız
   if (movementType !== "motorlu" || !width || !height || !lamelType) {
     return null;
   }
 
-  // Filter lamel thicknesses based on lamel type
-  const validThicknesses = Object.keys(MOTOR_CAPACITY_MAP).filter((thickness) =>
-    lamelType === "aluminyum_ekstruzyon"
-      ? thickness.includes("_se")
-      : thickness.includes("_sl")
-  ) as LamelThickness[];
+  // Seçili lamel kalınlığını al (39_sl, 45_se, 55_sl, 55_se)
+  const lamelTickness = values?.lamelTickness as LamelThickness | undefined;
+  
+  // Eğer lamelTickness seçiliyse, sadece o kalınlığı kullan
+  // Değilse, lamelType'a göre tüm uygun kalınlıkları kullan
+  const validThicknesses: LamelThickness[] = lamelTickness && MOTOR_CAPACITY_MAP[lamelTickness]
+    ? [lamelTickness]
+    : (Object.keys(MOTOR_CAPACITY_MAP).filter((thickness) =>
+        lamelType === "aluminyum_ekstruzyon"
+          ? thickness.includes("_se")
+          : thickness.includes("_sl")
+      ) as LamelThickness[]);
 
   // Get all possible motor models from all valid thicknesses
   const motorModels = [
@@ -95,7 +116,9 @@ export function filterMotorOptions(
 
     if (!isValidMotorMarka) return false;
 
-    // Then check if any of the valid thicknesses can support this motor with given square meters
+    // Then check if the selected lamel thickness (or any valid thickness) can support this motor with given square meters
+    // Eğer lamelTickness seçiliyse, sadece o kalınlığı kontrol et
+    // Değilse, tüm valid thicknesses'i kontrol et
     return validThicknesses.some((thickness) => {
       const capacity = MOTOR_CAPACITY_MAP[thickness][motor];
       return capacity >= squareMeters && capacity > 0; // Ensure capacity is greater than 0
@@ -139,7 +162,7 @@ export function useFilterMotorModel(
 ) {
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
-  const { width, height, lamelType, movementType, motorMarka, motorModel } =
+  const { width, height, lamelType, lamelTickness, movementType, motorMarka, motorModel, dikmeOlcuAlmaSekli, dikmeType, kutuOlcuAlmaSekli, boxType } =
     formik.values;
 
   useEffect(() => {
@@ -152,9 +175,14 @@ export function useFilterMotorModel(
     width,
     height,
     lamelType,
+    lamelTickness,
     movementType,
     motorMarka,
     motorModel,
+    dikmeOlcuAlmaSekli,
+    dikmeType,
+    kutuOlcuAlmaSekli,
+    boxType,
     productId,
     selectedProduct,
   ]);

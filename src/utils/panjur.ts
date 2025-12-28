@@ -500,7 +500,8 @@ export const findYalitimliBoxPrice = (
   boxType: string,
   boxColor: string,
   systemWidth: number,
-  boxsetType?: string
+  boxsetType?: string,
+  yalitimliType?: string
 ): {
   totalPrice: number;
   selectedProducts: SelectedProduct[];
@@ -513,6 +514,37 @@ export const findYalitimliBoxPrice = (
   const selectedProducts: SelectedProduct[] = [];
   let totalPrice = 0;
 
+  // Kapama tipini belirle:
+  // - emptyBox: hiçbir kapama ekleme (sadece kutu)
+  // - fullset veya detail: kompozit kapama ekle
+  // - boxWithMotor veya diğer: alt kapama ekle
+  const getKapamaConfig = (currentBoxType: string) => {
+    if (boxsetType === "emptyBox") {
+      // Boş kutu: sadece kutu, kapama yok
+      return [];
+    } else if (yalitimliType === "fullset" || yalitimliType === "detail") {
+      // Fullset veya detail: kompozit kapama
+      const kompozitNames: Record<string, string> = {
+        "250mm_ithal": "25x25 Strafor Kutu Kompozit Kapama",
+        "250mm_yerli": "25x25 Strafor Kutu Kompozit Kapama",
+        "300mm_yerli": "30x30 Strafor Kutu Kompozit Kapama",
+        "300mm_ithal": "30x30 Strafor Kutu Kompozit Kapama",
+      };
+      const kompozitName = kompozitNames[currentBoxType];
+      return kompozitName ? [{ name: kompozitName, needsColor: false }] : [];
+    } else {
+      // boxWithMotor veya diğer: alt kapama
+      const altKapamaNames: Record<string, string> = {
+        "250mm_ithal": "25x25 Strafor Kutu Alt Kapama",
+        "250mm_yerli": "25x25 Strafor Kutu Alt Kapama",
+        "300mm_yerli": "30x30 Strafor Kutu Alt Kapama",
+        "300mm_ithal": "30x30 Strafor Kutu Alt Kapama",
+      };
+      const altKapamaName = altKapamaNames[currentBoxType];
+      return altKapamaName ? [{ name: altKapamaName, needsColor: true }] : [];
+    }
+  };
+
   // Kutu konfigürasyonları
   const configs: Record<
     string,
@@ -520,31 +552,19 @@ export const findYalitimliBoxPrice = (
   > = {
     "250mm_ithal": [
       { name: "25x25 Strafor Kutu İthal", needsColor: false },
-      // emptyBox ise kompozit kapama ekle, değilse alt kapama ekle
-      ...(boxsetType === "emptyBox" 
-        ? [{ name: "25x25 Strafor Kutu Kompozit Kapama", needsColor: false }]
-        : [{ name: "25x25 Strafor Kutu Alt Kapama", needsColor: true }]),
+      ...getKapamaConfig("250mm_ithal"),
     ],
     "250mm_yerli": [
       { name: "25x25 Eps Panjur Kutusu Yerli", needsColor: false },
-      // emptyBox ise kompozit kapama ekle, değilse alt kapama ekle
-      ...(boxsetType === "emptyBox" 
-        ? [{ name: "25x25 Strafor Kutu Kompozit Kapama", needsColor: false }]
-        : [{ name: "25x25 Strafor Kutu Alt Kapama", needsColor: true }]),
+      ...getKapamaConfig("250mm_yerli"),
     ],
     "300mm_yerli": [
       { name: "30x30 Eps Panjur Kutusu Yerli", needsColor: false },
-      // emptyBox ise kompozit kapama ekle, değilse alt kapama ekle
-      ...(boxsetType === "emptyBox" 
-        ? [{ name: "30x30 Strafor Kutu Kompozit Kapama", needsColor: false }]
-        : [{ name: "30x30 Strafor Kutu Alt Kapama", needsColor: true }]),
+      ...getKapamaConfig("300mm_yerli"),
     ],
     "300mm_ithal": [
       { name: "30x30 Strafor Kutu İthal", needsColor: false },
-      // emptyBox ise kompozit kapama ekle, değilse alt kapama ekle
-      ...(boxsetType === "emptyBox" 
-        ? [{ name: "30x30 Strafor Kutu Kompozit Kapama", needsColor: false }]
-        : [{ name: "30x30 Strafor Kutu Alt Kapama", needsColor: true }]),
+      ...getKapamaConfig("300mm_ithal"),
     ],
   };
 

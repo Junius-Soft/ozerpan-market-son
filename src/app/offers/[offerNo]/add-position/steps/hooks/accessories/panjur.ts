@@ -90,17 +90,22 @@ export const calculatePanjurAccessories = (
     neededAccessories.push(...monoblokEkAksesuarlar);
   } else if (optionId === "yalitimli") {
     // Yalıtımlı kutu için yeni fonksiyon
+    // EmptyBox durumunda sadece yan kapak, orta kapak yok
     const yalitimliYanKapaklar = findYalitimliYanKapakAccessoryPrice(
       allAccessories,
       values.boxType,
       values.box_color,
-      dikmeCount
+      dikmeCount,
+      values.boxsetType === "emptyBox"
     );
     neededAccessories.push(...yalitimliYanKapaklar);
 
-    // Yalıtımlı kutu ek aksesuarları
-    const yalitimliEkAksesuarlar = findYalitimliEkAksesuarlar(allAccessories);
-    neededAccessories.push(...yalitimliEkAksesuarlar);
+    // Yalıtımlı kutu ek aksesuarları (fullset T sac ve plaket)
+    // EmptyBox durumunda bu aksesuarlar eklenmez
+    if (values.boxsetType !== "emptyBox") {
+      const yalitimliEkAksesuarlar = findYalitimliEkAksesuarlar(allAccessories);
+      neededAccessories.push(...yalitimliEkAksesuarlar);
+    }
   } else {
     // Distan için eski fonksiyon - bölme sayısı kadar
     const yanKapak = findYanKapakAccessoryPrice(

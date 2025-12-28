@@ -526,7 +526,9 @@ export const findYalitimliBoxPrice = (
       // Boş kutu: sadece kutu, kapama yok
       return [];
     } else if (yalitimliType === "fullset" || yalitimliType === "detail") {
-      // Fullset veya detail: kompozit kapama (lamel rengi ile)
+      // Fullset veya detail: kompozit kapama
+      // Not: Kompozit kapama için product-prices.json'da renk bilgisi description'da yok,
+      // bu yüzden needsColor: false yapıyoruz (sadece isim ile arama yapılacak)
       const kompozitNames: Record<string, string> = {
         "250mm_ithal": "25x25 Strafor Kutu Kompozit Kapama",
         "250mm_yerli": "25x25 Strafor Kutu Kompozit Kapama",
@@ -534,7 +536,7 @@ export const findYalitimliBoxPrice = (
         "300mm_ithal": "30x30 Strafor Kutu Kompozit Kapama",
       };
       const kompozitName = kompozitNames[currentBoxType];
-      return kompozitName ? [{ name: kompozitName, needsColor: true, useLamelColor: true }] : [];
+      return kompozitName ? [{ name: kompozitName, needsColor: false, useLamelColor: true }] : [];
     } else {
       // boxWithMotor veya diğer: alt kapama (box rengi ile)
       const altKapamaNames: Record<string, string> = {

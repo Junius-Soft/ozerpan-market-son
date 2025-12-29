@@ -2467,7 +2467,7 @@
       "content": {
         "fields": [
           {
-            "id": "color",
+            "id": "dikme_color",
             "name": "Dikme Rengi",
             "type": "select",
             "options": [
@@ -2477,25 +2477,16 @@
                 "color": "#4B4B4B"
               },
               {
-                "id": "beyaz",
-                "name": "Beyaz",
-                "color": "#FFFFFF"
-              },
-              {
                 "id": "metalik_gri",
                 "name": "Metalik Gri",
                 "color": "#7D7D7D"
               },
-              {
-                "id": "altın_meşe",
-                "name": "Altın Meşe",
-                "color": "#D1B48C"
-              },
-              {
-                "id": "ral_boyalı",
-                "name": "Ral Boyalı",
-                "color": "#FFFFFF"
-              }
+              { "id": "beyaz", "name": "Beyaz", "color": "#FFFFFF" },
+              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
+              { "id": "krem", "name": "Krem", "color": "#E6D8C9" },
+              { "id": "altın_meşe", "name": "Altın Meşe", "color": "#D1B48C" },
+              { "id": "fındık", "name": "Fındık", "color": "#8B5B29" },
+              { "id": "ral_boyalı", "name": "Ral Boyalı", "color": "#FFFFFF" }
             ],
             "default": "antrasit_gri"
           },

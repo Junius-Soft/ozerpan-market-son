@@ -51,7 +51,8 @@ export interface KepenkSelections extends BaseSelections {
   gozluLamelBaslangic?: number;
   gozluLamelBitis?: number;
   dikmeType?: "77_lik" | "100_luk";
-  color?: "antrasit_gri" | "beyaz" | "metalik_gri" | "altın_meşe" | "ral_boyalı";
+  dikme_color?: "antrasit_gri" | "beyaz" | "metalik_gri" | "kahverengi" | "krem" | "altın_meşe" | "fındık" | "ral_boyalı";
+  color?: "antrasit_gri" | "beyaz" | "metalik_gri" | "altın_meşe" | "ral_boyalı"; // Eski uyumluluk için
   subPart_color?: "antrasit_gri" | "beyaz" | "metalik_gri" | "kahverengi" | "krem" | "altın_meşe" | "fındık" | "ral_boyalı";
   unitPrice: number;
   selectedProducts: {

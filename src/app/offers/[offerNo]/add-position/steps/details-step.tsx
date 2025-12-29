@@ -22,6 +22,7 @@ import {
 import { PanjurSelections } from "@/types/panjur";
 import { useFilterLamelThickness } from "./hooks/form-rules/useFilterLamelThickness";
 import { useFilterMotorModel } from "./hooks/form-rules/useFilterMotorModel";
+import { useFilterKepenkMotor } from "./hooks/form-rules/useFilterKepenkMotor";
 import { useFilterBoxSize } from "./hooks/form-rules/useFilterBoxSize";
 import { useAutoDependencyAndFilterBy } from "./hooks/useAutoDependencyDefaults";
 import { AlertTriangle } from "lucide-react";
@@ -66,6 +67,7 @@ export const DetailsStep = forwardRef<DetailsStepRef, DetailsStepProps>(
     // Panjur-specific hooks (they already check productId internally)
     useFilterLamelThickness(formik);
     useFilterMotorModel(formik, selectedProduct);
+    useFilterKepenkMotor(formik, selectedProduct);
     useFilterBoxSize(formik);
     const { totalPrice, selectedProducts } = useCalculator(
       formik.values,

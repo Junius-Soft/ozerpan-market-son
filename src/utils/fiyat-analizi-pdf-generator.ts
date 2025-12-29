@@ -189,14 +189,18 @@ export async function generateFiyatAnaliziPDFPozListesi(
           ? Number(prod.totalPrice) * (pos.quantity ?? 1)
           : prodPrice * totalQuantity;
 
-        // Unique key: stock_code + description + unit + price + currency
-        const key = `${prod.stock_code || "-"}|${prod.description || "-"}|${prod.unit || "-"}|${prodPrice}|${posCurrency}`;
+        // Unique key: stock_code + description + unit + currency (fiyat hariç - aynı malzemeler toplu gösterilecek)
+        const key = `${prod.stock_code || "-"}|${prod.description || "-"}|${prod.unit || "-"}|${posCurrency}`;
         
         if (malzemeMap.has(key)) {
           // Mevcut malzemeyi güncelle
           const existing = malzemeMap.get(key)!;
           existing.totalQuantity += totalQuantity;
           existing.totalPrice += totalPrice;
+          // Fiyat farklıysa ortalama fiyatı hesapla (toplam fiyat / toplam miktar)
+          if (existing.totalQuantity > 0) {
+            existing.price = existing.totalPrice / existing.totalQuantity;
+          }
         } else {
           // Yeni malzeme ekle
           malzemeMap.set(key, {
@@ -231,14 +235,18 @@ export async function generateFiyatAnaliziPDFPozListesi(
           ? Number(acc.totalPrice) * (pos.quantity ?? 1)
           : accPrice * totalQuantity;
 
-        // Unique key: stock_code + description + unit + price + currency
-        const key = `${acc.stock_code || "-"}|${acc.description || "-"}|${acc.unit || "-"}|${accPrice}|${posCurrency}`;
+        // Unique key: stock_code + description + unit + currency (fiyat hariç - aynı malzemeler toplu gösterilecek)
+        const key = `${acc.stock_code || "-"}|${acc.description || "-"}|${acc.unit || "-"}|${posCurrency}`;
         
         if (malzemeMap.has(key)) {
           // Mevcut malzemeyi güncelle
           const existing = malzemeMap.get(key)!;
           existing.totalQuantity += totalQuantity;
           existing.totalPrice += totalPrice;
+          // Fiyat farklıysa ortalama fiyatı hesapla (toplam fiyat / toplam miktar)
+          if (existing.totalQuantity > 0) {
+            existing.price = existing.totalPrice / existing.totalQuantity;
+          }
         } else {
           // Yeni malzeme ekle
           malzemeMap.set(key, {

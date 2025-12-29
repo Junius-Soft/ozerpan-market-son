@@ -76,6 +76,14 @@ export default function ProductDetailsPage() {
     loadSelectedPosition();
   }, [selectedPositionId, offerNo]);
 
+  // Reset quantity to 1 for new positions (not when editing/copying)
+  useEffect(() => {
+    if (!selectedPositionId) {
+      // Yeni poz çiziminde quantity'yi 1'e resetle
+      dispatch(setQuantity(1));
+    }
+  }, [selectedPositionId, dispatch]);
+
   // Transform tabs into initialValues with default field values and dependencies
   const getInitialValues = useCallback(() => {
     const initialValues = getProductSpecificType(productId);
@@ -236,8 +244,8 @@ export default function ProductDetailsPage() {
               }
             }
           }
-          // Set quantity from position if available
-          if (position) {
+          // Set quantity from position if available (only when editing/copying)
+          if (position && selectedPositionId) {
             dispatch(setQuantity(position.quantity || 1));
           }
         }
@@ -327,6 +335,25 @@ export default function ProductDetailsPage() {
       // Canvas'ı export et
       const canvasDataUrl = detailsStepRef.current?.exportCanvas() || undefined;
 
+      // Calculate total from selectedProducts if available, otherwise use previewTotal or unitPrice
+      const selectedProducts = values.selectedProducts || {
+        products: [],
+        accessories: [],
+      };
+      
+      // Calculate total from selectedProducts (these are already calculated for 1 unit)
+      const calculatedTotalFromProducts = [
+        ...(selectedProducts.products || []),
+        ...(selectedProducts.accessories || []),
+      ].reduce((sum, item) => sum + (item.totalPrice || 0), 0);
+      
+      // Use calculated total from products if available, otherwise use previewTotal or unitPrice
+      const unitPrice = calculatedTotalFromProducts > 0 
+        ? calculatedTotalFromProducts 
+        : (previewTotal > 0 ? previewTotal : (values.unitPrice || 0));
+      
+      const total = unitPrice * (quantity || 1);
+
       // Create new position with calculated values
       const newPosition: Position = {
         id: selectedPositionId || `POS-${Date.now()}`,
@@ -342,16 +369,16 @@ export default function ProductDetailsPage() {
           : "01",
         unit: "adet",
         quantity: quantity || 1,
-        unitPrice: values.unitPrice || 0,
-        selectedProducts: values.selectedProducts || {
-          products: [],
-          accessories: [],
-        },
+        unitPrice: unitPrice,
+        selectedProducts: selectedProducts,
         productId,
         typeId,
         productName,
         optionId,
-        currency: productObj.currency,
+        // Cam balkon ve sineklik için currency her zaman TRY olmalı
+        currency: (productId === "cam-balkon" || productId === "sineklik") 
+          ? { code: "TRY", symbol: "₺" }
+          : productObj.currency,
         canvasDataUrl, // Canvas verisini pozisyon objesine ekle
         productDetails: {
           ...values,
@@ -377,7 +404,7 @@ export default function ProductDetailsPage() {
               sectionMotorPositions: productState.sectionMotorPositions,
             }),
         } as Position["productDetails"],
-        total: values.unitPrice * quantity || 0, // Calculate total
+        total: total,
       };
 
       // Update or add the position

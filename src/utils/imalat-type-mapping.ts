@@ -38,6 +38,24 @@ export const imalatTypeMapping: Record<string, string[]> = {
   "cam_balkon_profiller": ["cam_balkon_profiller"],
   "cam_balkon_aksesuar": ["cam_balkon_aksesuar"],
   
+  // Kepenk tipleri
+  "Kepenk Lamel": [
+    "kepenk_lamel_profilleri",
+    "kepenk_lamel_aksesuarlari",
+  ],
+  "Kepenk Dikme": [
+    "kepenk_dikme_profilleri",
+    "kepenk_dikme_aksesuarlari",
+  ],
+  "Kepenk Kutu": [
+    "kepenk_kutu_profilleri",
+    "kepenk_kutu_aksesuarlari",
+  ],
+  "Kepenk Alt Parça": [
+    "kepenk_alt_parca_profilleri",
+    "kepenk_alt_parca_aksesuarlari",
+  ],
+  
   // Preview için özel tip (hiçbir ürünü filtrelemez, hepsini gösterir)
   "preview": [],
 };

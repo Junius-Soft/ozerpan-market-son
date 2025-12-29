@@ -22,6 +22,7 @@ import {
   calculateDikmeHeight,
   findSectionWidths,
   findYalitimliBoxPrice,
+  getBoxHeight,
 } from "@/utils/panjur";
 import { findEffectiveSections } from "@/utils/shutter-calculations";
 import { ProductTab } from "@/documents/products";
@@ -289,7 +290,9 @@ export const calculatePanjur = (
       values.box_color,
       systemWidth,
       values.boxsetType,
-      values.yalitimliType
+      values.yalitimliType,
+      values.lamel_color, // Kompozit kapama için lamel rengi kullanılacak
+      values.quantity || 1 // Kompozit kapama için quantity kullanılacak
     );
     boxPrice = totalPrice;
     boxSelectedProducts.push(...selectedProducts);
@@ -427,12 +430,19 @@ export const calculatePanjur = (
         );
       }
 
+      // Fullset durumunda yükseltme profili boyundan kutu ölçüsü kadar düşülür
+      let yukseltmeProfiliHeight = relevantSystemHeight;
+      if (optionId === "yalitimli" && values.yalitimliType === "fullset") {
+        const boxHeight = getBoxHeight(values.boxType);
+        yukseltmeProfiliHeight = relevantSystemHeight - boxHeight;
+      }
+
       const [sectionYukseltmePrice, sectionYukseltmeSelectedProduct] =
         findYukseltmeProfiliPrice(
           prices,
           values.dikme_color || values.lamel_color,
           dikmeCountAtPosition,
-          relevantSystemHeight
+          yukseltmeProfiliHeight
         );
 
       yukseltmeProfiliPrice += sectionYukseltmePrice;

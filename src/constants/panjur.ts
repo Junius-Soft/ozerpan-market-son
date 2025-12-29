@@ -3,9 +3,9 @@ import { LamelProperties, LamelHeightTable } from "@/types/panjur";
 // Lamel özellikleri sabitleri
 export const lamelProperties: Record<string, LamelProperties> = {
   "39_sl": {
-    maxWidth: 2300,
-    maxHeight: 2400,
-    maxArea: 5.5, // m2
+    maxWidth: 2000, // PDF'deki tavsiye edilen maksimum en: 2000 mm
+    maxHeight: 2400, // PDF'deki tavsiye edilen maksimum yükseklik: 2400 mm
+    maxArea: 5.5, // PDF'deki maksimum kullanım alanı: 5,50 m²
   },
   "55_sl": {
     maxWidth: 3200,

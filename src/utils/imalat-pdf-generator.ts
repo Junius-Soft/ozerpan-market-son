@@ -3,6 +3,7 @@ import autoTable, { RowInput } from "jspdf-autotable";
 import JsBarcode from "jsbarcode";
 import { Offer, Position } from "@/documents/offers";
 import { getProductSortConfig } from "./yalitimli-config";
+import { getTypeFilters } from "./imalat-type-mapping";
 
 // Base64 font data will be imported
 import NotoSansRegular from "./NotoSans-Regular.js";
@@ -132,6 +133,77 @@ export class ImalatPDFGenerator {
       }
     });
 
+    // Tip filtreleme: selectedTypes varsa, sadece seçilen tiplere ait ürünleri göster
+    let filteredProducts = allProducts;
+    if (selectedTypes && selectedTypes.length > 0 && !selectedTypes.includes("preview")) {
+      const allowedTypes = getTypeFilters(selectedTypes);
+      filteredProducts = allProducts.filter((item) => {
+        const productType = item.product.type || "";
+        return allowedTypes.includes(productType);
+      });
+    }
+
+    // Özel filtreleme kuralları: Seçilen tipe göre belirli ürünleri hariç tut
+    if (selectedTypes && selectedTypes.length > 0) {
+      filteredProducts = filteredProducts.filter((item) => {
+        const productType = (item.product.type || "").toLowerCase();
+        const description = (item.product.description || "").toLowerCase();
+        const stockCode = (item.product.stock_code || "").toLowerCase();
+
+        // Lamel seçildiğinde: tapa, çelik askı, zımba teli gelmesin
+        if (selectedTypes.includes("Lamel")) {
+          if (
+            description.includes("tapa") ||
+            description.includes("çelik askı") ||
+            description.includes("askı") ||
+            description.includes("zımba teli") ||
+            description.includes("zimba teli") ||
+            stockCode.includes("tapa") ||
+            stockCode.includes("askı") ||
+            stockCode.includes("zimba")
+          ) {
+            return false;
+          }
+        }
+
+        // Alt Parça seçildiğinde: alt parça lastiği gelmesin
+        if (selectedTypes.includes("Alt Parça")) {
+          if (
+            description.includes("alt parça lastiği") ||
+            description.includes("alt parça lastik") ||
+            stockCode.includes("lastik")
+          ) {
+            return false;
+          }
+        }
+
+        // Kutu seçildiğinde: yan kapak gelmesin
+        if (selectedTypes.includes("Kutu")) {
+          if (
+            description.includes("yan kapak") ||
+            stockCode.includes("yan kapak")
+          ) {
+            return false;
+          }
+        }
+
+        // Tambur seçildiğinde: boru başı ve rulman gelmesin
+        if (selectedTypes.includes("Boru")) {
+          if (
+            description.includes("boru başı") ||
+            description.includes("boru baş") ||
+            description.includes("rulman") ||
+            stockCode.includes("boru baş") ||
+            stockCode.includes("rulman")
+          ) {
+            return false;
+          }
+        }
+
+        return true;
+      });
+    }
+
     // Pozisyonlardan unique productId'leri al
     const uniqueProductIds = [
       ...new Set(data.positions.map((p) => p.productId).filter(Boolean)),
@@ -164,7 +236,7 @@ export class ImalatPDFGenerator {
     // Grupla: stok kodu + temiz açıklama + ölçü (size) bazında
     const groupedProductsMap = new Map<string, GroupedProduct>();
     
-    allProducts.forEach((item) => {
+    filteredProducts.forEach((item) => {
       const stockCode = item.product.stock_code || "";
       const cleanDesc = cleanDescription(item.product.description || "");
       const size = item.product.size || "";
@@ -297,8 +369,14 @@ export class ImalatPDFGenerator {
     });
 
     // Canvas preview'larını ekle (sadece "Ürün Önizlemesi" seçiliyse)
+    // Sadece panjur görselleri gösterilecek
     if (selectedTypes?.includes("preview")) {
-      this.addCanvasPreviewsForPositions(data.positions);
+      const panjurPositions = data.positions.filter(
+        (pos) => pos.productId === "panjur"
+      );
+      if (panjurPositions.length > 0) {
+        this.addCanvasPreviewsForPositions(panjurPositions);
+      }
     }
 
     // Footer ekle

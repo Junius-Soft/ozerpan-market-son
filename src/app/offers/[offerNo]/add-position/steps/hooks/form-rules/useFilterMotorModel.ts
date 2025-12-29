@@ -5,7 +5,7 @@ import { FormikProps } from "formik";
 import { PanjurSelections } from "@/types/panjur";
 import { Product } from "@/documents/products";
 import { toast } from "react-toastify";
-import { calculateSystemWidth, calculateSystemHeight } from "@/utils/panjur";
+import { calculateSystemWidth, calculateSystemHeight, getBoxHeight } from "@/utils/panjur";
 
 export type FormValues = Record<string, string | number | boolean>;
 
@@ -70,14 +70,24 @@ export function filterMotorOptions(
     values.dikmeOlcuAlmaSekli || "dikme_dahil",
     values.dikmeType || "mini_dikme"
   );
-  const systemHeight = calculateSystemHeight(
-    height,
-    values.kutuOlcuAlmaSekli || "kutu_dahil",
-    values.boxType || "137mm"
-  );
   
-  // Sistem alanını m² cinsinden hesapla
-  const squareMeters = (systemWidth * systemHeight) / 1000000;
+  // Motor seçimi için sistem yüksekliği: kutu dahil seçildiğinde kutu yüksekliği düşülmeli
+  // Çünkü motor kapasitesi lamel alanına göre hesaplanır, kutu alanı dahil değildir
+  const kutuOlcuAlmaSekli = values.kutuOlcuAlmaSekli || "kutu_dahil";
+  const boxType = values.boxType || "137mm";
+  let systemHeightForMotor: number;
+  
+  if (kutuOlcuAlmaSekli === "kutu_dahil") {
+    // Kutu dahil seçildiğinde: height - kutu yüksekliği (motor kapasitesi için)
+    const kutuYuksekligi = getBoxHeight(boxType);
+    systemHeightForMotor = height - kutuYuksekligi;
+  } else {
+    // Kutu hariç seçildiğinde: height (zaten kutu yüksekliği eklenmemiş)
+    systemHeightForMotor = height;
+  }
+  
+  // Sistem alanını m² cinsinden hesapla (motor seçimi için)
+  const squareMeters = (systemWidth * systemHeightForMotor) / 1000000;
 
   // Eğer motorlu değilse veya gerekli veriler eksikse işlem yapamayız
   if (movementType !== "motorlu" || !width || !height || !lamelType) {

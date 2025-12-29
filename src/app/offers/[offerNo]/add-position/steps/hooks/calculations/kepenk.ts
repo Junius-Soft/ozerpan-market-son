@@ -162,11 +162,10 @@ export const calculateKepenk = (
     const systemAreaM2 = (systemWidth * systemHeight) / 1000000;
     
     // Manuel motor seçimi aktif mi?
-    const isManuelMotorSecimi = values.manuelMotorSecimi === true;
-    
+    // Motor seçimi - motorModel "auto" ise otomatik, değilse manuel seçim
     let selectedMotorModel: string | null = null;
     
-    if (isManuelMotorSecimi && values.motorModel) {
+    if (values.motorModel && values.motorModel !== "auto") {
       // Manuel seçim - kullanıcının seçtiği motoru kullan
       selectedMotorModel = resolveMotorSelection(
         values.motorModel,

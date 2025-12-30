@@ -63,7 +63,7 @@ export function filterBoxSize(
     }
     
     // İlk sarım çapı hesaplaması
-    let sarimCapi = calculateSarimCapi(
+    const sarimCapi = calculateSarimCapi(
       lamelYuksekligiForSarim,
       selectedLamelTickness,
       selectedMovementType

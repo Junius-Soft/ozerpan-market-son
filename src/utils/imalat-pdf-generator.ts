@@ -146,7 +146,6 @@ export class ImalatPDFGenerator {
     // Özel filtreleme kuralları: Seçilen tipe göre belirli ürünleri hariç tut
     if (selectedTypes && selectedTypes.length > 0) {
       filteredProducts = filteredProducts.filter((item) => {
-        const productType = (item.product.type || "").toLowerCase();
         const description = (item.product.description || "").toLowerCase();
         const stockCode = (item.product.stock_code || "").toLowerCase();
 

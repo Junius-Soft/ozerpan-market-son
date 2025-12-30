@@ -5,7 +5,7 @@ import { FormikProps } from "formik";
 import { PanjurSelections } from "@/types/panjur";
 import { Product } from "@/documents/products";
 import { toast } from "react-toastify";
-import { calculateSystemWidth, calculateSystemHeight, getBoxHeight } from "@/utils/panjur";
+import { calculateSystemWidth, getBoxHeight } from "@/utils/panjur";
 
 export type FormValues = Record<string, string | number | boolean>;
 

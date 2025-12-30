@@ -10,23 +10,26 @@ export function getAvailableLamelColors(
   prices: PriceItem[],
   lamelType: string
 ): string[] {
-  // product-prices.json'daki renk değerlerini form'daki renk ID'lerine map et
-  const colorMapping: Record<string, string[]> = {
-    "alüminyum": ["aluminyum"],
-    "rall_boya": ["ral_boyali"],
-    "antrasit_gri": ["ral_7016"],
-    "beyaz": ["beyaz", "ral_9005"], // beyaz hem kendi hem de ral_9005 için kullanılabilir
-    "krem": ["ral_8017"],
-    "metalik_gri": ["ral_8017"],
-    "ekstruzyonhh": ["aluminyum"], // se_77 için özel durum
-  };
-
   // product-prices.json'dan bu lamel tipi için mevcut renkleri bul
   const lamelPrices = prices.filter(
     (p) => p.type === "kepenk_lamel_profilleri" && p.lamel_type === lamelType
   );
 
   const availableColorsInJson = lamelPrices.map((p) => p.color.toLowerCase());
+
+  // product-prices.json'daki renk değerlerini form'daki renk ID'lerine map et
+  // Sadece gerçekten var olan renkleri map et
+  const colorMapping: Record<string, string[]> = {
+    "alüminyum": ["aluminyum"],
+    "rall_boya": ["ral_boyali"],
+    "antrasit_gri": ["ral_7016"],
+    "beyaz": ["beyaz"], // beyaz sadece beyaz olarak map et
+    "krem": ["ral_8017"],
+    "metalik_gri": ["ral_8017"],
+    "ekstruzyonhh": ["aluminyum"], // se_77 için özel durum
+    "siyah": ["ral_9005"], // eğer siyah varsa ral_9005 olarak map et
+    "altın_meşe": ["ral_8017"], // altın meşe de kahverengi tonları için
+  };
 
   // Form'daki renk ID'lerini topla
   const availableFormColors = new Set<string>();

@@ -110,8 +110,8 @@ export const findLamelPrice = (
     "aluminyum": ["alüminyum"], // Form: "aluminyum" -> JSON: "alüminyum"
     "ral_boyali": ["rall_boya", "ral_boyali"], // Form: "ral_boyali" -> JSON: "rall_boya"
     "ral_7016": ["antrasit_gri"], // Form: "ral_7016" -> JSON: "antrasit_gri"
-    "ral_9005": ["beyaz"], // Form: "ral_9005" -> JSON: "beyaz" (siyah için de beyaz kullanılabilir)
-    "ral_8017": ["krem", "metalik_gri"], // Form: "ral_8017" -> JSON: "krem" veya "metalik_gri" (kahverengi tonları)
+    "ral_9005": ["siyah"], // Form: "ral_9005" -> JSON: "siyah" (eğer siyah yoksa bulunamaz)
+    "ral_8017": ["krem", "metalik_gri", "altın_meşe"], // Form: "ral_8017" -> JSON: "krem", "metalik_gri" veya "altın_meşe" (kahverengi tonları)
   };
 
   const colorLower = color.toLowerCase();
@@ -133,11 +133,15 @@ export const findLamelPrice = (
     );
   }
 
-  // Eğer hala bulunamazsa, beyaz ile tekrar dene
+  // Eğer hala bulunamazsa, renk bulunamadı - hata döndür (beyaz'a fallback yapma)
   if (!matchingLamel) {
-    matchingLamel = lamelPrices.find(
-      (p) => p.color.toLowerCase() === "beyaz"
-    );
+    // Sadece mapping'de olmayan renkler için beyaz'a fallback yap
+    // Ama ral_9005 gibi özel renkler için fallback yapma
+    if (colorLower !== "ral_9005" && colorLower !== "ral_7016" && colorLower !== "ral_8017" && colorLower !== "ral_boyali") {
+      matchingLamel = lamelPrices.find(
+        (p) => p.color.toLowerCase() === "beyaz"
+      );
+    }
   }
 
   if (!matchingLamel) return [0, null];

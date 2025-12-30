@@ -273,7 +273,9 @@ export async function generateTeklifFormuPDF(
     const endValues = [
       pos.productDetails?.width ?? "-",
       pos.productDetails?.height ?? "-",
-      pos.quantity,
+      typeof pos.quantity === 'number' 
+        ? parseFloat(pos.quantity.toFixed(2))
+        : pos.quantity,
       "", // Kontrol sütunu boş
       euroPrice ? formatPrice(euroPrice) : "-",
     ];

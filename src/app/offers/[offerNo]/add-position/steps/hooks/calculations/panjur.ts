@@ -503,16 +503,9 @@ export const calculatePanjur = (
         // Sadece tambur ve kutu fiyatı
         return tamburPrice + boxPrice;
       } else if (values.boxsetType === "emptyBox") {
-        // Boş kutu: lamel, dikme, alt parça, kutu dahil, tambur ve motor hariç
+        // Boş kutu: sadece kutu + yan kapak, lamel, dikme, alt parça, kompozit hariç
         return (
-          totalLamelPrice +
-          subPartPrice +
-          totalDikmePrice +
           boxPrice +
-          yukseltmeProfiliPrice +
-          remotePrice +
-          smarthomePrice +
-          receiverPrice +
           (accessoryItems || [])
             .filter((acc) => {
               const description = acc.description.toLowerCase();
@@ -631,17 +624,8 @@ export const calculatePanjur = (
             product !== null && product !== undefined
         );
       } else if (values.boxsetType === "emptyBox") {
-        // Boş kutu: lamel, dikme, alt parça, kutu dahil, tambur ve motor hariç
-        return [
-          ...lamelSelectedProducts,
-          ...subPartSelectedProducts,
-          ...dikmeSelectedProducts,
-          ...boxSelectedProducts,
-          ...yukseltmeProfiliSelectedProducts,
-          remoteSelectedProduct,
-          smarthomeSelectedProduct,
-          receiverSelectedProduct,
-        ].filter(
+        // Boş kutu: sadece kutu + yan kapak, lamel, dikme, alt parça, kompozit hariç
+        return [...boxSelectedProducts].filter(
           (product): product is SelectedProduct =>
             product !== null && product !== undefined
         );

@@ -147,7 +147,9 @@ export async function generateFiyatAnaliziPDFPozListesi(
       pos.productName || "-",
       genislik,
       pos.productDetails?.height ?? "-",
-      pos.quantity,
+      typeof pos.quantity === 'number' 
+        ? parseFloat(pos.quantity.toFixed(2))
+        : pos.quantity,
       pos.unit ? pos.unit.charAt(0).toUpperCase() + pos.unit.slice(1) : "-",
       unitPrice !== undefined ? formatPrice(unitPrice, posCurrency, isCamBalkon) : "-",
       total !== undefined ? formatPrice(total, posCurrency, isCamBalkon) : "-",
@@ -189,14 +191,18 @@ export async function generateFiyatAnaliziPDFPozListesi(
           ? Number(prod.totalPrice) * (pos.quantity ?? 1)
           : prodPrice * totalQuantity;
 
-        // Unique key: stock_code + description + unit + price + currency
-        const key = `${prod.stock_code || "-"}|${prod.description || "-"}|${prod.unit || "-"}|${prodPrice}|${posCurrency}`;
+        // Unique key: stock_code + description + unit + currency (fiyat hariç - aynı malzemeler toplu gösterilecek)
+        const key = `${prod.stock_code || "-"}|${prod.description || "-"}|${prod.unit || "-"}|${posCurrency}`;
         
         if (malzemeMap.has(key)) {
           // Mevcut malzemeyi güncelle
           const existing = malzemeMap.get(key)!;
           existing.totalQuantity += totalQuantity;
           existing.totalPrice += totalPrice;
+          // Fiyat farklıysa ortalama fiyatı hesapla (toplam fiyat / toplam miktar)
+          if (existing.totalQuantity > 0) {
+            existing.price = existing.totalPrice / existing.totalQuantity;
+          }
         } else {
           // Yeni malzeme ekle
           malzemeMap.set(key, {
@@ -231,14 +237,18 @@ export async function generateFiyatAnaliziPDFPozListesi(
           ? Number(acc.totalPrice) * (pos.quantity ?? 1)
           : accPrice * totalQuantity;
 
-        // Unique key: stock_code + description + unit + price + currency
-        const key = `${acc.stock_code || "-"}|${acc.description || "-"}|${acc.unit || "-"}|${accPrice}|${posCurrency}`;
+        // Unique key: stock_code + description + unit + currency (fiyat hariç - aynı malzemeler toplu gösterilecek)
+        const key = `${acc.stock_code || "-"}|${acc.description || "-"}|${acc.unit || "-"}|${posCurrency}`;
         
         if (malzemeMap.has(key)) {
           // Mevcut malzemeyi güncelle
           const existing = malzemeMap.get(key)!;
           existing.totalQuantity += totalQuantity;
           existing.totalPrice += totalPrice;
+          // Fiyat farklıysa ortalama fiyatı hesapla (toplam fiyat / toplam miktar)
+          if (existing.totalQuantity > 0) {
+            existing.price = existing.totalPrice / existing.totalQuantity;
+          }
         } else {
           // Yeni malzeme ekle
           malzemeMap.set(key, {
@@ -262,7 +272,9 @@ export async function generateFiyatAnaliziPDFPozListesi(
       index + 1,
       item.stock_code,
       item.description,
-      item.totalQuantity,
+      typeof item.totalQuantity === 'number' 
+        ? parseFloat(item.totalQuantity.toFixed(2))
+        : item.totalQuantity,
       item.unit,
       item.price ? formatPrice(item.price, item.currency, item.isCamBalkon) : "-",
       item.totalPrice !== undefined ? formatPrice(item.totalPrice, item.currency, item.isCamBalkon) : "-",

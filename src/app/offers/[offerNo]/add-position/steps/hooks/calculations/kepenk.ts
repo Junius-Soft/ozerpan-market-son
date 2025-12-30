@@ -116,8 +116,8 @@ export const calculateKepenk = (
   // Excel'e göre: "Lamel Genişliği ile Aynı Sistem Adedi Kadar"
   // Alt parça ölçüsü lamel genişliği kadar olmalı, sistem genişliği değil!
   const sectionWidths = [lamelGenisligi]; // Sistem genişliği yerine lamel genişliği kullan
-  // Alt parça rengini kullan, yoksa varsayılan olarak "alüminyum" kullan
-  const subPartColor = values.subPart_color || values.color || "alüminyum";
+  // Alt parça rengini kullan, yoksa varsayılan olarak "antrasit_gri" kullan
+  const subPartColor = values.subPart_color || "antrasit_gri";
   const subPartResults = findSubPartPrice(
     prices,
     values.lamelType,
@@ -136,11 +136,13 @@ export const calculateKepenk = (
   // Dikme yüksekliği = sistem yüksekliği - kutu yüksekliği
   // Excel'e göre: "Dikme Boyu = Sistem Yüksekliği - Kutu Yüksekliği"
   const dikmeHeight = values.height - boxHeight; // + yerine - kullan
+  // Dikme rengini kullan, yoksa varsayılan olarak "antrasit_gri" kullan
+  const dikmeColor = values.dikme_color || values.color || "antrasit_gri";
 
   const [dikmePrice, dikmeSelectedProduct] = findDikmePrice(
     prices,
     dikmeType,
-    "alüminyum",
+    dikmeColor,
     dikmeHeight
   );
 
@@ -162,11 +164,10 @@ export const calculateKepenk = (
     const systemAreaM2 = (systemWidth * systemHeight) / 1000000;
     
     // Manuel motor seçimi aktif mi?
-    const isManuelMotorSecimi = values.manuelMotorSecimi === true;
-    
+    // Motor seçimi - motorModel "auto" ise otomatik, değilse manuel seçim
     let selectedMotorModel: string | null = null;
     
-    if (isManuelMotorSecimi && values.motorModel) {
+    if (values.motorModel && values.motorModel !== "auto") {
       // Manuel seçim - kullanıcının seçtiği motoru kullan
       selectedMotorModel = resolveMotorSelection(
         values.motorModel,

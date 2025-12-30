@@ -595,9 +595,27 @@ export const findYalitimliBoxPrice = (
       if (productItem) {
         // Kompozit kapama için quantity kullan, diğerleri için 1
         const productQuantity = useLamelColor ? quantity : 1;
-        const product = createSelectedProduct(productItem, productQuantity, systemWidth);
-        selectedProducts.push(product);
-        totalPrice += product.totalPrice;
+        
+        // Kompozit kapama için özel hesaplama: adet bazında (systemWidth kullanılmaz)
+        // Çünkü kompozit kapama adet bazında satılıyor, metre bazında değil
+        if (useLamelColor) {
+          // Kompozit kapama: adet * birim fiyat
+          // size bilgisi kullanılmamalı çünkü adet bazında satılıyor
+          const unitPrice = parseFloat(productItem.price || "0");
+          const product: SelectedProduct = {
+            ...productItem,
+            quantity: productQuantity,
+            totalPrice: unitPrice * productQuantity,
+            size: 0, // Kompozit kapama adet bazında, size kullanılmaz
+          };
+          selectedProducts.push(product);
+          totalPrice += product.totalPrice;
+        } else {
+          // Diğer ürünler (kutu): normal hesaplama (metre bazında)
+          const product = createSelectedProduct(productItem, productQuantity, systemWidth);
+          selectedProducts.push(product);
+          totalPrice += product.totalPrice;
+        }
       }
     });
   }

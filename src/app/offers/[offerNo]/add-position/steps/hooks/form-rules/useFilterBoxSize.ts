@@ -49,6 +49,46 @@ export function filterBoxSize(
     ];
   }
 
+  // Önce sarım çapına göre hangi kutu olması gerektiğini belirle (sadece distan için)
+  let sarimCapiBasedBox: string | null = null;
+  if (optionId === "distan") {
+    // Sarım çapı hesaplaması için lamel yüksekliğini hesapla
+    // İlk tahmin: kutu dahil değilse, lamel yüksekliği = toplam yükseklik
+    // Kutu dahilse, ortalama bir kutu yüksekliği kullan (165mm kutu için yaklaşık 165mm)
+    let lamelYuksekligiForSarim = height;
+    if (kutuOlcuAlmaSekli === "kutu_dahil") {
+      // Ortalama kutu yüksekliği olarak 165mm kullan (en yaygın kutu)
+      const avgBoxHeight = getBoxHeight("165mm");
+      lamelYuksekligiForSarim = height - avgBoxHeight / 2;
+    }
+    
+    // İlk sarım çapı hesaplaması
+    const sarimCapi = calculateSarimCapi(
+      lamelYuksekligiForSarim,
+      selectedLamelTickness,
+      selectedMovementType
+    );
+    sarimCapiBasedBox = getBoxSizeBySarimCapi(sarimCapi, optionId);
+    
+    // İteratif iyileştirme: Eğer kutu dahilse ve bir kutu belirlendiyse,
+    // bu kutu için lamel yüksekliğini tekrar hesapla ve sarım çapını doğrula
+    if (kutuOlcuAlmaSekli === "kutu_dahil" && sarimCapiBasedBox) {
+      const determinedBoxHeight = getBoxHeight(sarimCapiBasedBox);
+      const refinedLamelYuksekligi = height - determinedBoxHeight / 2;
+      const refinedSarimCapi = calculateSarimCapi(
+        refinedLamelYuksekligi,
+        selectedLamelTickness,
+        selectedMovementType
+      );
+      const refinedBox = getBoxSizeBySarimCapi(refinedSarimCapi, optionId);
+      
+      // Eğer iyileştirilmiş kutu farklıysa, onu kullan
+      if (refinedBox && refinedBox !== sarimCapiBasedBox) {
+        sarimCapiBasedBox = refinedBox;
+      }
+    }
+  }
+
   const validOptions: { id: string; name: string }[] = [];
 
   for (const box of boxOptions) {
@@ -72,16 +112,9 @@ export function filterBoxSize(
     }
     
     // Sarım çapına göre kontrol (sadece distan için)
-    if (isValid && optionId === "distan") {
-      const sarimCapi = calculateSarimCapi(
-        lamelYuksekligi,
-        selectedLamelTickness,
-        selectedMovementType
-      );
-      const sarimCapiBasedBox = getBoxSizeBySarimCapi(sarimCapi, optionId);
-      
-      // Sarım çapına göre belirlenen kutu ile eşleşmeli
-      if (sarimCapiBasedBox && box.id !== sarimCapiBasedBox) {
+    // Eğer sarım çapına göre belirlenen bir kutu varsa, sadece o kutu geçerli
+    if (isValid && optionId === "distan" && sarimCapiBasedBox) {
+      if (box.id !== sarimCapiBasedBox) {
         isValid = false;
       }
     }

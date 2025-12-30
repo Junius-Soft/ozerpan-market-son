@@ -163,7 +163,8 @@ export function getSurmeKasaProfiles(
 
   const profile = allProfiles.find((item) => {
     return (
-      item.description.includes("Sürme Sineklik Ray Profili") &&
+      (item.description.includes("Sürme Sineklik Ray Profili") || 
+       item.description.includes("Alm. Sürme Sineklik Ray Profili")) &&
       item.color === color
     );
   });
@@ -194,7 +195,8 @@ export function getSurmeKanatProfiles(
 
   const profile = allProfiles.find((item) => {
     return (
-      item.description.includes("Sürme Sineklik Kanat Profili") &&
+      (item.description.includes("Sürme Sineklik Kanat Profili") ||
+       item.description.includes("Alm. Sürme Sineklik Kanat Profili")) &&
       item.color === color
     );
   });

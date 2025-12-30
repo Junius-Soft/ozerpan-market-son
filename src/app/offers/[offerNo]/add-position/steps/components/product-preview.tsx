@@ -51,6 +51,7 @@ interface ProductPreviewProps {
   onTotalChange?: (total: number) => void;
   summaryRef?: React.RefObject<HTMLDivElement>;
   seperation: number; // Ayrım sayısı (örneğin, panjur için)
+  optionId?: string | null; // Montaj tipi (distan, monoblok, yalitimli)
 }
 
 export interface ProductPreviewComponentRef {
@@ -126,7 +127,7 @@ const formatFieldValue = (
 export const ProductPreview = forwardRef<
   ProductPreviewComponentRef,
   ProductPreviewProps
->(({ selectedProduct, onTotalChange, summaryRef, seperation }, ref) => {
+>(({ selectedProduct, onTotalChange, summaryRef, seperation, optionId }, ref) => {
   const productPreviewRef = useRef<ProductPreviewRef>(null);
   const { loading, eurRate } = useExchangeRate();
   const formik = useFormikContext<PanjurSelections>();
@@ -367,7 +368,15 @@ export const ProductPreview = forwardRef<
           )}
           <div className="space-y-2 border-t pt-4">
             <h4 className="font-medium">Seçilen Özellikler</h4>
-            {selectedProduct?.tabs?.map((tab) => {
+            {selectedProduct?.tabs
+              ?.filter((tab) => {
+                // showIfOptionId kontrolü: Eğer tab'ın showIfOptionId'si varsa, optionId ile eşleşmeli
+                if (tab.showIfOptionId) {
+                  return tab.showIfOptionId === optionId;
+                }
+                return true; // showIfOptionId yoksa her zaman göster
+              })
+              ?.map((tab) => {
               const fields = tab.content?.fields || [];
 
               if (fields.length === 0) return null;

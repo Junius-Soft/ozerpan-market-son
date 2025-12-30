@@ -651,7 +651,7 @@ export function calculateAksesuarMalzemeleri(
     });
   }
   
-  // 3. BAKLA-5 - çıkış camı adedince
+  // 3. BAKLA-5 - çıkış camı adedince (açılır kanatlar için)
   if (toplamCikisSayisi > 0) {
     malzemeler.push({
       kategori: 'Aksesuar',
@@ -663,7 +663,7 @@ export function calculateAksesuarMalzemeleri(
     });
   }
   
-  // 4. MENTEŞELİ KANAT TAKIMI - çıkış camı sayısı kadar
+  // 4. MENTEŞELİ KANAT TAKIMI - çıkış camı sayısı kadar (açılır kanatlar için)
   if (toplamCikisSayisi > 0) {
     malzemeler.push({
       kategori: 'Aksesuar',
@@ -675,7 +675,7 @@ export function calculateAksesuarMalzemeleri(
     });
   }
   
-  // 5. MENTEŞE-KANAT TUTUCU - çıkış camı sayısı kadar
+  // 5. MENTEŞE-KANAT TUTUCU - çıkış camı sayısı kadar (açılır kanatlar için)
   if (toplamCikisSayisi > 0) {
     malzemeler.push({
       kategori: 'Aksesuar',

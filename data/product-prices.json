@@ -1903,7 +1903,8 @@
         "type": "sineklik_profilleri",
         "color": "pres",
         "unit": "Metre",
-        "price": "3.26"
+        "price": "3.26",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Beyaz",
@@ -1912,7 +1913,8 @@
         "type": "sineklik_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "3.50"
+        "price": "3.50",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Kahverengi",
@@ -1921,7 +1923,8 @@
         "type": "sineklik_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "3.58"
+        "price": "3.58",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Antrasit Gri",
@@ -1930,7 +1933,8 @@
         "type": "sineklik_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "3.52"
+        "price": "3.52",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Krem",
@@ -1948,16 +1952,18 @@
         "type": "sineklik_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "3.58"
+        "price": "3.58",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Ral Boyalı",
-        "stock_code": "378111600200",
+        "stock_code": "378111601000",
         "uretici_kodu": "378111601010",
         "type": "sineklik_profilleri",
         "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "4.22"
+        "price": "4.22",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Altın Meşe",
@@ -1966,7 +1972,8 @@
         "type": "sineklik_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "4.55"
+        "price": "4.55",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Fındık",
@@ -1975,7 +1982,8 @@
         "type": "sineklik_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "4.55"
+        "price": "4.55",
+        "currency": "EUR"
       },
       {
         "description": "Yan Dikme Adaptörü 31x42 Beyaz",
@@ -2663,7 +2671,7 @@
         "type": "profil",
         "color": "ral",
         "unit": "Metre",
-        "price": "4.22",
+        "price": "4.2158",
         "currency": "EUR"
       },
       {
@@ -2673,7 +2681,7 @@
         "type": "profil",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "3.50",
+        "price": "3.4989",
         "currency": "EUR"
       },
       {
@@ -2703,7 +2711,7 @@
         "type": "profil",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "3.52",
+        "price": "3.5175",
         "currency": "EUR"
       },
       {
@@ -3779,14 +3787,87 @@
     ],
     "kepenk": [
       {
-        "description": "77 mm Çelik Poliüretanlı Lamel Beyaz",
-        "stock_code": "353115700XXX",
+        "description": "77'lik Çelik Lamel RALL BOYA",
+        "stock_code": "353115701000",
+        "uretici_kodu": "ST.077.XX.QBF",
+        "type": "kepenk_lamel_profilleri",
+        "lamel_type": "st_77",
+        "color": "rall_boya",
+        "unit": "Metre",
+        "price": "4.307606",
+        "currency": "EUR",
+        "weight_per_m2": "12.99",
+        "profile_count": "12.99",
+        "kapama_yuzeyi_mm": "77",
+        "nominal_kalinlik_mm": "18.5",
+        "azami_genislik_mm": "5000",
+        "azami_yukseklik_mm": "4000",
+        "azami_kullanim_alani_m2": "20"
+      },
+      {
+        "description": "77'lik Çelik Lamel Beyaz",
+        "stock_code": "353115701100",
         "uretici_kodu": "ST.077.XX.QBF",
         "type": "kepenk_lamel_profilleri",
         "lamel_type": "st_77",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "10.00",
+        "price": "3.520106",
+        "currency": "EUR",
+        "weight_per_m2": "12.99",
+        "profile_count": "12.99",
+        "kapama_yuzeyi_mm": "77",
+        "nominal_kalinlik_mm": "18.5",
+        "azami_genislik_mm": "5000",
+        "azami_yukseklik_mm": "4000",
+        "azami_kullanim_alani_m2": "20"
+      },
+      {
+        "description": "77'lik Çelik Lamel Metalik Gri",
+        "stock_code": "353115703000",
+        "uretici_kodu": "ST.077.XX.QBF",
+        "type": "kepenk_lamel_profilleri",
+        "lamel_type": "st_77",
+        "color": "metalik_gri",
+        "unit": "Metre",
+        "price": "3.632738",
+        "currency": "EUR",
+        "weight_per_m2": "12.99",
+        "profile_count": "12.99",
+        "kapama_yuzeyi_mm": "77",
+        "nominal_kalinlik_mm": "18.5",
+        "azami_genislik_mm": "5000",
+        "azami_yukseklik_mm": "4000",
+        "azami_kullanim_alani_m2": "20"
+      },
+      {
+        "description": "77'lik Çelik Lamel Krem",
+        "stock_code": "353115703100",
+        "uretici_kodu": "ST.077.XX.QBF",
+        "type": "kepenk_lamel_profilleri",
+        "lamel_type": "st_77",
+        "color": "krem",
+        "unit": "Metre",
+        "price": "3.621333",
+        "currency": "EUR",
+        "weight_per_m2": "12.99",
+        "profile_count": "12.99",
+        "kapama_yuzeyi_mm": "77",
+        "nominal_kalinlik_mm": "18.5",
+        "azami_genislik_mm": "5000",
+        "azami_yukseklik_mm": "4000",
+        "azami_kullanim_alani_m2": "20"
+      },
+      {
+        "description": "77'lik Çelik Lamel Antrasit Gri",
+        "stock_code": "353115703400",
+        "uretici_kodu": "ST.077.XX.QBF",
+        "type": "kepenk_lamel_profilleri",
+        "lamel_type": "st_77",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "4.307606",
+        "currency": "EUR",
         "weight_per_m2": "12.99",
         "profile_count": "12.99",
         "kapama_yuzeyi_mm": "77",

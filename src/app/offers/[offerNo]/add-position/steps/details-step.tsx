@@ -188,6 +188,7 @@ export const DetailsStep = forwardRef<DetailsStepRef, DetailsStepProps>(
           onTotalChange={onTotalChange}
           summaryRef={summaryRef}
           seperation={typeId}
+          optionId={optionId}
         />
       </div>
     );

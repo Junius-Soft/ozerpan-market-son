@@ -147,7 +147,9 @@ export async function generateFiyatAnaliziPDFPozListesi(
       pos.productName || "-",
       genislik,
       pos.productDetails?.height ?? "-",
-      pos.quantity,
+      typeof pos.quantity === 'number' 
+        ? parseFloat(pos.quantity.toFixed(2))
+        : pos.quantity,
       pos.unit ? pos.unit.charAt(0).toUpperCase() + pos.unit.slice(1) : "-",
       unitPrice !== undefined ? formatPrice(unitPrice, posCurrency, isCamBalkon) : "-",
       total !== undefined ? formatPrice(total, posCurrency, isCamBalkon) : "-",
@@ -270,7 +272,9 @@ export async function generateFiyatAnaliziPDFPozListesi(
       index + 1,
       item.stock_code,
       item.description,
-      item.totalQuantity,
+      typeof item.totalQuantity === 'number' 
+        ? parseFloat(item.totalQuantity.toFixed(2))
+        : item.totalQuantity,
       item.unit,
       item.price ? formatPrice(item.price, item.currency, item.isCamBalkon) : "-",
       item.totalPrice !== undefined ? formatPrice(item.totalPrice, item.currency, item.isCamBalkon) : "-",

@@ -319,6 +319,9 @@ export class ImalatPDFGenerator {
         // Kesim listesinde profil adedi yukarı yuvarlanır
         // Örn: 3.144 → 4 adet (her biri 'size' uzunluğunda)
         displayQuantity = Math.ceil(rawTotalQuantity).toString();
+      } else {
+        // Diğer ürünler için 2 ondalık basamak
+        displayQuantity = parseFloat(rawTotalQuantity.toFixed(2)).toString();
       }
 
       // Pozisyon numaralarını birleştir (birden fazla pozisyonda varsa)
@@ -986,7 +989,8 @@ export class ImalatPDFGenerator {
         const pozQuantity = Number(position.quantity ?? 1);
         position.selectedProducts.accessories.forEach((accessory) => {
           const accessoryQuantity = Number(accessory.quantity ?? 1);
-          const totalQuantity = (accessoryQuantity * pozQuantity).toString();
+          const totalQuantityRaw = accessoryQuantity * pozQuantity;
+          const totalQuantity = parseFloat(totalQuantityRaw.toFixed(2)).toString();
           profileData.push([
             (profileData.length + 1).toString(),
             accessory.stock_code || "",

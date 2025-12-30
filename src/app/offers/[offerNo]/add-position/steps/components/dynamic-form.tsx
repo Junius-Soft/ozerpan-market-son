@@ -16,6 +16,7 @@ import { CustomDialog } from "@/components/ui/custom-dialog";
 import { useFilterBoxSize } from "../hooks/form-rules/useFilterBoxSize";
 import { useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
+import { getAvailableLamelColors } from "@/utils/kepenk-color-availability";
 
 interface DynamicFormProps {
   formik: FormikProps<
@@ -23,6 +24,7 @@ interface DynamicFormProps {
   >;
   fields: ProductTabField[];
   values: PanjurSelections;
+  prices?: import("@/types/kepenk").PriceItem[];
 }
 
 type FormValues = Record<string, string | number | boolean>;
@@ -174,8 +176,9 @@ const SelectInput: React.FC<
       PanjurSelections & Record<string, string | number | boolean>
     >;
     optionId?: string | null;
+    prices?: import("@/types/kepenk").PriceItem[];
   }
-> = ({ field, form, fieldDef, allFields, formik, optionId }) => {
+> = ({ field, form, fieldDef, allFields, formik, optionId, prices }) => {
   const { values } = form;
   const [open, setOpen] = useState(false);
   const { validBoxOptions } = useFilterBoxSize(formik);
@@ -183,6 +186,27 @@ const SelectInput: React.FC<
   const filteredOptions = useMemo(() => {
     if (!fieldDef.options) return [];
     let options = [...fieldDef.options];
+
+    // Kepenk için lamelColor field'ında renk filtreleme - olmayan renkleri direkt kaldır
+    if (fieldDef.id === "lamelColor" && prices && Array.isArray(prices) && prices.length > 0) {
+      const productId = (values as Record<string, unknown>).productId;
+      const lamelType = (values as Record<string, unknown>).lamelType;
+      
+      if (productId === "kepenk" && lamelType && typeof lamelType === "string") {
+        try {
+          const availableColors = getAvailableLamelColors(prices, lamelType);
+          
+          // Sadece mevcut renkleri göster, olmayanları kaldır
+          options = options.filter((option) => {
+            const optionId = option.id || option.name;
+            return availableColors.includes(optionId);
+          });
+        } catch (error) {
+          console.error("Error filtering lamel colors:", error);
+          // Hata durumunda tüm seçenekleri göster
+        }
+      }
+    }
 
     if (fieldDef.filterBy) {
       const filters = Array.isArray(fieldDef.filterBy)
@@ -212,7 +236,7 @@ const SelectInput: React.FC<
     }
 
     return options;
-  }, [fieldDef.options, fieldDef.filterBy, values, optionId]);
+  }, [fieldDef.options, fieldDef.filterBy, fieldDef.id, values, optionId, prices]);
 
   const currentValue = field.value?.toString() ?? "";
   const selectedOption = filteredOptions.find(
@@ -373,10 +397,10 @@ const SelectInput: React.FC<
             <button
               key={option.id || option.name}
               type="button"
-              className={`flex flex-col items-center justify-center border rounded-lg p-2 transition hover:border-blue-500 focus:outline-none ${
+              className={`flex flex-col items-center justify-center border rounded-lg p-2 transition focus:outline-none ${
                 (option.id || option.name) === currentValue
-                  ? "border-blue-500 ring-2 ring-blue-300"
-                  : "border-muted"
+                  ? "border-blue-500 ring-2 ring-blue-300 hover:border-blue-500"
+                  : "border-muted hover:border-blue-500"
               }`}
               onClick={() => handleSelect(option.id || option.name)}
               tabIndex={0}
@@ -499,7 +523,7 @@ const FormikInputs = (
   }
 };
 
-export function DynamicForm({ formik, fields, values }: DynamicFormProps) {
+export function DynamicForm({ formik, fields, values, prices }: DynamicFormProps) {
   const searchParams = useSearchParams();
   const optionId = searchParams.get("optionId");
   return (
@@ -525,6 +549,7 @@ export function DynamicForm({ formik, fields, values }: DynamicFormProps) {
               allFields={fields}
               formik={formik}
               optionId={optionId}
+              prices={prices}
             />
           </div>
         );

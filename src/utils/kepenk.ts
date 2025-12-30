@@ -105,11 +105,35 @@ export const findLamelPrice = (
     (p) => p.type === "kepenk_lamel_profilleri" && p.lamel_type === lamelType
   );
 
-  let matchingLamel = lamelPrices.find(
-    (p) => p.color.toLowerCase() === color.toLowerCase()
-  );
+  // Renk eşleştirme: Form'dan gelen renk değerlerini product-prices.json'daki değerlere map et
+  const colorMapping: Record<string, string[]> = {
+    "aluminyum": ["alüminyum"], // Form: "aluminyum" -> JSON: "alüminyum"
+    "ral_boyali": ["rall_boya", "ral_boyali"], // Form: "ral_boyali" -> JSON: "rall_boya"
+    "ral_7016": ["antrasit_gri"], // Form: "ral_7016" -> JSON: "antrasit_gri"
+    "ral_9005": ["beyaz"], // Form: "ral_9005" -> JSON: "beyaz" (siyah için de beyaz kullanılabilir)
+    "ral_8017": ["krem", "metalik_gri"], // Form: "ral_8017" -> JSON: "krem" veya "metalik_gri" (kahverengi tonları)
+  };
 
-  // Eğer bulunamazsa, beyaz ile tekrar dene
+  const colorLower = color.toLowerCase();
+  const mappedColors = colorMapping[colorLower] || [colorLower];
+  
+  // Önce mapping'deki renkleri dene
+  let matchingLamel = null;
+  for (const mappedColor of mappedColors) {
+    matchingLamel = lamelPrices.find(
+      (p) => p.color.toLowerCase() === mappedColor
+    );
+    if (matchingLamel) break;
+  }
+
+  // Eğer hala bulunamazsa, orijinal renk değerini dene
+  if (!matchingLamel) {
+    matchingLamel = lamelPrices.find(
+      (p) => p.color.toLowerCase() === colorLower
+    );
+  }
+
+  // Eğer hala bulunamazsa, beyaz ile tekrar dene
   if (!matchingLamel) {
     matchingLamel = lamelPrices.find(
       (p) => p.color.toLowerCase() === "beyaz"

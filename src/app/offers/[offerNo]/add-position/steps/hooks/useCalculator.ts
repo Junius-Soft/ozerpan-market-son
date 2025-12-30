@@ -139,5 +139,5 @@ export const useCalculator = (
     optionId,
   ]);
 
-  return result;
+  return { ...result, prices };
 };

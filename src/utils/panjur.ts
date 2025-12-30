@@ -600,12 +600,13 @@ export const findYalitimliBoxPrice = (
         // Çünkü kompozit kapama adet bazında satılıyor, metre bazında değil
         if (useLamelColor) {
           // Kompozit kapama: adet * birim fiyat
+          // size bilgisi kullanılmamalı çünkü adet bazında satılıyor
           const unitPrice = parseFloat(productItem.price || "0");
           const product: SelectedProduct = {
             ...productItem,
             quantity: productQuantity,
             totalPrice: unitPrice * productQuantity,
-            size: systemWidth, // Ölçü bilgisi için saklanıyor ama fiyat hesaplamasında kullanılmıyor
+            size: 0, // Kompozit kapama adet bazında, size kullanılmaz
           };
           selectedProducts.push(product);
           totalPrice += product.totalPrice;

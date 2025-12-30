@@ -105,15 +105,43 @@ export const findLamelPrice = (
     (p) => p.type === "kepenk_lamel_profilleri" && p.lamel_type === lamelType
   );
 
-  let matchingLamel = lamelPrices.find(
-    (p) => p.color.toLowerCase() === color.toLowerCase()
-  );
+  // Renk eşleştirme: Form'dan gelen renk değerlerini product-prices.json'daki değerlere map et
+  const colorMapping: Record<string, string[]> = {
+    "aluminyum": ["alüminyum"], // Form: "aluminyum" -> JSON: "alüminyum"
+    "ral_boyali": ["rall_boya", "ral_boyali"], // Form: "ral_boyali" -> JSON: "rall_boya"
+    "ral_7016": ["antrasit_gri"], // Form: "ral_7016" -> JSON: "antrasit_gri"
+    "ral_9005": ["siyah"], // Form: "ral_9005" -> JSON: "siyah" (eğer siyah yoksa bulunamaz)
+    "ral_8017": ["krem", "metalik_gri", "altın_meşe"], // Form: "ral_8017" -> JSON: "krem", "metalik_gri" veya "altın_meşe" (kahverengi tonları)
+  };
 
-  // Eğer bulunamazsa, beyaz ile tekrar dene
+  const colorLower = color.toLowerCase();
+  const mappedColors = colorMapping[colorLower] || [colorLower];
+  
+  // Önce mapping'deki renkleri dene
+  let matchingLamel = null;
+  for (const mappedColor of mappedColors) {
+    matchingLamel = lamelPrices.find(
+      (p) => p.color.toLowerCase() === mappedColor
+    );
+    if (matchingLamel) break;
+  }
+
+  // Eğer hala bulunamazsa, orijinal renk değerini dene
   if (!matchingLamel) {
     matchingLamel = lamelPrices.find(
-      (p) => p.color.toLowerCase() === "beyaz"
+      (p) => p.color.toLowerCase() === colorLower
     );
+  }
+
+  // Eğer hala bulunamazsa, renk bulunamadı - hata döndür (beyaz'a fallback yapma)
+  if (!matchingLamel) {
+    // Sadece mapping'de olmayan renkler için beyaz'a fallback yap
+    // Ama ral_9005 gibi özel renkler için fallback yapma
+    if (colorLower !== "ral_9005" && colorLower !== "ral_7016" && colorLower !== "ral_8017" && colorLower !== "ral_boyali") {
+      matchingLamel = lamelPrices.find(
+        (p) => p.color.toLowerCase() === "beyaz"
+      );
+    }
   }
 
   if (!matchingLamel) return [0, null];

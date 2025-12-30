@@ -69,7 +69,7 @@ export const DetailsStep = forwardRef<DetailsStepRef, DetailsStepProps>(
     useFilterMotorModel(formik, selectedProduct);
     useFilterKepenkMotor(formik, selectedProduct);
     useFilterBoxSize(formik);
-    const { totalPrice, selectedProducts } = useCalculator(
+    const { totalPrice, selectedProducts, prices = [] } = useCalculator(
       formik.values,
       selectedProduct?.id ?? "",
       selectedProduct?.tabs ?? []
@@ -93,7 +93,7 @@ export const DetailsStep = forwardRef<DetailsStepRef, DetailsStepProps>(
       });
     }, [selectedProduct, optionId]);
     const [currentTab, setCurrentTab] = useState<string>(
-      availableTabs[0].id ?? ""
+      availableTabs[0]?.id ?? ""
     );
 
     const renderTabContent = (
@@ -101,6 +101,10 @@ export const DetailsStep = forwardRef<DetailsStepRef, DetailsStepProps>(
         PanjurSelections & Record<string, string | number | boolean>
       >
     ) => {
+      if (availableTabs.length === 0) {
+        return null;
+      }
+
       const activeTab = availableTabs.find((tab) => tab.id === currentTab);
 
       if (activeTab?.content?.fields && activeTab.content.fields.length > 0) {
@@ -111,6 +115,7 @@ export const DetailsStep = forwardRef<DetailsStepRef, DetailsStepProps>(
               formik={formik}
               fields={activeTab.content.fields}
               values={values}
+              prices={prices}
             />
             {activeTab.content.preview && (
               <div className="mt-6">
@@ -160,19 +165,21 @@ export const DetailsStep = forwardRef<DetailsStepRef, DetailsStepProps>(
         {/* Left Side - Tabs and Content */}
         <div className="lg:col-span-2 space-y-6">
           {/* Tabs - Using API provided tabs */}
-          <div className="flex flex-wrap gap-2">
-            {availableTabs.map((tab) => (
-              <Button
-                key={tab.id}
-                variant={currentTab === tab.id ? "default" : "outline"}
-                onClick={() => setCurrentTab(tab.id)}
-                type="button" // Form submit davranışını engellemek için type="button" eklendi
-                className="flex-1"
-              >
-                {tab.name}
-              </Button>
-            ))}
-          </div>
+          {availableTabs.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {availableTabs.map((tab) => (
+                <Button
+                  key={tab.id}
+                  variant={currentTab === tab.id ? "default" : "outline"}
+                  onClick={() => setCurrentTab(tab.id)}
+                  type="button" // Form submit davranışını engellemek için type="button" eklendi
+                  className="flex-1"
+                >
+                  {tab.name}
+                </Button>
+              ))}
+            </div>
+          )}
 
           {/* Tab Content */}
           <Card className="p-6">

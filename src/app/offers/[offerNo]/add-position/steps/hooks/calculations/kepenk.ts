@@ -30,7 +30,8 @@ export const calculateKepenk = (
   // Lamel tipine göre otomatik dikme, kutu ve tambur seçimi (kullanıcı seçimi yoksa)
   const is100mm = values.lamelType.includes("100");
   const dikmeType = values.dikmeType || (is100mm ? "100_luk" : "77_lik");
-  const boxType = is100mm ? "350mm" : "300mm";
+  // BoxType kullanıcı seçimi varsa onu kullan, yoksa otomatik belirle
+  const boxType = (values as { boxType?: string }).boxType || (is100mm ? "350mm" : "300mm");
   // Tambur tipi başlangıçta lamel tipine göre belirlenir, ama motor seçimine göre değişebilir
   let tamburType = is100mm ? "102mm" : "70mm";
 
@@ -147,12 +148,14 @@ export const calculateKepenk = (
   );
 
   // Kutu fiyatı hesapla - Hem ön hem arka kutu bileşenleri
+  // Kutu rengi lamel rengi ile aynı fiyattan çekilir
+  const boxColor = values.lamelColor || "beyaz";
   const {
     frontPrice,
     backPrice,
     selectedFrontBox,
     selectedBackBox,
-  } = findBoxPrice(prices, boxType, "alüminyum", systemWidth);
+  } = findBoxPrice(prices, boxType, boxColor, systemWidth);
   const boxPrice = frontPrice + backPrice;
 
   // Motor fiyatı hesapla (sadece motorlu ise)

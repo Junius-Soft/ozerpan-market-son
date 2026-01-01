@@ -449,6 +449,17 @@ export const ProductPreview = forwardRef<
                 </div>
               );
             })}
+            {/* Kepenk için m² bilgisi en sonda */}
+            {selectedProduct?.id === "kepenk" && values.width && values.height && (
+              <div className="pt-4 border-t">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Metrekare</span>
+                  <span className="font-medium text-foreground">
+                    {((parseFloat(values.width.toString()) * parseFloat(values.height.toString())) / 1000000).toFixed(2)} m²
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -10,7 +10,8 @@ export const calculateKepenkAccessories = (
   // Lamel tipine göre dikme tipi (kullanıcı seçimi yoksa)
   const is100mm = values.lamelType.includes("100");
   const dikmeType = values.dikmeType || (is100mm ? "100_luk" : "77_lik");
-  const boxType = is100mm ? "350mm" : "300mm";
+  // BoxType kullanıcı seçimi varsa onu kullan, yoksa otomatik belirle
+  const boxType = (values as { boxType?: string }).boxType || (is100mm ? "350mm" : "300mm");
   
   // Lamel genişliği hesapla (alt parça ölçüsü için gerekli)
   const lamelGenisligi = calculateLamelGenisligi(values.width, dikmeType);
@@ -35,12 +36,12 @@ export const calculateKepenkAccessories = (
     neededAccessories.push(selectedProduct);
   }
 
-  // 77'lik Lamel Denge Makarası Beyaz
-  if (!is100mm) {
+  // Lamel Denge Makarası - Sadece 400mm (40'lık) kutuda çıkar
+  if (boxType === "400mm") {
     const lamelDengeMakarasi = allAccessories.find(
       (acc) =>
         acc.type === "kepenk_dikme_aksesuarlari" &&
-        acc.dikme_type === "77_lik" &&
+        acc.dikme_type === dikmeType &&
         acc.description.toLowerCase().includes("lamel denge makarası")
     );
 
@@ -67,13 +68,11 @@ export const calculateKepenkAccessories = (
     neededAccessories.push(selectedProduct);
   }
 
-  // Kıl Fitil
+  // Kıl Fitil - Her iki dikme tipi için de 67*1800 (06'x1800) kullanılır
   const kilFitil = allAccessories.find(
     (acc) =>
       acc.type === "kepenk_dikme_aksesuarlari" &&
-      acc.dikme_type === dikmeType &&
-      (acc.description.includes("067x") || acc.description.includes("06'x")) &&
-      (is100mm ? acc.description.includes("1800") : acc.description.includes("1200"))
+      (acc.description.includes("067x1800") || acc.description.includes("06'x1800"))
   );
 
   if (kilFitil) {
@@ -100,6 +99,20 @@ export const calculateKepenkAccessories = (
     neededAccessories.push(selectedProduct);
   }
 
+  // Yan Kapak - Kutu tipine göre yan kapak ekle
+  const yanKapak = allAccessories.find(
+    (acc) =>
+      acc.type === "kepenk_kutu_aksesuarlari" &&
+      acc.kutu_type === boxType &&
+      acc.description.toLowerCase().includes("yan kapak")
+  );
+
+  if (yanKapak) {
+    // Yan kapaklar genellikle 2 adet (sağ ve sol)
+    const selectedProduct = createSelectedProduct(yanKapak, 2);
+    neededAccessories.push(selectedProduct);
+  }
+
   // Tambur Aksesuarları - Motorlu sistemlerde
   if (values.movementType === "motorlu") {
     const tamburType = is100mm ? "102mm" : "70mm";
@@ -111,7 +124,74 @@ export const calculateKepenkAccessories = (
         acc.hareket_tip === "motorlu"
     );
     
-    tamburAksesuarlari.forEach((aksesuar) => {
+    // Redüktör kolu ve kanca ara kol için özel kontrol - miktar 1 olmalı (2 katı çıkmaması için)
+    const reduktorKolu = tamburAksesuarlari.find(
+      (acc) => acc.description.toLowerCase().includes("redüktör kolu")
+    );
+    const kancaAraKol = tamburAksesuarlari.find(
+      (acc) => acc.description.toLowerCase().includes("kancalı ara kol")
+    );
+    
+    // Bilezik 70>101 Beyaz için özel hesaplama - Her 50 cm (500 mm) genişlik için 1 adet
+    const bilezik70101Beyaz = tamburAksesuarlari.find(
+      (acc) => acc.description.toLowerCase().includes("bilezik 70>101 beyaz")
+    );
+    
+    // 70 Boru Baş Yuvalık Pimli Meşeli - Sadece 400mm (40'lık) kutuda kullanılacak
+    const boruBasYuvalikMeseli = tamburAksesuarlari.find(
+      (acc) => acc.description.toLowerCase().includes("boru baş yuvalık pimli meşeli")
+    );
+    
+    // Plaket 10x100 12 mm Pimli Galvaniz - Sadece 400mm (40'lık) kutuda kullanılacak
+    const plaket10x100 = tamburAksesuarlari.find(
+      (acc) => acc.description.toLowerCase().includes("plaket 10x100") || acc.description.toLowerCase().includes("pinset 10x100")
+    );
+    
+    // Diğer tambur aksesuarları (redüktör kolu, kanca ara kol, bilezik, boru baş yuvalık ve plaket hariç)
+    const digerTamburAksesuarlari = tamburAksesuarlari.filter(
+      (acc) =>
+        !acc.description.toLowerCase().includes("redüktör kolu") &&
+        !acc.description.toLowerCase().includes("kancalı ara kol") &&
+        !acc.description.toLowerCase().includes("bilezik 70>101 beyaz") &&
+        !acc.description.toLowerCase().includes("boru baş yuvalık pimli meşeli") &&
+        !acc.description.toLowerCase().includes("plaket 10x100") &&
+        !acc.description.toLowerCase().includes("pinset 10x100")
+    );
+    
+    // Redüktör kolu ekle (sadece 1 adet)
+    if (reduktorKolu) {
+      const selectedProduct = createSelectedProduct(reduktorKolu, 1);
+      neededAccessories.push(selectedProduct);
+    }
+    
+    // Kanca ara kol ekle (sadece 1 adet)
+    if (kancaAraKol) {
+      const selectedProduct = createSelectedProduct(kancaAraKol, 1);
+      neededAccessories.push(selectedProduct);
+    }
+    
+    // Bilezik 70>101 Beyaz ekle - Her 50 cm (500 mm) genişlik için 1 adet
+    if (bilezik70101Beyaz) {
+      // Her 500 mm (50 cm) genişlik için 1 adet bilezik
+      const bilezikAdedi = Math.ceil(values.width / 500);
+      const selectedProduct = createSelectedProduct(bilezik70101Beyaz, bilezikAdedi);
+      neededAccessories.push(selectedProduct);
+    }
+    
+    // 70 Boru Baş Yuvalık Pimli Meşeli ekle - Sadece 400mm (40'lık) kutuda
+    if (boruBasYuvalikMeseli && boxType === "400mm") {
+      const selectedProduct = createSelectedProduct(boruBasYuvalikMeseli, 1);
+      neededAccessories.push(selectedProduct);
+    }
+    
+    // Plaket 10x100 12 mm Pimli Galvaniz ekle - Sadece 400mm (40'lık) kutuda
+    if (plaket10x100 && boxType === "400mm") {
+      const selectedProduct = createSelectedProduct(plaket10x100, 1);
+      neededAccessories.push(selectedProduct);
+    }
+    
+    // Diğer tambur aksesuarları ekle
+    digerTamburAksesuarlari.forEach((aksesuar) => {
       const selectedProduct = createSelectedProduct(aksesuar, 1);
       neededAccessories.push(selectedProduct);
     });

@@ -59,9 +59,6 @@ export const yalitimliConfigs: Record<string, YalitimliConfig> = {
     includedProducts: ["box"],
     accessoryIncludeKeywords: [
       "yan kapak",
-      "orta kapak",
-      "fullset t sac",
-      "pimli galvaniz",
     ],
   },
   detail_withoutBox: {

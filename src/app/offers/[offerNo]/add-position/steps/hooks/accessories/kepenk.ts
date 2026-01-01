@@ -132,11 +132,17 @@ export const calculateKepenkAccessories = (
       (acc) => acc.description.toLowerCase().includes("kancalı ara kol")
     );
     
-    // Diğer tambur aksesuarları (redüktör kolu ve kanca ara kol hariç)
+    // Bilezik 70>101 Beyaz için özel hesaplama - Her 50 cm (500 mm) genişlik için 1 adet
+    const bilezik70101Beyaz = tamburAksesuarlari.find(
+      (acc) => acc.description.toLowerCase().includes("bilezik 70>101 beyaz")
+    );
+    
+    // Diğer tambur aksesuarları (redüktör kolu, kanca ara kol ve bilezik hariç)
     const digerTamburAksesuarlari = tamburAksesuarlari.filter(
       (acc) =>
         !acc.description.toLowerCase().includes("redüktör kolu") &&
-        !acc.description.toLowerCase().includes("kancalı ara kol")
+        !acc.description.toLowerCase().includes("kancalı ara kol") &&
+        !acc.description.toLowerCase().includes("bilezik 70>101 beyaz")
     );
     
     // Redüktör kolu ekle (sadece 1 adet)
@@ -148,6 +154,14 @@ export const calculateKepenkAccessories = (
     // Kanca ara kol ekle (sadece 1 adet)
     if (kancaAraKol) {
       const selectedProduct = createSelectedProduct(kancaAraKol, 1);
+      neededAccessories.push(selectedProduct);
+    }
+    
+    // Bilezik 70>101 Beyaz ekle - Her 50 cm (500 mm) genişlik için 1 adet
+    if (bilezik70101Beyaz) {
+      // Her 500 mm (50 cm) genişlik için 1 adet bilezik
+      const bilezikAdedi = Math.ceil(values.width / 500);
+      const selectedProduct = createSelectedProduct(bilezik70101Beyaz, bilezikAdedi);
       neededAccessories.push(selectedProduct);
     }
     

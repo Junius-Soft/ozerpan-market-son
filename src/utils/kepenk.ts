@@ -203,10 +203,40 @@ export const findDikmePrice = (
     (p) => p.type === "kepenk_dikme_profilleri" && p.dikme_type === dikmeType
   );
 
-  let matchingDikme = dikmePrices.find(
-    (p) => p.color.toLowerCase() === color.toLowerCase()
-  );
+  // Renk eşleştirme: Form'dan gelen renk değerlerini product-prices.json'daki değerlere map et
+  const colorMapping: Record<string, string[]> = {
+    "aluminyum": ["alüminyum"], // Form: "aluminyum" -> JSON: "alüminyum"
+    "ral_boyali": ["rall_boya", "ral_boyali"], // Form: "ral_boyali" -> JSON: "rall_boya"
+    "ral_7016": ["antrasit_gri"], // Form: "ral_7016" -> JSON: "antrasit_gri"
+    "ral_9005": ["siyah"], // Form: "ral_9005" -> JSON: "siyah"
+    "ral_8017": ["krem", "metalik_gri", "altın_meşe"], // Form: "ral_8017" -> JSON: "krem", "metalik_gri" veya "altın_meşe"
+    "beyaz": ["beyaz"], // Form: "beyaz" -> JSON: "beyaz"
+    "antrasit_gri": ["antrasit_gri"], // Form: "antrasit_gri" -> JSON: "antrasit_gri"
+    "metalik_gri": ["metalik_gri"], // Form: "metalik_gri" -> JSON: "metalik_gri"
+    "krem": ["krem"], // Form: "krem" -> JSON: "krem"
+    "altın_meşe": ["altın_meşe"], // Form: "altın_meşe" -> JSON: "altın_meşe"
+  };
 
+  const colorLower = color.toLowerCase();
+  const mappedColors = colorMapping[colorLower] || [colorLower];
+
+  // Önce mapping'deki renkleri dene
+  let matchingDikme = null;
+  for (const mappedColor of mappedColors) {
+    matchingDikme = dikmePrices.find(
+      (p) => p.color.toLowerCase() === mappedColor
+    );
+    if (matchingDikme) break;
+  }
+
+  // Eğer hala bulunamazsa, orijinal renk değerini dene
+  if (!matchingDikme) {
+    matchingDikme = dikmePrices.find(
+      (p) => p.color.toLowerCase() === colorLower
+    );
+  }
+
+  // Eğer hala bulunamazsa, ilk uygun dikmeyi kullan (fallback)
   if (!matchingDikme && dikmePrices.length > 0) {
     matchingDikme = dikmePrices[0];
   }

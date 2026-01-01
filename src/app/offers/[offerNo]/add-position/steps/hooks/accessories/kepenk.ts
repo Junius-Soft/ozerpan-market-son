@@ -67,13 +67,11 @@ export const calculateKepenkAccessories = (
     neededAccessories.push(selectedProduct);
   }
 
-  // Kıl Fitil
+  // Kıl Fitil - Her iki dikme tipi için de 67*1800 (06'x1800) kullanılır
   const kilFitil = allAccessories.find(
     (acc) =>
       acc.type === "kepenk_dikme_aksesuarlari" &&
-      acc.dikme_type === dikmeType &&
-      (acc.description.includes("067x") || acc.description.includes("06'x")) &&
-      (is100mm ? acc.description.includes("1800") : acc.description.includes("1200"))
+      (acc.description.includes("067x1800") || acc.description.includes("06'x1800"))
   );
 
   if (kilFitil) {

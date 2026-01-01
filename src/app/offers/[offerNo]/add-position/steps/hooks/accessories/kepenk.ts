@@ -137,12 +137,18 @@ export const calculateKepenkAccessories = (
       (acc) => acc.description.toLowerCase().includes("bilezik 70>101 beyaz")
     );
     
-    // Diğer tambur aksesuarları (redüktör kolu, kanca ara kol ve bilezik hariç)
+    // 70 Boru Baş Yuvalık Pimli Meşeli - Sadece 400mm (40'lık) kutuda kullanılacak
+    const boruBasYuvalikMeseli = tamburAksesuarlari.find(
+      (acc) => acc.description.toLowerCase().includes("boru baş yuvalık pimli meşeli")
+    );
+    
+    // Diğer tambur aksesuarları (redüktör kolu, kanca ara kol, bilezik ve boru baş yuvalık hariç)
     const digerTamburAksesuarlari = tamburAksesuarlari.filter(
       (acc) =>
         !acc.description.toLowerCase().includes("redüktör kolu") &&
         !acc.description.toLowerCase().includes("kancalı ara kol") &&
-        !acc.description.toLowerCase().includes("bilezik 70>101 beyaz")
+        !acc.description.toLowerCase().includes("bilezik 70>101 beyaz") &&
+        !acc.description.toLowerCase().includes("boru baş yuvalık pimli meşeli")
     );
     
     // Redüktör kolu ekle (sadece 1 adet)
@@ -162,6 +168,12 @@ export const calculateKepenkAccessories = (
       // Her 500 mm (50 cm) genişlik için 1 adet bilezik
       const bilezikAdedi = Math.ceil(values.width / 500);
       const selectedProduct = createSelectedProduct(bilezik70101Beyaz, bilezikAdedi);
+      neededAccessories.push(selectedProduct);
+    }
+    
+    // 70 Boru Baş Yuvalık Pimli Meşeli ekle - Sadece 400mm (40'lık) kutuda
+    if (boruBasYuvalikMeseli && boxType === "400mm") {
+      const selectedProduct = createSelectedProduct(boruBasYuvalikMeseli, 1);
       neededAccessories.push(selectedProduct);
     }
     

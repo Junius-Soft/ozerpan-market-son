@@ -109,7 +109,35 @@ export const calculateKepenkAccessories = (
         acc.hareket_tip === "motorlu"
     );
     
-    tamburAksesuarlari.forEach((aksesuar) => {
+    // Redüktör kolu ve kanca ara kol için özel kontrol - miktar 1 olmalı (2 katı çıkmaması için)
+    const reduktorKolu = tamburAksesuarlari.find(
+      (acc) => acc.description.toLowerCase().includes("redüktör kolu")
+    );
+    const kancaAraKol = tamburAksesuarlari.find(
+      (acc) => acc.description.toLowerCase().includes("kancalı ara kol")
+    );
+    
+    // Diğer tambur aksesuarları (redüktör kolu ve kanca ara kol hariç)
+    const digerTamburAksesuarlari = tamburAksesuarlari.filter(
+      (acc) =>
+        !acc.description.toLowerCase().includes("redüktör kolu") &&
+        !acc.description.toLowerCase().includes("kancalı ara kol")
+    );
+    
+    // Redüktör kolu ekle (sadece 1 adet)
+    if (reduktorKolu) {
+      const selectedProduct = createSelectedProduct(reduktorKolu, 1);
+      neededAccessories.push(selectedProduct);
+    }
+    
+    // Kanca ara kol ekle (sadece 1 adet)
+    if (kancaAraKol) {
+      const selectedProduct = createSelectedProduct(kancaAraKol, 1);
+      neededAccessories.push(selectedProduct);
+    }
+    
+    // Diğer tambur aksesuarları ekle
+    digerTamburAksesuarlari.forEach((aksesuar) => {
       const selectedProduct = createSelectedProduct(aksesuar, 1);
       neededAccessories.push(selectedProduct);
     });

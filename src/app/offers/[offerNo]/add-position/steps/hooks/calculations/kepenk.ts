@@ -147,12 +147,14 @@ export const calculateKepenk = (
   );
 
   // Kutu fiyatı hesapla - Hem ön hem arka kutu bileşenleri
+  // Kutu rengi lamel rengi ile aynı fiyattan çekilir
+  const boxColor = values.lamelColor || "beyaz";
   const {
     frontPrice,
     backPrice,
     selectedFrontBox,
     selectedBackBox,
-  } = findBoxPrice(prices, boxType, "alüminyum", systemWidth);
+  } = findBoxPrice(prices, boxType, boxColor, systemWidth);
   const boxPrice = frontPrice + backPrice;
 
   // Motor fiyatı hesapla (sadece motorlu ise)

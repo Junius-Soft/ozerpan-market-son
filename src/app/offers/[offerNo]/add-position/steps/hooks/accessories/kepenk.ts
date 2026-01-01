@@ -10,7 +10,8 @@ export const calculateKepenkAccessories = (
   // Lamel tipine göre dikme tipi (kullanıcı seçimi yoksa)
   const is100mm = values.lamelType.includes("100");
   const dikmeType = values.dikmeType || (is100mm ? "100_luk" : "77_lik");
-  const boxType = is100mm ? "350mm" : "300mm";
+  // BoxType kullanıcı seçimi varsa onu kullan, yoksa otomatik belirle
+  const boxType = (values as { boxType?: string }).boxType || (is100mm ? "350mm" : "300mm");
   
   // Lamel genişliği hesapla (alt parça ölçüsü için gerekli)
   const lamelGenisligi = calculateLamelGenisligi(values.width, dikmeType);
@@ -35,12 +36,12 @@ export const calculateKepenkAccessories = (
     neededAccessories.push(selectedProduct);
   }
 
-  // 77'lik Lamel Denge Makarası Beyaz
-  if (!is100mm) {
+  // Lamel Denge Makarası - Sadece 400mm (40'lık) kutuda çıkar
+  if (boxType === "400mm") {
     const lamelDengeMakarasi = allAccessories.find(
       (acc) =>
         acc.type === "kepenk_dikme_aksesuarlari" &&
-        acc.dikme_type === "77_lik" &&
+        acc.dikme_type === dikmeType &&
         acc.description.toLowerCase().includes("lamel denge makarası")
     );
 

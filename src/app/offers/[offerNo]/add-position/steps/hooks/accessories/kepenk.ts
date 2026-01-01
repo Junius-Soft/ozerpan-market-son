@@ -99,6 +99,20 @@ export const calculateKepenkAccessories = (
     neededAccessories.push(selectedProduct);
   }
 
+  // Yan Kapak - Kutu tipine göre yan kapak ekle
+  const yanKapak = allAccessories.find(
+    (acc) =>
+      acc.type === "kepenk_kutu_aksesuarlari" &&
+      acc.kutu_type === boxType &&
+      acc.description.toLowerCase().includes("yan kapak")
+  );
+
+  if (yanKapak) {
+    // Yan kapaklar genellikle 2 adet (sağ ve sol)
+    const selectedProduct = createSelectedProduct(yanKapak, 2);
+    neededAccessories.push(selectedProduct);
+  }
+
   // Tambur Aksesuarları - Motorlu sistemlerde
   if (values.movementType === "motorlu") {
     const tamburType = is100mm ? "102mm" : "70mm";

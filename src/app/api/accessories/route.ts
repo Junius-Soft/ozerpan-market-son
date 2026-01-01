@@ -30,7 +30,8 @@ export async function GET(request: NextRequest) {
           item.type === "kepenk_alt_parca_aksesuarlari" ||
           item.type === "kepenk_dikme_aksesuarlari" ||
           item.type === "kepenk_lamel_aksesuarlari" ||
-          item.type === "kepenk_tambur_aksesuarlari"
+          item.type === "kepenk_tambur_aksesuarlari" ||
+          item.type === "kepenk_kutu_aksesuarlari"
       );
 
       return NextResponse.json(accessories, { status: 200 });

@@ -5014,18 +5014,6 @@
         "hareket_tip": "motorlu"
       },
       {
-        "description": "Bilezik 70>120 Beyaz",
-        "stock_code": "353457311200",
-        "uretici_kodu": "CP.070.00.120",
-        "type": "kepenk_tambur_aksesuarlari",
-        "tambur_type": "70mm",
-        "color": "beyaz",
-        "unit": "Adet",
-        "price": "0.84",
-        "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
-        "hareket_tip": "motorlu"
-      },
-      {
         "description": "Bilezik 70>101 - Özel Kanallı Siyah",
         "stock_code": "353457311300",
         "uretici_kodu": "CP.070.00.101.OK",

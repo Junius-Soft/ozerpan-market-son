@@ -142,13 +142,20 @@ export const calculateKepenkAccessories = (
       (acc) => acc.description.toLowerCase().includes("boru baş yuvalık pimli meşeli")
     );
     
-    // Diğer tambur aksesuarları (redüktör kolu, kanca ara kol, bilezik ve boru baş yuvalık hariç)
+    // Plaket 10x100 12 mm Pimli Galvaniz - Sadece 400mm (40'lık) kutuda kullanılacak
+    const plaket10x100 = tamburAksesuarlari.find(
+      (acc) => acc.description.toLowerCase().includes("plaket 10x100") || acc.description.toLowerCase().includes("pinset 10x100")
+    );
+    
+    // Diğer tambur aksesuarları (redüktör kolu, kanca ara kol, bilezik, boru baş yuvalık ve plaket hariç)
     const digerTamburAksesuarlari = tamburAksesuarlari.filter(
       (acc) =>
         !acc.description.toLowerCase().includes("redüktör kolu") &&
         !acc.description.toLowerCase().includes("kancalı ara kol") &&
         !acc.description.toLowerCase().includes("bilezik 70>101 beyaz") &&
-        !acc.description.toLowerCase().includes("boru baş yuvalık pimli meşeli")
+        !acc.description.toLowerCase().includes("boru baş yuvalık pimli meşeli") &&
+        !acc.description.toLowerCase().includes("plaket 10x100") &&
+        !acc.description.toLowerCase().includes("pinset 10x100")
     );
     
     // Redüktör kolu ekle (sadece 1 adet)
@@ -174,6 +181,12 @@ export const calculateKepenkAccessories = (
     // 70 Boru Baş Yuvalık Pimli Meşeli ekle - Sadece 400mm (40'lık) kutuda
     if (boruBasYuvalikMeseli && boxType === "400mm") {
       const selectedProduct = createSelectedProduct(boruBasYuvalikMeseli, 1);
+      neededAccessories.push(selectedProduct);
+    }
+    
+    // Plaket 10x100 12 mm Pimli Galvaniz ekle - Sadece 400mm (40'lık) kutuda
+    if (plaket10x100 && boxType === "400mm") {
+      const selectedProduct = createSelectedProduct(plaket10x100, 1);
       neededAccessories.push(selectedProduct);
     }
     

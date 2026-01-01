@@ -4783,7 +4783,7 @@
         "tambur_type": "70mm",
         "color": "alüminyum",
         "unit": "Metre",
-        "price": "2.00",
+        "price": "7.40",
         "capi_mm": "70",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
         "hareket_tip": "motorlu"
@@ -4870,7 +4870,7 @@
         "hareket_tip": "motorlu"
       },
       {
-        "description": "Pinset 10x100 12 mm Pimli Galvaniz",
+        "description": "Plaket 10x100 12 mm Pimli Galvaniz",
         "stock_code": "353454116900",
         "uretici_kodu": "BK.075.00.PIV",
         "type": "kepenk_tambur_aksesuarlari",

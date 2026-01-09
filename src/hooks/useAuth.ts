@@ -12,10 +12,12 @@ export function useAuth() {
   useEffect(() => {
     // Token kontrolü
     const checkAuth = () => {
+      // LoginModal'da set ettiğimiz cookie'yi kontrol ediyoruz
       const system_user = document.cookie
         .split("; ")
         .find((row) => row.startsWith("system_user="));
-      const isAuthed = system_user === "system_user=yes";
+      
+      const isAuthed = system_user?.split("=")[1] === "yes";
       setIsAuthenticated(isAuthed);
 
       if (!isAuthed) {
@@ -27,13 +29,12 @@ export function useAuth() {
       setIsInitialized(true);
     };
 
-    // İlk yüklemede ve cookie değişimlerinde kontrol et
+    // İlk yüklemede kontrol et
     checkAuth();
 
     // Cookie değişikliklerini kontrol etmek için interval
     const cookieCheckInterval = setInterval(checkAuth, 1000);
 
-    // Storage değişikliklerini dinle
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === "isAuthenticated") {
         checkAuth();
@@ -56,7 +57,6 @@ export function useAuth() {
     localStorage.setItem("isAuthenticated", "true");
     setShowLoginModal(false);
 
-    // Retrieve and navigate to the intended path
     const intendedPath = sessionStorage.getItem("intendedPath");
     if (intendedPath) {
       sessionStorage.removeItem("intendedPath");
@@ -65,15 +65,16 @@ export function useAuth() {
   };
 
   const handleLogout = () => {
-    // Token ve localStorage temizle
+    // Cookie'yi manuel olarak sil (Tarihi geçmişe alarak)
+    document.cookie = "system_user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    
+    // LocalStorage temizle
     localStorage.removeItem("isAuthenticated");
 
-    // State'i güncelle ve modal'ı sıfırla
     setIsAuthenticated(false);
     setShowLoginModal(false);
     setIsInitialized(true);
 
-    // Ana sayfaya yönlendir
     router.push("/");
   };
 

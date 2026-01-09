@@ -1,19 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, LogIn } from "lucide-react";
+import { ShoppingCart, LogIn, LogOut } from "lucide-react"; // LogOut ikonunu da ekledim
 import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
 import { LoginModal } from "./login-modal";
 import { Button } from "./ui/button";
 import { ThemeToggle } from "./theme-toggle";
 import { useRouter } from "next/navigation";
-import { useFrappeAuth } from "frappe-react-sdk";
-import { useState } from "react";
+// useFrappeAuth importunu kaldırdık
 
 export function Navbar() {
-  const { logout } = useFrappeAuth();
-  const [loggingOut, setLoggingOut] = useState(false);
+  // Frappe ile ilgili kısımları kaldırdık
 
   const {
     isAuthenticated,
@@ -21,6 +19,7 @@ export function Navbar() {
     openLoginModal,
     closeLoginModal,
     handleLoginSuccess,
+    handleLogout, // useAuth'tan gelen çıkış fonksiyonunu buraya ekledik
   } = useAuth();
 
   const router = useRouter();
@@ -70,16 +69,12 @@ export function Navbar() {
                     Teklifler
                   </Button>
                   <Button
-                    onClick={async () => {
-                      setLoggingOut(true);
-                      await logout();
-                    }}
+                    onClick={handleLogout} // Doğrudan useAuth içindeki fonksiyonu bağladık
                     variant="secondary"
-                    disabled={loggingOut}
-                    className="inline-flex items-center px-4 py-2"
+                    className="inline-flex items-center px-4 py-2 gap-2"
                   >
-                    <LogIn className="h-4 w-4" />
-                    {loggingOut ? "Çıkış Yapılıyor.." : "Çıkış"}
+                    <LogOut className="h-4 w-4" />
+                    Çıkış
                   </Button>
                 </>
               ) : (

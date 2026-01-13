@@ -414,13 +414,24 @@ const findMonoblokBoxComponent = (
 
   if (!component) return { product: null, price: 0 };
 
-  const product = createSelectedProduct(component, quantity, systemWidth);
+  // Her bir bileşen için ayrı ayrı hesaplama yap
+  // quantity > 1 ise, her biri için systemWidth ile çarpılmalı
+  const unitPrice = parseFloat(component.price || "0");
+  const sizeMetre = systemWidth / 1000;
+  const totalPrice = sizeMetre * unitPrice * quantity;
+  
+  const product: SelectedProduct = {
+    ...component,
+    quantity,
+    totalPrice,
+    size: systemWidth,
+  };
+  
   if (quantity > 1) {
-    product.description = `${product.description} (${quantity} Adet)`;
-    product.totalPrice = parseFloat(component.price) * quantity;
+    product.description = `${component.description} (${quantity} Adet)`;
   }
 
-  return { product, price: product.totalPrice };
+  return { product, price: totalPrice };
 };
 
 export const findMonoblokBoxPrice = (
@@ -444,15 +455,15 @@ export const findMonoblokBoxPrice = (
   // Kutu konfigürasyonları
   const configs: Record<string, Array<{ name: string; quantity: number }>> = {
     "185x220": [
-      { name: "165 Kutu Kapak", quantity: 2 },
+      { name: "185 Kutu Kapak", quantity: 2 },
       { name: "200 Kutu Kapak", quantity: 1 },
       { name: "200 Kutu Alt Kapak", quantity: 1 },
       { name: "Kutu Tampon Çıtası", quantity: 1 },
-      { name: "165 mm Yalıtım Beyaz", quantity: 1 },
+      { name: "185 mm Yalıtım Beyaz", quantity: 1 },
     ],
     "185": [
-      { name: "165 Kutu Kapak", quantity: 3 },
-      { name: "165 Kutu Alt Kapak", quantity: 1 },
+      { name: "185 Kutu Kapak", quantity: 3 },
+      { name: "185 Kutu Alt Kapak", quantity: 1 },
       { name: "Kutu Tampon Çıtası", quantity: 1 },
     ],
     "220": [
@@ -461,11 +472,11 @@ export const findMonoblokBoxPrice = (
       { name: "Kutu Tampon Çıtası", quantity: 1 },
     ],
     "220x255": [
-      { name: "235 Kutu Kapak Yalıtımlı", quantity: 1 },
-      { name: "235 Kutu Alt Kapak Yalıtımlı", quantity: 1 },
+      { name: "255 Kutu Kapak Yalıtımlı", quantity: 1 },
+      { name: "255 Kutu Alt Kapak Yalıtımlı", quantity: 1 },
       { name: "200 Kutu Kapak", quantity: 2 },
       { name: "Kutu Tampon Çıtası", quantity: 1 },
-      { name: "200 mm Yalıtım Beyaz", quantity: 1 },
+      { name: "220 mm Yalıtım Beyaz", quantity: 1 },
     ],
   };
 

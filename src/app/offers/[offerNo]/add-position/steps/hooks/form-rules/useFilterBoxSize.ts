@@ -66,17 +66,8 @@ export function filterBoxSize(
     );
     sarimCapiBasedBox = getBoxSizeBySarimCapi(sarimCapi, optionId);
     
-    // Eğer sarım çapına göre bir kutu belirlendiyse ve kutu dahil seçilmişse,
-    // bu kutu için lamel yüksekliğini kontrol et (maksimum lamel yüksekliği kontrolü için)
-    // Ama sarım çapı hesaplaması için toplam yükseklik kullanılmaya devam eder
-    if (kutuOlcuAlmaSekli === "kutu_dahil" && sarimCapiBasedBox) {
-      const determinedBoxHeight = getBoxHeight(sarimCapiBasedBox);
-      const refinedLamelYuksekligi = height - determinedBoxHeight / 2;
-      
-      // Eğer belirlenen kutu için lamel yüksekliği maksimum değeri aşıyorsa,
-      // bir üst kutuya geçmek gerekebilir (ama sarım çapı kontrolü önceliklidir)
-      // Bu durumda maksimum lamel yüksekliği kontrolü zaten yapılacak
-    }
+    // Sarım çapı hesaplaması tamamlandı
+    // Maksimum lamel yüksekliği kontrolü aşağıdaki döngüde yapılacak
   }
 
   const validOptions: { id: string; name: string }[] = [];

@@ -116,12 +116,14 @@ export const createSelectedProduct = (
   const price = parseFloat(priceItem.price || "0");
   const calculatedPrice = isNaN(price) ? 0 : price;
 
+  const totalPrice = sizeMetre
+    ? sizeMetre * calculatedPrice * quantity
+    : calculatedPrice * quantity;
+
   return {
     ...priceItem,
     quantity,
-    totalPrice: sizeMetre
-      ? sizeMetre * calculatedPrice * quantity
-      : calculatedPrice * quantity,
+    totalPrice: Number(totalPrice.toFixed(2)),
     size,
   };
 };
@@ -418,7 +420,7 @@ const findMonoblokBoxComponent = (
   // quantity > 1 ise, her biri için systemWidth ile çarpılmalı
   const unitPrice = parseFloat(component.price || "0");
   const sizeMetre = systemWidth / 1000;
-  const totalPrice = sizeMetre * unitPrice * quantity;
+  const totalPrice = Number((sizeMetre * unitPrice * quantity).toFixed(2));
   
   const product: SelectedProduct = {
     ...component,

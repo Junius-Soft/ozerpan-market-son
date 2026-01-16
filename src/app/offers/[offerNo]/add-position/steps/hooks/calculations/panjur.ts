@@ -212,7 +212,7 @@ export const calculatePanjur = (
   );
 
   // Toplam alt parça fiyatı ve ürünleri
-  const subPartPrice = subPartResults.reduce((sum, r) => sum + r.price, 0);
+  const subPartPrice = Number(subPartResults.reduce((sum, r) => sum + r.price, 0).toFixed(2));
   // Alt parça ürünlerini topluca ekle
   const subPartSelectedProducts: SelectedProduct[] = subPartResults
     .map((r) => r.selectedProduct)
@@ -395,7 +395,7 @@ export const calculatePanjur = (
     totalTamburPrice += unitTamburPrice;
   });
 
-  const tamburPrice = totalTamburPrice;
+  const tamburPrice = Number(totalTamburPrice.toFixed(2));
 
   // Yükseltme Profili fiyatı hesaplama (dikmeAdapter === "double_sided" veya "triple_sided" ise)
   let yukseltmeProfiliPrice = 0;
@@ -444,7 +444,7 @@ export const calculatePanjur = (
           yukseltmeProfiliHeight
         );
 
-      yukseltmeProfiliPrice += sectionYukseltmePrice;
+      yukseltmeProfiliPrice = Number((yukseltmeProfiliPrice + sectionYukseltmePrice).toFixed(2));
 
       if (sectionYukseltmeSelectedProduct) {
         // Dikme pozisyon bilgisini ekleyerek ürünü kaydet
@@ -475,7 +475,7 @@ export const calculatePanjur = (
           values.width // Yatay profil için sistem genişliği kullanılıyor
         );
 
-      yukseltmeProfiliPrice += yatayYukseltmePrice;
+      yukseltmeProfiliPrice = Number((yukseltmeProfiliPrice + yatayYukseltmePrice).toFixed(2));
 
       if (yatayYukseltmeSelectedProduct) {
         yukseltmeProfiliSelectedProducts.push({
@@ -490,7 +490,7 @@ export const calculatePanjur = (
   // Paketleme ücreti hesaplama
   const calculatePackagingCost = (basePrice: number): number => {
     if (values.packagingType === "var") {
-      return basePrice * 0.05; // %5
+      return Number((basePrice * 0.05).toFixed(2)); // %5
     }
     return 0;
   };
@@ -500,10 +500,10 @@ export const calculatePanjur = (
     if (optionId === "yalitimli") {
       if (values.boxsetType === "boxWithMotor") {
         // Sadece tambur ve kutu fiyatı
-        return tamburPrice + boxPrice;
+        return Number((tamburPrice + boxPrice).toFixed(2));
       } else if (values.boxsetType === "emptyBox") {
         // Boş kutu: sadece kutu + yan kapak, lamel, dikme, alt parça, kompozit hariç
-        return (
+        return Number((
           boxPrice +
           (accessoryItems || [])
             .filter((acc) => {
@@ -521,11 +521,11 @@ export const calculatePanjur = (
               (total: number, acc: SelectedProduct) => total + acc.totalPrice,
               0
             )
-        );
+        ).toFixed(2));
       } else if (values.yalitimliType === "detail") {
         if (values.yalitimliDetailType === "withoutBox") {
           // Kutu, kutu bileşenleri, tambur ve (motor/makara) hariç - sadece lamel, dikme, alt parça
-          return (
+          return Number((
             totalLamelPrice +
             subPartPrice +
             totalDikmePrice +
@@ -549,10 +549,10 @@ export const calculatePanjur = (
                 (total: number, acc: SelectedProduct) => total + acc.totalPrice,
                 0
               )
-          );
+          ).toFixed(2));
         } else if (values.yalitimliDetailType === "onlyMotor") {
           // Kutu ve kutu bileşenleri hariç, tambur ve (motor/makara) dahil
-          return (
+          return Number((
             totalLamelPrice +
             subPartPrice +
             totalDikmePrice +
@@ -570,13 +570,13 @@ export const calculatePanjur = (
                 (total: number, acc: SelectedProduct) => total + acc.totalPrice,
                 0
               )
-          );
+          ).toFixed(2));
         }
       }
     }
 
     // Diğer durumlar için normal hesaplama
-    return (
+    return Number((
       totalLamelPrice +
       subPartPrice +
       totalDikmePrice +
@@ -590,12 +590,12 @@ export const calculatePanjur = (
         (total: number, acc: SelectedProduct) => total + acc.totalPrice,
         0
       )
-    );
+    ).toFixed(2));
   })();
 
   // Paketleme ücreti hesaplama ve ekleme
-  const packagingCost = calculatePackagingCost(rawTotalPriceEUR);
-  const totalPrice = rawTotalPriceEUR + packagingCost;
+  const packagingCost = Number(calculatePackagingCost(rawTotalPriceEUR).toFixed(2));
+  const totalPrice = Number((rawTotalPriceEUR + packagingCost).toFixed(2));
 
   // Paketleme selectedProduct'ını oluştur
   const packagingSelectedProduct: SelectedProduct | null =

@@ -115,7 +115,7 @@ export function getMenteseliTulAccessoryItem(
   // m² bazlı fiyatlandırma
   const product = createSelectedProduct(tul, 1);
   // totalPrice'ı m² bazlı hesapla (price zaten m² fiyatı)
-  product.totalPrice = areaM2 * parseFloat(tul.price || "0");
+  product.totalPrice = Number((areaM2 * parseFloat(tul.price || "0")).toFixed(2));
   product.size = areaM2; // m² cinsinden sakla (gösterim için)
   return product;
 }
@@ -142,7 +142,7 @@ export function getSabitTulAccessoryItem(
   // m² bazlı fiyatlandırma
   const product = createSelectedProduct(tul, 1);
   // totalPrice'ı m² bazlı hesapla (price zaten m² fiyatı)
-  product.totalPrice = areaM2 * parseFloat(tul.price || "0");
+  product.totalPrice = Number((areaM2 * parseFloat(tul.price || "0")).toFixed(2));
   product.size = areaM2; // m² cinsinden sakla (gösterim için)
   return product;
 }
@@ -234,7 +234,7 @@ export function getPliseTulAccessoryItems(
       // m² bazlı fiyatlandırma - size kullanmıyoruz, direkt m² ile çarpıyoruz
       const product = createSelectedProduct(tul, 1);
       // totalPrice'ı m² bazlı hesapla (price zaten m² fiyatı olmalı)
-      product.totalPrice = areaPerTul * parseFloat(tul.price || "0");
+      product.totalPrice = Number((areaPerTul * parseFloat(tul.price || "0")).toFixed(2));
       product.size = areaPerTul; // m² değerini size olarak sakla (gösterim için)
       items.push(product);
     }
@@ -390,7 +390,7 @@ export function getSurmeTulAccessoryItem(
   // m² bazlı fiyatlandırma
   const product = createSelectedProduct(tul, 1);
   // totalPrice'ı m² bazlı hesapla (price zaten m² fiyatı)
-  product.totalPrice = areaM2 * parseFloat(tul.price || "0");
+  product.totalPrice = Number((areaM2 * parseFloat(tul.price || "0")).toFixed(2));
   product.size = areaM2; // m² cinsinden sakla (gösterim için)
   return product;
 }

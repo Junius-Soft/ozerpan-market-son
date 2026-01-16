@@ -220,7 +220,7 @@ export const calculateYalitimliPrice = (
     0
   );
 
-  return totalPrice;
+  return Number(totalPrice.toFixed(2));
 };
 
 // Ürüne göre sıralama konfigürasyonu al

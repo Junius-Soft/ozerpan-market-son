@@ -259,13 +259,13 @@ export const calculateKepenk = (
   }
 
   // Aksesuar fiyatlarını hesapla
-  const accessoryTotalPrice = accessoryItems.reduce(
+  const accessoryTotalPrice = Number(accessoryItems.reduce(
     (sum, acc) => sum + (acc.totalPrice || 0),
     0
-  );
+  ).toFixed(2));
 
   // Toplam fiyat (aksesuarlar dahil)
-  const totalPrice =
+  const totalPrice = Number((
     lamelPrice +
     gozluLamelPrice +
     subPartPrice +
@@ -275,7 +275,8 @@ export const calculateKepenk = (
     motorPrice +
     receiverPrice +
     remotePrice +
-    accessoryTotalPrice;
+    accessoryTotalPrice
+  ).toFixed(2));
 
   // Seçili ürünleri topla
   const products: SelectedProduct[] = [

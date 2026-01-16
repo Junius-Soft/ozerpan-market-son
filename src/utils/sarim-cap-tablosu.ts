@@ -1,5 +1,6 @@
 // PDF'deki sarım tablosuna göre sarım çapı hesaplama
 // Sarım çapı (cm) = f(yükseklik (m), lamel tipi, hareket tipi)
+// ÖNEMLİ: Sarım çapı sadece yüksekliğe göre hesaplanır, genişlik değişince bir değişme olmaz
 
 // Sarım çapı tablosu (cm cinsinden)
 // Format: [lamelTipi][hareketTipi][yukseklikMetre] = sarimCapiCm
@@ -120,7 +121,8 @@ const sarimCapiTablosu: Record<string, Record<string, Record<number, number>>> =
 
 /**
  * Sarım çapını hesaplar (cm cinsinden)
- * @param height Yükseklik (mm)
+ * ÖNEMLİ: Sarım çapı sadece yüksekliğe göre hesaplanır, genişlik değişince bir değişme olmaz
+ * @param height Yükseklik (mm) - Sadece yükseklik kullanılır, genişlik kullanılmaz
  * @param lamelTickness Lamel kalınlığı (39_sl, 45_se, 55_sl, 55_se)
  * @param movementType Hareket tipi (manuel, motorlu)
  * @returns Sarım çapı (cm) veya null

@@ -52,53 +52,22 @@ export function filterBoxSize(
   // Önce sarım çapına göre hangi kutu olması gerektiğini belirle (sadece distan için)
   // NOT: Sarım çapı tablosu 1.0 m (1000 mm) ve üzeri için geçerlidir
   // 1.0 m'den küçük yükseklikler için sadece maksimum lamel yüksekliği kontrolü kullanılır
+  // ÖNEMLİ: Sarım çapı sadece yüksekliğe göre hesaplanır, genişlik değişince bir değişme olmaz
   let sarimCapiBasedBox: string | null = null;
   if (optionId === "distan") {
     // Sarım çapı hesaplaması için lamel yüksekliğini hesapla
-    // İlk tahmin: kutu dahil değilse, lamel yüksekliği = toplam yükseklik
-    // Kutu dahilse, ortalama bir kutu yüksekliği kullan (165mm kutu için yaklaşık 165mm)
-    let lamelYuksekligiForSarim = height;
-    if (kutuOlcuAlmaSekli === "kutu_dahil") {
-      // Ortalama kutu yüksekliği olarak 165mm kullan (en yaygın kutu)
-      const avgBoxHeight = getBoxHeight("165mm");
-      lamelYuksekligiForSarim = height - avgBoxHeight / 2;
-    }
+    // ÖNEMLİ: Sarım çapı hesaplaması için TOPLAM YÜKSEKLİK kullanılmalı (kutu dahil/haric fark etmez)
+    // Çünkü sarım çapı tablosu toplam yüksekliğe göre hazırlanmıştır
+    // İlk sarım çapı hesaplaması için toplam yüksekliği kullan
+    const sarimCapi = calculateSarimCapi(
+      height, // Toplam yükseklik kullan (kutu dahil/haric fark etmez)
+      selectedLamelTickness,
+      selectedMovementType
+    );
+    sarimCapiBasedBox = getBoxSizeBySarimCapi(sarimCapi, optionId);
     
-    // Sadece 1.0 m (1000 mm) ve üzeri yükseklikler için sarım çapı hesapla
-    // Daha küçük yükseklikler için sarım çapı kontrolü yapma, sadece maksimum lamel yüksekliği kontrolü kullan
-    if (lamelYuksekligiForSarim >= 1000) {
-      // İlk sarım çapı hesaplaması
-      const sarimCapi = calculateSarimCapi(
-        lamelYuksekligiForSarim,
-        selectedLamelTickness,
-        selectedMovementType
-      );
-      sarimCapiBasedBox = getBoxSizeBySarimCapi(sarimCapi, optionId);
-      
-      // İteratif iyileştirme: Eğer kutu dahilse ve bir kutu belirlendiyse,
-      // bu kutu için lamel yüksekliğini tekrar hesapla ve sarım çapını doğrula
-      if (kutuOlcuAlmaSekli === "kutu_dahil" && sarimCapiBasedBox) {
-        const determinedBoxHeight = getBoxHeight(sarimCapiBasedBox);
-        const refinedLamelYuksekligi = height - determinedBoxHeight / 2;
-        
-        // İyileştirilmiş lamel yüksekliği de 1.0 m ve üzeri olmalı
-        if (refinedLamelYuksekligi >= 1000) {
-          const refinedSarimCapi = calculateSarimCapi(
-            refinedLamelYuksekligi,
-            selectedLamelTickness,
-            selectedMovementType
-          );
-          const refinedBox = getBoxSizeBySarimCapi(refinedSarimCapi, optionId);
-          
-          // Eğer iyileştirilmiş kutu farklıysa, onu kullan
-          if (refinedBox && refinedBox !== sarimCapiBasedBox) {
-            sarimCapiBasedBox = refinedBox;
-          }
-        }
-      }
-    }
-    // 1.0 m'den küçük yükseklikler için sarimCapiBasedBox null kalır,
-    // sadece maksimum lamel yüksekliği kontrolü kullanılır
+    // Sarım çapı hesaplaması tamamlandı
+    // Maksimum lamel yüksekliği kontrolü aşağıdaki döngüde yapılacak
   }
 
   const validOptions: { id: string; name: string }[] = [];

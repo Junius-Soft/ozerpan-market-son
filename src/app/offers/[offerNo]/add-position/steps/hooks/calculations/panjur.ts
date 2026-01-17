@@ -310,11 +310,45 @@ export const calculatePanjur = (
   const movementTab = availableTabs?.find((tab) => tab.id === "movement");
 
   // Uzaktan kumanda fiyatı hesaplama
-  const [remotePrice, remoteSelectedProduct] = findRemotePrice(
+  // Alıcılı motorda: Eğer motor kutu içerisindeyse (boxWithMotor), kumanda fiyatı 0 olmalı
+  // Çünkü kumanda motorla birlikte geliyor, ayrıca fiyatlandırılmamalı
+  // Eğer motor tek başına alınıyorsa (yalitimliDetailType === "onlyMotor"), fiyat gösterilmeli
+  let [remotePrice, remoteSelectedProduct] = findRemotePrice(
     prices,
     values.remote,
     movementTab
   );
+  
+  // Alıcılı motorda ve motor kutu içerisindeyse SADECE DC 104 için fiyatı 0 yap
+  // DC 104 her kutuda mevcut olduğu için listede görünecek ama fiyatı 0 olacak
+  // Diğer kumandalar (DC 105, DC 106, DC 107, vb.) için normal fiyat gösterilecek
+  const isAliciliMotor = values.motorSekli === "alicili_motorlu" || 
+                         values.motorSekli === "alicili_motorlu_reduktorlu" ||
+                         values.motorSekli === "alicili_motorlu_geri_bildirimli" ||
+                         values.motorSekli === "alicili_motorlu_geri_bildirimli_engel-tanimali";
+  
+  // Motor kutu içerisinde mi kontrolü:
+  // - Yalıtımlı için: boxsetType === "boxWithMotor"
+  // - Distan ve Monoblok için: movementType === "motorlu" (motor her zaman kutu içerisinde)
+  const isMotorInBox = 
+    (optionId === "yalitimli" && values.boxsetType === "boxWithMotor") ||
+    ((optionId === "distan" || optionId === "monoblok") && values.movementType === "motorlu");
+  
+  // Sadece DC 104 için fiyatı 0 yap (remote ID veya description'da "DC 104" geçiyorsa)
+  const isDC104 = values.remote === "dc_104_1_kanalli" || 
+                  (remoteSelectedProduct?.description?.toLowerCase().includes("dc 104") ?? false);
+  
+  if (isAliciliMotor && isMotorInBox && remoteSelectedProduct && isDC104) {
+    remotePrice = 0;
+    // Fiyat analizinde görünecek ama fiyatı 0 olacak
+    // Çünkü DC 104 kumanda motorla birlikte geliyor, ayrıca fiyatlandırılmamalı
+    remoteSelectedProduct = {
+      ...remoteSelectedProduct,
+      totalPrice: 0,
+      unitPrice: 0,
+      price: "0", // Fiyat analizinde 0 görünsün
+    };
+  }
 
   // Akıllı ev sistemi fiyatlandırması
   const [smarthomePrice, smarthomeSelectedProduct] = findSmartHomePrice(

@@ -116,9 +116,37 @@ export function filterMotorOptions(
     ),
   ] as MotorModel[];
 
-  // Filter motor models based on square meters and motorMarka
+  // Önce sistem alanına göre en küçük uygun motoru bul
+  // Sonra o motordan daha büyük kapasiteli tüm motorları da geçerli yap
+  let minRequiredMotor: MotorModel | null = null;
+  let minRequiredCapacity = Infinity;
+
+  // Tüm motorları kontrol et ve en küçük uygun motoru bul
+  for (const motor of motorModels) {
+    // Motor markası kontrolü
+    const isValidMotorMarka =
+      values?.motorMarka === "mosel"
+        ? motor.startsWith("sel_")
+        : motor.startsWith("boost_");
+
+    if (!isValidMotorMarka) continue;
+
+    // Motor kapasitesini kontrol et
+    const motorCapacity = validThicknesses.reduce((maxCapacity, thickness) => {
+      const capacity = MOTOR_CAPACITY_MAP[thickness][motor];
+      return capacity > maxCapacity ? capacity : maxCapacity;
+    }, 0);
+
+    // Eğer motor sistem alanını karşılayabiliyorsa ve şu ana kadar bulunan en küçük motordan daha küçükse
+    if (motorCapacity >= squareMeters && motorCapacity > 0 && motorCapacity < minRequiredCapacity) {
+      minRequiredCapacity = motorCapacity;
+      minRequiredMotor = motor;
+    }
+  }
+
+  // Şimdi en küçük uygun motordan daha büyük veya eşit kapasiteli tüm motorları geçerli yap
   const validMotors = motorModels.filter((motor) => {
-    // First check if the motor matches the selected brand
+    // Motor markası kontrolü
     const isValidMotorMarka =
       values?.motorMarka === "mosel"
         ? motor.startsWith("sel_")
@@ -126,12 +154,21 @@ export function filterMotorOptions(
 
     if (!isValidMotorMarka) return false;
 
-    // Then check if the selected lamel thickness (or any valid thickness) can support this motor with given square meters
-    // Eğer lamelTickness seçiliyse, sadece o kalınlığı kontrol et
-    // Değilse, tüm valid thicknesses'i kontrol et
+    // Motor kapasitesini al
+    const motorCapacity = validThicknesses.reduce((maxCapacity, thickness) => {
+      const capacity = MOTOR_CAPACITY_MAP[thickness][motor];
+      return capacity > maxCapacity ? capacity : maxCapacity;
+    }, 0);
+
+    // Eğer en küçük uygun motor bulunduysa, sadece o motordan daha büyük veya eşit kapasiteli motorları geçerli yap
+    if (minRequiredMotor) {
+      return motorCapacity >= minRequiredCapacity && motorCapacity > 0;
+    }
+
+    // Eğer hiç uygun motor bulunamadıysa, eski mantığı kullan (geriye dönük uyumluluk)
     return validThicknesses.some((thickness) => {
       const capacity = MOTOR_CAPACITY_MAP[thickness][motor];
-      return capacity >= squareMeters && capacity > 0; // Ensure capacity is greater than 0
+      return capacity >= squareMeters && capacity > 0;
     });
   });
 

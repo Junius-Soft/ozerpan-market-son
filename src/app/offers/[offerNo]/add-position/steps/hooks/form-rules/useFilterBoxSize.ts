@@ -70,10 +70,24 @@ export function filterBoxSize(
     // Maksimum lamel yüksekliği kontrolü aşağıdaki döngüde yapılacak
   }
 
-  const validOptions: { id: string; name: string }[] = [];
+  // Kutu boyutlarını sayısal değerlere çeviren yardımcı fonksiyon
+  const getBoxSizeNumber = (boxId: string): number => {
+    // "137mm" -> 137, "185x220mm" -> 185, "250mm_yerli" -> 250
+    const match = boxId.match(/(\d+)/);
+    return match ? parseInt(match[1]) : 0;
+  };
+
+  // Önce sarım çapına göre minimum kutu boyutunu belirle (sadece distan için)
+  let minRequiredBoxSize = 0;
+  if (optionId === "distan" && sarimCapiBasedBox) {
+    minRequiredBoxSize = getBoxSizeNumber(sarimCapiBasedBox);
+  }
+
+  // Tüm geçerli kutuları bul (maksimum lamel yüksekliği kontrolüne göre)
+  const allValidBoxes: { id: string; name: string; size: number }[] = [];
 
   for (const box of boxOptions) {
-    const boxSize = box.id.replace("mm", "");
+    const boxSize = box.id.replace("mm", "").replace("x", "").split("_")[0]; // "185x220mm" -> "185", "250mm_yerli" -> "250"
     const boxHeight = getBoxHeight(box.id);
     let lamelYuksekligi = 0;
     if (kutuOlcuAlmaSekli === "kutu_dahil") {
@@ -92,16 +106,51 @@ export function filterBoxSize(
       isValid = true;
     }
     
-    // Sarım çapına göre kontrol (sadece distan için)
-    // Eğer sarım çapına göre belirlenen bir kutu varsa, sadece o kutu geçerli
-    if (isValid && optionId === "distan" && sarimCapiBasedBox) {
-      if (box.id !== sarimCapiBasedBox) {
-        isValid = false;
-      }
-    }
-    
     if (isValid) {
-      validOptions.push({ id: box.id, name: box.name });
+      // Kutu boyutunu sayısal değere çevir (karşılaştırma için)
+      const boxSizeNum = getBoxSizeNumber(box.id);
+      allValidBoxes.push({ id: box.id, name: box.name, size: boxSizeNum });
+    }
+  }
+
+  // En küçük geçerli kutuyu bul (maksimum lamel yüksekliği kontrolünden geçen)
+  let minValidBoxSize = Infinity;
+  if (allValidBoxes.length > 0) {
+    minValidBoxSize = Math.min(...allValidBoxes.map(box => box.size));
+  }
+
+  // Sarım çapına göre belirlenen minimum kutu boyutu varsa, onu da dikkate al
+  if (minRequiredBoxSize > 0 && minRequiredBoxSize > minValidBoxSize) {
+    minValidBoxSize = minRequiredBoxSize;
+  }
+
+  // Şimdi sadece en küçük geçerli kutudan daha büyük veya eşit kutuları seçilebilir yap
+  // Kullanıcı daha küçük kutu seçemez, ama daha büyük kutu seçebilir
+  const validOptions: { id: string; name: string }[] = [];
+  
+  for (const box of boxOptions) {
+    const boxSizeNum = getBoxSizeNumber(box.id);
+    
+    // Sadece en küçük geçerli kutudan daha büyük veya eşit kutuları ekle
+    if (boxSizeNum >= minValidBoxSize) {
+      // Ayrıca bu kutunun maksimum lamel yüksekliği kontrolünü de geçmesi gerekiyor
+      const boxSize = box.id.replace("mm", "").replace("x", "").split("_")[0];
+      const boxHeight = getBoxHeight(box.id);
+      let lamelYuksekligi = 0;
+      if (kutuOlcuAlmaSekli === "kutu_dahil") {
+        lamelYuksekligi = height - boxHeight / 2;
+      } else {
+        lamelYuksekligi = height;
+      }
+      
+      const maxValue =
+        maxLamelHeights[optionId]?.[boxSize]?.[selectedLamelTickness]?.[
+          selectedMovementType
+        ];
+      
+      if (maxValue && lamelYuksekligi <= maxValue) {
+        validOptions.push({ id: box.id, name: box.name });
+      }
     }
   }
   const isCurrentValid = validOptions.some(
@@ -113,7 +162,7 @@ export function filterBoxSize(
     if (!isCurrentValid) {
       // En küçük kutuyu seçmek için validOptions'u kutu boyutuna göre sırala
       const sortedOptions = [...validOptions].sort(
-        (a, b) => parseInt(a.id) - parseInt(b.id)
+        (a, b) => getBoxSizeNumber(a.id) - getBoxSizeNumber(b.id)
       );
       const smallestValidBoxId = sortedOptions[0].id;
       formik.setFieldValue("boxType", smallestValidBoxId);

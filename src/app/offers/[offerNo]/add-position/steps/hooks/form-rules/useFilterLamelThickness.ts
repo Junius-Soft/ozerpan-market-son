@@ -59,10 +59,29 @@ function filterLamelThickness(
   // En uygun lamel tipini bul
   // Kontrol: Genişlik VE yükseklik kontrolü YANINDA alan kontrolü de yapılmalı
   // Bir lamel geçerli olması için: (genişlik <= maxWidth VE yükseklik <= maxHeight) VEYA (alan <= maxArea)
-  const validOptionsArray: { id: string; label: string; name: string }[] = [];
+  // ÖNEMLİ: Yükseklik 2400mm'yi geçtiğinde 39'luk lamel yerine daha kalın lamel seçilmeli
+  const validOptionsArray: { id: string; label: string; name: string; priority: number }[] = [];
   const areaM2 = (width * height) / 1000000; // m² cinsinden alan
 
+  // Lamel öncelik sırası: En küçük uygun lamel seçilmeli (39 > 45 > 55)
+  // Yani 39_sl en yüksek öncelikli, 55'lik en düşük öncelikli
+  const lamelPriority: Record<string, number> = {
+    "39_sl": 1, // En küçük, en yüksek öncelik
+    "45_se": 2,
+    "55_sl": 3,
+    "55_se": 3,
+  };
+
   for (const [key, props] of Object.entries(lamelProperties)) {
+    // ÖNEMLİ: 39_sl için özel kurallar
+    // - Yükseklik 2400mm'yi geçtiğinde geçersiz (maxHeight: 2400mm)
+    // - Genişlik 2300mm'yi geçtiğinde geçersiz (maxWidth: 2300mm)
+    if (key === "39_sl") {
+      if (height > 2400 || width > 2300) {
+        continue; // 39_sl'yi atla - yükseklik veya genişlik limitini aştığında kullanılamaz
+      }
+    }
+    
     // Genişlik ve yükseklik kontrolü
     const sizeValid = width <= props.maxWidth && height <= props.maxHeight;
     // Alan kontrolü
@@ -72,7 +91,12 @@ function filterLamelThickness(
     const isValid = sizeValid || areaValid;
     
     if (isValid) {
-      validOptionsArray.push({ id: key, label: key, name: key });
+      validOptionsArray.push({ 
+        id: key, 
+        label: key, 
+        name: key,
+        priority: lamelPriority[key] || 999 // Öncelik: düşük sayı = yüksek öncelik
+      });
     }
   }
 
@@ -87,6 +111,9 @@ function filterLamelThickness(
     };
   }
 
+  // Önceliğe göre sırala (düşük sayı = yüksek öncelik = daha kalın lamel)
+  validOptionsArray.sort((a, b) => a.priority - b.priority);
+  
   const selectedLamel = validOptionsArray[0]?.id;
 
   // Her zaman ilk seçeneği (en uygun) seç
@@ -101,8 +128,12 @@ function filterLamelThickness(
   // 55lik lamel seçildiğinde motorlu olmalı mı?
   const shouldBeMotorlu = finalSelectedLamel?.includes("55_") || false;
 
+  // validOptions'tan priority field'ını kaldır (ProductTabField tipine uygun olması için)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const validOptionsWithoutPriority = validOptionsArray.map(({ priority, ...rest }) => rest);
+
   return {
-    validOptions: validOptionsArray,
+    validOptions: validOptionsWithoutPriority,
     selectedLamel: finalSelectedLamel,
     selectedType,
     shouldBeMotorlu,
@@ -167,38 +198,47 @@ export function useFilterLamelThickness(
       formik.setFieldValue("lamelType", result.selectedType);
     }
 
-    // Lamel seçimini güncelle - sadece mevcut seçim geçersizse değiştir
-    // Eğer mevcut seçim geçerliyse, kullanıcının seçimini koru
+    // Lamel seçimini güncelle - ölçüler değiştiğinde en uygun lamel otomatik seçilsin
     const currentLamel = formik.values.lamelTickness as string;
     const isCurrentSelectionValid =
       result.validOptions &&
       result.validOptions.some((option) => option.id === currentLamel);
 
-    // Sadece mevcut seçim geçersizse ve yeni bir seçim varsa değiştir
-    if (
-      result.selectedLamel &&
-      !isCurrentSelectionValid &&
-      currentLamel !== result.selectedLamel
-    ) {
-      const oldSelection = currentLamel;
+    // Ölçüler değiştiğinde en uygun lamel otomatik seçilsin
+    // Eğer mevcut seçim en uygun değilse (öncelik sırasında ilk değilse) veya geçersizse değiştir
+    if (result.selectedLamel && result.validOptions && result.validOptions.length > 0) {
+      const bestLamel = result.validOptions[0]?.id;
+      const isCurrentBest = currentLamel === bestLamel;
+      
+      // Mevcut seçim en uygun değilse veya geçersizse değiştir
+      if ((!isCurrentBest || !isCurrentSelectionValid) && bestLamel) {
+        const oldSelection = currentLamel;
 
-      console.log(
-        `Changing lamel from ${oldSelection} to ${result.selectedLamel}`
-      );
-      formik.setFieldValue("lamelTickness", result.selectedLamel);
-
-      // Kullanıcıyı bilgilendir
-      if (oldSelection) {
-        toast.info(
-          `Seçilen lamel kalınlığı (${formatLamelName(
-            oldSelection
-          )}) bu ölçüler için uygun değil. ${formatLamelName(
-            result.selectedLamel
-          )} olarak değiştirildi.`
+        console.log(
+          `Changing lamel from ${oldSelection} to ${bestLamel}`
         );
+        formik.setFieldValue("lamelTickness", bestLamel);
+
+        // Kullanıcıyı bilgilendir
+        if (oldSelection && oldSelection !== bestLamel) {
+          if (!isCurrentSelectionValid) {
+            toast.info(
+              `Seçilen lamel kalınlığı (${formatLamelName(
+                oldSelection
+              )}) bu ölçüler için uygun değil. ${formatLamelName(
+                bestLamel
+              )} olarak değiştirildi.`
+            );
+          } else {
+            toast.info(
+              `Ölçü değişikliği nedeniyle en uygun lamel (${formatLamelName(
+                bestLamel
+              )}) otomatik seçildi.`
+            );
+          }
+        }
       }
     }
-    // Eğer mevcut seçim geçerliyse, kullanıcının seçimini koru (değiştirme)
 
     // 55lik lamel seçildiğinde movementType motorlu olmalı
     if (result.shouldBeMotorlu && formik.values.movementType !== "motorlu") {

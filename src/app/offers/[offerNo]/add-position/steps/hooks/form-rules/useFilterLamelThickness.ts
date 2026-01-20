@@ -129,7 +129,7 @@ function filterLamelThickness(
   const shouldBeMotorlu = finalSelectedLamel?.includes("55_") || false;
 
   // validOptions'tan priority field'ını kaldır (ProductTabField tipine uygun olması için)
-  const validOptionsWithoutPriority = validOptionsArray.map(({ priority, ...rest }) => rest);
+  const validOptionsWithoutPriority = validOptionsArray.map(({ priority: _, ...rest }) => rest);
 
   return {
     validOptions: validOptionsWithoutPriority,

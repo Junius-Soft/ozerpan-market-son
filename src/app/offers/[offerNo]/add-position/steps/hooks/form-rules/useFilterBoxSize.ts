@@ -220,7 +220,8 @@ export function useFilterBoxSize(
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    width,
+    // ÖNEMLİ: width dependency'si kaldırıldı çünkü kutu seçimi genişlikten etkilenmiyor
+    // Sarım çapı sadece yüksekliğe göre hesaplanıyor ve maxLamelHeights kontrolü de genişlik kullanmıyor
     height,
     lamelType,
     kutuOlcuAlmaSekli,

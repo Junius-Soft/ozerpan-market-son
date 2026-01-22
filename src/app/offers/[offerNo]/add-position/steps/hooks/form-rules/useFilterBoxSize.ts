@@ -54,17 +54,22 @@ export function filterBoxSize(
   // 1.0 m'den küçük yükseklikler için sadece maksimum lamel yüksekliği kontrolü kullanılır
   // ÖNEMLİ: Sarım çapı sadece yüksekliğe göre hesaplanır, genişlik değişince bir değişme olmaz
   let sarimCapiBasedBox: string | null = null;
-  if (optionId === "distan") {
+  if (optionId === "distan" && selectedLamelTickness) {
     // Sarım çapı hesaplaması için lamel yüksekliğini hesapla
     // ÖNEMLİ: Sarım çapı hesaplaması için TOPLAM YÜKSEKLİK kullanılmalı (kutu dahil/haric fark etmez)
     // Çünkü sarım çapı tablosu toplam yüksekliğe göre hazırlanmıştır
     // İlk sarım çapı hesaplaması için toplam yüksekliği kullan
+    // ÖNEMLİ: selectedLamelTickness'in geçerli olduğundan emin ol (lamel değişikliğinde güncellenmiş olmalı)
     const sarimCapi = calculateSarimCapi(
       height, // Toplam yükseklik kullan (kutu dahil/haric fark etmez)
       selectedLamelTickness,
       selectedMovementType
     );
-    sarimCapiBasedBox = getBoxSizeBySarimCapi(sarimCapi, optionId);
+    
+    // Sarım çapı hesaplaması başarılıysa kutu ölçüsünü belirle
+    if (sarimCapi !== null) {
+      sarimCapiBasedBox = getBoxSizeBySarimCapi(sarimCapi, optionId);
+    }
     
     // Sarım çapı hesaplaması tamamlandı
     // Maksimum lamel yüksekliği kontrolü aşağıdaki döngüde yapılacak
@@ -165,7 +170,21 @@ export function filterBoxSize(
         (a, b) => getBoxSizeNumber(a.id) - getBoxSizeNumber(b.id)
       );
       const smallestValidBoxId = sortedOptions[0].id;
-      formik.setFieldValue("boxType", smallestValidBoxId);
+      
+      // ÖNEMLİ: Lamel değişikliğinde kutu seçimini güncellerken, 
+      // sarım çapına göre belirlenen minimum kutu boyutunu kullan
+      // Eğer sarım çapına göre belirlenen kutu varsa ve geçerliyse, onu seç
+      let boxToSelect = smallestValidBoxId;
+      if (optionId === "distan" && sarimCapiBasedBox) {
+        const sarimCapiBoxValid = validOptions.some(
+          (opt) => opt.id === sarimCapiBasedBox
+        );
+        if (sarimCapiBoxValid) {
+          boxToSelect = sarimCapiBasedBox;
+        }
+      }
+      
+      formik.setFieldValue("boxType", boxToSelect);
     }
   }
   return validOptions.length > 0 ? validOptions : null;

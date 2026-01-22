@@ -2671,7 +2671,7 @@
         "type": "profil",
         "color": "ral",
         "unit": "Metre",
-        "price": "4.2158",
+        "price": "3.68",
         "currency": "EUR"
       },
       {
@@ -2681,7 +2681,7 @@
         "type": "profil",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "3.4989",
+        "price": "3.04",
         "currency": "EUR"
       },
       {
@@ -2691,7 +2691,7 @@
         "type": "profil",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "3.58",
+        "price": "3.08",
         "currency": "EUR"
       },
       {
@@ -2701,7 +2701,7 @@
         "type": "profil",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "3.58",
+        "price": "4.16",
         "currency": "EUR"
       },
       {
@@ -2711,7 +2711,7 @@
         "type": "profil",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "3.5175",
+        "price": "3.52",
         "currency": "EUR"
       },
       {

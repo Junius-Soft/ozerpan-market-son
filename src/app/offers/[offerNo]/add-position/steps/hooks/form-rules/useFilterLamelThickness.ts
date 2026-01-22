@@ -68,7 +68,6 @@ function filterLamelThickness(
   // Eğer lamelType "aluminyum_ekstruzyon" ise → SE-45 ve SE-55 kullanılabilir (özel seçim)
   const selectedLamelType = values.lamelType as string | undefined;
   const isEkstruzyon = selectedLamelType === "aluminyum_ekstruzyon";
-  const isPoliuretanli = selectedLamelType === "aluminyum_poliuretanli" || !selectedLamelType;
 
   // Lamel öncelik sırası: En küçük uygun lamel seçilmeli
   // Standart (poliüretanlı): 39_sl > 55_sl

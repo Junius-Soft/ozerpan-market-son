@@ -63,16 +63,34 @@ function filterLamelThickness(
   const validOptionsArray: { id: string; label: string; name: string; priority: number }[] = [];
   const areaM2 = (width * height) / 1000000; // m² cinsinden alan
 
-  // Lamel öncelik sırası: En küçük uygun lamel seçilmeli (39 > 45 > 55)
-  // Yani 39_sl en yüksek öncelikli, 55'lik en düşük öncelikli
+  // Lamel tipine göre filtreleme
+  // Eğer lamelType seçilmemişse veya "aluminyum_poliuretanli" ise → sadece SL-39 ve SL-55 (standart)
+  // Eğer lamelType "aluminyum_ekstruzyon" ise → SE-45 ve SE-55 kullanılabilir (özel seçim)
+  const selectedLamelType = values.lamelType as string | undefined;
+  const isEkstruzyon = selectedLamelType === "aluminyum_ekstruzyon";
+
+  // Lamel öncelik sırası: En küçük uygun lamel seçilmeli
+  // Standart (poliüretanlı): 39_sl > 55_sl
+  // Özel (ekstrüzyon): 45_se > 55_se
   const lamelPriority: Record<string, number> = {
-    "39_sl": 1, // En küçük, en yüksek öncelik
-    "45_se": 2,
-    "55_sl": 3,
-    "55_se": 3,
+    "39_sl": 1, // Standart, en küçük, en yüksek öncelik
+    "55_sl": 2, // Standart
+    "45_se": 1, // Özel, en küçük
+    "55_se": 2, // Özel
   };
 
   for (const [key, props] of Object.entries(lamelProperties)) {
+    // Lamel tipine göre filtreleme
+    // SE-45 ve SE-55 sadece alüminyum ekstrüzyon seçildiğinde kullanılabilir
+    if (key.includes("_se")) {
+      if (!isEkstruzyon) {
+        continue; // SE lameller sadece ekstrüzyon seçildiğinde kullanılabilir
+      }
+    }
+    
+    // SL-39 ve SL-55 standart lameller (poliüretanlı)
+    // Bunlar her zaman kullanılabilir (ekstrüzyon seçilse bile)
+    
     // ÖNEMLİ: 39_sl için özel kurallar
     // - Yükseklik 2400mm'yi geçtiğinde geçersiz (maxHeight: 2400mm)
     // - Genişlik 2300mm'yi geçtiğinde geçersiz (maxWidth: 2300mm)

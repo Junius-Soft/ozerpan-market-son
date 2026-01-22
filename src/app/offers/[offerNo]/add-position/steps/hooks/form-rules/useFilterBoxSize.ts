@@ -200,7 +200,6 @@ export function useFilterBoxSize(
   const productId = searchParams.get("productId");
   const optionId = searchParams.get("optionId") || "distan";
   const {
-    width,
     height,
     lamelType,
     kutuOlcuAlmaSekli,

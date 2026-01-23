@@ -83,12 +83,6 @@ export function filterBoxSize(
     return match ? parseInt(match[1]) : 0;
   };
 
-  // Önce sarım çapına göre minimum kutu boyutunu belirle (sadece distan için)
-  let minRequiredBoxSize = 0;
-  if (optionId === "distan" && sarimCapiBasedBox) {
-    minRequiredBoxSize = getBoxSizeNumber(sarimCapiBasedBox);
-  }
-
   // Tüm geçerli kutuları bul (önce maksimum lamel yüksekliği kontrolüne göre)
   const allValidBoxesByMaxHeight: { id: string; name: string; size: number }[] = [];
 

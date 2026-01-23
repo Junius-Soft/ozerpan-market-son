@@ -13,16 +13,33 @@ export function useAuth() {
     // Token kontrolü
     const checkAuth = () => {
       // LoginModal'da set ettiğimiz cookie'yi kontrol ediyoruz
-      const system_user = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("system_user="));
+      const allCookies = document.cookie.split("; ");
+      const system_user = allCookies.find((row) => row.startsWith("system_user="));
       
-      const isAuthed = system_user?.split("=")[1] === "yes";
-      setIsAuthenticated(isAuthed);
-
-      if (!isAuthed) {
-        localStorage.removeItem("isAuthenticated");
+      // Cookie değerini al (eğer varsa)
+      let cookieValue = null;
+      if (system_user) {
+        const parts = system_user.split("=");
+        if (parts.length >= 2) {
+          cookieValue = parts.slice(1).join("="); // "=" karakteri değerde olabilir
+        }
+      }
+      
+      const isAuthed = cookieValue === "yes";
+      
+      // Eğer cookie "no" ise, localStorage'dan kontrol et (fallback)
+      if (cookieValue === "no" && localStorage.getItem("isAuthenticated") === "true") {
+        // LocalStorage'da authenticated var ama cookie no ise, cookie'yi düzelt
+        console.warn("Cookie 'no' olarak ayarlanmış ama localStorage authenticated. Cookie düzeltiliyor...");
+        document.cookie = "system_user=yes; path=/; max-age=86400; SameSite=Lax";
+        setIsAuthenticated(true);
       } else {
+        setIsAuthenticated(isAuthed);
+      }
+
+      if (!isAuthed && cookieValue !== "no") {
+        localStorage.removeItem("isAuthenticated");
+      } else if (isAuthed) {
         localStorage.setItem("isAuthenticated", "true");
       }
 
@@ -33,7 +50,27 @@ export function useAuth() {
     checkAuth();
 
     // Cookie değişikliklerini kontrol etmek için interval
-    const cookieCheckInterval = setInterval(checkAuth, 1000);
+    const cookieCheckInterval = setInterval(() => {
+      checkAuth();
+      
+      // Cookie watchdog: Eğer localStorage'da authenticated var ama cookie "no" ise, düzelt
+      const isLocalStorageAuth = localStorage.getItem("isAuthenticated") === "true";
+      if (isLocalStorageAuth) {
+        const allCookies = document.cookie.split("; ");
+        const system_user = allCookies.find((row) => row.startsWith("system_user="));
+        if (system_user) {
+          const parts = system_user.split("=");
+          if (parts.length >= 2) {
+            const cookieValue = parts.slice(1).join("=");
+            if (cookieValue === "no") {
+              // Cookie "no" olarak değiştirilmiş, tekrar "yes" yap
+              console.warn("Cookie 'no' olarak değiştirilmiş, düzeltiliyor...");
+              document.cookie = "system_user=yes; path=/; max-age=86400; SameSite=Lax";
+            }
+          }
+        }
+      }
+    }, 1000);
 
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === "isAuthenticated") {
@@ -53,6 +90,10 @@ export function useAuth() {
   const closeLoginModal = () => setShowLoginModal(false);
 
   const handleLoginSuccess = () => {
+    // Cookie'yi kesinlikle set et
+    document.cookie = "system_user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    document.cookie = "system_user=yes; path=/; max-age=86400; SameSite=Lax";
+    
     setIsAuthenticated(true);
     localStorage.setItem("isAuthenticated", "true");
     setShowLoginModal(false);

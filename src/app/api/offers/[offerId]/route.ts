@@ -12,21 +12,58 @@ export async function GET(
 ) {
   try {
     const { offerId } = await context.params;
+    
+    if (!offerId) {
+      console.error("GET /api/offers/[offerId]: offerId is missing");
+      return NextResponse.json(
+        { error: "Offer ID is required" },
+        { status: 400 }
+      );
+    }
+
+    console.log(`GET /api/offers/${offerId}: Fetching offer...`);
+    
     const { data: offer, error } = await supabase
       .from("offers")
       .select("*")
       .eq("id", offerId)
       .single();
 
-    if (error) throw error;
-    if (!offer)
-      return NextResponse.json({ error: "Offer not found" }, { status: 404 });
+    if (error) {
+      console.error(`GET /api/offers/${offerId}: Supabase error:`, error);
+      
+      // Handle specific Supabase errors
+      if (error.code === "PGRST116") {
+        // No rows returned
+        return NextResponse.json(
+          { error: "Offer not found" },
+          { status: 404 }
+        );
+      }
+      
+      throw error;
+    }
+    
+    if (!offer) {
+      console.warn(`GET /api/offers/${offerId}: Offer not found`);
+      return NextResponse.json(
+        { error: "Offer not found" },
+        { status: 404 }
+      );
+    }
 
+    console.log(`GET /api/offers/${offerId}: Success`);
     return NextResponse.json(offer);
   } catch (error) {
     console.error("Error getting offer:", error);
+    
+    // Return more specific error message
+    const errorMessage = error instanceof Error 
+      ? error.message 
+      : "Internal server error";
+    
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: errorMessage },
       { status: 500 }
     );
   }

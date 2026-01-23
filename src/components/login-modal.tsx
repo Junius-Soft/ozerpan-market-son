@@ -42,9 +42,27 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
         // Şifre ve E-posta kontrolü
         if (email === adminUser.email && password === adminUser.password) {
           
+          // Önce mevcut cookie'yi temizle (eğer varsa)
+          document.cookie = "system_user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+          
           // useAuth hook'unun çalışabilmesi için cookie set ediyoruz
           // (Mevcut yapınız cookie kontrolü yaptığı için bu gerekli)
-          document.cookie = "system_user=yes; path=/; max-age=86400"; // 1 gün geçerli
+          // Domain ve path belirtmeden set ediyoruz ki tüm sayfalarda geçerli olsun
+          const cookieString = "system_user=yes; path=/; max-age=86400; SameSite=Lax";
+          document.cookie = cookieString;
+          
+          // Cookie'nin doğru set edildiğini kontrol et
+          const checkCookie = () => {
+            const cookie = document.cookie
+              .split("; ")
+              .find((row) => row.startsWith("system_user="));
+            if (cookie?.split("=")[1] !== "yes") {
+              console.warn("Cookie set edilemedi, tekrar deniyor...");
+              // Bir kez daha dene
+              document.cookie = cookieString;
+            }
+          };
+          setTimeout(checkCookie, 100);
 
           toast.success("Giriş başarılı!", {
             position: "top-center",

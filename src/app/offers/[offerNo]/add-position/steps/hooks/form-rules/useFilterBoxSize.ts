@@ -67,6 +67,7 @@ export function filterBoxSize(
     );
     
     // Sarım çapı hesaplaması başarılıysa kutu ölçüsünü belirle
+    // ÖNEMLİ: Sarım çapı sadece minimum kutu boyutunu belirler, maksimum lamel yüksekliği kontrolü de yapılmalı
     if (sarimCapi !== null) {
       sarimCapiBasedBox = getBoxSizeBySarimCapi(sarimCapi, optionId);
     }
@@ -88,8 +89,8 @@ export function filterBoxSize(
     minRequiredBoxSize = getBoxSizeNumber(sarimCapiBasedBox);
   }
 
-  // Tüm geçerli kutuları bul (maksimum lamel yüksekliği kontrolüne göre)
-  const allValidBoxes: { id: string; name: string; size: number }[] = [];
+  // Tüm geçerli kutuları bul (önce maksimum lamel yüksekliği kontrolüne göre)
+  const allValidBoxesByMaxHeight: { id: string; name: string; size: number }[] = [];
 
   for (const box of boxOptions) {
     const boxSize = box.id.replace("mm", "").replace("x", "").split("_")[0]; // "185x220mm" -> "185", "250mm_yerli" -> "250"
@@ -114,20 +115,26 @@ export function filterBoxSize(
     if (isValid) {
       // Kutu boyutunu sayısal değere çevir (karşılaştırma için)
       const boxSizeNum = getBoxSizeNumber(box.id);
-      allValidBoxes.push({ id: box.id, name: box.name, size: boxSizeNum });
+      allValidBoxesByMaxHeight.push({ id: box.id, name: box.name, size: boxSizeNum });
     }
   }
 
-  // En küçük geçerli kutuyu bul (maksimum lamel yüksekliği kontrolünden geçen)
+  // ÖNEMLİ: Maksimum lamel yüksekliği kontrolü sarım çapı kontrolünden daha önemlidir
+  // Maksimum lamel yüksekliği kontrolünden geçen en küçük kutu her zaman kullanılabilir
+  // Sarım çapı kontrolü sadece maksimum lamel yüksekliği kontrolünden geçen kutular arasında
+  // sarım çapına göre belirlenen minimum kutu boyutundan küçük olanları filtreler
+  // Ama maksimum lamel yüksekliği kontrolünden geçen en küçük kutu her zaman kullanılabilir
+  
+  // Maksimum lamel yüksekliği kontrolünden geçen en küçük kutuyu bul
+  // Bu kutu her zaman kullanılabilir (maksimum lamel yüksekliği kontrolü önceliklidir)
   let minValidBoxSize = Infinity;
-  if (allValidBoxes.length > 0) {
-    minValidBoxSize = Math.min(...allValidBoxes.map(box => box.size));
+  if (allValidBoxesByMaxHeight.length > 0) {
+    minValidBoxSize = Math.min(...allValidBoxesByMaxHeight.map(box => box.size));
   }
-
-  // Sarım çapına göre belirlenen minimum kutu boyutu varsa, onu da dikkate al
-  if (minRequiredBoxSize > 0 && minRequiredBoxSize > minValidBoxSize) {
-    minValidBoxSize = minRequiredBoxSize;
-  }
+  
+  // NOT: Sarım çapı kontrolü artık uygulanmıyor çünkü maksimum lamel yüksekliği kontrolü önceliklidir
+  // Eğer maksimum lamel yüksekliği kontrolünden geçen bir kutu varsa, onu kullan
+  // Sarım çapı kontrolü sadece bir tavsiye olarak kullanılabilir, ama zorunlu değildir
 
   // Şimdi sadece en küçük geçerli kutudan daha büyük veya eşit kutuları seçilebilir yap
   // Kullanıcı daha küçük kutu seçemez, ama daha büyük kutu seçebilir

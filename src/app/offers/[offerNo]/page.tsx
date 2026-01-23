@@ -45,6 +45,8 @@ export default function OfferDetailPage() {
   const [selectedPositions, setSelectedPositions] = useState<Position[]>([]);
   const [isDeletingPositions, setIsDeletingPositions] = useState(false);
   const [orderLoading, setOrderLoading] = useState(false);
+  const [isLoadingOffer, setIsLoadingOffer] = useState(true);
+  const [offerError, setOfferError] = useState<string | null>(null);
   const { eurRate, loading: isEurRateLoading } = useExchangeRate({
     offerId: params.offerNo as string,
   });
@@ -62,14 +64,43 @@ export default function OfferDetailPage() {
 
   useEffect(() => {
     const loadOffer = async () => {
-      const currentOffer = await getOffer(params.offerNo as string);
-      if (currentOffer) {
-        setOffer(currentOffer);
-        setOfferName(currentOffer.name);
+      if (!params.offerNo) {
+        console.error("OfferDetailPage: offerNo is missing");
+        setIsLoadingOffer(false);
+        setOfferError("Teklif numarası bulunamadı");
+        return;
+      }
+      
+      setIsLoadingOffer(true);
+      setOfferError(null);
+      
+      try {
+        const currentOffer = await getOffer(params.offerNo as string);
+        if (currentOffer) {
+          setOffer(currentOffer);
+          setOfferName(currentOffer.name);
+        } else {
+          console.warn(`OfferDetailPage: Offer not found with id: ${params.offerNo}`);
+          setOfferError("Teklif bulunamadı");
+          // Optionally redirect to offers list after a delay
+          // setTimeout(() => router.push("/offers"), 3000);
+        }
+      } catch (error) {
+        console.error("OfferDetailPage: Failed to load offer:", error);
+        const errorMessage = error instanceof Error 
+          ? error.message 
+          : "Teklif yüklenirken bir hata oluştu";
+        setOfferError(errorMessage);
+        toast.error(errorMessage, {
+          position: "top-center",
+          autoClose: 3000,
+        });
+      } finally {
+        setIsLoadingOffer(false);
       }
     };
     loadOffer();
-  }, [params.offerNo]);
+  }, [params.offerNo, router]);
 
   // Cam balkon teklifleri için varsayılan para birimini TRY yap
   useEffect(() => {
@@ -188,7 +219,35 @@ export default function OfferDetailPage() {
     []
   );
 
-  if (!offer || isEurRateLoading) {
+  // Show skeleton only while initially loading
+  if (isLoadingOffer || (isEurRateLoading && !offer)) {
+    return <OfferDetailSkeleton />;
+  }
+
+  // Show error state if offer failed to load
+  if (offerError && !offer) {
+    return (
+      <div className="py-8 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6">
+            <h2 className="text-lg font-semibold text-red-800 dark:text-red-200 mb-2">
+              Teklif Yüklenemedi
+            </h2>
+            <p className="text-red-600 dark:text-red-300 mb-4">{offerError}</p>
+            <Button
+              onClick={() => router.push("/offers")}
+              variant="outline"
+            >
+              Teklifler Listesine Dön
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // If no offer but no error, show skeleton (shouldn't happen but safety check)
+  if (!offer) {
     return <OfferDetailSkeleton />;
   }
 

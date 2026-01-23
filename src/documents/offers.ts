@@ -66,15 +66,43 @@ export const getOffers = async (): Promise<Offer[]> => {
 // Function to get single offer by ID from Supabase
 export const getOffer = async (offerId: string): Promise<Offer | null> => {
   try {
+    if (!offerId) {
+      console.error("getOffer: offerId is required");
+      return null;
+    }
+    
     const response = await fetch(`/api/offers/${offerId}`);
     if (!response.ok) {
-      if (response.status === 404) return null;
-      throw new Error("Failed to fetch offer");
+      if (response.status === 404) {
+        console.warn(`getOffer: Offer not found with id: ${offerId}`);
+        return null;
+      }
+      
+      // Try to get error message from response
+      let errorMessage = "Failed to fetch offer";
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error || errorMessage;
+      } catch {
+        errorMessage = `Failed to fetch offer: ${response.status} ${response.statusText}`;
+      }
+      
+      console.error(`getOffer: ${errorMessage}`, {
+        offerId,
+        status: response.status,
+        statusText: response.statusText,
+      });
+      
+      throw new Error(errorMessage);
     }
     return response.json();
   } catch (error) {
     console.error("Failed to get offer:", error);
-    return null;
+    // Re-throw the error so the caller can handle it
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error("Failed to fetch offer");
   }
 };
 

@@ -52,7 +52,7 @@ export function OfferSummaryCard({
   positions,
 }: OfferSummaryCardProps) {
   // Sipariş numarası seçimi için state kaldırıldı, parenttan geliyor
-  const { orders, isLoading: ordersLoading } = useErcomOrders();
+  const { orders, isLoading: ordersLoading, isError: ordersError, errorMessage: ordersErrorMessage } = useErcomOrders();
   const [vatRate, setVatRate] = useState<number>(20);
   const [discountRate, setDiscountRate] = useState<number>(0);
   const [assemblyRate, setAssemblyRate] = useState<number>(0);
@@ -200,7 +200,17 @@ export function OfferSummaryCard({
               disabled={ordersLoading || orders.length === 0}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Sipariş seçin" />
+                <SelectValue 
+                  placeholder={
+                    ordersLoading 
+                      ? "Yükleniyor..." 
+                      : ordersError 
+                      ? "Siparişler yüklenemedi" 
+                      : orders.length === 0 
+                      ? "Sipariş bulunamadı" 
+                      : "Sipariş seçin"
+                  } 
+                />
               </SelectTrigger>
               <SelectContent>
                 {orders.map((order: { name: string }) => (
@@ -210,6 +220,11 @@ export function OfferSummaryCard({
                 ))}
               </SelectContent>
             </Select>
+            {ordersError && ordersErrorMessage && (
+              <p className="text-xs text-amber-600 mt-1">
+                {ordersErrorMessage}
+              </p>
+            )}
           </div>
           <div>
             <label className="block text-xs text-gray-500 mb-1">

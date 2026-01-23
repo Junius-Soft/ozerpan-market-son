@@ -49,6 +49,7 @@ async function proxyToFrappe(request: NextRequest, pathSegments: string[]) {
   }`;
 
   console.log("Proxying request to:", frappeUrl);
+  console.log("Request method:", request.method);
 
   const headers: Record<string, string> = {};
 
@@ -59,6 +60,14 @@ async function proxyToFrappe(request: NextRequest, pathSegments: string[]) {
       headers[key] = value;
     }
   });
+
+  // Log cookie header for debugging
+  const cookieHeader = request.headers.get("cookie");
+  if (cookieHeader) {
+    console.log("Cookie header present:", cookieHeader.substring(0, 100) + "...");
+  } else {
+    console.warn("No cookie header found in request");
+  }
 
   try {
     const body =
@@ -72,7 +81,19 @@ async function proxyToFrappe(request: NextRequest, pathSegments: string[]) {
       body,
     });
 
+    console.log(`Frappe API response status: ${response.status} ${response.statusText}`);
+
     const responseText = await response.text();
+
+    // Log error response for debugging
+    if (!response.ok) {
+      console.error(`Frappe API error (${response.status}):`, {
+        url: frappeUrl,
+        status: response.status,
+        statusText: response.statusText,
+        responsePreview: responseText.substring(0, 500),
+      });
+    }
 
     // Create response headers
     const responseHeaders: Record<string, string> = {
@@ -89,9 +110,15 @@ async function proxyToFrappe(request: NextRequest, pathSegments: string[]) {
     }
 
     // Copy set-cookie headers for authentication
+    // Ancak system_user=no cookie'sini ignore et (bizim authentication sistemimizi bozmasın)
     const setCookie = response.headers.get("Set-Cookie");
     if (setCookie) {
-      responseHeaders["Set-Cookie"] = setCookie;
+      // Eğer system_user=no içeriyorsa, ignore et
+      if (!setCookie.includes("system_user=no")) {
+        responseHeaders["Set-Cookie"] = setCookie;
+      } else {
+        console.warn("Frappe'den gelen system_user=no cookie'si ignore edildi");
+      }
     }
 
     return new NextResponse(responseText, {

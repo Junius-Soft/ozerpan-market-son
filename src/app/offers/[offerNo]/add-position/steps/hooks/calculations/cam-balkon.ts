@@ -320,7 +320,7 @@ export const calculateCamBalkon = (
   // Paketleme ücreti hesaplama
   const calculatePackagingCost = (basePrice: number): number => {
     if (values.packagingType === "var") {
-      return parseFloat((basePrice * 0.05).toFixed(2)); // %5, 2 ondalık basamak
+      return parseFloat((basePrice * 0.02).toFixed(2)); // %2, 2 ondalık basamak
     }
     return 0;
   };
@@ -333,7 +333,7 @@ export const calculateCamBalkon = (
     packagingCost > 0
       ? {
           stock_code: "PAKET-001",
-          description: "Paketleme Ücreti (%5)",
+          description: "Paketleme Ücreti (%2)",
           uretici_kodu: "PAKET-001",
           price: packagingCost.toFixed(2),
           quantity: 1,

@@ -524,7 +524,7 @@ export const calculatePanjur = (
   // Paketleme ücreti hesaplama
   const calculatePackagingCost = (basePrice: number): number => {
     if (values.packagingType === "var") {
-      return Number((basePrice * 0.05).toFixed(2)); // %5
+      return Number((basePrice * 0.02).toFixed(2)); // %2
     }
     return 0;
   };
@@ -636,7 +636,7 @@ export const calculatePanjur = (
     packagingCost > 0
       ? {
           stock_code: "PAKET-001",
-          description: "Paketleme Ücreti (%5)",
+          description: "Paketleme Ücreti (%2)",
           uretici_kodu: "PAKET-001",
           price: packagingCost.toString(),
           quantity: 1,

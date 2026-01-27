@@ -2328,7 +2328,8 @@
         "motor_model": "sel_60_10_kisa",
         "motor_type": "standart",
         "unit": "Adet",
-        "price": "66.58"
+        "price": "66.58",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-60 10 Motor",
@@ -2339,7 +2340,8 @@
         "motor_model": "sel_60_10",
         "motor_type": "standart",
         "unit": "Adet",
-        "price": "42.08"
+        "price": "42.08",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-60 20 Motor",
@@ -2350,7 +2352,8 @@
         "motor_model": "sel_60_20",
         "motor_type": "standart",
         "unit": "Adet",
-        "price": "44.05"
+        "price": "44.05",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-60 30 Motor",
@@ -2361,7 +2364,8 @@
         "motor_model": "sel_60_30",
         "motor_type": "standart",
         "unit": "Adet",
-        "price": "51.06"
+        "price": "51.06",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-60 50 Motor",
@@ -2372,7 +2376,8 @@
         "motor_model": "sel_60_50",
         "motor_type": "standart",
         "unit": "Adet",
-        "price": "60.68"
+        "price": "60.68",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-60 10 Alıcılı Motor",
@@ -2383,7 +2388,8 @@
         "motor_model": "sel_60_10",
         "motor_type": "alicili",
         "unit": "Adet",
-        "price": "83.37"
+        "price": "83.37",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-60 20 Alıcılı Motor",
@@ -2394,7 +2400,8 @@
         "motor_model": "sel_60_20",
         "motor_type": "alicili",
         "unit": "Adet",
-        "price": "84.61"
+        "price": "84.61",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-60 30 Alıcılı Motor",
@@ -2405,7 +2412,8 @@
         "motor_model": "sel_60_30",
         "motor_type": "alicili",
         "unit": "Adet",
-        "price": "85.38"
+        "price": "85.38",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-60 50 Alıcılı Motor",
@@ -2416,7 +2424,8 @@
         "motor_model": "sel_60_50",
         "motor_type": "alicili",
         "unit": "Adet",
-        "price": "96.97"
+        "price": "96.97",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-60 50 Redüktörlü Motor",
@@ -2427,7 +2436,8 @@
         "motor_model": "sel_60_50",
         "motor_type": "reduktorlu",
         "unit": "Adet",
-        "price": "84.18"
+        "price": "84.18",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL 60 LE/S Solar Alıcılı Motor Kit",
@@ -2438,7 +2448,8 @@
         "motor_model": "sel_60_solar",
         "motor_type": "solar",
         "unit": "Adet",
-        "price": "244.60"
+        "price": "244.60",
+        "currency": "EUR"
       },
       {
         "description": "Somfy BOOST 15 Motor",
@@ -2449,7 +2460,8 @@
         "motor_model": "boost_15",
         "motor_type": "standart",
         "unit": "Adet",
-        "price": "88.30"
+        "price": "88.30",
+        "currency": "EUR"
       },
       {
         "description": "Somfy BOOST 35 Motor",
@@ -2460,7 +2472,8 @@
         "motor_model": "boost_35",
         "motor_type": "standart",
         "unit": "Adet",
-        "price": "129.49"
+        "price": "129.49",
+        "currency": "EUR"
       },
       {
         "description": "Somfy BOOST 55 Motor",
@@ -2471,7 +2484,8 @@
         "motor_model": "boost_55",
         "motor_type": "standart",
         "unit": "Adet",
-        "price": "188.16"
+        "price": "188.16",
+        "currency": "EUR"
       },
       {
         "description": "Somfy OXIMO 06 IO Alıcılı Motor",
@@ -2482,7 +2496,8 @@
         "motor_model": "oximo_06",
         "motor_type": "alicili_io",
         "unit": "Adet",
-        "price": "219.27"
+        "price": "219.27",
+        "currency": "EUR"
       },
       {
         "description": "Somfy OXIMO 15 IO Alıcılı Motor",
@@ -2493,7 +2508,8 @@
         "motor_model": "oximo_15",
         "motor_type": "alicili_io",
         "unit": "Adet",
-        "price": "253.34"
+        "price": "253.34",
+        "currency": "EUR"
       },
       {
         "description": "Somfy OXIMO 20 IO Alıcılı Motor",
@@ -2504,7 +2520,8 @@
         "motor_model": "oximo_20",
         "motor_type": "alicili_io",
         "unit": "Adet",
-        "price": "266.68"
+        "price": "266.68",
+        "currency": "EUR"
       },
       {
         "description": "Somfy OXIMO 30 IO Alıcılı Motor",
@@ -2515,7 +2532,8 @@
         "motor_model": "oximo_30",
         "motor_type": "alicili_io",
         "unit": "Adet",
-        "price": "293.34"
+        "price": "293.34",
+        "currency": "EUR"
       },
       {
         "description": "Somfy OXIMO 40 IO Alıcılı Motor",
@@ -2526,7 +2544,8 @@
         "motor_model": "oximo_40",
         "motor_type": "alicili_io",
         "unit": "Adet",
-        "price": "330.38"
+        "price": "330.38",
+        "currency": "EUR"
       },
       {
         "description": "Somfy BOOST 15 RTS Alıcılı Motor",
@@ -2537,7 +2556,8 @@
         "motor_model": "boost_15",
         "motor_type": "alicili_rts",
         "unit": "Adet",
-        "price": "155.56"
+        "price": "155.56",
+        "currency": "EUR"
       },
       {
         "description": "Somfy BOOST 35 RTS Alıcılı Motor",
@@ -2548,7 +2568,8 @@
         "motor_model": "boost_35",
         "motor_type": "alicili_rts",
         "unit": "Adet",
-        "price": "188.16"
+        "price": "188.16",
+        "currency": "EUR"
       },
       {
         "description": "Somfy BOOST 55 RTS Alıcılı Motor",
@@ -2559,7 +2580,8 @@
         "motor_model": "boost_55",
         "motor_type": "alicili_rts",
         "unit": "Adet",
-        "price": "242.97"
+        "price": "242.97",
+        "currency": "EUR"
       },
       {
         "description": "Somfy ALTUS 06 IO Alıcılı Motor",
@@ -2570,7 +2592,8 @@
         "motor_model": "altus_06",
         "motor_type": "alicili_io",
         "unit": "Adet",
-        "price": "166.73"
+        "price": "166.73",
+        "currency": "EUR"
       },
       {
         "description": "Somfy ALTUS 10 IO Alıcılı Motor",
@@ -2581,7 +2604,8 @@
         "motor_model": "altus_10",
         "motor_type": "alicili_io",
         "unit": "Adet",
-        "price": "177.47"
+        "price": "177.47",
+        "currency": "EUR"
       },
       {
         "description": "Somfy ALTUS 20 IO Alıcılı Motor",
@@ -2592,7 +2616,8 @@
         "motor_model": "altus_20",
         "motor_type": "alicili_io",
         "unit": "Adet",
-        "price": "192.63"
+        "price": "192.63",
+        "currency": "EUR"
       },
       {
         "description": "Somfy ALTUS 30 IO Alıcılı Motor",
@@ -2603,7 +2628,8 @@
         "motor_model": "altus_30",
         "motor_type": "alicili_io",
         "unit": "Adet",
-        "price": "238.10"
+        "price": "238.10",
+        "currency": "EUR"
       },
       {
         "description": "Somfy ALTUS 40 IO Alıcılı Motor",
@@ -2614,7 +2640,8 @@
         "motor_model": "altus_40",
         "motor_type": "alicili_io",
         "unit": "Adet",
-        "price": "248.68"
+        "price": "248.68",
+        "currency": "EUR"
       },
       {
         "description": "Pvc Tapa SL-39",
@@ -5278,7 +5305,8 @@
         "unit": "Adet",
         "price": "102.83",
         "hareket_tip": "motorlu",
-        "tambur_tipi_mm": "70"
+        "tambur_tipi_mm": "70",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-70 80 Redüktörlü Motor",
@@ -5291,7 +5319,8 @@
         "unit": "Adet",
         "price": "104.67",
         "hareket_tip": "motorlu",
-        "tambur_tipi_mm": "70"
+        "tambur_tipi_mm": "70",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-70 100 Redüktörlü Motor",
@@ -5304,7 +5333,8 @@
         "unit": "Adet",
         "price": "108.56",
         "hareket_tip": "motorlu",
-        "tambur_tipi_mm": "70"
+        "tambur_tipi_mm": "70",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-70 120 Redüktörlü Motor",
@@ -5317,7 +5347,8 @@
         "unit": "Adet",
         "price": "112.45",
         "hareket_tip": "motorlu",
-        "tambur_tipi_mm": "70"
+        "tambur_tipi_mm": "70",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-70 140 Redüktörlü Motor",
@@ -5330,7 +5361,8 @@
         "unit": "Adet",
         "price": "113.76",
         "hareket_tip": "motorlu",
-        "tambur_tipi_mm": "70"
+        "tambur_tipi_mm": "70",
+        "currency": "EUR"
       },
       {
         "description": "Somfy LT SIRIUS 80 Redüktörlü Motor",
@@ -5343,7 +5375,8 @@
         "unit": "Adet",
         "price": "326.26",
         "hareket_tip": "motorlu",
-        "tambur_tipi_mm": "70"
+        "tambur_tipi_mm": "70",
+        "currency": "EUR"
       },
       {
         "description": "Somfy LT TITAN 100 Redüktörlü Motor",
@@ -5356,7 +5389,8 @@
         "unit": "Adet",
         "price": "474.48",
         "hareket_tip": "motorlu",
-        "tambur_tipi_mm": "70"
+        "tambur_tipi_mm": "70",
+        "currency": "EUR"
       },
       {
         "description": "Somfy LT TAURUS 120 Redüktörlü Motor",
@@ -5369,7 +5403,8 @@
         "unit": "Adet",
         "price": "540.74",
         "hareket_tip": "motorlu",
-        "tambur_tipi_mm": "70"
+        "tambur_tipi_mm": "70",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-102 230 Redüktörlü Motor",
@@ -5382,7 +5417,8 @@
         "unit": "Adet",
         "price": "308.75",
         "hareket_tip": "motorlu",
-        "tambur_tipi_mm": "102"
+        "tambur_tipi_mm": "102",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-102 330 Redüktörlü Motor",
@@ -5395,7 +5431,8 @@
         "unit": "Adet",
         "price": "316.32",
         "hareket_tip": "motorlu",
-        "tambur_tipi_mm": "102"
+        "tambur_tipi_mm": "102",
+        "currency": "EUR"
       },
       {
         "description": "SEL-600 Endüstriyel Zincirli Motor",
@@ -5408,7 +5445,8 @@
         "unit": "Adet",
         "price": "273.20",
         "hareket_tip": "motorlu",
-        "tambur_tipi_mm": "114"
+        "tambur_tipi_mm": "114",
+        "currency": "EUR"
       },
       {
         "description": "SEL-800 Endüstriyel Zincirli Motor",
@@ -5421,7 +5459,8 @@
         "unit": "Adet",
         "price": "422.58",
         "hareket_tip": "motorlu",
-        "tambur_tipi_mm": "114"
+        "tambur_tipi_mm": "114",
+        "currency": "EUR"
       },
       {
         "description": "SEL-1000 Endüstriyel Zincirli Motor",
@@ -5434,7 +5473,8 @@
         "unit": "Adet",
         "price": "492.16",
         "hareket_tip": "motorlu",
-        "tambur_tipi_mm": "159"
+        "tambur_tipi_mm": "159",
+        "currency": "EUR"
       },
       {
         "description": "Mosel Oval Power Alıcı x 2 Yericli",

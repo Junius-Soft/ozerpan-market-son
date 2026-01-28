@@ -130,7 +130,8 @@
             ],
             "default": "motorlu",
             "defaultValues": {
-              "yalitimli": "motorlu"
+              "yalitimli": "motorlu",
+              "distan": "manuel"
             }
           },
           {

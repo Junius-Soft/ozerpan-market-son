@@ -330,6 +330,10 @@ export async function generateFiyatAnaliziPDFPozListesi(
   
   // Diğer malzemeleri ekle
   otherMalzemeler.forEach((item) => {
+    // Birim fiyatı her zaman toplam fiyat / toplam miktar olarak hesapla
+    const unitPrice = item.totalQuantity > 0 
+      ? item.totalPrice / item.totalQuantity 
+      : (item.price || 0);
     malzemeListesiData.push([
       siraNo++,
       item.stock_code,
@@ -338,7 +342,7 @@ export async function generateFiyatAnaliziPDFPozListesi(
         ? parseFloat(item.totalQuantity.toFixed(2))
         : item.totalQuantity,
       item.unit,
-      item.price ? formatPrice(item.price, item.currency, item.isCamBalkon) : "-",
+      unitPrice ? formatPrice(unitPrice, item.currency, item.isCamBalkon) : "-",
       item.totalPrice !== undefined ? formatPrice(item.totalPrice, item.currency, item.isCamBalkon) : "-",
     ]);
   });

@@ -328,10 +328,10 @@ export const calculatePanjur = (
                          values.motorSekli === "alicili_motorlu_geri_bildirimli_engel-tanimali";
   
   // Motor kutu içerisinde mi kontrolü:
-  // - Yalıtımlı için: boxsetType === "boxWithMotor"
+  // - Yalıtımlı için: boxsetType === "boxWithMotor" veya yalitimliType === "fullset" (FULL SET)
   // - Distan ve Monoblok için: movementType === "motorlu" (motor her zaman kutu içerisinde)
   const isMotorInBox = 
-    (optionId === "yalitimli" && values.boxsetType === "boxWithMotor") ||
+    (optionId === "yalitimli" && (values.boxsetType === "boxWithMotor" || values.yalitimliType === "fullset")) ||
     ((optionId === "distan" || optionId === "monoblok") && values.movementType === "motorlu");
   
   // Sadece DC 104 için fiyatı 0 yap (remote ID veya description'da "DC 104" geçiyorsa)

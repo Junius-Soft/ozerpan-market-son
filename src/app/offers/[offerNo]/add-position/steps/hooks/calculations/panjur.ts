@@ -501,12 +501,14 @@ export const calculatePanjur = (
 
     // Triple sided için ek yatay yükseltme profili (üst tarafa)
     if (values.dikmeAdapter === "triple_sided") {
+      // Yatay plise kasa profili genişlikten 6 cm (60 mm) kısa olacak
+      const yatayProfilGenislik = values.width - 60;
       const [yatayYukseltmePrice, yatayYukseltmeSelectedProduct] =
         findYukseltmeProfiliPrice(
           prices,
           values.dikme_color || values.lamel_color,
           1, // 1 adet
-          values.width // Yatay profil için sistem genişliği kullanılıyor
+          yatayProfilGenislik // Yatay profil için genişlikten 60mm düşülmüş değer
         );
 
       yukseltmeProfiliPrice = Number((yukseltmeProfiliPrice + yatayYukseltmePrice).toFixed(2));

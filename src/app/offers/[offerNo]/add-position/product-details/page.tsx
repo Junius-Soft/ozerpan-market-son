@@ -483,7 +483,11 @@ export default function ProductDetailsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-8">
           {/* Title and Buttons */}
-          <Formik initialValues={initialValues} onSubmit={handleComplete}>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleComplete}
+            enableReinitialize
+          >
             {(formik) => (
               <Form
                 ref={formRef}

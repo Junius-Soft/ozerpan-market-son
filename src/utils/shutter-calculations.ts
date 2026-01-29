@@ -136,6 +136,33 @@ export function findEffectiveSections(
   }
 }
 
+/** Bölmeli panjurda lamel limiti kontrolü için tüm etkili bölmeler arasındaki
+ * maksimum genişlik ve yüksekliği döndürür. Böylece seçilen lamel her bölmeyi karşılar. */
+export function getMaxSectionDimensionsForLamelLimit(
+  totalWidth: number,
+  totalHeight: number,
+  middleBarPositions: number[],
+  sectionHeights: number[],
+  sectionConnections: string[]
+): { width: number; height: number } {
+  const groups = findEffectiveSections(
+    totalWidth,
+    totalHeight,
+    middleBarPositions,
+    sectionHeights,
+    sectionConnections,
+    false
+  ) as Array<{ sectionIndices: number[]; width: number; height: number }>;
+
+  if (groups.length === 0) {
+    return { width: totalWidth, height: totalHeight };
+  }
+
+  const width = Math.max(...groups.map((g) => g.width));
+  const height = Math.max(...groups.map((g) => g.height));
+  return { width, height };
+}
+
 // Backward compatibility için eski fonksiyonları koruyalım
 export function findLargestEffectiveSection(
   totalWidth: number,

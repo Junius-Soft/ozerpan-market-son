@@ -155,6 +155,17 @@ export function findZimbaTeliAccessoryPrice(
   );
 }
 
+// Dıştan takma montaj vidası (3,9*16 mm matkap uçlu) - her dıştan takma için 10 adet
+export function findDistanVidaAccessoryPrice(
+  accessories: PriceItem[]
+): PriceItem | null {
+  return (
+    accessories.find((acc) =>
+      acc.description.toLowerCase().includes("matkap uçlu vida")
+    ) || null
+  );
+}
+
 // Çelik Askı fiyatı bulucu
 export function findCelikAskiAccessoryPrice(
   accessories: PriceItem[],

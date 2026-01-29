@@ -23,6 +23,7 @@ import {
   findAccessoryByName,
   findPvcTapaAccessoryPrice,
   findZimbaTeliAccessoryPrice,
+  findDistanVidaAccessoryPrice,
   findCelikAskiAccessoryPrice,
   findAltParcaLastigiAccessoryPrice,
   findStoperKonikAccessoryPrice,
@@ -119,6 +120,12 @@ export const calculatePanjurAccessories = (
         middleBarPositions.length + 1
       );
       neededAccessories.push(selectedProduct);
+    }
+
+    // Dıştan takma için kullanılan vida: her dıştan takma için 10 adet 3,9*16 mm matkap uçlu vida
+    const distanVida = findDistanVidaAccessoryPrice(allAccessories);
+    if (distanVida) {
+      neededAccessories.push(createSelectedProduct(distanVida, 10));
     }
   }
 

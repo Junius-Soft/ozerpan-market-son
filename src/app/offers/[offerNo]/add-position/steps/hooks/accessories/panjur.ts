@@ -414,41 +414,53 @@ export const calculatePanjurAccessories = (
     neededAccessories.push(selectedProduct);
   }
 
-  // Kıl Fitili ekle - her dikme için ayrı hesapla (her dikmenin sağında ve solunda)
+  // Kıl Fitili: Dikme modül * 2 (her dikme boyu için sağ + sol = 2 fitil). Bölmeli için her dikmenin boyu sistem yüksekliğinden hesaplanır.
   const kilFitiliName = "067x550 Standart Kıl Fitil";
   const kilFitili = allAccessories.find(
     (acc) => acc.description === kilFitiliName
   );
   if (kilFitili) {
-    let totalKilFitiliLength = 0;
+    // Bölme sistem yükseklikleri (kutu/ölçü alma dahil) - hesaplama ile aynı mantık
+    const sectionSystemHeights =
+      sectionHeights.length > 0
+        ? sectionHeights.map((sh) =>
+            calculateSystemHeight(
+              sh,
+              values.kutuOlcuAlmaSekli,
+              values.boxType
+            )
+          )
+        : [
+            calculateSystemHeight(
+              Number(height),
+              values.kutuOlcuAlmaSekli,
+              values.boxType
+            ),
+          ];
+
     const totalDikmeCount = middleBarPositions.length + 2; // sol dikme + orta dikmeler + sağ dikme
+    let totalKilFitiliLength = 0;
 
-    // Her dikme için yüksekliğini hesapla
     for (let i = 0; i < totalDikmeCount; i++) {
-      let relevantSectionHeight: number;
-
+      let relevantSystemHeight: number;
       if (i === 0) {
-        // Sol dikme - ilk bölmenin yüksekliği
-        relevantSectionHeight = sectionHeights[0] || height;
+        relevantSystemHeight = sectionSystemHeights[0];
       } else if (i === totalDikmeCount - 1) {
-        // Sağ dikme - son bölmenin yüksekliği
-        const lastSectionIndex = middleBarPositions.length + 1 - 1;
-        relevantSectionHeight = sectionHeights[lastSectionIndex] || height;
+        relevantSystemHeight =
+          sectionSystemHeights[sectionSystemHeights.length - 1];
       } else {
-        // Orta dikme - bitişik iki bölmenin maksimumu
-        const leftSectionHeight = sectionHeights[i - 1] || height;
-        const rightSectionHeight = sectionHeights[i] || height;
-        relevantSectionHeight = Math.max(leftSectionHeight, rightSectionHeight);
+        const left = sectionSystemHeights[i - 1];
+        const right = sectionSystemHeights[i];
+        relevantSystemHeight = Math.max(left, right);
       }
 
-      const dikmeHeightForSection = calculateDikmeHeight(
-        relevantSectionHeight,
+      const dikmeModul = calculateDikmeHeight(
+        relevantSystemHeight,
         values.boxType,
         values.dikmeType,
         optionId
-      ); // metre cinsine çevir
-      // Her dikme için sağında ve solunda olmak üzere 2 tane kıl fitili
-      totalKilFitiliLength += dikmeHeightForSection * 2;
+      );
+      totalKilFitiliLength += dikmeModul * 2; // Her dikme için dikme modül * 2
     }
 
     const selectedProduct = createSelectedProduct(

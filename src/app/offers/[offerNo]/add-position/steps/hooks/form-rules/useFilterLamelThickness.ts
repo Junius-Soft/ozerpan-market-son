@@ -7,7 +7,7 @@ import { PanjurSelections } from "@/types/panjur";
 import { lamelProperties } from "@/constants/panjur";
 import { ProductTabField } from "@/documents/products";
 import { toast } from "react-toastify";
-import { findEffectiveSections } from "@/utils/shutter-calculations";
+import { getMaxSectionDimensionsForLamelLimit } from "@/utils/shutter-calculations";
 
 interface ShutterState {
   middleBarPositions: number[];
@@ -46,15 +46,15 @@ function filterLamelThickness(
   const totalWidth = Number(values.width);
   const totalHeight = Number(values.height);
 
-  // En geniş etkili bölmeyi bul
-  const { width, height } = findEffectiveSections(
+  // Bölmeli panjurda lamel limitleri bölme içi ölçüye göre: tüm etkili bölmeler
+  // arasında max genişlik ve max yükseklik kullanılır (örn. 3m 2 bölmeli → 1.5m)
+  const { width, height } = getMaxSectionDimensionsForLamelLimit(
     totalWidth,
     totalHeight,
     middleBarPositions,
     sectionHeights,
-    sectionConnections,
-    true // En büyük bölmeyi döndür
-  ) as { width: number; height: number };
+    sectionConnections
+  );
 
   // En uygun lamel tipini bul
   // Kontrol: Genişlik VE yükseklik kontrolü YANINDA alan kontrolü de yapılmalı

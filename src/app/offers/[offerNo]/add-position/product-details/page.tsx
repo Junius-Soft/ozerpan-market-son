@@ -91,7 +91,15 @@ export default function ProductDetailsPage() {
     productObj?.tabs?.forEach((tab) => {
       if (tab.content?.fields) {
         tab.content.fields.forEach((field) => {
-          const defaultValue = field.default ?? "";
+          // Check for optionId-specific defaultValues first
+          let defaultValue = field.default ?? "";
+          if (
+            field.defaultValues &&
+            optionId &&
+            field.defaultValues[optionId] !== undefined
+          ) {
+            defaultValue = field.defaultValues[optionId];
+          }
 
           switch (field.type) {
             case "number":
@@ -101,7 +109,7 @@ export default function ProductDetailsPage() {
                   : 1000;
               break;
             case "checkbox":
-              initialValues[field.id] = defaultValue === "1";
+              initialValues[field.id] = defaultValue === "1" || defaultValue === true;
               break;
             default:
               initialValues[field.id] = defaultValue || "";
@@ -120,7 +128,7 @@ export default function ProductDetailsPage() {
     initialValues.quantity = quantity; // Default quantity
     initialValues.unitPrice = 0; // Default unit price
     return initialValues;
-  }, [productObj?.tabs, productId, quantity]);
+  }, [productObj?.tabs, productId, quantity, optionId]);
 
   const initialValues = useMemo(() => {
     const values = getInitialValues();
@@ -475,7 +483,11 @@ export default function ProductDetailsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-8">
           {/* Title and Buttons */}
-          <Formik initialValues={initialValues} onSubmit={handleComplete}>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleComplete}
+            enableReinitialize
+          >
             {(formik) => (
               <Form
                 ref={formRef}

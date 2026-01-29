@@ -125,12 +125,13 @@
             "name": "Hareket Tipi",
             "type": "select",
             "options": [
-              { "id": "motorlu", "name": "Motorlu (Redüktörlü)" },
+              { "id": "motorlu", "name": "Motorlu" },
               { "id": "manuel", "name": "Manuel" }
             ],
             "default": "motorlu",
             "defaultValues": {
-              "yalitimli": "motorlu"
+              "yalitimli": "motorlu",
+              "distan": "manuel"
             }
           },
           {
@@ -2307,7 +2308,7 @@
             "name": "Hareket Tipi",
             "type": "select",
             "options": [
-              { "id": "motorlu", "name": "Motorlu (Redüktörlü)" }
+              { "id": "motorlu", "name": "Motorlu" }
             ],
             "default": "motorlu"
           },

@@ -328,10 +328,10 @@ export const calculatePanjur = (
                          values.motorSekli === "alicili_motorlu_geri_bildirimli_engel-tanimali";
   
   // Motor kutu içerisinde mi kontrolü:
-  // - Yalıtımlı için: boxsetType === "boxWithMotor"
+  // - Yalıtımlı için: boxsetType === "boxWithMotor" veya yalitimliType === "fullset" (FULL SET)
   // - Distan ve Monoblok için: movementType === "motorlu" (motor her zaman kutu içerisinde)
   const isMotorInBox = 
-    (optionId === "yalitimli" && values.boxsetType === "boxWithMotor") ||
+    (optionId === "yalitimli" && (values.boxsetType === "boxWithMotor" || values.yalitimliType === "fullset")) ||
     ((optionId === "distan" || optionId === "monoblok") && values.movementType === "motorlu");
   
   // Sadece DC 104 için fiyatı 0 yap (remote ID veya description'da "DC 104" geçiyorsa)
@@ -501,12 +501,14 @@ export const calculatePanjur = (
 
     // Triple sided için ek yatay yükseltme profili (üst tarafa)
     if (values.dikmeAdapter === "triple_sided") {
+      // Yatay plise kasa profili genişlikten 6 cm (60 mm) kısa olacak
+      const yatayProfilGenislik = values.width - 60;
       const [yatayYukseltmePrice, yatayYukseltmeSelectedProduct] =
         findYukseltmeProfiliPrice(
           prices,
           values.dikme_color || values.lamel_color,
           1, // 1 adet
-          values.width // Yatay profil için sistem genişliği kullanılıyor
+          yatayProfilGenislik // Yatay profil için genişlikten 60mm düşülmüş değer
         );
 
       yukseltmeProfiliPrice = Number((yukseltmeProfiliPrice + yatayYukseltmePrice).toFixed(2));

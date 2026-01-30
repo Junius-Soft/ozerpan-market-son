@@ -626,7 +626,7 @@
         "uretici_kodu": "MO.SEL.60.TY.020",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "40.78"
+        "price": "44.05"
       },
       {
         "description": "MOSEL SEL 60-30 Motor",
@@ -634,7 +634,7 @@
         "uretici_kodu": "MO.SEL.60.TY.030",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "47.32"
+        "price": "51.06"
       },
       {
         "description": "MOSEL SEL 60-50 Motor",
@@ -642,7 +642,7 @@
         "uretici_kodu": "MO.SEL.60.TY.050",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "56.04"
+        "price": "60.68"
       },
       {
         "description": "MOSEL SEL 60-20 Alıcılı Motor",
@@ -650,7 +650,7 @@
         "uretici_kodu": "MO.SEL.60.RS.020",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "79.08"
+        "price": "84.61"
       },
       {
         "description": "MOSEL SEL 60-30 Alıcılı Motor",
@@ -658,7 +658,7 @@
         "uretici_kodu": "MO.SEL.60.RS.030",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "80.00"
+        "price": "85.38"
       },
       {
         "description": "MOSEL SEL 60-50 Alıcılı Motor",
@@ -666,7 +666,7 @@
         "uretici_kodu": "MO.SEL.60.RS.050",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "90.62"
+        "price": "96.97"
       },
       {
         "description": "Somfy BOOST 15 Motor",
@@ -674,7 +674,7 @@
         "uretici_kodu": "352512121015",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "82.52"
+        "price": "88.30"
       },
       {
         "description": "Somfy BOOST 35 Motor",
@@ -682,7 +682,7 @@
         "uretici_kodu": "352512121035",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "121.02"
+        "price": "129.49"
       },
       {
         "description": "Somfy BOOST 55 Motor",
@@ -690,7 +690,7 @@
         "uretici_kodu": "352512121055",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "175.85"
+        "price": "188.16"
       },
       {
         "description": "Somfy BOOST 15 Alıcılı Motor",
@@ -698,7 +698,7 @@
         "uretici_kodu": "352512221015",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "175.85"
+        "price": "155.56"
       },
       {
         "description": "Somfy BOOST 35 Alıcılı Motor",
@@ -706,7 +706,7 @@
         "uretici_kodu": "352512221035",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "159.86"
+        "price": "188.16"
       },
       {
         "description": "Somfy BOOST 55 Alıcılı Motor",
@@ -714,7 +714,7 @@
         "uretici_kodu": "352512221055",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "227.08"
+        "price": "242.97"
       },
       {
         "description": "067x550 Standart Kıl Fitil",

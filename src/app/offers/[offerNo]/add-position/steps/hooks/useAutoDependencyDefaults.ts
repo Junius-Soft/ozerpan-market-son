@@ -45,7 +45,8 @@ export function useAutoDependencyAndFilterBy(
     const newValues = { ...formik.values };
     let updated = false;
 
-    // OptionId'ye göre defaultValues desteği
+    // OptionId'ye göre defaultValues desteği - sadece alan boşken uygula.
+    // Kullanıcı manuel/motorlu gibi bir değer seçtiyse üzerine yazma; yoksa motorlu hiç seçilemiyor.
     for (const tab of allTabs) {
       if (tab.content?.fields) {
         for (const field of tab.content.fields) {
@@ -54,7 +55,12 @@ export function useAutoDependencyAndFilterBy(
             optionId &&
             field.defaultValues[optionId]
           ) {
-            if (newValues[field.id] !== field.defaultValues[optionId]) {
+            const currentVal = newValues[field.id];
+            const isEmpty =
+              currentVal === undefined ||
+              currentVal === "" ||
+              currentVal === null;
+            if (isEmpty && newValues[field.id] !== field.defaultValues[optionId]) {
               newValues[field.id] = field.defaultValues[optionId];
               updated = true;
             }

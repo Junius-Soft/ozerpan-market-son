@@ -3,7 +3,7 @@
     {
       "id": "panjur",
       "defaultType": "1",
-      "defaultOption": "distan",
+      "defaultOption": "yalitimli",
       "name": "Panjur",
       "isActive": true,
       "image": "/images/products/panjur/types/1 li.png",

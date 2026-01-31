@@ -183,6 +183,30 @@ export function useAutoDependencyAndFilterBy(
     }
 
     if (updated) {
+      // defaultValues'lı alanlarda kullanıcının güncel seçimini koru; setValues
+      // eski formik.values kopyasıyla çağrıldığı için motorlu seçimi manuel ile ezilmesin
+      for (const tab of allTabs) {
+        if (!tab.content?.fields) continue;
+        for (const field of tab.content.fields) {
+          if (
+            field.defaultValues &&
+            optionId &&
+            field.defaultValues[optionId] !== undefined
+          ) {
+            const currentInForm = formik.values[field.id];
+            const isEmpty =
+              currentInForm === undefined ||
+              currentInForm === "" ||
+              currentInForm === null;
+            if (
+              !isEmpty &&
+              newValues[field.id] !== currentInForm
+            ) {
+              newValues[field.id] = currentInForm;
+            }
+          }
+        }
+      }
       pendingUpdate.current = true;
       formik.setValues(newValues, false);
     }

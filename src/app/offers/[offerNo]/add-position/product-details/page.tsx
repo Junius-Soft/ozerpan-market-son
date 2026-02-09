@@ -91,12 +91,14 @@ export default function ProductDetailsPage() {
     productObj?.tabs?.forEach((tab) => {
       if (tab.content?.fields) {
         tab.content.fields.forEach((field) => {
-          // Check for optionId-specific defaultValues first
+          // field.default düzenlemede pozisyondan geliyorsa (kaydedilmiş değer) onu koru
           let defaultValue = field.default ?? "";
+          // Sadece alan boşken optionId'ye göre varsayılan uygula; yoksa ürün detayında Motorlu kayıtlı olsa bile Manuel görünüyor
           if (
             field.defaultValues &&
             optionId &&
-            field.defaultValues[optionId] !== undefined
+            field.defaultValues[optionId] !== undefined &&
+            (defaultValue === "" || defaultValue === undefined || defaultValue === null)
           ) {
             defaultValue = field.defaultValues[optionId];
           }

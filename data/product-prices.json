@@ -2439,6 +2439,22 @@
         "color": "siyah",
         "unit": "Adet",
         "price": "0.04"
+      },
+      {
+        "description": "40mm Sekizgen Boru 0,40",
+        "stock_code": "352151116910",
+        "uretici_kodu": "TU.040.00.040",
+        "type": "panjur_tambur_boru_profilleri",
+        "unit": "Metre",
+        "price": "1.24"
+      },
+      {
+        "description": "60mm Sekizgen Boru 0,60",
+        "stock_code": "352151246910",
+        "uretici_kodu": "TU.060.00.060",
+        "type": "panjur_tambur_boru_profilleri",
+        "unit": "Metre",
+        "price": "2.35"
       }
     ],
     "sineklik": [

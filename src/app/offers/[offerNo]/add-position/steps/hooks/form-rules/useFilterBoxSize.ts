@@ -65,13 +65,13 @@ export function filterBoxSize(
       selectedLamelTickness,
       selectedMovementType
     );
-    
+
     // Sarım çapı hesaplaması başarılıysa kutu ölçüsünü belirle
     // ÖNEMLİ: Sarım çapı sadece minimum kutu boyutunu belirler, maksimum lamel yüksekliği kontrolü de yapılmalı
     if (sarimCapi !== null) {
       sarimCapiBasedBox = getBoxSizeBySarimCapi(sarimCapi, optionId);
     }
-    
+
     // Sarım çapı hesaplaması tamamlandı
     // Maksimum lamel yüksekliği kontrolü aşağıdaki döngüde yapılacak
   }
@@ -95,17 +95,17 @@ export function filterBoxSize(
     } else {
       lamelYuksekligi = height;
     }
-    
+
     // Sadece seçili movementType'a göre kontrol et
     const maxValue =
       maxLamelHeights[optionId]?.[boxSize]?.[selectedLamelTickness]?.[
-        selectedMovementType
+      selectedMovementType
       ];
     let isValid = false;
     if (maxValue && lamelYuksekligi <= maxValue) {
       isValid = true;
     }
-    
+
     if (isValid) {
       // Kutu boyutunu sayısal değere çevir (karşılaştırma için)
       const boxSizeNum = getBoxSizeNumber(box.id);
@@ -118,14 +118,14 @@ export function filterBoxSize(
   // Sarım çapı kontrolü sadece maksimum lamel yüksekliği kontrolünden geçen kutular arasında
   // sarım çapına göre belirlenen minimum kutu boyutundan küçük olanları filtreler
   // Ama maksimum lamel yüksekliği kontrolünden geçen en küçük kutu her zaman kullanılabilir
-  
+
   // Maksimum lamel yüksekliği kontrolünden geçen en küçük kutuyu bul
   // Bu kutu her zaman kullanılabilir (maksimum lamel yüksekliği kontrolü önceliklidir)
   let minValidBoxSize = Infinity;
   if (allValidBoxesByMaxHeight.length > 0) {
     minValidBoxSize = Math.min(...allValidBoxesByMaxHeight.map(box => box.size));
   }
-  
+
   // NOT: Sarım çapı kontrolü artık uygulanmıyor çünkü maksimum lamel yüksekliği kontrolü önceliklidir
   // Eğer maksimum lamel yüksekliği kontrolünden geçen bir kutu varsa, onu kullan
   // Sarım çapı kontrolü sadece bir tavsiye olarak kullanılabilir, ama zorunlu değildir
@@ -133,10 +133,10 @@ export function filterBoxSize(
   // Şimdi sadece en küçük geçerli kutudan daha büyük veya eşit kutuları seçilebilir yap
   // Kullanıcı daha küçük kutu seçemez, ama daha büyük kutu seçebilir
   const validOptions: { id: string; name: string }[] = [];
-  
+
   for (const box of boxOptions) {
     const boxSizeNum = getBoxSizeNumber(box.id);
-    
+
     // Sadece en küçük geçerli kutudan daha büyük veya eşit kutuları ekle
     if (boxSizeNum >= minValidBoxSize) {
       // Ayrıca bu kutunun maksimum lamel yüksekliği kontrolünü de geçmesi gerekiyor
@@ -148,12 +148,12 @@ export function filterBoxSize(
       } else {
         lamelYuksekligi = height;
       }
-      
+
       const maxValue =
         maxLamelHeights[optionId]?.[boxSize]?.[selectedLamelTickness]?.[
-          selectedMovementType
+        selectedMovementType
         ];
-      
+
       if (maxValue && lamelYuksekligi <= maxValue) {
         validOptions.push({ id: box.id, name: box.name });
       }
@@ -165,26 +165,34 @@ export function filterBoxSize(
 
   if (validOptions.length > 0) {
     // Sadece mevcut değer geçersizse en küçük geçerli seçeneği seç
-    if (!isCurrentValid) {
-      // En küçük kutuyu seçmek için validOptions'u kutu boyutuna göre sırala
-      const sortedOptions = [...validOptions].sort(
-        (a, b) => getBoxSizeNumber(a.id) - getBoxSizeNumber(b.id)
+    // VEYA distan için her zaman hesaplanan ideali seç (parametre değiştiğinde)
+    let shouldUpdate = !isCurrentValid;
+    let boxToSelect = "";
+
+    // En küçük kutuyu varsayılan olarak belirle
+    const sortedOptions = [...validOptions].sort(
+      (a, b) => getBoxSizeNumber(a.id) - getBoxSizeNumber(b.id)
+    );
+    const smallestValidBoxId = sortedOptions[0].id;
+    boxToSelect = smallestValidBoxId;
+
+    // Distan için özel mantık: Sarım çapına göre belirlenen kutu geçerliyse onu seç
+    if (optionId === "distan" && sarimCapiBasedBox) {
+      const sarimCapiBoxValid = validOptions.some(
+        (opt) => opt.id === sarimCapiBasedBox
       );
-      const smallestValidBoxId = sortedOptions[0].id;
-      
-      // ÖNEMLİ: Lamel değişikliğinde kutu seçimini güncellerken, 
-      // sarım çapına göre belirlenen minimum kutu boyutunu kullan
-      // Eğer sarım çapına göre belirlenen kutu varsa ve geçerliyse, onu seç
-      let boxToSelect = smallestValidBoxId;
-      if (optionId === "distan" && sarimCapiBasedBox) {
-        const sarimCapiBoxValid = validOptions.some(
-          (opt) => opt.id === sarimCapiBasedBox
-        );
-        if (sarimCapiBoxValid) {
-          boxToSelect = sarimCapiBasedBox;
+      if (sarimCapiBoxValid) {
+        boxToSelect = sarimCapiBasedBox;
+        // Distan için ideal kutu geçerliyse ve şu anki seçili kutu ideal kutu değilse güncelle
+        // Bu sayede kullanıcı manuel -> motorlu veya motorlu -> manuel geçişinde
+        // ideal kutuya otomatik döner. (Kullanıcı manuel olarak boxType'ı değiştirdiğinde bu hook çalışmaz)
+        if (formik.values.boxType !== boxToSelect) {
+          shouldUpdate = true;
         }
       }
-      
+    }
+
+    if (shouldUpdate) {
       formik.setFieldValue("boxType", boxToSelect);
     }
   }

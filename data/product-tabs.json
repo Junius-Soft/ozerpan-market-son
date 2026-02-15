@@ -11,9 +11,18 @@
             "name": "Ürün Tipi",
             "type": "select",
             "options": [
-              { "id": "fullset", "name": "Full Set" },
-              { "id": "boxset", "name": "Kutu Set" },
-              { "id": "detail", "name": "Detay" }
+              {
+                "id": "fullset",
+                "name": "Full Set"
+              },
+              {
+                "id": "boxset",
+                "name": "Kutu Set"
+              },
+              {
+                "id": "detail",
+                "name": "Detay"
+              }
             ],
             "default": "fullset"
           },
@@ -22,8 +31,14 @@
             "name": "Kutu Set Tipi",
             "type": "select",
             "options": [
-              { "id": "boxWithMotor", "name": "Motorlu Kutu" },
-              { "id": "emptyBox", "name": "Boş Kutu" }
+              {
+                "id": "boxWithMotor",
+                "name": "Motorlu Kutu"
+              },
+              {
+                "id": "emptyBox",
+                "name": "Boş Kutu"
+              }
             ],
             "default": "withoutBox",
             "dependsOn": {
@@ -36,8 +51,14 @@
             "name": "Detay",
             "type": "select",
             "options": [
-              { "id": "withoutBox", "name": "Kutu Hariç" },
-              { "id": "onlyMotor", "name": "Motor Ekle" }
+              {
+                "id": "withoutBox",
+                "name": "Kutu Hariç"
+              },
+              {
+                "id": "onlyMotor",
+                "name": "Motor Ekle"
+              }
             ],
             "default": "withoutBox",
             "dependsOn": {
@@ -86,8 +107,14 @@
             "name": "Kutu Ölçü Alma Şekli",
             "type": "select",
             "options": [
-              { "id": "kutu_dahil", "name": "Kutu Dahil" },
-              { "id": "kutu_haric", "name": "Kutu Hariç" }
+              {
+                "id": "kutu_dahil",
+                "name": "Kutu Dahil"
+              },
+              {
+                "id": "kutu_haric",
+                "name": "Kutu Hariç"
+              }
             ],
             "default": "kutu_dahil"
           },
@@ -96,9 +123,18 @@
             "name": "Dikme Ölçü Alma Şekli",
             "type": "select",
             "options": [
-              { "id": "dikme_dahil", "name": "Dikme Dahil" },
-              { "id": "dikme_haric", "name": "Dikme Hariç" },
-              { "id": "tek_dikme", "name": "Tek Dikme" }
+              {
+                "id": "dikme_dahil",
+                "name": "Dikme Dahil"
+              },
+              {
+                "id": "dikme_haric",
+                "name": "Dikme Hariç"
+              },
+              {
+                "id": "tek_dikme",
+                "name": "Tek Dikme"
+              }
             ],
             "default": "dikme_dahil"
           },
@@ -107,8 +143,14 @@
             "name": "Hareket Bağlantı Noktası",
             "type": "select",
             "options": [
-              { "id": "sol", "name": "Sol" },
-              { "id": "sag", "name": "Sağ" }
+              {
+                "id": "sol",
+                "name": "Sol"
+              },
+              {
+                "id": "sag",
+                "name": "Sağ"
+              }
             ],
             "default": "sol"
           }
@@ -125,12 +167,18 @@
             "name": "Hareket Tipi",
             "type": "select",
             "options": [
-              { "id": "motorlu", "name": "Motorlu" },
-              { "id": "manuel", "name": "Manuel" }
+              {
+                "id": "motorlu",
+                "name": "Motorlu"
+              },
+              {
+                "id": "manuel",
+                "name": "Manuel"
+              }
             ],
-            "default": "motorlu",
             "defaultValues": {
               "yalitimli": "motorlu",
+              "monoblok": "motorlu",
               "distan": "manuel"
             }
           },
@@ -161,7 +209,10 @@
             "name": "Makas Seçeneği",
             "type": "select",
             "options": [
-              { "id": "makassiz", "name": "Makassız" },
+              {
+                "id": "makassiz",
+                "name": "Makassız"
+              },
               {
                 "id": "makasli",
                 "name": "Makaslı",
@@ -257,7 +308,6 @@
               "value": "motorlu"
             }
           },
-
           {
             "id": "motorModel",
             "name": "Motor Modeli",
@@ -297,8 +347,16 @@
             "filterBy": {
               "field": "motorMarka",
               "valueMap": {
-                "mosel": ["sel_60-20", "sel_60-30", "sel_60-50"],
-                "somfy": ["boost_15", "boost_35", "boost_55"]
+                "mosel": [
+                  "sel_60-20",
+                  "sel_60-30",
+                  "sel_60-50"
+                ],
+                "somfy": [
+                  "boost_15",
+                  "boost_35",
+                  "boost_55"
+                ]
               }
             },
             "default": "sel_60-20",
@@ -312,7 +370,10 @@
             "name": "Buton",
             "type": "select",
             "options": [
-              { "id": "yok", "name": "Yok" },
+              {
+                "id": "yok",
+                "name": "Yok"
+              },
               {
                 "id": "alicili-buton",
                 "name": "Alıcılı Buton",
@@ -330,7 +391,10 @@
             "name": "Alıcı",
             "type": "select",
             "options": [
-              { "id": "yok", "name": "Yok" },
+              {
+                "id": "yok",
+                "name": "Yok"
+              },
               {
                 "id": "dc_318_tek_kanalli_vera_ankastre_alici",
                 "name": "DC 318 Tek Kanallı Vera Ankastre Alıcı"
@@ -414,7 +478,10 @@
             "name": "Kumanda",
             "type": "select",
             "options": [
-              { "id": "yok", "name": "Yok" },
+              {
+                "id": "yok",
+                "name": "Yok"
+              },
               {
                 "id": "dc_104_1_kanalli",
                 "name": "DC 104 1 Kanallı",
@@ -649,13 +716,15 @@
               }
             ]
           },
-
           {
             "id": "smarthome",
             "name": "Akıllı Ev Sistemleri",
             "type": "select",
             "options": [
-              { "id": "yok", "name": "Yok" },
+              {
+                "id": "yok",
+                "name": "Yok"
+              },
               {
                 "id": "mosel_dd_7002_b",
                 "name": "Mosel DD 7002 B",
@@ -670,14 +739,22 @@
             "default": "yok",
             "dependsOn": {
               "field": "motorSekli",
-              "value": ["duz_motorlu"]
+              "value": [
+                "duz_motorlu"
+              ]
             },
             "filterBy": [
               {
                 "field": "motorMarka",
                 "valueMap": {
-                  "mosel": ["yok", "mosel_dd_7002_b"],
-                  "somfy": ["yok", "somfy_tahoma_switch_pro"]
+                  "mosel": [
+                    "yok",
+                    "mosel_dd_7002_b"
+                  ],
+                  "somfy": [
+                    "yok",
+                    "somfy_tahoma_switch_pro"
+                  ]
                 }
               }
             ]
@@ -738,17 +815,35 @@
               {
                 "field": "lamelType",
                 "valueMap": {
-                  "aluminyum_poliuretanli": ["39_sl", "55_sl"],
-                  "aluminyum_ekstruzyon": ["45_se", "55_se"]
+                  "aluminyum_poliuretanli": [
+                    "39_sl",
+                    "55_sl"
+                  ],
+                  "aluminyum_ekstruzyon": [
+                    "45_se",
+                    "55_se"
+                  ]
                 }
               },
               {
                 "field": "customFilter",
                 "properties": {
-                  "39_sl": { "maxWidth": 2000, "maxHeight": 2400 },
-                  "45_se": { "maxWidth": 4250, "maxHeight": 3500 },
-                  "55_sl": { "maxWidth": 3200, "maxHeight": 3100 },
-                  "55_se": { "maxWidth": 5500, "maxHeight": 4000 }
+                  "39_sl": {
+                    "maxWidth": 2000,
+                    "maxHeight": 2400
+                  },
+                  "45_se": {
+                    "maxWidth": 4250,
+                    "maxHeight": 3500
+                  },
+                  "55_sl": {
+                    "maxWidth": 3200,
+                    "maxHeight": 3100
+                  },
+                  "55_se": {
+                    "maxWidth": 5500,
+                    "maxHeight": 4000
+                  }
                 }
               }
             ],
@@ -759,8 +854,14 @@
             "name": "Askı Kilit Seçimi",
             "type": "select",
             "options": [
-              { "id": "yok", "name": "Yok" },
-              { "id": "aski_kilit", "name": "Askı Kilit" }
+              {
+                "id": "yok",
+                "name": "Yok"
+              },
+              {
+                "id": "aski_kilit",
+                "name": "Askı Kilit"
+              }
             ],
             "default": "yok"
           }
@@ -777,8 +878,14 @@
             "name": "Paketleme",
             "type": "select",
             "options": [
-              { "id": "yok", "name": "Yok" },
-              { "id": "var", "name": "Var" }
+              {
+                "id": "yok",
+                "name": "Yok"
+              },
+              {
+                "id": "var",
+                "name": "Var"
+              }
             ],
             "default": "yok"
           },
@@ -787,24 +894,70 @@
             "name": "Kutu Ölçüsü",
             "type": "select",
             "options": [
-              { "id": "137mm", "name": "137MM" },
-              { "id": "165mm", "name": "165MM" },
-              { "id": "205mm", "name": "205MM" },
-              { "id": "250mm", "name": "250MM" },
-              { "id": "185mm", "name": "185MM" },
-              { "id": "185x220mm", "name": "185MM Yalıtımlı" },
-              { "id": "220mm", "name": "220MM" },
-              { "id": "220x255mm", "name": "220MM Yalıtımlı" },
-              { "id": "250mm_yerli", "name": "250MM Yerli" },
-              { "id": "250mm_ithal", "name": "250MM İthal" },
-              { "id": "300mm_yerli", "name": "300MM Yerli" },
-              { "id": "300mm_ithal", "name": "300MM İthal" }
+              {
+                "id": "137mm",
+                "name": "137MM"
+              },
+              {
+                "id": "165mm",
+                "name": "165MM"
+              },
+              {
+                "id": "205mm",
+                "name": "205MM"
+              },
+              {
+                "id": "250mm",
+                "name": "250MM"
+              },
+              {
+                "id": "185mm",
+                "name": "185MM"
+              },
+              {
+                "id": "185x220mm",
+                "name": "185MM Yalıtımlı"
+              },
+              {
+                "id": "220mm",
+                "name": "220MM"
+              },
+              {
+                "id": "220x255mm",
+                "name": "220MM Yalıtımlı"
+              },
+              {
+                "id": "250mm_yerli",
+                "name": "250MM Yerli"
+              },
+              {
+                "id": "250mm_ithal",
+                "name": "250MM İthal"
+              },
+              {
+                "id": "300mm_yerli",
+                "name": "300MM Yerli"
+              },
+              {
+                "id": "300mm_ithal",
+                "name": "300MM İthal"
+              }
             ],
             "filterBy": {
               "field": "optionId",
               "valueMap": {
-                "distan": ["137mm", "165mm", "205mm", "250mm"],
-                "monoblok": ["185mm", "185x220mm", "220mm", "220x255mm"],
+                "distan": [
+                  "137mm",
+                  "165mm",
+                  "205mm",
+                  "250mm"
+                ],
+                "monoblok": [
+                  "185mm",
+                  "185x220mm",
+                  "220mm",
+                  "220x255mm"
+                ],
                 "yalitimli": [
                   "250mm_yerli",
                   "250mm_ithal",
@@ -820,20 +973,44 @@
             "name": "Dikme Seçimi",
             "type": "select",
             "options": [
-              { "id": "mini_dikme", "name": "Mini Dikme" },
-              { "id": "midi_dikme", "name": "Midi Dikme" },
-              { "id": "mini_pvc_dikme", "name": "Mini PVC Dikme" },
-              { "id": "midi_pvc_dikme", "name": "Midi PVC Dikme" }
+              {
+                "id": "mini_dikme",
+                "name": "Mini Dikme"
+              },
+              {
+                "id": "midi_dikme",
+                "name": "Midi Dikme"
+              },
+              {
+                "id": "mini_pvc_dikme",
+                "name": "Mini PVC Dikme"
+              },
+              {
+                "id": "midi_pvc_dikme",
+                "name": "Midi PVC Dikme"
+              }
             ],
             "default": "mini_dikme",
             "filterBy": [
               {
                 "field": "lamelTickness",
                 "valueMap": {
-                  "39_sl": ["mini_dikme", "mini_pvc_dikme"],
-                  "55_sl": ["midi_dikme", "midi_pvc_dikme"],
-                  "45_se": ["mini_dikme", "mini_pvc_dikme"],
-                  "55_se": ["midi_dikme", "midi_pvc_dikme"]
+                  "39_sl": [
+                    "mini_dikme",
+                    "mini_pvc_dikme"
+                  ],
+                  "55_sl": [
+                    "midi_dikme",
+                    "midi_pvc_dikme"
+                  ],
+                  "45_se": [
+                    "mini_dikme",
+                    "mini_pvc_dikme"
+                  ],
+                  "55_se": [
+                    "midi_dikme",
+                    "midi_pvc_dikme"
+                  ]
                 }
               }
             ]
@@ -843,9 +1020,18 @@
             "name": "Dikme Adaptörü",
             "type": "select",
             "options": [
-              { "id": "yok", "name": "Yok" },
-              { "id": "double_sided", "name": "Çift Taraflı" },
-              { "id": "triple_sided", "name": "Üç Taraflı" }
+              {
+                "id": "yok",
+                "name": "Yok"
+              },
+              {
+                "id": "double_sided",
+                "name": "Çift Taraflı"
+              },
+              {
+                "id": "triple_sided",
+                "name": "Üç Taraflı"
+              }
             ],
             "default": "yok"
           },
@@ -854,19 +1040,40 @@
             "name": "Alt Parça Seçimi",
             "type": "select",
             "options": [
-              { "id": "mini_alt_parca", "name": "Mini Alt Parça" },
-              { "id": "midi_alt_parca", "name": "Midi Alt Parça" },
-              { "id": "kilitli_alt_parca", "name": "Kilitli Alt Parça" }
+              {
+                "id": "mini_alt_parca",
+                "name": "Mini Alt Parça"
+              },
+              {
+                "id": "midi_alt_parca",
+                "name": "Midi Alt Parça"
+              },
+              {
+                "id": "kilitli_alt_parca",
+                "name": "Kilitli Alt Parça"
+              }
             ],
             "default": "mini_alt_parca",
             "filterBy": [
               {
                 "field": "dikmeType",
                 "valueMap": {
-                  "mini_dikme": ["mini_alt_parca", "kilitli_alt_parca"],
-                  "mini_pvc_dikme": ["mini_alt_parca", "kilitli_alt_parca"],
-                  "midi_dikme": ["midi_alt_parca", "kilitli_alt_parca"],
-                  "midi_pvc_dikme": ["midi_alt_parca", "kilitli_alt_parca"]
+                  "mini_dikme": [
+                    "mini_alt_parca",
+                    "kilitli_alt_parca"
+                  ],
+                  "mini_pvc_dikme": [
+                    "mini_alt_parca",
+                    "kilitli_alt_parca"
+                  ],
+                  "midi_dikme": [
+                    "midi_alt_parca",
+                    "kilitli_alt_parca"
+                  ],
+                  "midi_pvc_dikme": [
+                    "midi_alt_parca",
+                    "kilitli_alt_parca"
+                  ]
                 }
               }
             ]
@@ -894,16 +1101,56 @@
                 "name": "Metalik Gri",
                 "color": "#7D7D7D"
               },
-              { "id": "beyaz", "name": "Beyaz", "color": "#FFFFFF" },
-              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
-              { "id": "krem", "name": "Krem", "color": "#E6D8C9" },
-              { "id": "vizon", "name": "Vizon", "color": "#A89F91" },
-              { "id": "altın_meşe", "name": "Altın Meşe", "color": "#D1B48C" },
-              { "id": "fındık", "name": "Fındık", "color": "#8B5B29" },
-              { "id": "açık_bej", "name": "Açık Bej", "color": "#F5F5DC" },
-              { "id": "koyu_bej", "name": "Koyu Bej", "color": "#D2B48C" },
-              { "id": "açık_bronz", "name": "Açık Bronz", "color": "#CD853F" },
-              { "id": "kül_siyahı", "name": "Kül Siyahı", "color": "#696969" }
+              {
+                "id": "beyaz",
+                "name": "Beyaz",
+                "color": "#FFFFFF"
+              },
+              {
+                "id": "kahverengi",
+                "name": "Kahverengi",
+                "color": "#7B4B3A"
+              },
+              {
+                "id": "krem",
+                "name": "Krem",
+                "color": "#E6D8C9"
+              },
+              {
+                "id": "vizon",
+                "name": "Vizon",
+                "color": "#A89F91"
+              },
+              {
+                "id": "altın_meşe",
+                "name": "Altın Meşe",
+                "color": "#D1B48C"
+              },
+              {
+                "id": "fındık",
+                "name": "Fındık",
+                "color": "#8B5B29"
+              },
+              {
+                "id": "açık_bej",
+                "name": "Açık Bej",
+                "color": "#F5F5DC"
+              },
+              {
+                "id": "koyu_bej",
+                "name": "Koyu Bej",
+                "color": "#D2B48C"
+              },
+              {
+                "id": "açık_bronz",
+                "name": "Açık Bronz",
+                "color": "#CD853F"
+              },
+              {
+                "id": "kül_siyahı",
+                "name": "Kül Siyahı",
+                "color": "#696969"
+              }
             ],
             "default": "antrasit_gri"
           },
@@ -922,11 +1169,31 @@
                 "name": "Metalik Gri",
                 "color": "#7D7D7D"
               },
-              { "id": "beyaz", "name": "Beyaz", "color": "#FFFFFF" },
-              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
-              { "id": "krem", "name": "Krem", "color": "#E6D8C9" },
-              { "id": "altın_meşe", "name": "Altın Meşe", "color": "#D1B48C" },
-              { "id": "ral_boyalı", "name": "Ral Boyalı", "color": "#FFFFFF" }
+              {
+                "id": "beyaz",
+                "name": "Beyaz",
+                "color": "#FFFFFF"
+              },
+              {
+                "id": "kahverengi",
+                "name": "Kahverengi",
+                "color": "#7B4B3A"
+              },
+              {
+                "id": "krem",
+                "name": "Krem",
+                "color": "#E6D8C9"
+              },
+              {
+                "id": "altın_meşe",
+                "name": "Altın Meşe",
+                "color": "#D1B48C"
+              },
+              {
+                "id": "ral_boyalı",
+                "name": "Ral Boyalı",
+                "color": "#FFFFFF"
+              }
             ],
             "default": "antrasit_gri"
           },
@@ -945,12 +1212,36 @@
                 "name": "Metalik Gri",
                 "color": "#7D7D7D"
               },
-              { "id": "beyaz", "name": "Beyaz", "color": "#FFFFFF" },
-              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
-              { "id": "krem", "name": "Krem", "color": "#E6D8C9" },
-              { "id": "altın_meşe", "name": "Altın Meşe", "color": "#D1B48C" },
-              { "id": "fındık", "name": "Fındık", "color": "#8B5B29" },
-              { "id": "ral_boyalı", "name": "Ral Boyalı", "color": "#FFFFFF" }
+              {
+                "id": "beyaz",
+                "name": "Beyaz",
+                "color": "#FFFFFF"
+              },
+              {
+                "id": "kahverengi",
+                "name": "Kahverengi",
+                "color": "#7B4B3A"
+              },
+              {
+                "id": "krem",
+                "name": "Krem",
+                "color": "#E6D8C9"
+              },
+              {
+                "id": "altın_meşe",
+                "name": "Altın Meşe",
+                "color": "#D1B48C"
+              },
+              {
+                "id": "fındık",
+                "name": "Fındık",
+                "color": "#8B5B29"
+              },
+              {
+                "id": "ral_boyalı",
+                "name": "Ral Boyalı",
+                "color": "#FFFFFF"
+              }
             ],
             "default": "antrasit_gri"
           },
@@ -969,12 +1260,36 @@
                 "name": "Metalik Gri",
                 "color": "#7D7D7D"
               },
-              { "id": "beyaz", "name": "Beyaz", "color": "#FFFFFF" },
-              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
-              { "id": "krem", "name": "Krem", "color": "#E6D8C9" },
-              { "id": "altın_meşe", "name": "Altın Meşe", "color": "#D1B48C" },
-              { "id": "fındık", "name": "Fındık", "color": "#8B5B29" },
-              { "id": "ral_boyalı", "name": "Ral Boyalı", "color": "#FFFFFF" }
+              {
+                "id": "beyaz",
+                "name": "Beyaz",
+                "color": "#FFFFFF"
+              },
+              {
+                "id": "kahverengi",
+                "name": "Kahverengi",
+                "color": "#7B4B3A"
+              },
+              {
+                "id": "krem",
+                "name": "Krem",
+                "color": "#E6D8C9"
+              },
+              {
+                "id": "altın_meşe",
+                "name": "Altın Meşe",
+                "color": "#D1B48C"
+              },
+              {
+                "id": "fındık",
+                "name": "Fındık",
+                "color": "#8B5B29"
+              },
+              {
+                "id": "ral_boyalı",
+                "name": "Ral Boyalı",
+                "color": "#FFFFFF"
+              }
             ],
             "default": "antrasit_gri"
           }
@@ -993,10 +1308,22 @@
             "name": "Sineklik Tipi",
             "type": "select",
             "options": [
-              { "id": "plise", "name": "Plise" },
-              { "id": "menteseli", "name": "Menteşeli" },
-              { "id": "surme", "name": "Sürme" },
-              { "id": "sabit", "name": "Sabit" }
+              {
+                "id": "plise",
+                "name": "Plise"
+              },
+              {
+                "id": "menteseli",
+                "name": "Menteşeli"
+              },
+              {
+                "id": "surme",
+                "name": "Sürme"
+              },
+              {
+                "id": "sabit",
+                "name": "Sabit"
+              }
             ],
             "default": "plise"
           },
@@ -1065,7 +1392,10 @@
             "default": "esikli",
             "dependsOn": {
               "field": "pliseOpeningType",
-              "value": ["yatay", "double"]
+              "value": [
+                "yatay",
+                "double"
+              ]
             }
           },
           {
@@ -1085,7 +1415,10 @@
             "default": "outsideToOutside",
             "dependsOn": {
               "field": "sineklikType",
-              "value": ["plise", "sabit"]
+              "value": [
+                "plise",
+                "sabit"
+              ]
             }
           },
           {
@@ -1199,16 +1532,44 @@
                 "name": "Metalik Gri",
                 "color": "#7D7D7D"
               },
-              { "id": "beyaz", "name": "Beyaz", "color": "#FFFFFF" },
-              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
-              { "id": "vizon", "name": "Vizon", "color": "#A89F91" },
-              { "id": "altın_meşe", "name": "Altın Meşe", "color": "#D1B48C" },
-              { "id": "fındık", "name": "Fındık", "color": "#8B5B29" },
-              { "id": "ral", "name": "RAL", "color": "#E6D8C9" }
+              {
+                "id": "beyaz",
+                "name": "Beyaz",
+                "color": "#FFFFFF"
+              },
+              {
+                "id": "kahverengi",
+                "name": "Kahverengi",
+                "color": "#7B4B3A"
+              },
+              {
+                "id": "vizon",
+                "name": "Vizon",
+                "color": "#A89F91"
+              },
+              {
+                "id": "altın_meşe",
+                "name": "Altın Meşe",
+                "color": "#D1B48C"
+              },
+              {
+                "id": "fındık",
+                "name": "Fındık",
+                "color": "#8B5B29"
+              },
+              {
+                "id": "ral",
+                "name": "RAL",
+                "color": "#E6D8C9"
+              }
             ],
             "default": "beyaz"
           },
-          { "id": "description", "name": "Açıklama", "type": "text" }
+          {
+            "id": "description",
+            "name": "Açıklama",
+            "type": "text"
+          }
         ]
       }
     }
@@ -1249,7 +1610,6 @@
                 "name": "Vela 24mm",
                 "image": "/images/products/cam-balkon.png"
               }
-             
             ],
             "default": "vela-24mm",
             "dependsOn": {
@@ -1433,8 +1793,14 @@
             "name": "Paketleme",
             "type": "select",
             "options": [
-              { "id": "yok", "name": "Yok" },
-              { "id": "var", "name": "Var" }
+              {
+                "id": "yok",
+                "name": "Yok"
+              },
+              {
+                "id": "var",
+                "name": "Var"
+              }
             ],
             "default": "yok"
           }
@@ -1455,11 +1821,26 @@
             "name": "Kol Sayısı",
             "type": "select",
             "options": [
-              { "id": "1", "name": "1 Kol" },
-              { "id": "2", "name": "2 Kol" },
-              { "id": "3", "name": "3 Kol" },
-              { "id": "4", "name": "4 Kol" },
-              { "id": "5", "name": "5 Kol" }
+              {
+                "id": "1",
+                "name": "1 Kol"
+              },
+              {
+                "id": "2",
+                "name": "2 Kol"
+              },
+              {
+                "id": "3",
+                "name": "3 Kol"
+              },
+              {
+                "id": "4",
+                "name": "4 Kol"
+              },
+              {
+                "id": "5",
+                "name": "5 Kol"
+              }
             ],
             "default": "1"
           },
@@ -1476,22 +1857,70 @@
             "name": "Kanat",
             "type": "select",
             "options": [
-              { "id": "1", "name": "1" },
-              { "id": "2", "name": "2" },
-              { "id": "3", "name": "3" },
-              { "id": "4", "name": "4" },
-              { "id": "5", "name": "5" },
-              { "id": "6", "name": "6" },
-              { "id": "7", "name": "7" },
-              { "id": "8", "name": "8" },
-              { "id": "9", "name": "9" },
-              { "id": "10", "name": "10" },
-              { "id": "11", "name": "11" },
-              { "id": "12", "name": "12" },
-              { "id": "13", "name": "13" },
-              { "id": "14", "name": "14" },
-              { "id": "15", "name": "15" },
-              { "id": "16", "name": "16" }
+              {
+                "id": "1",
+                "name": "1"
+              },
+              {
+                "id": "2",
+                "name": "2"
+              },
+              {
+                "id": "3",
+                "name": "3"
+              },
+              {
+                "id": "4",
+                "name": "4"
+              },
+              {
+                "id": "5",
+                "name": "5"
+              },
+              {
+                "id": "6",
+                "name": "6"
+              },
+              {
+                "id": "7",
+                "name": "7"
+              },
+              {
+                "id": "8",
+                "name": "8"
+              },
+              {
+                "id": "9",
+                "name": "9"
+              },
+              {
+                "id": "10",
+                "name": "10"
+              },
+              {
+                "id": "11",
+                "name": "11"
+              },
+              {
+                "id": "12",
+                "name": "12"
+              },
+              {
+                "id": "13",
+                "name": "13"
+              },
+              {
+                "id": "14",
+                "name": "14"
+              },
+              {
+                "id": "15",
+                "name": "15"
+              },
+              {
+                "id": "16",
+                "name": "16"
+              }
             ],
             "default": "1"
           },
@@ -1500,9 +1929,18 @@
             "name": "Çıkış Sayısı",
             "type": "select",
             "options": [
-              { "id": "0", "name": "0" },
-              { "id": "1", "name": "1" },
-              { "id": "2", "name": "2" }
+              {
+                "id": "0",
+                "name": "0"
+              },
+              {
+                "id": "1",
+                "name": "1"
+              },
+              {
+                "id": "2",
+                "name": "2"
+              }
             ],
             "default": "1"
           },
@@ -1511,16 +1949,30 @@
             "name": "Çıkış Yönü",
             "type": "select",
             "options": [
-              { "id": "sag", "name": "Sağ" },
-              { "id": "sol", "name": "Sol" },
-              { "id": "sagsol", "name": "Sağ-Sol" }
+              {
+                "id": "sag",
+                "name": "Sağ"
+              },
+              {
+                "id": "sol",
+                "name": "Sol"
+              },
+              {
+                "id": "sagsol",
+                "name": "Sağ-Sol"
+              }
             ],
             "default": "sol",
             "filterBy": {
               "field": "kol1_cikisSayisi",
               "valueMap": {
-                "1": ["sag", "sol"],
-                "2": ["sagsol"]
+                "1": [
+                  "sag",
+                  "sol"
+                ],
+                "2": [
+                  "sagsol"
+                ]
               }
             }
           },
@@ -1529,28 +1981,82 @@
             "name": "Sola Kanat",
             "type": "select",
             "options": [
-              { "id": "0", "name": "0" },
-              { "id": "1", "name": "1" },
-              { "id": "2", "name": "2" },
-              { "id": "3", "name": "3" },
-              { "id": "4", "name": "4" },
-              { "id": "5", "name": "5" },
-              { "id": "6", "name": "6" },
-              { "id": "7", "name": "7" },
-              { "id": "8", "name": "8" },
-              { "id": "9", "name": "9" },
-              { "id": "10", "name": "10" },
-              { "id": "11", "name": "11" },
-              { "id": "12", "name": "12" },
-              { "id": "13", "name": "13" },
-              { "id": "14", "name": "14" },
-              { "id": "15", "name": "15" },
-              { "id": "16", "name": "16" }
+              {
+                "id": "0",
+                "name": "0"
+              },
+              {
+                "id": "1",
+                "name": "1"
+              },
+              {
+                "id": "2",
+                "name": "2"
+              },
+              {
+                "id": "3",
+                "name": "3"
+              },
+              {
+                "id": "4",
+                "name": "4"
+              },
+              {
+                "id": "5",
+                "name": "5"
+              },
+              {
+                "id": "6",
+                "name": "6"
+              },
+              {
+                "id": "7",
+                "name": "7"
+              },
+              {
+                "id": "8",
+                "name": "8"
+              },
+              {
+                "id": "9",
+                "name": "9"
+              },
+              {
+                "id": "10",
+                "name": "10"
+              },
+              {
+                "id": "11",
+                "name": "11"
+              },
+              {
+                "id": "12",
+                "name": "12"
+              },
+              {
+                "id": "13",
+                "name": "13"
+              },
+              {
+                "id": "14",
+                "name": "14"
+              },
+              {
+                "id": "15",
+                "name": "15"
+              },
+              {
+                "id": "16",
+                "name": "16"
+              }
             ],
             "default": "0",
             "dependsOn": {
               "field": "kol1_cikisYonu",
-              "value": ["sol", "sagsol"]
+              "value": [
+                "sol",
+                "sagsol"
+              ]
             }
           },
           {
@@ -1574,12 +2080,17 @@
             "name": "Sabit Cam Yönü",
             "type": "select",
             "options": [
-              { "id": "sag", "name": "Sağ" },
-              { "id": "sol", "name": "Sol" }
+              {
+                "id": "sag",
+                "name": "Sağ"
+              },
+              {
+                "id": "sol",
+                "name": "Sol"
+              }
             ],
             "default": "sag"
           },
-
           {
             "id": "kol2_genislik",
             "name": "2. Kol - Genişlik (mm)",
@@ -1589,7 +2100,12 @@
             "default": 1000,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["2", "3", "4", "5"]
+              "value": [
+                "2",
+                "3",
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1597,27 +2113,80 @@
             "name": "2. Kol - Kanat",
             "type": "select",
             "options": [
-              { "id": "1", "name": "1" },
-              { "id": "2", "name": "2" },
-              { "id": "3", "name": "3" },
-              { "id": "4", "name": "4" },
-              { "id": "5", "name": "5" },
-              { "id": "6", "name": "6" },
-              { "id": "7", "name": "7" },
-              { "id": "8", "name": "8" },
-              { "id": "9", "name": "9" },
-              { "id": "10", "name": "10" },
-              { "id": "11", "name": "11" },
-              { "id": "12", "name": "12" },
-              { "id": "13", "name": "13" },
-              { "id": "14", "name": "14" },
-              { "id": "15", "name": "15" },
-              { "id": "16", "name": "16" }
+              {
+                "id": "1",
+                "name": "1"
+              },
+              {
+                "id": "2",
+                "name": "2"
+              },
+              {
+                "id": "3",
+                "name": "3"
+              },
+              {
+                "id": "4",
+                "name": "4"
+              },
+              {
+                "id": "5",
+                "name": "5"
+              },
+              {
+                "id": "6",
+                "name": "6"
+              },
+              {
+                "id": "7",
+                "name": "7"
+              },
+              {
+                "id": "8",
+                "name": "8"
+              },
+              {
+                "id": "9",
+                "name": "9"
+              },
+              {
+                "id": "10",
+                "name": "10"
+              },
+              {
+                "id": "11",
+                "name": "11"
+              },
+              {
+                "id": "12",
+                "name": "12"
+              },
+              {
+                "id": "13",
+                "name": "13"
+              },
+              {
+                "id": "14",
+                "name": "14"
+              },
+              {
+                "id": "15",
+                "name": "15"
+              },
+              {
+                "id": "16",
+                "name": "16"
+              }
             ],
             "default": "1",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["2", "3", "4", "5"]
+              "value": [
+                "2",
+                "3",
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1625,14 +2194,28 @@
             "name": "2. Kol - Çıkış Sayısı",
             "type": "select",
             "options": [
-              { "id": "0", "name": "0" },
-              { "id": "1", "name": "1" },
-              { "id": "2", "name": "2" }
+              {
+                "id": "0",
+                "name": "0"
+              },
+              {
+                "id": "1",
+                "name": "1"
+              },
+              {
+                "id": "2",
+                "name": "2"
+              }
             ],
             "default": "1",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["2", "3", "4", "5"]
+              "value": [
+                "2",
+                "3",
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1640,20 +2223,39 @@
             "name": "2. Kol - Çıkış Yönü",
             "type": "select",
             "options": [
-              { "id": "sag", "name": "Sağ" },
-              { "id": "sol", "name": "Sol" },
-              { "id": "sagsol", "name": "Sağ-Sol" }
+              {
+                "id": "sag",
+                "name": "Sağ"
+              },
+              {
+                "id": "sol",
+                "name": "Sol"
+              },
+              {
+                "id": "sagsol",
+                "name": "Sağ-Sol"
+              }
             ],
             "default": "sag",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["2", "3", "4", "5"]
+              "value": [
+                "2",
+                "3",
+                "4",
+                "5"
+              ]
             },
             "filterBy": {
               "field": "kol2_cikisSayisi",
               "valueMap": {
-                "1": ["sag", "sol"],
-                "2": ["sagsol"]
+                "1": [
+                  "sag",
+                  "sol"
+                ],
+                "2": [
+                  "sagsol"
+                ]
               }
             }
           },
@@ -1666,7 +2268,12 @@
             "default": 0,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["2", "3", "4", "5"]
+              "value": [
+                "2",
+                "3",
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1674,28 +2281,82 @@
             "name": "2. Kol - Sola Kanat",
             "type": "select",
             "options": [
-              { "id": "0", "name": "0" },
-              { "id": "1", "name": "1" },
-              { "id": "2", "name": "2" },
-              { "id": "3", "name": "3" },
-              { "id": "4", "name": "4" },
-              { "id": "5", "name": "5" },
-              { "id": "6", "name": "6" },
-              { "id": "7", "name": "7" },
-              { "id": "8", "name": "8" },
-              { "id": "9", "name": "9" },
-              { "id": "10", "name": "10" },
-              { "id": "11", "name": "11" },
-              { "id": "12", "name": "12" },
-              { "id": "13", "name": "13" },
-              { "id": "14", "name": "14" },
-              { "id": "15", "name": "15" },
-              { "id": "16", "name": "16" }
+              {
+                "id": "0",
+                "name": "0"
+              },
+              {
+                "id": "1",
+                "name": "1"
+              },
+              {
+                "id": "2",
+                "name": "2"
+              },
+              {
+                "id": "3",
+                "name": "3"
+              },
+              {
+                "id": "4",
+                "name": "4"
+              },
+              {
+                "id": "5",
+                "name": "5"
+              },
+              {
+                "id": "6",
+                "name": "6"
+              },
+              {
+                "id": "7",
+                "name": "7"
+              },
+              {
+                "id": "8",
+                "name": "8"
+              },
+              {
+                "id": "9",
+                "name": "9"
+              },
+              {
+                "id": "10",
+                "name": "10"
+              },
+              {
+                "id": "11",
+                "name": "11"
+              },
+              {
+                "id": "12",
+                "name": "12"
+              },
+              {
+                "id": "13",
+                "name": "13"
+              },
+              {
+                "id": "14",
+                "name": "14"
+              },
+              {
+                "id": "15",
+                "name": "15"
+              },
+              {
+                "id": "16",
+                "name": "16"
+              }
             ],
             "default": "0",
             "dependsOn": {
               "field": "kol2_cikisYonu",
-              "value": ["sol", "sagsol"]
+              "value": [
+                "sol",
+                "sagsol"
+              ]
             }
           },
           {
@@ -1707,7 +2368,12 @@
             "default": 100,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["2", "3", "4", "5"]
+              "value": [
+                "2",
+                "3",
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1719,7 +2385,12 @@
             "default": 500,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["2", "3", "4", "5"]
+              "value": [
+                "2",
+                "3",
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1727,16 +2398,26 @@
             "name": "2. Kol - Sabit Cam Yönü",
             "type": "select",
             "options": [
-              { "id": "sag", "name": "Sağ" },
-              { "id": "sol", "name": "Sol" }
+              {
+                "id": "sag",
+                "name": "Sağ"
+              },
+              {
+                "id": "sol",
+                "name": "Sol"
+              }
             ],
             "default": "sag",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["2", "3", "4", "5"]
+              "value": [
+                "2",
+                "3",
+                "4",
+                "5"
+              ]
             }
           },
-
           {
             "id": "kol3_genislik",
             "name": "3. Kol - Genişlik (mm)",
@@ -1746,7 +2427,11 @@
             "default": 1000,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["3", "4", "5"]
+              "value": [
+                "3",
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1754,27 +2439,79 @@
             "name": "3. Kol - Kanat",
             "type": "select",
             "options": [
-              { "id": "1", "name": "1" },
-              { "id": "2", "name": "2" },
-              { "id": "3", "name": "3" },
-              { "id": "4", "name": "4" },
-              { "id": "5", "name": "5" },
-              { "id": "6", "name": "6" },
-              { "id": "7", "name": "7" },
-              { "id": "8", "name": "8" },
-              { "id": "9", "name": "9" },
-              { "id": "10", "name": "10" },
-              { "id": "11", "name": "11" },
-              { "id": "12", "name": "12" },
-              { "id": "13", "name": "13" },
-              { "id": "14", "name": "14" },
-              { "id": "15", "name": "15" },
-              { "id": "16", "name": "16" }
+              {
+                "id": "1",
+                "name": "1"
+              },
+              {
+                "id": "2",
+                "name": "2"
+              },
+              {
+                "id": "3",
+                "name": "3"
+              },
+              {
+                "id": "4",
+                "name": "4"
+              },
+              {
+                "id": "5",
+                "name": "5"
+              },
+              {
+                "id": "6",
+                "name": "6"
+              },
+              {
+                "id": "7",
+                "name": "7"
+              },
+              {
+                "id": "8",
+                "name": "8"
+              },
+              {
+                "id": "9",
+                "name": "9"
+              },
+              {
+                "id": "10",
+                "name": "10"
+              },
+              {
+                "id": "11",
+                "name": "11"
+              },
+              {
+                "id": "12",
+                "name": "12"
+              },
+              {
+                "id": "13",
+                "name": "13"
+              },
+              {
+                "id": "14",
+                "name": "14"
+              },
+              {
+                "id": "15",
+                "name": "15"
+              },
+              {
+                "id": "16",
+                "name": "16"
+              }
             ],
             "default": "1",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["3", "4", "5"]
+              "value": [
+                "3",
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1782,14 +2519,27 @@
             "name": "3. Kol - Çıkış Sayısı",
             "type": "select",
             "options": [
-              { "id": "0", "name": "0" },
-              { "id": "1", "name": "1" },
-              { "id": "2", "name": "2" }
+              {
+                "id": "0",
+                "name": "0"
+              },
+              {
+                "id": "1",
+                "name": "1"
+              },
+              {
+                "id": "2",
+                "name": "2"
+              }
             ],
             "default": "1",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["3", "4", "5"]
+              "value": [
+                "3",
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1797,20 +2547,38 @@
             "name": "3. Kol - Çıkış Yönü",
             "type": "select",
             "options": [
-              { "id": "sag", "name": "Sağ" },
-              { "id": "sol", "name": "Sol" },
-              { "id": "sagsol", "name": "Sağ-Sol" }
+              {
+                "id": "sag",
+                "name": "Sağ"
+              },
+              {
+                "id": "sol",
+                "name": "Sol"
+              },
+              {
+                "id": "sagsol",
+                "name": "Sağ-Sol"
+              }
             ],
             "default": "sag",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["3", "4", "5"]
+              "value": [
+                "3",
+                "4",
+                "5"
+              ]
             },
             "filterBy": {
               "field": "kol3_cikisSayisi",
               "valueMap": {
-                "1": ["sag", "sol"],
-                "2": ["sagsol"]
+                "1": [
+                  "sag",
+                  "sol"
+                ],
+                "2": [
+                  "sagsol"
+                ]
               }
             }
           },
@@ -1823,7 +2591,11 @@
             "default": 0,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["3", "4", "5"]
+              "value": [
+                "3",
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1831,28 +2603,82 @@
             "name": "3. Kol - Sola Kanat",
             "type": "select",
             "options": [
-              { "id": "0", "name": "0" },
-              { "id": "1", "name": "1" },
-              { "id": "2", "name": "2" },
-              { "id": "3", "name": "3" },
-              { "id": "4", "name": "4" },
-              { "id": "5", "name": "5" },
-              { "id": "6", "name": "6" },
-              { "id": "7", "name": "7" },
-              { "id": "8", "name": "8" },
-              { "id": "9", "name": "9" },
-              { "id": "10", "name": "10" },
-              { "id": "11", "name": "11" },
-              { "id": "12", "name": "12" },
-              { "id": "13", "name": "13" },
-              { "id": "14", "name": "14" },
-              { "id": "15", "name": "15" },
-              { "id": "16", "name": "16" }
+              {
+                "id": "0",
+                "name": "0"
+              },
+              {
+                "id": "1",
+                "name": "1"
+              },
+              {
+                "id": "2",
+                "name": "2"
+              },
+              {
+                "id": "3",
+                "name": "3"
+              },
+              {
+                "id": "4",
+                "name": "4"
+              },
+              {
+                "id": "5",
+                "name": "5"
+              },
+              {
+                "id": "6",
+                "name": "6"
+              },
+              {
+                "id": "7",
+                "name": "7"
+              },
+              {
+                "id": "8",
+                "name": "8"
+              },
+              {
+                "id": "9",
+                "name": "9"
+              },
+              {
+                "id": "10",
+                "name": "10"
+              },
+              {
+                "id": "11",
+                "name": "11"
+              },
+              {
+                "id": "12",
+                "name": "12"
+              },
+              {
+                "id": "13",
+                "name": "13"
+              },
+              {
+                "id": "14",
+                "name": "14"
+              },
+              {
+                "id": "15",
+                "name": "15"
+              },
+              {
+                "id": "16",
+                "name": "16"
+              }
             ],
             "default": "0",
             "dependsOn": {
               "field": "kol3_cikisYonu",
-              "value": ["sol", "sagsol"]
+              "value": [
+                "sol",
+                "sagsol"
+              ]
             }
           },
           {
@@ -1864,7 +2690,11 @@
             "default": 100,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["3", "4", "5"]
+              "value": [
+                "3",
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1876,7 +2706,11 @@
             "default": 500,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["3", "4", "5"]
+              "value": [
+                "3",
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1884,16 +2718,25 @@
             "name": "3. Kol - Sabit Cam Yönü",
             "type": "select",
             "options": [
-              { "id": "sag", "name": "Sağ" },
-              { "id": "sol", "name": "Sol" }
+              {
+                "id": "sag",
+                "name": "Sağ"
+              },
+              {
+                "id": "sol",
+                "name": "Sol"
+              }
             ],
             "default": "sag",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["3", "4", "5"]
+              "value": [
+                "3",
+                "4",
+                "5"
+              ]
             }
           },
-
           {
             "id": "kol4_genislik",
             "name": "4. Kol - Genişlik (mm)",
@@ -1903,7 +2746,10 @@
             "default": 1000,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["4", "5"]
+              "value": [
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1911,27 +2757,78 @@
             "name": "4. Kol - Kanat",
             "type": "select",
             "options": [
-              { "id": "1", "name": "1" },
-              { "id": "2", "name": "2" },
-              { "id": "3", "name": "3" },
-              { "id": "4", "name": "4" },
-              { "id": "5", "name": "5" },
-              { "id": "6", "name": "6" },
-              { "id": "7", "name": "7" },
-              { "id": "8", "name": "8" },
-              { "id": "9", "name": "9" },
-              { "id": "10", "name": "10" },
-              { "id": "11", "name": "11" },
-              { "id": "12", "name": "12" },
-              { "id": "13", "name": "13" },
-              { "id": "14", "name": "14" },
-              { "id": "15", "name": "15" },
-              { "id": "16", "name": "16" }
+              {
+                "id": "1",
+                "name": "1"
+              },
+              {
+                "id": "2",
+                "name": "2"
+              },
+              {
+                "id": "3",
+                "name": "3"
+              },
+              {
+                "id": "4",
+                "name": "4"
+              },
+              {
+                "id": "5",
+                "name": "5"
+              },
+              {
+                "id": "6",
+                "name": "6"
+              },
+              {
+                "id": "7",
+                "name": "7"
+              },
+              {
+                "id": "8",
+                "name": "8"
+              },
+              {
+                "id": "9",
+                "name": "9"
+              },
+              {
+                "id": "10",
+                "name": "10"
+              },
+              {
+                "id": "11",
+                "name": "11"
+              },
+              {
+                "id": "12",
+                "name": "12"
+              },
+              {
+                "id": "13",
+                "name": "13"
+              },
+              {
+                "id": "14",
+                "name": "14"
+              },
+              {
+                "id": "15",
+                "name": "15"
+              },
+              {
+                "id": "16",
+                "name": "16"
+              }
             ],
             "default": "1",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["4", "5"]
+              "value": [
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1939,14 +2836,26 @@
             "name": "4. Kol - Çıkış Sayısı",
             "type": "select",
             "options": [
-              { "id": "0", "name": "0" },
-              { "id": "1", "name": "1" },
-              { "id": "2", "name": "2" }
+              {
+                "id": "0",
+                "name": "0"
+              },
+              {
+                "id": "1",
+                "name": "1"
+              },
+              {
+                "id": "2",
+                "name": "2"
+              }
             ],
             "default": "1",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["4", "5"]
+              "value": [
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1954,20 +2863,37 @@
             "name": "4. Kol - Çıkış Yönü",
             "type": "select",
             "options": [
-              { "id": "sag", "name": "Sağ" },
-              { "id": "sol", "name": "Sol" },
-              { "id": "sagsol", "name": "Sağ-Sol" }
+              {
+                "id": "sag",
+                "name": "Sağ"
+              },
+              {
+                "id": "sol",
+                "name": "Sol"
+              },
+              {
+                "id": "sagsol",
+                "name": "Sağ-Sol"
+              }
             ],
             "default": "sag",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["4", "5"]
+              "value": [
+                "4",
+                "5"
+              ]
             },
             "filterBy": {
               "field": "kol4_cikisSayisi",
               "valueMap": {
-                "1": ["sag", "sol"],
-                "2": ["sagsol"]
+                "1": [
+                  "sag",
+                  "sol"
+                ],
+                "2": [
+                  "sagsol"
+                ]
               }
             }
           },
@@ -1980,7 +2906,10 @@
             "default": 0,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["4", "5"]
+              "value": [
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -1988,28 +2917,82 @@
             "name": "4. Kol - Sola Kanat",
             "type": "select",
             "options": [
-              { "id": "0", "name": "0" },
-              { "id": "1", "name": "1" },
-              { "id": "2", "name": "2" },
-              { "id": "3", "name": "3" },
-              { "id": "4", "name": "4" },
-              { "id": "5", "name": "5" },
-              { "id": "6", "name": "6" },
-              { "id": "7", "name": "7" },
-              { "id": "8", "name": "8" },
-              { "id": "9", "name": "9" },
-              { "id": "10", "name": "10" },
-              { "id": "11", "name": "11" },
-              { "id": "12", "name": "12" },
-              { "id": "13", "name": "13" },
-              { "id": "14", "name": "14" },
-              { "id": "15", "name": "15" },
-              { "id": "16", "name": "16" }
+              {
+                "id": "0",
+                "name": "0"
+              },
+              {
+                "id": "1",
+                "name": "1"
+              },
+              {
+                "id": "2",
+                "name": "2"
+              },
+              {
+                "id": "3",
+                "name": "3"
+              },
+              {
+                "id": "4",
+                "name": "4"
+              },
+              {
+                "id": "5",
+                "name": "5"
+              },
+              {
+                "id": "6",
+                "name": "6"
+              },
+              {
+                "id": "7",
+                "name": "7"
+              },
+              {
+                "id": "8",
+                "name": "8"
+              },
+              {
+                "id": "9",
+                "name": "9"
+              },
+              {
+                "id": "10",
+                "name": "10"
+              },
+              {
+                "id": "11",
+                "name": "11"
+              },
+              {
+                "id": "12",
+                "name": "12"
+              },
+              {
+                "id": "13",
+                "name": "13"
+              },
+              {
+                "id": "14",
+                "name": "14"
+              },
+              {
+                "id": "15",
+                "name": "15"
+              },
+              {
+                "id": "16",
+                "name": "16"
+              }
             ],
             "default": "0",
             "dependsOn": {
               "field": "kol4_cikisYonu",
-              "value": ["sol", "sagsol"]
+              "value": [
+                "sol",
+                "sagsol"
+              ]
             }
           },
           {
@@ -2021,7 +3004,10 @@
             "default": 100,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["4", "5"]
+              "value": [
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -2033,7 +3019,10 @@
             "default": 500,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["4", "5"]
+              "value": [
+                "4",
+                "5"
+              ]
             }
           },
           {
@@ -2041,16 +3030,24 @@
             "name": "4. Kol - Sabit Cam Yönü",
             "type": "select",
             "options": [
-              { "id": "sag", "name": "Sağ" },
-              { "id": "sol", "name": "Sol" }
+              {
+                "id": "sag",
+                "name": "Sağ"
+              },
+              {
+                "id": "sol",
+                "name": "Sol"
+              }
             ],
             "default": "sag",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["4", "5"]
+              "value": [
+                "4",
+                "5"
+              ]
             }
           },
-
           {
             "id": "kol5_genislik",
             "name": "5. Kol - Genişlik (mm)",
@@ -2060,7 +3057,9 @@
             "default": 1000,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["5"]
+              "value": [
+                "5"
+              ]
             }
           },
           {
@@ -2068,27 +3067,77 @@
             "name": "5. Kol - Kanat",
             "type": "select",
             "options": [
-              { "id": "1", "name": "1" },
-              { "id": "2", "name": "2" },
-              { "id": "3", "name": "3" },
-              { "id": "4", "name": "4" },
-              { "id": "5", "name": "5" },
-              { "id": "6", "name": "6" },
-              { "id": "7", "name": "7" },
-              { "id": "8", "name": "8" },
-              { "id": "9", "name": "9" },
-              { "id": "10", "name": "10" },
-              { "id": "11", "name": "11" },
-              { "id": "12", "name": "12" },
-              { "id": "13", "name": "13" },
-              { "id": "14", "name": "14" },
-              { "id": "15", "name": "15" },
-              { "id": "16", "name": "16" }
+              {
+                "id": "1",
+                "name": "1"
+              },
+              {
+                "id": "2",
+                "name": "2"
+              },
+              {
+                "id": "3",
+                "name": "3"
+              },
+              {
+                "id": "4",
+                "name": "4"
+              },
+              {
+                "id": "5",
+                "name": "5"
+              },
+              {
+                "id": "6",
+                "name": "6"
+              },
+              {
+                "id": "7",
+                "name": "7"
+              },
+              {
+                "id": "8",
+                "name": "8"
+              },
+              {
+                "id": "9",
+                "name": "9"
+              },
+              {
+                "id": "10",
+                "name": "10"
+              },
+              {
+                "id": "11",
+                "name": "11"
+              },
+              {
+                "id": "12",
+                "name": "12"
+              },
+              {
+                "id": "13",
+                "name": "13"
+              },
+              {
+                "id": "14",
+                "name": "14"
+              },
+              {
+                "id": "15",
+                "name": "15"
+              },
+              {
+                "id": "16",
+                "name": "16"
+              }
             ],
             "default": "1",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["5"]
+              "value": [
+                "5"
+              ]
             }
           },
           {
@@ -2096,14 +3145,25 @@
             "name": "5. Kol - Çıkış Sayısı",
             "type": "select",
             "options": [
-              { "id": "0", "name": "0" },
-              { "id": "1", "name": "1" },
-              { "id": "2", "name": "2" }
+              {
+                "id": "0",
+                "name": "0"
+              },
+              {
+                "id": "1",
+                "name": "1"
+              },
+              {
+                "id": "2",
+                "name": "2"
+              }
             ],
             "default": "1",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["5"]
+              "value": [
+                "5"
+              ]
             }
           },
           {
@@ -2111,20 +3171,36 @@
             "name": "5. Kol - Çıkış Yönü",
             "type": "select",
             "options": [
-              { "id": "sag", "name": "Sağ" },
-              { "id": "sol", "name": "Sol" },
-              { "id": "sagsol", "name": "Sağ-Sol" }
+              {
+                "id": "sag",
+                "name": "Sağ"
+              },
+              {
+                "id": "sol",
+                "name": "Sol"
+              },
+              {
+                "id": "sagsol",
+                "name": "Sağ-Sol"
+              }
             ],
             "default": "sag",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["5"]
+              "value": [
+                "5"
+              ]
             },
             "filterBy": {
               "field": "kol5_cikisSayisi",
               "valueMap": {
-                "1": ["sag", "sol"],
-                "2": ["sagsol"]
+                "1": [
+                  "sag",
+                  "sol"
+                ],
+                "2": [
+                  "sagsol"
+                ]
               }
             }
           },
@@ -2137,7 +3213,9 @@
             "default": 0,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["5"]
+              "value": [
+                "5"
+              ]
             }
           },
           {
@@ -2145,28 +3223,82 @@
             "name": "5. Kol - Sola Kanat",
             "type": "select",
             "options": [
-              { "id": "0", "name": "0" },
-              { "id": "1", "name": "1" },
-              { "id": "2", "name": "2" },
-              { "id": "3", "name": "3" },
-              { "id": "4", "name": "4" },
-              { "id": "5", "name": "5" },
-              { "id": "6", "name": "6" },
-              { "id": "7", "name": "7" },
-              { "id": "8", "name": "8" },
-              { "id": "9", "name": "9" },
-              { "id": "10", "name": "10" },
-              { "id": "11", "name": "11" },
-              { "id": "12", "name": "12" },
-              { "id": "13", "name": "13" },
-              { "id": "14", "name": "14" },
-              { "id": "15", "name": "15" },
-              { "id": "16", "name": "16" }
+              {
+                "id": "0",
+                "name": "0"
+              },
+              {
+                "id": "1",
+                "name": "1"
+              },
+              {
+                "id": "2",
+                "name": "2"
+              },
+              {
+                "id": "3",
+                "name": "3"
+              },
+              {
+                "id": "4",
+                "name": "4"
+              },
+              {
+                "id": "5",
+                "name": "5"
+              },
+              {
+                "id": "6",
+                "name": "6"
+              },
+              {
+                "id": "7",
+                "name": "7"
+              },
+              {
+                "id": "8",
+                "name": "8"
+              },
+              {
+                "id": "9",
+                "name": "9"
+              },
+              {
+                "id": "10",
+                "name": "10"
+              },
+              {
+                "id": "11",
+                "name": "11"
+              },
+              {
+                "id": "12",
+                "name": "12"
+              },
+              {
+                "id": "13",
+                "name": "13"
+              },
+              {
+                "id": "14",
+                "name": "14"
+              },
+              {
+                "id": "15",
+                "name": "15"
+              },
+              {
+                "id": "16",
+                "name": "16"
+              }
             ],
             "default": "0",
             "dependsOn": {
               "field": "kol5_cikisYonu",
-              "value": ["sol", "sagsol"]
+              "value": [
+                "sol",
+                "sagsol"
+              ]
             }
           },
           {
@@ -2178,7 +3310,9 @@
             "default": 100,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["5"]
+              "value": [
+                "5"
+              ]
             }
           },
           {
@@ -2190,7 +3324,9 @@
             "default": 500,
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["5"]
+              "value": [
+                "5"
+              ]
             }
           },
           {
@@ -2198,13 +3334,21 @@
             "name": "5. Kol - Sabit Cam Yönü",
             "type": "select",
             "options": [
-              { "id": "sag", "name": "Sağ" },
-              { "id": "sol", "name": "Sol" }
+              {
+                "id": "sag",
+                "name": "Sağ"
+              },
+              {
+                "id": "sol",
+                "name": "Sol"
+              }
             ],
             "default": "sag",
             "dependsOn": {
               "field": "kolSayisi",
-              "value": ["5"]
+              "value": [
+                "5"
+              ]
             }
           }
         ]
@@ -2246,12 +3390,30 @@
             "name": "Lamel Tipi",
             "type": "select",
             "options": [
-              { "id": "sl_77", "name": "SL-77 (77mm Alüminyum)" },
-              { "id": "st_77", "name": "ST-77 (77mm Çelik)" },
-              { "id": "se_77", "name": "SE-77 (77mm Ekstrüzyon)" },
-              { "id": "se_78", "name": "SE-78 (78mm Gözlü)" },
-              { "id": "sl_100", "name": "SL-100 (100mm Alüminyum)" },
-              { "id": "st_100", "name": "ST-100 (100mm Çelik)" }
+              {
+                "id": "sl_77",
+                "name": "SL-77 (77mm Alüminyum)"
+              },
+              {
+                "id": "st_77",
+                "name": "ST-77 (77mm Çelik)"
+              },
+              {
+                "id": "se_77",
+                "name": "SE-77 (77mm Ekstrüzyon)"
+              },
+              {
+                "id": "se_78",
+                "name": "SE-78 (78mm Gözlü)"
+              },
+              {
+                "id": "sl_100",
+                "name": "SL-100 (100mm Alüminyum)"
+              },
+              {
+                "id": "st_100",
+                "name": "ST-100 (100mm Çelik)"
+              }
             ],
             "default": "sl_77"
           },
@@ -2286,12 +3448,30 @@
             "name": "Lamel Rengi",
             "type": "select",
             "options": [
-              { "id": "aluminyum", "name": "Alüminyum (Doğal)" },
-              { "id": "beyaz", "name": "Beyaz" },
-              { "id": "ral_7016", "name": "RAL 7016 (Antrasit)" },
-              { "id": "ral_9005", "name": "RAL 9005 (Siyah)" },
-              { "id": "ral_8017", "name": "RAL 8017 (Kahverengi)" },
-              { "id": "ral_boyali", "name": "RAL Boyalı (Özel)" }
+              {
+                "id": "aluminyum",
+                "name": "Alüminyum (Doğal)"
+              },
+              {
+                "id": "beyaz",
+                "name": "Beyaz"
+              },
+              {
+                "id": "ral_7016",
+                "name": "RAL 7016 (Antrasit)"
+              },
+              {
+                "id": "ral_9005",
+                "name": "RAL 9005 (Siyah)"
+              },
+              {
+                "id": "ral_8017",
+                "name": "RAL 8017 (Kahverengi)"
+              },
+              {
+                "id": "ral_boyali",
+                "name": "RAL Boyalı (Özel)"
+              }
             ],
             "default": "aluminyum"
           }
@@ -2308,7 +3488,10 @@
             "name": "Hareket Tipi",
             "type": "select",
             "options": [
-              { "id": "motorlu", "name": "Motorlu" }
+              {
+                "id": "motorlu",
+                "name": "Motorlu"
+              }
             ],
             "default": "motorlu"
           },
@@ -2361,16 +3544,46 @@
             "name": "Motor Modeli",
             "type": "select",
             "options": [
-              { "id": "auto", "name": "Otomatik Seçim" },
-              { "id": "sel_70_80", "name": "MOSEL SEL-70 80 Nm (70mm Tambur)" },
-              { "id": "sel_70_100", "name": "MOSEL SEL-70 100 Nm (70mm Tambur)" },
-              { "id": "sel_70_120", "name": "MOSEL SEL-70 120 Nm (70mm Tambur)" },
-              { "id": "sel_70_140", "name": "MOSEL SEL-70 140 Nm (70mm Tambur)" },
-              { "id": "sel_102_230", "name": "MOSEL SEL-102 230 Nm (102mm Tambur)" },
-              { "id": "sel_102_330", "name": "MOSEL SEL-102 330 Nm (102mm Tambur)" },
-              { "id": "sel_600", "name": "SEL-600 Nm Santral Motor" },
-              { "id": "sel_800", "name": "SEL-800 Nm Santral Motor" },
-              { "id": "sel_1000", "name": "SEL-1000 Nm Santral Motor" }
+              {
+                "id": "auto",
+                "name": "Otomatik Seçim"
+              },
+              {
+                "id": "sel_70_80",
+                "name": "MOSEL SEL-70 80 Nm (70mm Tambur)"
+              },
+              {
+                "id": "sel_70_100",
+                "name": "MOSEL SEL-70 100 Nm (70mm Tambur)"
+              },
+              {
+                "id": "sel_70_120",
+                "name": "MOSEL SEL-70 120 Nm (70mm Tambur)"
+              },
+              {
+                "id": "sel_70_140",
+                "name": "MOSEL SEL-70 140 Nm (70mm Tambur)"
+              },
+              {
+                "id": "sel_102_230",
+                "name": "MOSEL SEL-102 230 Nm (102mm Tambur)"
+              },
+              {
+                "id": "sel_102_330",
+                "name": "MOSEL SEL-102 330 Nm (102mm Tambur)"
+              },
+              {
+                "id": "sel_600",
+                "name": "SEL-600 Nm Santral Motor"
+              },
+              {
+                "id": "sel_800",
+                "name": "SEL-800 Nm Santral Motor"
+              },
+              {
+                "id": "sel_1000",
+                "name": "SEL-1000 Nm Santral Motor"
+              }
             ],
             "default": "auto",
             "dependsOn": {
@@ -2383,7 +3596,10 @@
             "name": "Alıcı",
             "type": "select",
             "options": [
-              { "id": "yok", "name": "Yok" },
+              {
+                "id": "yok",
+                "name": "Yok"
+              },
               {
                 "id": "mosel_oval_power_2ch",
                 "name": "Mosel Oval Power Alıcı x 2 Yericli"
@@ -2412,7 +3628,10 @@
             "name": "Kumanda",
             "type": "select",
             "options": [
-              { "id": "yok", "name": "Yok" },
+              {
+                "id": "yok",
+                "name": "Yok"
+              },
               {
                 "id": "dc_1157_1ch",
                 "name": "DC-1157 X 1 Kanallı Vericil (Oval Alıcı)"
@@ -2441,20 +3660,38 @@
             "name": "Dikme Seçimi",
             "type": "select",
             "options": [
-              { "id": "77_lik", "name": "77'lik Dikme" },
-              { "id": "100_luk", "name": "100'lük Dikme" }
+              {
+                "id": "77_lik",
+                "name": "77'lik Dikme"
+              },
+              {
+                "id": "100_luk",
+                "name": "100'lük Dikme"
+              }
             ],
             "default": "77_lik",
             "filterBy": [
               {
                 "field": "lamelType",
                 "valueMap": {
-                  "sl_77": ["77_lik"],
-                  "st_77": ["77_lik"],
-                  "se_77": ["77_lik"],
-                  "se_78": ["77_lik"],
-                  "sl_100": ["100_luk"],
-                  "st_100": ["100_luk"]
+                  "sl_77": [
+                    "77_lik"
+                  ],
+                  "st_77": [
+                    "77_lik"
+                  ],
+                  "se_77": [
+                    "77_lik"
+                  ],
+                  "se_78": [
+                    "77_lik"
+                  ],
+                  "sl_100": [
+                    "100_luk"
+                  ],
+                  "st_100": [
+                    "100_luk"
+                  ]
                 }
               }
             ]
@@ -2482,12 +3719,36 @@
                 "name": "Metalik Gri",
                 "color": "#7D7D7D"
               },
-              { "id": "beyaz", "name": "Beyaz", "color": "#FFFFFF" },
-              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
-              { "id": "krem", "name": "Krem", "color": "#E6D8C9" },
-              { "id": "altın_meşe", "name": "Altın Meşe", "color": "#D1B48C" },
-              { "id": "fındık", "name": "Fındık", "color": "#8B5B29" },
-              { "id": "ral_boyalı", "name": "Ral Boyalı", "color": "#FFFFFF" }
+              {
+                "id": "beyaz",
+                "name": "Beyaz",
+                "color": "#FFFFFF"
+              },
+              {
+                "id": "kahverengi",
+                "name": "Kahverengi",
+                "color": "#7B4B3A"
+              },
+              {
+                "id": "krem",
+                "name": "Krem",
+                "color": "#E6D8C9"
+              },
+              {
+                "id": "altın_meşe",
+                "name": "Altın Meşe",
+                "color": "#D1B48C"
+              },
+              {
+                "id": "fındık",
+                "name": "Fındık",
+                "color": "#8B5B29"
+              },
+              {
+                "id": "ral_boyalı",
+                "name": "Ral Boyalı",
+                "color": "#FFFFFF"
+              }
             ],
             "default": "antrasit_gri"
           },
@@ -2506,12 +3767,36 @@
                 "name": "Metalik Gri",
                 "color": "#7D7D7D"
               },
-              { "id": "beyaz", "name": "Beyaz", "color": "#FFFFFF" },
-              { "id": "kahverengi", "name": "Kahverengi", "color": "#7B4B3A" },
-              { "id": "krem", "name": "Krem", "color": "#E6D8C9" },
-              { "id": "altın_meşe", "name": "Altın Meşe", "color": "#D1B48C" },
-              { "id": "fındık", "name": "Fındık", "color": "#8B5B29" },
-              { "id": "ral_boyalı", "name": "Ral Boyalı", "color": "#FFFFFF" }
+              {
+                "id": "beyaz",
+                "name": "Beyaz",
+                "color": "#FFFFFF"
+              },
+              {
+                "id": "kahverengi",
+                "name": "Kahverengi",
+                "color": "#7B4B3A"
+              },
+              {
+                "id": "krem",
+                "name": "Krem",
+                "color": "#E6D8C9"
+              },
+              {
+                "id": "altın_meşe",
+                "name": "Altın Meşe",
+                "color": "#D1B48C"
+              },
+              {
+                "id": "fındık",
+                "name": "Fındık",
+                "color": "#8B5B29"
+              },
+              {
+                "id": "ral_boyalı",
+                "name": "Ral Boyalı",
+                "color": "#FFFFFF"
+              }
             ],
             "default": "antrasit_gri"
           }

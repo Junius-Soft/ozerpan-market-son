@@ -2124,35 +2124,35 @@
       },
       {
         "description": "Situo 1 IO Pure II SEA MEA",
-        "stock_code": "352532111100",
+        "stock_code": "352532231100",
         "uretici_kodu": "352532111100",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "73.20"
+      },
+      {
+        "description": "Situo 5 IO Pure II SEA MEA",
+        "stock_code": "352532251100",
+        "uretici_kodu": "352532151100",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "177.27"
+      },
+      {
+        "description": "Situo 1 RTS Pure II",
+        "stock_code": "352532111100",
+        "uretici_kodu": "352532121100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "76.62"
       },
       {
-        "description": "Situo 5 IO Pure II SEA MEA",
-        "stock_code": "352532151100",
-        "uretici_kodu": "352532151100",
-        "type": "otomasyon_kumandalar",
-        "unit": "Adet",
-        "price": "130.11"
-      },
-      {
-        "description": "Situo 1 RTS Pure II",
-        "stock_code": "352532121100",
-        "uretici_kodu": "352532121100",
-        "type": "otomasyon_kumandalar",
-        "unit": "Adet",
-        "price": "62.19"
-      },
-      {
         "description": "Situo 5 RTS Pure II",
-        "stock_code": "352532141100",
+        "stock_code": "352532151100",
         "uretici_kodu": "352532141100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "105.61"
+        "price": "130.11"
       },
       {
         "description": "Telis 16 RTS Pure",
@@ -2180,11 +2180,11 @@
       },
       {
         "description": "Telis 6 Chronis RTS Zaman Ayarlı Kumanda",
-        "stock_code": "352532321100",
+        "stock_code": "352532191100",
         "uretici_kodu": "352532321100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "323.50"
+        "price": "380.76"
       },
       {
         "description": "Sıva Altı Kalıcı Buton",

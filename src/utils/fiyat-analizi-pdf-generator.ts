@@ -49,7 +49,7 @@ export async function generateFiyatAnaliziPDFPozListesi(
         maximumFractionDigits: 2,
       })}`;
     }
-    
+
     // Diğer ürünler için pozisyonun kendi currency'sine göre formatla
     // Pozisyon currency'si EUR ise EUR, TRY ise TRY göster
     if (positionCurrency === "EUR") {
@@ -70,18 +70,18 @@ export async function generateFiyatAnaliziPDFPozListesi(
     if (pos.productId !== "cam-balkon" || !pos.productDetails) {
       return "-";
     }
-    
+
     const pd = pos.productDetails as Record<string, unknown>;
     const kolSayisi = Number(pd.kolSayisi || 1);
     let toplamGenislik = 0;
-    
+
     for (let i = 1; i <= kolSayisi; i++) {
       const g = Number(pd[`kol${i}_genislik`] || 0);
       if (!Number.isNaN(g) && g > 0) {
         toplamGenislik += g;
       }
     }
-    
+
     return toplamGenislik > 0 ? `${toplamGenislik} mm` : "-";
   };
 
@@ -135,7 +135,7 @@ export async function generateFiyatAnaliziPDFPozListesi(
     const total = unitPrice * pos.quantity;
     const posCurrency = pos.currency?.code || "EUR";
     const isCamBalkon = pos.productId === "cam-balkon";
-    
+
     // Cam balkon için genişlik hesapla
     let genislik: number | string = pos.productDetails?.width ?? "-";
     if (isCamBalkon) {
@@ -147,7 +147,7 @@ export async function generateFiyatAnaliziPDFPozListesi(
       pos.productName || "-",
       genislik,
       pos.productDetails?.height ?? "-",
-      typeof pos.quantity === 'number' 
+      typeof pos.quantity === 'number'
         ? parseFloat(pos.quantity.toFixed(2))
         : pos.quantity,
       pos.unit ? pos.unit.charAt(0).toUpperCase() + pos.unit.slice(1) : "-",
@@ -171,44 +171,49 @@ export async function generateFiyatAnaliziPDFPozListesi(
 
   const malzemeMap = new Map<string, MalzemeItem>();
   // Lamelleri ayrı topla (tüm lameller tek satırda gösterilecek)
-  const lamelTotals = new Map<string, { totalQuantity: number; totalPrice: number; currency: string; isCamBalkon: boolean }>();
+  const lamelTotals = new Map<string, { totalQuantity: number; totalPrice: number; currency: string; isCamBalkon: boolean; description: string }>();
 
   positions.forEach((pos) => {
     const posCurrency = pos.currency?.code || "EUR";
     const isCamBalkon = pos.productId === "cam-balkon";
-    
+
     // Ürünler
     if (pos.selectedProducts && Array.isArray(pos.selectedProducts.products)) {
       pos.selectedProducts.products.forEach((prod) => {
         // Lamelleri ayrı topla
         const prodType = (prod as { type?: string }).type || "";
         const isLamel = prodType === "panjur_lamel_profilleri" || prodType === "kepenk_lamel_profilleri";
-        
+
         if (isLamel) {
           // Metre bazında satılan ürünler için size değerini metre'ye çevir
           const isMetre = prod.unit?.toLowerCase() === "metre";
           const prodSize = (prod as { size?: number }).size;
-          const baseQuantity = isMetre && prodSize 
-            ? Number((prodSize / 1000).toFixed(2)) 
+          const baseQuantity = isMetre && prodSize
+            ? Number((prodSize / 1000).toFixed(2))
             : (prod.quantity ?? 1);
           // Pozisyon quantity'si ile çarp
           const totalQuantity = baseQuantity * (pos.quantity ?? 1);
-          const totalPrice = prod.totalPrice 
+          const totalPrice = prod.totalPrice
             ? Number(prod.totalPrice) * (pos.quantity ?? 1)
             : (prod.price ? Number(prod.price) : 0) * totalQuantity;
 
-          // Lamelleri currency bazında grupla
-          const lamelKey = `lamel|${posCurrency}`;
+          // Lamelleri currency ve açıklama bazında grupla
+          // Açıklamadan (Bölme X) ifadesini temizle
+          const cleanDescription = prod.description?.replace(/\s*\([^)]*Bölme[^)]*\)/gi, "").trim() || "Lamel";
+          const lamelKey = `lamel|${posCurrency}|${cleanDescription}`;
+
           if (lamelTotals.has(lamelKey)) {
             const existing = lamelTotals.get(lamelKey)!;
             existing.totalQuantity += totalQuantity;
             existing.totalPrice += totalPrice;
+            // Açıklama zaten aynı
           } else {
             lamelTotals.set(lamelKey, {
               totalQuantity,
               totalPrice,
               currency: posCurrency,
               isCamBalkon,
+              description: cleanDescription,
             });
           }
           return; // Lamelleri normal malzeme listesine ekleme
@@ -218,19 +223,19 @@ export async function generateFiyatAnaliziPDFPozListesi(
         // Metre bazında satılan ürünler için size değerini metre'ye çevir
         const isMetre = prod.unit?.toLowerCase() === "metre";
         const prodSize = (prod as { size?: number }).size;
-        const baseQuantity = isMetre && prodSize 
-          ? Number((prodSize / 1000).toFixed(2)) 
+        const baseQuantity = isMetre && prodSize
+          ? Number((prodSize / 1000).toFixed(2))
           : (prod.quantity ?? 1);
         // Pozisyon quantity'si ile çarp
         const totalQuantity = baseQuantity * (pos.quantity ?? 1);
         const prodPrice = prod.price ? Number(prod.price) : 0;
-        const totalPrice = prod.totalPrice 
+        const totalPrice = prod.totalPrice
           ? Number(prod.totalPrice) * (pos.quantity ?? 1)
           : prodPrice * totalQuantity;
 
         // Unique key: stock_code + description + unit + currency (fiyat hariç - aynı malzemeler toplu gösterilecek)
         const key = `${prod.stock_code || "-"}|${prod.description || "-"}|${prod.unit || "-"}|${posCurrency}`;
-        
+
         if (malzemeMap.has(key)) {
           // Mevcut malzemeyi güncelle
           const existing = malzemeMap.get(key)!;
@@ -264,19 +269,19 @@ export async function generateFiyatAnaliziPDFPozListesi(
         // Metre bazında satılan aksesuarlar için size değerini metre'ye çevir
         const isMetre = acc.unit?.toLowerCase() === "metre";
         const accSize = (acc as { size?: number }).size;
-        const baseQuantity = isMetre && accSize 
-          ? Number((accSize / 1000).toFixed(2)) 
+        const baseQuantity = isMetre && accSize
+          ? Number((accSize / 1000).toFixed(2))
           : (acc.quantity ?? 1);
         // Pozisyon quantity'si ile çarp
         const totalQuantity = baseQuantity * (pos.quantity ?? 1);
         const accPrice = acc.price ? Number(acc.price) : 0;
-        const totalPrice = acc.totalPrice 
+        const totalPrice = acc.totalPrice
           ? Number(acc.totalPrice) * (pos.quantity ?? 1)
           : accPrice * totalQuantity;
 
         // Unique key: stock_code + description + unit + currency (fiyat hariç - aynı malzemeler toplu gösterilecek)
         const key = `${acc.stock_code || "-"}|${acc.description || "-"}|${acc.unit || "-"}|${posCurrency}`;
-        
+
         if (malzemeMap.has(key)) {
           // Mevcut malzemeyi güncelle
           const existing = malzemeMap.get(key)!;
@@ -305,40 +310,40 @@ export async function generateFiyatAnaliziPDFPozListesi(
 
   // Map'ten array'e çevir
   const otherMalzemeler = Array.from(malzemeMap.values());
-  
+
   // Lamelleri tek satır olarak ekle
   const malzemeListesiData: RowInput[] = [];
   let siraNo = 1;
-  
+
   // Önce lamelleri ekle (eğer varsa)
   lamelTotals.forEach((lamelTotal) => {
-    const avgPrice = lamelTotal.totalQuantity > 0 
-      ? lamelTotal.totalPrice / lamelTotal.totalQuantity 
+    const avgPrice = lamelTotal.totalQuantity > 0
+      ? lamelTotal.totalPrice / lamelTotal.totalQuantity
       : 0;
     malzemeListesiData.push([
       siraNo++,
       "LAMEL",
-      "Lamel (Toplam)",
-      typeof lamelTotal.totalQuantity === 'number' 
+      lamelTotal.description.includes("Lamel") ? lamelTotal.description : `Lamel (${lamelTotal.description})`,
+      typeof lamelTotal.totalQuantity === 'number'
         ? parseFloat(lamelTotal.totalQuantity.toFixed(2))
         : lamelTotal.totalQuantity,
-      "Metre",
+      "mtül",
       avgPrice ? formatPrice(avgPrice, lamelTotal.currency, lamelTotal.isCamBalkon) : "-",
       lamelTotal.totalPrice !== undefined ? formatPrice(lamelTotal.totalPrice, lamelTotal.currency, lamelTotal.isCamBalkon) : "-",
     ]);
   });
-  
+
   // Diğer malzemeleri ekle
   otherMalzemeler.forEach((item) => {
     // Birim fiyatı her zaman toplam fiyat / toplam miktar olarak hesapla
-    const unitPrice = item.totalQuantity > 0 
-      ? item.totalPrice / item.totalQuantity 
+    const unitPrice = item.totalQuantity > 0
+      ? item.totalPrice / item.totalQuantity
       : (item.price || 0);
     malzemeListesiData.push([
       siraNo++,
       item.stock_code,
       item.description,
-      typeof item.totalQuantity === 'number' 
+      typeof item.totalQuantity === 'number'
         ? parseFloat(item.totalQuantity.toFixed(2))
         : item.totalQuantity,
       item.unit,

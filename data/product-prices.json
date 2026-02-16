@@ -2124,35 +2124,35 @@
       },
       {
         "description": "Situo 1 IO Pure II SEA MEA",
-        "stock_code": "352532111100",
+        "stock_code": "352532231100",
         "uretici_kodu": "352532111100",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "73.20"
+      },
+      {
+        "description": "Situo 5 IO Pure II SEA MEA",
+        "stock_code": "352532251100",
+        "uretici_kodu": "352532151100",
+        "type": "otomasyon_kumandalar",
+        "unit": "Adet",
+        "price": "177.27"
+      },
+      {
+        "description": "Situo 1 RTS Pure II",
+        "stock_code": "352532111100",
+        "uretici_kodu": "352532121100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
         "price": "76.62"
       },
       {
-        "description": "Situo 5 IO Pure II SEA MEA",
-        "stock_code": "352532151100",
-        "uretici_kodu": "352532151100",
-        "type": "otomasyon_kumandalar",
-        "unit": "Adet",
-        "price": "130.11"
-      },
-      {
-        "description": "Situo 1 RTS Pure II",
-        "stock_code": "352532121100",
-        "uretici_kodu": "352532121100",
-        "type": "otomasyon_kumandalar",
-        "unit": "Adet",
-        "price": "62.19"
-      },
-      {
         "description": "Situo 5 RTS Pure II",
-        "stock_code": "352532141100",
+        "stock_code": "352532151100",
         "uretici_kodu": "352532141100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "105.61"
+        "price": "130.11"
       },
       {
         "description": "Telis 16 RTS Pure",
@@ -2180,11 +2180,11 @@
       },
       {
         "description": "Telis 6 Chronis RTS Zaman Ayarlı Kumanda",
-        "stock_code": "352532321100",
+        "stock_code": "352532191100",
         "uretici_kodu": "352532321100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "323.50"
+        "price": "380.76"
       },
       {
         "description": "Sıva Altı Kalıcı Buton",
@@ -2455,6 +2455,96 @@
         "type": "panjur_tambur_boru_profilleri",
         "unit": "Metre",
         "price": "2.35"
+      },
+      {
+        "description": "Plise Kasa Profili Beyaz",
+        "stock_code": "SK.PLI.001.01",
+        "uretici_kodu": "SK.PLI.001.01",
+        "type": "sineklik_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "3.45",
+        "currency": "EUR"
+      },
+      {
+        "description": "Plise Kasa Profili Kahverengi",
+        "stock_code": "SK.PLI.001.02",
+        "uretici_kodu": "SK.PLI.001.02",
+        "type": "sineklik_profilleri",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "3.57",
+        "currency": "EUR"
+      },
+      {
+        "description": "Plise Kasa Profili Metalik Gri",
+        "stock_code": "SK.PLI.001.03",
+        "uretici_kodu": "SK.PLI.001.03",
+        "type": "sineklik_profilleri",
+        "color": "metalik_gri",
+        "unit": "Metre",
+        "price": "3.57",
+        "currency": "EUR"
+      },
+      {
+        "description": "Plise Kasa Profili Antrasit Gri",
+        "stock_code": "SK.PLI.001.04",
+        "uretici_kodu": "SK.PLI.001.04",
+        "type": "sineklik_profilleri",
+        "color": "antrasit_gri",
+        "unit": "Metre",
+        "price": "3.57",
+        "currency": "EUR"
+      },
+      {
+        "description": "Plise Kasa Profili Krem",
+        "stock_code": "SK.PLI.001.05",
+        "uretici_kodu": "SK.PLI.001.05",
+        "type": "sineklik_profilleri",
+        "color": "krem",
+        "unit": "Metre",
+        "price": "3.57",
+        "currency": "EUR"
+      },
+      {
+        "description": "Plise Kasa Profili Altın Meşe",
+        "stock_code": "SK.PLI.001.06",
+        "uretici_kodu": "SK.PLI.001.06",
+        "type": "sineklik_profilleri",
+        "color": "altın_meşe",
+        "unit": "Metre",
+        "price": "4.16",
+        "currency": "EUR"
+      },
+      {
+        "description": "Plise Kasa Profili Fındık",
+        "stock_code": "SK.PLI.001.07",
+        "uretici_kodu": "SK.PLI.001.07",
+        "type": "sineklik_profilleri",
+        "color": "fındık",
+        "unit": "Metre",
+        "price": "4.16",
+        "currency": "EUR"
+      },
+      {
+        "description": "Plise Kasa Profili Vizon",
+        "stock_code": "SK.PLI.001.08",
+        "uretici_kodu": "SK.PLI.001.08",
+        "type": "sineklik_profilleri",
+        "color": "vizon",
+        "unit": "Metre",
+        "price": "3.57",
+        "currency": "EUR"
+      },
+      {
+        "description": "Plise Kasa Profili RAL",
+        "stock_code": "SK.PLI.001.09",
+        "uretici_kodu": "SK.PLI.001.09",
+        "type": "sineklik_profilleri",
+        "color": "ral",
+        "unit": "Metre",
+        "price": "3.68",
+        "currency": "EUR"
       }
     ],
     "sineklik": [

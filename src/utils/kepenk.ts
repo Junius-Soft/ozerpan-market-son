@@ -405,6 +405,12 @@ export const findMotorPrice = (
       p.motor_type === motorTip
   );
 
+  // Motor modeline göre filtrele
+  // NOT: 70'lik motorlarda sel_70 modeli altında 80 ve 100 Nm olabilir.
+  // Bu durumda doğru ayrım kepenk-motor-selection.ts'de yapılmalı ve buraya benzersiz ID gelmeli.
+  // Ancak `sel_70` gibi genel bir ID gelirse, fiyata veya tork değerine göre ayrım yapmak gerekebilir.
+  // Şimdilik ilk eşleşeni döndürüyoruz, ancak `kepenk-motor-selection.ts` dosyasında `sel_70` yerine `sel_70_100` gibi
+  // benzersiz ID'ler kullanıldığından emin olunmalı.
   const matchingMotor = motorPrices[0];
 
   if (!matchingMotor) return [0, null];

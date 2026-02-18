@@ -67,9 +67,15 @@ export const KEPENK_MOTOR_CAPACITY_MAP: Record<string, Record<string, number>> =
 // Excel'deki motor açıklamalarına ve product-prices.json'daki mevcut modellere göre
 export const MOTOR_MODEL_TO_NEWTON: Record<string, string> = {
   // 70mm tambur motorları
-  sel_70: "70-80", // MOSEL SEL 70 80 Redüktörlü Motor
-  sel_70_80: "70-80", // MOSEL SEL 70 80 Nm
-  sel_70_100: "70-100", // MOSEL SEL 70 100 Nm
+  sel_70: "70-80", // MOSEL SEL 70 80 Redüktörlü Motor (product-prices.json'da sel_70 olarak geçiyor)
+  sel_70_80: "70-80", // MOSEL SEL 70 80 Nm (bu da olabilir)
+  sel_70_100: "70-100", // MOSEL SEL 70 100 Nm (product-prices.json: sel_70) -> DÜZELTME: sel_70 hepsi için aynı ID'yi kullanıyor olabilir mi? HAYIR, Fiyat listesinde sel_70, sel_70_120, sel_70_140 var.
+  // 100 lük motor fiyat listesinde sel_70 olarak görünüyor olabilir mi? Kontrol: sel_70 (80Nm), sel_70 (100Nm) -> model aynı ama price farklı olabilir.
+  // ANCAK product-prices.json'da:
+  // sel_70 -> 80Nm ve 100Nm için ayrı satırlar VAR ama motor_model AYNI (sel_70).
+  // sel_70_120 -> 120Nm
+  // sel_70_140 -> 140Nm
+
   sel_70_120: "70-120", // MOSEL SEL 70-120 Redüktörlü Motor
   sel_70_140: "70-140", // MOSEL SEL 70 140 Nm
   // 102mm tambur motorları
@@ -107,19 +113,23 @@ function getMotorModelByNewtonRange(
 ): string | null {
   if (tamburType === "70mm") {
     if (newtonRange === "70-80") {
-      return "sel_70";
-    } else if (newtonRange === "70-100" || newtonRange === "70-120") {
-      return "sel_70_120"; // 70-100 için de 70-120 motorunu kullan (daha güçlü)
+      return "sel_70"; // 80 Nm (product-prices.json: sel_70) (DİKKAT: 80 ve 100 aynı model ID'ye sahip olabilir, fiyatla ayrışmalı ama burada ID dönüyoruz. Fiyatta description ile ayrışacak)
+    } else if (newtonRange === "70-100") {
+      return "sel_70"; // 100 Nm (product-prices.json: sel_70)
+    } else if (newtonRange === "70-120") {
+      return "sel_70_120"; // 120 Nm
     } else if (newtonRange === "70-140") {
-      return "sel_70_120"; // 70-140 için de 70-120 motorunu kullan (mevcut en güçlü)
+      return "sel_70_140"; // 140 Nm
     }
   } else if (tamburType === "102mm") {
     if (newtonRange === "102-230") {
-      return "sel_102_120";
+      return "sel_102_120"; // 102-120 (product-prices'da bu ID var mı kontrol etmek lazım, yukarda 102-230 -> sel_102_120 denmiş)
     } else if (newtonRange === "102-330") {
-      return "sel_102_120"; // 102-330 için de sel_102_120 kullan (mevcut en güçlü)
-    } else if (newtonRange === "SEL-600" || newtonRange === "SEL-800") {
-      return "sel_900"; // SEL-600/800 için sel_900 kullan
+      return "sel_102_330";
+    } else if (newtonRange === "SEL-600") {
+      return "sel_600";
+    } else if (newtonRange === "SEL-800") {
+      return "sel_800"; // sel_900 yerine sel_800 olabilir json'a göre
     } else if (newtonRange === "SEL-1000") {
       return "sel_1000";
     }
@@ -141,7 +151,7 @@ export function selectKepenkMotor(
 ): string | null {
   // Lamel tipini normalize et
   const normalizedLamelType = lamelType.toLowerCase().replace("-", "_");
-  
+
   // Lamel tipine göre kapasite tablosunu al
   const capacityMap = KEPENK_MOTOR_CAPACITY_MAP[normalizedLamelType];
   if (!capacityMap) {

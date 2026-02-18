@@ -53,11 +53,11 @@ const TextInput: React.FC<FormikInputProps> = ({ field, fieldDef }) => (
 
 const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
   const { values } = form;
-  
+
   // Gözlü lamel için dinamik min/max değerleri
   let minValue = fieldDef.min;
   let maxValue = fieldDef.max;
-  
+
   if (field.name === "gozluLamelBaslangic") {
     // Başlangıç: 0'dan küçük olamaz
     minValue = 0;
@@ -66,27 +66,27 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
     const height = Number(values.height) || 0;
     maxValue = height > 0 ? height : undefined;
   }
-  
+
   // Input değerini string olarak tut (kullanıcı yazarken sorun olmasın)
   const [localValue, setLocalValue] = useState<string>(
     field.value != null ? String(field.value) : ""
   );
-  
+
   // Form değeri dışarıdan değiştiğinde localValue'yu güncelle (sadece external değişiklikler için)
   const isUserTypingRef = useRef(false);
-  
+
   useEffect(() => {
     // Kullanıcı yazıyorsa güncelleme yapma
     if (isUserTypingRef.current) {
       return;
     }
-    
+
     if (field.value != null && String(field.value) !== localValue) {
       setLocalValue(String(field.value));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [field.value]);
-  
+
   return (
     <Input
       id={fieldDef.id}
@@ -100,17 +100,17 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
       onChange={(e) => {
         isUserTypingRef.current = true;
         const inputValue = e.target.value;
-        
+
         // Sadece sayısal karakterlere izin ver
         const cleanValue = inputValue.replace(/[^\d.-]/g, "");
         setLocalValue(cleanValue);
-        
+
         // Boş değere izin ver (kullanıcı siliyorsa)
         if (cleanValue === "" || cleanValue === "-") {
           form.setFieldValue(field.name, "");
           return;
         }
-        
+
         // Parse et ve form'a set et (min/max kontrolü yapma, sadece yazıyor)
         const numValue = parseFloat(cleanValue);
         if (!isNaN(numValue)) {
@@ -124,7 +124,7 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
           let finalValue = value;
           let showWarning = false;
           let warningMessage = "";
-          
+
           if (minValue !== undefined && finalValue < minValue) {
             finalValue = minValue;
             if (field.name === "gozluLamelBaslangic") {
@@ -146,7 +146,7 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
             // Geçerli değeri kaydet
             setLocalValue(String(finalValue));
           }
-          
+
           if (showWarning && warningMessage) {
             toast.warn(warningMessage);
           }
@@ -162,8 +162,8 @@ const NumberInput: React.FC<FormikInputProps> = ({ field, form, fieldDef }) => {
       max={maxValue}
       name={field.name}
       disabled={fieldDef.disabled}
-      className={field.name === "gozluLamelBaslangic" || field.name === "gozluLamelBitis" 
-        ? "w-full" 
+      className={field.name === "gozluLamelBaslangic" || field.name === "gozluLamelBitis"
+        ? "w-full"
         : ""}
     />
   );
@@ -191,11 +191,11 @@ const SelectInput: React.FC<
     if (fieldDef.id === "lamelColor" && prices && Array.isArray(prices) && prices.length > 0) {
       const productId = (values as Record<string, unknown>).productId;
       const lamelType = (values as Record<string, unknown>).lamelType;
-      
+
       if (productId === "kepenk" && lamelType && typeof lamelType === "string") {
         try {
           const availableColors = getAvailableLamelColors(prices, lamelType);
-          
+
           // Sadece mevcut renkleri göster, olmayanları kaldır
           options = options.filter((option) => {
             const optionId = option.id || option.name;
@@ -246,7 +246,7 @@ const SelectInput: React.FC<
   const handleSelect = (optionValue: string) => {
     form.setFieldValue(field.name, optionValue, false);
     // lamel_color seçildiyse diğer renk alanını da güncelle
-    if (field.name === "lamel_color" && allFields) {
+    if ((field.name === "lamel_color" || field.name === "lamelColor") && allFields) {
       const colorFields = ["box_color", "subPart_color", "dikme_color"];
       colorFields.forEach((colorField: string) => {
         const colorFieldDef = allFields.find((f) => f.id === colorField);
@@ -315,9 +315,9 @@ const SelectInput: React.FC<
     const fullHex =
       hex.length === 3
         ? hex
-            .split("")
-            .map((x) => x + x)
-            .join("")
+          .split("")
+          .map((x) => x + x)
+          .join("")
         : hex;
     const r = parseInt(fullHex.substring(0, 2), 16);
     const g = parseInt(fullHex.substring(2, 4), 16);
@@ -334,11 +334,10 @@ const SelectInput: React.FC<
       trigger={
         <button
           type="button"
-          className={`w-full flex items-center border rounded-md px-3 py-2 min-h-[44px] transition ${
-            isSingleOption || fieldDef.disabled
+          className={`w-full flex items-center border rounded-md px-3 py-2 min-h-[44px] transition ${isSingleOption || fieldDef.disabled
               ? "bg-muted text-muted-foreground opacity-60 cursor-not-allowed"
               : "bg-background hover:bg-muted"
-          }`}
+            }`}
           onClick={() => {
             if (!isSingleOption) setOpen(true);
           }}
@@ -389,19 +388,18 @@ const SelectInput: React.FC<
           const style =
             hasColor && option.color
               ? {
-                  backgroundColor: option.color,
-                  color: getContrastTextColor(option.color),
-                }
+                backgroundColor: option.color,
+                color: getContrastTextColor(option.color),
+              }
               : {};
           return (
             <button
               key={option.id || option.name}
               type="button"
-              className={`flex flex-col items-center justify-center border rounded-lg p-2 transition focus:outline-none ${
-                (option.id || option.name) === currentValue
+              className={`flex flex-col items-center justify-center border rounded-lg p-2 transition focus:outline-none ${(option.id || option.name) === currentValue
                   ? "border-blue-500 ring-2 ring-blue-300 hover:border-blue-500"
                   : "border-muted hover:border-blue-500"
-              }`}
+                }`}
               onClick={() => handleSelect(option.id || option.name)}
               tabIndex={0}
               autoFocus={false}

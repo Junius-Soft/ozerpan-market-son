@@ -189,7 +189,7 @@ export async function generateFiyatAnaliziPDFPozListesi(
           const isMetre = prod.unit?.toLowerCase() === "metre";
           const prodSize = (prod as { size?: number }).size;
           const baseQuantity = isMetre && prodSize
-            ? Number((prodSize / 1000).toFixed(2))
+            ? Number(((prodSize / 1000) * (prod.quantity ?? 1)).toFixed(2))
             : (prod.quantity ?? 1);
           // Pozisyon quantity'si ile çarp
           const totalQuantity = baseQuantity * (pos.quantity ?? 1);
@@ -224,7 +224,7 @@ export async function generateFiyatAnaliziPDFPozListesi(
         const isMetre = prod.unit?.toLowerCase() === "metre";
         const prodSize = (prod as { size?: number }).size;
         const baseQuantity = isMetre && prodSize
-          ? Number((prodSize / 1000).toFixed(2))
+          ? Number(((prodSize / 1000) * (prod.quantity ?? 1)).toFixed(2))
           : (prod.quantity ?? 1);
         // Pozisyon quantity'si ile çarp
         const totalQuantity = baseQuantity * (pos.quantity ?? 1);
@@ -270,7 +270,7 @@ export async function generateFiyatAnaliziPDFPozListesi(
         const isMetre = acc.unit?.toLowerCase() === "metre";
         const accSize = (acc as { size?: number }).size;
         const baseQuantity = isMetre && accSize
-          ? Number((accSize / 1000).toFixed(2))
+          ? Number(((accSize / 1000) * (acc.quantity ?? 1)).toFixed(2))
           : (acc.quantity ?? 1);
         // Pozisyon quantity'si ile çarp
         const totalQuantity = baseQuantity * (pos.quantity ?? 1);

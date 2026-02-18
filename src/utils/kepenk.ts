@@ -112,7 +112,7 @@ export const findLamelPrice = (
   // Renk eşleştirme: Form'dan gelen renk değerlerini product-prices.json'daki değerlere map et
   const colorMapping: Record<string, string[]> = {
     "aluminyum": ["alüminyum"], // Form: "aluminyum" -> JSON: "alüminyum"
-    "ral_boyali": ["rall_boya", "ral_boyali"], // Form: "ral_boyali" -> JSON: "rall_boya"
+    "ral_boyali": ["rall_boya", "ral_boyali", "ral_boyalı"], // Form: "ral_boyali" -> JSON: "rall_boya"
     "ral_7016": ["antrasit_gri"], // Form: "ral_7016" -> JSON: "antrasit_gri"
     "ral_9005": ["siyah"], // Form: "ral_9005" -> JSON: "siyah" (eğer siyah yoksa bulunamaz)
     "ral_8017": ["krem", "metalik_gri", "altın_meşe"], // Form: "ral_8017" -> JSON: "krem", "metalik_gri" veya "altın_meşe" (kahverengi tonları)
@@ -121,7 +121,7 @@ export const findLamelPrice = (
 
   const colorLower = color.toLowerCase();
   const mappedColors = colorMapping[colorLower] || [colorLower];
-  
+
   // Önce mapping'deki renkleri dene
   let matchingLamel = null;
   for (const mappedColor of mappedColors) {
@@ -168,12 +168,45 @@ export const findSubPartPrice = (
 
   // Lamel tipine göre alt parça seç
   const altParcaType = lamelType.includes("100") ? "100_lu" : "77_li";
-  
-  // Renk filtresi ekle (eğer renk eşleşmezse, varsayılan olarak ilk uygun olanı kullan)
-  let matchingSubPart = subPartPrices.find(
-    (p) => p.lamel_type === altParcaType && 
-           p.color?.toLowerCase() === color.toLowerCase()
-  );
+
+
+  // Renk eşleştirme: Form'dan gelen renk değerlerini product-prices.json'daki değerlere map et
+  const colorMapping: Record<string, string[]> = {
+    "aluminyum": ["alüminyum"],
+    "ral_boyali": ["rall_boya", "ral_boyali", "ral_boyalı"],
+    "ral_7016": ["antrasit_gri"],
+    "ral_9005": ["siyah"],
+    "ral_8017": ["krem", "metalik_gri", "altın_meşe"],
+    "beyaz": ["beyaz"],
+    "antrasit_gri": ["antrasit_gri"],
+    "metalik_gri": ["metalik_gri"],
+    "krem": ["krem"],
+    "altın_meşe": ["altın_meşe"],
+  };
+
+  const colorLower = color.toLowerCase();
+  const mappedColors = colorMapping[colorLower] || [colorLower];
+
+  // Renk filtresi ekle (mapping ile)
+  let matchingSubPart = null;
+
+  // Önce mapping'deki renkleri dene
+  for (const mappedColor of mappedColors) {
+    matchingSubPart = subPartPrices.find(
+      (p) =>
+        p.lamel_type === altParcaType &&
+        p.color?.toLowerCase() === mappedColor
+    );
+    if (matchingSubPart) break;
+  }
+
+  // Eğer bulunamazsa, orijinal rengi dene
+  if (!matchingSubPart) {
+    matchingSubPart = subPartPrices.find(
+      (p) => p.lamel_type === altParcaType &&
+        p.color?.toLowerCase() === color.toLowerCase()
+    );
+  }
 
   // Eğer renk eşleşmezse, lamel tipine göre ilk uygun olanı kullan
   if (!matchingSubPart) {
@@ -210,7 +243,7 @@ export const findDikmePrice = (
   // Renk eşleştirme: Form'dan gelen renk değerlerini product-prices.json'daki değerlere map et
   const colorMapping: Record<string, string[]> = {
     "aluminyum": ["alüminyum"], // Form: "aluminyum" -> JSON: "alüminyum"
-    "ral_boyali": ["rall_boya", "ral_boyali"], // Form: "ral_boyali" -> JSON: "rall_boya"
+    "ral_boyali": ["rall_boya", "ral_boyali", "ral_boyalı"], // Form: "ral_boyali" -> JSON: "rall_boya"
     "ral_7016": ["antrasit_gri"], // Form: "ral_7016" -> JSON: "antrasit_gri"
     "ral_9005": ["siyah"], // Form: "ral_9005" -> JSON: "siyah"
     "ral_8017": ["krem", "metalik_gri", "altın_meşe"], // Form: "ral_8017" -> JSON: "krem", "metalik_gri" veya "altın_meşe"
@@ -283,36 +316,36 @@ export const findBoxPrice = (
 
   // Ön ve arka kutu bileşenlerini bul
   const boxSize = boxType.replace("mm", "");
-  
+
   // Önce mapping'deki renkleri dene
   let frontBox = null;
   let backBox = null;
-  
+
   for (const mappedColor of mappedColors) {
     frontBox = boxPrices.find(
-      (p) => 
+      (p) =>
         (p.kutu_type?.includes(`${boxSize}_on45`) || p.description?.includes("ÖN 45")) &&
         p.color.toLowerCase() === mappedColor
     );
     if (frontBox) break;
   }
-  
+
   // Eğer hala bulunamazsa, renk kontrolü olmadan dene
   if (!frontBox) {
     frontBox = boxPrices.find(
       (p) => p.kutu_type?.includes(`${boxSize}_on45`) || p.description?.includes("ÖN 45")
     );
   }
-  
+
   for (const mappedColor of mappedColors) {
     backBox = boxPrices.find(
-      (p) => 
+      (p) =>
         (p.kutu_type?.includes(`${boxSize}_arka90`) || p.description?.includes("ARKA 90")) &&
         p.color.toLowerCase() === mappedColor
     );
     if (backBox) break;
   }
-  
+
   // Eğer hala bulunamazsa, renk kontrolü olmadan dene
   if (!backBox) {
     backBox = boxPrices.find(
@@ -345,7 +378,7 @@ export const findTamburPrice = (
       p.tambur_type === tamburType
   );
 
-  let matchingTambur = tamburPrices.find((p) => 
+  let matchingTambur = tamburPrices.find((p) =>
     p.lamel_type?.includes(lamelType.replace("_", "-").toUpperCase())
   );
 

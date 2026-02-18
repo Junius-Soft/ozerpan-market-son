@@ -24,8 +24,8 @@ const sarimCapiTablosu: Record<string, Record<string, Record<number, number>>> =
       1.25: 14,
       1.5: 15.5,
       1.75: 16,
-      2.0: 17,
-      2.25: 18,
+      2.0: 16,
+      2.25: 16,
       2.5: 19,
       2.75: 19.5,
       3.0: 20,
@@ -133,26 +133,26 @@ export function calculateSarimCapi(
   movementType: "manuel" | "motorlu"
 ): number | null {
   const heightMetre = height / 1000;
-  
+
   // En yakın yükseklik değerini bul (yukarı yuvarlama)
   const heightKeys = [1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5, 2.75, 3.0, 3.25, 3.5];
   let closestHeight = heightKeys[0];
-  
+
   for (const key of heightKeys) {
     if (heightMetre <= key) {
       closestHeight = key;
       break;
     }
   }
-  
+
   // Eğer 3.5'ten büyükse, en büyük değeri kullan
   if (heightMetre > 3.5) {
     closestHeight = 3.5;
   }
-  
+
   const tablo = sarimCapiTablosu[lamelTickness]?.[movementType];
   if (!tablo) return null;
-  
+
   return tablo[closestHeight] || null;
 }
 
@@ -179,7 +179,7 @@ export function getBoxSizeBySarimCapi(
   if (!sarimCapi || optionId !== "distan") {
     return null;
   }
-  
+
   // Distan için sarım çapına göre kutu seçimi
   if (sarimCapi <= 13) {
     return "137mm";

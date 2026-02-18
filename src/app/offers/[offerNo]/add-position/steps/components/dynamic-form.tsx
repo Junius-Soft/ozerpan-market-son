@@ -248,9 +248,25 @@ const SelectInput: React.FC<
     // lamel_color seçildiyse diğer renk alanını da güncelle
     if ((field.name === "lamel_color" || field.name === "lamelColor") && allFields) {
       const colorFields = ["box_color", "subPart_color", "dikme_color"];
+      const woodColors = ["fındık", "altın_meşe"];
+
       colorFields.forEach((colorField: string) => {
         const colorFieldDef = allFields.find((f) => f.id === colorField);
         if (!colorFieldDef?.options) return;
+
+        // Ahşap renkler (Fındık, Altın Meşe) için özel durum: Yan dikme ve alt parça kahverengi olsun
+        if (woodColors.includes(optionValue)) {
+          // Hedef field'da kahverengi var mı kontrol et
+          const hasKahverengi = colorFieldDef.options.some(
+            (opt) => opt.id === "kahverengi"
+          );
+
+          if (hasKahverengi) {
+            form.setFieldValue(colorField, "kahverengi", false);
+            return;
+          }
+        }
+
         const hasColor = colorFieldDef.options.some(
           (option) => option.id === optionValue || option.name === optionValue
         );
@@ -335,8 +351,8 @@ const SelectInput: React.FC<
         <button
           type="button"
           className={`w-full flex items-center border rounded-md px-3 py-2 min-h-[44px] transition ${isSingleOption || fieldDef.disabled
-              ? "bg-muted text-muted-foreground opacity-60 cursor-not-allowed"
-              : "bg-background hover:bg-muted"
+            ? "bg-muted text-muted-foreground opacity-60 cursor-not-allowed"
+            : "bg-background hover:bg-muted"
             }`}
           onClick={() => {
             if (!isSingleOption) setOpen(true);
@@ -397,8 +413,8 @@ const SelectInput: React.FC<
               key={option.id || option.name}
               type="button"
               className={`flex flex-col items-center justify-center border rounded-lg p-2 transition focus:outline-none ${(option.id || option.name) === currentValue
-                  ? "border-blue-500 ring-2 ring-blue-300 hover:border-blue-500"
-                  : "border-muted hover:border-blue-500"
+                ? "border-blue-500 ring-2 ring-blue-300 hover:border-blue-500"
+                : "border-muted hover:border-blue-500"
                 }`}
               onClick={() => handleSelect(option.id || option.name)}
               tabIndex={0}

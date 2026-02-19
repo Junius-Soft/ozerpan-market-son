@@ -4210,14 +4210,14 @@
         "price": "0.00"
       },
       {
-        "description": "70mm Sekizgen Boru 1,0 mm",
+        "description": "70mm Sekizgen Boru 1,2 mm",
         "stock_code": "353153500900",
         "uretici_kodu": "TU.070.00.100",
         "type": "kepenk_tambur_boru_profilleri",
         "tambur_type": "70mm",
         "color": "alüminyum",
         "unit": "Metre",
-        "price": "7.40",
+        "price": "8.29",
         "capi_mm": "70",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
         "hareket_tip": "motorlu"
@@ -6085,6 +6085,78 @@
         "unit": "m²",
         "price": "2834.00",
         "currency": "TRY"
+      },
+      {
+        "description": "77'lik Alt Parça (4457) Pres",
+        "stock_code": "353121700200",
+        "type": "kepenk_alt_parça_profilleri",
+        "color": "pres",
+        "unit": "Metre",
+        "price": "9.32",
+        "currency": "EUR"
+      },
+      {
+        "description": "77'lik Alt Parça (4457) Ral Boyalı",
+        "stock_code": "353121701000",
+        "type": "kepenk_alt_parça_profilleri",
+        "color": "ral_boyalı",
+        "unit": "Metre",
+        "price": "11.01",
+        "currency": "EUR"
+      },
+      {
+        "description": "100'lük Alt Parça Boyalı",
+        "stock_code": "353121801000",
+        "type": "kepenk_alt_parça_profilleri",
+        "color": "ral_boyalı",
+        "unit": "Metre",
+        "price": "16.38",
+        "currency": "EUR"
+      },
+      {
+        "description": "100'lük Alt Parça Beyaz",
+        "stock_code": "353121801100",
+        "type": "kepenk_alt_parça_profilleri",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "16.64",
+        "currency": "EUR"
+      },
+      {
+        "description": "77'lik Dikme (100 mm) Pres",
+        "stock_code": "353131710200",
+        "type": "kepenk_dikme_profilleri",
+        "color": "pres",
+        "unit": "Metre",
+        "price": "13.21",
+        "currency": "EUR"
+      },
+      {
+        "description": "77'lik Dikme (100 mm) Ral Boyalı",
+        "stock_code": "353131711000",
+        "type": "kepenk_dikme_profilleri",
+        "color": "ral_boyalı",
+        "unit": "Metre",
+        "price": "21.13",
+        "currency": "EUR"
+      },
+      {
+        "description": "100'lük Dikme (100 mm) Ral Boyalı",
+        "stock_code": "353131811000",
+        "type": "kepenk_dikme_profilleri",
+        "color": "ral_boyalı",
+        "unit": "Metre",
+        "price": "25.35",
+        "currency": "EUR"
+      },
+      {
+        "description": "100'lük Dikme (140 mm) Ral Boyalı",
+        "stock_code": "353131821000",
+        "type": "kepenk_dikme_profilleri",
+        "color": "ral_boyalı",
+        "unit": "Metre",
+        "price": "39.83",
+        "currency": "EUR"
       }
     ]
   }

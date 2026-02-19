@@ -1578,6 +1578,42 @@
         "unit": "Adet",
         "price": "16.50",
         "currency": "TRY"
+      },
+      {
+        "description": "77'lik Alt Parça Lastiği Gri",
+        "stock_code": "353320701900",
+        "type": "panjur_alt_parça_aksesuarları",
+        "color": "gri",
+        "unit": "Metre",
+        "price": "1.64",
+        "currency": "EUR"
+      },
+      {
+        "description": "100'lük Alt Parça Lastiği Gri",
+        "stock_code": "353320801900",
+        "type": "panjur_alt_parça_aksesuarları",
+        "color": "gri",
+        "unit": "Metre",
+        "price": "4.00",
+        "currency": "EUR"
+      },
+      {
+        "description": "70 Boru Başı Yuvarlak Pimli Metal Pres",
+        "stock_code": "353451300200",
+        "type": "panjur_tambur_boru_aksesuarları",
+        "color": "pres",
+        "unit": "Adet",
+        "price": "10.00",
+        "currency": "EUR"
+      },
+      {
+        "description": "102 Boru Başı 16x16 Kare Pimli Pres",
+        "stock_code": "353451500200",
+        "type": "panjur_tambur_boru_aksesuarları",
+        "color": "pres",
+        "unit": "Adet",
+        "price": "18.26",
+        "currency": "EUR"
       }
     ]
   }

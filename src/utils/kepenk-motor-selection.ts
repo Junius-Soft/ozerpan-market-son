@@ -90,7 +90,7 @@ export const MOTOR_MODEL_TO_NEWTON: Record<string, string> = {
 
 // Manuel motor seçimi ID'lerinden product-prices.json'daki motor ID'lerine
 export const MANUAL_MOTOR_TO_PRODUCT_ID: Record<string, string> = {
-  sel_70_80: "sel_70",
+  sel_70_80: "sel_70_80",
   sel_70_100: "sel_70_100",
   sel_70_120: "sel_70_120",
   sel_70_140: "sel_70_140",
@@ -113,9 +113,9 @@ function getMotorModelByNewtonRange(
 ): string | null {
   if (tamburType === "70mm") {
     if (newtonRange === "70-80") {
-      return "sel_70"; // 80 Nm (product-prices.json: sel_70) (DİKKAT: 80 ve 100 aynı model ID'ye sahip olabilir, fiyatla ayrışmalı ama burada ID dönüyoruz. Fiyatta description ile ayrışacak)
+      return "sel_70_80"; // 80 Nm (Virtual ID for sel_70 80Nm)
     } else if (newtonRange === "70-100") {
-      return "sel_70"; // 100 Nm (product-prices.json: sel_70)
+      return "sel_70_100"; // 100 Nm (Virtual ID for sel_70 100Nm)
     } else if (newtonRange === "70-120") {
       return "sel_70_120"; // 120 Nm
     } else if (newtonRange === "70-140") {
@@ -123,13 +123,13 @@ function getMotorModelByNewtonRange(
     }
   } else if (tamburType === "102mm") {
     if (newtonRange === "102-230") {
-      return "sel_102_120"; // 102-120 (product-prices'da bu ID var mı kontrol etmek lazım, yukarda 102-230 -> sel_102_120 denmiş)
+      return "sel_102_330"; // 102-230 range (Product sel_102_230 missing, using 330Nm as safety fallback)
     } else if (newtonRange === "102-330") {
       return "sel_102_330";
     } else if (newtonRange === "SEL-600") {
       return "sel_600";
     } else if (newtonRange === "SEL-800") {
-      return "sel_800"; // sel_900 yerine sel_800 olabilir json'a göre
+      return "sel_900"; // SEL-800 uses sel_900 product ID
     } else if (newtonRange === "SEL-1000") {
       return "sel_1000";
     }

@@ -398,20 +398,35 @@ export const findMotorPrice = (
     motorModel: string,
     motorTip: string
 ): [number, SelectedProduct | null] => {
+    // Check for virtual IDs for sel_70 ambiguity
+    let searchModel = motorModel;
+    let descriptionFilter: string | null = null;
+
+    if (motorModel === "sel_70_80") {
+        searchModel = "sel_70";
+        descriptionFilter = "80"; // "SEL-70 80"
+    } else if (motorModel === "sel_70_100") {
+        searchModel = "sel_70";
+        descriptionFilter = "100"; // "SEL-70 100"
+    }
+
     const motorPrices = prices.filter(
         (p) =>
             p.type === "kepenk_motorlar" &&
-            p.motor_model === motorModel &&
+            p.motor_model === searchModel &&
             p.motor_type === motorTip
     );
 
     // Motor modeline göre filtrele
-    // NOT: 70'lik motorlarda sel_70 modeli altında 80 ve 100 Nm olabilir.
-    // Bu durumda doğru ayrım kepenk-motor-selection.ts'de yapılmalı ve buraya benzersiz ID gelmeli.
-    // Ancak `sel_70` gibi genel bir ID gelirse, fiyata veya tork değerine göre ayrım yapmak gerekebilir.
-    // Şimdilik ilk eşleşeni döndürüyoruz, ancak `kepenk-motor-selection.ts` dosyasında `sel_70` yerine `sel_70_100` gibi
-    // benzersiz ID'ler kullanıldığından emin olunmalı.
-    const matchingMotor = motorPrices[0];
+    let matchingMotor: PriceItem | undefined = motorPrices[0];
+
+    if (descriptionFilter && motorPrices.length > 0) {
+        // Try to filter by description if ambiguity resolution is needed
+        const refinedMatch = motorPrices.find(p => p.description && p.description.includes(descriptionFilter as string));
+        if (refinedMatch) {
+            matchingMotor = refinedMatch;
+        }
+    }
 
     if (!matchingMotor) return [0, null];
 

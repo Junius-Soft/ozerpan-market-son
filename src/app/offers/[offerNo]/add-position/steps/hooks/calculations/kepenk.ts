@@ -17,6 +17,7 @@ import {
   findSubPartAccessoryPrice,
   findTamburAccessoryPrice,
   findMountingAccessoryPrice,
+  findEndCapPrice,
 } from "@/utils/kepenk";
 import { selectKepenkMotor, resolveMotorSelection } from "@/utils/kepenk-motor-selection";
 import { findReceiverPrice, findRemotePrice } from "@/utils/panjur";
@@ -283,6 +284,14 @@ export const calculateKepenk = (
     16
   );
 
+  // Tapa (Lamel Tapası)
+  // Her lamel için 2 adet tapa
+  const [endCapPrice, endCapProduct] = findEndCapPrice(
+    prices,
+    values.lamelType,
+    normalLamelCount
+  );
+
   // Aksesuar fiyatlarını hesapla
   const accessoryTotalPrice = Number(accessoryItems.reduce(
     (sum, acc) => sum + (acc.totalPrice || 0),
@@ -303,7 +312,8 @@ export const calculateKepenk = (
     accessoryTotalPrice +
     subPartAccessoryPrice +
     tamburAccessoryPrice +
-    mountingAccessoryPrice
+    mountingAccessoryPrice +
+    endCapPrice
   ).toFixed(2));
 
   // Seçili ürünleri topla
@@ -321,6 +331,7 @@ export const calculateKepenk = (
     subPartAccessoryProduct,
     tamburAccessoryProduct,
     mountingAccessoryProduct,
+    endCapProduct,
   ].filter((p) => p !== null && p !== undefined) as SelectedProduct[];
 
   return {

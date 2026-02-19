@@ -486,3 +486,29 @@ export const findMountingAccessoryPrice = (
     const selectedProduct = createSelectedProduct(matchingAccessory, quantity);
     return [selectedProduct.totalPrice, selectedProduct];
 };
+
+// Tapa fiyatı bulma (Her lamel için 2 adet)
+export const findEndCapPrice = (
+    prices: PriceItem[],
+    lamelType: string,
+    lamelCount: number
+): [number, SelectedProduct | null] => {
+    const tapaPrices = prices.filter(
+        (p) => p.type === "kepenk_tapa_aksesuarları"
+    );
+
+    const is100mm = lamelType.includes("100");
+    const searchTerm = is100mm ? "100" : "77";
+
+    const matchingTapa = tapaPrices.find(
+        (p) => p.description && p.description.includes(searchTerm)
+    );
+
+    if (!matchingTapa) return [0, null];
+
+    // Her lamel için 2 adet tapa
+    const totalCount = lamelCount * 2;
+    const selectedProduct = createSelectedProduct(matchingTapa, totalCount);
+
+    return [selectedProduct.totalPrice, selectedProduct];
+};

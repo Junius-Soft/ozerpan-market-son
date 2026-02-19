@@ -1614,6 +1614,36 @@
         "unit": "Adet",
         "price": "18.26",
         "currency": "EUR"
+      },
+      {
+        "description": "3,9x16 mm YSB Matkap Uçlu Vida (Kepenk İçin)",
+        "stock_code": "121123901669",
+        "uretici_kodu": "VIDA-39-16",
+        "type": "kepenk_montaj_aksesuarları",
+        "color": "standart",
+        "unit": "Adet",
+        "price": "0.05",
+        "currency": "EUR"
+      },
+      {
+        "description": "Pvc Tapa SL ST-77 (77mm Kepenk Tapa)",
+        "stock_code": "353212701200",
+        "uretici_kodu": "Pvc Tapa SL ST-77",
+        "type": "kepenk_tapa_aksesuarları",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0.10",
+        "currency": "EUR"
+      },
+      {
+        "description": "Pvc Tapa ST-100 (100mm Kepenk Tapa)",
+        "stock_code": "353212801200",
+        "uretici_kodu": "Pvc Tapa ST-100",
+        "type": "kepenk_tapa_aksesuarları",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0.24",
+        "currency": "EUR"
       }
     ]
   }

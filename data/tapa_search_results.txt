@@ -1,0 +1,26 @@
+--- TAPA SEARCH RESULTS ---
+
+Found Row: {'Stok kodu': '121901100011', 'Açıklama': '12 mm Delik Tapası Beyaz', 'Üretici': 'Dağlar', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+Found Row: {'Stok kodu': '121901100019', 'Açıklama': '12 mm Delik Tapası Gri', 'Üretici': 'Dağlar', 'Renk': 'GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+Found Row: {'Stok kodu': '121901100020', 'Açıklama': '12 mm Delik Tapası Kahverengi', 'Üretici': 'Dağlar', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+Found Row: {'Stok kodu': '121901100034', 'Açıklama': '12 mm Delik Tapası Antrasit Gri', 'Üretici': 'Dağlar', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+Found Row: {'Stok kodu': '121903900011', 'Açıklama': '3,9 mm Vida Tapası Beyaz', 'Üretici': 'Dağlar', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+Found Row: {'Stok kodu': '121903900019', 'Açıklama': '3,9 mm Vida Tapası Gri', 'Üretici': 'Dağlar', 'Renk': 'GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+Found Row: {'Stok kodu': '121903900020', 'Açıklama': '3,9 mm Vida Tapası Kahverengi', 'Üretici': 'Dağlar', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+Found Row: {'Stok kodu': '121903900034', 'Açıklama': '3,9 mm Vida Tapası Antrasit Gri', 'Üretici': 'Dağlar', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+Found Row: {'Stok kodu': '121904800011', 'Açıklama': '4,8 mm Vida Tapası Beyaz', 'Üretici': 'Dağlar', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+Found Row: {'Stok kodu': '121904800019', 'Açıklama': '4,8 mm Vida Tapası Gri', 'Üretici': 'Dağlar', 'Renk': 'GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+Found Row: {'Stok kodu': '121904800020', 'Açıklama': '4,8 mm Vida Tapası Kahverengi', 'Üretici': 'Dağlar', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+Found Row: {'Stok kodu': '121904800034', 'Açıklama': '4,8 mm Vida Tapası Antrasit Gri', 'Üretici': 'Dağlar', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+Found Row: {'Stok kodu': '352212201200', 'Açıklama': 'Pvc Tapa SL-39', 'Üretici': 'Habil', 'Renk': 'SıYAH', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.042'}
+Found Row: {'Stok kodu': '352212301200', 'Açıklama': 'Pvc Tapa SL-41', 'Üretici': 'Özdil', 'Renk': 'SıYAH', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.0719119667385'}
+Found Row: {'Stok kodu': '352212401200', 'Açıklama': 'Pvc Tapa SL-45', 'Üretici': 'Özdil', 'Renk': 'SıYAH', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.0406943687745'}
+Found Row: {'Stok kodu': '352212501200', 'Açıklama': 'Pvc Tapa SL-55', 'Üretici': 'Habil', 'Renk': 'SıYAH', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.042'}
+Found Row: {'Stok kodu': '353212701200', 'Açıklama': 'Pvc Tapa SL ST-77', 'Üretici': 'Habil', 'Renk': 'SıYAH', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.1'}
+Found Row: {'Stok kodu': '353212801200', 'Açıklama': 'Pvc Tapa ST-100', 'Üretici': 'Özdil', 'Renk': 'SıYAH', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+Found Row: {'Stok kodu': '353213701200', 'Açıklama': 'Pvc Tapa SE-77 EXT', 'Üretici': 'Özdil', 'Renk': 'SıYAH', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.128862209467764'}
+Found Row: {'Stok kodu': '353214701200', 'Açıklama': 'Pvc Tapa SE-78/SL-78', 'Üretici': 'Özdil', 'Renk': 'SıYAH', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.109208696388561'}
+Found Row: {'Stok kodu': 'ZZ 352213601200', 'Açıklama': 'Pvc Tapa SE-62', 'Üretici': 'Özdil', 'Renk': 'SıYAH', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.737030124'}
+
+--- 'ARIT' SEARCH RESULTS ---
+

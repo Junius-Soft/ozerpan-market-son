@@ -1,0 +1,9 @@
+
+File: c:\Users\sadi2\Desktop\ERP\projeler\cam2\ozerpan-market-son\data\product-prices.json
+Line 1241: "stock_code": "352123900200",
+Line 1403: "stock_code": "352131100200",
+
+File: c:\Users\sadi2\Desktop\ERP\projeler\cam2\ozerpan-market-son\data\accessories.json
+Line 292: "stock_code": "352451121200",
+Line 427: "stock_code": "352321211900",
+Line 562: "stock_code": "352321211900",

@@ -1,0 +1,217 @@
+--- PRICE CHECK REPORT ---
+
+checking: KEPENK ALT PARÇA
+  > Searching JSON with keywords: ['alt', 'parça']
+    - Found: Mini Alt Parça Pres | Price: 3.51 | Code: 352123900200
+    - Found: Mini Alt Parça Beyaz | Price: 3.76 | Code: 352123901110
+    - Found: Mini Alt Parça Kahverengi | Price: 3.93 | Code: 352123902010
+    - Found: Mini Alt Parça Metalik Gri | Price: 3.93 | Code: 352123903010
+    - Found: Mini Alt Parça Krem | Price: 3.93 | Code: 352123903110
+    - Found: Mini Alt Parça Antrasit Gri | Price: 3.93 | Code: 352123903410
+    - Found: Mini Alt Parça Vizon | Price: 3.93 | Code: 352123903510
+    - Found: Mini Alt Parça Altın Meşe | Price: 4.91 | Code: 352123905110
+    - Found: Mini Alt Parça Ral Boyalı | Price: 4.43 | Code: 352123901010
+    - Found: Midi Alt Parça Pres | Price: 4.72 | Code: 352125500200
+  > Searching Excel with keywords: ['alt', 'parça']
+    - Found Row: {'Stok kodu': '352122000200', 'Açıklama': 'Panjur Kilitli Alt Parça', 'Üretici': 'ELC', 'Renk': 'PRES', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.46415543055818'}
+    - Found Row: {'Stok kodu': '352122001010', 'Açıklama': 'Panjur Kilitli Alt Parça', 'Üretici': 'ELC', 'Renk': 'RALL BOYA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.48888406005636'}
+    - Found Row: {'Stok kodu': '352122001110', 'Açıklama': 'Panjur Kilitli Alt Parça', 'Üretici': 'ELC', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.71457630505636'}
+    - Found Row: {'Stok kodu': '352122002010', 'Açıklama': 'Panjur Kilitli Alt Parça', 'Üretici': 'ELC', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.88152355472182'}
+    - Found Row: {'Stok kodu': '352122003010', 'Açıklama': 'Panjur Kilitli Alt Parça', 'Üretici': 'ELC', 'Renk': 'METALıKGRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.88152355472182'}
+    - Found Row: {'Stok kodu': '352122003110', 'Açıklama': 'Panjur Kilitli Alt Parça', 'Üretici': 'ELC', 'Renk': 'KREM', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.88152355472182'}
+    - Found Row: {'Stok kodu': '352122003410', 'Açıklama': 'Panjur Kilitli Alt Parça', 'Üretici': 'ELC', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.88152355472182'}
+    - Found Row: {'Stok kodu': '352122003510', 'Açıklama': 'Panjur Kilitli Alt Parça', 'Üretici': 'ELC', 'Renk': 'VIZON', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.88152355472182'}
+    - Found Row: {'Stok kodu': '352122005110', 'Açıklama': 'Panjur Kilitli Alt Parça', 'Üretici': 'ELC', 'Renk': 'ALTINMEşE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.84147024029818'}
+    - Found Row: {'Stok kodu': '352123900200', 'Açıklama': 'Panjur Alt Parça', 'Üretici': 'ELC', 'Renk': 'PRES', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.51'}
+    - Found Row: {'Stok kodu': '352123901010', 'Açıklama': 'Panjur Alt Parça', 'Üretici': 'ELC', 'Renk': 'RALL BOYA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.42897062732'}
+    - Found Row: {'Stok kodu': '352123901110', 'Açıklama': 'Panjur Alt Parça', 'Üretici': 'ELC', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.76490931732'}
+    - Found Row: {'Stok kodu': '352123902010', 'Açıklama': 'Panjur Alt Parça', 'Üretici': 'ELC', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.93411872484'}
+    - Found Row: {'Stok kodu': '352123903010', 'Açıklama': 'Panjur Alt Parça', 'Üretici': 'ELC', 'Renk': 'METALıKGRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.93411872484'}
+    - Found Row: {'Stok kodu': '352123903110', 'Açıklama': 'Panjur Alt Parça', 'Üretici': 'ELC', 'Renk': 'KREM', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.93411872484'}
+    - Found Row: {'Stok kodu': '352123903410', 'Açıklama': 'Panjur Alt Parça', 'Üretici': 'ELC', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.93411872484'}
+    - Found Row: {'Stok kodu': '352123903510', 'Açıklama': 'Panjur Alt Parça', 'Üretici': 'ELC', 'Renk': 'VIZON', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.93411872484'}
+    - Found Row: {'Stok kodu': '352123905110', 'Açıklama': 'Panjur Alt Parça', 'Üretici': 'ELC', 'Renk': 'ALTINMEşE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.90707281808'}
+    - Found Row: {'Stok kodu': '352125500200', 'Açıklama': 'Panjur Geniş Alt Parça', 'Üretici': 'ELC', 'Renk': 'PRES', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.72358560815'}
+    - Found Row: {'Stok kodu': '352125501010', 'Açıklama': 'Panjur Geniş Alt Parça', 'Üretici': 'Özdil', 'Renk': 'RALL BOYA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '5.71159208058'}
+    - Found Row: {'Stok kodu': '352125501110', 'Açıklama': 'Panjur Geniş Alt Parça', 'Üretici': 'ELC', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.79959733058'}
+    - Found Row: {'Stok kodu': '352125502010', 'Açıklama': 'Panjur Geniş Alt Parça', 'Üretici': 'ELC', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.79959733058'}
+    - Found Row: {'Stok kodu': '352125503010', 'Açıklama': 'Panjur Geniş Alt Parça', 'Üretici': 'ELC', 'Renk': 'METALıKGRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.79959733058'}
+    - Found Row: {'Stok kodu': '352125503110', 'Açıklama': 'Panjur Geniş Alt Parça', 'Üretici': 'ELC', 'Renk': 'KREM', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.79959733058'}
+    - Found Row: {'Stok kodu': '352125503410', 'Açıklama': 'Panjur Geniş Alt Parça', 'Üretici': 'Özdil', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.79959733058'}
+    - Found Row: {'Stok kodu': '352125503510', 'Açıklama': 'Panjur Geniş Alt Parça', 'Üretici': 'Özdil', 'Renk': 'VIZON', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.79959733058'}
+    - Found Row: {'Stok kodu': '352125505110', 'Açıklama': 'Panjur Geniş Alt Parça', 'Üretici': 'ELC', 'Renk': 'ALTINMEşE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '6.02664370695'}
+    - Found Row: {'Stok kodu': '352321211900', 'Açıklama': "39'luk Alt Parça Lastiği Gri", 'Üretici': 'Özdil', 'Renk': 'GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.32'}
+    - Found Row: {'Stok kodu': '352321511900', 'Açıklama': "55'lik Alt Parça Lastiği Gri", 'Üretici': 'Özdil', 'Renk': 'GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.52'}
+    - Found Row: {'Stok kodu': '352323936900', 'Açıklama': 'Alt Parça Sürgüsü Yuvarlak Galvaniz', 'Üretici': 'Özdil', 'Renk': 'PRES', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.881911716525'}
+    - Found Row: {'Stok kodu': '352323946900', 'Açıklama': 'Alt Parça Sürgüsü Yassı Galvaniz', 'Üretici': 'Özdil', 'Renk': 'PRES', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.8348193433125'}
+    - Found Row: {'Stok kodu': '353121700200', 'Açıklama': "77'lik Alt Parça (4457)", 'Üretici': 'ELC', 'Renk': 'PRES', 'Para birimi': 'EUR', 'Satış liste fiyatı': '9.32254036363637'}
+    - Found Row: {'Stok kodu': '353121701000', 'Açıklama': "77'lik Alt Parça (4457)", 'Üretici': 'ELC', 'Renk': 'RALL BOYA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '11.0132181818182'}
+    - Found Row: {'Stok kodu': '353121701100', 'Açıklama': "77'lik Alt Parça (4457)", 'Üretici': 'ELC', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '10.3940967272727'}
+    - Found Row: {'Stok kodu': '353121703000', 'Açıklama': "77'lik Alt Parça (4457)", 'Üretici': 'ELC', 'Renk': 'METALıKGRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '10.3940967272727'}
+    - Found Row: {'Stok kodu': '353121801000', 'Açıklama': "100'lük Alt Parça", 'Üretici': 'Özdil', 'Renk': 'RALL BOYA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '16.3791855'}
+    - Found Row: {'Stok kodu': '353121801100', 'Açıklama': "100'lük Alt Parça", 'Üretici': 'Özdil', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '16.6427586'}
+    - Found Row: {'Stok kodu': '353121803000', 'Açıklama': "100'lük Alt Parça", 'Üretici': 'Özdil', 'Renk': 'METALıKGRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '16.6427586'}
+    - Found Row: {'Stok kodu': '353320701900', 'Açıklama': "77'lik Alt Parça Lastiği Gri", 'Üretici': 'Özdil', 'Renk': 'GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '1.64'}
+    - Found Row: {'Stok kodu': '353320801900', 'Açıklama': "100'lük Alt Parça Lastiği Gri", 'Üretici': 'Özdil', 'Renk': 'GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.0'}
+    - Found Row: {'Stok kodu': 'ZZ 353121702000', 'Açıklama': "77'lik Alt Parça (4457)", 'Üretici': 'ELC', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '8.6349'}
+    - Found Row: {'Stok kodu': 'ZZ352122005210', 'Açıklama': 'Panjur Kilitli Alt Parça', 'Üretici': 'ELC', 'Renk': 'FINDIK', 'Para birimi': 'EUR', 'Satış liste fiyatı': '9.13884888'}
+
+==================================================
+checking: KEPENK DİKME
+  > Searching JSON with keywords: ['dikme']
+    - Found: Mini Dikme 53 mm Pres | Price: 5.01 | Code: 352131100200
+    - Found: Mini Dikme 53 mm Beyaz | Price: 5.37 | Code: 352131101110
+    - Found: Mini Dikme 53 mm Kahverengi | Price: 5.61 | Code: 352131102010
+    - Found: Mini Dikme 53 mm Metalik Gri | Price: 5.61 | Code: 352131103010
+    - Found: Mini Dikme 53 mm Krem | Price: 5.61 | Code: 352131103110
+    - Found: Mini Dikme 53 mm Antrasit Gri | Price: 6.27 | Code: 352131103400
+    - Found: Mini Dikme 53 mm Vizon | Price: 3.32 | Code: 352131403500
+    - Found: Mini Dikme 53 mm Ral Boyalı | Price: 6.47 | Code: 352131101010
+    - Found: Midi Dikme 60 mm Pres | Price: 3.49 | Code: 352131200200
+    - Found: Midi Dikme 60 mm Beyaz | Price: 7.41 | Code: 352131201110
+  > Searching Excel with keywords: ['dikme']
+    - Found Row: {'Stok kodu': '352131100200', 'Açıklama': "39'luk Dikme 53 mm", 'Üretici': 'ELC', 'Renk': 'PRES', 'Para birimi': 'EUR', 'Satış liste fiyatı': '5.00782603106818'}
+    - Found Row: {'Stok kodu': '352131101010', 'Açıklama': "39'luk Dikme 53 mm", 'Üretici': 'ELC', 'Renk': 'RALL BOYA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '6.47496060138636'}
+    - Found Row: {'Stok kodu': '352131101110', 'Açıklama': "39'luk Dikme 53 mm", 'Üretici': 'ELC', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '5.36983755138636'}
+    - Found Row: {'Stok kodu': '352131102010', 'Açıklama': "39'luk Dikme 53 mm", 'Üretici': 'ELC', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '5.61117856493182'}
+    - Found Row: {'Stok kodu': '352131103010', 'Açıklama': "39'luk Dikme 53 mm", 'Üretici': 'ELC', 'Renk': 'METALıKGRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '5.61117856493182'}
+    - Found Row: {'Stok kodu': '352131103110', 'Açıklama': "39'luk Dikme 53 mm", 'Üretici': 'ELC', 'Renk': 'KREM', 'Para birimi': 'EUR', 'Satış liste fiyatı': '5.61117856493182'}
+    - Found Row: {'Stok kodu': '352131103400', 'Açıklama': "39'luk Dikme 53 mm", 'Üretici': 'ELC', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '6.27004657756363'}
+    - Found Row: {'Stok kodu': '352131105110', 'Açıklama': "39'luk Dikme 53 mm", 'Üretici': 'Emre', 'Renk': 'ALTINMEşE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '6.99888939281818'}
+    - Found Row: {'Stok kodu': '352131201000', 'Açıklama': "55'lik Dikme 60 mm", 'Üretici': 'Özdil', 'Renk': 'PRES', 'Para birimi': 'EUR', 'Satış liste fiyatı': '8.59754944611818'}
+    - Found Row: {'Stok kodu': '352131201010', 'Açıklama': "55'lik Dikme 60 mm", 'Üretici': 'Özdil', 'Renk': 'RALL BOYA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '8.64062503289204'}
+    - Found Row: {'Stok kodu': '352131201110', 'Açıklama': "55'lik Dikme 60 mm", 'Üretici': 'Özdil', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '7.41271053289204'}
+    - Found Row: {'Stok kodu': '352131202010', 'Açıklama': "55'lik Dikme 60 mm", 'Üretici': 'Özdil', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '7.74586606246023'}
+    - Found Row: {'Stok kodu': '352131203010', 'Açıklama': "55'lik Dikme 60 mm", 'Üretici': 'Özdil', 'Renk': 'METALıKGRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '7.74586606246023'}
+    - Found Row: {'Stok kodu': '352131203110', 'Açıklama': "55'lik Dikme 60 mm", 'Üretici': 'Özdil', 'Renk': 'KREM', 'Para birimi': 'EUR', 'Satış liste fiyatı': '7.74586606246023'}
+    - Found Row: {'Stok kodu': '352131203410', 'Açıklama': "55'lik Dikme 60 mm", 'Üretici': 'Özdil', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '7.74586606246023'}
+    - Found Row: {'Stok kodu': '352131205110', 'Açıklama': "55'lik Dikme 60 mm", 'Üretici': 'Özdil', 'Renk': 'ALTINMEşE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '9.66151035747727'}
+    - Found Row: {'Stok kodu': '352132101110', 'Açıklama': 'Pvc Yan Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.49747199595055'}
+    - Found Row: {'Stok kodu': '352132107010', 'Açıklama': 'Pvc Yan Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'KAPLAMA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '8.38288566771345'}
+    - Found Row: {'Stok kodu': '352132107110', 'Açıklama': 'Pvc Yan Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'ALTINMEşE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '7.161826056224'}
+    - Found Row: {'Stok kodu': '352132107210', 'Açıklama': 'Pvc Yan Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'FINDIK', 'Para birimi': 'EUR', 'Satış liste fiyatı': '7.161826056224'}
+    - Found Row: {'Stok kodu': '352132108110', 'Açıklama': 'Pvc Yan Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '7.161826056224'}
+    - Found Row: {'Stok kodu': '352132108710', 'Açıklama': 'Pvc Yan Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'VIZON', 'Para birimi': 'EUR', 'Satış liste fiyatı': '7.161826056224'}
+    - Found Row: {'Stok kodu': '352132201110', 'Açıklama': 'Pvc Yan Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.43753547989091'}
+    - Found Row: {'Stok kodu': '352132207010', 'Açıklama': 'Pvc Yan Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'KAPLAMA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '8.137851087352'}
+    - Found Row: {'Stok kodu': '352132207110', 'Açıklama': 'Pvc Yan Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'ALTINMEşE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '6.96321289516364'}
+    - Found Row: {'Stok kodu': '352132207210', 'Açıklama': 'Pvc Yan Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'FINDIK', 'Para birimi': 'EUR', 'Satış liste fiyatı': '6.96321289516364'}
+    - Found Row: {'Stok kodu': '352132208110', 'Açıklama': 'Pvc Yan Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '6.96321289516364'}
+    - Found Row: {'Stok kodu': '352132208710', 'Açıklama': 'Pvc Yan Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'VIZON', 'Para birimi': 'EUR', 'Satış liste fiyatı': '6.96321289516364'}
+    - Found Row: {'Stok kodu': '352132301110', 'Açıklama': 'Pvc Orta Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '7.2139976875'}
+    - Found Row: {'Stok kodu': '352132307010', 'Açıklama': 'Pvc Orta Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'KAPLAMA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '14.624461695'}
+    - Found Row: {'Stok kodu': '352132307110', 'Açıklama': 'Pvc Orta Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'ALTINMEşE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.7543479115'}
+    - Found Row: {'Stok kodu': '352132307210', 'Açıklama': 'Pvc Orta Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'FINDIK', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.7543479115'}
+    - Found Row: {'Stok kodu': '352132308110', 'Açıklama': 'Pvc Orta Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.7543479115'}
+    - Found Row: {'Stok kodu': '352132308710', 'Açıklama': 'Pvc Orta Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'VIZON', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.7543479115'}
+    - Found Row: {'Stok kodu': '352132401110', 'Açıklama': 'Pvc Orta Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '7.2139976875'}
+    - Found Row: {'Stok kodu': '352132407010', 'Açıklama': 'Pvc Orta Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'KAPLAMA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '14.427995375'}
+    - Found Row: {'Stok kodu': '352132407110', 'Açıklama': 'Pvc Orta Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'ALTINMEşE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.6094540005'}
+    - Found Row: {'Stok kodu': '352132407210', 'Açıklama': 'Pvc Orta Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'FINDIK', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.6094540005'}
+    - Found Row: {'Stok kodu': '352132408110', 'Açıklama': 'Pvc Orta Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.6094540005'}
+    - Found Row: {'Stok kodu': '352132408710', 'Açıklama': 'Pvc Orta Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'VIZON', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.6094540005'}
+    - Found Row: {'Stok kodu': '352132501110', 'Açıklama': 'Pvc Ötelemeli Yan Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '7.1449546875'}
+    - Found Row: {'Stok kodu': '352132507010', 'Açıklama': 'Pvc Ötelemeli Yan Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'KAPLAMA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '14.558967954375'}
+    - Found Row: {'Stok kodu': '352132507110', 'Açıklama': 'Pvc Ötelemeli Yan Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'ALTINMEşE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.6322798875'}
+    - Found Row: {'Stok kodu': '352132507210', 'Açıklama': 'Pvc Ötelemeli Yan Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'FINDIK', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.6322798875'}
+    - Found Row: {'Stok kodu': '352132508710', 'Açıklama': 'Pvc Ötelemeli Yan Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'VIZON', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.6322798875'}
+    - Found Row: {'Stok kodu': '352132508810', 'Açıklama': 'Pvc Ötelemeli Yan Dikme 39 mm', 'Üretici': 'Winsa', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.7238'}
+    - Found Row: {'Stok kodu': '352132601110', 'Açıklama': 'Pvc Ötelemeli Yan Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '7.1449546875'}
+    - Found Row: {'Stok kodu': '352132607010', 'Açıklama': 'Pvc Ötelemeli Yan Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'KAPLAMA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '14.289909375'}
+    - Found Row: {'Stok kodu': '352132607110', 'Açıklama': 'Pvc Ötelemeli Yan Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'ALTINMEşE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.48938079375'}
+    - Found Row: {'Stok kodu': '352132607210', 'Açıklama': 'Pvc Ötelemeli Yan Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'FINDIK', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.48938079375'}
+    - Found Row: {'Stok kodu': '352132608710', 'Açıklama': 'Pvc Ötelemeli Yan Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'VIZON', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.48938079375'}
+    - Found Row: {'Stok kodu': '352132608810', 'Açıklama': 'Pvc Ötelemeli Yan Dikme 55 mm', 'Üretici': 'Winsa', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '12.59385'}
+    - Found Row: {'Stok kodu': '352132931110', 'Açıklama': 'Yan Dikme Adaptörü 31x42', 'Üretici': 'Winsa', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '2.12363302979927'}
+    - Found Row: {'Stok kodu': '352132937010', 'Açıklama': 'Yan Dikme Adaptörü 31x42', 'Üretici': 'Winsa', 'Renk': 'KAPLAMA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '5.75037986430982'}
+    - Found Row: {'Stok kodu': '352132937110', 'Açıklama': 'Yan Dikme Adaptörü 31x42', 'Üretici': 'Winsa', 'Renk': 'ALTINMEşE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.84369315568218'}
+    - Found Row: {'Stok kodu': '352132937210', 'Açıklama': 'Yan Dikme Adaptörü 31x42', 'Üretici': 'Winsa', 'Renk': 'FINDIK', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.84369315568218'}
+    - Found Row: {'Stok kodu': '352132938110', 'Açıklama': 'Yan Dikme Adaptörü 31x42', 'Üretici': 'Winsa', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.84369315568218'}
+    - Found Row: {'Stok kodu': '352132938710', 'Açıklama': 'Yan Dikme Adaptörü 31x42', 'Üretici': 'Winsa', 'Renk': 'VIZON', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.84369315568218'}
+    - Found Row: {'Stok kodu': '352332911100', 'Açıklama': 'Panjur Dikme Makası Beyaz', 'Üretici': 'Özdil', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '17.76'}
+    - Found Row: {'Stok kodu': '352332912000', 'Açıklama': 'Panjur Dikme Makası Kahverengi', 'Üretici': 'Özdil', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '18.7482101293683'}
+    - Found Row: {'Stok kodu': '352332921100', 'Açıklama': 'Panjur Dikme Menteşesi Beyaz', 'Üretici': 'Özdil', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '1.7845440772635'}
+    - Found Row: {'Stok kodu': '352332922000', 'Açıklama': 'Panjur Dikme Menteşesi Kahverengi', 'Üretici': 'Özdil', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '1.8685226220759'}
+    - Found Row: {'Stok kodu': '353131710200', 'Açıklama': "77'lik Dikme (100 mm)", 'Üretici': 'ELC', 'Renk': 'PRES', 'Para birimi': 'EUR', 'Satış liste fiyatı': '13.2099787636364'}
+    - Found Row: {'Stok kodu': '353131711000', 'Açıklama': "77'lik Dikme (100 mm)", 'Üretici': 'ELC', 'Renk': 'RALL BOYA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '21.1330136'}
+    - Found Row: {'Stok kodu': '353131711100', 'Açıklama': "77'lik Dikme (100 mm)", 'Üretici': 'ELC', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '21.1330136'}
+    - Found Row: {'Stok kodu': '353131712000', 'Açıklama': "77'lik Dikme (100 mm)", 'Üretici': 'ELC', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '21.1330136'}
+    - Found Row: {'Stok kodu': '353131713000', 'Açıklama': "77'lik Dikme (100 mm)", 'Üretici': 'ELC', 'Renk': 'METALıKGRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '21.1330136'}
+    - Found Row: {'Stok kodu': '353131720200', 'Açıklama': "77'lik Dikme (90 mm)", 'Üretici': 'ELC', 'Renk': 'PRES', 'Para birimi': 'EUR', 'Satış liste fiyatı': '21.1330136'}
+    - Found Row: {'Stok kodu': '353131721000', 'Açıklama': "77'lik Dikme (90 mm)", 'Üretici': 'ELC', 'Renk': 'RALL BOYA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '21.1330136'}
+    - Found Row: {'Stok kodu': '353131721100', 'Açıklama': "77'lik Dikme (90 mm)", 'Üretici': 'ELC', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '21.1330136'}
+    - Found Row: {'Stok kodu': '353131723000', 'Açıklama': "77'lik Dikme (90 mm)", 'Üretici': 'ELC', 'Renk': 'METALıKGRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '21.1330136'}
+    - Found Row: {'Stok kodu': '353131811000', 'Açıklama': "100'lük Dikme (100 mm)", 'Üretici': 'Özdil', 'Renk': 'RALL BOYA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '25.347002625'}
+    - Found Row: {'Stok kodu': '353131813000', 'Açıklama': "100'lük Dikme (100 mm)", 'Üretici': 'Özdil', 'Renk': 'METALıKGRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '20.18626155'}
+    - Found Row: {'Stok kodu': '353131821000', 'Açıklama': "100'lük Dikme (140 mm)", 'Üretici': 'Özdil', 'Renk': 'RALL BOYA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '39.831004125'}
+    - Found Row: {'Stok kodu': '353131823000', 'Açıklama': "100'lük Dikme (140 mm)", 'Üretici': 'Özdil', 'Renk': 'METALıKGRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '31.72126815'}
+    - Found Row: {'Stok kodu': '353330701700', 'Açıklama': 'Dikme Pleksi', 'Üretici': 'Tura', 'Renk': '<Yok>', 'Para birimi': 'EUR', 'Satış liste fiyatı': '1.80576136363636'}
+    - Found Row: {'Stok kodu': 'ZZ 352331211100', 'Açıklama': 'Dikmeli U başı Mini Beyaz', 'Üretici': 'Özdil', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.59935747725'}
+    - Found Row: {'Stok kodu': 'ZZ 352331212000', 'Açıklama': 'Dikmeli U başı Mini Kahverengi', 'Üretici': 'Özdil', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.59935747725'}
+    - Found Row: {'Stok kodu': 'ZZ 352331221200', 'Açıklama': 'Dikme Akış Parçası Siyah', 'Üretici': 'Alenda', 'Renk': 'SıYAH', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.570816645'}
+    - Found Row: {'Stok kodu': 'ZZ 352332931200', 'Açıklama': 'Panjur Dikme Amortisör Siyah', 'Üretici': 'Alenda', 'Renk': '<Yok>', 'Para birimi': 'EUR', 'Satış liste fiyatı': '23.2875'}
+    - Found Row: {'Stok kodu': 'zz 353131730200', 'Açıklama': "77'lik Dikme (105 mm)", 'Üretici': 'ELC', 'Renk': 'PRES', 'Para birimi': 'EUR', 'Satış liste fiyatı': '108498.915'}
+    - Found Row: {'Stok kodu': 'ZZ352131000200', 'Açıklama': 'Özel Dikme', 'Üretici': 'ELC', 'Renk': 'PRES', 'Para birimi': 'EUR', 'Satış liste fiyatı': '8.65632'}
+    - Found Row: {'Stok kodu': 'ZZ352131001010', 'Açıklama': 'Özel Dikme', 'Üretici': 'ELC', 'Renk': 'RALL BOYA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '11.89736'}
+    - Found Row: {'Stok kodu': 'ZZ352131001110', 'Açıklama': 'Özel Dikme', 'Üretici': 'ELC', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '9.21512'}
+    - Found Row: {'Stok kodu': 'ZZ352131002010', 'Açıklama': 'Özel Dikme', 'Üretici': 'ELC', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '9.21512'}
+    - Found Row: {'Stok kodu': 'ZZ352131003010', 'Açıklama': 'Özel Dikme', 'Üretici': 'ELC', 'Renk': 'METALıKGRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '9.21512'}
+    - Found Row: {'Stok kodu': 'ZZ352131003110', 'Açıklama': 'Özel Dikme', 'Üretici': 'ELC', 'Renk': 'KREM', 'Para birimi': 'EUR', 'Satış liste fiyatı': '9.21512'}
+    - Found Row: {'Stok kodu': 'ZZ352131003410', 'Açıklama': 'Özel Dikme', 'Üretici': 'ELC', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '9.21512'}
+    - Found Row: {'Stok kodu': 'ZZ352131003510', 'Açıklama': 'Özel Dikme', 'Üretici': 'ELC', 'Renk': 'VIZON', 'Para birimi': 'EUR', 'Satış liste fiyatı': '9.21512'}
+    - Found Row: {'Stok kodu': 'ZZ352131005110', 'Açıklama': 'Özel Dikme', 'Üretici': 'ELC', 'Renk': 'ALTINMEşE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '10.77976'}
+    - Found Row: {'Stok kodu': 'ZZ352131005210', 'Açıklama': 'Özel Dikme', 'Üretici': 'ELC', 'Renk': 'FINDIK', 'Para birimi': 'EUR', 'Satış liste fiyatı': '10.77976'}
+    - Found Row: {'Stok kodu': 'ZZ352131900200', 'Açıklama': 'Panjur Dikme Adaptörü', 'Üretici': 'ELC', 'Renk': 'PRES', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.30614'}
+    - Found Row: {'Stok kodu': 'ZZ352131901010', 'Açıklama': 'Panjur Dikme Adaptörü', 'Üretici': 'ELC', 'Renk': 'RALL BOYA', 'Para birimi': 'EUR', 'Satış liste fiyatı': '5.97566'}
+    - Found Row: {'Stok kodu': 'ZZ352131901110', 'Açıklama': 'Panjur Dikme Adaptörü', 'Üretici': 'ELC', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.581'}
+    - Found Row: {'Stok kodu': 'ZZ352131902010', 'Açıklama': 'Panjur Dikme Adaptörü', 'Üretici': 'ELC', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.581'}
+    - Found Row: {'Stok kodu': 'ZZ352131903010', 'Açıklama': 'Panjur Dikme Adaptörü', 'Üretici': 'ELC', 'Renk': 'METALıKGRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.581'}
+    - Found Row: {'Stok kodu': 'ZZ352131903110', 'Açıklama': 'Panjur Dikme Adaptörü', 'Üretici': 'ELC', 'Renk': 'KREM', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.581'}
+    - Found Row: {'Stok kodu': 'ZZ352131903410', 'Açıklama': 'Panjur Dikme Adaptörü', 'Üretici': 'ELC', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.581'}
+    - Found Row: {'Stok kodu': 'ZZ352131903510', 'Açıklama': 'Panjur Dikme Adaptörü', 'Üretici': 'ELC', 'Renk': 'VIZON', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.581'}
+    - Found Row: {'Stok kodu': 'ZZ352131905110', 'Açıklama': 'Panjur Dikme Adaptörü', 'Üretici': 'ELC', 'Renk': 'ALTINMEşE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '5.36486'}
+    - Found Row: {'Stok kodu': 'ZZ352131905210', 'Açıklama': 'Panjur Dikme Adaptörü', 'Üretici': 'ELC', 'Renk': 'FINDIK', 'Para birimi': 'EUR', 'Satış liste fiyatı': '5.36486'}
+
+==================================================
+checking: 70 LİK SEKİZGEN BORU
+  > Searching JSON with keywords: ['70', 'sekizgen', 'boru']
+    - Found: 70mm Sekizgen Boru 1,0 mm | Price: 7.40 | Code: 353153500900
+  > Searching Excel with keywords: ['70', 'sekizgen', 'boru']
+    - Found Row: {'Stok kodu': '353151366900', 'Açıklama': '70mm Sekizgen Boru 1,2 mm', 'Üretici': 'Özdil', 'Renk': '<Yok>', 'Para birimi': 'EUR', 'Satış liste fiyatı': '8.2944810729'}
+
+==================================================
+checking: KEPENK ALT PARÇA LASTİĞİ
+  > Searching JSON with keywords: ['alt', 'parça', 'lastiği']
+    - Found: 39'luk Alt Parça Lastiği Gri | Price: 0.35 | Code: 352321211900
+    - Found: 55'lik Alt Parça Lastiği Gri | Price: 0.57 | Code: 352321511900
+    - Found: 39'luk Alt Parça Lastiği Gri | Price: 0.35 | Code: 352321211900
+    - Found: 55'lik Alt Parça Lastiği Gri | Price: 0.57 | Code: 352321511900
+  > Searching Excel with keywords: ['alt', 'parça', 'lastiği']
+    - Found Row: {'Stok kodu': '352321211900', 'Açıklama': "39'luk Alt Parça Lastiği Gri", 'Üretici': 'Özdil', 'Renk': 'GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.32'}
+    - Found Row: {'Stok kodu': '352321511900', 'Açıklama': "55'lik Alt Parça Lastiği Gri", 'Üretici': 'Özdil', 'Renk': 'GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.52'}
+    - Found Row: {'Stok kodu': '353320701900', 'Açıklama': "77'lik Alt Parça Lastiği Gri", 'Üretici': 'Özdil', 'Renk': 'GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '1.64'}
+    - Found Row: {'Stok kodu': '353320801900', 'Açıklama': "100'lük Alt Parça Lastiği Gri", 'Üretici': 'Özdil', 'Renk': 'GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.0'}
+
+==================================================
+checking: KEPENK BORU BAŞI
+  > Searching JSON with keywords: ['boru', 'başı']
+    - Found: 114 mm Çelik Boru Başı Galvaniz | Price: 21.00 | Code: 353451614900
+    - Found: 159 mm Çelik Boru Başı Galvaniz | Price: 0.00 | Code: 353451714900
+    - Found: 40 Boru Başı Rulmanlı Siyah | Price: 0.37 | Code: 352451121200
+    - Found: 60 Boru Başı Rulmanlı Siyah | Price: 0.73 | Code: 352451221200
+    - Found: Redüktör boru başı 40 mm-C 371 uyumlu | Price: 1.68 | Code: Netsim
+  > Searching Excel with keywords: ['boru', 'başı']
+    - Found Row: {'Stok kodu': '352451111200', 'Açıklama': '40 Boru Başı Pimli 12 mm Siyah', 'Üretici': 'Dağlar', 'Renk': 'SıYAH', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.69225788622375'}
+    - Found Row: {'Stok kodu': '352451121200', 'Açıklama': '40 Boru Başı Rulmanlı Siyah', 'Üretici': 'Özdil', 'Renk': 'SıYAH', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.38658557282625'}
+    - Found Row: {'Stok kodu': '352451211200', 'Açıklama': '60 Boru Başı Pimli 12 mm Siyah', 'Üretici': 'Dağlar', 'Renk': 'SıYAH', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.9529783888275'}
+    - Found Row: {'Stok kodu': '352451221200', 'Açıklama': '60 Boru Başı Rulmanlı Siyah', 'Üretici': 'Özdil', 'Renk': 'SıYAH', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.75'}
+    - Found Row: {'Stok kodu': '352456121100', 'Açıklama': 'Redüktör Boru Başı 40 mm Beyaz', 'Üretici': 'Mosel', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '2.44635705'}
+    - Found Row: {'Stok kodu': '352456221100', 'Açıklama': 'Redüktör Boru Başı 60 mm Beyaz', 'Üretici': 'Mosel', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '3.42489987'}
+    - Found Row: {'Stok kodu': '353451300200', 'Açıklama': '70 Boru Başı Yuvarlak Pimli Metal Pres', 'Üretici': 'Özdil', 'Renk': 'PRES', 'Para birimi': 'EUR', 'Satış liste fiyatı': '10.0'}
+    - Found Row: {'Stok kodu': '353451301200', 'Açıklama': '70 Boru Başı 16x16 Kare Pimli Siyah', 'Üretici': 'Toreks', 'Renk': 'SıYAH', 'Para birimi': 'EUR', 'Satış liste fiyatı': '10.00715625'}
+    - Found Row: {'Stok kodu': '353451500200', 'Açıklama': '102 Boru Başı 16x16 Kare Pimli Pres', 'Üretici': 'Yüksel', 'Renk': 'PRES', 'Para birimi': 'EUR', 'Satış liste fiyatı': '18.2586349431818'}
+    - Found Row: {'Stok kodu': '353451516900', 'Açıklama': '102 mm Çelik Boru Başı Galvaniz', 'Üretici': 'Özdil', 'Renk': '<Yok>', 'Para birimi': 'EUR', 'Satış liste fiyatı': '20.98635'}
+    - Found Row: {'Stok kodu': '353451616900', 'Açıklama': '114 mm Çelik Boru Başı Galvaniz', 'Üretici': 'Özdil', 'Renk': '<Yok>', 'Para birimi': 'EUR', 'Satış liste fiyatı': '20.98662048'}
+    - Found Row: {'Stok kodu': 'ZZ 353451716900', 'Açıklama': '140 mm Çelik Boru Başı Galvaniz', 'Üretici': 'Özdil', 'Renk': '<Yok>', 'Para birimi': 'EUR', 'Satış liste fiyatı': '20.98662048'}
+
+==================================================

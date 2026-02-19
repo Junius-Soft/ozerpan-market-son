@@ -1,0 +1,16 @@
+--- PRICE CHECK REPORT (VİDA) ---
+
+checking: VİDA
+  > Searching Excel with keywords: ['vida']
+    - Found Row: {'Stok kodu': '121123901669', 'Açıklama': '3,9x16 mm YSB Matkap Uçlu Vida', 'Üretici': 'Alenda', 'Renk': '<Yok>', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.05'}
+    - Found Row: {'Stok kodu': '121903900011', 'Açıklama': '3,9 mm Vida Tapası Beyaz', 'Üretici': 'Dağlar', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+    - Found Row: {'Stok kodu': '121903900019', 'Açıklama': '3,9 mm Vida Tapası Gri', 'Üretici': 'Dağlar', 'Renk': 'GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+    - Found Row: {'Stok kodu': '121903900020', 'Açıklama': '3,9 mm Vida Tapası Kahverengi', 'Üretici': 'Dağlar', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+    - Found Row: {'Stok kodu': '121903900034', 'Açıklama': '3,9 mm Vida Tapası Antrasit Gri', 'Üretici': 'Dağlar', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+    - Found Row: {'Stok kodu': '121904800011', 'Açıklama': '4,8 mm Vida Tapası Beyaz', 'Üretici': 'Dağlar', 'Renk': 'BEYAZ', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+    - Found Row: {'Stok kodu': '121904800019', 'Açıklama': '4,8 mm Vida Tapası Gri', 'Üretici': 'Dağlar', 'Renk': 'GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+    - Found Row: {'Stok kodu': '121904800020', 'Açıklama': '4,8 mm Vida Tapası Kahverengi', 'Üretici': 'Dağlar', 'Renk': 'KAHVE', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+    - Found Row: {'Stok kodu': '121904800034', 'Açıklama': '4,8 mm Vida Tapası Antrasit Gri', 'Üretici': 'Dağlar', 'Renk': 'ANT.GRı', 'Para birimi': 'EUR', 'Satış liste fiyatı': '0.24'}
+    - Found Row: {'Stok kodu': '121911093369', 'Açıklama': 'Klips vidası Galvaniz', 'Üretici': 'Winsa', 'Renk': '<Yok>', 'Para birimi': 'EUR', 'Satış liste fiyatı': '4.33'}
+
+==================================================

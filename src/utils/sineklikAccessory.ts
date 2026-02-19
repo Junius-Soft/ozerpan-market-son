@@ -1,5 +1,5 @@
 import { PriceItem } from "@/types/panjur";
-import { createSelectedProduct } from "@/utils/panjur";
+import { createSelectedProduct, normalizeColor } from "@/utils/panjur";
 import { SineklikSelections } from "@/types/sineklik";
 
 export function getMenteseliKasaKoseTakozuItem(
@@ -9,7 +9,8 @@ export function getMenteseliKasaKoseTakozuItem(
   const { color, menteseliOpeningType } = values;
   if (menteseliOpeningType === "disaAcilim") return undefined;
 
-  const takozStockCode = ["metalik_gri", "beyaz"].includes(color)
+  const normalizedColor = normalizeColor(color);
+  const takozStockCode = ["Metalik Gri", "Beyaz"].includes(normalizedColor)
     ? "378317031200"
     : "378317041200";
 
@@ -43,7 +44,8 @@ export function getMenteseliPencereMentesesiItem(
 
   if (menteseliOpeningType === "iceAcilim") return undefined;
 
-  const menteseStockCode = ["metalik_gri", "beyaz"].includes(color)
+  const normalizedColor = normalizeColor(color);
+  const menteseStockCode = ["Metalik Gri", "Beyaz"].includes(normalizedColor)
     ? "378332232000"
     : "378332251100";
 
@@ -80,7 +82,8 @@ export function getMenteseliFitilAccessoryItem(
 ): PriceItem | undefined {
   const { color, width, height } = values;
 
-  const fitilStockCode = ["metalik_gri", "beyaz"].includes(color)
+  const normalizedColor = normalizeColor(color);
+  const fitilStockCode = ["Metalik Gri", "Beyaz"].includes(normalizedColor)
     ? "378335101100"
     : "378335201100";
 
@@ -111,7 +114,7 @@ export function getMenteseliTulAccessoryItem(
 
   // m² hesaplama - alan bazlı
   const areaM2 = (width * height) / 1_000_000;
-  
+
   // m² bazlı fiyatlandırma
   const product = createSelectedProduct(tul, 1);
   // totalPrice'ı m² bazlı hesapla (price zaten m² fiyatı)
@@ -138,7 +141,7 @@ export function getSabitTulAccessoryItem(
 
   // m² hesaplama - alan bazlı
   const areaM2 = (width * height) / 1_000_000;
-  
+
   // m² bazlı fiyatlandırma
   const product = createSelectedProduct(tul, 1);
   // totalPrice'ı m² bazlı hesapla (price zaten m² fiyatı)
@@ -153,7 +156,8 @@ export function getSabitFitilAccessoryItem(
 ): PriceItem | undefined {
   const { color, width, height } = values;
 
-  const fitilStockCode = ["metalik_gri", "beyaz"].includes(color)
+  const normalizedColor = normalizeColor(color);
+  const fitilStockCode = ["Metalik Gri", "Beyaz"].includes(normalizedColor)
     ? "378335101100"
     : "378335201100";
 
@@ -172,7 +176,8 @@ export function getSabitKoseTakozuAccessoryItem(
 ): PriceItem | undefined {
   const { color } = values;
 
-  const takozStockCode = ["metalik_gri", "beyaz"].includes(color)
+  const normalizedColor = normalizeColor(color);
+  const takozStockCode = ["Metalik Gri", "Beyaz"].includes(normalizedColor)
     ? "378332101100"
     : "378332102000";
 
@@ -206,7 +211,7 @@ export function getPliseTulAccessoryItems(
 
   // m² hesaplama - tül katı yerine alan bazlı
   let areaM2: number;
-  
+
   if (kasaType === "esiksiz") {
     // Eşiksiz kasa için alan hesaplama
     const effectiveWidth = width;
@@ -216,7 +221,7 @@ export function getPliseTulAccessoryItems(
     // Normal kasa için alan hesaplama
     let effectiveWidth: number;
     let effectiveHeight: number;
-    
+
     if (pliseOpeningType === "dikey") {
       effectiveWidth = width - 55;
       effectiveHeight = height;
@@ -246,7 +251,7 @@ export function getPliseTulAccessoryItems(
     product.size = areaM2; // m² değerini size olarak sakla (gösterim için)
     items.push(product);
   }
-  
+
   return items;
 }
 
@@ -302,15 +307,16 @@ export function getPliseAccessoryKitItem(
   allAccessories: PriceItem[]
 ): PriceItem | undefined {
   const { kasaType, color } = values;
+  const normalizedColor = normalizeColor(color);
 
   let kitStockCode;
 
   if (kasaType === "esiksiz") {
-    kitStockCode = ["metalik_gri", "beyaz"].includes(color)
+    kitStockCode = ["Metalik Gri", "Beyaz"].includes(normalizedColor)
       ? "378250161200"
       : "378261801900";
   } else {
-    kitStockCode = ["metalik_gri", "beyaz"].includes(color)
+    kitStockCode = ["Metalik Gri", "Beyaz"].includes(normalizedColor)
       ? "378242201900"
       : "378250141200";
   }
@@ -386,7 +392,7 @@ export function getSurmeTulAccessoryItem(
 
   // m² hesaplama - alan bazlı
   const areaM2 = (width * height) / 1_000_000;
-  
+
   // m² bazlı fiyatlandırma
   const product = createSelectedProduct(tul, 1);
   // totalPrice'ı m² bazlı hesapla (price zaten m² fiyatı)
@@ -401,7 +407,8 @@ export function getSurmeFitilAccessoryItem(
 ): PriceItem | undefined {
   const { color, width, height } = values;
 
-  const fitilStockCode = ["metalik_gri", "beyaz"].includes(color)
+  const normalizedColor = normalizeColor(color);
+  const fitilStockCode = ["Metalik Gri", "Beyaz"].includes(normalizedColor)
     ? "378335101100"
     : "378335201100";
 

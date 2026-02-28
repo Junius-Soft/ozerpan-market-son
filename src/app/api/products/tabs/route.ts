@@ -20,15 +20,17 @@ export async function GET(request: NextRequest) {
 
   try {
     const productTabs = JSON.parse(await fs.readFile(dataFilePath, "utf8"));
+    // "SS" (Sürme Seri) ürünü sineklik sekmeleri kullanır
+    const resolvedProductId = productId === "SS" ? "sineklik" : productId;
     let tabs = productTabs[
-      productId as keyof typeof productTabs
+      resolvedProductId as keyof typeof productTabs
     ] as ProductTab[];
 
     if (!tabs) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
     // Apply product-specific filters
-    tabs = applyProductFilters(productId, tabs, optionId, typeId);
+    tabs = applyProductFilters(resolvedProductId, tabs, optionId, typeId);
     return NextResponse.json({ tabs });
   } catch (error) {
     console.error("Error reading products:", error);

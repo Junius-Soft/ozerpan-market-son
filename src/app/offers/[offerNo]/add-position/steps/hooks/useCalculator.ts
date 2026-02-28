@@ -32,7 +32,7 @@ export const useCalculator = (
   const { accessories } = useAccessories(values);
   const fetchedProductRef = useRef<string | null>(null);
   const lastCalcKeyRef = useRef<string>("");
-  
+
   // Redux state'lerini çek
   const middleBarPositions = useSelector(
     (state: RootState) => state.shutter.middleBarPositions
@@ -50,10 +50,15 @@ export const useCalculator = (
   // Fiyat fetch fonksiyonu
   const fetchPrices = useCallback(async (pName: string) => {
     if (fetchedProductRef.current === pName) return;
-    
+
     try {
-      const apiProductId = pName.toLowerCase() === "cam-balkon" ? "cam_balkon" : pName.toLowerCase();
-      
+      const apiProductId =
+        pName === "SS" || pName.toLowerCase() === "sineklik"
+          ? "sineklik"
+          : pName.toLowerCase() === "cam-balkon"
+            ? "cam_balkon"
+            : pName.toLowerCase();
+
       const response = await fetch(
         `/api/product-prices?productId=${apiProductId}`
       );
@@ -115,6 +120,14 @@ export const useCalculator = (
         values as CamBalkonSelections,
         prices,
         optionId
+      );
+      setResult(calcResult);
+    } else if (productName === "SS") {
+      // Sürme Seri sineklik olarak hesapla
+      const calcResult = calculateSineklik(
+        values as SineklikSelections,
+        prices,
+        accessories || []
       );
       setResult(calcResult);
     } else {

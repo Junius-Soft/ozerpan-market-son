@@ -189,6 +189,7 @@ export const DynamicPreview = forwardRef<
           };
 
         case "sineklik":
+        case "SS":
           return {
             frameColor: values.frameColor as string,
             meshType: values.meshType as string,
@@ -340,6 +341,7 @@ export const DynamicPreview = forwardRef<
             />
           );
         case "sineklik":
+        case "SS":
           return (
             <InsectScreenPreview
               width={width}

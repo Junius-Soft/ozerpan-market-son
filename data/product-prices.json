@@ -6187,6 +6187,36 @@
         "unit": "Metre",
         "price": "39.83",
         "currency": "EUR"
+      },
+      {
+        "description": "77'lik Dikme (100 mm) Beyaz",
+        "stock_code": "353131711100",
+        "type": "kepenk_dikme_profilleri",
+        "dikme_type": "77_lik",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "21.13",
+        "currency": "EUR"
+      },
+      {
+        "description": "77'lik Dikme (100 mm) Kahve",
+        "stock_code": "353131712200",
+        "type": "kepenk_dikme_profilleri",
+        "dikme_type": "77_lik",
+        "color": "kahverengi",
+        "unit": "Metre",
+        "price": "21.13",
+        "currency": "EUR"
+      },
+      {
+        "description": "77'lik Dikme (100 mm) Metalik Gri",
+        "stock_code": "353131713000",
+        "type": "kepenk_dikme_profilleri",
+        "dikme_type": "77_lik",
+        "color": "metalik_gri",
+        "unit": "Metre",
+        "price": "21.13",
+        "currency": "EUR"
       }
     ]
   }

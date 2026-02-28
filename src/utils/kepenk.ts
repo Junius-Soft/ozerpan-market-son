@@ -171,10 +171,15 @@ export const findSubPartPrice = (
     // Renk eşleştirme: Form'dan gelen renk değerlerini product-prices.json'daki değerlere map et
     const colorMapping: Record<string, string[]> = {
         "antrasit": ["antrasit_gri"],
+        "antrasit_gri": ["antrasit_gri"],
         "metalik_gri": ["metalik_gri"],
         "beyaz": ["beyaz"],
         "ral_boyali": ["rall_boya", "ral_boyali", "ral_boyalı"],
-        "antrasit_gri": ["antrasit_gri"]
+        "ral_boyalı": ["rall_boya", "ral_boyali", "ral_boyalı"],
+        "kahverengi": ["kahverengi", "kahve"],
+        "krem": ["krem"],
+        "altın_meşe": ["altın_meşe", "altin_mese"],
+        "fındık": ["fındık", "findik"],
     };
 
     const colorLower = color.toLowerCase();
@@ -241,6 +246,10 @@ export const findDikmePrice = (
         "beyaz": ["beyaz"],
         "ral_boyali": ["rall_boya", "ral_boyali", "ral_boyalı"],
         "ral_boyalı": ["rall_boya", "ral_boyali", "ral_boyalı"],
+        "kahverengi": ["kahverengi", "kahve"],
+        "krem": ["krem"],
+        "altın_meşe": ["altın_meşe", "altin_mese"],
+        "fındık": ["fındık", "findik"],
     };
 
     const colorLower = color.toLowerCase();

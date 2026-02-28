@@ -111,12 +111,10 @@ export const findLamelPrice = (
 
     // Renk eşleştirme: Form'dan gelen renk değerlerini product-prices.json'daki değerlere map et
     const colorMapping: Record<string, string[]> = {
-        "aluminyum": ["alüminyum"], // Form: "aluminyum" -> JSON: "alüminyum"
-        "ral_boyali": ["rall_boya", "ral_boyali", "ral_boyalı"], // Form: "ral_boyali" -> JSON: "rall_boya"
-        "ral_7016": ["antrasit_gri"], // Form: "ral_7016" -> JSON: "antrasit_gri"
-        "ral_9005": ["siyah"], // Form: "ral_9005" -> JSON: "siyah" (eğer siyah yoksa bulunamaz)
-        "ral_8017": ["krem", "metalik_gri", "altın_meşe"], // Form: "ral_8017" -> JSON: "krem", "metalik_gri" veya "altın_meşe" (kahverengi tonları)
-        "beyaz": ["beyaz"], // Form: "beyaz" -> JSON: "beyaz"
+        "antrasit": ["antrasit_gri"],
+        "metalik_gri": ["metalik_gri"],
+        "beyaz": ["beyaz"],
+        "ral_boyali": ["rall_boya", "ral_boyali", "ral_boyalı"],
     };
 
     const colorLower = color.toLowerCase();
@@ -172,16 +170,11 @@ export const findSubPartPrice = (
 
     // Renk eşleştirme: Form'dan gelen renk değerlerini product-prices.json'daki değerlere map et
     const colorMapping: Record<string, string[]> = {
-        "aluminyum": ["alüminyum"],
-        "ral_boyali": ["rall_boya", "ral_boyali", "ral_boyalı"],
-        "ral_7016": ["antrasit_gri"],
-        "ral_9005": ["siyah"],
-        "ral_8017": ["krem", "metalik_gri", "altın_meşe"],
-        "beyaz": ["beyaz"],
-        "antrasit_gri": ["antrasit_gri"],
+        "antrasit": ["antrasit_gri"],
         "metalik_gri": ["metalik_gri"],
-        "krem": ["krem"],
-        "altın_meşe": ["altın_meşe"],
+        "beyaz": ["beyaz"],
+        "ral_boyali": ["rall_boya", "ral_boyali", "ral_boyalı"],
+        "antrasit_gri": ["antrasit_gri"]
     };
 
     const colorLower = color.toLowerCase();
@@ -242,16 +235,12 @@ export const findDikmePrice = (
 
     // Renk eşleştirme: Form'dan gelen renk değerlerini product-prices.json'daki değerlere map et
     const colorMapping: Record<string, string[]> = {
-        "aluminyum": ["alüminyum"], // Form: "aluminyum" -> JSON: "alüminyum"
-        "ral_boyali": ["rall_boya", "ral_boyali", "ral_boyalı"], // Form: "ral_boyali" -> JSON: "rall_boya"
-        "ral_7016": ["antrasit_gri"], // Form: "ral_7016" -> JSON: "antrasit_gri"
-        "ral_9005": ["siyah"], // Form: "ral_9005" -> JSON: "siyah"
-        "ral_8017": ["krem", "metalik_gri", "altın_meşe"], // Form: "ral_8017" -> JSON: "krem", "metalik_gri" veya "altın_meşe"
-        "beyaz": ["beyaz"], // Form: "beyaz" -> JSON: "beyaz"
-        "antrasit_gri": ["antrasit_gri"], // Form: "antrasit_gri" -> JSON: "antrasit_gri"
-        "metalik_gri": ["metalik_gri"], // Form: "metalik_gri" -> JSON: "metalik_gri"
-        "krem": ["krem"], // Form: "krem" -> JSON: "krem"
-        "altın_meşe": ["altın_meşe"], // Form: "altın_meşe" -> JSON: "altın_meşe"
+        "antrasit": ["antrasit_gri"],
+        "antrasit_gri": ["antrasit_gri"],
+        "metalik_gri": ["metalik_gri"],
+        "beyaz": ["beyaz"],
+        "ral_boyali": ["rall_boya", "ral_boyali", "ral_boyalı"],
+        "ral_boyalı": ["rall_boya", "ral_boyali", "ral_boyalı"],
     };
 
     const colorLower = color.toLowerCase();
@@ -303,12 +292,10 @@ export const findBoxPrice = (
 
     // Renk eşleştirme: Lamel rengini kutu rengine map et (lamel rengi ile aynı fiyat)
     const colorMapping: Record<string, string[]> = {
-        "aluminyum": ["alüminyum"], // Form: "aluminyum" -> JSON: "alüminyum"
-        "ral_boyali": ["ral_boyalı", "rall_boya", "ral_boyali"], // Form: "ral_boyali" -> JSON: "ral_boyalı"
-        "ral_7016": ["antrasit_gri"], // Form: "ral_7016" -> JSON: "antrasit_gri"
-        "ral_9005": ["siyah"], // Form: "ral_9005" -> JSON: "siyah"
-        "ral_8017": ["krem", "metalik_gri", "altın_meşe"], // Form: "ral_8017" -> JSON: "krem", "metalik_gri" veya "altın_meşe"
-        "beyaz": ["beyaz"], // Form: "beyaz" -> JSON: "beyaz"
+        "antrasit": ["antrasit_gri"],
+        "metalik_gri": ["metalik_gri"],
+        "beyaz": ["beyaz"],
+        "ral_boyali": ["ral_boyalı", "rall_boya", "ral_boyali"],
     };
 
     const colorLower = color.toLowerCase();

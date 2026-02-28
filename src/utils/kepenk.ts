@@ -244,6 +244,7 @@ export const findDikmePrice = (
     const colorMapping: Record<string, string[]> = {
         "aluminyum": ["alüminyum"], // Form: "aluminyum" -> JSON: "alüminyum"
         "ral_boyali": ["rall_boya", "ral_boyali", "ral_boyalı"], // Form: "ral_boyali" -> JSON: "rall_boya"
+        "ral_boyalı": ["rall_boya", "ral_boyali", "ral_boyalı"], // Form: "ral_boyalı" (Türkçe ı) -> JSON: "rall_boya"
         "ral_7016": ["antrasit_gri"], // Form: "ral_7016" -> JSON: "antrasit_gri"
         "ral_9005": ["siyah"], // Form: "ral_9005" -> JSON: "siyah"
         "ral_8017": ["krem", "metalik_gri", "altın_meşe"], // Form: "ral_8017" -> JSON: "krem", "metalik_gri" veya "altın_meşe"

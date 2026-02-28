@@ -6127,6 +6127,28 @@
         "currency": "EUR"
       },
       {
+        "description": "77'lik Alt Parça (4457) Beyaz",
+        "stock_code": "353121701100",
+        "uretici_kodu": "ELC",
+        "type": "kepenk_alt_parca_profilleri",
+        "lamel_type": "77_li",
+        "color": "beyaz",
+        "unit": "Metre",
+        "price": "10.39",
+        "currency": "EUR"
+      },
+      {
+        "description": "77'lik Alt Parça (4457) Metalik Gri",
+        "stock_code": "353121701200",
+        "uretici_kodu": "ELC",
+        "type": "kepenk_alt_parca_profilleri",
+        "lamel_type": "77_li",
+        "color": "metalik_gri",
+        "unit": "Metre",
+        "price": "10.39",
+        "currency": "EUR"
+      },
+      {
         "description": "77'lik Dikme (100 mm) Pres",
         "stock_code": "353131710200",
         "type": "kepenk_dikme_profilleri",

@@ -3449,31 +3449,23 @@
             "type": "select",
             "options": [
               {
-                "id": "aluminyum",
-                "name": "Alüminyum (Doğal)"
+                "id": "antrasit",
+                "name": "Antrasit"
+              },
+              {
+                "id": "metalik_gri",
+                "name": "Metalik Gri"
               },
               {
                 "id": "beyaz",
                 "name": "Beyaz"
               },
               {
-                "id": "ral_7016",
-                "name": "RAL 7016 (Antrasit)"
-              },
-              {
-                "id": "ral_9005",
-                "name": "RAL 9005 (Siyah)"
-              },
-              {
-                "id": "ral_8017",
-                "name": "RAL 8017 (Kahverengi)"
-              },
-              {
                 "id": "ral_boyali",
-                "name": "RAL Boyalı (Özel)"
+                "name": "Ral Boyalı"
               }
             ],
-            "default": "aluminyum"
+            "default": "antrasit"
           }
         ]
       }

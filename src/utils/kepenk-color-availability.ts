@@ -20,15 +20,11 @@ export function getAvailableLamelColors(
   // product-prices.json'daki renk değerlerini form'daki renk ID'lerine map et
   // Sadece gerçekten var olan renkleri map et
   const colorMapping: Record<string, string[]> = {
-    "alüminyum": ["aluminyum"],
+    "antrasit_gri": ["antrasit"],
+    "metalik_gri": ["metalik_gri"],
+    "beyaz": ["beyaz"],
     "rall_boya": ["ral_boyali"],
-    "antrasit_gri": ["ral_7016"],
-    "beyaz": ["beyaz"], // beyaz sadece beyaz olarak map et
-    "krem": ["ral_8017"],
-    "metalik_gri": ["ral_8017"],
-    "ekstruzyonhh": ["aluminyum"], // se_77 için özel durum
-    "siyah": ["ral_9005"], // eğer siyah varsa ral_9005 olarak map et
-    "altın_meşe": ["ral_8017"], // altın meşe de kahverengi tonları için
+    "ral_boyalı": ["ral_boyali"]
   };
 
   // Form'daki renk ID'lerini topla
@@ -38,17 +34,6 @@ export function getAvailableLamelColors(
     const mappedColors = colorMapping[jsonColor] || [jsonColor];
     mappedColors.forEach((formColor) => availableFormColors.add(formColor));
   });
-
-  // Özel durumlar
-  // se_77 için ekstruzyonhh -> aluminyum olarak göster
-  if (lamelType === "se_77" && availableColorsInJson.includes("ekstruzyonhh")) {
-    availableFormColors.add("aluminyum");
-  }
-
-  // se_78 için alüminyum zaten var
-  if (lamelType === "se_78" && availableColorsInJson.includes("alüminyum")) {
-    availableFormColors.add("aluminyum");
-  }
 
   return Array.from(availableFormColors);
 }

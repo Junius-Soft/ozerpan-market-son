@@ -37,11 +37,14 @@ export const imalatTypeMapping: Record<string, string[]> = {
     "sineklik_kanat_profilleri",
     "profil", // Sürme sineklik kanat profilleri için
   ],
-  
+  "Ray Profili": [
+    "profil", // Sürme sineklik ray profilleri için
+  ],
+
   // Cam Balkon tipleri
   "cam_balkon_profiller": ["cam_balkon_profiller"],
   "cam_balkon_aksesuar": ["cam_balkon_aksesuar"],
-  
+
   // Kepenk tipleri
   "Kepenk Lamel": [
     "kepenk_lamel_profilleri",
@@ -59,7 +62,7 @@ export const imalatTypeMapping: Record<string, string[]> = {
     "kepenk_alt_parca_profilleri",
     "kepenk_alt_parca_aksesuarlari",
   ],
-  
+
   // Preview için özel tip (hiçbir ürünü filtrelemez, hepsini gösterir)
   "preview": [],
 };
@@ -69,7 +72,7 @@ export const imalatTypeMapping: Record<string, string[]> = {
  */
 export function getTypeFilters(selectedTypes: string[]): string[] {
   const allTypes: string[] = [];
-  
+
   selectedTypes.forEach((selectedType) => {
     const mappedTypes = imalatTypeMapping[selectedType];
     if (mappedTypes && mappedTypes.length > 0) {
@@ -80,7 +83,7 @@ export function getTypeFilters(selectedTypes: string[]): string[] {
       // Preview için özel işlem yok, boş bırakıyoruz
     }
   });
-  
+
   return [...new Set(allTypes)]; // Unique type'ları döndür
 }
 
@@ -96,19 +99,19 @@ export function matchesSelectedTypes(
   if (selectedTypes.length === 0 || selectedTypes.includes("preview")) {
     return true;
   }
-  
+
   // Type mapping'e göre kontrol et
   const allowedTypes = getTypeFilters(selectedTypes);
-  
+
   // Eğer ürünün type'ı allowedTypes içindeyse, göster
   if (productType && allowedTypes.includes(productType)) {
     return true;
   }
-  
+
   // Fallback: Description'da arama yap (eski mantık)
   const prodDesc = (productDescription || "").toLowerCase().trim();
   const normalizedTypes = selectedTypes.map((t) => t.toLowerCase().trim());
-  
+
   return normalizedTypes.some((type) => prodDesc.includes(type));
 }
 

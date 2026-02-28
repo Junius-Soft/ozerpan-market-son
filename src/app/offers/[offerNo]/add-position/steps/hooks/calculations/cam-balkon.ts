@@ -26,18 +26,18 @@ function extractKolBilgileri(
   const kolBilgileri: KolBilgisi[] = [];
 
   for (let i = 1; i <= kolSayisi; i++) {
-    const cikisYonuRaw = v[`kol${i}_cikis_yonu`];
+    const cikisYonuRaw = v[`kol${i}_cikisYonu`] || v[`kol${i}_cikis_yonu`];
     const sabitCamYonuRaw = v[`kol${i}_sabitCamYonu`];
 
     kolBilgileri.push({
       genislik: Number(v[`kol${i}_genislik`]) || 0,
       kanat: Number(v[`kol${i}_kanat`]) || 1,
-      cikis_sayisi: Number(v[`kol${i}_cikis_sayisi`]) || 0,
+      cikis_sayisi: Number(v[`kol${i}_cikisSayisi`] || v[`kol${i}_cikis_sayisi`]) || 0,
       cikis_yonu:
         typeof cikisYonuRaw === "string" && cikisYonuRaw.length > 0
           ? cikisYonuRaw
           : "sag",
-      sola_kanat: Number(v[`kol${i}_sola_kanat`]) || 0,
+      sola_kanat: Number(v[`kol${i}_solaKanat`] || v[`kol${i}_sola_kanat`]) || 0,
       sabitCamAdedi: Number(v[`kol${i}_sabitCamAdedi`]) || 0,
       sabitCamGenisligi: Number(v[`kol${i}_sabitCamGenisligi`]) || 0,
       sabitCamYonu:
@@ -140,14 +140,14 @@ export const calculateCamBalkon = (
       if (malzemeColor === "bronz") newSuffix = "4440";
       else if (malzemeColor === "antrasit") newSuffix = "4441";
       else if (malzemeColor === "ral") newSuffix = "7072";
-      
+
       // Kod içindeki suffix'i değiştir
       targetStockCode = targetStockCode.replace(currentColorSuffix, newSuffix);
     }
 
     // Fiyat listesinde bu kodu ara
     let priceItem = prices.find((p) => p.stock_code === targetStockCode);
-    
+
     // Eğer bulunamadıysa alternatif aramalar yap (aksesuarlar için)
     if (!priceItem && targetStockCode.endsWith('_0')) {
       // _0 sonekini çıkarıp tekrar dene (örn: 356860_429_0 -> 356860_429)
@@ -157,7 +157,7 @@ export const calculateCamBalkon = (
         targetStockCode = alternativeCode; // Bulunan kodu kullan
       }
     }
-    
+
     // Hala bulunamadıysa _0_0 çift sonek için dene (örn: 356855_0_0 -> 356855_0)
     if (!priceItem && targetStockCode.endsWith('_0_0')) {
       const alternativeCode = targetStockCode.slice(0, -2);
@@ -171,7 +171,7 @@ export const calculateCamBalkon = (
       const unitPrice = parseFloat(priceItem.price);
       const itemTotal = unitPrice * malzeme.miktar;
       totalPrice += itemTotal;
-      
+
       // Güvenli size hesaplama
       let size = 0;
       if (malzeme.olcu) {
@@ -197,7 +197,7 @@ export const calculateCamBalkon = (
       // Fiyat bulunamadı
       console.warn(`Fiyat bulunamadı: ${targetStockCode} (${malzeme.aciklama})`);
       errors.push(`Fiyat bulunamadı: ${malzeme.aciklama} (${targetStockCode})`);
-      
+
       // Güvenli size hesaplama
       let size = 0;
       if (malzeme.olcu) {
@@ -206,7 +206,7 @@ export const calculateCamBalkon = (
           size = parsedSize;
         }
       }
-      
+
       selectedProducts.products.push({
         stock_code: targetStockCode,
         description: malzeme.aciklama,
@@ -332,16 +332,16 @@ export const calculateCamBalkon = (
   const packagingSelectedProduct: SelectedProduct | null =
     packagingCost > 0
       ? {
-          stock_code: "PAKET-001",
-          description: "Paketleme Ücreti (%2)",
-          uretici_kodu: "PAKET-001",
-          price: packagingCost.toFixed(2),
-          quantity: 1,
-          totalPrice: packagingCost,
-          type: "packaging",
-          color: "",
-          unit: "adet",
-        }
+        stock_code: "PAKET-001",
+        description: "Paketleme Ücreti (%2)",
+        uretici_kodu: "PAKET-001",
+        price: packagingCost.toFixed(2),
+        quantity: 1,
+        totalPrice: packagingCost,
+        type: "packaging",
+        color: "",
+        unit: "adet",
+      }
       : null;
 
   // Paketleme ücretini aksesuarlar listesine ekle

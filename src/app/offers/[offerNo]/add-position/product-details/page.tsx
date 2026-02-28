@@ -149,7 +149,9 @@ export default function ProductDetailsPage() {
         }
 
         // Get the full product object by ID
-        const productFromAPI = await getProductById(productId);
+        // "SS" (Sürme Seri) sineklik ürün bilgilerini kullanır
+        const apiProductId = productId === "SS" ? "sineklik" : productId;
+        const productFromAPI = await getProductById(apiProductId);
 
         // Get the product tabs with type and option filters
         const tabsResponse = await getProductTabs(productId, typeId, optionId);
@@ -158,7 +160,7 @@ export default function ProductDetailsPage() {
         const product = {
           id: productId,
           name: productName || productFromAPI?.name || productId,
-          currency: productFromAPI?.currency,
+          currency: productFromAPI?.currency || { code: "TRY", symbol: "₺" },
           tabs: tabsResponse.tabs,
         } as Product;
 
@@ -169,10 +171,10 @@ export default function ProductDetailsPage() {
           const position =
             currentOffer?.positions.find((p) => p.id === selectedPositionId) ??
             ({} as Position);
-          
+
           // Update selectedPosition state
           setSelectedPosition(position);
-          
+
           if (position?.id && Array.isArray(product.tabs)) {
             // Dinamik tip belirleme - productId'ye göre uygun tip kullan
             const productDetails = position.productDetails as ReturnType<
@@ -346,22 +348,35 @@ export default function ProductDetailsPage() {
       const canvasDataUrl = detailsStepRef.current?.exportCanvas() || undefined;
 
       // Calculate total from selectedProducts if available, otherwise use previewTotal or unitPrice
-      const selectedProducts = values.selectedProducts || {
-        products: [],
-        accessories: [],
-      };
-      
+      // KRİTİK: formik.values.selectedProducts gecikmeyle güncelleniyor (setFieldValue async).
+      // detailsStepRef üzerinden direkt hesaplama sonucunu alıyoruz (her zaman güncel).
+      const refSelectedProducts = detailsStepRef.current?.getSelectedProducts();
+      const freshSelectedProducts = values.selectedProducts;
+
+      const hasRefProducts = (refSelectedProducts?.products?.length || 0) > 0 ||
+        (refSelectedProducts?.accessories?.length || 0) > 0;
+      const hasFormikProducts = (freshSelectedProducts?.products?.length || 0) > 0 ||
+        (freshSelectedProducts?.accessories?.length || 0) > 0;
+
+      // Önce ref'ten al (en güncel), yoksa formik'ten, yoksa daha önce kaydedilen pozisyondan
+      const selectedProducts = hasRefProducts
+        ? refSelectedProducts
+        : hasFormikProducts
+          ? freshSelectedProducts
+          : (selectedPosition?.selectedProducts || { products: [], accessories: [] });
+
       // Calculate total from selectedProducts (these are already calculated for 1 unit)
+      const safeSelectedProducts = selectedProducts || { products: [], accessories: [] };
       const calculatedTotalFromProducts = [
-        ...(selectedProducts.products || []),
-        ...(selectedProducts.accessories || []),
-      ].reduce((sum, item) => sum + (item.totalPrice || 0), 0);
-      
+        ...(safeSelectedProducts.products || []),
+        ...(safeSelectedProducts.accessories || []),
+      ].reduce((sum, item) => sum + ((item as { totalPrice?: number }).totalPrice || 0), 0);
+
       // Use calculated total from products if available, otherwise use previewTotal or unitPrice
-      const unitPrice = calculatedTotalFromProducts > 0 
-        ? calculatedTotalFromProducts 
+      const unitPrice = calculatedTotalFromProducts > 0
+        ? calculatedTotalFromProducts
         : (previewTotal > 0 ? previewTotal : (values.unitPrice || 0));
-      
+
       const total = unitPrice * (quantity || 1);
 
       // Create new position with calculated values
@@ -369,24 +384,24 @@ export default function ProductDetailsPage() {
         id: selectedPositionId || `POS-${Date.now()}`,
         pozNo: selectedPositionId
           ? currentOffer.positions.find((p) => p.id === selectedPositionId)
-              ?.pozNo || "01"
+            ?.pozNo || "01"
           : currentOffer.positions.length > 0
-          ? String(
+            ? String(
               parseInt(
                 currentOffer.positions[currentOffer.positions.length - 1].pozNo
               ) + 1
             ).padStart(2, "0")
-          : "01",
+            : "01",
         unit: "adet",
         quantity: quantity || 1,
         unitPrice: unitPrice,
-        selectedProducts: selectedProducts,
+        selectedProducts: safeSelectedProducts as { products: import("@/types/panjur").SelectedProduct[]; accessories: import("@/types/panjur").SelectedProduct[] },
         productId,
         typeId,
         productName,
         optionId,
         // Cam balkon ve sineklik için currency her zaman TRY olmalı
-        currency: (productId === "cam-balkon" || productId === "sineklik") 
+        currency: (productId === "cam-balkon" || productId === "sineklik" || productId === "SS")
           ? { code: "TRY", symbol: "₺" }
           : productObj.currency,
         canvasDataUrl, // Canvas verisini pozisyon objesine ekle
@@ -395,24 +410,24 @@ export default function ProductDetailsPage() {
           // Product-specific state'i sadece panjur için ekle
           ...(productId === "panjur" &&
             productState.middleBarPositions && {
-              middleBarPositions: productState.middleBarPositions,
-            }),
+            middleBarPositions: productState.middleBarPositions,
+          }),
           ...(productId === "panjur" &&
             productState.sectionHeights && {
-              sectionHeights: productState.sectionHeights,
-            }),
+            sectionHeights: productState.sectionHeights,
+          }),
           ...(productId === "panjur" &&
             productState.sectionMotors && {
-              sectionMotors: productState.sectionMotors,
-            }),
+            sectionMotors: productState.sectionMotors,
+          }),
           ...(productId === "panjur" &&
             productState.sectionConnections && {
-              sectionConnections: productState.sectionConnections,
-            }),
+            sectionConnections: productState.sectionConnections,
+          }),
           ...(productId === "panjur" &&
             productState.sectionMotorPositions && {
-              sectionMotorPositions: productState.sectionMotorPositions,
-            }),
+            sectionMotorPositions: productState.sectionMotorPositions,
+          }),
         } as Position["productDetails"],
         total: total,
       };

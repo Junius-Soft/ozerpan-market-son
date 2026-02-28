@@ -55,6 +55,16 @@ export const getImalatListesiOptions = (
     ];
   }
 
+  // Sürme Seri (SS) için
+  if (productId === "SS") {
+    return [
+      { label: "Kasa Profili", value: "Kasa Profili" },
+      { label: "Kanat Profili", value: "Kanat Profili" },
+      { label: "Ray Profili", value: "Ray Profili" },
+      { label: "Ürün Önizlemesi", value: "preview" },
+    ];
+  }
+
   // Default options (herhangi bir ürün belirtilmemişse)
   return [];
 };

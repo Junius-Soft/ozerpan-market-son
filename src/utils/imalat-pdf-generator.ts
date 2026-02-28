@@ -135,12 +135,20 @@ export class ImalatPDFGenerator {
 
     // Tip filtreleme: selectedTypes varsa, sadece seçilen tiplere ait ürünleri göster
     let filteredProducts = allProducts;
-    if (selectedTypes && selectedTypes.length > 0 && !selectedTypes.includes("preview")) {
-      const allowedTypes = getTypeFilters(selectedTypes);
-      filteredProducts = allProducts.filter((item) => {
-        const productType = item.product.type || "";
-        return allowedTypes.includes(productType);
-      });
+    const nonPreviewTypes = (selectedTypes || []).filter(t => t !== "preview");
+    if (nonPreviewTypes.length > 0) {
+      const allowedTypes = getTypeFilters(nonPreviewTypes);
+      // allowedTypes boşsa (tüm seçimler preview ise) tümünü göster
+      if (allowedTypes.length > 0) {
+        filteredProducts = allProducts.filter((item) => {
+          const productType = item.product.type || "";
+          // Tip eşleşmesi: tam eşleşme VEYA description'da arama
+          if (allowedTypes.includes(productType)) return true;
+          // Fallback: description'da tip adları geçiyor mu kontrol et
+          const desc = (item.product.description || "").toLowerCase();
+          return nonPreviewTypes.some(t => desc.includes(t.toLowerCase()));
+        });
+      }
     }
 
     // Özel filtreleme kuralları: Seçilen tipe göre belirli ürünleri hariç tut
@@ -234,13 +242,13 @@ export class ImalatPDFGenerator {
 
     // Grupla: stok kodu + temiz açıklama + ölçü (size) bazında
     const groupedProductsMap = new Map<string, GroupedProduct>();
-    
+
     filteredProducts.forEach((item) => {
       const stockCode = item.product.stock_code || "";
       const cleanDesc = cleanDescription(item.product.description || "");
       const size = item.product.size || "";
       const key = `${stockCode}|${cleanDesc}|${size}`;
-      
+
       const poz = data.positions.find((p) => p.pozNo === item.pozNo);
       const pozQuantity = Number(poz?.quantity ?? 1);
       const productQuantity = Number(item.product.quantity ?? 1);
@@ -268,7 +276,7 @@ export class ImalatPDFGenerator {
 
     // Gruplanmış ürünleri array'e çevir ve sırala
     const groupedProducts = Array.from(groupedProductsMap.values());
-    
+
     groupedProducts.sort((a, b) => {
       const aType = a.product.type || "Diğer";
       const bType = b.product.type || "Diğer";
@@ -371,13 +379,16 @@ export class ImalatPDFGenerator {
     });
 
     // Canvas preview'larını ekle (sadece "Ürün Önizlemesi" seçiliyse)
-    // Sadece panjur görselleri gösterilecek
     if (selectedTypes?.includes("preview")) {
-      const panjurPositions = data.positions.filter(
-        (pos) => pos.productId === "panjur"
+      const previewPositions = data.positions.filter(
+        (pos) =>
+          pos.productId === "panjur" ||
+          pos.productId === "sineklik" ||
+          pos.productId === "SS" ||
+          pos.productId === "cam-balkon"
       );
-      if (panjurPositions.length > 0) {
-        this.addCanvasPreviewsForPositions(panjurPositions);
+      if (previewPositions.length > 0) {
+        this.addCanvasPreviewsForPositions(previewPositions);
       }
     }
 
@@ -739,9 +750,14 @@ export class ImalatPDFGenerator {
             position.productName.length > 20
               ? position.productName.substring(0, 20) + "..."
               : position.productName;
-          const vizonText = `VIZON: ${shortName}`;
-          const vizonWidth = this.doc.getTextWidth(vizonText);
-          this.doc.text(vizonText, infoRightEdge - vizonWidth, detailY);
+
+          // Panjur ise VIZON: ön ekini ekle, değilse direkt yaz
+          const displayTitle = position.productId === "panjur"
+            ? `VIZON: ${shortName}`
+            : shortName.toUpperCase();
+
+          const vizonWidth = this.doc.getTextWidth(displayTitle);
+          this.doc.text(displayTitle, infoRightEdge - vizonWidth, detailY);
           detailY += lineHeight;
         }
 

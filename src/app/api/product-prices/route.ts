@@ -25,8 +25,15 @@ export async function GET(request: NextRequest) {
     console.error("Failed to read accessories.json:", error);
   }
 
-  const productPrices = data.product_prices[productId] ?? [];
-  const productAccessories = (accessoriesData.accessories as any)[productId] ?? [];
+  let productPrices = data.product_prices[productId] ?? [];
+  let productAccessories = (accessoriesData.accessories as any)[productId] ?? [];
+
+  if (productId === "sineklik") {
+    const panjurPrices = data.product_prices["panjur"] ?? [];
+    const panjurAccessories = (accessoriesData.accessories as any)["panjur"] ?? [];
+    productPrices = [...productPrices, ...panjurPrices];
+    productAccessories = [...productAccessories, ...panjurAccessories];
+  }
 
   const combinedData = [...productPrices, ...productAccessories];
 

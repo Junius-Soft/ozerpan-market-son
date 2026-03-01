@@ -207,6 +207,20 @@ export class ImalatPDFGenerator {
           }
         }
 
+        // Kasa Profili seçildiğinde: Kanat profilleri gelmesin (17x25 vb. ortak kullanım hariç)
+        if (selectedTypes.includes("Kasa Profili") && !selectedTypes.includes("Kanat Profili")) {
+          if (description.includes("kanat")) {
+            return false;
+          }
+        }
+
+        // Kanat Profili seçildiğinde: Kasa profilleri gelmesin
+        if (selectedTypes.includes("Kanat Profili") && !selectedTypes.includes("Kasa Profili")) {
+          if (description.includes("kasa")) {
+            return false;
+          }
+        }
+
         return true;
       });
     }

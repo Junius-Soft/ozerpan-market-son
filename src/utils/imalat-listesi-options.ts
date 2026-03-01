@@ -51,6 +51,8 @@ export const getImalatListesiOptions = (
       { label: "Alt Parça", value: "Kepenk Alt Parça" },
       { label: "Dikme", value: "Kepenk Dikme" },
       { label: "Kutu", value: "Kepenk Kutu" },
+      { label: "Tambur Borusu", value: "Kepenk Boru" },
+      { label: "Motor ve Montaj Aksesuarı", value: "Kepenk Motor ve Aksesuar" },
       { label: "Ürün Önizlemesi", value: "preview" },
     ];
   }

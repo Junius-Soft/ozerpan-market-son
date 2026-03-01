@@ -49,6 +49,8 @@ export const imalatTypeMapping: Record<string, string[]> = {
   "Kepenk Lamel": [
     "kepenk_lamel_profilleri",
     "kepenk_lamel_aksesuarlari",
+    "kepenk_tapa_aksesuarları",
+    "kepenk_tapa_aksesuarlari",
   ],
   "Kepenk Dikme": [
     "kepenk_dikme_profilleri",
@@ -61,6 +63,18 @@ export const imalatTypeMapping: Record<string, string[]> = {
   "Kepenk Alt Parça": [
     "kepenk_alt_parca_profilleri",
     "kepenk_alt_parca_aksesuarlari",
+  ],
+  "Kepenk Boru": [
+    "kepenk_tambur_boru_profilleri",
+    "kepenk_tambur_aksesuarlari",
+  ],
+  "Kepenk Motor ve Aksesuar": [
+    "kepenk_motorlar",
+    "kepenk_kumandalar",
+    "kepenk_alicilar",
+    "kepenk_montaj_aksesuarları",
+    "kepenk_montaj_aksesuarlari",
+    "kepenk_diger_aksesuarlar",
   ],
 
   // Preview için özel tip (hiçbir ürünü filtrelemez, hepsini gösterir)

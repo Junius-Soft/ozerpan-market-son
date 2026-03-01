@@ -505,7 +505,7 @@ export const findEndCapPrice = (
     lamelCount: number
 ): [number, SelectedProduct | null] => {
     const tapaPrices = prices.filter(
-        (p) => p.type === "kepenk_tapa_aksesuarları"
+        (p) => p.type === "kepenk_tapa_aksesuarları" || p.type === "kepenk_tapa_aksesuarlari"
     );
 
     const is100mm = lamelType.includes("100");
@@ -517,8 +517,8 @@ export const findEndCapPrice = (
 
     if (!matchingTapa) return [0, null];
 
-    // Her lamel için 2 adet tapa
-    const totalCount = lamelCount * 2;
+    // Her lamel için 1 adet tapa (kullanıcı talebi: Lamel sayısı ile aynı miktarda)
+    const totalCount = lamelCount;
     const selectedProduct = createSelectedProduct(matchingTapa, totalCount);
 
     return [selectedProduct.totalPrice, selectedProduct];

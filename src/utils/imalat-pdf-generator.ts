@@ -800,7 +800,7 @@ export class ImalatPDFGenerator {
       // Görüntü eklenemezse hata mesajı yazdır
       this.doc.setFontSize(10);
       this.doc.setFont("NotoSans", "normal");
-      this.doc.text("Görüntü yüklenemedi", x + 5, y + 20);
+      this.doc.text("Görüntü yüklenemedi: " + (canvasDataUrl ? "data_var_ama_gecersiz" : "tamamen_bos"), x + 5, y + 20);
 
       // Pozisyon bilgilerini yine de ekle (beyaz kutuda, dikey çizgili)
       this.doc.setFontSize(8);

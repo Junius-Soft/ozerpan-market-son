@@ -40,6 +40,14 @@ export const imalatTypeMapping: Record<string, string[]> = {
   "Ray Profili": [
     "profil", // Sürme sineklik ray profilleri için
   ],
+  "Aksesuarlar": [
+    "aksesuarlar",
+    "aksesuar",
+    "sineklik_aksesuar",
+    "sineklik_aksesuarlari",
+    "sineklik_aksesuarları",
+    "sineklik_tul",
+  ],
 
   // Cam Balkon tipleri
   "cam_balkon_profiller": ["cam_balkon_profiller"],

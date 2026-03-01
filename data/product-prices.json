@@ -6219,6 +6219,16 @@
         "unit": "Metre",
         "price": "21.13",
         "currency": "EUR"
+      },
+      {
+        "description": "3,9x16 mm YSB Matkap Uçlu Vida (Kepenk İçin)",
+        "stock_code": "121123901669",
+        "uretici_kodu": "VIDA-39-16",
+        "type": "kepenk_montaj_aksesuarları",
+        "color": "standart",
+        "unit": "Adet",
+        "price": "0.05",
+        "currency": "EUR"
       }
     ]
   }

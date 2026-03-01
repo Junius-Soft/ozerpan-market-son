@@ -484,7 +484,7 @@ export const findMountingAccessoryPrice = (
     quantity: number = 16
 ): [number, SelectedProduct | null] => {
     const accessoryPrices = prices.filter(
-        (p) => p.type === "kepenk_montaj_aksesuarları"
+        (p) => p.type === "kepenk_montaj_aksesuarları" || p.type === "kepenk_montaj_aksesuarlari"
     );
 
     // Vidayı bul (3,9x16 mm YSB) - Stok kodu veya açıklama ile

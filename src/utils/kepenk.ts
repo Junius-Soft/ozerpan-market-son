@@ -440,7 +440,7 @@ export const findSubPartAccessoryPrice = (
     // Ancak kodda Türkçe karakter sorunu olmaması için dikkatli olunmalı.
     // JSON dosyasında "panjur_alt_parça_aksesuarları" olarak kayıtlı.
     const accessoryPrices = prices.filter(
-        (p) => p.type === "panjur_alt_parça_aksesuarları"
+        (p) => p.type === "panjur_alt_parça_aksesuarları" || p.type === "kepenk_alt_parca_aksesuarlari"
     );
 
     const is100mm = lamelType.includes("100");
@@ -462,7 +462,7 @@ export const findTamburAccessoryPrice = (
     tamburType: string
 ): [number, SelectedProduct | null] => {
     const accessoryPrices = prices.filter(
-        (p) => p.type === "panjur_tambur_boru_aksesuarları"
+        (p) => p.type === "panjur_tambur_boru_aksesuarları" || p.type === "kepenk_tambur_aksesuarlari"
     );
 
     const tamburSize = tamburType.replace("mm", ""); // "70" or "102"

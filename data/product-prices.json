@@ -3757,14 +3757,15 @@
         "price": "0.01"
       },
       {
-        "description": "77'lik Alt Parça Lastik Gri",
-        "stock_code": "353320805000",
+        "description": "77'lik Alt Parça Lastiği Gri",
+        "stock_code": "353320701900",
         "uretici_kodu": "SL-77, ST-77,SE-77 EXT, SE-78",
         "type": "kepenk_alt_parca_aksesuarlari",
         "lamel_type": "77_li",
-        "color": "alüminyum",
+        "color": "gri",
         "unit": "Metre",
-        "price": "1.27"
+        "price": "1.64",
+        "currency": "EUR"
       },
       {
         "description": "100'lük Alt Parça Lastik Gri",
@@ -4316,16 +4317,17 @@
         "hareket_tip": "motorlu"
       },
       {
-        "description": "70 Boru Baş Yuvalık Pimli Meşeli Pres",
+        "description": "70 Boru Başı Yuvarlak Pimli Metal Pres",
         "stock_code": "353451300200",
-        "uretici_kodu": "CP.070.00.APL",
+        "uretici_kodu": "Özdil",
         "type": "kepenk_tambur_aksesuarlari",
         "tambur_type": "70mm",
-        "color": "alüminyum",
+        "color": "pres",
         "unit": "Adet",
         "price": "10.00",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "70 Boru Baş Tıpa16 Kare Pimli Siyah",

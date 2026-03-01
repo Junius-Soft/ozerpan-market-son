@@ -122,7 +122,7 @@ export function getPliseKasaProfiles(
   const horizontalMeasurement: number = width - 50;
   let verticalMeasurement: number = height - 50;
   let horizontalQuantity: number = 2;
-  let verticalQuantity: number = 2;
+  const verticalQuantity: number = 2;
   let dusukEsik: PriceItem | undefined;
 
   const normalizedColor = normalizeColor(color);

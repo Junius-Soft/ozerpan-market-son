@@ -25,12 +25,13 @@ export async function GET(request: NextRequest) {
     console.error("Failed to read accessories.json:", error);
   }
 
+  const accRecord = accessoriesData.accessories as Record<string, unknown[]>;
   let productPrices = data.product_prices[productId] ?? [];
-  let productAccessories = (accessoriesData.accessories as any)[productId] ?? [];
+  let productAccessories = accRecord[productId] ?? [];
 
   if (productId === "sineklik") {
     const panjurPrices = data.product_prices["panjur"] ?? [];
-    const panjurAccessories = (accessoriesData.accessories as any)["panjur"] ?? [];
+    const panjurAccessories = accRecord["panjur"] ?? [];
     productPrices = [...productPrices, ...panjurPrices];
     productAccessories = [...productAccessories, ...panjurAccessories];
   }

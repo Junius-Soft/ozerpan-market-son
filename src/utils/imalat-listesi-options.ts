@@ -30,17 +30,18 @@ export const getImalatListesiOptions = (
   // Sineklik için
   if (productId === "sineklik") {
     return [
-      { label: "Ürün Önizlemesi", value: "preview" },
       { label: "Kasa Profili", value: "Kasa Profili" },
       { label: "Kanat Profili", value: "Kanat Profili" },
+      { label: "Aksesuarlar", value: "Aksesuarlar" },
+      { label: "Ürün Önizlemesi", value: "preview" },
     ];
   }
   // Cam Balkon için
   if (productId === "cam-balkon") {
     return [
-      { label: "Ürün Önizlemesi", value: "preview" },
       { label: "Profiller", value: "cam_balkon_profiller" },
       { label: "Aksesuarlar", value: "cam_balkon_aksesuar" },
+      { label: "Ürün Önizlemesi", value: "preview" },
     ];
   }
 
@@ -51,6 +52,8 @@ export const getImalatListesiOptions = (
       { label: "Alt Parça", value: "Kepenk Alt Parça" },
       { label: "Dikme", value: "Kepenk Dikme" },
       { label: "Kutu", value: "Kepenk Kutu" },
+      { label: "Tambur Borusu", value: "Kepenk Boru" },
+      { label: "Motor ve Montaj Aksesuarı", value: "Kepenk Motor ve Aksesuar" },
       { label: "Ürün Önizlemesi", value: "preview" },
     ];
   }

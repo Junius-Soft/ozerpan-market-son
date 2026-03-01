@@ -440,7 +440,7 @@ export const findSubPartAccessoryPrice = (
     // Ancak kodda Türkçe karakter sorunu olmaması için dikkatli olunmalı.
     // JSON dosyasında "panjur_alt_parça_aksesuarları" olarak kayıtlı.
     const accessoryPrices = prices.filter(
-        (p) => p.type === "panjur_alt_parça_aksesuarları"
+        (p) => p.type === "panjur_alt_parça_aksesuarları" || p.type === "kepenk_alt_parca_aksesuarlari"
     );
 
     const is100mm = lamelType.includes("100");
@@ -462,7 +462,7 @@ export const findTamburAccessoryPrice = (
     tamburType: string
 ): [number, SelectedProduct | null] => {
     const accessoryPrices = prices.filter(
-        (p) => p.type === "panjur_tambur_boru_aksesuarları"
+        (p) => p.type === "panjur_tambur_boru_aksesuarları" || p.type === "kepenk_tambur_aksesuarlari"
     );
 
     const tamburSize = tamburType.replace("mm", ""); // "70" or "102"
@@ -484,7 +484,7 @@ export const findMountingAccessoryPrice = (
     quantity: number = 16
 ): [number, SelectedProduct | null] => {
     const accessoryPrices = prices.filter(
-        (p) => p.type === "kepenk_montaj_aksesuarları"
+        (p) => p.type === "kepenk_montaj_aksesuarları" || p.type === "kepenk_montaj_aksesuarlari"
     );
 
     // Vidayı bul (3,9x16 mm YSB) - Stok kodu veya açıklama ile
@@ -505,7 +505,7 @@ export const findEndCapPrice = (
     lamelCount: number
 ): [number, SelectedProduct | null] => {
     const tapaPrices = prices.filter(
-        (p) => p.type === "kepenk_tapa_aksesuarları"
+        (p) => p.type === "kepenk_tapa_aksesuarları" || p.type === "kepenk_tapa_aksesuarlari"
     );
 
     const is100mm = lamelType.includes("100");
@@ -517,8 +517,8 @@ export const findEndCapPrice = (
 
     if (!matchingTapa) return [0, null];
 
-    // Her lamel için 2 adet tapa
-    const totalCount = lamelCount * 2;
+    // Her lamel için 1 adet tapa (kullanıcı talebi: Lamel sayısı ile aynı miktarda)
+    const totalCount = lamelCount;
     const selectedProduct = createSelectedProduct(matchingTapa, totalCount);
 
     return [selectedProduct.totalPrice, selectedProduct];

@@ -1,7 +1,7 @@
 "use client";
 
 import { ShutterPreview, ShutterPreviewRef } from "./shutter-preview";
-import { InsectScreenPreview } from "./insect-screen-preview";
+import { InsectScreenPreview, InsectScreenPreviewRef } from "./insect-screen-preview";
 import { KepenkPreview, KepenkPreviewRef } from "./kepenk-preview";
 import { Product } from "@/documents/products";
 import { FormikProps } from "formik";
@@ -120,6 +120,7 @@ export const DynamicPreview = forwardRef<
   ) => {
     const shutterPreviewRef = useRef<ShutterPreviewRef>(null);
     const kepenkPreviewRef = useRef<KepenkPreviewRef>(null);
+    const insectScreenPreviewRef = useRef<InsectScreenPreviewRef>(null);
 
     // Export canvas function exposed via ref
     useImperativeHandle(ref, () => ({
@@ -129,6 +130,11 @@ export const DynamicPreview = forwardRef<
         }
         if (productId === "kepenk" && kepenkPreviewRef.current) {
           return kepenkPreviewRef.current.exportCanvas();
+        }
+        if ((productId === "sineklik" || productId === "SS") && insectScreenPreviewRef.current) {
+          const dataUrl = insectScreenPreviewRef.current.exportCanvas();
+          console.log("InsectScreen exportCanvas result length:", dataUrl?.length);
+          return dataUrl;
         }
         if (productId === "cam-balkon") {
           // Cam balkon için global değişkenden al
@@ -344,6 +350,7 @@ export const DynamicPreview = forwardRef<
         case "SS":
           return (
             <InsectScreenPreview
+              ref={insectScreenPreviewRef}
               width={width}
               height={height}
               className={className}

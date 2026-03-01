@@ -13,9 +13,32 @@ export async function GET(request: NextRequest) {
       { status: 400 }
     );
   }
+
+  const accessoriesFilePath = path.join(process.cwd(), "data", "accessories.json");
+
   const data = JSON.parse(await fs.readFile(dataFilePath, "utf8"));
 
-  return NextResponse.json(data.product_prices[productId] ?? [], {
+  let accessoriesData = { accessories: {} };
+  try {
+    accessoriesData = JSON.parse(await fs.readFile(accessoriesFilePath, "utf8"));
+  } catch (error) {
+    console.error("Failed to read accessories.json:", error);
+  }
+
+  const accRecord = accessoriesData.accessories as Record<string, unknown[]>;
+  let productPrices = data.product_prices[productId] ?? [];
+  let productAccessories = accRecord[productId] ?? [];
+
+  if (productId === "sineklik") {
+    const panjurPrices = data.product_prices["panjur"] ?? [];
+    const panjurAccessories = accRecord["panjur"] ?? [];
+    productPrices = [...productPrices, ...panjurPrices];
+    productAccessories = [...productAccessories, ...panjurAccessories];
+  }
+
+  const combinedData = [...productPrices, ...productAccessories];
+
+  return NextResponse.json(combinedData, {
     status: 200,
   });
 }

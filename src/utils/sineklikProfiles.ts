@@ -105,7 +105,7 @@ export function getPliseKanatProfiles(
   if (!profile) return [];
 
   const size = pliseOpeningType == "dikey" ? width - 94 : height - 94;
-  const quantity = 1;
+  const quantity = pliseOpeningType === "double" ? 2 : 1;
   mappedProfiles.push(createSelectedProduct(profile, quantity, size));
 
   return mappedProfiles;
@@ -122,13 +122,13 @@ export function getPliseKasaProfiles(
   const horizontalMeasurement: number = width - 50;
   let verticalMeasurement: number = height - 50;
   let horizontalQuantity: number = 2;
-  let verticalQuantity: number = 2;
+  const verticalQuantity: number = 2;
   let dusukEsik: PriceItem | undefined;
 
   const normalizedColor = normalizeColor(color);
 
   if (kasaType === "esiksiz") {
-    verticalMeasurement = width - 35;
+    verticalMeasurement = height - 35;
     dusukEsik = allProfiles.find((item) => {
       // Find matches description AND normalized color
       return (
@@ -136,12 +136,10 @@ export function getPliseKasaProfiles(
         normalizeColor(item.color) === normalizedColor
       );
     });
-    if (pliseOpeningType === "yatay") {
+    if (pliseOpeningType === "yatay" || pliseOpeningType === "double") {
       horizontalQuantity = 1;
     }
-    if (pliseOpeningType === "double") {
-      verticalQuantity = 2; // Should be 2 for double (left/right)
-    }
+    // verticalQuantity remains 2 for double or yatay
   }
 
   const profile = allProfiles.find((item) => {

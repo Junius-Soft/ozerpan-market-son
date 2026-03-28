@@ -515,7 +515,8 @@ export const findYalitimliBoxPrice = (
   systemWidth: number,
   boxsetType?: string,
   yalitimliType?: string,
-  lamelColor?: string
+  lamelColor?: string,
+  movementType?: string
 ): {
   totalPrice: number;
   selectedProducts: SelectedProduct[];
@@ -531,11 +532,19 @@ export const findYalitimliBoxPrice = (
 
   // Kapama tipini belirle:
   // - emptyBox: hiçbir kapama ekleme (sadece kutu)
+  // - fullset + boxWithMotor + motorsuz: kapama yok (sadece kutu + yan kapak)
   // - fullset veya detail: kompozit kapama ekle (lamel rengi ile)
   // - boxWithMotor veya diğer: alt kapama ekle (box rengi ile)
   const getKapamaConfig = (currentBoxType: string) => {
     if (boxsetType === "emptyBox") {
       // Boş kutu: sadece kutu, kapama yok
+      return [];
+    } else if (
+      yalitimliType === "fullset" &&
+      boxsetType === "boxWithMotor" &&
+      movementType !== "motorlu"
+    ) {
+      // Full Set + Kutu Set + Motorsuz: sadece kutu ve yan kapak, kompozit alt kapama yok
       return [];
     } else if (yalitimliType === "fullset" || yalitimliType === "detail") {
       // Fullset veya detail: kompozit kapama

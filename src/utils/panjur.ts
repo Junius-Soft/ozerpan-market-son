@@ -532,22 +532,16 @@ export const findYalitimliBoxPrice = (
 
   // Kapama tipini belirle:
   // - emptyBox: hiçbir kapama ekleme (sadece kutu)
-  // - fullset + boxWithMotor + motorsuz: kapama yok (sadece kutu + yan kapak)
-  // - fullset veya detail: kompozit kapama ekle (lamel rengi ile)
-  // - boxWithMotor veya diğer: alt kapama ekle (box rengi ile)
+  // - boxWithMotor: kapama yok (motorlu kutu paketi)
+  // - fullset: kapama yok (motorlu kutu ile aynı liste)
+  // - detail: kompozit kapama ekle (lamel rengi ile)
+  // - diğer: alt kapama ekle (box rengi ile)
   const getKapamaConfig = (currentBoxType: string) => {
-    if (boxsetType === "emptyBox") {
-      // Boş kutu: sadece kutu, kapama yok
+    if (boxsetType === "emptyBox" || boxsetType === "boxWithMotor" || yalitimliType === "fullset") {
+      // Boş kutu, Motorlu Kutu ve Full Set: kapama yok
       return [];
-    } else if (
-      yalitimliType === "fullset" &&
-      boxsetType === "boxWithMotor" &&
-      movementType !== "motorlu"
-    ) {
-      // Full Set + Kutu Set + Motorsuz: sadece kutu ve yan kapak, kompozit alt kapama yok
-      return [];
-    } else if (yalitimliType === "fullset" || yalitimliType === "detail") {
-      // Fullset veya detail: kompozit kapama
+    } else if (yalitimliType === "detail") {
+      // Detay: kompozit kapama
       // Not: Kompozit kapama için product-prices.json'da renk bilgisi description'da yok,
       // bu yüzden needsColor: false yapıyoruz (sadece isim ile arama yapılacak)
       const kompozitNames: Record<string, string> = {
@@ -559,7 +553,7 @@ export const findYalitimliBoxPrice = (
       const kompozitName = kompozitNames[currentBoxType];
       return kompozitName ? [{ name: kompozitName, needsColor: false, useLamelColor: true }] : [];
     } else {
-      // boxWithMotor veya diğer: alt kapama (box rengi ile)
+      // Diğer durumlar: alt kapama (box rengi ile)
       const altKapamaNames: Record<string, string> = {
         "250mm_ithal": "25x25 Strafor Kutu Alt Kapama",
         "250mm_yerli": "25x25 Strafor Kutu Alt Kapama",

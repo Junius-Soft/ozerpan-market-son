@@ -536,8 +536,27 @@ export const calculatePanjur = (
     // Yalıtımlı kutu için özel hesaplama
     if (optionId === "yalitimli") {
       if (values.boxsetType === "boxWithMotor") {
-        // Sadece tambur ve kutu fiyatı
-        return Number((tamburPrice + boxPrice).toFixed(2));
+        // Motorlu Kutu: kutu + tambur + ilgili aksesuarlar
+        // (yan kapak, buldeks vida, boru başı, plaket, 3,9*13 vida)
+        return Number((
+          boxPrice +
+          tamburPrice +
+          (accessoryItems || [])
+            .filter((acc) => {
+              const description = acc.description.toLowerCase();
+              return (
+                description.includes("yan kapak") ||
+                description.includes("buldeks vida") ||
+                description.includes("boru başı") ||
+                description.includes("pimli galvaniz") ||
+                description.includes("3,9x13")
+              );
+            })
+            .reduce(
+              (total: number, acc: SelectedProduct) => total + acc.totalPrice,
+              0
+            )
+        ).toFixed(2));
       } else if (values.boxsetType === "emptyBox") {
         // Boş kutu: sadece kutu + yan kapak + buldeks vida, lamel, dikme, alt parça, kompozit hariç
         return Number((
@@ -723,18 +742,18 @@ export const calculatePanjur = (
       // Yalıtımlı kutu için aksesuarları da filtrele
       if (optionId === "yalitimli") {
         if (values.boxsetType === "boxWithMotor") {
-          // Sadece tambur ve kutu ile ilgili aksesuarlar
+          // Motorlu Kutu: T SAC YOK, kompozit yok
+          // Kutu, tambur, motor, yan kapak, buldeks vida, boru başı, plaket, 3,9*13 vida
           const filteredAccessories = (accessoryItems || []).filter((acc) => {
             const description = acc.description.toLowerCase();
             return (
               description.includes("boru") ||
               description.includes("tambur") ||
-              description.includes("kutu") ||
               description.includes("motor") ||
               description.includes("yan kapak") ||
-              description.includes("orta kapak") ||
-              description.includes("fullset t sac") ||
-              description.includes("pimli galvaniz")
+              description.includes("buldeks vida") ||
+              description.includes("pimli galvaniz") ||
+              description.includes("3,9x13")
             );
           });
           // Paketleme ücretini ekle
@@ -748,6 +767,25 @@ export const calculatePanjur = (
             return (
               description.includes("yan kapak") ||
               description.includes("buldeks vida")
+            );
+          });
+          // Paketleme ücretini ekle
+          return packagingSelectedProduct
+            ? [...filteredAccessories, packagingSelectedProduct]
+            : filteredAccessories;
+        } else if (values.yalitimliType === "fullset") {
+          // Full Set: T SAC YOK, motorlu kutu ile aynı içerik
+          const filteredAccessories = (accessoryItems || []).filter((acc) => {
+            const description = acc.description.toLowerCase();
+            return (
+              description.includes("boru") ||
+              description.includes("tambur") ||
+              description.includes("motor") ||
+              description.includes("yan kapak") ||
+              description.includes("orta kapak") ||
+              description.includes("buldeks vida") ||
+              description.includes("pimli galvaniz") ||
+              description.includes("3,9x13")
             );
           });
           // Paketleme ücretini ekle
@@ -777,7 +815,8 @@ export const calculatePanjur = (
               ? [...filteredAccessories, packagingSelectedProduct]
               : filteredAccessories;
           } else if (values.yalitimliDetailType === "onlyMotor") {
-            // Kutu aksesuarları hariç, tambur ve motor/makara aksesuarları dahil
+            // Motor Ekle: Kutu aksesuarları hariç, tambur + boru başı + plaket dahil
+            // Buldeks vida yok (sadece tam montaj ürünleri)
             const filteredAccessories = (accessoryItems || []).filter((acc) => {
               const description = acc.description.toLowerCase();
               return !(
@@ -785,7 +824,7 @@ export const calculatePanjur = (
                 description.includes("yan kapak") ||
                 description.includes("orta kapak") ||
                 description.includes("fullset t sac") ||
-                description.includes("pimli galvaniz")
+                description.includes("buldeks vida")
               );
             });
             // Paketleme ücretini ekle

@@ -1175,6 +1175,15 @@
         "color": "",
         "unit": "Adet",
         "price": "0.10"
+      },
+      {
+        "description": "3,9x13 mm YSB Matkap Uçlu Vida",
+        "stock_code": "VIDA-39-13-001",
+        "uretici_kodu": "VIDA-39-13-001",
+        "type": "yalitimli_panjur_kutu_aksesuarlari",
+        "color": "",
+        "unit": "Adet",
+        "price": "0.05"
       }
     ],
     "sineklik": [

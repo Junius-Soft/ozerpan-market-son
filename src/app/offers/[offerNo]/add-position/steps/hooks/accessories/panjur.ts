@@ -14,6 +14,7 @@ import {
   findMonoblokEkAksesuarlar,
   findYalitimliYanKapakAccessoryPrice,
   findYalitimliEkAksesuarlar,
+  findYalitimliMotorluKutuAksesuarlar,
   findBuldeksVidaAccessoryPrice,
   findBoruBasiAccessoryPrice,
   findRulmanAccessoryPrice,
@@ -91,30 +92,42 @@ export const calculatePanjurAccessories = (
     );
     neededAccessories.push(...monoblokEkAksesuarlar);
   } else if (optionId === "yalitimli") {
-    // Yalıtımlı kutu için yeni fonksiyon
-    // EmptyBox durumunda sadece yan kapak, orta kapak yok
+    const isEmptyBox = values.boxsetType === "emptyBox";
+    const isBoxWithMotor = values.boxsetType === "boxWithMotor";
+    const isFullSet = values.yalitimliType === "fullset";
+    const isDetail = values.yalitimliType === "detail";
+
+    // Yan Kapak: emptyBox ve boxWithMotor için orta kapak yok
+    const noOrtaKapak = isEmptyBox || isBoxWithMotor;
     const yalitimliYanKapaklar = findYalitimliYanKapakAccessoryPrice(
       allAccessories,
       values.boxType,
       values.box_color,
       dikmeCount,
-      values.boxsetType === "emptyBox"
+      noOrtaKapak
     );
     neededAccessories.push(...yalitimliYanKapaklar);
 
-    // Yalıtımlı kutu ek aksesuarları (fullset T sac ve plaket)
-    // EmptyBox durumunda bu aksesuarlar eklenmez
-    if (values.boxsetType !== "emptyBox") {
-      const yalitimliEkAksesuarlar = findYalitimliEkAksesuarlar(allAccessories);
-      neededAccessories.push(...yalitimliEkAksesuarlar);
-    }
-
-    // Boş kutu (emptyBox) için 4 adet Buldeks Vida
-    if (values.boxsetType === "emptyBox") {
+    if (isEmptyBox) {
+      // Boş kutu: sadece 4 adet Buldeks Vida
       const buldeksVida = findBuldeksVidaAccessoryPrice(allAccessories);
       if (buldeksVida) {
         neededAccessories.push(createSelectedProduct(buldeksVida, 4));
       }
+    } else if (isBoxWithMotor || isFullSet) {
+      // Motorlu Kutu ve Full Set:
+      // - 4 adet Buldeks Vida
+      // - Plaket + 2 adet 3,9*13 vida (T SAC YOK)
+      const buldeksVida = findBuldeksVidaAccessoryPrice(allAccessories);
+      if (buldeksVida) {
+        neededAccessories.push(createSelectedProduct(buldeksVida, 4));
+      }
+      const motorluKutuAksesuarlar = findYalitimliMotorluKutuAksesuarlar(allAccessories);
+      neededAccessories.push(...motorluKutuAksesuarlar);
+    } else if (!isDetail) {
+      // Diğer yalitimli senaryolar: Full T Sac + Plaket
+      const yalitimliEkAksesuarlar = findYalitimliEkAksesuarlar(allAccessories);
+      neededAccessories.push(...yalitimliEkAksesuarlar);
     }
   } else {
     // Distan için eski fonksiyon - bölme sayısı kadar

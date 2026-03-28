@@ -539,15 +539,16 @@ export const calculatePanjur = (
         // Sadece tambur ve kutu fiyatı
         return Number((tamburPrice + boxPrice).toFixed(2));
       } else if (values.boxsetType === "emptyBox") {
-        // Boş kutu: sadece kutu + yan kapak, lamel, dikme, alt parça, kompozit hariç
+        // Boş kutu: sadece kutu + yan kapak + buldeks vida, lamel, dikme, alt parça, kompozit hariç
         return Number((
           boxPrice +
           (accessoryItems || [])
             .filter((acc) => {
               const description = acc.description.toLowerCase();
-              // Sadece yan kapak aksesuarları, kutu ile ilgili diğer aksesuarlar hariç
+              // Yan kapak ve buldeks vida aksesuarları
               return (
-                description.includes("yan kapak") &&
+                (description.includes("yan kapak") ||
+                 description.includes("buldeks vida")) &&
                 !description.includes("fullset t sac") &&
                 !description.includes("pimli galvaniz") &&
                 !description.includes("kompozit") &&
@@ -741,12 +742,12 @@ export const calculatePanjur = (
             ? [...filteredAccessories, packagingSelectedProduct]
             : filteredAccessories;
         } else if (values.boxsetType === "emptyBox") {
-          // EmptyBox için sadece yan kapak aksesuarları (full T sac ve plaket yok)
+          // EmptyBox için sadece yan kapak ve buldeks vida aksesuarları (full T sac ve plaket yok)
           const filteredAccessories = (accessoryItems || []).filter((acc) => {
             const description = acc.description.toLowerCase();
             return (
-              description.includes("yan kapak")
-              // fullset t sac ve pimli galvaniz (plaket) çıkarıldı
+              description.includes("yan kapak") ||
+              description.includes("buldeks vida")
             );
           });
           // Paketleme ücretini ekle

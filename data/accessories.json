@@ -1166,6 +1166,15 @@
         "color": "",
         "unit": "Adet",
         "price": "0.40"
+      },
+      {
+        "description": "Buldeks Vida",
+        "stock_code": "BULDEKS-VIDA-001",
+        "uretici_kodu": "BULDEKS-VIDA-001",
+        "type": "yalitimli_panjur_kutu_aksesuarlari",
+        "color": "",
+        "unit": "Adet",
+        "price": "0.10"
       }
     ],
     "sineklik": [

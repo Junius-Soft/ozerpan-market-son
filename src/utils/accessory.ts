@@ -553,6 +553,20 @@ export function findYalitimliEkAksesuarlar(
   return results;
 }
 
+// Buldeks Vida bulucu - Boş kutu için 4 adet
+export function findBuldeksVidaAccessoryPrice(
+  accessories: PriceItem[]
+): PriceItem | null {
+  const yalitimliAccessories = accessories.filter(
+    (acc) => acc.type === "yalitimli_panjur_kutu_aksesuarlari"
+  );
+  return (
+    yalitimliAccessories.find((acc) =>
+      acc.description.toLowerCase().includes("buldeks vida")
+    ) || null
+  );
+}
+
 // Yalıtımlı kutu yan kapak aksesuarları bulucu
 export function findYalitimliYanKapakAccessoryPrice(
   accessories: PriceItem[],

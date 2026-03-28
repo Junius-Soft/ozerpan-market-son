@@ -14,6 +14,7 @@ import {
   findMonoblokEkAksesuarlar,
   findYalitimliYanKapakAccessoryPrice,
   findYalitimliEkAksesuarlar,
+  findBuldeksVidaAccessoryPrice,
   findBoruBasiAccessoryPrice,
   findRulmanAccessoryPrice,
   findPlaketAccessoryPrice,
@@ -106,6 +107,14 @@ export const calculatePanjurAccessories = (
     if (values.boxsetType !== "emptyBox") {
       const yalitimliEkAksesuarlar = findYalitimliEkAksesuarlar(allAccessories);
       neededAccessories.push(...yalitimliEkAksesuarlar);
+    }
+
+    // Boş kutu (emptyBox) için 4 adet Buldeks Vida
+    if (values.boxsetType === "emptyBox") {
+      const buldeksVida = findBuldeksVidaAccessoryPrice(allAccessories);
+      if (buldeksVida) {
+        neededAccessories.push(createSelectedProduct(buldeksVida, 4));
+      }
     }
   } else {
     // Distan için eski fonksiyon - bölme sayısı kadar

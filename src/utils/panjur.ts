@@ -516,7 +516,7 @@ export const findYalitimliBoxPrice = (
   boxsetType?: string,
   yalitimliType?: string,
   lamelColor?: string,
-  movementType?: string
+  movementType?: string // eslint-disable-line @typescript-eslint/no-unused-vars
 ): {
   totalPrice: number;
   selectedProducts: SelectedProduct[];

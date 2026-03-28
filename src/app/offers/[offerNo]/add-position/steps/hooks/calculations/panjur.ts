@@ -291,8 +291,7 @@ export const calculatePanjur = (
       systemWidth,
       values.boxsetType,
       values.yalitimliType,
-      values.lamel_color, // Kompozit kapama için lamel rengi kullanılacak (m² fiyatı olarak systemWidth ile çarpılır)
-      values.movementType // Full Set + Kutu Set + Motorsuz durumunda kompozit kapama eklenmemesi için
+      values.lamel_color // Kompozit kapama için lamel rengi
     );
     boxPrice = totalPrice;
     boxSelectedProducts.push(...selectedProducts);

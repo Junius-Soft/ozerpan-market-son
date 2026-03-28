@@ -8,7 +8,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "1.58"
+        "price": "1.58",
+        "currency": "EUR"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Metalik Gri",
@@ -17,7 +18,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "1.61"
+        "price": "1.61",
+        "currency": "EUR"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Krem",
@@ -26,7 +28,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "1.61"
+        "price": "1.61",
+        "currency": "EUR"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Koyu Bej",
@@ -35,7 +38,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "koyu_bej",
         "unit": "Metre",
-        "price": "1.65"
+        "price": "1.65",
+        "currency": "EUR"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Açık Bej",
@@ -44,7 +48,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "açık_bej",
         "unit": "Metre",
-        "price": "1.65"
+        "price": "1.65",
+        "currency": "EUR"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Kül Siyahı",
@@ -53,7 +58,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "kül_siyahı",
         "unit": "Metre",
-        "price": "1.71"
+        "price": "1.71",
+        "currency": "EUR"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Altın Meşe",
@@ -62,7 +68,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "1.74"
+        "price": "1.74",
+        "currency": "EUR"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Antrasit Gri",
@@ -71,7 +78,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "1.61"
+        "price": "1.61",
+        "currency": "EUR"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Fındık",
@@ -80,7 +88,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "1.74"
+        "price": "1.74",
+        "currency": "EUR"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Vizon",
@@ -89,7 +98,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "1.61"
+        "price": "1.61",
+        "currency": "EUR"
       },
       {
         "description": "39 mm Alüminyum Poliüretanlı Lamel Açık Bronz1",
@@ -98,7 +108,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "açık_bronz1",
         "unit": "Metre",
-        "price": "3.98"
+        "price": "3.98",
+        "currency": "EUR"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Beyaz",
@@ -107,7 +118,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "2.46"
+        "price": "2.46",
+        "currency": "EUR"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Metalik Gri",
@@ -116,7 +128,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "2.46"
+        "price": "2.46",
+        "currency": "EUR"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Metalik Bronz",
@@ -134,7 +147,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "2.51"
+        "price": "2.51",
+        "currency": "EUR"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Koyu Bej",
@@ -143,7 +157,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "koyu_bej",
         "unit": "Metre",
-        "price": "2.58"
+        "price": "2.58",
+        "currency": "EUR"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Açık Bej",
@@ -152,7 +167,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "açık_bej",
         "unit": "Metre",
-        "price": "2.51"
+        "price": "2.51",
+        "currency": "EUR"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Kül Siyahı",
@@ -161,7 +177,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "kül_siyahı",
         "unit": "Metre",
-        "price": "2.50"
+        "price": "2.50",
+        "currency": "EUR"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Altın Meşe",
@@ -170,7 +187,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "2.65"
+        "price": "2.65",
+        "currency": "EUR"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Antrasit Gri",
@@ -179,7 +197,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "2.46"
+        "price": "2.46",
+        "currency": "EUR"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Fındık",
@@ -188,7 +207,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "2.65"
+        "price": "2.65",
+        "currency": "EUR"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Vizon",
@@ -197,7 +217,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "2.46"
+        "price": "2.46",
+        "currency": "EUR"
       },
       {
         "description": "55 mm Alüminyum Poliüretanlı Lamel Açık Bronz",
@@ -206,7 +227,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "acik_bronz",
         "unit": "Metre",
-        "price": "2.55"
+        "price": "2.55",
+        "currency": "EUR"
       },
       {
         "description": "45 mm Alüminyum Ekstrüzyon Lamel Beyaz",
@@ -251,7 +273,8 @@
         "type": "panjur_lamel_profilleri",
         "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "5.98"
+        "price": "5.98",
+        "currency": "EUR"
       },
       {
         "description": "55 mm Alüminyum Ekstrüzyon Lamel Beyaz",
@@ -305,7 +328,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "7.33"
+        "price": "7.33",
+        "currency": "EUR"
       },
       {
         "description": "137 - ARKA 90 Alüminyum Kutu Beyaz",
@@ -314,7 +338,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "11.17"
+        "price": "11.17",
+        "currency": "EUR"
       },
       {
         "description": "137 - ÖN 45 Alüminyum Kutu Kahverengi",
@@ -323,7 +348,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "7.70"
+        "price": "7.70",
+        "currency": "EUR"
       },
       {
         "description": "137 - ARKA 90 Alüminyum Kutu Kahverengi",
@@ -332,7 +358,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "11.73"
+        "price": "11.73",
+        "currency": "EUR"
       },
       {
         "description": "137 - ÖN 45 Alüminyum Kutu Metalik Gri",
@@ -341,7 +368,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "7.70"
+        "price": "7.70",
+        "currency": "EUR"
       },
       {
         "description": "137 - ARKA 90 Alüminyum Kutu Metalik Gri",
@@ -350,7 +378,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "11.73"
+        "price": "11.73",
+        "currency": "EUR"
       },
       {
         "description": "137 - ÖN 45 Alüminyum Kutu Krem",
@@ -359,7 +388,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "7.70"
+        "price": "7.70",
+        "currency": "EUR"
       },
       {
         "description": "137 - ARKA 90 Alüminyum Kutu Krem",
@@ -368,7 +398,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "11.73"
+        "price": "11.73",
+        "currency": "EUR"
       },
       {
         "description": "137 - ÖN 45 Alüminyum Kutu Antrasit Gri",
@@ -377,7 +408,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "7.70"
+        "price": "7.70",
+        "currency": "EUR"
       },
       {
         "description": "137 - ARKA 90 Alüminyum Kutu Antrasit Gri",
@@ -386,7 +418,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "11.73"
+        "price": "11.73",
+        "currency": "EUR"
       },
       {
         "description": "165 - ÖN 45 Alüminyum Kutu Beyaz",
@@ -395,7 +428,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "8.98"
+        "price": "8.98",
+        "currency": "EUR"
       },
       {
         "description": "165 - ARKA 90 Alüminyum Kutu Beyaz",
@@ -404,7 +438,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "13.12"
+        "price": "13.12",
+        "currency": "EUR"
       },
       {
         "description": "165 - ÖN 45 Alüminyum Kutu Kahverengi",
@@ -413,7 +448,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "9.43"
+        "price": "9.43",
+        "currency": "EUR"
       },
       {
         "description": "165 - ARKA 90 Alüminyum Kutu Kahverengi",
@@ -422,7 +458,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "13.79"
+        "price": "13.79",
+        "currency": "EUR"
       },
       {
         "description": "165 - ÖN 45 Alüminyum Kutu Metalik Gri",
@@ -431,7 +468,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "9.43"
+        "price": "9.43",
+        "currency": "EUR"
       },
       {
         "description": "165 - ARKA 90 Alüminyum Kutu Metalik Gri",
@@ -440,7 +478,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "13.79"
+        "price": "13.79",
+        "currency": "EUR"
       },
       {
         "description": "165 - ÖN 45 Alüminyum Kutu Krem",
@@ -449,7 +488,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "9.43"
+        "price": "9.43",
+        "currency": "EUR"
       },
       {
         "description": "165 - ARKA 90 Alüminyum Kutu Krem",
@@ -458,7 +498,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "13.79"
+        "price": "13.79",
+        "currency": "EUR"
       },
       {
         "description": "165 - ÖN 45 Alüminyum Kutu Altın Meşe",
@@ -467,7 +508,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "9.61"
+        "price": "9.61",
+        "currency": "EUR"
       },
       {
         "description": "165 - ARKA 90 Alüminyum Kutu Altın Meşe",
@@ -476,7 +518,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "14.05"
+        "price": "14.05",
+        "currency": "EUR"
       },
       {
         "description": "165 - ÖN 45 Alüminyum Kutu Antrasit Gri",
@@ -485,7 +528,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "9.43"
+        "price": "9.43",
+        "currency": "EUR"
       },
       {
         "description": "165 - ARKA 90 Alüminyum Kutu Antrasit Gri",
@@ -494,7 +538,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "13.79"
+        "price": "13.79",
+        "currency": "EUR"
       },
       {
         "description": "165 - ÖN 45 Alüminyum Kutu Vizon",
@@ -521,7 +566,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "11.66"
+        "price": "11.66",
+        "currency": "EUR"
       },
       {
         "description": "205 - ARKA 90 Alüminyum Kutu Beyaz",
@@ -530,7 +576,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "15.78"
+        "price": "15.78",
+        "currency": "EUR"
       },
       {
         "description": "205 - ÖN 45 Alüminyum Kutu Kahverengi",
@@ -539,7 +586,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "12.25"
+        "price": "12.25",
+        "currency": "EUR"
       },
       {
         "description": "205 - ARKA 90 Alüminyum Kutu Kahverengi",
@@ -548,7 +596,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "16.57"
+        "price": "16.57",
+        "currency": "EUR"
       },
       {
         "description": "205 - ÖN 45 Alüminyum Kutu Metalik Gri",
@@ -557,7 +606,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "12.25"
+        "price": "12.25",
+        "currency": "EUR"
       },
       {
         "description": "205 - ARKA 90 Alüminyum Kutu Metalik Gri",
@@ -566,7 +616,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "16.57"
+        "price": "16.57",
+        "currency": "EUR"
       },
       {
         "description": "205 - ÖN 45 Alüminyum Kutu krem",
@@ -575,7 +626,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "12.25"
+        "price": "12.25",
+        "currency": "EUR"
       },
       {
         "description": "205 - ARKA 90 Alüminyum Kutu Krem",
@@ -584,7 +636,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "16.57"
+        "price": "16.57",
+        "currency": "EUR"
       },
       {
         "description": "205 - ÖN 45 Alüminyum Kutu Altın Meşe",
@@ -593,7 +646,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "12.49"
+        "price": "12.49",
+        "currency": "EUR"
       },
       {
         "description": "205 - ARKA 90 Alüminyum Kutu Altın Meşe",
@@ -602,7 +656,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "16.88"
+        "price": "16.88",
+        "currency": "EUR"
       },
       {
         "description": "205 - ÖN 45 Alüminyum Kutu Antrasit Gri",
@@ -611,7 +666,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "12.25"
+        "price": "12.25",
+        "currency": "EUR"
       },
       {
         "description": "205 - ARKA 90 Alüminyum Kutu Antrasit Gri",
@@ -620,7 +676,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "16.57"
+        "price": "16.57",
+        "currency": "EUR"
       },
       {
         "description": "205 - ÖN 45 Alüminyum Kutu Vizon",
@@ -647,7 +704,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "18.76"
+        "price": "18.76",
+        "currency": "EUR"
       },
       {
         "description": "250 - ARKA 90 Alüminyum Kutu Beyaz",
@@ -656,7 +714,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "25.52"
+        "price": "25.52",
+        "currency": "EUR"
       },
       {
         "description": "250 - ÖN 45 Alüminyum Kutu Kahverengi",
@@ -665,7 +724,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "19.71"
+        "price": "19.71",
+        "currency": "EUR"
       },
       {
         "description": "250 - ARKA 90 Alüminyum Kutu Kahverengi",
@@ -674,7 +734,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "26.79"
+        "price": "26.79",
+        "currency": "EUR"
       },
       {
         "description": "250 - ÖN 45 Alüminyum Kutu Metalik Gri",
@@ -683,7 +744,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "19.71"
+        "price": "19.71",
+        "currency": "EUR"
       },
       {
         "description": "250 - ARKA 90 Alüminyum Kutu Metalik Gri",
@@ -692,7 +754,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "26.79"
+        "price": "26.79",
+        "currency": "EUR"
       },
       {
         "description": "250 - ÖN 45 Alüminyum Kutu Antrasit Gri",
@@ -701,7 +764,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "19.71"
+        "price": "19.71",
+        "currency": "EUR"
       },
       {
         "description": "250 - ARKA 90 Alüminyum Kutu Antrasit Gri",
@@ -710,7 +774,8 @@
         "type": "panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "26.79"
+        "price": "26.79",
+        "currency": "EUR"
       },
       {
         "description": "Kutu Tampon Çıtası RAL Boyalı",
@@ -719,7 +784,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "3.27"
+        "price": "3.27",
+        "currency": "EUR"
       },
       {
         "description": "Kutu Tampon Çıtası Beyaz",
@@ -728,7 +794,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "2.71"
+        "price": "2.71",
+        "currency": "EUR"
       },
       {
         "description": "Kutu Tampon Çıtası Kahverengi",
@@ -737,7 +804,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "2.71"
+        "price": "2.71",
+        "currency": "EUR"
       },
       {
         "description": "Kutu Tampon Çıtası Antrasit Gri",
@@ -746,7 +814,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "2.71"
+        "price": "2.71",
+        "currency": "EUR"
       },
       {
         "description": "185 Kutu Kapak Beyaz",
@@ -755,7 +824,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "4.05"
+        "price": "4.05",
+        "currency": "EUR"
       },
       {
         "description": "185 Kutu Kapak Folyo Kaplama",
@@ -764,7 +834,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "folyo_kaplama",
         "unit": "Metre",
-        "price": "11.47"
+        "price": "11.47",
+        "currency": "EUR"
       },
       {
         "description": "185 Kutu Kapak Altın Meşe",
@@ -773,7 +844,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "9.61"
+        "price": "9.61",
+        "currency": "EUR"
       },
       {
         "description": "185 Kutu Kapak Fındık",
@@ -782,7 +854,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "9.61"
+        "price": "9.61",
+        "currency": "EUR"
       },
       {
         "description": "185 Kutu Kapak Antrasit Gri",
@@ -791,7 +864,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "9.61"
+        "price": "9.61",
+        "currency": "EUR"
       },
       {
         "description": "185 Kutu Kapak Vizon",
@@ -800,7 +874,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "9.61"
+        "price": "9.61",
+        "currency": "EUR"
       },
       {
         "description": "185 Kutu Alt Kapak Beyaz",
@@ -809,7 +884,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "3.37"
+        "price": "3.37",
+        "currency": "EUR"
       },
       {
         "description": "185 Kutu Alt Kapak Folyo Kaplama",
@@ -818,7 +894,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "folyo_kaplama",
         "unit": "Metre",
-        "price": "9.43"
+        "price": "9.43",
+        "currency": "EUR"
       },
       {
         "description": "185 Kutu Alt Kapak Altın Meşe",
@@ -827,7 +904,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "7.91"
+        "price": "7.91",
+        "currency": "EUR"
       },
       {
         "description": "185 Kutu Alt Kapak Fındık",
@@ -836,7 +914,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "7.91"
+        "price": "7.91",
+        "currency": "EUR"
       },
       {
         "description": "185 Kutu Alt Kapak Antrasit Gri",
@@ -845,7 +924,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "7.91"
+        "price": "7.91",
+        "currency": "EUR"
       },
       {
         "description": "185 Kutu Alt Kapak Vizon",
@@ -854,7 +934,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "7.91"
+        "price": "7.91",
+        "currency": "EUR"
       },
       {
         "description": "185 mm Yalıtım Beyaz",
@@ -863,7 +944,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "2.50"
+        "price": "2.50",
+        "currency": "EUR"
       },
       {
         "description": "200 Kutu Kapak Beyaz",
@@ -872,7 +954,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "4.72"
+        "price": "4.72",
+        "currency": "EUR"
       },
       {
         "description": "200 Kutu Kapak Folyo Kap.",
@@ -881,7 +964,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "folyo_kaplama",
         "unit": "Metre",
-        "price": "13.26"
+        "price": "13.26",
+        "currency": "EUR"
       },
       {
         "description": "200 Kutu Kapak Altın Meşe",
@@ -890,7 +974,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "11.13"
+        "price": "11.13",
+        "currency": "EUR"
       },
       {
         "description": "200 Kutu Kapak Fındık",
@@ -899,7 +984,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "11.13"
+        "price": "11.13",
+        "currency": "EUR"
       },
       {
         "description": "200 Kutu Kapak Antrasit Gri",
@@ -908,7 +994,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "11.13"
+        "price": "11.13",
+        "currency": "EUR"
       },
       {
         "description": "200 Kutu Kapak Vizon",
@@ -917,7 +1004,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "11.13"
+        "price": "11.13",
+        "currency": "EUR"
       },
       {
         "description": "200 Kutu Alt Kapak Beyaz",
@@ -926,7 +1014,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "5.73"
+        "price": "5.73",
+        "currency": "EUR"
       },
       {
         "description": "200 Kutu Alt Kapak Folyo Kap.",
@@ -935,7 +1024,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "folyo_kaplama",
         "unit": "Metre",
-        "price": "12.94"
+        "price": "12.94",
+        "currency": "EUR"
       },
       {
         "description": "200 Kutu Alt Kapak Altın Meşe",
@@ -944,7 +1034,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "11.14"
+        "price": "11.14",
+        "currency": "EUR"
       },
       {
         "description": "200 Kutu Alt Kapak Fındık",
@@ -953,7 +1044,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "11.14"
+        "price": "11.14",
+        "currency": "EUR"
       },
       {
         "description": "200 Kutu Alt Kapak Antrasit Gri",
@@ -962,7 +1054,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "11.14"
+        "price": "11.14",
+        "currency": "EUR"
       },
       {
         "description": "200 Kutu Alt Kapak Vizon",
@@ -971,7 +1064,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "11.14"
+        "price": "11.14",
+        "currency": "EUR"
       },
       {
         "description": "255 Kutu Kapak Yalıtımlı Beyaz",
@@ -980,7 +1074,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "5.67"
+        "price": "5.67",
+        "currency": "EUR"
       },
       {
         "description": "255 Kutu Kapak Yalıtımlı Folyo Kaplama",
@@ -989,7 +1084,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "folyo_kaplama",
         "unit": "Metre",
-        "price": "15.50"
+        "price": "15.50",
+        "currency": "EUR"
       },
       {
         "description": "255 Kutu Kapak Yalıtımlı Altın Meşe",
@@ -998,7 +1094,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "13.04"
+        "price": "13.04",
+        "currency": "EUR"
       },
       {
         "description": "255 Kutu Kapak Yalıtımlı Fındık",
@@ -1007,7 +1104,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "13.04"
+        "price": "13.04",
+        "currency": "EUR"
       },
       {
         "description": "255 Kutu Kapak Yalıtımlı Antrasit Gri",
@@ -1016,7 +1114,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "13.04"
+        "price": "13.04",
+        "currency": "EUR"
       },
       {
         "description": "255 Kutu Kapak Yalıtımlı Vizon",
@@ -1025,7 +1124,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "13.04"
+        "price": "13.04",
+        "currency": "EUR"
       },
       {
         "description": "255 Kutu Alt Kapak Yalıtımlı Beyaz",
@@ -1034,7 +1134,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "6.52"
+        "price": "6.52",
+        "currency": "EUR"
       },
       {
         "description": "255 Kutu Alt Kapak Yalıtımlı Folyo Kaplama",
@@ -1043,7 +1144,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "folyo_kaplama",
         "unit": "Metre",
-        "price": "15.13"
+        "price": "15.13",
+        "currency": "EUR"
       },
       {
         "description": "255 Kutu Alt Kapak Yalıtımlı Altın Meşe",
@@ -1052,7 +1154,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "12.98"
+        "price": "12.98",
+        "currency": "EUR"
       },
       {
         "description": "255 Kutu Alt Kapak Yalıtımlı Fındık",
@@ -1061,7 +1164,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "12.98"
+        "price": "12.98",
+        "currency": "EUR"
       },
       {
         "description": "255 Kutu Alt Kapak Yalıtımlı Antrasit Gri",
@@ -1070,7 +1174,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "12.98"
+        "price": "12.98",
+        "currency": "EUR"
       },
       {
         "description": "255 Kutu Alt Kapak Yalıtımlı Vizon",
@@ -1079,7 +1184,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "12.98"
+        "price": "12.98",
+        "currency": "EUR"
       },
       {
         "description": "220 mm Yalıtım Beyaz",
@@ -1088,7 +1194,8 @@
         "type": "monoblok_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "2.73"
+        "price": "2.73",
+        "currency": "EUR"
       },
       {
         "description": "25x25 Strafor Kutu İthal ",
@@ -1097,7 +1204,8 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "36.23"
+        "price": "36.23",
+        "currency": "EUR"
       },
       {
         "description": "30x30 Strafor Kutu İthal",
@@ -1106,7 +1214,8 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "38.33"
+        "price": "38.33",
+        "currency": "EUR"
       },
       {
         "description": "25x25 Eps Panjur Kutusu Yerli",
@@ -1115,7 +1224,8 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "26.57"
+        "price": "26.57",
+        "currency": "EUR"
       },
       {
         "description": "30x30 Eps Panjur Kutusu Yerli",
@@ -1124,7 +1234,8 @@
         "type": "yalitimli_panjur_kutu_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "27.62"
+        "price": "27.62",
+        "currency": "EUR"
       },
       {
         "description": "25x25 Strafor Kutu Alt Kapama Beyaz",
@@ -1243,7 +1354,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "pres",
         "unit": "Metre",
-        "price": "3.51"
+        "price": "3.51",
+        "currency": "EUR"
       },
       {
         "description": "Mini Alt Parça Beyaz",
@@ -1252,7 +1364,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "3.76"
+        "price": "3.76",
+        "currency": "EUR"
       },
       {
         "description": "Mini Alt Parça Kahverengi",
@@ -1261,7 +1374,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "3.93"
+        "price": "3.93",
+        "currency": "EUR"
       },
       {
         "description": "Mini Alt Parça Metalik Gri",
@@ -1270,7 +1384,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "3.93"
+        "price": "3.93",
+        "currency": "EUR"
       },
       {
         "description": "Mini Alt Parça Krem",
@@ -1279,7 +1394,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "3.93"
+        "price": "3.93",
+        "currency": "EUR"
       },
       {
         "description": "Mini Alt Parça Antrasit Gri",
@@ -1288,7 +1404,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "3.93"
+        "price": "3.93",
+        "currency": "EUR"
       },
       {
         "description": "Mini Alt Parça Vizon",
@@ -1297,7 +1414,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "3.93"
+        "price": "3.93",
+        "currency": "EUR"
       },
       {
         "description": "Mini Alt Parça Altın Meşe",
@@ -1306,7 +1424,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "4.91"
+        "price": "4.91",
+        "currency": "EUR"
       },
       {
         "description": "Mini Alt Parça Ral Boyalı",
@@ -1315,7 +1434,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "4.43"
+        "price": "4.43",
+        "currency": "EUR"
       },
       {
         "description": "Midi Alt Parça Pres",
@@ -1324,7 +1444,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "pres",
         "unit": "Metre",
-        "price": "4.72"
+        "price": "4.72",
+        "currency": "EUR"
       },
       {
         "description": "Midi Alt Parça Beyaz",
@@ -1333,7 +1454,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "4.80"
+        "price": "4.80",
+        "currency": "EUR"
       },
       {
         "description": "Midi Alt Parça Kahverengi",
@@ -1342,7 +1464,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "4.80"
+        "price": "4.80",
+        "currency": "EUR"
       },
       {
         "description": "Midi Alt Parça Metalik Gri",
@@ -1351,7 +1474,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "4.80"
+        "price": "4.80",
+        "currency": "EUR"
       },
       {
         "description": "Midi Alt Parça Krem",
@@ -1360,7 +1484,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "4.80"
+        "price": "4.80",
+        "currency": "EUR"
       },
       {
         "description": "Midi Alt Parça Antrasit Gri",
@@ -1369,7 +1494,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "4.80"
+        "price": "4.80",
+        "currency": "EUR"
       },
       {
         "description": "Midi Alt Parça Vizon",
@@ -1378,7 +1504,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "4.80"
+        "price": "4.80",
+        "currency": "EUR"
       },
       {
         "description": "Midi Alt Parça Altın Meşe",
@@ -1387,7 +1514,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "6.03"
+        "price": "6.03",
+        "currency": "EUR"
       },
       {
         "description": "Midi Alt Parça Ral Boyalı",
@@ -1396,7 +1524,8 @@
         "type": "panjur_alt_parça_profilleri",
         "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "5.71"
+        "price": "5.71",
+        "currency": "EUR"
       },
       {
         "description": "Mini Dikme 53 mm Pres",
@@ -1405,7 +1534,8 @@
         "type": "panjur_dikme_profilleri",
         "color": "pres",
         "unit": "Metre",
-        "price": "5.01"
+        "price": "5.01",
+        "currency": "EUR"
       },
       {
         "description": "Mini Dikme 53 mm Beyaz",
@@ -1414,7 +1544,8 @@
         "type": "panjur_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "5.37"
+        "price": "5.37",
+        "currency": "EUR"
       },
       {
         "description": "Mini Dikme 53 mm Kahverengi",
@@ -1423,7 +1554,8 @@
         "type": "panjur_dikme_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "5.61"
+        "price": "5.61",
+        "currency": "EUR"
       },
       {
         "description": "Mini Dikme 53 mm Metalik Gri",
@@ -1432,7 +1564,8 @@
         "type": "panjur_dikme_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "5.61"
+        "price": "5.61",
+        "currency": "EUR"
       },
       {
         "description": "Mini Dikme 53 mm Krem",
@@ -1441,7 +1574,8 @@
         "type": "panjur_dikme_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "5.61"
+        "price": "5.61",
+        "currency": "EUR"
       },
       {
         "description": "Mini Dikme 53 mm Antrasit Gri",
@@ -1450,7 +1584,8 @@
         "type": "panjur_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "6.27"
+        "price": "6.27",
+        "currency": "EUR"
       },
       {
         "description": "Mini Dikme 53 mm Vizon",
@@ -1468,7 +1603,8 @@
         "type": "panjur_dikme_profilleri",
         "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "6.47"
+        "price": "6.47",
+        "currency": "EUR"
       },
       {
         "description": "Midi Dikme 60 mm Pres",
@@ -1486,7 +1622,8 @@
         "type": "panjur_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "7.41"
+        "price": "7.41",
+        "currency": "EUR"
       },
       {
         "description": "Midi Dikme 60 mm Kahverengi",
@@ -1495,7 +1632,8 @@
         "type": "panjur_dikme_profilleri",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "7.75"
+        "price": "7.75",
+        "currency": "EUR"
       },
       {
         "description": "Midi Dikme 60 mm Metalik Gri",
@@ -1504,7 +1642,8 @@
         "type": "panjur_dikme_profilleri",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "7.75"
+        "price": "7.75",
+        "currency": "EUR"
       },
       {
         "description": "Midi Dikme 60 mm Krem",
@@ -1513,7 +1652,8 @@
         "type": "panjur_dikme_profilleri",
         "color": "krem",
         "unit": "Metre",
-        "price": "7.75"
+        "price": "7.75",
+        "currency": "EUR"
       },
       {
         "description": "Midi Dikme 60 mm Antrasit Gri",
@@ -1522,7 +1662,8 @@
         "type": "panjur_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "7.75"
+        "price": "7.75",
+        "currency": "EUR"
       },
       {
         "description": "Midi Dikme 60 mm Vizon",
@@ -1540,7 +1681,8 @@
         "type": "panjur_dikme_profilleri",
         "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "8.64"
+        "price": "8.64",
+        "currency": "EUR"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Beyaz",
@@ -1549,7 +1691,8 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "3.50"
+        "price": "3.50",
+        "currency": "EUR"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Folyo Kap.",
@@ -1558,7 +1701,8 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "folyo_kap",
         "unit": "Metre",
-        "price": "8.38"
+        "price": "8.38",
+        "currency": "EUR"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Altın Meşe",
@@ -1567,7 +1711,8 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "7.16"
+        "price": "7.16",
+        "currency": "EUR"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Fındık",
@@ -1576,7 +1721,8 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "7.16"
+        "price": "7.16",
+        "currency": "EUR"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Antrasit Gri",
@@ -1585,7 +1731,8 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "7.16"
+        "price": "7.16",
+        "currency": "EUR"
       },
       {
         "description": "Mini Pvc Yan Dikme 39 mm Vizon",
@@ -1594,7 +1741,8 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "7.16"
+        "price": "7.16",
+        "currency": "EUR"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Beyaz",
@@ -1603,7 +1751,8 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "3.44"
+        "price": "3.44",
+        "currency": "EUR"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Folyo Kap.",
@@ -1612,7 +1761,8 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "folyo_kap",
         "unit": "Metre",
-        "price": "8.14"
+        "price": "8.14",
+        "currency": "EUR"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Altın Meşe",
@@ -1621,7 +1771,8 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "6.96"
+        "price": "6.96",
+        "currency": "EUR"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Fındık",
@@ -1630,7 +1781,8 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "6.96"
+        "price": "6.96",
+        "currency": "EUR"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Antrasit Gri",
@@ -1639,7 +1791,8 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "6.96"
+        "price": "6.96",
+        "currency": "EUR"
       },
       {
         "description": "Midi Pvc Yan Dikme 55 mm Vizon",
@@ -1648,7 +1801,8 @@
         "type": "pvc_panjur_yan_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "6.96"
+        "price": "6.96",
+        "currency": "EUR"
       },
       {
         "description": "Pvc Ötelemeli Yan Dikme 39 mm Beyaz",
@@ -1777,7 +1931,8 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "7.21"
+        "price": "7.21",
+        "currency": "EUR"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Folyo Kap.",
@@ -1786,7 +1941,8 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "folyo_kap",
         "unit": "Metre",
-        "price": "14.62"
+        "price": "14.62",
+        "currency": "EUR"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Altın Meşe",
@@ -1795,7 +1951,8 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "12.75"
+        "price": "12.75",
+        "currency": "EUR"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Fındık",
@@ -1804,7 +1961,8 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "12.75"
+        "price": "12.75",
+        "currency": "EUR"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Antrasit Gri",
@@ -1813,7 +1971,8 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "12.75"
+        "price": "12.75",
+        "currency": "EUR"
       },
       {
         "description": "Mini Pvc Orta Dikme 39 mm Vizon",
@@ -1822,7 +1981,8 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "12.75"
+        "price": "12.75",
+        "currency": "EUR"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Beyaz",
@@ -1831,7 +1991,8 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "7.21"
+        "price": "7.21",
+        "currency": "EUR"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Folyo Kap.",
@@ -1840,7 +2001,8 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "folyo_kap",
         "unit": "Metre",
-        "price": "14.43"
+        "price": "14.43",
+        "currency": "EUR"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Altın Meşe",
@@ -1849,7 +2011,8 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "12.61"
+        "price": "12.61",
+        "currency": "EUR"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Fındık",
@@ -1858,7 +2021,8 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "12.61"
+        "price": "12.61",
+        "currency": "EUR"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Antrasit Gri",
@@ -1867,7 +2031,8 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "12.61"
+        "price": "12.61",
+        "currency": "EUR"
       },
       {
         "description": "Midi Pvc Orta Dikme 55 mm Vizon",
@@ -1876,7 +2041,8 @@
         "type": "pvc_panjur_orta_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "12.61"
+        "price": "12.61",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Ral Boyalı",
@@ -1915,7 +2081,8 @@
         "type": "monoblok_panjur_yan_dikme_profilleri",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "2.12"
+        "price": "2.12",
+        "currency": "EUR"
       },
       {
         "description": "Yan Dikme Adaptörü 31x42 Folyo Kaplama",
@@ -1924,7 +2091,8 @@
         "type": "monoblok_panjur_yan_dikme_profilleri",
         "color": "folyo_kaplama",
         "unit": "Metre",
-        "price": "5.75"
+        "price": "5.75",
+        "currency": "EUR"
       },
       {
         "description": "Yan Dikme Adaptörü 31x42 Altın Meşe",
@@ -1933,7 +2101,8 @@
         "type": "monoblok_panjur_yan_dikme_profilleri",
         "color": "altın_meşe",
         "unit": "Metre",
-        "price": "4.84"
+        "price": "4.84",
+        "currency": "EUR"
       },
       {
         "description": "Yan Dikme Adaptörü 31x42 Fındık",
@@ -1942,7 +2111,8 @@
         "type": "monoblok_panjur_yan_dikme_profilleri",
         "color": "fındık",
         "unit": "Metre",
-        "price": "4.84"
+        "price": "4.84",
+        "currency": "EUR"
       },
       {
         "description": "Yan Dikme Adaptörü 31x42 Antrasit Gri",
@@ -1951,7 +2121,8 @@
         "type": "monoblok_panjur_yan_dikme_profilleri",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "4.84"
+        "price": "4.84",
+        "currency": "EUR"
       },
       {
         "description": "Yan Dikme Adaptörü 31x42 Vizon",
@@ -1960,7 +2131,8 @@
         "type": "monoblok_panjur_yan_dikme_profilleri",
         "color": "vizon",
         "unit": "Metre",
-        "price": "4.84"
+        "price": "4.84",
+        "currency": "EUR"
       },
       {
         "description": "Mosel DD 7002 B",
@@ -1984,7 +2156,8 @@
         "uretici_kodu": "RC.OTM.DC.315",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "28.03"
+        "price": "28.03",
+        "currency": "EUR"
       },
       {
         "description": "DC 316 5 Kanallı Vera Buton Tipi Verici",
@@ -2008,7 +2181,8 @@
         "uretici_kodu": "RC.OTM.DC.168",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "39.75"
+        "price": "39.75",
+        "currency": "EUR"
       },
       {
         "description": "DC 169 16 Kanallı Zaman Ayarlı Verici",
@@ -2016,7 +2190,8 @@
         "uretici_kodu": "RC.OTM.DC.169",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "42.42"
+        "price": "42.42",
+        "currency": "EUR"
       },
       {
         "description": "DC 104 1 Kanallı Verici",
@@ -2024,7 +2199,8 @@
         "uretici_kodu": "RC.OTM.DC.104",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "16.97"
+        "price": "16.97",
+        "currency": "EUR"
       },
       {
         "description": "DC 105 5 Kanallı Verici",
@@ -2032,7 +2208,8 @@
         "uretici_kodu": "RC.OTM.DC.105",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "22.68"
+        "price": "22.68",
+        "currency": "EUR"
       },
       {
         "description": "DC 106 10 Kanallı Verici",
@@ -2040,7 +2217,8 @@
         "uretici_kodu": "RC.OTM.DC.106",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "27.73"
+        "price": "27.73",
+        "currency": "EUR"
       },
       {
         "description": "DC 107 16 Kanallı Verici",
@@ -2048,7 +2226,8 @@
         "uretici_kodu": "RC.OTM.DC.107",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "32.79"
+        "price": "32.79",
+        "currency": "EUR"
       },
       {
         "description": "DC 305 1 Kanallı Verici (SILVER)",
@@ -2056,7 +2235,8 @@
         "uretici_kodu": "RC.OTM.DC.305",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "26.69"
+        "price": "26.69",
+        "currency": "EUR"
       },
       {
         "description": "DC 306 5 Kanallı Verici (SILVER)",
@@ -2064,7 +2244,8 @@
         "uretici_kodu": "RC.OTM.DC.306",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "32.79"
+        "price": "32.79",
+        "currency": "EUR"
       },
       {
         "description": "DC 307 10 Kanallı Verici (SILVER)",
@@ -2072,7 +2253,8 @@
         "uretici_kodu": "RC.OTM.DC.307",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "34.99"
+        "price": "34.99",
+        "currency": "EUR"
       },
       {
         "description": "DC 313 16 Kanallı Verici (SILVER)",
@@ -2080,7 +2262,8 @@
         "uretici_kodu": "RC.OTM.DC.313",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "35.81"
+        "price": "35.81",
+        "currency": "EUR"
       },
       {
         "description": "DC 316 2 Kanallı Buton Tipi Verici",
@@ -2088,7 +2271,8 @@
         "uretici_kodu": "RC.OTM.DC.316.2",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "31.69"
+        "price": "31.69",
+        "currency": "EUR"
       },
       {
         "description": "DC 317 16 Kanallı Buton Tipi Verici",
@@ -2096,7 +2280,8 @@
         "uretici_kodu": "RC.OTM.DC.317.16",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "44.97"
+        "price": "44.97",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL DD 3000H Bi-Direction tek kanallı verici",
@@ -2128,7 +2313,8 @@
         "uretici_kodu": "352532111100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "73.20"
+        "price": "73.20",
+        "currency": "EUR"
       },
       {
         "description": "Situo 5 IO Pure II SEA MEA",
@@ -2136,7 +2322,8 @@
         "uretici_kodu": "352532151100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "177.27"
+        "price": "177.27",
+        "currency": "EUR"
       },
       {
         "description": "Situo 1 RTS Pure II",
@@ -2144,7 +2331,8 @@
         "uretici_kodu": "352532121100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "76.62"
+        "price": "76.62",
+        "currency": "EUR"
       },
       {
         "description": "Situo 5 RTS Pure II",
@@ -2152,7 +2340,8 @@
         "uretici_kodu": "352532141100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "130.11"
+        "price": "130.11",
+        "currency": "EUR"
       },
       {
         "description": "Telis 16 RTS Pure",
@@ -2160,7 +2349,8 @@
         "uretici_kodu": "352532171100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "359.78"
+        "price": "359.78",
+        "currency": "EUR"
       },
       {
         "description": "Smoove Origin RTS Buton Kumanda",
@@ -2168,7 +2358,8 @@
         "uretici_kodu": "352532211100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "67.12"
+        "price": "67.12",
+        "currency": "EUR"
       },
       {
         "description": "Smoove Origin IO Buton Kumanda",
@@ -2176,7 +2367,8 @@
         "uretici_kodu": "352532211100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "67.12"
+        "price": "67.12",
+        "currency": "EUR"
       },
       {
         "description": "Telis 6 Chronis RTS Zaman Ayarlı Kumanda",
@@ -2184,7 +2376,8 @@
         "uretici_kodu": "352532321100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "380.76"
+        "price": "380.76",
+        "currency": "EUR"
       },
       {
         "description": "Sıva Altı Kalıcı Buton",
@@ -2192,7 +2385,8 @@
         "uretici_kodu": "352540211100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "3.16"
+        "price": "3.16",
+        "currency": "EUR"
       },
       {
         "description": "Sıva Üstü Buton Kasası",
@@ -2200,7 +2394,8 @@
         "uretici_kodu": "352540911100",
         "type": "otomasyon_kumandalar",
         "unit": "Adet",
-        "price": "1.14"
+        "price": "1.14",
+        "currency": "EUR"
       },
       {
         "description": "Mosel DC-74 Kutu İçi Panjur Alıcısı",
@@ -2208,7 +2403,8 @@
         "uretici_kodu": "RC.ALC.DC.73",
         "type": "otomasyon_alıcılar",
         "unit": "Adet",
-        "price": "32.62"
+        "price": "32.62",
+        "currency": "EUR"
       },
       {
         "description": "DC 319 İki Kanallı Vera Ankastre Alıcı",
@@ -2232,7 +2428,8 @@
         "uretici_kodu": "1810314",
         "type": "otomasyon_alıcılar",
         "unit": "Adet",
-        "price": "234.03"
+        "price": "234.03",
+        "currency": "EUR"
       },
       {
         "description": "Centralis Uno RTS Buton Alıcı",
@@ -2240,7 +2437,8 @@
         "uretici_kodu": "1810217",
         "type": "otomasyon_alıcılar",
         "unit": "Adet",
-        "price": "237.41"
+        "price": "237.41",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-60 10 Kısa Motor (33cm)",
@@ -2429,7 +2627,8 @@
         "type": "panjur_aksesuar",
         "color": "siyah",
         "unit": "Adet",
-        "price": "0.07"
+        "price": "0.07",
+        "currency": "EUR"
       },
       {
         "description": "Pvc Tapa SL-45",
@@ -2438,7 +2637,8 @@
         "type": "panjur_aksesuar",
         "color": "siyah",
         "unit": "Adet",
-        "price": "0.04"
+        "price": "0.04",
+        "currency": "EUR"
       },
       {
         "description": "40mm Sekizgen Boru 0,40",
@@ -2446,7 +2646,8 @@
         "uretici_kodu": "TU.040.00.040",
         "type": "panjur_tambur_boru_profilleri",
         "unit": "Metre",
-        "price": "1.24"
+        "price": "1.85",
+        "currency": "EUR"
       },
       {
         "description": "60mm Sekizgen Boru 0,60",
@@ -3570,7 +3771,7 @@
         "lamel_type": "st_100",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "5.85",
+        "price": "5.86",
         "currency": "EUR",
         "weight_per_m2": "10.417",
         "profile_count": "10.417",
@@ -3660,7 +3861,8 @@
         "lamel_type": "77_li",
         "color": "alüminyum",
         "unit": "Metre",
-        "price": "0.72",
+        "price": "9.32",
+        "currency": "EUR",
         "kapama_yuzeyi_mm": "80",
         "nominal_kalinlik_mm": "18"
       },
@@ -3672,7 +3874,8 @@
         "lamel_type": "100_lu",
         "color": "alüminyum",
         "unit": "Metre",
-        "price": "1.13",
+        "price": "16.38",
+        "currency": "EUR",
         "kapama_yuzeyi_mm": "100",
         "nominal_kalinlik_mm": "22"
       },
@@ -3802,7 +4005,8 @@
         "price": "31.99",
         "en_mm": "300",
         "boy_mm": "300",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "300 - ARKA 90 Alüminyum Kutu Beyaz",
@@ -3815,7 +4019,8 @@
         "price": "28.21",
         "en_mm": "300",
         "boy_mm": "300",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "300 - ARKA 90 Alüminyum Kutu Kahverengi",
@@ -3828,7 +4033,8 @@
         "price": "29.61",
         "en_mm": "300",
         "boy_mm": "300",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "300 - ARKA 90 Alüminyum Kutu Metalik Gri",
@@ -3841,7 +4047,8 @@
         "price": "29.61",
         "en_mm": "300",
         "boy_mm": "300",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "300 - ARKA 90 Alüminyum Kutu Antrasit Gri",
@@ -3854,7 +4061,8 @@
         "price": "28.13",
         "en_mm": "300",
         "boy_mm": "300",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "300 - ÖN 45 Alüminyum Kutu RAL Boyalı",
@@ -3864,7 +4072,8 @@
         "kutu_type": "300mm_on45",
         "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "25.04"
+        "price": "25.04",
+        "currency": "EUR"
       },
       {
         "description": "300 - ÖN 45 Alüminyum Kutu Beyaz",
@@ -3874,7 +4083,8 @@
         "kutu_type": "300mm_on45",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "21.26"
+        "price": "21.26",
+        "currency": "EUR"
       },
       {
         "description": "300 - ÖN 45 Alüminyum Kutu Kahverengi",
@@ -3884,7 +4094,8 @@
         "kutu_type": "300mm_on45",
         "color": "kahverengi",
         "unit": "Metre",
-        "price": "22.32"
+        "price": "22.32",
+        "currency": "EUR"
       },
       {
         "description": "300 - ÖN 45 Alüminyum Kutu Metalik Gri",
@@ -3894,7 +4105,8 @@
         "kutu_type": "300mm_on45",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "22.32"
+        "price": "22.32",
+        "currency": "EUR"
       },
       {
         "description": "300 - ÖN 45 Alüminyum Kutu Antrasit Gri",
@@ -3904,7 +4116,8 @@
         "kutu_type": "300mm_on45",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "21.20"
+        "price": "21.20",
+        "currency": "EUR"
       },
       {
         "description": "350 - ARKA 90 Alüminyum Kutu RAL Boyalı",
@@ -3917,7 +4130,8 @@
         "price": "36.93",
         "en_mm": "350",
         "boy_mm": "350",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "350 - ARKA 90 Alüminyum Kutu Beyaz",
@@ -3930,7 +4144,8 @@
         "price": "32.53",
         "en_mm": "350",
         "boy_mm": "350",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "350 - ARKA 90 Alüminyum Kutu Kahverengi",
@@ -3956,7 +4171,8 @@
         "price": "34.17",
         "en_mm": "350",
         "boy_mm": "350",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "350 - ARKA 90 Alüminyum Kutu Antrasit Gri",
@@ -3969,7 +4185,8 @@
         "price": "32.45",
         "en_mm": "350",
         "boy_mm": "350",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "350 - ÖN 45 Alüminyum Kutu RAL Boyalı",
@@ -3979,7 +4196,8 @@
         "kutu_type": "350mm_on45",
         "color": "ral_boyalı",
         "unit": "Metre",
-        "price": "29.73"
+        "price": "29.73",
+        "currency": "EUR"
       },
       {
         "description": "350 - ÖN 45 Alüminyum Kutu Beyaz",
@@ -3989,7 +4207,8 @@
         "kutu_type": "350mm_on45",
         "color": "beyaz",
         "unit": "Metre",
-        "price": "25.34"
+        "price": "25.34",
+        "currency": "EUR"
       },
       {
         "description": "350 - ÖN 45 Alüminyum Kutu Kahverengi",
@@ -4009,7 +4228,8 @@
         "kutu_type": "350mm_on45",
         "color": "metalik_gri",
         "unit": "Metre",
-        "price": "26.61"
+        "price": "26.61",
+        "currency": "EUR"
       },
       {
         "description": "350 - ÖN 45 Alüminyum Kutu Antrasit Gri",
@@ -4019,7 +4239,8 @@
         "kutu_type": "350mm_on45",
         "color": "antrasit_gri",
         "unit": "Metre",
-        "price": "25.28"
+        "price": "25.28",
+        "currency": "EUR"
       },
       {
         "description": "400 Alüminyum Kutu Kit",
@@ -4247,7 +4468,8 @@
         "price": "36.76",
         "capi_mm": "114",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "150 mm Boru 3,0 mm",
@@ -4274,7 +4496,8 @@
         "en_mm": "300",
         "boy_mm": "300",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "350 Yan Kapak 45 Siyah",
@@ -4288,7 +4511,8 @@
         "en_mm": "350",
         "boy_mm": "350",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "400 Yan Kapak 45 Galvanizli",
@@ -4351,7 +4575,8 @@
         "unit": "Adet",
         "price": "18.26",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, LT-100, SL-100",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "102 mm Çelik Boru Baş Galvaniz",
@@ -4411,7 +4636,8 @@
         "unit": "Adet",
         "price": "7.46",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "Kancalı Redüktör Kolu 150 cm Beyaz",
@@ -4423,7 +4649,8 @@
         "unit": "Adet",
         "price": "8.13",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "Kancalı Redüktör Kolu 200 cm Beyaz",
@@ -4435,7 +4662,8 @@
         "unit": "Adet",
         "price": "10.86",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78, ST-100, SL-100",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "Bilezik 70>101 Beyaz",
@@ -4447,7 +4675,8 @@
         "unit": "Adet",
         "price": "0.70",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "Bilezik 70>101 - Özel Kanallı Siyah",
@@ -4473,7 +4702,8 @@
         "en_mm": "100",
         "boy_mm": "35",
         "lamel_dusme_mm": "67",
-        "panjur_tip": "maxi"
+        "panjur_tip": "maxi",
+        "currency": "EUR"
       },
       {
         "description": "77'lik Dikme 100 mm",
@@ -4487,7 +4717,8 @@
         "en_mm": "100",
         "boy_mm": "35",
         "lamel_dusme_mm": "67",
-        "panjur_tip": "maxi"
+        "panjur_tip": "maxi",
+        "currency": "EUR"
       },
       {
         "description": "77'lik Dikme 100 mm",
@@ -4501,7 +4732,8 @@
         "en_mm": "100",
         "boy_mm": "35",
         "lamel_dusme_mm": "67",
-        "panjur_tip": "maxi"
+        "panjur_tip": "maxi",
+        "currency": "EUR"
       },
       {
         "description": "77'lik Dikme 100 mm",
@@ -4515,7 +4747,8 @@
         "en_mm": "100",
         "boy_mm": "35",
         "lamel_dusme_mm": "67",
-        "panjur_tip": "maxi"
+        "panjur_tip": "maxi",
+        "currency": "EUR"
       },
       {
         "description": "77'lik Dikme 100 mm",
@@ -4529,7 +4762,8 @@
         "en_mm": "100",
         "boy_mm": "35",
         "lamel_dusme_mm": "67",
-        "panjur_tip": "maxi"
+        "panjur_tip": "maxi",
+        "currency": "EUR"
       },
       {
         "description": "77'lik Dikme 90 mm",
@@ -4543,7 +4777,8 @@
         "en_mm": "90",
         "boy_mm": "35",
         "lamel_dusme_mm": "67",
-        "panjur_tip": "maxi"
+        "panjur_tip": "maxi",
+        "currency": "EUR"
       },
       {
         "description": "77'lik Dikme 90 mm",
@@ -4557,7 +4792,8 @@
         "en_mm": "90",
         "boy_mm": "35",
         "lamel_dusme_mm": "67",
-        "panjur_tip": "maxi"
+        "panjur_tip": "maxi",
+        "currency": "EUR"
       },
       {
         "description": "77'lik Dikme 90 mm",
@@ -4571,7 +4807,8 @@
         "en_mm": "90",
         "boy_mm": "35",
         "lamel_dusme_mm": "67",
-        "panjur_tip": "maxi"
+        "panjur_tip": "maxi",
+        "currency": "EUR"
       },
       {
         "description": "77'lik Dikme 90 mm",
@@ -4585,7 +4822,8 @@
         "en_mm": "90",
         "boy_mm": "35",
         "lamel_dusme_mm": "67",
-        "panjur_tip": "maxi"
+        "panjur_tip": "maxi",
+        "currency": "EUR"
       },
       {
         "description": "100'lük Dikme 100 mm",
@@ -4599,7 +4837,8 @@
         "en_mm": "100",
         "boy_mm": "50",
         "lamel_dusme_mm": "70",
-        "panjur_tip": "mega"
+        "panjur_tip": "mega",
+        "currency": "EUR"
       },
       {
         "description": "100'lük Dikme 100 mm",
@@ -4613,7 +4852,8 @@
         "en_mm": "100",
         "boy_mm": "50",
         "lamel_dusme_mm": "70",
-        "panjur_tip": "mega"
+        "panjur_tip": "mega",
+        "currency": "EUR"
       },
       {
         "description": "100'lük Dikme 140 mm",
@@ -4627,7 +4867,8 @@
         "en_mm": "140",
         "boy_mm": "50",
         "lamel_dusme_mm": "70",
-        "panjur_tip": "mega"
+        "panjur_tip": "mega",
+        "currency": "EUR"
       },
       {
         "description": "100'lük Dikme 140 mm",
@@ -4641,7 +4882,8 @@
         "en_mm": "140",
         "boy_mm": "50",
         "lamel_dusme_mm": "70",
-        "panjur_tip": "mega"
+        "panjur_tip": "mega",
+        "currency": "EUR"
       },
       {
         "description": "77'lik Lamel Denge Makarası Beyaz",
@@ -4653,7 +4895,8 @@
         "unit": "Takım",
         "price": "2.56",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
-        "panjur_tip": "maxi"
+        "panjur_tip": "maxi",
+        "currency": "EUR"
       },
       {
         "description": "Dikme Pleksi",
@@ -4665,7 +4908,8 @@
         "unit": "Metre",
         "price": "1.81",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
-        "panjur_tip": "maxi"
+        "panjur_tip": "maxi",
+        "currency": "EUR"
       },
       {
         "description": "Dikme Pleksi",
@@ -4677,7 +4921,8 @@
         "unit": "Metre",
         "price": "1.81",
         "lamel_type": "ST-100, SL-100",
-        "panjur_tip": "mega"
+        "panjur_tip": "mega",
+        "currency": "EUR"
       },
       {
         "description": "06'x1200 Standart Kıl Fitil",
@@ -4689,7 +4934,8 @@
         "unit": "Metre",
         "price": "0.23",
         "lamel_type": "SL-77, ST-77, SE-77 EXT, SE-78",
-        "panjur_tip": "maxi"
+        "panjur_tip": "maxi",
+        "currency": "EUR"
       },
       {
         "description": "06'x1800 Standart Kıl Fitil",
@@ -4701,7 +4947,8 @@
         "unit": "Metre",
         "price": "0.35",
         "lamel_type": "ST-100, SL-100",
-        "panjur_tip": "mega"
+        "panjur_tip": "mega",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL-70 60 Redüktörlü Motor",
@@ -4895,7 +5142,8 @@
         "unit": "Adet",
         "price": "46.50",
         "motor_tip": "butonlu_reduktorlu_zincirli",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "Mosel iwy Alıcı x 2 Vericli",
@@ -4919,7 +5167,8 @@
         "unit": "Adet",
         "price": "48.12",
         "motor_tip": "butonlu_reduktorlu_zincirli",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "Mosel PC-1157 Fotoselli Kepenk Alıcısı",
@@ -4943,7 +5192,8 @@
         "unit": "Adet",
         "price": "7.09",
         "alici_type": "oval_alici",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       },
       {
         "description": "DC-1153 X 4 Kanallı Vericil (Oval Alıcı)",
@@ -4955,7 +5205,8 @@
         "unit": "Adet",
         "price": "7.09",
         "alici_type": "oval_alici",
-        "hareket_tip": "motorlu"
+        "hareket_tip": "motorlu",
+        "currency": "EUR"
       }
     ],
     "cam_balkon": [

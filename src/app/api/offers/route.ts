@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from "next/server";
 import type { Offer } from "@/documents/offers";
 import { supabase } from "@/lib/supabase";

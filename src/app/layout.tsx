@@ -2,6 +2,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import { Navbar } from "@/components/navbar";
 import { AuthGuard } from "@/components/auth-guard";
+import { AuthProvider } from "@/contexts/auth-context";
 import { ToastProvider } from "@/contexts/toast-context";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
@@ -39,13 +40,15 @@ export default function RootLayout({
             disableTransitionOnChange
             storageKey="ozerpan-theme"
           >
-            <ToastProvider>
-              <Navbar />
-              <AuthGuard>
-                <ReduxProvider>{children}</ReduxProvider>
-              </AuthGuard>
-              <ToastContainer />
-            </ToastProvider>
+            <AuthProvider>
+              <ToastProvider>
+                <Navbar />
+                <AuthGuard>
+                  <ReduxProvider>{children}</ReduxProvider>
+                </AuthGuard>
+                <ToastContainer />
+              </ToastProvider>
+            </AuthProvider>
           </ThemeProvider>
         </ClientFrappeProvider>
       </body>

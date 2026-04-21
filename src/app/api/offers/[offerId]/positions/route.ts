@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { Position } from "@/documents/offers";
@@ -33,7 +34,7 @@ export async function DELETE(
     }
 
     // Filter out the positions to be deleted
-    const updatedPositions = offer.positions.filter(
+    const updatedPositions = (offer.positions as any[]).filter(
       (pos: Position) => !positionIds.includes(pos.id)
     );
 
@@ -43,7 +44,7 @@ export async function DELETE(
       .update({
         positions: updatedPositions,
         is_dirty: true,
-      })
+      } as any)
       .eq("id", offerId);
 
     if (updateError) {

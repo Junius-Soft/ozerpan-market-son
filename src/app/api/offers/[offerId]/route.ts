@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
-import { Position } from "@/documents/offers";
+
 
 // Force dynamic rendering - don't pre-render at build time
 export const dynamic = 'force-dynamic';
@@ -95,13 +96,8 @@ export async function PATCH(
     }
 
     // Build update object based on provided fields
-    const updateData: {
-      name?: string;
-      status?: string;
-      is_dirty?: boolean;
-      eurRate?: number;
-      positions?: Position[];
-    } = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const updateData: Record<string, any> = {};
     if (body.name) updateData.name = body.name;
     if (body.positions) updateData.positions = body.positions;
     if (body.status) {
@@ -115,7 +111,7 @@ export async function PATCH(
 
     const { data: offer, error: updateError } = await supabase
       .from("offers")
-      .update(updateData)
+      .update(updateData as any)
       .eq("id", offerId)
       .select()
       .single();

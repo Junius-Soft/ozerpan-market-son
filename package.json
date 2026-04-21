@@ -27,6 +27,7 @@
     "@radix-ui/react-toast": "^1.2.14",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@reduxjs/toolkit": "^2.8.2",
+    "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.49.8",
     "@types/yup": "^0.29.14",
     "class-variance-authority": "^0.7.1",

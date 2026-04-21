@@ -240,13 +240,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Çıkış
   const signOut = useCallback(async () => {
+    console.log("signOut çağrıldı");
+    
+    // State'i hemen temizle - UI anında güncellenir
+    setUser(null);
+    setSession(null);
+    setProfile(null);
+    
+    // Supabase'e bildir ama bekleme (timeout ile)
     try {
-      await supabase.auth.signOut();
-      setUser(null);
-      setSession(null);
-      setProfile(null);
+      const signOutPromise = supabase.auth.signOut({ scope: 'local' });
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('signOut timeout')), 3000)
+      );
+      await Promise.race([signOutPromise, timeoutPromise]);
+      console.log("Supabase signOut başarılı");
     } catch (error) {
-      console.error("Çıkış hatası:", error);
+      console.warn("Supabase signOut timeout veya hata (state zaten temizlendi):", error);
     }
   }, []);
 

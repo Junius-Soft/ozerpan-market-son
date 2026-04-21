@@ -133,8 +133,11 @@ export function Navbar() {
                       )}
                       <DropdownMenuSeparator />
                       <DropdownMenuItem
-                        onClick={handleLogout}
-                        className="text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400"
+                        onSelect={(e) => {
+                          e.preventDefault();
+                          handleLogout();
+                        }}
+                        className="text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400 cursor-pointer"
                       >
                         <LogOut className="h-4 w-4 mr-2" />
                         Çıkış Yap

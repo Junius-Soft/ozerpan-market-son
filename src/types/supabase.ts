@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type Json =
   | string
   | number
@@ -5,6 +6,8 @@ export type Json =
   | null
   | { [key: string]: Json | undefined }
   | Json[];
+
+export type UserRole = "admin" | "customer";
 
 export interface Database {
   public: {
@@ -17,7 +20,8 @@ export interface Database {
           status: "Taslak" | "Kaydedildi" | "Revize" | "Sipariş Verildi";
           positions: Json[];
           is_dirty?: boolean;
-          eurRate?: number; // EUR/TL exchange rate
+          eurRate?: number;
+          user_id?: string;
         };
         Insert: {
           id: string;
@@ -27,6 +31,7 @@ export interface Database {
           positions: Json[];
           is_dirty?: boolean;
           eurRate?: number;
+          user_id?: string;
         };
         Update: {
           id?: string;
@@ -36,8 +41,54 @@ export interface Database {
           positions?: Json[];
           is_dirty?: boolean;
           eurRate?: number;
+          user_id?: string;
         };
+        Relationships: [];
       };
+      profiles: {
+        Row: {
+          id: string;
+          email: string;
+          full_name: string | null;
+          role: UserRole;
+          phone: string | null;
+          company: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          email: string;
+          full_name?: string | null;
+          role?: UserRole;
+          phone?: string | null;
+          company?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          email?: string;
+          full_name?: string | null;
+          role?: UserRole;
+          phone?: string | null;
+          company?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      [_ in never]: never;
+    };
+    Enums: {
+      user_role: UserRole;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
     };
   };
 }

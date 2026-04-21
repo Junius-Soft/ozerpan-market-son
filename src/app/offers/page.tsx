@@ -25,9 +25,11 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import MobileOffersGrid from "./MobileOffersGrid";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function OffersPage() {
   const router = useRouter();
+  const { isAdmin } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newOfferName, setNewOfferName] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -138,16 +140,18 @@ export default function OffersPage() {
           </div>
           {allOffers.length > 0 && (
             <div className="fixed left-0 right-0 bottom-0 z-40 flex gap-2 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md border-t border-zinc-200 dark:border-zinc-800 md:hidden p-4">
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={handleDeleteSelected}
-                disabled={selectedOffers.length === 0}
-                className="gap-2 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 w-full"
-              >
-                <Trash2 className="h-5 w-5" />
-                Seçilenleri Sil
-              </Button>
+              {isAdmin && (
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={handleDeleteSelected}
+                  disabled={selectedOffers.length === 0}
+                  className="gap-2 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 w-full"
+                >
+                  <Trash2 className="h-5 w-5" />
+                  Seçilenleri Sil
+                </Button>
+              )}
               <Button
                 onClick={() => setIsModalOpen(true)}
                 variant="outline"
@@ -165,15 +169,17 @@ export default function OffersPage() {
           <h1 className="text-2xl font-bold">Teklifler</h1>
           {allOffers.length > 0 && (
             <div className="space-x-2">
-              <Button
-                variant="outline"
-                onClick={handleDeleteSelected}
-                disabled={selectedOffers.length === 0}
-                className="gap-2  border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
-              >
-                <Trash2 className="h-4 w-4" />
-                Seçilenleri Sil
-              </Button>
+              {isAdmin && (
+                <Button
+                  variant="outline"
+                  onClick={handleDeleteSelected}
+                  disabled={selectedOffers.length === 0}
+                  className="gap-2 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Seçilenleri Sil
+                </Button>
+              )}
               <Button
                 onClick={() => setIsModalOpen(true)}
                 variant="outline"
@@ -281,19 +287,21 @@ export default function OffersPage() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-[50px]">
-                      <Checkbox
-                        checked={
-                          selectedOffers.length === allOffers.length &&
-                          allOffers.length > 0
-                        }
-                        onCheckedChange={(checked) => {
-                          setSelectedOffers(
-                            checked ? allOffers.map((o) => o.id) : []
-                          );
-                        }}
-                      />
-                    </TableHead>
+                    {isAdmin && (
+                      <TableHead className="w-[50px]">
+                        <Checkbox
+                          checked={
+                            selectedOffers.length === allOffers.length &&
+                            allOffers.length > 0
+                          }
+                          onCheckedChange={(checked) => {
+                            setSelectedOffers(
+                              checked ? allOffers.map((o) => o.id) : []
+                            );
+                          }}
+                        />
+                      </TableHead>
+                    )}
                     <TableHead className="w-[100px]">Teklif No</TableHead>
                     <TableHead>Teklif Adı</TableHead>
                     <TableHead>Oluşturulma Tarihi</TableHead>
@@ -341,12 +349,14 @@ export default function OffersPage() {
                           router.push(`/offers/${offer.id}`);
                         }}
                       >
-                        <TableCell className="w-[50px] checkbox-cell">
-                          <Checkbox
-                            checked={selectedOffers.includes(offer.id)}
-                            onCheckedChange={() => toggleOffer(offer.id)}
-                          />
-                        </TableCell>
+                        {isAdmin && (
+                          <TableCell className="w-[50px] checkbox-cell">
+                            <Checkbox
+                              checked={selectedOffers.includes(offer.id)}
+                              onCheckedChange={() => toggleOffer(offer.id)}
+                            />
+                          </TableCell>
+                        )}
                         <TableCell className="font-medium">
                           {offer.id}
                         </TableCell>

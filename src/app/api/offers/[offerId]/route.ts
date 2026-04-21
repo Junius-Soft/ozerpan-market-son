@@ -95,13 +95,8 @@ export async function PATCH(
     }
 
     // Build update object based on provided fields
-    const updateData: {
-      name?: string;
-      status?: string;
-      is_dirty?: boolean;
-      eurRate?: number;
-      positions?: Position[];
-    } = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const updateData: Record<string, any> = {};
     if (body.name) updateData.name = body.name;
     if (body.positions) updateData.positions = body.positions;
     if (body.status) {
@@ -115,7 +110,7 @@ export async function PATCH(
 
     const { data: offer, error: updateError } = await supabase
       .from("offers")
-      .update(updateData)
+      .update(updateData as any)
       .eq("id", offerId)
       .select()
       .single();

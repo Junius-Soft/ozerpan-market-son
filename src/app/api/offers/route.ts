@@ -70,7 +70,7 @@ export async function POST(request: Request) {
 
     const { data, error } = await supabase
       .from("offers")
-      .insert([newOffer])
+      .insert([newOffer] as any)
       .select()
       .single();
 
@@ -155,7 +155,7 @@ export async function PATCH(request: Request) {
       .update({
         positions: body.positions,
         is_dirty: true,
-      })
+      } as any)
       .eq("id", id);
 
     if (updateError) {

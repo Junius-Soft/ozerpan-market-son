@@ -12,6 +12,7 @@
     "start": "next start",
     "lint": "next lint",
     "import-offers": "tsx scripts/import-offers.ts",
+    "migrate-prices": "tsx scripts/migrate-prices-to-supabase.ts",
     "deploy": "vercel --prod"
   },
   "dependencies": {

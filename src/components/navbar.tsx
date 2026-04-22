@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, LogIn, LogOut, User, Shield } from "lucide-react";
+import { ShoppingCart, LogIn, LogOut, User, Shield, DollarSign } from "lucide-react";
 import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
 import { LoginModal } from "./login-modal";
@@ -75,6 +75,17 @@ export function Navbar() {
                     <ShoppingCart className="h-4 w-4" />
                     <span className="hidden sm:inline">Teklifler</span>
                   </Button>
+
+                  {isAdmin && (
+                    <Button
+                      onClick={() => router.push("/admin/prices")}
+                      variant="outline"
+                      className="inline-flex items-center px-4 py-2 gap-2 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30"
+                    >
+                      <DollarSign className="h-4 w-4" />
+                      <span className="hidden sm:inline">Fiyat Yönetimi</span>
+                    </Button>
+                  )}
 
                   {/* User Dropdown */}
                   <DropdownMenu>

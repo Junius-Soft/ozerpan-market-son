@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CATEGORY_LABELS, TYPE_LABELS } from "../page";
+import { CATEGORY_LABELS, TYPE_LABELS } from "../constants";
 
 interface PriceFiltersProps {
   category: string;

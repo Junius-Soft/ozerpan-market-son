@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { TrendingUp, TrendingDown, Package, Clock } from "lucide-react";
-import type { PriceItem } from "../page";
+import type { PriceItem } from "../constants";
 
 interface StatsCardsProps {
   prices: PriceItem[];

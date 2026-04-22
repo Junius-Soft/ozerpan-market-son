@@ -27,8 +27,8 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react";
-import type { PriceItem } from "../page";
-import { CATEGORY_LABELS, TYPE_LABELS } from "../page";
+import type { PriceItem } from "../constants";
+import { CATEGORY_LABELS, TYPE_LABELS } from "../constants";
 
 interface PriceTableProps {
   prices: PriceItem[];

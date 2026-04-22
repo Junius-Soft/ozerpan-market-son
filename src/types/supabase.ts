@@ -44,6 +44,59 @@ export interface Database {
         };
         Relationships: [];
       };
+      product_prices: {
+        Row: {
+          id: string;
+          product_category: string;
+          item_type: string;
+          description: string;
+          stock_code: string | null;
+          uretici_kodu: string | null;
+          type: string | null;
+          color: string | null;
+          unit: string | null;
+          price: number;
+          previous_price: number | null;
+          currency: string;
+          price_updated_at: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          product_category: string;
+          item_type?: string;
+          description: string;
+          stock_code?: string | null;
+          uretici_kodu?: string | null;
+          type?: string | null;
+          color?: string | null;
+          unit?: string | null;
+          price: number;
+          previous_price?: number | null;
+          currency?: string;
+          price_updated_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          product_category?: string;
+          item_type?: string;
+          description?: string;
+          stock_code?: string | null;
+          uretici_kodu?: string | null;
+          type?: string | null;
+          color?: string | null;
+          unit?: string | null;
+          price?: number;
+          previous_price?: number | null;
+          currency?: string;
+          price_updated_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       profiles: {
         Row: {
           id: string;

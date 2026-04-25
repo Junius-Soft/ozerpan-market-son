@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, LogIn, LogOut, User, Shield, DollarSign } from "lucide-react";
+import { ShoppingCart, LogIn, LogOut, User, Shield, DollarSign, Users } from "lucide-react";
 import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
 import { LoginModal } from "./login-modal";
@@ -84,6 +84,17 @@ export function Navbar() {
                     >
                       <DollarSign className="h-4 w-4" />
                       <span className="hidden sm:inline">Fiyat Yönetimi</span>
+                    </Button>
+                  )}
+
+                  {isAdmin && (
+                    <Button
+                      onClick={() => router.push("/admin/users")}
+                      variant="outline"
+                      className="inline-flex items-center px-4 py-2 gap-2 border-violet-200 dark:border-violet-800 text-violet-700 dark:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-950/30"
+                    >
+                      <Users className="h-4 w-4" />
+                      <span className="hidden sm:inline">Kullanıcılar</span>
                     </Button>
                   )}
 

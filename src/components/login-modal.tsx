@@ -148,9 +148,9 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
               Kayıt Başarılı!
             </h2>
             <p className="text-sm text-muted-foreground text-center max-w-sm">
-              Hesabınız oluşturuldu. E-posta adresinize bir doğrulama bağlantısı
-              gönderildi. Lütfen e-postanızı kontrol edin ve hesabınızı
-              doğrulayın.
+              Hesabınız oluşturuldu. Sistemi kullanabilmeniz için yönetici
+              onayı gerekmektedir. Onay sonrası giriş yapabileceksiniz.
+              Lütfen sistem yöneticisi ile iletişime geçiniz.
             </p>
             <div className="flex flex-col w-full gap-2 pt-2">
               <Button

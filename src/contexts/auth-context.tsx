@@ -19,6 +19,7 @@ export interface UserProfile {
   role: UserRole;
   phone: string | null;
   company: string | null;
+  is_approved: boolean;
 }
 
 interface AuthContextType {
@@ -29,6 +30,7 @@ interface AuthContextType {
   isInitialized: boolean;
   isAdmin: boolean;
   isCustomer: boolean;
+  isApproved: boolean;
   isLoading: boolean;
   showLoginModal: boolean;
   openLoginModal: () => void;
@@ -271,6 +273,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isInitialized,
     isAdmin: profile?.role === "admin",
     isCustomer: profile?.role === "customer",
+    isApproved: profile?.role === "admin" ? true : (profile?.is_approved ?? false),
     isLoading,
     showLoginModal,
     openLoginModal,

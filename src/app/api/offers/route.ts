@@ -30,10 +30,40 @@ const isValidOffer = (offer: unknown): offer is Offer => {
 // GET /api/offers
 export async function GET() {
   try {
-    const { data: offers, error } = await supabase
+    // Get the current user from auth header or cookie
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+    // Check user role from profile
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role, is_approved")
+      .eq("id", user.id)
+      .single();
+
+    const isAdmin = profile?.role === "admin";
+
+    let query = supabase
       .from("offers")
       .select("*")
       .order("created_at", { ascending: false });
+
+    if (isAdmin) {
+      // Admin: sadece Taslak olmayan teklifleri görsün
+      query = query.neq("status", "Taslak");
+    } else {
+      // Customer: sadece kendi tekliflerini görsün
+      query = query.eq("user_id", user.id);
+    }
+
+    const { data: offers, error } = await query;
+    
     if (error) {
       throw error;
     }
@@ -67,7 +97,13 @@ export async function POST(request: Request) {
       );
     }
 
-    const newOffer = body as Offer;
+    // Get the current user
+    const { data: { user } } = await supabase.auth.getUser();
+
+    const newOffer = {
+      ...body,
+      user_id: user?.id || null,
+    } as Offer;
 
     const { data, error } = await supabase
       .from("offers")

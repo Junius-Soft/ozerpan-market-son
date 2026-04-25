@@ -147,11 +147,20 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
             <h2 className="text-xl font-semibold text-center">
               Kayıt Başarılı!
             </h2>
-            <p className="text-sm text-muted-foreground text-center max-w-sm">
-              Hesabınız oluşturuldu. E-posta adresinize bir doğrulama bağlantısı
-              gönderildi. Lütfen e-postanızı kontrol edin ve hesabınızı
-              doğrulayın.
-            </p>
+            <div className="space-y-3 w-full max-w-sm">
+              <div className="flex gap-3 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/10 border border-blue-200/50 dark:border-blue-800/30">
+                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-500 text-white text-xs font-bold flex items-center justify-center">1</span>
+                <p className="text-sm text-blue-700 dark:text-blue-300">
+                  E-posta adresinize bir doğrulama bağlantısı gönderildi. Lütfen e-postanızı kontrol edip hesabınızı doğrulayın.
+                </p>
+              </div>
+              <div className="flex gap-3 p-3 rounded-lg bg-amber-50 dark:bg-amber-900/10 border border-amber-200/50 dark:border-amber-800/30">
+                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-500 text-white text-xs font-bold flex items-center justify-center">2</span>
+                <p className="text-sm text-amber-700 dark:text-amber-300">
+                  E-posta doğrulamasının ardından, sistem yöneticisinin hesabınızı onaylaması gerekmektedir. Lütfen yönetici ile iletişime geçiniz.
+                </p>
+              </div>
+            </div>
             <div className="flex flex-col w-full gap-2 pt-2">
               <Button
                 onClick={() => {

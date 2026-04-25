@@ -96,7 +96,6 @@ export async function PATCH(
     }
 
     // Build update object based on provided fields
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const updateData: Record<string, any> = {};
     if (body.name) updateData.name = body.name;
     if (body.positions) updateData.positions = body.positions;

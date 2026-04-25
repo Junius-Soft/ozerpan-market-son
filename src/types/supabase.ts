@@ -105,6 +105,7 @@ export interface Database {
           role: UserRole;
           phone: string | null;
           company: string | null;
+          is_approved: boolean;
           created_at: string;
           updated_at: string;
         };
@@ -115,6 +116,7 @@ export interface Database {
           role?: UserRole;
           phone?: string | null;
           company?: string | null;
+          is_approved?: boolean;
           created_at?: string;
           updated_at?: string;
         };
@@ -125,6 +127,7 @@ export interface Database {
           role?: UserRole;
           phone?: string | null;
           company?: string | null;
+          is_approved?: boolean;
           updated_at?: string;
         };
         Relationships: [];

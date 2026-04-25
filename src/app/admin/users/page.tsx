@@ -9,10 +9,14 @@ import {
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   CheckCircle2, Clock, Users, ShieldCheck, Search,
   UserCheck, UserX, Shield, User, Building2, Phone, Mail,
+  Trash2, AlertTriangle,
 } from "lucide-react";
 import { toast } from "react-toastify";
 
@@ -36,6 +40,8 @@ export default function AdminUsersPage() {
   const [filter, setFilter] = useState<FilterType>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [processingIds, setProcessingIds] = useState<Set<string>>(new Set());
+  const [deleteTarget, setDeleteTarget] = useState<UserProfile | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     loadUsers();
@@ -83,6 +89,27 @@ export default function AdminUsersPage() {
     }
   };
 
+  const handleDelete = async () => {
+    if (!deleteTarget) return;
+    setIsDeleting(true);
+    try {
+      const response = await fetch(`/api/admin/users?userId=${deleteTarget.id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) throw new Error("Failed to delete user");
+      setUsers((prev) => prev.filter((u) => u.id !== deleteTarget.id));
+      toast.success(`"${deleteTarget.full_name || deleteTarget.email}" silindi!`, {
+        position: "top-center", autoClose: 2000,
+      });
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      toast.error("Kullanıcı silinirken hata oluştu");
+    } finally {
+      setIsDeleting(false);
+      setDeleteTarget(null);
+    }
+  };
+
   const filteredUsers = useMemo(() => {
     let result = users;
     if (filter === "pending") result = result.filter((u) => !u.is_approved && u.role !== "admin");
@@ -108,6 +135,38 @@ export default function AdminUsersPage() {
   return (
     <div className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        {/* Silme Onay Dialog */}
+        <Dialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2 text-red-600">
+                <AlertTriangle className="h-5 w-5" />
+                Kullanıcıyı Sil
+              </DialogTitle>
+            </DialogHeader>
+            <div className="py-2 space-y-3">
+              <p className="text-sm text-muted-foreground">
+                <strong className="text-foreground">{deleteTarget?.full_name || deleteTarget?.email}</strong> adlı kullanıcıyı silmek istediğinizden emin misiniz?
+              </p>
+              <div className="rounded-lg border border-red-100 bg-red-50 dark:bg-red-900/10 dark:border-red-900/30 p-3 text-sm text-red-700 dark:text-red-400">
+                ⚠️ Bu işlem geri alınamaz. Kullanıcının tüm teklifleri de silinecektir.
+              </div>
+            </div>
+            <DialogFooter className="gap-2 sm:gap-0">
+              <Button variant="outline" onClick={() => setDeleteTarget(null)} disabled={isDeleting}>
+                İptal
+              </Button>
+              <Button variant="destructive" onClick={handleDelete} disabled={isDeleting} className="gap-2">
+                {isDeleting ? (
+                  <><span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Siliniyor...</>
+                ) : (
+                  <><Trash2 className="h-4 w-4" /> Evet, Sil</>
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
         {/* Header */}
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2">
@@ -269,36 +328,46 @@ export default function AdminUsersPage() {
                         </TableCell>
                         <TableCell className="text-right">
                           {user.role !== "admin" && (
-                            user.is_approved ? (
+                            <div className="flex items-center justify-end gap-2">
+                              {user.is_approved ? (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => handleApproval(user.id, false)}
+                                  disabled={processingIds.has(user.id)}
+                                  className="gap-1.5 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-950/30"
+                                >
+                                  {processingIds.has(user.id) ? (
+                                    <span className="h-3.5 w-3.5 border-2 border-red-300 border-t-red-600 rounded-full animate-spin" />
+                                  ) : (
+                                    <UserX className="h-3.5 w-3.5" />
+                                  )}
+                                  Onayı Kaldır
+                                </Button>
+                              ) : (
+                                <Button
+                                  size="sm"
+                                  onClick={() => handleApproval(user.id, true)}
+                                  disabled={processingIds.has(user.id)}
+                                  className="gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white"
+                                >
+                                  {processingIds.has(user.id) ? (
+                                    <span className="h-3.5 w-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                  ) : (
+                                    <UserCheck className="h-3.5 w-3.5" />
+                                  )}
+                                  Onayla
+                                </Button>
+                              )}
                               <Button
                                 variant="outline"
                                 size="sm"
-                                onClick={() => handleApproval(user.id, false)}
-                                disabled={processingIds.has(user.id)}
+                                onClick={() => setDeleteTarget(user)}
                                 className="gap-1.5 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-950/30"
                               >
-                                {processingIds.has(user.id) ? (
-                                  <span className="h-3.5 w-3.5 border-2 border-red-300 border-t-red-600 rounded-full animate-spin" />
-                                ) : (
-                                  <UserX className="h-3.5 w-3.5" />
-                                )}
-                                Onayı Kaldır
+                                <Trash2 className="h-3.5 w-3.5" />
                               </Button>
-                            ) : (
-                              <Button
-                                size="sm"
-                                onClick={() => handleApproval(user.id, true)}
-                                disabled={processingIds.has(user.id)}
-                                className="gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white"
-                              >
-                                {processingIds.has(user.id) ? (
-                                  <span className="h-3.5 w-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                ) : (
-                                  <UserCheck className="h-3.5 w-3.5" />
-                                )}
-                                Onayla
-                              </Button>
-                            )
+                            </div>
                           )}
                         </TableCell>
                       </TableRow>
@@ -358,27 +427,37 @@ export default function AdminUsersPage() {
                       )}
                     </div>
                     {user.role !== "admin" && (
-                      <div>
-                        {user.is_approved ? (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleApproval(user.id, false)}
-                            disabled={processingIds.has(user.id)}
-                            className="w-full gap-1.5 border-red-200 text-red-600 hover:bg-red-50"
-                          >
-                            <UserX className="h-3.5 w-3.5" /> Onayı Kaldır
-                          </Button>
-                        ) : (
-                          <Button
-                            size="sm"
-                            onClick={() => handleApproval(user.id, true)}
-                            disabled={processingIds.has(user.id)}
-                            className="w-full gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white"
-                          >
-                            <UserCheck className="h-3.5 w-3.5" /> Onayla
-                          </Button>
-                        )}
+                      <div className="flex gap-2">
+                        <div className="flex-1">
+                          {user.is_approved ? (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleApproval(user.id, false)}
+                              disabled={processingIds.has(user.id)}
+                              className="w-full gap-1.5 border-red-200 text-red-600 hover:bg-red-50"
+                            >
+                              <UserX className="h-3.5 w-3.5" /> Onayı Kaldır
+                            </Button>
+                          ) : (
+                            <Button
+                              size="sm"
+                              onClick={() => handleApproval(user.id, true)}
+                              disabled={processingIds.has(user.id)}
+                              className="w-full gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white"
+                            >
+                              <UserCheck className="h-3.5 w-3.5" /> Onayla
+                            </Button>
+                          )}
+                        </div>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setDeleteTarget(user)}
+                          className="gap-1.5 border-red-200 text-red-600 hover:bg-red-50"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
                       </div>
                     )}
                   </div>

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase";
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 // GET /api/admin/users - Get all users (admin only)
 export async function GET() {
   try {
-    const { data: users, error } = await supabase
+    const { data: users, error } = await supabaseAdmin
       .from("profiles")
       .select("*")
       .order("created_at", { ascending: false });
@@ -41,7 +41,7 @@ export async function PATCH(request: Request) {
       );
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from("profiles")
       .update({ is_approved, updated_at: new Date().toISOString() } as any)
       .eq("id", userId)
@@ -56,6 +56,60 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ success: true, user: data });
   } catch (error) {
     console.error("Error in PATCH /api/admin/users:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+// DELETE /api/admin/users?userId=xxx - Delete a user
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get("userId");
+
+    if (!userId) {
+      return NextResponse.json(
+        { error: "userId is required" },
+        { status: 400 }
+      );
+    }
+
+    // 1. Kullanıcının tekliflerini sil
+    const { error: offersError } = await supabaseAdmin
+      .from("offers")
+      .delete()
+      .eq("user_id", userId);
+
+    if (offersError) {
+      console.error("Error deleting user offers:", offersError);
+    }
+
+    // 2. Profili sil
+    const { error: profileError } = await supabaseAdmin
+      .from("profiles")
+      .delete()
+      .eq("id", userId);
+
+    if (profileError) {
+      console.error("Error deleting profile:", profileError);
+      throw profileError;
+    }
+
+    // 3. Auth kullanıcısını sil
+    try {
+      const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(userId);
+      if (authError) {
+        console.warn("Auth user deletion failed:", authError.message);
+      }
+    } catch (e) {
+      console.warn("Auth user deletion error:", e);
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error in DELETE /api/admin/users:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

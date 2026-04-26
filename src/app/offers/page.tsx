@@ -28,6 +28,7 @@ import {
 import { Trash2, Plus, ChevronLeft, ChevronRight, AlertTriangle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { type Offer, getOffers } from "@/documents/offers";
+import { supabase } from "@/lib/supabase";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import MobileOffersGrid from "./MobileOffersGrid";
@@ -140,9 +141,16 @@ export default function OffersPage() {
   const handleDeleteConfirm = async () => {
     setIsDeleting(true);
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const headers: HeadersInit = {};
+      if (session?.access_token) {
+        headers["Authorization"] = `Bearer ${session.access_token}`;
+      }
+
       for (const offerId of selectedOffers) {
         const response = await fetch(`/api/offers?id=${offerId}`, {
           method: "DELETE",
+          headers,
         });
         if (!response.ok) {
           throw new Error(`Failed to delete offer ${offerId}`);

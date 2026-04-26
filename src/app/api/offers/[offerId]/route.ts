@@ -1,29 +1,40 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
-
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
 // Force dynamic rendering - don't pre-render at build time
 export const dynamic = 'force-dynamic';
 
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
+function getSupabase(request: NextRequest) {
+  const authHeader = request.headers.get("authorization");
+  if (authHeader) {
+    const token = authHeader.replace("Bearer ", "");
+    return createClient(supabaseUrl, supabaseKey, {
+      global: { headers: { Authorization: `Bearer ${token}` } },
+    });
+  }
+  return createClient(supabaseUrl, supabaseKey);
+}
+
 // GET /api/offers/:offerId - Get a single offer
 export async function GET(
-  request: Request,
+  request: NextRequest,
   context: { params: Promise<{ offerId: string }> }
 ) {
   try {
+    const supabase = getSupabase(request);
     const { offerId } = await context.params;
     
     if (!offerId) {
-      console.error("GET /api/offers/[offerId]: offerId is missing");
       return NextResponse.json(
         { error: "Offer ID is required" },
         { status: 400 }
       );
     }
 
-    console.log(`GET /api/offers/${offerId}: Fetching offer...`);
-    
     const { data: offer, error } = await supabase
       .from("offers")
       .select("*")
@@ -31,38 +42,28 @@ export async function GET(
       .single();
 
     if (error) {
-      console.error(`GET /api/offers/${offerId}: Supabase error:`, error);
-      
-      // Handle specific Supabase errors
       if (error.code === "PGRST116") {
-        // No rows returned
         return NextResponse.json(
           { error: "Offer not found" },
           { status: 404 }
         );
       }
-      
       throw error;
     }
     
     if (!offer) {
-      console.warn(`GET /api/offers/${offerId}: Offer not found`);
       return NextResponse.json(
         { error: "Offer not found" },
         { status: 404 }
       );
     }
 
-    console.log(`GET /api/offers/${offerId}: Success`);
     return NextResponse.json(offer);
   } catch (error) {
     console.error("Error getting offer:", error);
-    
-    // Return more specific error message
     const errorMessage = error instanceof Error 
       ? error.message 
       : "Internal server error";
-    
     return NextResponse.json(
       { error: errorMessage },
       { status: 500 }
@@ -72,10 +73,11 @@ export async function GET(
 
 // PATCH /api/offers/:offerId - Update offer name or status
 export async function PATCH(
-  request: Request,
+  request: NextRequest,
   context: { params: Promise<{ offerId: string }> }
 ) {
   try {
+    const supabase = getSupabase(request);
     const { offerId } = await context.params;
     const body = await request.json();
     if (!body.name && !body.status && !body.positions) {

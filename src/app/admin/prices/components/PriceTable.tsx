@@ -26,6 +26,7 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  Trash2,
 } from "lucide-react";
 import type { PriceItem } from "../constants";
 import { CATEGORY_LABELS, TYPE_LABELS } from "../constants";
@@ -36,6 +37,7 @@ interface PriceTableProps {
   selectedIds: Set<string>;
   setSelectedIds: (ids: Set<string>) => void;
   onUpdatePrice: (id: string, price: number) => void;
+  onDeleteItems: (ids: string[]) => void;
   sortBy: string;
   sortOrder: "asc" | "desc";
   onSort: (field: string) => void;
@@ -112,6 +114,7 @@ export function PriceTable({
   selectedIds,
   setSelectedIds,
   onUpdatePrice,
+  onDeleteItems,
   sortBy,
   sortOrder,
   onSort,
@@ -184,6 +187,7 @@ export function PriceTable({
               </TableHead>
               <TableHead>Önceki</TableHead>
               <TableHead>Değişim</TableHead>
+              <TableHead className="w-10"></TableHead>
               <TableHead className="cursor-pointer select-none" onClick={() => onSort("price_updated_at")}>
                 <span className="flex items-center">
                   Güncelleme
@@ -261,6 +265,16 @@ export function PriceTable({
                   </TableCell>
                   <TableCell>
                     <PriceChangeIndicator current={item.price} previous={item.previous_price} />
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="h-7 w-7 text-muted-foreground hover:text-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => onDeleteItems([item.id])}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </Button>
                   </TableCell>
                   <TableCell className="text-xs text-muted-foreground">
                     {formatDate(item.price_updated_at)}

@@ -4,6 +4,11 @@ import { createClient } from "@supabase/supabase-js";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
+// Fiyatı her zaman 2 basamağa yuvarla
+function roundPrice(value: number): number {
+  return Math.round(value * 100) / 100;
+}
+
 function getSupabase(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
   if (authHeader) {
@@ -86,7 +91,7 @@ export async function PATCH(request: NextRequest) {
   }
 
   const updateData: Record<string, unknown> = {};
-  if (price !== undefined) updateData.price = parseFloat(price);
+  if (price !== undefined) updateData.price = roundPrice(parseFloat(price));
   if (description !== undefined) updateData.description = description;
   if (stock_code !== undefined) updateData.stock_code = stock_code;
   if (uretici_kodu !== undefined) updateData.uretici_kodu = uretici_kodu;
@@ -142,7 +147,7 @@ export async function POST(request: NextRequest) {
     let errorCount = 0;
 
     for (const item of currentPrices || []) {
-      const newPrice = parseFloat((item.price * multiplier).toFixed(2));
+      const newPrice = roundPrice(item.price * multiplier);
       const { error: updateError } = await supabase
         .from("product_prices")
         .update({ price: newPrice })
@@ -175,5 +180,83 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ types: uniqueTypes, categories: uniqueCategories });
   }
 
+  // Excel ile toplu fiyat güncelleme
+  if (action === "excel_update") {
+    const { updates } = body;
+    if (!updates || !Array.isArray(updates) || updates.length === 0) {
+      return NextResponse.json({ error: "updates dizisi gerekli" }, { status: 400 });
+    }
+
+    let successCount = 0;
+    let errorCount = 0;
+
+    for (const item of updates) {
+      const { id, price } = item;
+      if (!id || price === undefined) {
+        errorCount++;
+        continue;
+      }
+
+      const { error: updateError } = await supabase
+        .from("product_prices")
+        .update({
+          price: roundPrice(parseFloat(price)),
+          price_updated_at: new Date().toISOString(),
+        })
+        .eq("id", id);
+
+      if (updateError) {
+        errorCount++;
+      } else {
+        successCount++;
+      }
+    }
+
+    return NextResponse.json({
+      message: `${successCount} ürün güncellendi${errorCount > 0 ? `, ${errorCount} hata` : ""}`,
+      successCount,
+      errorCount,
+    });
+  }
+
   return NextResponse.json({ error: "Geçersiz action" }, { status: 400 });
+}
+
+// DELETE: Ürün sil (tekli veya çoklu)
+export async function DELETE(request: NextRequest) {
+  const supabase = getSupabase(request);
+  const { searchParams } = request.nextUrl;
+  const id = searchParams.get("id");
+  const idsParam = searchParams.get("ids");
+
+  if (idsParam) {
+    // Çoklu silme
+    const ids = idsParam.split(",");
+    const { error } = await supabase
+      .from("product_prices")
+      .delete()
+      .in("id", ids);
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true, deletedCount: ids.length });
+  }
+
+  if (id) {
+    // Tekli silme
+    const { error } = await supabase
+      .from("product_prices")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true });
+  }
+
+  return NextResponse.json({ error: "id veya ids parametresi gerekli" }, { status: 400 });
 }

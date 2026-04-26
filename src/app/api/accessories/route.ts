@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
+import { createClient } from "@supabase/supabase-js";
 
-const accessoriesFilePath = path.join(process.cwd(), "data", "accessories.json");
-const productPricesFilePath = path.join(process.cwd(), "data", "product-prices.json");
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -16,37 +15,46 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  // Kepenk için product-prices.json'dan aksesuarları çek
-  if (productId === "kepenk") {
-    try {
-      const productPricesData = JSON.parse(
-        await fs.readFile(productPricesFilePath, "utf8")
-      );
-      const kepenkProducts = productPricesData.product_prices?.kepenk || [];
-      
-      // Sadece aksesuar tiplerini filtrele
-      const accessories = kepenkProducts.filter(
-        (item: { type?: string }) =>
-          item.type === "kepenk_alt_parca_aksesuarlari" ||
-          item.type === "kepenk_dikme_aksesuarlari" ||
-          item.type === "kepenk_lamel_aksesuarlari" ||
-          item.type === "kepenk_tambur_aksesuarlari" ||
-          item.type === "kepenk_kutu_aksesuarlari"
-      );
+  try {
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
-      return NextResponse.json(accessories, { status: 200 });
-    } catch (error) {
-      console.error("Error reading product-prices.json:", error);
+    let query = supabase
+      .from("product_prices")
+      .select("description, stock_code, uretici_kodu, type, color, unit, price, currency")
+      .eq("item_type", "accessory")
+      .eq("product_category", productId);
+
+    // Kepenk: aksesuar tiplerini product tablosundan al (önceki davranışla uyumlu)
+    if (productId === "kepenk") {
+      query = supabase
+        .from("product_prices")
+        .select("description, stock_code, uretici_kodu, type, color, unit, price, currency")
+        .eq("product_category", "kepenk")
+        .in("type", [
+          "kepenk_alt_parca_aksesuarlari",
+          "kepenk_dikme_aksesuarlari",
+          "kepenk_lamel_aksesuarlari",
+          "kepenk_tambur_aksesuarlari",
+          "kepenk_kutu_aksesuarlari",
+        ]);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error("Supabase accessories query error:", error);
       return NextResponse.json([], { status: 200 });
     }
-  }
 
-  // Diğer ürünler için accessories.json'dan çek
-  try {
-    const data = JSON.parse(await fs.readFile(accessoriesFilePath, "utf8"));
-    return NextResponse.json(data.accessories[productId] ?? [], { status: 200 });
+    // price'ı string'e çevir (mevcut frontend ile uyumlu olması için)
+    const result = (data || []).map((item) => ({
+      ...item,
+      price: String(item.price),
+    }));
+
+    return NextResponse.json(result, { status: 200 });
   } catch (error) {
-    console.error("Error reading accessories.json:", error);
+    console.error("Accessories API error:", error);
     return NextResponse.json([], { status: 200 });
   }
 }

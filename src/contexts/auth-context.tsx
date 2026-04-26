@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
   useCallback,
+  useRef,
   type ReactNode,
 } from "react";
 import { supabase } from "@/lib/supabase";
@@ -60,8 +61,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
-  // Profil bilgilerini getir
-  const fetchProfile = useCallback(async (userId: string) => {
+  // Race condition'ları önlemek için ref'ler
+  const fetchingRef = useRef(false);
+  const lastFetchedIdRef = useRef<string | null>(null);
+
+  // Profil bilgilerini getir - debounce ile race condition önleme
+  const fetchProfile = useCallback(async (userId: string): Promise<UserProfile | null> => {
+    // Aynı kullanıcı için zaten fetch yapılıyorsa bekle
+    if (fetchingRef.current && lastFetchedIdRef.current === userId) {
+      return null;
+    }
+
+    fetchingRef.current = true;
+    lastFetchedIdRef.current = userId;
+
     try {
       const { data, error } = await supabase
         .from("profiles")
@@ -78,23 +91,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       console.error("Profil getirme hatası:", err);
       return null;
+    } finally {
+      fetchingRef.current = false;
     }
   }, []);
 
   const refreshProfile = useCallback(async () => {
     if (user) {
       const profileData = await fetchProfile(user.id);
-      setProfile(profileData);
+      if (profileData) {
+        setProfile(profileData);
+      }
     }
   }, [user, fetchProfile]);
 
   // İlk yükleme ve oturum değişikliklerini dinle
   useEffect(() => {
     let mounted = true;
+    let initDone = false;
 
     const initAuth = async () => {
       try {
-        // Mevcut oturumu kontrol et
+        // Mevcut oturumu kontrol et - getSession() network request yapmaz
         const {
           data: { session: currentSession },
         } = await supabase.auth.getSession();
@@ -104,7 +122,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setSession(currentSession);
 
           const profileData = await fetchProfile(currentSession.user.id);
-          if (mounted) {
+          if (mounted && profileData) {
             setProfile(profileData);
           }
         }
@@ -114,6 +132,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (mounted) {
           setIsInitialized(true);
           setIsLoading(false);
+          initDone = true;
         }
       }
     };
@@ -126,19 +145,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } = supabase.auth.onAuthStateChange(async (event, newSession) => {
       if (!mounted) return;
 
+      // initAuth tamamlanmadan gelen INITIAL_SESSION event'ini yoksay
+      // (initAuth zaten hallediyor)
+      if (event === "INITIAL_SESSION" && !initDone) {
+        return;
+      }
+
       setSession(newSession);
       setUser(newSession?.user ?? null);
 
+      if (event === "SIGNED_OUT") {
+        setProfile(null);
+        return;
+      }
+
       if (newSession?.user) {
+        // TOKEN_REFRESHED event'inde profili tekrar çekmeye gerek yok
+        if (event === "TOKEN_REFRESHED") {
+          return;
+        }
+
         const profileData = await fetchProfile(newSession.user.id);
-        if (mounted) {
+        if (mounted && profileData) {
           setProfile(profileData);
         }
       } else {
-        setProfile(null);
-      }
-
-      if (event === "SIGNED_OUT") {
         setProfile(null);
       }
     });
@@ -175,9 +206,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           return { error: error.message };
         }
 
+        // signIn sonrası profil onAuthStateChange tarafından yüklenecek
+        // ama hızlı UI güncellemesi için burada da yükleyelim
         if (data.user) {
           const profileData = await fetchProfile(data.user.id);
-          setProfile(profileData);
+          if (profileData) {
+            setProfile(profileData);
+          }
         }
 
         return { error: null };
@@ -242,23 +277,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Çıkış
   const signOut = useCallback(async () => {
-    console.log("signOut çağrıldı");
-    
     // State'i hemen temizle - UI anında güncellenir
     setUser(null);
     setSession(null);
     setProfile(null);
     
-    // Supabase'e bildir ama bekleme (timeout ile)
+    // Supabase'e bildir
     try {
-      const signOutPromise = supabase.auth.signOut({ scope: 'local' });
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('signOut timeout')), 3000)
-      );
-      await Promise.race([signOutPromise, timeoutPromise]);
-      console.log("Supabase signOut başarılı");
+      await supabase.auth.signOut({ scope: 'local' });
     } catch (error) {
-      console.warn("Supabase signOut timeout veya hata (state zaten temizlendi):", error);
+      console.warn("Supabase signOut hatası (state zaten temizlendi):", error);
     }
   }, []);
 

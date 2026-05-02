@@ -1,10 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import type { Offer } from "@/documents/offers";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@supabase/supabase-js";
 
 // Force dynamic rendering - don't pre-render at build time
 export const dynamic = 'force-dynamic';
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
+function getSupabase(request: NextRequest) {
+  const authHeader = request.headers.get("authorization");
+  if (authHeader) {
+    const token = authHeader.replace("Bearer ", "");
+    return createClient(supabaseUrl, supabaseKey, {
+      global: { headers: { Authorization: `Bearer ${token}` } },
+    });
+  }
+  return createClient(supabaseUrl, supabaseKey);
+}
 
 interface UnknownObject {
   [key: string]: unknown;
@@ -28,9 +42,11 @@ const isValidOffer = (offer: unknown): offer is Offer => {
 };
 
 // GET /api/offers
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    // Get the current user from auth header or cookie
+    const supabase = getSupabase(request);
+
+    // Get the current user from the token
     const { data: { user } } = await supabase.auth.getUser();
     
     if (!user) {
@@ -85,8 +101,9 @@ export async function GET() {
 }
 
 // POST /api/offers - Add a new offer
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
+    const supabase = getSupabase(request);
     const body = await request.json();
 
     // Validate offer
@@ -126,8 +143,9 @@ export async function POST(request: Request) {
 }
 
 // DELETE /api/offers/:id - Delete an offer
-export async function DELETE(request: Request) {
+export async function DELETE(request: NextRequest) {
   try {
+    const supabase = getSupabase(request);
     const url = new URL(request.url);
     const id = url.searchParams.get("id");
 
@@ -155,8 +173,9 @@ export async function DELETE(request: Request) {
 }
 
 // PATCH /api/offers/:id - Update an offer's positions
-export async function PATCH(request: Request) {
+export async function PATCH(request: NextRequest) {
   try {
+    const supabase = getSupabase(request);
     const url = new URL(request.url);
     const id = url.searchParams.get("id");
     const body = await request.json();

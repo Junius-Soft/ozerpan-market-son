@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setEurRate } from "@/store/appSlice";
 import { RootState } from "@/store";
+import { supabase } from "@/lib/supabase";
 
 interface ExchangeRateResponse {
   rate: number;
@@ -26,7 +27,12 @@ export const useExchangeRate = ({ offerId }: UseExchangeRateProps = {}) => {
       // If we have an offerId, first try to get the saved rate from the offer
       if (offerId) {
         try {
-          const offerResponse = await fetch(`/api/offers/${offerId}`);
+          const { data: { session } } = await supabase.auth.getSession();
+          const headers: HeadersInit = {};
+          if (session?.access_token) {
+            headers["Authorization"] = `Bearer ${session.access_token}`;
+          }
+          const offerResponse = await fetch(`/api/offers/${offerId}`, { headers });
           const offerData = await offerResponse.json();
           if (offerData.eurRate) {
             dispatch(setEurRate(offerData.eurRate));

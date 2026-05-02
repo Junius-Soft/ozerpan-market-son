@@ -1,17 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 import { Position } from "@/documents/offers";
 
 // Force dynamic rendering - don't pre-render at build time
 export const dynamic = 'force-dynamic';
 
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
+function getSupabase(request: NextRequest) {
+  const authHeader = request.headers.get("authorization");
+  if (authHeader) {
+    const token = authHeader.replace("Bearer ", "");
+    return createClient(supabaseUrl, supabaseKey, {
+      global: { headers: { Authorization: `Bearer ${token}` } },
+    });
+  }
+  return createClient(supabaseUrl, supabaseKey);
+}
+
 // DELETE /api/offers/:offerId/positions - Delete multiple positions
 export async function DELETE(
-  request: Request,
+  request: NextRequest,
   context: { params: Promise<{ offerId: string }> }
 ) {
   try {
+    const supabase = getSupabase(request);
     const { offerId } = await context.params;
     // Get position IDs from request body
     const { positionIds } = await request.json();

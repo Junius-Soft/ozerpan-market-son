@@ -1,10 +1,23 @@
 import { Position } from "@/documents/offers";
 import { parsePrice } from "@/utils/price-formatter";
+import { supabase } from "@/lib/supabase";
 
 // Import PDF generation functionality
 import { generateImalatListPDF } from "@/utils/imalat-pdf-generator";
 import { generateTeklifFormuPDF } from "@/utils/teklif-formu-pdf-generator";
 import { Offer } from "@/documents/offers";
+
+// Auth token ile header oluştur
+async function getAuthHeaders(): Promise<HeadersInit> {
+  const { data: { session } } = await supabase.auth.getSession();
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+  };
+  if (session?.access_token) {
+    headers["Authorization"] = `Bearer ${session.access_token}`;
+  }
+  return headers;
+}
 
 export function calculateTotals(positions: Position[]) {
   const subtotal = positions.reduce((sum, pos) => {
@@ -68,11 +81,10 @@ export async function apiCopyPosition(
     id: `POS-${Date.now()}`,
     pozNo: nextPozNo,
   };
+  const headers = await getAuthHeaders();
   const response = await fetch(`/api/offers/${offerId}`, {
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify({
       positions: [...positions, newPosition],
     }),
@@ -86,11 +98,10 @@ export async function apiDeletePositions(
   selectedPositions: Position[]
 ) {
   const positionIds = selectedPositions.map((pos) => pos.id);
+  const headers = await getAuthHeaders();
   const response = await fetch(`/api/offers/${offerId}/positions`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify({ positionIds }),
   });
   if (!response.ok) throw new Error("Failed to delete positions");
@@ -98,11 +109,10 @@ export async function apiDeletePositions(
 }
 
 export async function apiSaveOfferName(offerId: string, offerName: string) {
+  const headers = await getAuthHeaders();
   const response = await fetch(`/api/offers/${offerId}`, {
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify({ name: offerName }),
   });
   if (!response.ok) throw new Error("Failed to update offer name");
@@ -114,11 +124,10 @@ export async function apiUpdateOfferStatus(
   newStatus: string,
   eurRate?: number
 ) {
+  const headers = await getAuthHeaders();
   const response = await fetch(`/api/offers/${offerId}`, {
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify({ status: newStatus, eurRate }),
   });
   if (!response.ok) throw new Error("Failed to update offer status");

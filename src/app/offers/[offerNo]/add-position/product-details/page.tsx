@@ -14,7 +14,7 @@ import {
 } from "@/documents/products";
 import { DetailsStep, DetailsStepRef } from "../steps/details-step";
 import { getOffer, type Position } from "@/documents/offers";
-import { getOffers } from "@/documents/offers";
+import { supabase } from "@/lib/supabase";
 import { Formik, Form } from "formik";
 import { handleImalatListesiPDF } from "@/utils/handle-imalat-listesi";
 import { ProductDetailsHeader } from "./ProductDetailsHeader";
@@ -337,8 +337,7 @@ export default function ProductDetailsPage() {
       setIsSaving(true);
 
       // Get existing offer first
-      const offers = await getOffers();
-      const currentOffer = offers.find((o) => o.id === offerNo);
+      const currentOffer = await getOffer(offerNo);
 
       if (!currentOffer) {
         throw new Error("Offer not found");
@@ -445,11 +444,17 @@ export default function ProductDetailsPage() {
       }
       console.log({ updatedPositions });
       // Update offer positions via PATCH endpoint
+      const { data: { session } } = await supabase.auth.getSession();
+      const authHeaders: HeadersInit = {
+        "Content-Type": "application/json",
+      };
+      if (session?.access_token) {
+        authHeaders["Authorization"] = `Bearer ${session.access_token}`;
+      }
+
       const updateResponse = await fetch(`/api/offers/${offerNo}`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: authHeaders,
         body: JSON.stringify({
           positions: updatedPositions,
           name: currentOffer.name,

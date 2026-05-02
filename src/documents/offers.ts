@@ -3,6 +3,7 @@ import { KepenkSelections } from "@/types/kepenk";
 import { SineklikSelections } from "@/types/sineklik";
 import { CamBalkonSelections } from "@/types/cam-balkon";
 import { Currency } from "./products";
+import { supabase } from "@/lib/supabase";
 
 export interface Position {
   id: string;
@@ -34,16 +35,27 @@ export interface Offer {
   eurRate?: number;
 }
 
+// Auth token ile header oluştur
+async function getAuthHeaders(): Promise<HeadersInit> {
+  const { data: { session } } = await supabase.auth.getSession();
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+  };
+  if (session?.access_token) {
+    headers["Authorization"] = `Bearer ${session.access_token}`;
+  }
+  return headers;
+}
+
 // API functions for offer management
 
 // Function to save offers to Supabase
 export const saveOffers = async (offers: Offer[]) => {
   try {
+    const headers = await getAuthHeaders();
     await fetch("/api/offers", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
       body: JSON.stringify(offers),
     });
   } catch (error) {
@@ -54,7 +66,8 @@ export const saveOffers = async (offers: Offer[]) => {
 // Function to get offers from Supabase
 export const getOffers = async (): Promise<Offer[]> => {
   try {
-    const response = await fetch("/api/offers");
+    const headers = await getAuthHeaders();
+    const response = await fetch("/api/offers", { headers });
     if (!response.ok) throw new Error("Failed to fetch offers");
     return response.json();
   } catch (error) {
@@ -71,7 +84,8 @@ export const getOffer = async (offerId: string): Promise<Offer | null> => {
       return null;
     }
     
-    const response = await fetch(`/api/offers/${offerId}`);
+    const headers = await getAuthHeaders();
+    const response = await fetch(`/api/offers/${offerId}`, { headers });
     if (!response.ok) {
       if (response.status === 404) {
         console.warn(`getOffer: Offer not found with id: ${offerId}`);
@@ -112,11 +126,10 @@ export const deletePositions = async (
   positionIds: string[]
 ): Promise<boolean> => {
   try {
+    const headers = await getAuthHeaders();
     const response = await fetch(`/api/offers/${offerId}/positions`, {
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
       body: JSON.stringify({ positionIds }),
     });
 

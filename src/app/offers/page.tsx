@@ -318,9 +318,15 @@ export default function OffersPage() {
                     status: "Taslak" as const,
                     positions: [],
                   };
+                  // Session token'ı al ve Authorization header'ına ekle
+                  const { data: { session } } = await supabase.auth.getSession();
+                  const postHeaders: HeadersInit = { "Content-Type": "application/json" };
+                  if (session?.access_token) {
+                    postHeaders["Authorization"] = `Bearer ${session.access_token}`;
+                  }
                   const response = await fetch("/api/offers", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: postHeaders,
                     body: JSON.stringify(newOffer),
                   });
                   if (!response.ok) throw new Error("Failed to create offer");

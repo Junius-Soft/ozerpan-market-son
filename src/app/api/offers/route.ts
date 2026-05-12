@@ -7,17 +7,24 @@ import { createClient } from "@supabase/supabase-js";
 export const dynamic = 'force-dynamic';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
+// Kullanıcı token'ı ile kimlik doğrulama yapan client
 function getSupabase(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
   if (authHeader) {
     const token = authHeader.replace("Bearer ", "");
-    return createClient(supabaseUrl, supabaseKey, {
+    return createClient(supabaseUrl, supabaseAnonKey, {
       global: { headers: { Authorization: `Bearer ${token}` } },
     });
   }
-  return createClient(supabaseUrl, supabaseKey);
+  return createClient(supabaseUrl, supabaseAnonKey);
+}
+
+// RLS'yi bypass eden admin client (sadece server-side kullanılır)
+function getAdminSupabase() {
+  return createClient(supabaseUrl, supabaseServiceKey);
 }
 
 interface UnknownObject {
@@ -71,8 +78,8 @@ export async function GET(request: NextRequest) {
       .order("created_at", { ascending: false });
 
     if (isAdmin) {
-      // Admin: sadece Taslak olmayan teklifleri görsün
-      query = query.neq("status", "Taslak");
+      // Admin: tüm teklifleri görsün (Taslak dahil)
+      // Filtre yok - tüm teklifler döner
     } else {
       // Customer: sadece kendi tekliflerini görsün
       query = query.eq("user_id", user.id);
@@ -103,7 +110,6 @@ export async function GET(request: NextRequest) {
 // POST /api/offers - Add a new offer
 export async function POST(request: NextRequest) {
   try {
-    const supabase = getSupabase(request);
     const body = await request.json();
 
     // Validate offer
@@ -114,15 +120,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get the current user
-    const { data: { user } } = await supabase.auth.getUser();
+    // Kullanıcı kimliğini token ile doğrula
+    const authSupabase = getSupabase(request);
+    const { data: { user }, error: authError } = await authSupabase.auth.getUser();
 
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: "Unauthorized - geçerli bir oturum bulunamadı" },
+        { status: 401 }
+      );
+    }
+
+    // RLS'yi bypass eden admin client ile kaydet (user_id doğru atanır)
+    const adminSupabase = getAdminSupabase();
     const newOffer = {
       ...body,
-      user_id: user?.id || null,
+      user_id: user.id, // Token'dan gelen gerçek user_id
     } as Offer;
 
-    const { data, error } = await supabase
+    const { data, error } = await adminSupabase
       .from("offers")
       .insert([newOffer] as any)
       .select()

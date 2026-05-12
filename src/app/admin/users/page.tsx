@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import {
   CheckCircle2, Clock, Users, ShieldCheck, Search,
   UserCheck, UserX, Shield, User, Building2, Phone, Mail,
-  Trash2, AlertTriangle,
+  Trash2, AlertTriangle, UserPlus,
 } from "lucide-react";
 import { toast } from "react-toastify";
 
@@ -42,6 +42,9 @@ export default function AdminUsersPage() {
   const [processingIds, setProcessingIds] = useState<Set<string>>(new Set());
   const [deleteTarget, setDeleteTarget] = useState<UserProfile | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showInviteDialog, setShowInviteDialog] = useState(false);
+  const [inviteEmail, setInviteEmail] = useState("");
+  const [isInviting, setIsInviting] = useState(false);
 
   useEffect(() => {
     loadUsers();
@@ -110,6 +113,31 @@ export default function AdminUsersPage() {
     }
   };
 
+  const handleInvite = async () => {
+    if (!inviteEmail.trim()) return;
+    setIsInviting(true);
+    try {
+      const response = await fetch("/api/admin/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: inviteEmail.trim() }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "Failed to invite user");
+      toast.success(`Davet maili gönderildi: ${inviteEmail}`, {
+        position: "top-center", autoClose: 3000,
+      });
+      setInviteEmail("");
+      setShowInviteDialog(false);
+      setTimeout(() => loadUsers(), 1500);
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : "Bilinmeyen hata";
+      toast.error(`Davet gönderilemedi: ${msg}`);
+    } finally {
+      setIsInviting(false);
+    }
+  };
+
   const filteredUsers = useMemo(() => {
     let result = users;
     if (filter === "pending") result = result.filter((u) => !u.is_approved && u.role !== "admin");
@@ -135,6 +163,50 @@ export default function AdminUsersPage() {
   return (
     <div className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        {/* Kullanıcı Davet Dialog */}
+        <Dialog open={showInviteDialog} onOpenChange={(open) => { setShowInviteDialog(open); if (!open) setInviteEmail(""); }}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <UserPlus className="h-5 w-5 text-emerald-600" />
+                Yeni Kullanıcı Davet Et
+              </DialogTitle>
+            </DialogHeader>
+            <div className="py-2 space-y-3">
+              <p className="text-sm text-muted-foreground">
+                Kullanıcıya e-posta ile davet linki gönderilecek. Davet linki üzerinden sisteme giriş yapabilirler.
+              </p>
+              <div className="space-y-1">
+                <label className="text-sm font-medium">E-posta Adresi</label>
+                <Input
+                  type="email"
+                  placeholder="ornek@firma.com"
+                  value={inviteEmail}
+                  onChange={(e) => setInviteEmail(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleInvite()}
+                  autoFocus
+                />
+              </div>
+            </div>
+            <DialogFooter className="gap-2 sm:gap-0">
+              <Button variant="outline" onClick={() => { setShowInviteDialog(false); setInviteEmail(""); }} disabled={isInviting}>
+                İptal
+              </Button>
+              <Button
+                onClick={handleInvite}
+                disabled={isInviting || !inviteEmail.trim()}
+                className="gap-2 bg-emerald-600 hover:bg-emerald-700 text-white"
+              >
+                {isInviting ? (
+                  <><span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Gönderiliyor...</>
+                ) : (
+                  <><UserPlus className="h-4 w-4" /> Davet Gönder</>
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
         {/* Silme Onay Dialog */}
         <Dialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
           <DialogContent className="sm:max-w-md">
@@ -168,13 +240,22 @@ export default function AdminUsersPage() {
         </Dialog>
 
         {/* Header */}
-        <div>
-          <h1 className="text-2xl font-bold flex items-center gap-2">
-            <Users className="h-6 w-6" /> Kullanıcı Yönetimi
-          </h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            Kayıtlı kullanıcıları yönetin ve onaylayın
-          </p>
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl font-bold flex items-center gap-2">
+              <Users className="h-6 w-6" /> Kullanıcı Yönetimi
+            </h1>
+            <p className="text-sm text-muted-foreground mt-1">
+              Kayıtlı kullanıcıları yönetin ve onaylayın
+            </p>
+          </div>
+          <Button
+            onClick={() => setShowInviteDialog(true)}
+            className="gap-2 bg-emerald-600 hover:bg-emerald-700 text-white"
+          >
+            <UserPlus className="h-4 w-4" />
+            Kullanıcı Davet Et
+          </Button>
         </div>
 
         {/* Stats Cards */}

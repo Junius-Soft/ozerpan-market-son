@@ -78,8 +78,8 @@ export async function GET(request: NextRequest) {
       .order("created_at", { ascending: false });
 
     if (isAdmin) {
-      // Admin: tüm teklifleri görsün (Taslak dahil)
-      // Filtre yok - tüm teklifler döner
+      // Admin: Taslak hariç tüm teklifleri görsün
+      query = query.neq("status", "Taslak");
     } else {
       // Customer: sadece kendi tekliflerini görsün
       query = query.eq("user_id", user.id);

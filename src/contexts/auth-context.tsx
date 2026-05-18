@@ -6,7 +6,6 @@ import {
   useEffect,
   useState,
   useCallback,
-  useRef,
   type ReactNode,
 } from "react";
 import { supabase } from "@/lib/supabase";
@@ -192,13 +191,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           return { error: error.message };
         }
 
-        // signIn sonrası profil onAuthStateChange tarafından yüklenecek
-        // ama hızlı UI güncellemesi için burada da yükleyelim
-        if (data.user) {
-          const profileData = await fetchProfile(data.user.id);
-          if (profileData) {
-            setProfile(profileData);
-          }
+        // Hemen user ve session'ı set et - UI anında güncellenir
+        if (data.session && data.user) {
+          setUser(data.user);
+          setSession(data.session);
+
+          // Profili arka planda yükle (await etmiyoruz - login'i yavaşlatmasın)
+          fetchProfile(data.user.id).then((profileData) => {
+            if (profileData) {
+              setProfile(profileData);
+            }
+          });
         }
 
         return { error: null };

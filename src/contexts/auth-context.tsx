@@ -61,20 +61,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
-  // Race condition'ları önlemek için ref'ler
-  const fetchingRef = useRef(false);
-  const lastFetchedIdRef = useRef<string | null>(null);
-
-  // Profil bilgilerini getir - debounce ile race condition önleme
+  // Profil bilgilerini getir
   const fetchProfile = useCallback(async (userId: string): Promise<UserProfile | null> => {
-    // Aynı kullanıcı için zaten fetch yapılıyorsa bekle
-    if (fetchingRef.current && lastFetchedIdRef.current === userId) {
-      return null;
-    }
-
-    fetchingRef.current = true;
-    lastFetchedIdRef.current = userId;
-
     try {
       const { data, error } = await supabase
         .from("profiles")
@@ -91,8 +79,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       console.error("Profil getirme hatası:", err);
       return null;
-    } finally {
-      fetchingRef.current = false;
     }
   }, []);
 

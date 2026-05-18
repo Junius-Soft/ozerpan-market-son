@@ -61,6 +61,13 @@ async function proxyToFrappe(request: NextRequest, pathSegments: string[]) {
     }
   });
 
+  // Frappe API Key authentication - cookie-based session yerine token kullan
+  const apiKey = process.env.FRAPPE_API_KEY;
+  const apiSecret = process.env.FRAPPE_API_SECRET;
+  if (apiKey && apiSecret) {
+    headers["Authorization"] = `token ${apiKey}:${apiSecret}`;
+  }
+
   // Log cookie header for debugging
   const cookieHeader = request.headers.get("cookie");
   if (cookieHeader) {

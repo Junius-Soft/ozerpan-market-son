@@ -6,7 +6,6 @@ import {
   useEffect,
   useState,
   useCallback,
-  useRef,
   type ReactNode,
 } from "react";
 import { supabase } from "@/lib/supabase";
@@ -61,20 +60,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
-  // Race condition'ları önlemek için ref'ler
-  const fetchingRef = useRef(false);
-  const lastFetchedIdRef = useRef<string | null>(null);
-
-  // Profil bilgilerini getir - debounce ile race condition önleme
+  // Profil bilgilerini getir
   const fetchProfile = useCallback(async (userId: string): Promise<UserProfile | null> => {
-    // Aynı kullanıcı için zaten fetch yapılıyorsa bekle
-    if (fetchingRef.current && lastFetchedIdRef.current === userId) {
-      return null;
-    }
-
-    fetchingRef.current = true;
-    lastFetchedIdRef.current = userId;
-
     try {
       const { data, error } = await supabase
         .from("profiles")
@@ -91,8 +78,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       console.error("Profil getirme hatası:", err);
       return null;
-    } finally {
-      fetchingRef.current = false;
     }
   }, []);
 
@@ -206,13 +191,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           return { error: error.message };
         }
 
-        // signIn sonrası profil onAuthStateChange tarafından yüklenecek
-        // ama hızlı UI güncellemesi için burada da yükleyelim
-        if (data.user) {
-          const profileData = await fetchProfile(data.user.id);
-          if (profileData) {
-            setProfile(profileData);
-          }
+        // Hemen user ve session'ı set et - UI anında güncellenir
+        if (data.session && data.user) {
+          setUser(data.user);
+          setSession(data.session);
+
+          // Profili arka planda yükle (await etmiyoruz - login'i yavaşlatmasın)
+          fetchProfile(data.user.id).then((profileData) => {
+            if (profileData) {
+              setProfile(profileData);
+            }
+          });
         }
 
         return { error: null };

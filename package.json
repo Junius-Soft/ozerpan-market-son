@@ -12,6 +12,7 @@
     "start": "next start",
     "lint": "next lint",
     "import-offers": "tsx scripts/import-offers.ts",
+    "migrate-prices": "tsx scripts/migrate-prices-to-supabase.ts",
     "deploy": "vercel --prod"
   },
   "dependencies": {
@@ -27,6 +28,7 @@
     "@radix-ui/react-toast": "^1.2.14",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@reduxjs/toolkit": "^2.8.2",
+    "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.49.8",
     "@types/yup": "^0.29.14",
     "class-variance-authority": "^0.7.1",
@@ -47,6 +49,7 @@
     "react-toastify": "^11.0.5",
     "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "xlsx": "^0.18.5",
     "yup": "^1.6.1"
   },
   "devDependencies": {

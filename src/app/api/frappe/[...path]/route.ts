@@ -53,20 +53,32 @@ async function proxyToFrappe(request: NextRequest, pathSegments: string[]) {
 
   const headers: Record<string, string> = {};
 
+  // Proxy'den geçirirken sorun çıkaran header'ları filtrele
+  const EXCLUDED_HEADERS = new Set([
+    "host",
+    "origin",
+    "referer",
+    "connection",
+    "keep-alive",
+    "transfer-encoding",
+    "content-length",    // fetch otomatik hesaplar
+    "expect",           // 417 hatasının ana sebebi
+    "accept-encoding",  // proxy decompress edemez
+    "cookie",           // Frappe'ye browser cookie göndermemeli
+  ]);
+
   // Copy relevant headers from the original request
   request.headers.forEach((value, key) => {
-    // Exclude host and origin headers that could cause issues
-    if (!["host", "origin", "referer"].includes(key.toLowerCase())) {
+    if (!EXCLUDED_HEADERS.has(key.toLowerCase())) {
       headers[key] = value;
     }
   });
 
-  // Log cookie header for debugging
-  const cookieHeader = request.headers.get("cookie");
-  if (cookieHeader) {
-    console.log("Cookie header present:", cookieHeader.substring(0, 100) + "...");
-  } else {
-    console.warn("No cookie header found in request");
+  // Frappe API Key authentication - cookie-based session yerine token kullan
+  const apiKey = process.env.FRAPPE_API_KEY;
+  const apiSecret = process.env.FRAPPE_API_SECRET;
+  if (apiKey && apiSecret) {
+    headers["Authorization"] = `token ${apiKey}:${apiSecret}`;
   }
 
   try {

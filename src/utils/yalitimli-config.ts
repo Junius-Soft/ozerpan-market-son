@@ -31,6 +31,14 @@ export const productSortConfigs: Record<string, ProductSortConfig> = {
       "sineklik_kanat_profilleri",
     ],
   },
+  SS: {
+    typeOrder: [
+      "sineklik_profilleri",
+      "sineklik_kasa_profilleri",
+      "sineklik_kanat_profilleri",
+      "profil",
+    ],
+  },
   pencere: {
     typeOrder: [
       "pencere_profilleri",

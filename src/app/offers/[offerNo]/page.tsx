@@ -70,10 +70,10 @@ export default function OfferDetailPage() {
         setOfferError("Teklif numarası bulunamadı");
         return;
       }
-      
+
       setIsLoadingOffer(true);
       setOfferError(null);
-      
+
       try {
         const currentOffer = await getOffer(params.offerNo as string);
         if (currentOffer) {
@@ -87,8 +87,8 @@ export default function OfferDetailPage() {
         }
       } catch (error) {
         console.error("OfferDetailPage: Failed to load offer:", error);
-        const errorMessage = error instanceof Error 
-          ? error.message 
+        const errorMessage = error instanceof Error
+          ? error.message
           : "Teklif yüklenirken bir hata oluştu";
         setOfferError(errorMessage);
         toast.error(errorMessage, {
@@ -258,7 +258,7 @@ export default function OfferDetailPage() {
       .map((word) =>
         word.length > 0
           ? word[0].toLocaleUpperCase("tr-TR") +
-            word.slice(1).toLocaleLowerCase("tr-TR")
+          word.slice(1).toLocaleLowerCase("tr-TR")
           : ""
       )
       .join(" ");
@@ -327,44 +327,13 @@ export default function OfferDetailPage() {
             );
             if (positions.length > 0) {
               import("@/utils/offer-utils").then((utils) => {
-                import("@/utils/imalat-type-mapping").then((mappingUtils) => {
-                  const filteredPositions = positions.map((pos) => {
-                    const filteredProducts = (
-                      pos.selectedProducts?.products || []
-                    ).filter((prod) => {
-                      return mappingUtils.matchesSelectedTypes(
-                        prod.type,
-                        prod.description,
-                        selectedTypes
-                      );
-                    });
-                    
-                    // Aksesuarları da filtrele
-                    const filteredAccessories = (
-                      pos.selectedProducts?.accessories || []
-                    ).filter((acc) => {
-                      return mappingUtils.matchesSelectedTypes(
-                        acc.type,
-                        acc.description,
-                        selectedTypes
-                      );
-                    });
-                    
-                    return {
-                      ...pos,
-                      selectedProducts: {
-                        ...pos.selectedProducts,
-                        products: filteredProducts,
-                        accessories: filteredAccessories,
-                      },
-                    };
-                  }) as typeof positions;
-                  utils.openImalatListPDFMulti(
-                    offer,
-                    filteredPositions,
-                    selectedTypes
-                  );
-                });
+                // PDF generator filtrelemeyi selectedTypes üzerinden zaten yapıyor.
+                // Burada tekrar filtreleme yapmıyoruz, ham pozisyonları gönderiyoruz.
+                utils.openImalatListPDFMulti(
+                  offer,
+                  positions,
+                  selectedTypes
+                );
               });
             }
           }}

@@ -19,7 +19,7 @@ import {
   ProductPreview,
   ProductPreviewComponentRef,
 } from "./components/product-preview";
-import { PanjurSelections } from "@/types/panjur";
+import { PanjurSelections, SelectedProduct } from "@/types/panjur";
 import { useFilterLamelThickness } from "./hooks/form-rules/useFilterLamelThickness";
 import { useFilterMotorModel } from "./hooks/form-rules/useFilterMotorModel";
 import { useFilterKepenkMotor } from "./hooks/form-rules/useFilterKepenkMotor";
@@ -41,6 +41,8 @@ interface DetailsStepProps {
 
 export interface DetailsStepRef {
   exportCanvas: () => string | null;
+  getSelectedProducts: () => { products: SelectedProduct[]; accessories: SelectedProduct[] };
+  getTotalPrice: () => number;
 }
 
 export const DetailsStep = forwardRef<DetailsStepRef, DetailsStepProps>(
@@ -50,20 +52,12 @@ export const DetailsStep = forwardRef<DetailsStepRef, DetailsStepProps>(
   ) => {
     const productPreviewRef = useRef<ProductPreviewComponentRef>(null);
 
-    // Export canvas function exposed via ref
-    useImperativeHandle(ref, () => ({
-      exportCanvas: () => {
-        if (productPreviewRef.current) {
-          return productPreviewRef.current.exportCanvas();
-        }
-        return null;
-      },
-    }));
-
     // Use correct productType based on selectedProduct
-    const productType = (selectedProduct?.id || "panjur") as "panjur" | "kepenk" | "sineklik" | "cam-balkon";
+    // "SS" (Sürme Seri) sineklik tabları kullanır
+    const rawProductType = selectedProduct?.id || "panjur";
+    const productType = (rawProductType === "SS" ? "sineklik" : rawProductType) as "panjur" | "kepenk" | "sineklik" | "cam-balkon";
     useAutoDependencyAndFilterBy(formik, productType, optionId);
-    
+
     // Panjur-specific hooks (they already check productId internally)
     useFilterLamelThickness(formik);
     useFilterMotorModel(formik, selectedProduct);
@@ -74,6 +68,20 @@ export const DetailsStep = forwardRef<DetailsStepRef, DetailsStepProps>(
       selectedProduct?.id ?? "",
       selectedProduct?.tabs ?? []
     );
+
+    // Export canvas + calc result exposed via ref
+    // useImperativeHandle burada olmalı çünkü selectedProducts ve totalPrice useCalculator'dan geliyor
+    useImperativeHandle(ref, () => ({
+      exportCanvas: () => {
+        if (productPreviewRef.current) {
+          return productPreviewRef.current.exportCanvas();
+        }
+        return null;
+      },
+      // Calculator sonucunu doğrudan al (formik.values.selectedProducts'tan bağımsız)
+      getSelectedProducts: () => selectedProducts,
+      getTotalPrice: () => totalPrice,
+    }), [selectedProducts, totalPrice]);
 
     // selectedProducts'ı JSON string olarak serialize ederek değişiklik takibi yapalım
     const selectedProductsJSON = JSON.stringify(selectedProducts);

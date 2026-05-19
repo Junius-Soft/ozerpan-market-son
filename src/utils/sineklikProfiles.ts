@@ -1,5 +1,5 @@
 import { PriceItem, SelectedProduct } from "@/types/panjur";
-import { createSelectedProduct } from "@/utils/panjur";
+import { createSelectedProduct, normalizeColor } from "@/utils/panjur";
 import { SineklikSelections } from "@/types/sineklik";
 
 export function getMenteseliKasaProfiles(
@@ -12,17 +12,19 @@ export function getMenteseliKasaProfiles(
 
   const mappedProfiles: SelectedProduct[] = [];
 
+  const normalizedColor = normalizeColor(color);
+
   const profile = allProfiles.find((item) => {
     return (
       item.description.includes("İçe Açılım Sineklik Kasa Profili") &&
-      item.color === color
+      normalizeColor(item.color) === normalizedColor
     );
   });
   if (!profile) return [];
 
   const quantity = 2;
-  const horizontalSize = width - 110;
-  const verticalSize = height - 110;
+  const horizontalSize = width; // 110mm deduction removed as per user feedback ("imalat listesi yanlış")
+  const verticalSize = height; // 110mm deduction removed
   mappedProfiles.push(createSelectedProduct(profile, quantity, horizontalSize));
   mappedProfiles.push(createSelectedProduct(profile, quantity, verticalSize));
 
@@ -36,10 +38,12 @@ export function getMenteseliKanatProfiles(
   const { width, height, color, menteseliOpeningType } = values;
   const mappedProfiles: SelectedProduct[] = [];
 
+  const normalizedColor = normalizeColor(color);
+
   const profile = allProfiles.find((item) => {
     return (
       item.description.includes("İçe Açılım Sineklik Kanat Profili") &&
-      item.color === color
+      normalizeColor(item.color) === normalizedColor
     );
   });
   if (!profile) return [];
@@ -63,10 +67,12 @@ export function getSabitKanatProfiles(
 
   const mappedProfiles: SelectedProduct[] = [];
 
+  const normalizedColor = normalizeColor(color);
+
   const profile = allProfiles.find((item) => {
     return (
       item.description.includes("İçe Açılım Sineklik Kanat Profili") &&
-      item.color === color
+      normalizeColor(item.color) === normalizedColor
     );
   });
   if (!profile) return [];
@@ -88,15 +94,18 @@ export function getPliseKanatProfiles(
 
   const { width, height, color, pliseOpeningType } = values;
 
+  const normalizedColor = normalizeColor(color);
+
   const profile = allProfiles.find((item) => {
     return (
-      item.description.includes("Plise Kanat Profili") && item.color === color
+      item.description.includes("Plise Kanat Profili") &&
+      normalizeColor(item.color) === normalizedColor
     );
   });
   if (!profile) return [];
 
   const size = pliseOpeningType == "dikey" ? width - 94 : height - 94;
-  const quantity = 1;
+  const quantity = pliseOpeningType === "double" ? 2 : 1;
   mappedProfiles.push(createSelectedProduct(profile, quantity, size));
 
   return mappedProfiles;
@@ -113,28 +122,30 @@ export function getPliseKasaProfiles(
   const horizontalMeasurement: number = width - 50;
   let verticalMeasurement: number = height - 50;
   let horizontalQuantity: number = 2;
-  let verticalQuantity: number = 2;
+  const verticalQuantity: number = 2;
   let dusukEsik: PriceItem | undefined;
 
+  const normalizedColor = normalizeColor(color);
+
   if (kasaType === "esiksiz") {
-    verticalMeasurement = width - 35;
+    verticalMeasurement = height - 35;
     dusukEsik = allProfiles.find((item) => {
+      // Find matches description AND normalized color
       return (
         item.description.includes("Plise Düşük Eşik Profili") &&
-        item.color === color
+        normalizeColor(item.color) === normalizedColor
       );
     });
-    if (pliseOpeningType === "yatay") {
+    if (pliseOpeningType === "yatay" || pliseOpeningType === "double") {
       horizontalQuantity = 1;
     }
-    if (pliseOpeningType === "double") {
-      verticalQuantity = 1;
-    }
+    // verticalQuantity remains 2 for double or yatay
   }
 
   const profile = allProfiles.find((item) => {
     return (
-      item.description.includes("Plise Kasa Profili") && item.color === color
+      item.description.includes("Plise Kasa Profili") &&
+      normalizeColor(item.color) === normalizedColor
     );
   });
   if (!profile) return [];
@@ -161,11 +172,13 @@ export function getSurmeKasaProfiles(
 
   const mappedProfiles: SelectedProduct[] = [];
 
+  const normalizedColor = normalizeColor(color);
+
   const profile = allProfiles.find((item) => {
     return (
-      (item.description.includes("Sürme Sineklik Ray Profili") || 
-       item.description.includes("Alm. Sürme Sineklik Ray Profili")) &&
-      item.color === color
+      (item.description.includes("Sürme Sineklik Ray Profili") ||
+        item.description.includes("Alm. Sürme Sineklik Ray Profili")) &&
+      normalizeColor(item.color) === normalizedColor
     );
   });
   if (!profile) return [];
@@ -193,11 +206,13 @@ export function getSurmeKanatProfiles(
 
   const mappedProfiles: SelectedProduct[] = [];
 
+  const normalizedColor = normalizeColor(color);
+
   const profile = allProfiles.find((item) => {
     return (
       (item.description.includes("Sürme Sineklik Kanat Profili") ||
-       item.description.includes("Alm. Sürme Sineklik Kanat Profili")) &&
-      item.color === color
+        item.description.includes("Alm. Sürme Sineklik Kanat Profili")) &&
+      normalizeColor(item.color) === normalizedColor
     );
   });
   if (!profile) return [];

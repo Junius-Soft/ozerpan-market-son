@@ -553,6 +553,63 @@ export function findYalitimliEkAksesuarlar(
   return results;
 }
 
+// Buldeks Vida bulucu - Boş kutu için 4 adet
+export function findBuldeksVidaAccessoryPrice(
+  accessories: PriceItem[]
+): PriceItem | null {
+  const yalitimliAccessories = accessories.filter(
+    (acc) => acc.type === "yalitimli_panjur_kutu_aksesuarlari"
+  );
+  return (
+    yalitimliAccessories.find((acc) =>
+      acc.description.toLowerCase().includes("buldeks vida")
+    ) || null
+  );
+}
+
+// 3,9x13 mm Vida bulucu - Plaket montajı için 2 adet
+export function findPlaketVidaAccessoryPrice(
+  accessories: PriceItem[]
+): PriceItem | null {
+  const yalitimliAccessories = accessories.filter(
+    (acc) => acc.type === "yalitimli_panjur_kutu_aksesuarlari"
+  );
+  return (
+    yalitimliAccessories.find((acc) =>
+      acc.description.toLowerCase().includes("3,9x13")
+    ) || null
+  );
+}
+
+// Motorlu Kutu / Full Set ek aksesuarları bulucu
+// T Sac HARİÇ, sadece Plaket + 2 adet 3,9*13 vida
+export function findYalitimliMotorluKutuAksesuarlar(
+  accessories: PriceItem[]
+): SelectedProduct[] {
+  const results: SelectedProduct[] = [];
+  const yalitimliAccessories = accessories.filter(
+    (acc) => acc.type === "yalitimli_panjur_kutu_aksesuarlari"
+  );
+
+  // 1 adet Plaket 100x100 12 mm Pimli Galvaniz
+  const plaket = yalitimliAccessories.find((acc) =>
+    acc.description.includes("Plaket 100x100 12 mm Pimli Galvaniz")
+  );
+  if (plaket) {
+    results.push(createSelectedProduct(plaket, 1));
+  }
+
+  // 2 adet 3,9x13 mm YSB Matkap Uçlu Vida (plaket montajı için)
+  const plaketVida = yalitimliAccessories.find((acc) =>
+    acc.description.toLowerCase().includes("3,9x13")
+  );
+  if (plaketVida) {
+    results.push(createSelectedProduct(plaketVida, 2));
+  }
+
+  return results;
+}
+
 // Yalıtımlı kutu yan kapak aksesuarları bulucu
 export function findYalitimliYanKapakAccessoryPrice(
   accessories: PriceItem[],

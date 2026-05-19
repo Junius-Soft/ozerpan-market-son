@@ -14,6 +14,10 @@ import {
   findTamburPrice,
   findMotorPrice,
   getBoxHeight,
+  findSubPartAccessoryPrice,
+  findTamburAccessoryPrice,
+  findMountingAccessoryPrice,
+  findEndCapPrice,
 } from "@/utils/kepenk";
 import { selectKepenkMotor, resolveMotorSelection } from "@/utils/kepenk-motor-selection";
 import { findReceiverPrice, findRemotePrice } from "@/utils/panjur";
@@ -42,8 +46,8 @@ export const calculateKepenk = (
   const boxHeight = getBoxHeight(boxType);
 
   // Gözlü lamel kontrolü
-  const hasGozluLamel = values.gozluLamelVar && 
-    values.gozluLamelBaslangic !== undefined && 
+  const hasGozluLamel = values.gozluLamelVar &&
+    values.gozluLamelBaslangic !== undefined &&
     values.gozluLamelBitis !== undefined &&
     values.gozluLamelBaslangic > 0 &&
     values.gozluLamelBitis > values.gozluLamelBaslangic &&
@@ -69,7 +73,7 @@ export const calculateKepenk = (
   // Normal lamel fiyatı hesapla
   let lamelPrice = 0;
   let lamelSelectedProduct: SelectedProduct | null = null;
-  
+
   if (normalLamelHeight > 0) {
     // Lamel rengini kullan, yoksa varsayılan olarak "beyaz" kullan
     const lamelColor = values.lamelColor || "beyaz";
@@ -89,7 +93,7 @@ export const calculateKepenk = (
   // Gözlü lamel fiyatı hesapla (varsa)
   let gozluLamelPrice = 0;
   let gozluLamelSelectedProduct: SelectedProduct | null = null;
-  
+
   if (hasGozluLamel && gozluLamelHeight > 0) {
     const gozluLamelCount = calculateLamelCount(gozluLamelHeight, "se_78", boxHeight);
     // Gözlü lamel için renk: "alüminyum" (product-prices.json'da color: "alüminyum")
@@ -165,11 +169,11 @@ export const calculateKepenk = (
   if (values.movementType === "motorlu") {
     // Sistem alanını hesapla (m²)
     const systemAreaM2 = (systemWidth * systemHeight) / 1000000;
-    
+
     // Manuel motor seçimi aktif mi?
     // Motor seçimi - motorModel "auto" ise otomatik, değilse manuel seçim
     let selectedMotorModel: string | null = null;
-    
+
     if (values.motorModel && values.motorModel !== "auto") {
       // Manuel seçim - kullanıcının seçtiği motoru kullan
       selectedMotorModel = resolveMotorSelection(
@@ -178,10 +182,10 @@ export const calculateKepenk = (
         systemAreaM2,
         tamburType
       );
-      
+
       // Manuel seçimde tambur tipini motora göre ayarla
-      if (values.motorModel.includes("102") || values.motorModel.includes("sel_6") || 
-          values.motorModel.includes("sel_8") || values.motorModel.includes("sel_10")) {
+      if (values.motorModel.includes("102") || values.motorModel.includes("sel_6") ||
+        values.motorModel.includes("sel_8") || values.motorModel.includes("sel_10")) {
         tamburType = "102mm";
       }
     } else {
@@ -200,7 +204,7 @@ export const calculateKepenk = (
           systemAreaM2,
           alternativeTamburType
         );
-        
+
         // Eğer 102mm tambur motorları uygunsa, tambur tipini güncelle
         if (selectedMotorModel) {
           tamburType = alternativeTamburType;
@@ -224,10 +228,10 @@ export const calculateKepenk = (
 
   // Tambur fiyatı hesapla (motor seçiminden sonra, tambur tipi güncellenmiş olabilir)
   // Motorlu sistemlerde tambur ölçüsünden 6 cm (60mm) düşülür
-  const tamburOlcusu = values.movementType === "motorlu" 
-    ? systemWidth - 60 
+  const tamburOlcusu = values.movementType === "motorlu"
+    ? systemWidth - 60
     : systemWidth;
-  
+
   const [tamburPrice, tamburSelectedProduct] = findTamburPrice(
     prices,
     tamburType,
@@ -244,7 +248,7 @@ export const calculateKepenk = (
   if (values.movementType === "motorlu") {
     // Get the movement tab for receiver price calculation
     const movementTab = availableTabs?.find((tab) => tab.id === "movement");
-    
+
     [receiverPrice, receiverSelectedProduct] = findReceiverPrice(
       prices,
       values.receiver,
@@ -257,6 +261,36 @@ export const calculateKepenk = (
       movementTab
     );
   }
+
+  // Yeni Aksesuarlar: Alt Parça Lastiği, Boru Başı, Vida
+  // Alt Parça Lastiği
+  // Metraj = Alt parça uzunluğu (lamel genişliği)
+  const [subPartAccessoryPrice, subPartAccessoryProduct] = findSubPartAccessoryPrice(
+    prices,
+    values.lamelType,
+    lamelGenisligi
+  );
+
+  // Boru Başı (Tambur Aksesuarı)
+  // Tambur tipine göre (70mm veya 102mm)
+  const [tamburAccessoryPrice, tamburAccessoryProduct] = findTamburAccessoryPrice(
+    prices,
+    tamburType
+  );
+
+  // Montaj Vidası (16 Adet)
+  const [mountingAccessoryPrice, mountingAccessoryProduct] = findMountingAccessoryPrice(
+    prices,
+    16
+  );
+
+  // Tapa (Lamel Tapası)
+  // Her lamel için 2 adet tapa
+  const [endCapPrice, endCapProduct] = findEndCapPrice(
+    prices,
+    values.lamelType,
+    normalLamelCount
+  );
 
   // Aksesuar fiyatlarını hesapla
   const accessoryTotalPrice = Number(accessoryItems.reduce(
@@ -275,7 +309,11 @@ export const calculateKepenk = (
     motorPrice +
     receiverPrice +
     remotePrice +
-    accessoryTotalPrice
+    accessoryTotalPrice +
+    subPartAccessoryPrice +
+    tamburAccessoryPrice +
+    mountingAccessoryPrice +
+    endCapPrice
   ).toFixed(2));
 
   // Seçili ürünleri topla
@@ -290,6 +328,10 @@ export const calculateKepenk = (
     motorSelectedProduct,
     receiverSelectedProduct,
     remoteSelectedProduct,
+    subPartAccessoryProduct,
+    tamburAccessoryProduct,
+    mountingAccessoryProduct,
+    endCapProduct,
   ].filter((p) => p !== null && p !== undefined) as SelectedProduct[];
 
   return {

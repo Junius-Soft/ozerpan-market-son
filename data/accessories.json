@@ -8,7 +8,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "pres",
         "unit": "Takım",
-        "price": "10.00"
+        "price": "10.00",
+        "currency": "EUR"
       },
       {
         "description": "137 Yan Kapak 45 Pimli Beyaz",
@@ -17,7 +18,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Takım",
-        "price": "12.38"
+        "price": "12.38",
+        "currency": "EUR"
       },
       {
         "description": "137 Yan Kapak 45 Pimli Kahverengi",
@@ -26,7 +28,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "kahverengi",
         "unit": "Takım",
-        "price": "12.38"
+        "price": "12.38",
+        "currency": "EUR"
       },
       {
         "description": "137 Yan Kapak 45 Pimli Metalik Gri",
@@ -35,7 +38,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "metalik_gri",
         "unit": "Takım",
-        "price": "12.38"
+        "price": "12.38",
+        "currency": "EUR"
       },
       {
         "description": "137 Yan Kapak 45 Pimli Krem",
@@ -44,7 +48,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "krem",
         "unit": "Takım",
-        "price": "12.38"
+        "price": "12.38",
+        "currency": "EUR"
       },
       {
         "description": "137 Yan Kapak 45 Pimli Antrasit Gri",
@@ -53,7 +58,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "antrasit_gri",
         "unit": "Takım",
-        "price": "13.00"
+        "price": "13.00",
+        "currency": "EUR"
       },
       {
         "description": "137 Yan Kapak 45 Pimli Vizon",
@@ -62,7 +68,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "vizon",
         "unit": "Takım",
-        "price": "13.00"
+        "price": "13.00",
+        "currency": "EUR"
       },
       {
         "description": "137 Yan Kapak 45 Pimli Ral Boyalı",
@@ -71,7 +78,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "ral_boyalı",
         "unit": "Takım",
-        "price": "10.24"
+        "price": "10.24",
+        "currency": "EUR"
       },
       {
         "description": "165 Yan Kapak 45 Pimli Pres",
@@ -80,7 +88,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "pres",
         "unit": "Takım",
-        "price": "10.74"
+        "price": "10.74",
+        "currency": "EUR"
       },
       {
         "description": "165 Yan Kapak 45 Pimli Beyaz",
@@ -89,7 +98,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Takım",
-        "price": "14.52"
+        "price": "14.52",
+        "currency": "EUR"
       },
       {
         "description": "165 Yan Kapak 45 Pimli Kahverengi",
@@ -98,7 +108,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "kahverengi",
         "unit": "Takım",
-        "price": "14.52"
+        "price": "14.52",
+        "currency": "EUR"
       },
       {
         "description": "165 Yan Kapak 45 Pimli Metalik Gri",
@@ -107,7 +118,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "metalik_gri",
         "unit": "Takım",
-        "price": "14.52"
+        "price": "14.52",
+        "currency": "EUR"
       },
       {
         "description": "165 Yan Kapak 45 Pimli Krem",
@@ -116,7 +128,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "krem",
         "unit": "Takım",
-        "price": "14.52"
+        "price": "14.52",
+        "currency": "EUR"
       },
       {
         "description": "165 Yan Kapak 45 Pimli Ral Boyalı",
@@ -125,7 +138,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "ral_boyalı",
         "unit": "Takım",
-        "price": "16.43"
+        "price": "16.43",
+        "currency": "EUR"
       },
       {
         "description": "165 Yan Kapak 45 Pimli Antrasit Gri",
@@ -134,7 +148,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "antrasit_gri",
         "unit": "Takım",
-        "price": "13.85"
+        "price": "13.85",
+        "currency": "EUR"
       },
       {
         "description": "205 Yan Kapak 45 Pimli Pres",
@@ -143,7 +158,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "pres",
         "unit": "Takım",
-        "price": "15.71"
+        "price": "15.71",
+        "currency": "EUR"
       },
       {
         "description": "205 Yan Kapak 45 Pimli Beyaz",
@@ -152,7 +168,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Takım",
-        "price": "20.50"
+        "price": "20.50",
+        "currency": "EUR"
       },
       {
         "description": "205 Yan Kapak 45 Pimli Kahverengi",
@@ -161,7 +178,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "kahverengi",
         "unit": "Takım",
-        "price": "20.50"
+        "price": "20.50",
+        "currency": "EUR"
       },
       {
         "description": "205 Yan Kapak 45 Pimli Metalik Gri",
@@ -170,7 +188,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "metalik_gri",
         "unit": "Takım",
-        "price": "20.50"
+        "price": "20.50",
+        "currency": "EUR"
       },
       {
         "description": "205 Yan Kapak 45 Pimli Krem",
@@ -179,7 +198,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "krem",
         "unit": "Takım",
-        "price": "20.50"
+        "price": "20.50",
+        "currency": "EUR"
       },
       {
         "description": "205 Yan Kapak 45 Pimli Antrasit Gri",
@@ -188,7 +208,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "antrasit_gri",
         "unit": "Takım",
-        "price": "21.53"
+        "price": "21.53",
+        "currency": "EUR"
       },
       {
         "description": "205 Yan Kapak 45 Pimli Ral Boya",
@@ -197,7 +218,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "ral_boyalı",
         "unit": "Takım",
-        "price": "23.04"
+        "price": "23.04",
+        "currency": "EUR"
       },
       {
         "description": "250 Yan Kapak 45 Motor Pres",
@@ -206,7 +228,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "pres",
         "unit": "Takım",
-        "price": "31.86"
+        "price": "31.86",
+        "currency": "EUR"
       },
       {
         "description": "250 Yan Kapak 45 Motor Beyaz",
@@ -215,7 +238,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Takım",
-        "price": "37.94"
+        "price": "37.94",
+        "currency": "EUR"
       },
       {
         "description": "250 Yan Kapak 45 Motor Kahverengi",
@@ -224,7 +248,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "kahverengi",
         "unit": "Takım",
-        "price": "37.94"
+        "price": "37.94",
+        "currency": "EUR"
       },
       {
         "description": "250 Yan Kapak 45 Motor Metalik Gri",
@@ -233,7 +258,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "metalik_gri",
         "unit": "Takım",
-        "price": "37.94"
+        "price": "37.94",
+        "currency": "EUR"
       },
       {
         "description": "250 Yan Kapak 45 Motor Krem",
@@ -242,7 +268,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "krem",
         "unit": "Takım",
-        "price": "37.94"
+        "price": "37.94",
+        "currency": "EUR"
       },
       {
         "description": "250 Yan Kapak 45 Motor Antrasit Gri",
@@ -251,7 +278,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "antrasit_gri",
         "unit": "Takım",
-        "price": "39.82"
+        "price": "39.82",
+        "currency": "EUR"
       },
       {
         "description": "250 Yan Kapak 45 Motor Ral Boyalı",
@@ -260,7 +288,8 @@
         "type": "panjur_kutu_aksesuarları",
         "color": "ral_boyalı",
         "unit": "Takım",
-        "price": "42.87"
+        "price": "42.87",
+        "currency": "EUR"
       },
       {
         "description": "40mm Sekizgen Boru 0,40",
@@ -268,7 +297,8 @@
         "uretici_kodu": "TU.040.00.040",
         "type": "panjur_tambur_boru_profilleri",
         "unit": "Metre",
-        "price": "1.24"
+        "price": "1.85",
+        "currency": "EUR"
       },
       {
         "description": "60mm Sekizgen Boru 0,60",
@@ -285,7 +315,8 @@
         "type": "panjur_tambur_boru_aksesuarları",
         "color": "galvaniz",
         "unit": "Adet",
-        "price": "1.31"
+        "price": "1.34",
+        "currency": "EUR"
       },
       {
         "description": "40 Boru Başı Rulmanlı Siyah",
@@ -294,7 +325,8 @@
         "type": "panjur_tambur_boru_aksesuarları",
         "color": "siyah",
         "unit": "Adet",
-        "price": "0.37"
+        "price": "0.39",
+        "currency": "EUR"
       },
       {
         "description": "60 Boru Başı Rulmanlı Siyah",
@@ -303,7 +335,8 @@
         "type": "panjur_tambur_boru_aksesuarları",
         "color": "siyah",
         "unit": "Adet",
-        "price": "0.73"
+        "price": "0.75",
+        "currency": "EUR"
       },
       {
         "description": "Winde Otomatik Makara Beyaz",
@@ -312,7 +345,8 @@
         "type": "panjur_tambur_boru_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "6.35"
+        "price": "6.35",
+        "currency": "EUR"
       },
       {
         "description": "Winde Otomatik Makara Kahverengi",
@@ -321,7 +355,8 @@
         "type": "panjur_tambur_boru_aksesuarları",
         "color": "kahverengi",
         "unit": "Adet",
-        "price": "6.35"
+        "price": "6.35",
+        "currency": "EUR"
       },
       {
         "description": "Winde Otomatik Makara Gri",
@@ -339,7 +374,8 @@
         "type": "panjur_tambur_boru_aksesuarları",
         "color": "antrasit_gri",
         "unit": "Adet",
-        "price": "6.35"
+        "price": "6.35",
+        "currency": "EUR"
       },
       {
         "description": "Rulman 12x28",
@@ -348,7 +384,8 @@
         "type": "panjur_tambur_boru_aksesuarları",
         "color": "standart",
         "unit": "Adet",
-        "price": "0.49"
+        "price": "0.53",
+        "currency": "EUR"
       },
       {
         "description": "Panjur Redüktörü Beyaz",
@@ -357,7 +394,8 @@
         "type": "panjur_tambur_boru_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "24.46"
+        "price": "30.00",
+        "currency": "EUR"
       },
       {
         "description": "Redüktör boru başı 40 mm-C 371 uyumlu",
@@ -393,7 +431,8 @@
         "type": "panjur_tambur_boru_aksesuarları",
         "color": "siyah",
         "unit": "Adet",
-        "price": "1.02"
+        "price": "1.02",
+        "currency": "EUR"
       },
       {
         "description": "40x140 Kasnak Rulmanlı Siyah",
@@ -402,7 +441,8 @@
         "type": "panjur_tambur_boru_aksesuarları",
         "color": "siyah",
         "unit": "Adet",
-        "price": "0.88"
+        "price": "1.13",
+        "currency": "EUR"
       },
       {
         "description": "Kordon Klavuzu Beyaz",
@@ -411,7 +451,8 @@
         "type": "panjur_tambur_boru_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "0.27"
+        "price": "0.32",
+        "currency": "EUR"
       },
       {
         "description": "Kordon Klavuzu Kahverengi",
@@ -420,7 +461,8 @@
         "type": "panjur_tambur_boru_aksesuarları",
         "color": "kahverengi",
         "unit": "Adet",
-        "price": "0.27"
+        "price": "0.32",
+        "currency": "EUR"
       },
       {
         "description": "39'luk Alt Parça Lastiği Gri",
@@ -429,7 +471,8 @@
         "type": "panjur_alt_parça_aksesuarları",
         "color": "gri",
         "unit": "Metre",
-        "price": "0.35"
+        "price": "0.32",
+        "currency": "EUR"
       },
       {
         "description": "55'lik Alt Parça Lastiği Gri",
@@ -438,7 +481,8 @@
         "type": "panjur_alt_parça_aksesuarları",
         "color": "gri",
         "unit": "Metre",
-        "price": "0.57"
+        "price": "0.52",
+        "currency": "EUR"
       },
       {
         "description": "Stoper Konik Beyaz",
@@ -447,7 +491,8 @@
         "type": "panjur_alt_parça_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "0.40"
+        "price": "0.28",
+        "currency": "EUR"
       },
       {
         "description": "Stoper Konik Kahverengi",
@@ -456,7 +501,8 @@
         "type": "panjur_alt_parça_aksesuarları",
         "color": "kahverengi",
         "unit": "Adet",
-        "price": "0.40"
+        "price": "0.28",
+        "currency": "EUR"
       },
       {
         "description": "Stoper Konik Gri",
@@ -465,7 +511,8 @@
         "type": "panjur_alt_parça_aksesuarları",
         "color": "gri",
         "unit": "Adet",
-        "price": "0.40"
+        "price": "0.28",
+        "currency": "EUR"
       },
       {
         "description": "Stoper Konik Ant. Gri",
@@ -483,7 +530,8 @@
         "type": "panjur_alt_parça_aksesuarları",
         "color": "galvaniz",
         "unit": "Adet",
-        "price": "0.67"
+        "price": "0.88",
+        "currency": "EUR"
       },
       {
         "description": "Alt Parça Sürgüsü Yassı Galvaniz",
@@ -492,7 +540,8 @@
         "type": "panjur_alt_parça_aksesuarları",
         "color": "galvaniz",
         "unit": "Adet",
-        "price": "0.64"
+        "price": "0.83",
+        "currency": "EUR"
       },
       {
         "description": "Çelik Askı 130 mm ( SL 39 )",
@@ -501,7 +550,8 @@
         "type": "panjur_lamel_aksesuarları",
         "color": "standart",
         "unit": "Adet",
-        "price": "0.53"
+        "price": "0.53",
+        "currency": "EUR"
       },
       {
         "description": "Çelik Askı 170 mm ( SL 55 )",
@@ -510,7 +560,8 @@
         "type": "panjur_lamel_aksesuarları",
         "color": "standart",
         "unit": "Adet",
-        "price": "0.70"
+        "price": "0.75",
+        "currency": "EUR"
       },
       {
         "description": "PVC TAPA SL-39",
@@ -519,7 +570,8 @@
         "type": "panjur_lamel_aksesuarları",
         "color": "standart",
         "unit": "Adet",
-        "price": "0.04"
+        "price": "0.04",
+        "currency": "EUR"
       },
       {
         "description": "PVC TAPA SL-55",
@@ -528,7 +580,8 @@
         "type": "panjur_lamel_aksesuarları",
         "color": "standart",
         "unit": "Adet",
-        "price": "0.06"
+        "price": "0.04",
+        "currency": "EUR"
       },
       {
         "description": "Askı Kilit ( SL 39 )",
@@ -546,7 +599,8 @@
         "type": "panjur_lamel_aksesuarları",
         "color": "standart",
         "unit": "Adet",
-        "price": "0.07"
+        "price": "0.07",
+        "currency": "EUR"
       },
       {
         "description": "3,9x16 mm YSB Matkap Uçlu Vida",
@@ -564,7 +618,8 @@
         "type": "panjur_lamel_aksesuarları",
         "color": "gri",
         "unit": "Metre",
-        "price": "0.35"
+        "price": "0.32",
+        "currency": "EUR"
       },
       {
         "description": "55'lik Alt Parça Lastiği Gri",
@@ -573,7 +628,8 @@
         "type": "panjur_lamel_aksesuarları",
         "color": "gri",
         "unit": "Metre",
-        "price": "0.57"
+        "price": "0.52",
+        "currency": "EUR"
       },
       {
         "description": "Panjur Dikme Makası Beyaz",
@@ -582,7 +638,8 @@
         "type": "panjur_dikme_aksesuarları",
         "color": "beyaz",
         "unit": "Takım",
-        "price": "13.80"
+        "price": "17.76",
+        "currency": "EUR"
       },
       {
         "description": "Panjur Dikme Makası Kahverengi",
@@ -591,7 +648,8 @@
         "type": "panjur_dikme_aksesuarları",
         "color": "kahverengi",
         "unit": "Takım",
-        "price": "14.56"
+        "price": "18.75",
+        "currency": "EUR"
       },
       {
         "description": "Panjur Dikme Menteşesi Beyaz",
@@ -600,7 +658,8 @@
         "type": "panjur_dikme_aksesuarları",
         "color": "beyaz",
         "unit": "Takım",
-        "price": "1.39"
+        "price": "1.78",
+        "currency": "EUR"
       },
       {
         "description": "Panjur Dikme Menteşesi Kahverengi",
@@ -626,7 +685,8 @@
         "uretici_kodu": "MO.SEL.60.TY.020",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "44.05"
+        "price": "44.05",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL 60-30 Motor",
@@ -634,7 +694,8 @@
         "uretici_kodu": "MO.SEL.60.TY.030",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "51.06"
+        "price": "51.06",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL 60-50 Motor",
@@ -642,7 +703,8 @@
         "uretici_kodu": "MO.SEL.60.TY.050",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "60.68"
+        "price": "60.68",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL 60-20 Alıcılı Motor",
@@ -650,7 +712,8 @@
         "uretici_kodu": "MO.SEL.60.RS.020",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "84.61"
+        "price": "84.61",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL 60-30 Alıcılı Motor",
@@ -658,7 +721,8 @@
         "uretici_kodu": "MO.SEL.60.RS.030",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "85.38"
+        "price": "85.38",
+        "currency": "EUR"
       },
       {
         "description": "MOSEL SEL 60-50 Alıcılı Motor",
@@ -666,7 +730,8 @@
         "uretici_kodu": "MO.SEL.60.RS.050",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "96.97"
+        "price": "96.97",
+        "currency": "EUR"
       },
       {
         "description": "Somfy BOOST 15 Motor",
@@ -674,7 +739,8 @@
         "uretici_kodu": "352512121015",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "88.30"
+        "price": "88.30",
+        "currency": "EUR"
       },
       {
         "description": "Somfy BOOST 35 Motor",
@@ -682,7 +748,8 @@
         "uretici_kodu": "352512121035",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "129.49"
+        "price": "129.49",
+        "currency": "EUR"
       },
       {
         "description": "Somfy BOOST 55 Motor",
@@ -690,7 +757,8 @@
         "uretici_kodu": "352512121055",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "188.16"
+        "price": "188.16",
+        "currency": "EUR"
       },
       {
         "description": "Somfy BOOST 15 Alıcılı Motor",
@@ -698,7 +766,8 @@
         "uretici_kodu": "352512221015",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "155.56"
+        "price": "155.56",
+        "currency": "EUR"
       },
       {
         "description": "Somfy BOOST 35 Alıcılı Motor",
@@ -706,7 +775,8 @@
         "uretici_kodu": "352512221035",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "188.16"
+        "price": "188.16",
+        "currency": "EUR"
       },
       {
         "description": "Somfy BOOST 55 Alıcılı Motor",
@@ -714,7 +784,8 @@
         "uretici_kodu": "352512221055",
         "type": "panjur_motorlari",
         "unit": "Adet",
-        "price": "242.97"
+        "price": "242.97",
+        "currency": "EUR"
       },
       {
         "description": "067x550 Standart Kıl Fitil",
@@ -722,7 +793,8 @@
         "uretici_kodu": "GC.055.67.INS",
         "type": "ortak_fitiller",
         "unit": "Adet",
-        "price": "0.13"
+        "price": "0.15",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Pres",
@@ -730,7 +802,8 @@
         "uretici_kodu": "378111600200",
         "type": "sineklik_profilleri",
         "unit": "Metre",
-        "price": "3.26"
+        "price": "3.26",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Beyaz",
@@ -738,7 +811,8 @@
         "uretici_kodu": "378111601100",
         "type": "sineklik_profilleri",
         "unit": "Metre",
-        "price": "3.50"
+        "price": "3.04",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Kahverengi",
@@ -746,7 +820,8 @@
         "uretici_kodu": "378111602000",
         "type": "sineklik_profilleri",
         "unit": "Metre",
-        "price": "3.58"
+        "price": "3.08",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Antrasit Gri",
@@ -754,7 +829,8 @@
         "uretici_kodu": "378111603400",
         "type": "sineklik_profilleri",
         "unit": "Metre",
-        "price": "3.51"
+        "price": "3.08",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Krem",
@@ -770,7 +846,8 @@
         "uretici_kodu": "378111603000",
         "type": "sineklik_profilleri",
         "unit": "Metre",
-        "price": "3.58"
+        "price": "3.68",
+        "currency": "EUR"
       },
       {
         "description": "Plise Kasa Profili Ral Boyalı",
@@ -778,7 +855,8 @@
         "uretici_kodu": "378111601010",
         "type": "sineklik_profilleri",
         "unit": "Metre",
-        "price": "4.22"
+        "price": "3.26",
+        "currency": "EUR"
       },
       {
         "description": "Yan Kapak Sürgüsü 185mm",
@@ -787,7 +865,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "",
         "unit": "Adet",
-        "price": "0.58"
+        "price": "0.58",
+        "currency": "EUR"
       },
       {
         "description": "Yan Kapak Sürgüsü 220mm",
@@ -796,7 +875,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "",
         "unit": "Adet",
-        "price": "0.58"
+        "price": "0.58",
+        "currency": "EUR"
       },
       {
         "description": "Orta Kapak İç Soketi Beyaz",
@@ -805,7 +885,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "1.43"
+        "price": "1.58",
+        "currency": "EUR"
       },
       {
         "description": "Yan Kapak 185mm (izolasyonsuz) Sağ",
@@ -814,7 +895,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "",
         "unit": "Adet",
-        "price": "3.33"
+        "price": "3.33",
+        "currency": "EUR"
       },
       {
         "description": "Yan Kapak 185mm (izolasyonsuz) Sol",
@@ -823,7 +905,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "",
         "unit": "Adet",
-        "price": "3.33"
+        "price": "3.33",
+        "currency": "EUR"
       },
       {
         "description": "Dış Kapak 185mm Beyaz",
@@ -832,7 +915,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "0.55"
+        "price": "0.61",
+        "currency": "EUR"
       },
       {
         "description": "Dış Kapak 185mm Kahverengi",
@@ -841,7 +925,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "kahverengi",
         "unit": "Adet",
-        "price": "0.55"
+        "price": "0.61",
+        "currency": "EUR"
       },
       {
         "description": "Dış Kapak 185mm Antrasit Gri",
@@ -850,7 +935,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "antrasit_gri",
         "unit": "Adet",
-        "price": "0.55"
+        "price": "0.61",
+        "currency": "EUR"
       },
       {
         "description": "İç Kapak 185mm Beyaz",
@@ -859,7 +945,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "0.56"
+        "price": "0.62",
+        "currency": "EUR"
       },
       {
         "description": "İç Kapak 185mm Antrasit Gri",
@@ -868,7 +955,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "antrasit_gri",
         "unit": "Adet",
-        "price": "0.56"
+        "price": "0.62",
+        "currency": "EUR"
       },
       {
         "description": "İç Kapak 185mm Kahverengi",
@@ -877,7 +965,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "kahverengi",
         "unit": "Adet",
-        "price": "0.56"
+        "price": "0.62",
+        "currency": "EUR"
       },
       {
         "description": "Orta Kapak 185mm Beyaz",
@@ -886,7 +975,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "2.08"
+        "price": "2.30",
+        "currency": "EUR"
       },
       {
         "description": "Geçiş Soketi 185mm / 40 Beyaz",
@@ -895,7 +985,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "3.81"
+        "price": "4.20",
+        "currency": "EUR"
       },
       {
         "description": "Geçiş Soketi 185mm / 60 Beyaz",
@@ -904,7 +995,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "3.75"
+        "price": "4.13",
+        "currency": "EUR"
       },
       {
         "description": "Yan Kapak 185x220mm (izolasyonlu) Sağ",
@@ -913,7 +1005,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "5.10"
+        "price": "5.10",
+        "currency": "EUR"
       },
       {
         "description": "Yan Kapak 185x220mm (izolasyonlu) Sol",
@@ -922,7 +1015,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "5.10"
+        "price": "5.10",
+        "currency": "EUR"
       },
       {
         "description": "İç Kapak 185x220mm Beyaz",
@@ -931,7 +1025,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "1.04"
+        "price": "1.15",
+        "currency": "EUR"
       },
       {
         "description": "İç Kapak 185x220mm Kahverengi",
@@ -940,7 +1035,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "kahverengi",
         "unit": "Adet",
-        "price": "1.04"
+        "price": "1.15",
+        "currency": "EUR"
       },
       {
         "description": "İç Kapak 185x220mm Antrasit Gri",
@@ -949,7 +1045,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "antrasit_gri",
         "unit": "Adet",
-        "price": "1.04"
+        "price": "1.15",
+        "currency": "EUR"
       },
       {
         "description": "Yan kapak 220mm (izolasyonsuz) Sağ",
@@ -958,7 +1055,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "4.88"
+        "price": "4.88",
+        "currency": "EUR"
       },
       {
         "description": "Yan kapak 220mm (izolasyonsuz) Sol",
@@ -967,7 +1065,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "4.88"
+        "price": "4.88",
+        "currency": "EUR"
       },
       {
         "description": "Dış Kapak 220mm Beyaz",
@@ -976,7 +1075,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "1.05"
+        "price": "1.16",
+        "currency": "EUR"
       },
       {
         "description": "Dış Kapak 220mm Kahverengi",
@@ -985,7 +1085,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "kahverengi",
         "unit": "Adet",
-        "price": "1.05"
+        "price": "1.16",
+        "currency": "EUR"
       },
       {
         "description": "Dış Kapak 220mm Antrasit Gri",
@@ -1003,7 +1104,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "1.03"
+        "price": "1.14",
+        "currency": "EUR"
       },
       {
         "description": "İç Kapak 220mm Kahverengi",
@@ -1012,7 +1114,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "kahverengi",
         "unit": "Adet",
-        "price": "1.03"
+        "price": "1.14",
+        "currency": "EUR"
       },
       {
         "description": "İç Kapak 220mm Antrasit Gri",
@@ -1030,7 +1133,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "0.45"
+        "price": "0.45",
+        "currency": "EUR"
       },
       {
         "description": "Orta Kapak 220mm Beyaz",
@@ -1039,7 +1143,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "2.72"
+        "price": "3.00",
+        "currency": "EUR"
       },
       {
         "description": "Geçiş Soketi 220mm / 40 Beyaz",
@@ -1048,7 +1153,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "4.04"
+        "price": "4.45",
+        "currency": "EUR"
       },
       {
         "description": "Geçiş Soketi 220mm / 60 Beyaz",
@@ -1057,7 +1163,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "3.96"
+        "price": "4.37",
+        "currency": "EUR"
       },
       {
         "description": "Yan kapak 220x255mm (izolasyonlu) Sağ",
@@ -1066,7 +1173,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "5.38"
+        "price": "5.38",
+        "currency": "EUR"
       },
       {
         "description": "Yan kapak 220x255mm (izolasyonlu) Sol",
@@ -1075,7 +1183,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "5.38"
+        "price": "5.38",
+        "currency": "EUR"
       },
       {
         "description": "İç Kapak 220x255mm Beyaz",
@@ -1084,7 +1193,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "beyaz",
         "unit": "Adet",
-        "price": "1.21"
+        "price": "1.33",
+        "currency": "EUR"
       },
       {
         "description": "İç Kapak 220x255mm Kahverengi",
@@ -1093,7 +1203,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "kahverengi",
         "unit": "Adet",
-        "price": "1.21"
+        "price": "1.33",
+        "currency": "EUR"
       },
       {
         "description": "İç Kapak 220x255mm Antrasit Gri",
@@ -1102,7 +1213,8 @@
         "type": "monoblok_panjur_kutu_aksesuarları",
         "color": "antrasit_gri",
         "unit": "Adet",
-        "price": "1.21"
+        "price": "1.34",
+        "currency": "EUR"
       },
       {
         "description": "25x25 Yan Kapak Sac (Fullset)",
@@ -1111,7 +1223,8 @@
         "type": "yalitimli_panjur_kutu_aksesuarlari",
         "color": "",
         "unit": "Adet",
-        "price": "5.65"
+        "price": "5.65",
+        "currency": "EUR"
       },
       {
         "description": "25x25 Orta Kapak Sac Siyah",
@@ -1120,7 +1233,8 @@
         "type": "yalitimli_panjur_kutu_aksesuarlari",
         "color": "",
         "unit": "Adet",
-        "price": "2.65"
+        "price": "2.78",
+        "currency": "EUR"
       },
       {
         "description": "30x30 Yan Kapak Sac (Fullset)",
@@ -1129,7 +1243,8 @@
         "type": "yalitimli_panjur_kutu_aksesuarlari",
         "color": "",
         "unit": "Adet",
-        "price": "6.55"
+        "price": "6.55",
+        "currency": "EUR"
       },
       {
         "description": "30x30 Orta Kapak Sac Siyah",
@@ -1138,7 +1253,8 @@
         "type": "yalitimli_panjur_kutu_aksesuarlari",
         "color": "",
         "unit": "Adet",
-        "price": "3.33"
+        "price": "3.47",
+        "currency": "EUR"
       },
       {
         "description": "Fullset T Sac",
@@ -1156,7 +1272,8 @@
         "type": "yalitimli_panjur_kutu_aksesuarlari",
         "color": "",
         "unit": "Adet",
-        "price": "1.31"
+        "price": "1.34",
+        "currency": "EUR"
       },
       {
         "description": "Plaket 75x75 28 mm Rulman için Galvaniz",
@@ -1166,6 +1283,24 @@
         "color": "",
         "unit": "Adet",
         "price": "0.40"
+      },
+      {
+        "description": "Buldeks Vida",
+        "stock_code": "BULDEKS-VIDA-001",
+        "uretici_kodu": "BULDEKS-VIDA-001",
+        "type": "yalitimli_panjur_kutu_aksesuarlari",
+        "color": "",
+        "unit": "Adet",
+        "price": "0.10"
+      },
+      {
+        "description": "3,9x13 mm YSB Matkap Uçlu Vida",
+        "stock_code": "VIDA-39-13-001",
+        "uretici_kodu": "VIDA-39-13-001",
+        "type": "yalitimli_panjur_kutu_aksesuarlari",
+        "color": "",
+        "unit": "Adet",
+        "price": "0.05"
       }
     ],
     "sineklik": [
@@ -1578,6 +1713,72 @@
         "unit": "Adet",
         "price": "16.50",
         "currency": "TRY"
+      },
+      {
+        "description": "77'lik Alt Parça Lastiği Gri",
+        "stock_code": "353320701900",
+        "type": "panjur_alt_parça_aksesuarları",
+        "color": "gri",
+        "unit": "Metre",
+        "price": "1.64",
+        "currency": "EUR"
+      },
+      {
+        "description": "100'lük Alt Parça Lastiği Gri",
+        "stock_code": "353320801900",
+        "type": "panjur_alt_parça_aksesuarları",
+        "color": "gri",
+        "unit": "Metre",
+        "price": "4.00",
+        "currency": "EUR"
+      },
+      {
+        "description": "70 Boru Başı Yuvarlak Pimli Metal Pres",
+        "stock_code": "353451300200",
+        "type": "panjur_tambur_boru_aksesuarları",
+        "color": "pres",
+        "unit": "Adet",
+        "price": "10.00",
+        "currency": "EUR"
+      },
+      {
+        "description": "102 Boru Başı 16x16 Kare Pimli Pres",
+        "stock_code": "353451500200",
+        "type": "panjur_tambur_boru_aksesuarları",
+        "color": "pres",
+        "unit": "Adet",
+        "price": "18.26",
+        "currency": "EUR"
+      },
+      {
+        "description": "3,9x16 mm YSB Matkap Uçlu Vida (Kepenk İçin)",
+        "stock_code": "121123901669",
+        "uretici_kodu": "VIDA-39-16",
+        "type": "kepenk_montaj_aksesuarları",
+        "color": "standart",
+        "unit": "Adet",
+        "price": "0.05",
+        "currency": "EUR"
+      },
+      {
+        "description": "Pvc Tapa SL ST-77 (77mm Kepenk Tapa)",
+        "stock_code": "353212701200",
+        "uretici_kodu": "Pvc Tapa SL ST-77",
+        "type": "kepenk_tapa_aksesuarları",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0.10",
+        "currency": "EUR"
+      },
+      {
+        "description": "Pvc Tapa ST-100 (100mm Kepenk Tapa)",
+        "stock_code": "353212801200",
+        "uretici_kodu": "Pvc Tapa ST-100",
+        "type": "kepenk_tapa_aksesuarları",
+        "color": "siyah",
+        "unit": "Adet",
+        "price": "0.24",
+        "currency": "EUR"
       }
     ]
   }
